@@ -7,6 +7,8 @@
 </ion-header>
 
 <ion-content>
+  <ion-button (click)="demoDownload()"><ion-icon name="cloud-download"></ion-icon></ion-button>
+  <div>{{progress}}%</div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
