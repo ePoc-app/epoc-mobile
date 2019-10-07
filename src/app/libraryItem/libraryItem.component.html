@@ -1,0 +1,9 @@
+<ion-card (click)="moreInfo()">
+  <ion-card-header>
+    <ion-card-title>{{item.name}}</ion-card-title>
+    <ion-progress-bar [value]="item.progress/100"></ion-progress-bar>
+  </ion-card-header>
+  <ion-card-content>
+    {{item.description}}
+  </ion-card-content>
+</ion-card>
