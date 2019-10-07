@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import {ChangeDetectorRef, Component} from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 
@@ -9,15 +9,45 @@ import { File } from '@ionic-native/file/ngx';
     styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-    private progress = 0;
+    private library = [];
 
-    constructor(public alertController: AlertController, private file: File, private transfer: FileTransfer) {}
+    constructor(
+        public alertController: AlertController,
+        public toastController: ToastController,
+        private cdr: ChangeDetectorRef,
+        private file: File,
+        private transfer: FileTransfer
+    ) {
+        const fileList = file.listDir(file.externalDataDirectory, '');
 
-    openFile() {
-        console.log('open file');
+        if (fileList) {
+            fileList.then((entries) => {
+                const mappedEntries = entries.map(entry => {
+                    return {
+                        name: entry.name.replace('.zip', ''),
+                        filename: entry.name,
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        progress: 100
+                    };
+                });
+                this.library.push(...mappedEntries);
+            });
+        }
+    }
+
+    async openFile() {
+        const toast = await this.toastController.create({
+            message: 'Feature not available yet.',
+            duration: 2000
+        });
+        toast.present();
     }
 
     async openLink() {
+        const toast = await this.toastController.create({
+            message: 'Feature not available yet.',
+            duration: 2000
+        });
         const alert = await this.alertController.create({
             header: 'Download Epoc',
             inputs: [
@@ -35,7 +65,7 @@ export class Tab1Page {
                 }, {
                     text: 'Ok',
                     handler: (data) => {
-                        console.log('Confirm Ok', data);
+                       toast.present();
                     }
                 }
             ]
@@ -44,17 +74,33 @@ export class Tab1Page {
         await alert.present();
     }
 
-    demoDownload() {
+    async demoDownload() {
         const url = 'https://files.inria.fr/LearningLab_public/LivreNumerique/C026PG-Distrib.zip';
-        const path = 'C026PG-Distrib.zip';
+        const filename = 'C026PG-Distrib.zip';
+        const toast = await this.toastController.create({
+            message: 'This Epoc already exists.',
+            duration: 2000
+        });
 
-        this.downloadFile(url, path);
+        try {
+            await this.file.checkFile(this.file.externalDataDirectory, filename);
+            toast.present();
+        } catch (error) {
+            this.downloadFile(url, filename);
+        }
     }
 
     downloadFile(url: string, fileName: string) {
         const fileTransfer = this.transfer.create();
 
-        this.progress = 0;
+        const newItem = {
+            name: fileName.replace('.zip', ''),
+            filename: fileName,
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            progress: 0,
+        };
+
+        this.library.push(newItem);
 
         fileTransfer.download(encodeURI(url), this.file.externalDataDirectory + fileName, true).then((entry) => {
             console.log('download completed', this.file.externalDataDirectory + fileName);
@@ -62,10 +108,15 @@ export class Tab1Page {
             console.log('download failed: ', error);
         });
 
-        fileTransfer.onProgress(this.updateProgress);
+        const component = this;
+
+        fileTransfer.onProgress((progress) => {
+            newItem.progress = Math.round(progress.loaded / progress.total * 100);
+            component.cdr.detectChanges();
+        });
     }
 
-    updateProgress(progress) {
-        this.progress = Math.round(progress.loaded / progress.total * 100);
+    onDeleteItem(index) {
+        this.library.splice(index, 1);
     }
 }
