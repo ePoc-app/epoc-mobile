@@ -7,6 +7,8 @@ export class HideToolbarDirective implements OnInit {
     @Input('header') header: HTMLElement;
     @Input('footer') footer: HTMLElement;
 
+    private hidden = false;
+
     constructor(public element: ElementRef, public renderer: Renderer) {}
 
     ngOnInit() {
@@ -14,7 +16,8 @@ export class HideToolbarDirective implements OnInit {
         this.footer.style.setProperty('position', 'absolute');
         this.header.style.setProperty('transition', 'top 700ms');
         this.footer.style.setProperty('transition', 'bottom 700ms');
-        this.element.nativeElement.style.setProperty('transition', 'padding 700ms');
+        this.element.nativeElement.style.setProperty('--padding-top', '44px');
+        this.element.nativeElement.style.setProperty('--padding-bottom', '44px');
         this.showToolbar();
     }
 
@@ -25,21 +28,23 @@ export class HideToolbarDirective implements OnInit {
             this.showToolbar();
         }
     }
-    @HostListener('click', ['$event']) onClick(event) {
-        this.showToolbar();
+    @HostListener('dblclick', ['$event']) onClick(event) {
+        this.toggleToolbar();
     }
 
     private hideToolbar() {
+        this.hidden = true;
         this.header.style.setProperty('top', '-56px');
         this.footer.style.setProperty('bottom', '-56px');
-        this.element.nativeElement.style.setProperty('--padding-top', '0');
-        this.element.nativeElement.style.setProperty('--padding-bottom', '0');
     }
 
     private showToolbar() {
+        this.hidden = false;
         this.header.style.setProperty( 'top', '0px');
         this.footer.style.setProperty('bottom', '0px');
-        this.element.nativeElement.style.setProperty('--padding-top', '44px');
-        this.element.nativeElement.style.setProperty('--padding-bottom', '44px');
+    }
+
+    private toggleToolbar() {
+        this.hidden ? this.showToolbar() :this.hideToolbar();
     }
 }
