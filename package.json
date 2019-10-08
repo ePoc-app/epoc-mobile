@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,7 @@
     "@angular/router": "~8.1.2",
     "@capacitor/android": "^1.2.1",
     "@capacitor/core": "1.2.1",
+    "@capacitor/ios": "^1.2.1",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/file": "^5.14.0",
     "@ionic-native/file-transfer": "^5.14.0",
@@ -52,6 +54,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "cordova-res": "^0.8.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
