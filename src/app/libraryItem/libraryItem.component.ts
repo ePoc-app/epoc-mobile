@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Router} from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 
@@ -12,16 +13,13 @@ export class LibraryItemComponent {
     @Output() deleteItem = new EventEmitter<boolean>();
 
     constructor(
+        private router: Router,
         public alertController: AlertController,
         public toastController: ToastController,
         private file: File
     ) {}
 
     async moreInfo() {
-        const toast = await this.toastController.create({
-            message: 'Feature not available yet.',
-            duration: 2000
-        });
         const alert = await this.alertController.create({
             header: this.item.name,
             message: '',
@@ -34,7 +32,7 @@ export class LibraryItemComponent {
                 }, {
                     text: 'Open',
                     handler: () => {
-                        toast.present();
+                        this.router.navigateByUrl('/player');
                     }
                 }
             ]
