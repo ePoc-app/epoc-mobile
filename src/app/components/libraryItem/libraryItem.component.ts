@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {AlertController} from '@ionic/angular';
+import {ActionSheetController, AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'library-item',
@@ -13,36 +13,68 @@ export class LibraryItemComponent {
 
     constructor(
         private router: Router,
+        public actionSheetController: ActionSheetController,
         public alertController: AlertController
     ) {}
 
     async moreInfo() {
-        const alert = await this.alertController.create({
+        const actions = await this.actionSheetController.create({
             header: this.epoc.title,
-            message: '',
-            buttons: [
-                {
-                    text: 'Delete',
-                    handler: () => {
-                        this.delete();
-                    }
-                }, {
-                    text: 'Open',
-                    handler: () => {
-                        this.open();
-                    }
+            mode: 'ios',
+            cssClass: 'custom-action-sheet',
+            buttons: [{
+                text: 'Open',
+                icon: 'ios-arrow-forward',
+                handler: () => {
+                    this.open();
                 }
-            ]
+            }, {
+                text: 'Score',
+                icon: 'checkbox-outline',
+                handler: () => {
+                    this.open();
+                }
+            }, {
+                text: 'Delete',
+                icon: 'trash',
+                role: 'destructive',
+                handler: () => {
+                    this.delete();
+                }
+            }, {
+                text: 'Cancel',
+                role: 'cancel',
+                handler: () => {
+                    console.log('Cancel clicked');
+                }
+            }]
         });
 
-        await alert.present();
+        await actions.present();
     }
 
     open() {
         this.router.navigateByUrl('/player');
     }
 
-    delete() {
-        this.deleteItem.emit(true);
+    async delete() {
+        const alert = await this.alertController.create({
+            header: 'Confirm deletion',
+            message: 'Are you sure to delete "' + this.epoc.title + '" ?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Yes',
+                    handler: () => {
+                        this.deleteItem.emit(true);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }
