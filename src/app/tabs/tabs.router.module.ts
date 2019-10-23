@@ -13,7 +13,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+              import('../pages/tab1/tab1.module').then(m => m.Tab1PageModule)
           }
         ]
       },
@@ -23,7 +23,17 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../pages/tab2/tab2.module').then(m => m.Tab2PageModule)
+          }
+        ]
+      },
+      {
+        path: 'tab3',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/tab3/tab3.module').then(m => m.Tab3PageModule)
           }
         ]
       },
