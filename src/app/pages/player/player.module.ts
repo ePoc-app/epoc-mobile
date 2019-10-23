@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PlayerPage } from './player.page';
-import {HideToolbarDirective} from '../hide-toolbar.directive';
+import {HideToolbarDirective} from '../../directives/hide-toolbar.directive';
 
 @NgModule({
   imports: [
