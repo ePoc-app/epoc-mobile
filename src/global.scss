@@ -24,3 +24,15 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.custom-action-sheet{
+  .action-sheet-button-inner{
+    display: block;
+    text-align: left;
+    color: black;
+
+    .action-sheet-icon{
+      float: right;
+    }
+  }
+}
