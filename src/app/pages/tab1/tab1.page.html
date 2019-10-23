@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Library
+    </ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/about">
+        <ion-icon slot="icon-only" ios="ios-information-circle-outline" md="ios-information-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let epoc of library; let i = index">
+        <library-item [epoc]="epoc" (deleteItem)="onDeleteItem(i)"></library-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="addFromFile()" data-desc="Add Epoc from file"><ion-icon name="document"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="addFromUrl()" data-desc="Add Epoc from URL"><ion-icon name="link"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="addDemo()" data-desc="Add Epoc demo"><ion-icon name="cloud-done"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

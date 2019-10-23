@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
-import { LibraryItemComponent } from '../libraryItem/libraryItem.component';
+import { LibraryItemComponent } from '../../components/libraryItem/libraryItem.component';
 
 @NgModule({
   imports: [
