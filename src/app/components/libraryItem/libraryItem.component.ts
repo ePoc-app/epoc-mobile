@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'library-item',
@@ -9,19 +8,17 @@ import { File } from '@ionic-native/file/ngx';
     styleUrls: ['libraryItem.component.scss']
 })
 export class LibraryItemComponent {
-    @Input('item') item;
+    @Input('epoc') epoc;
     @Output() deleteItem = new EventEmitter<boolean>();
 
     constructor(
         private router: Router,
-        public alertController: AlertController,
-        public toastController: ToastController,
-        private file: File
+        public alertController: AlertController
     ) {}
 
     async moreInfo() {
         const alert = await this.alertController.create({
-            header: this.item.name,
+            header: this.epoc.title,
             message: '',
             buttons: [
                 {
@@ -32,7 +29,7 @@ export class LibraryItemComponent {
                 }, {
                     text: 'Open',
                     handler: () => {
-                        this.router.navigateByUrl('/player');
+                        this.open();
                     }
                 }
             ]
@@ -41,10 +38,11 @@ export class LibraryItemComponent {
         await alert.present();
     }
 
+    open() {
+        this.router.navigateByUrl('/player');
+    }
 
     delete() {
-        this.file.removeFile(this.file.externalDataDirectory, this.item.filename).then(result => {
-            this.deleteItem.emit(true);
-        });
+        this.deleteItem.emit(true);
     }
 }

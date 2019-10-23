@@ -1,0 +1,17 @@
+<div class="epoc-card">
+  <ion-card (click)="open()">
+    <img [src]="epoc.image" />
+    <ion-card-header>
+      <ion-card-title class="epoc-title">{{epoc.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ul class="epoc-authors">
+        <li *ngFor="let author of epoc.authors">{{author}}</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+  <div class="epoc-toolbar">
+    <ion-icon ios="ios-more" md="ios-more" (click)="moreInfo()"></ion-icon>
+  </div>
+</div>
+
