@@ -9,7 +9,12 @@ const routes: Routes = [
   {
     path: 'player',
     loadChildren: () =>
-        import('./player/player.module').then(m => m.PlayerPageModule)
+        import('./pages/player/player.module').then(m => m.PlayerPageModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () =>
+        import('./pages/about/about.module').then(m => m.AboutPageModule)
   }
 ];
 @NgModule({
