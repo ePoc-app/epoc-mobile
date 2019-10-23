@@ -14,13 +14,16 @@ npm i
 ```
 
 ```bash
+# Build app
+ionic build
+
 # Serve app (browser)
 ionic serve
 ```
 
 **Android**
 ```
-# Add android platform using capacitor
+# Add android platform using capacitor (need to build first)
 ionic capacitor add android
 
 # Copy assets and plugins to android project
@@ -41,7 +44,7 @@ More info on : https://ionicframework.com/docs/building/android
 
 **iOS**
 ```
-# Add ios platform using capacitor
+# Add ios platform using capacitor (need to build first)
 ionic capacitor add ios
 
 # Run app
