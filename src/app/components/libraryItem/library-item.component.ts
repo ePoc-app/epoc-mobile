@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
+import {LibraryService} from '../../services/library.service';
 
 @Component({
     selector: 'library-item',
-    templateUrl: 'libraryItem.component.html',
-    styleUrls: ['libraryItem.component.scss']
+    templateUrl: 'library-item.component.html',
+    styleUrls: ['library-item.component.scss']
 })
 export class LibraryItemComponent {
     @Input('epoc') epoc;
@@ -13,6 +14,7 @@ export class LibraryItemComponent {
 
     constructor(
         private router: Router,
+        private libraryService: LibraryService,
         public actionSheetController: ActionSheetController,
         public alertController: AlertController
     ) {}
@@ -54,6 +56,7 @@ export class LibraryItemComponent {
     }
 
     open() {
+        this.libraryService.addItemToReading(this.epoc);
         this.router.navigateByUrl('/player');
     }
 

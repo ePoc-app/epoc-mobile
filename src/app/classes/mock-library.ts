@@ -1,8 +1,8 @@
 import {Epoc} from './epoc';
 
-export const MockLibrary: Epoc[] = [];
+export const MockReading: Epoc[] = [];
 
-export const DemoLibrary: Epoc[] = [
+export const MockLibrary: Epoc[] =  [
     {
         id: 'C042AD',
         title: 'Zone à régime restrictif',

@@ -1,10 +1,10 @@
 <div class="epoc-card">
-  <ion-card (click)="open()">
+  <ion-card [mode]="'md'" (click)="open()">
     <img [src]="epoc.image" />
-    <ion-card-header>
-      <ion-card-title class="epoc-title">{{epoc.title}}</ion-card-title>
+    <ion-card-header [mode]="'md'">
+      <ion-card-title [mode]="'md'" class="epoc-title">{{epoc.title}}</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content [mode]="'md'">
       <ul class="epoc-authors">
         <li *ngFor="let author of epoc.authors">{{author}}</li>
       </ul>
