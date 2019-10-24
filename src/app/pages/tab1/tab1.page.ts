@@ -9,6 +9,7 @@ import {LibraryService} from '../../services/library.service';
 })
 export class Tab1Page implements OnInit {
     library: Epoc[];
+    reading: Epoc[];
 
     constructor(
         private libraryService: LibraryService
@@ -17,17 +18,8 @@ export class Tab1Page implements OnInit {
     }
 
     ngOnInit() {
-        this.getLibrary();
-        this.addDemo();
-        this.addDemo();
-    }
-
-    getLibrary(): void {
         this.libraryService.getLibrary().subscribe(library => this.library = library);
-    }
-
-    async addDemo() {
-        await this.libraryService.addItem();
+        this.libraryService.getReading().subscribe(reading => this.reading = reading);
     }
 
     async addFromFile() {
