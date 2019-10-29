@@ -45,10 +45,7 @@ export class LibraryItemComponent {
                 }
             }, {
                 text: 'Cancel',
-                role: 'cancel',
-                handler: () => {
-                    console.log('Cancel clicked');
-                }
+                role: 'cancel'
             }]
         });
 

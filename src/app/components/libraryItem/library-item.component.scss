@@ -1,4 +1,6 @@
 .epoc-card{
+  text-align: left;
+
   ion-card{
     -webkit-margin-start: 5px;
     margin-inline-start: 5px;
@@ -23,11 +25,14 @@
 }
 
 .epoc-toolbar{
-  float: right;
   margin: -5px 5px 0 5px;
 
   ion-icon{
-    font-size: 1.8em;
+    font-size: 20px;
     line-height: 1;
+  }
+
+  .epoc-tool{
+    float: right;
   }
 }
