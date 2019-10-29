@@ -10,8 +10,10 @@
       </ul>
     </ion-card-content>
   </ion-card>
-  <div class="epoc-toolbar">
-    <ion-icon ios="ios-more" md="ios-more" (click)="moreInfo()"></ion-icon>
+  <div class="epoc-toolbar" *ngIf="deleteItem.observers.length > 0">
+    <div class="epoc-tool">
+      <ion-icon ios="ios-more" md="ios-more" (click)="moreInfo()"></ion-icon>
+    </div>
   </div>
 </div>
 

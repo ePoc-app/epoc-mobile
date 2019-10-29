@@ -11,6 +11,10 @@ export class Tab1Page implements OnInit {
     library: Epoc[];
     reading: Epoc[];
 
+    slidesOptions = {
+        slidesPerView: 2.2
+    };
+
     constructor(
         private libraryService: LibraryService
     ) {
@@ -20,14 +24,6 @@ export class Tab1Page implements OnInit {
     ngOnInit() {
         this.libraryService.getLibrary().subscribe(library => this.library = library);
         this.libraryService.getReading().subscribe(reading => this.reading = reading);
-    }
-
-    async addFromFile() {
-        await this.libraryService.addItemFromFile();
-    }
-
-    async addFromUrl() {
-        await this.libraryService.addItemFromUrl();
     }
 
     onDeleteItem(index: number) {
