@@ -22,7 +22,7 @@
       <ion-col size="12">
         <ion-slides [options]="slidesOptions">
           <ion-slide size="6" *ngFor="let reading of readings; let i = index">
-            <library-item [epoc]="getEpoc(reading)" (deleteItem)="onDeleteItem(i)"></library-item>
+            <library-item [epoc]="getEpoc(reading)" [progress]="reading.progress"  (deleteItem)="onDeleteItem(i)"></library-item>
           </ion-slide>
         </ion-slides>
       </ion-col>

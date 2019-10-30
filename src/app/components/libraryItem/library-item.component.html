@@ -2,6 +2,7 @@
   <ion-card [mode]="'md'" (click)="open()">
     <img [src]="epoc.image" />
     <ion-card-header [mode]="'md'">
+      <ion-progress-bar *ngIf="progress" class="epoc-progress" [value]="progress"></ion-progress-bar>
       <ion-card-title [mode]="'md'" class="epoc-title">{{epoc.title}}</ion-card-title>
     </ion-card-header>
     <ion-card-content [mode]="'md'">
