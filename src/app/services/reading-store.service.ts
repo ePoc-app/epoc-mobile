@@ -48,8 +48,8 @@ export class ReadingStoreService {
         }
     }
 
-    removeReading(index: number) {
-        this.readings.splice(index, 1);
+    removeReading(id: string) {
+        this.readings = this.readings.filter(reading => reading.epocId !== id);
         this.saveReadings();
     }
 }
