@@ -10,6 +10,7 @@ import {LibraryService} from '../../services/library.service';
 })
 export class LibraryItemComponent {
     @Input('epoc') epoc;
+    @Input('progress') progress;
     @Output() deleteItem = new EventEmitter<boolean>();
 
     constructor(
