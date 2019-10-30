@@ -4,6 +4,7 @@ import {AlertController, ToastController} from '@ionic/angular';
 
 import {MockLibrary, MockReading} from '../classes/mock-library';
 import {Epoc} from '../classes/epoc';
+import {Reading} from '../classes/reading';
 
 @Injectable({
     providedIn: 'root'
@@ -20,56 +21,23 @@ export class LibraryService {
         return of(MockLibrary);
     }
 
-    async addItemFromFile() {
-        const toast = await this.toastController.create({
-            message: 'Feature not available yet.',
-            duration: 2000
-        });
-        toast.present();
-    }
-
-    async addItemFromUrl() {
-        const toast = await this.toastController.create({
-            message: 'Feature not available yet.',
-            duration: 2000
-        });
-        const alert = await this.alertController.create({
-            header: 'Download Epoc',
-            inputs: [
-                {
-                    name: 'url',
-                    type: 'text',
-                    placeholder: 'Epoc download URL'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary'
-                }, {
-                    text: 'Ok',
-                    handler: (data) => {
-                        toast.present();
-                    }
-                }
-            ]
-        });
-
-        alert.present();
+    getReading(): Observable<Reading[]> {
+        return of(MockReading);
     }
 
     deleteItem(index: number) {
-        MockLibrary.splice(index, 1);
+        MockReading.splice(index, 1);
     }
 
-    addItemToReading(readingEpoc) {
-        if (MockReading.indexOf(readingEpoc) === -1) {
-            MockReading.push(readingEpoc);
+    addItemToReading(epoc) {
+        if (MockReading.findIndex(reading => reading.epocId === epoc.id) === -1) {
+            const reading = {
+                epocId: epoc.id,
+                progress : 0.1,
+                score : 0,
+                responses : []
+            };
+            MockReading.push(reading);
         }
-    }
-
-    getReading(): Observable<Epoc[]> {
-        return of(MockReading);
     }
 }
