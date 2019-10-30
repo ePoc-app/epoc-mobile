@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {LibraryService} from '../../services/library.service';
@@ -11,8 +11,8 @@ import {ReadingStoreService} from '../../services/reading-store.service';
 })
 export class LibraryItemComponent {
     @Input('epoc') epoc;
+    @Input('displayToolbar') displayToolbar;
     @Input('progress') progress;
-    @Output() deleteItem = new EventEmitter<boolean>();
 
     constructor(
         private router: Router,
@@ -63,7 +63,7 @@ export class LibraryItemComponent {
     async delete() {
         const alert = await this.alertController.create({
             header: 'Confirm deletion',
-            message: 'Are you sure to delete "' + this.epoc.title + '" ?',
+            message: 'Are you sure to delete "' + this.epoc.title + '" ? You will loose your current progress and answers.',
             buttons: [
                 {
                     text: 'Cancel',
@@ -72,7 +72,7 @@ export class LibraryItemComponent {
                 }, {
                     text: 'Yes',
                     handler: () => {
-                        this.deleteItem.emit(true);
+                        this.readingStore.removeReading(this.epoc.id);
                     }
                 }
             ]

@@ -29,10 +29,6 @@ export class Tab1Page implements OnInit {
         this.readingStore.readings$.subscribe(readings => this.readings = readings);
     }
 
-    onDeleteItem(index: number) {
-        this.readingStore.removeReading(index);
-    }
-
     getEpoc(reading) {
         return this.library.find(epoc => epoc.id === reading.epocId);
     }
