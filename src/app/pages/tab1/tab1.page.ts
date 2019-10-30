@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {LibraryService} from '../../services/library.service';
+import {ReadingStoreService} from '../../services/reading-store.service';
 
 @Component({
     selector: 'app-tab1',
@@ -17,18 +18,19 @@ export class Tab1Page implements OnInit {
     };
 
     constructor(
-        private libraryService: LibraryService
+        private libraryService: LibraryService,
+        private readingStore: ReadingStoreService
     ) {
 
     }
 
     ngOnInit() {
         this.libraryService.getLibrary().subscribe(library => this.library = library);
-        this.libraryService.getReading().subscribe(readings => this.readings = readings);
+        this.readingStore.readings$.subscribe(readings => this.readings = readings);
     }
 
     onDeleteItem(index: number) {
-        this.libraryService.deleteItem(index);
+        this.readingStore.removeReading(index);
     }
 
     getEpoc(reading) {

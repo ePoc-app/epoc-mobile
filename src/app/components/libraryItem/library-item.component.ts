@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {LibraryService} from '../../services/library.service';
+import {ReadingStoreService} from '../../services/reading-store.service';
 
 @Component({
     selector: 'library-item',
@@ -16,6 +17,7 @@ export class LibraryItemComponent {
     constructor(
         private router: Router,
         private libraryService: LibraryService,
+        private readingStore: ReadingStoreService,
         public actionSheetController: ActionSheetController,
         public alertController: AlertController
     ) {}
@@ -54,7 +56,7 @@ export class LibraryItemComponent {
     }
 
     open() {
-        this.libraryService.addItemToReading(this.epoc);
+        this.readingStore.addReading(this.epoc);
         this.router.navigateByUrl('/player');
     }
 
