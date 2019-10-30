@@ -1,6 +1,7 @@
 import {Epoc} from './epoc';
+import {Reading} from './reading';
 
-export const MockReading: Epoc[] = [];
+export const MockReading: Reading[] = [];
 
 export const MockLibrary: Epoc[] =  [
     {

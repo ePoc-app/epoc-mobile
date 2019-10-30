@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Epoc} from '../../classes/epoc';
+import {Reading} from '../../classes/reading';
 import {LibraryService} from '../../services/library.service';
 
 @Component({
@@ -9,7 +10,7 @@ import {LibraryService} from '../../services/library.service';
 })
 export class Tab1Page implements OnInit {
     library: Epoc[];
-    reading: Epoc[];
+    readings: Reading[];
 
     slidesOptions = {
         slidesPerView: 2.2
@@ -23,10 +24,14 @@ export class Tab1Page implements OnInit {
 
     ngOnInit() {
         this.libraryService.getLibrary().subscribe(library => this.library = library);
-        this.libraryService.getReading().subscribe(reading => this.reading = reading);
+        this.libraryService.getReading().subscribe(readings => this.readings = readings);
     }
 
     onDeleteItem(index: number) {
         this.libraryService.deleteItem(index);
+    }
+
+    getEpoc(reading) {
+        return this.library.find(epoc => epoc.id === reading.epocId);
     }
 }
