@@ -25,7 +25,8 @@ export class ReadingStoreService {
     }
 
     async fetchReadings() {
-        this.readings = JSON.parse(await this.readingService.get());
+        const readings = await this.readingService.get();
+        this.readings = readings ? JSON.parse(readings) : [];
     }
 
     saveReadings() {
