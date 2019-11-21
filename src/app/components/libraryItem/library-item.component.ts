@@ -31,7 +31,7 @@ export class LibraryItemComponent {
                 text: 'Open',
                 icon: 'ios-arrow-forward',
                 handler: () => {
-                    this.open();
+                    this.router.navigateByUrl('/player/about');
                 }
             }, {
                 text: 'Score',
