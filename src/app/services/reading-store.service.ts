@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Reading} from '../classes/reading';
 import {Epoc} from '../classes/epoc';
-import {ReadingService} from './reading.service';
+import {StorageService} from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ export class ReadingStoreService {
     private readonly readingsSubject = new BehaviorSubject<Reading[]>([]);
     readonly readings$ = this.readingsSubject.asObservable();
 
-    constructor(private readingService: ReadingService) {
+    constructor(private storageService: StorageService) {
         this.fetchReadings();
     }
 
@@ -25,12 +25,12 @@ export class ReadingStoreService {
     }
 
     async fetchReadings() {
-        const readings = await this.readingService.get();
+        const readings = await this.storageService.getValue('readings');
         this.readings = readings ? JSON.parse(readings) : [];
     }
 
     saveReadings() {
-        this.readingService.set(JSON.stringify(this.readings));
+        this.storageService.setValue('readings', JSON.stringify(this.readings));
     }
 
     addReading(epoc: Epoc) {
