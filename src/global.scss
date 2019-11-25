@@ -36,3 +36,29 @@
     }
   }
 }
+
+:root {
+  --ion-color-inria: #ee2d20;
+  --ion-color-inria-rgb: 238,45,32;
+  --ion-color-inria-contrast: #ffffff;
+  --ion-color-inria-contrast-rgb: 255,255,255;
+  --ion-color-inria-shade: #b9251a;
+  --ion-color-inria-tint: #b9251a;
+}
+
+.ion-color-inria {
+  --ion-color-base: var(--ion-color-inria);
+  --ion-color-base-rgb: var(--ion-color-inria-rgb);
+  --ion-color-contrast: var(--ion-color-inria-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-shade);
+  --ion-color-tint: var(--ion-color-inria-tint);
+}
+
+.bold{
+  font-weight: 700;
+}
+
+.semibold{
+  font-weight: 600;
+}
