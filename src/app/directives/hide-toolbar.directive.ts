@@ -34,8 +34,8 @@ export class HideToolbarDirective implements OnInit {
 
     private hideToolbar() {
         this.hidden = true;
-        this.header.style.setProperty('top', '-56px');
-        this.footer.style.setProperty('bottom', '-56px');
+        this.header.style.setProperty('top', '-80px');
+        this.footer.style.setProperty('bottom', '-80px');
     }
 
     private showToolbar() {
