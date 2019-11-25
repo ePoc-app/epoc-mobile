@@ -3,15 +3,60 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
     </ion-buttons>
-    <ion-title>About Epoc</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="epoc$ | async as epoc">
+  <ion-img [src]="epoc.image"></ion-img>
   <ion-grid>
+    <ion-row class="ion-text-center">
+      <ion-col size="12">
+        <h3>{{epoc.title}}</h3>
+      </ion-col>
+      <ion-col size="12">
+        <div *ngFor="let author of epoc.authors">
+          <ion-text>{{author.name}}</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-text-center">
+      <ion-col size="12">
+        <ion-button class="download-button" color="inria" expand="block" *ngIf="!isReading(epoc.id)" (click)="downloadEpoc(epoc.id)">Download the course</ion-button>
+        <ion-button class="download-button" color="inria" expand="block" *ngIf="isReading(epoc.id)" (click)="openEpoc(epoc.id)">Open the course</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="epoc-specs ion-text-center">
+      <ion-col size="4">
+        <div class="epoc-spec-title">RELEASE</div>
+        <div class="epoc-spec-value">2020</div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="epoc-spec-title">DURATION</div>
+        <div class="epoc-spec-value">30mn</div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="epoc-spec-title">ATTESTATION</div>
+        <div class="epoc-spec-value">100/100 pts</div>
+        <div><small>Seuil de réussite</small></div>
+      </ion-col>
+    </ion-row>
+
     <ion-row>
-      <ion-col>
-        Bloop
+      <ion-col size="12">
+        <h3 class="bold">Summary</h3>
+        <ion-text [innerHTML]="epoc.summary"></ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <h3 class="bold">Author<span *ngIf="epoc.authors.length > 1">s</span></h3>
+        <div class="epoc-author" *ngFor="let author of epoc.authors">
+          <ion-text class="semibold">{{author.name}} : </ion-text>
+          <ion-img [src]="author.image"></ion-img>
+          <ion-text [innerHTML]="author.description"></ion-text>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

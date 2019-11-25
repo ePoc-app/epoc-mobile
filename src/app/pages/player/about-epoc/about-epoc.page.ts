@@ -1,97 +1,43 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import {ReadingStoreService} from '../../../services/reading-store.service';
+import {LibraryService} from '../../../services/library.service';
+import {Observable} from 'rxjs';
+import {Epoc} from '../../../classes/epoc';
 
 @Component({
     selector: 'app-about-epoc',
     templateUrl: 'about-epoc.page.html',
     styleUrls: ['about-epoc.page.scss']
 })
-export class AboutEpocPage {
-    private content = '<h1>Introduction</h1>' +
-        '<p>' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis commodo ipsum vitae maximus. ' +
-        'Ut scelerisque accumsan ipsum, eu pellentesque velit convallis vitae. Duis lorem ante, ultricies quis ' +
-        'libero a, imperdiet lacinia turpis. Nunc nec fringilla ex. Curabitur vel venenatis velit. Aenean ex risus, ' +
-        'vehicula a aliquam quis, tincidunt quis dui. Aenean non urna lacinia, vulputate lacus nec, vestibulum felis. ' +
-        'Nunc eros neque, condimentum rhoncus ultrices ac, rhoncus non metus. Nullam ac nisl pharetra, pretium sem porta, ' +
-        'posuere dui. Ut convallis hendrerit ante et gravida. In pellentesque ex ut nisi congue, in ultricies metus venenatis. ' +
-        'Morbi nisi nulla, posuere vitae tincidunt vel, viverra ut ipsum.' +
-        '</p>' +
-        '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAACWCAYAAABNcIgQAAAB4UlEQVR42u3VMQEAAAjDMFCO9OEAAyQS+rSTmgKAp' +
-        '9oIATBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCAD' +
-        'BCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCAIzQCAEwQgAwQgAwQgAwQgAwQgAwQgAwQgA' +
-        'wQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAw' +
-        'QgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgCMUAYAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAj' +
-        'BAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAALgsUt3' +
-        'XksTHmUQAAAABJRU5ErkJggg==">' +
-        '<p>' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis commodo ipsum vitae maximus. ' +
-        'Ut scelerisque accumsan ipsum, eu pellentesque velit convallis vitae. Duis lorem ante, ultricies quis ' +
-        'libero a, imperdiet lacinia turpis. Nunc nec fringilla ex. Curabitur vel venenatis velit. Aenean ex risus, ' +
-        'vehicula a aliquam quis, tincidunt quis dui. Aenean non urna lacinia, vulputate lacus nec, vestibulum felis. ' +
-        'Nunc eros neque, condimentum rhoncus ultrices ac, rhoncus non metus. Nullam ac nisl pharetra, pretium sem porta, ' +
-        'posuere dui. Ut convallis hendrerit ante et gravida. In pellentesque ex ut nisi congue, in ultricies metus venenatis. ' +
-        'Morbi nisi nulla, posuere vitae tincidunt vel, viverra ut ipsum.' +
-        '</p>' +
-        '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAACWCAYAAABNcIgQAAAB5UlEQVR42u3VwQAAQAgAwQviTPKLJdMMEmgGYT8bP' +
-        '7seABwVRgiAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQ' +
-        'KAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQJghEYIgBECgBECgBECgBECgBECgBE' +
-        'CgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBEC' +
-        'gBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECYIQyAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEA' +
-        'GCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAL' +
-        'AZKp7UHTrTYwkAAAAASUVORK5CYII=">' +
-        '<p>' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis commodo ipsum vitae maximus. ' +
-        'Ut scelerisque accumsan ipsum, eu pellentesque velit convallis vitae. Duis lorem ante, ultricies quis ' +
-        'libero a, imperdiet lacinia turpis. Nunc nec fringilla ex. Curabitur vel venenatis velit. Aenean ex risus, ' +
-        'vehicula a aliquam quis, tincidunt quis dui. Aenean non urna lacinia, vulputate lacus nec, vestibulum felis. ' +
-        'Nunc eros neque, condimentum rhoncus ultrices ac, rhoncus non metus. Nullam ac nisl pharetra, pretium sem porta, ' +
-        'posuere dui. Ut convallis hendrerit ante et gravida. In pellentesque ex ut nisi congue, in ultricies metus venenatis. ' +
-        'Morbi nisi nulla, posuere vitae tincidunt vel, viverra ut ipsum.' +
-        '</p>' +
-        '<h1>Chapter 1</h1>' +
-        '<p>' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis commodo ipsum vitae maximus. ' +
-        'Ut scelerisque accumsan ipsum, eu pellentesque velit convallis vitae. Duis lorem ante, ultricies quis ' +
-        'libero a, imperdiet lacinia turpis. Nunc nec fringilla ex. Curabitur vel venenatis velit. Aenean ex risus, ' +
-        'vehicula a aliquam quis, tincidunt quis dui. Aenean non urna lacinia, vulputate lacus nec, vestibulum felis. ' +
-        'Nunc eros neque, condimentum rhoncus ultrices ac, rhoncus non metus. Nullam ac nisl pharetra, pretium sem porta, ' +
-        'posuere dui. Ut convallis hendrerit ante et gravida. In pellentesque ex ut nisi congue, in ultricies metus venenatis. ' +
-        'Morbi nisi nulla, posuere vitae tincidunt vel, viverra ut ipsum.' +
-        '</p>' +
-        '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAACWCAYAAABNcIgQAAAB4UlEQVR42u3VMQEAAAjDMFCO9OEAAyQS+rSTmgKAp' +
-        '9oIATBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCAD' +
-        'BCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCADBCAIzQCAEwQgAwQgAwQgAwQgAwQgAwQgAwQgA' +
-        'wQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAw' +
-        'QgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgAwQgCMUAYAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAj' +
-        'BAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAAjBAALgsUt3' +
-        'XksTHmUQAAAABJRU5ErkJggg==">' +
-        '<p>' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis commodo ipsum vitae maximus. ' +
-        'Ut scelerisque accumsan ipsum, eu pellentesque velit convallis vitae. Duis lorem ante, ultricies quis ' +
-        'libero a, imperdiet lacinia turpis. Nunc nec fringilla ex. Curabitur vel venenatis velit. Aenean ex risus, ' +
-        'vehicula a aliquam quis, tincidunt quis dui. Aenean non urna lacinia, vulputate lacus nec, vestibulum felis. ' +
-        'Nunc eros neque, condimentum rhoncus ultrices ac, rhoncus non metus. Nullam ac nisl pharetra, pretium sem porta, ' +
-        'posuere dui. Ut convallis hendrerit ante et gravida. In pellentesque ex ut nisi congue, in ultricies metus venenatis. ' +
-        'Morbi nisi nulla, posuere vitae tincidunt vel, viverra ut ipsum.' +
-        '</p>' +
-        '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAACWCAYAAABNcIgQAAAB5UlEQVR42u3VwQAAQAgAwQviTPKLJdMMEmgGYT8bP' +
-        '7seABwVRgiAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQ' +
-        'KAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQKAEQJghEYIgBECgBECgBECgBECgBECgBE' +
-        'CgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBEC' +
-        'gBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECgBECYIQyAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEA' +
-        'GCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAGCEAL' +
-        'AZKp7UHTrTYwkAAAAASUVORK5CYII=">' +
-        '<p>' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis commodo ipsum vitae maximus. ' +
-        'Ut scelerisque accumsan ipsum, eu pellentesque velit convallis vitae. Duis lorem ante, ultricies quis ' +
-        'libero a, imperdiet lacinia turpis. Nunc nec fringilla ex. Curabitur vel venenatis velit. Aenean ex risus, ' +
-        'vehicula a aliquam quis, tincidunt quis dui. Aenean non urna lacinia, vulputate lacus nec, vestibulum felis. ' +
-        'Nunc eros neque, condimentum rhoncus ultrices ac, rhoncus non metus. Nullam ac nisl pharetra, pretium sem porta, ' +
-        'posuere dui. Ut convallis hendrerit ante et gravida. In pellentesque ex ut nisi congue, in ultricies metus venenatis. ' +
-        'Morbi nisi nulla, posuere vitae tincidunt vel, viverra ut ipsum.' +
-        '</p>';
+export class AboutEpocPage implements OnInit{
 
-    log(value) {
-        console.log(value);
+    epoc$: Observable<Epoc>;
+
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private libraryService: LibraryService,
+        private readingStore: ReadingStoreService
+    ) {}
+
+    ngOnInit() {
+        this.epoc$ = this.route.paramMap.pipe(
+            switchMap((params: ParamMap) =>
+                this.libraryService.getEpoc(params.get('id')))
+        );
+    }
+
+    isReading(id) {
+        return this.readingStore.readings.findIndex(reading => reading.epocId === id) !== -1;
+    }
+
+    openEpoc(id) {
+        this.router.navigateByUrl('/player/play/' + id);
+    }
+
+    downloadEpoc(id) {
+        this.router.navigateByUrl('/player/download/' + id);
     }
 }

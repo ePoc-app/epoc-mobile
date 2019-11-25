@@ -1,3 +1,61 @@
-ion-footer{
+.download-button{
+  --border-radius: 30px;
+  padding: 0 20px 0 20px;
+  animation: 1s ease-in-out 1s 1 pulse;
 
+  button{
+    animation: 1s ease-in-out 1s 1 pulse;
+  }
+}
+
+ion-grid{
+  padding: 1em;
+}
+
+.epoc-specs{
+  margin: 1em 0;
+  padding: .5em;
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  font-size: 12px;
+
+  ion-col{
+    padding: 0;
+  }
+
+  ion-col:nth-child(2){
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+  }
+}
+
+.epoc-spec-title{
+  margin-bottom: .5em;
+}
+
+.epoc-spec-value{
+  font-weight: 700;
+}
+
+.epoc-author{
+  margin-bottom: 1em;
+
+  ion-img {
+    float: right;
+    width: 80px;
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
 }

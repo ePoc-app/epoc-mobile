@@ -28,16 +28,16 @@ export class LibraryItemComponent {
             mode: 'ios',
             cssClass: 'custom-action-sheet',
             buttons: [{
-                text: 'Open',
+                text: 'About this course',
                 icon: 'ios-arrow-forward',
                 handler: () => {
-                    this.router.navigateByUrl('/player/about');
+                    this.router.navigateByUrl('/player/about/' + this.epoc.id);
                 }
             }, {
                 text: 'Score',
                 icon: 'checkbox-outline',
                 handler: () => {
-                    this.open();
+                    this.router.navigateByUrl('/player/score/' + this.epoc.id);
                 }
             }, {
                 text: 'Delete',
@@ -56,8 +56,11 @@ export class LibraryItemComponent {
     }
 
     open() {
-        this.readingStore.addReading(this.epoc);
-        this.router.navigateByUrl('/player');
+        if (this.readingStore.readings.findIndex(reading => reading.epocId === this.epoc.id) === -1) {
+            this.router.navigateByUrl('/player/about/' + this.epoc.id);
+        } else {
+            this.router.navigateByUrl('/player/play/' + this.epoc.id);
+        }
     }
 
     async delete() {
