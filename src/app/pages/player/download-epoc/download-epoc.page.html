@@ -1,0 +1,27 @@
+<ion-header #header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="epoc$ | async as epoc">
+      <ion-back-button [defaultHref]="'player/about/' + epoc.id"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Download</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="epoc$ | async as epoc">
+  <ion-img [src]="epoc.image"></ion-img>
+  <ion-grid>
+    <ion-row class="ion-text-center">
+      <ion-col size="12">
+        <h3>{{epoc.title}}</h3>
+      </ion-col>
+      <ion-col size="12">
+        <div *ngFor="let author of epoc.authors">
+          <ion-text>{{author.name}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <ion-progress-bar [value]="progress"></ion-progress-bar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
