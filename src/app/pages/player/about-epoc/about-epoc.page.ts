@@ -5,6 +5,7 @@ import {ReadingStoreService} from '../../../services/reading-store.service';
 import {LibraryService} from '../../../services/library.service';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
+import {ActionSheetController, AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-about-epoc',
@@ -19,7 +20,8 @@ export class AboutEpocPage implements OnInit{
         private route: ActivatedRoute,
         private router: Router,
         private libraryService: LibraryService,
-        private readingStore: ReadingStoreService
+        private readingStore: ReadingStoreService,
+        public alertController: AlertController
     ) {}
 
     ngOnInit() {
@@ -37,7 +39,24 @@ export class AboutEpocPage implements OnInit{
         this.router.navigateByUrl('/player/play/' + id);
     }
 
-    downloadEpoc(id) {
-        this.router.navigateByUrl('/player/download/' + id);
+    async downloadEpoc(id) {
+        const alert = await this.alertController.create({
+            header: 'Confirm download',
+            message: 'This ePoc will take 500 Mo ',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Yes',
+                    handler: () => {
+                        this.router.navigateByUrl('/player/download/' + id);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }
