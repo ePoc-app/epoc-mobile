@@ -9,7 +9,7 @@ export const MockLibrary: Epoc[] =  [
             {
                 name: 'Didier Benza',
                 image: 'assets/demo/img/benza.jpg',
-                description: ''
+                description: 'At autem dignissimos dolorem illum molestias quas quod repudiandae saepe.'
             }
         ],
         summary: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices semper libero, ' +
@@ -40,18 +40,20 @@ export const MockLibrary: Epoc[] =  [
         authors: [
             {
                 name: 'Arnaud Legrand',
-                image: 'assets/demo/img/legrand.jpg',
-                description: ''
+                image: 'assets/demo/img/legrand.png',
+                description: 'Fusce aliquet eros vel sapien dictum tempor. Praesent malesuada rutrum eros, sit amet rhoncus dui.'
             },
             {
                 name: 'Christophe Pouzat',
-                image: 'assets/demo/img/pouzat.jpg',
-                description: ''
+                image: 'assets/demo/img/pouzat.png',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, nostrum? At ' +
+                    'autem dignissimos dolorem illum molestias quas quod repudiandae saepe.'
             },
             {
                 name: 'Konrad Hinsen',
-                image: 'assets/demo/img/hinsen.jpg',
-                description: ''
+                image: 'assets/demo/img/hinsen.png',
+                description: 'Sed sed ante nisi. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, nostrum? At ' +
+                    'autem dignissimos dolorem illum molestias quas quod repudiandae saepe.'
             }
         ],
         summary: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices semper libero, ' +
