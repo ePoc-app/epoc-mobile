@@ -1,5 +1,9 @@
-ion-footer{
-
+.slide-content {
+  position: relative;
+  display:block;
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  transition: min-height 700ms;
 }
 
 .hide-toolbar{
@@ -11,6 +15,24 @@ ion-footer{
   &.hidden{
     .hide-toolbar-wrapper{
       padding:0;
+
+      .slide-content{
+        min-height: 100vh;
+      }
     }
+  }
+}
+
+.cover-content{
+  h2{
+    margin: 4em 1em 1em 1em;
+  }
+
+  .edition{
+    position: absolute;
+    bottom:1em;
+    width:100%;
+    font-size: 0.6em;
+    color:grey;
   }
 }
