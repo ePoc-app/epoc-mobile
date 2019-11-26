@@ -1,3 +1,16 @@
 ion-footer{
 
 }
+
+.hide-toolbar{
+  .hide-toolbar-wrapper{
+    padding:44px 0;
+    transition: padding 700ms;
+  }
+
+  &.hidden{
+    .hide-toolbar-wrapper{
+      padding:0;
+    }
+  }
+}
