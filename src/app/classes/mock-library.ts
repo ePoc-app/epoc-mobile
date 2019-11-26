@@ -20,17 +20,96 @@ export const MockLibrary: Epoc[] =  [
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
         content: [
             {
-                type: 'html'
+                type: 'cover',
+                name: 'Cover'
             },
             {
-                type: 'video'
+                type: 'chapter',
+                name: 'Mise en situation pour aborder les règles de fonctionnement d\'une ZRR',
+                number: '1'
             },
             {
-                type: 'video-slide'
+                type: 'html',
+                name: 'Welcome',
+                value: '<h1>Welcome!</h1>' +
+                    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices semper libero, ' +
+                    'sit amet fringilla leo. Donec facilisis volutpat augue, in interdum ligula tincidunt ac. Sed ut ' +
+                    'volutpat dui, sed fringilla purus. Fusce aliquet eros vel sapien dictum tempor.</p><p>Class aptent taciti ' +
+                    'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
+                    'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
+                    'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>'
             },
             {
-                type: 'video-slide'
+                type: 'video',
+                name: 'Video',
+                value: 'asset/demo/video.mp4'
             },
+            {
+                type: 'assessment',
+                name: 'Que signifie ZRR ?',
+                score: 10,
+                items: [
+                    {
+                        type: 'choice',
+                        statement: '',
+                        label: 'Que signifie ZRR ?',
+                        responses: [
+                            {
+                                label: 'Zone de recherche à accès restreint',
+                                value: 'A'
+                            },
+                            {
+                                label: 'Zone à régime restrictif',
+                                value: 'B'
+                            }
+                        ],
+                        correctResponse: 'B'
+                    }
+                ]
+            },
+            {
+                type: 'assessment',
+                name: 'Le référent sécurité',
+                score: 30,
+                items: [
+                    {
+                        type: 'choice',
+                        statement: '',
+                        label: 'Quel pouvoir à le référent sécurité ?',
+                        responses: [
+                            {
+                                label: 'Donner des baffes si l\'on ne respecte pas les règles',
+                                value: 'A'
+                            },
+                            {
+                                label: 'Boire des bières',
+                                value: 'B'
+                            }
+                        ],
+                        correctResponse: 'A'
+                    },
+                    {
+                        type: 'multipleChoice',
+                        statement: '',
+                        label: 'Comment décririez vous cette formation ?',
+                        responses: [
+                            {
+                                label: 'Géniale',
+                                value: 'A'
+                            },
+                            {
+                                label: 'Passionnante',
+                                value: 'B'
+                            },
+                            {
+                                label: 'Trop longue',
+                                value: 'C'
+                            }
+                        ],
+                        correctResponse: 'AB'
+                    }
+                ]
+            }
         ]
     },
     {
