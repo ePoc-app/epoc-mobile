@@ -15,6 +15,7 @@ import {DownloadEpocPage} from './download-epoc/download-epoc.page';
     FormsModule,
     RouterModule.forChild([
         { path: 'play/:id', component: PlayerPage },
+        { path: 'play/:id/:page', component: PlayerPage },
         { path: 'about/:id', component: AboutEpocPage },
         { path: 'download/:id', component: DownloadEpocPage },
         { path: '**',   redirectTo: '/tabs/tab1' }
