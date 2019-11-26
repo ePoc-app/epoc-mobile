@@ -16,8 +16,6 @@ export class HideToolbarDirective implements OnInit {
         this.footer.style.setProperty('position', 'absolute');
         this.header.style.setProperty('transition', 'top 700ms');
         this.footer.style.setProperty('transition', 'bottom 700ms');
-        this.element.nativeElement.style.setProperty('--padding-top', '44px');
-        this.element.nativeElement.style.setProperty('--padding-bottom', '44px');
         this.showToolbar();
     }
 
@@ -36,15 +34,17 @@ export class HideToolbarDirective implements OnInit {
         this.hidden = true;
         this.header.style.setProperty('top', '-80px');
         this.footer.style.setProperty('bottom', '-80px');
+        this.element.nativeElement.classList.add('hidden');
     }
 
     private showToolbar() {
         this.hidden = false;
         this.header.style.setProperty( 'top', '0px');
         this.footer.style.setProperty('bottom', '0px');
+        this.element.nativeElement.classList.remove('hidden');
     }
 
     private toggleToolbar() {
-        this.hidden ? this.showToolbar() :this.hideToolbar();
+        this.hidden ? this.showToolbar() : this.hideToolbar();
     }
 }
