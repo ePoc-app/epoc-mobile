@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router, Params} from '@angular/router';
 import {LibraryService} from '../../services/library.service';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
@@ -15,13 +15,15 @@ export class PlayerPage implements OnInit {
     epoc$: Observable<Epoc>;
 
     slidesOptions = {
-        spaceBetween: 0
+        spaceBetween: 0,
+        initialSlide: 0,
+        autoHeight: true
     };
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private libraryService: LibraryService,
+        private libraryService: LibraryService
     ) {}
 
     ngOnInit() {
@@ -29,5 +31,7 @@ export class PlayerPage implements OnInit {
             switchMap((params: ParamMap) =>
                 this.libraryService.getEpoc(params.get('id')))
         );
+
+        this.slidesOptions.initialSlide = +this.route.snapshot.paramMap.get('page');
     }
 }

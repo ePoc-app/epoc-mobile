@@ -36,3 +36,93 @@
     color:grey;
   }
 }
+
+.chapter-content{
+  position: absolute;
+  width:100%;
+  height:100%;
+  background:#e7e6ea;
+  border:1em solid white;
+
+  .chapter-square{
+    position: absolute;
+    top:-1em;
+    left:-1em;
+    width:30%;
+    padding-bottom: 30%;
+    background: var(--ion-color-inria);
+  }
+
+  .chapter-number{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 50px;
+    color:white;
+  }
+
+  .chapter-title{
+    position: absolute;
+    top:50%;
+    left:0;
+    width:100%;
+    padding:1em;
+    transform: translateY(-50%);
+  }
+}
+
+.assessment-content{
+  padding: 1em;
+
+  .title{
+    position:relative;
+    padding: 1em;
+
+    &:after{
+      content:'';
+      position: absolute;
+      width:2em;
+      height:2em;
+      top:-1em;
+      left:-1em;
+      background: var(--ion-color-inria);
+      z-index: 1;
+    }
+
+    span{
+      display: block;
+      position: relative;
+      margin:-1em;
+      padding: .5em;
+      background:#e7e6ea;
+      z-index: 3;
+    }
+  }
+
+  .score{
+    margin: 1em 0;
+    text-align: right;
+
+    .score-bubble{
+      display: inline-block;
+      width:80px;
+      height:80px;
+      border-radius: 100%;
+      background:#94c11e;
+      text-align: center;
+    }
+
+    .score-number{
+      display: block;
+      margin-top: 10px;
+      font-size: 30px;
+      font-weight: 700;
+    }
+  }
+
+  .assessment-item{
+    margin-bottom: 1em;
+    text-align: left;
+  }
+}

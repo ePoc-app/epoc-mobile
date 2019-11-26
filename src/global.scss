@@ -63,6 +63,25 @@
   font-weight: 600;
 }
 
-.inner-scroll{
-  color:red;
+.html-content{
+  .title{
+    padding: 3em 1em;
+    text-align: center;
+    background:lightgrey;
+
+    h2{
+      margin:0;
+    }
+  }
+
+  .value{
+    padding: 1em;
+    text-align: left;
+  }
+
+  video{
+    position: relative;
+    width:100%;
+    border:1px solid grey;
+  }
 }

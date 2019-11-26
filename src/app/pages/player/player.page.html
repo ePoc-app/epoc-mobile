@@ -18,9 +18,9 @@
 <ion-content class="hide-toolbar" [scrollEvents]="true" appHideToolbar [header]="header.el" [footer]="footer.el">
   <div class="hide-toolbar-wrapper">
     <ion-slides *ngIf="epoc$ | async as epoc" [options]="slidesOptions">
-
       <ion-slide *ngFor="let content of epoc.content">
         <div class="slide-content">
+
           <div class="cover-content" *ngIf="content.type === 'cover'">
             <ion-img [src]="epoc.image"></ion-img>
             <h2>{{epoc.title}}</h2>
@@ -29,9 +29,63 @@
             </div>
             <div class="edition">2020 edition<br/>Inria Learning Lab</div>
           </div>
+
+          <div class="chapter-content" *ngIf="content.type === 'chapter'">
+            <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
+            <div class="chapter-title">{{content.name}}</div>
+          </div>
+
+          <div class="html-content" *ngIf="content.type === 'html'">
+            <div class="title">
+              <h2>{{content.name}}</h2>
+            </div>
+            <div class="value" [innerHTML]="content.value"></div>
+          </div>
+
+          <div class="assessment-content" *ngIf="content.type === 'assessment'">
+            <form>
+              <div class="title"><span>Assessment</span></div>
+              <div class="score">
+                <div class="score-bubble">
+                  <span class="score-number">{{content.score}}</span>
+                  <span class="score-points">points</span>
+                </div>
+              </div>
+              <div class="assessment-items">
+                <div class="assessment-item" *ngFor="let assessment of content.items; let assessmentIndex = index;">
+
+                  <div class="assessment-choice" *ngIf="assessment.type === 'choice'">
+                    <div>
+                      <b>{{assessment.label}}</b>
+                    </div>
+                    <ion-radio-group class="assessment-choice-responses">
+                      <ion-item class="assessment-choice-response" [lines]="'none'" text-wrap *ngFor="let response of assessment.responses">
+                        <ion-radio mode="md" slot="start" [value]="response.value"></ion-radio>
+                        <ion-label text-wrap>{{response.label}}</ion-label>
+                      </ion-item>
+                    </ion-radio-group>
+                  </div>
+
+                  <div class="assessment-multiple-choice" *ngIf="assessment.type === 'multipleChoice'">
+                    <div>
+                      <b>{{assessment.label}}</b>
+                    </div>
+                    <div class="assessment-choice-responses">
+                      <ion-item class="assessment-choice-response" [lines]="'none'" text-wrap *ngFor="let response of assessment.responses">
+                        <ion-checkbox mode="md" slot="start" [value]="response.value"></ion-checkbox>
+                        <ion-label text-wrap>{{response.label}}</ion-label>
+                      </ion-item>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <ion-button class="submit-responses" type="submit" expand="block">Submit</ion-button>
+            </form>
+          </div>
+
         </div>
       </ion-slide>
-
     </ion-slides>
   </div>
 </ion-content>
