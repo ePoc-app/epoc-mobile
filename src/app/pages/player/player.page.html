@@ -1,20 +1,39 @@
 <ion-header #header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
+      <ion-button (click)="router.navigateByUrl('/tabs/tab1');">
+        <ion-icon name="arrow-back"></ion-icon>
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>Player</ion-title>
+    <ion-title *ngIf="epoc$ | async as epoc"><small>{{epoc.title}}</small></ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" appHideToolbar [header]="header.el" [footer]="footer.el">
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <div [innerHTML]="content"></div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-content class="hide-toolbar" [scrollEvents]="true" appHideToolbar [header]="header.el" [footer]="footer.el">
+  <div class="hide-toolbar-wrapper">
+    <ion-slides *ngIf="epoc$ | async as epoc" [options]="slidesOptions">
+
+      <ion-slide *ngFor="let content of epoc.content">
+        <div class="slide-content">
+          <div class="cover-content" *ngIf="content.type === 'cover'">
+            <ion-img [src]="epoc.image"></ion-img>
+            <h2>{{epoc.title}}</h2>
+            <div *ngFor="let author of epoc.authors">
+              <ion-text>{{author.name}}</ion-text>
+            </div>
+            <div class="edition">2020 edition<br/>Inria Learning Lab</div>
+          </div>
+        </div>
+      </ion-slide>
+
+    </ion-slides>
+  </div>
 </ion-content>
 
 <ion-footer #footer>

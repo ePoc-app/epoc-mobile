@@ -16,9 +16,10 @@ import {DownloadEpocPage} from './download-epoc/download-epoc.page';
     RouterModule.forChild([
         { path: 'play/:id', component: PlayerPage },
         { path: 'about/:id', component: AboutEpocPage },
+        { path: 'download/:id', component: DownloadEpocPage },
         { path: '**',   redirectTo: '/tabs/tab1' }
     ])
   ],
-  declarations: [PlayerPage, AboutEpocPage, HideToolbarDirective]
+  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, HideToolbarDirective]
 })
 export class PlayerPageModule {}
