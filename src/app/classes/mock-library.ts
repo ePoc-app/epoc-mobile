@@ -39,7 +39,7 @@ export const MockLibrary: Epoc[] =  [
                     'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
                     'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
                     'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>' +
-                    '<video src="assets/demo/video.mp4" autoplay="false" controls="true"></video>'
+                    '<video src="assets/demo/video.mp4" controls="true"></video>'
             },
             {
                 type: 'assessment',
