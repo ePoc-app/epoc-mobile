@@ -45,7 +45,7 @@
           <div class="assessment-content" *ngIf="content.type === 'assessment'">
             <form #assessmentForm="ngForm" (ngSubmit)="onSubmit(assessmentForm, content.items)">
               <div class="title"><span>Assessment</span></div>
-              <div class="score">
+              <div class="score" [routerLink]="'/player/score/'+epoc.id">
                 <div class="score-bubble">
                   <span class="score-number">{{content.score}}</span>
                   <span class="score-points">points</span>
