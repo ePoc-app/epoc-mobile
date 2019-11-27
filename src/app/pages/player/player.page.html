@@ -1,15 +1,15 @@
 <ion-header #header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="router.navigateByUrl('/tabs/tab1');">
+      <ion-button color="medium" (click)="router.navigateByUrl('/tabs/tab1');">
         <ion-icon name="arrow-back"></ion-icon>
         <ion-icon name="home"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title *ngIf="epoc$ | async as epoc"><small>{{epoc.title}}</small></ion-title>
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="bookmark"></ion-icon>
+      <ion-button (click)="toggleBookmark()">
+        <ion-icon name="bookmark" [color]="isBookmarked ? 'inria':'medium'"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -17,7 +17,7 @@
 
 <ion-content class="hide-toolbar">
   <div class="hide-toolbar-wrapper">
-    <ion-slides *ngIf="epoc$ | async as epoc" #slides [options]="slidesOptions" (ionSlideDidChange)="slideChanged(epoc)">
+    <ion-slides *ngIf="epoc$ | async as epoc" #slides [options]="slidesOptions" (ionSlidesDidLoad)="initSlide(epoc)" (ionSlideWillChange)="beforeSlideChanged()" (ionSlideDidChange)="slideChanged(epoc)">
       <ion-slide *ngFor="let content of epoc.content">
         <div class="slide-content">
 
@@ -97,7 +97,7 @@
 <ion-footer #footer>
   <ion-toolbar>
     <ion-buttons slot="start" *ngIf="epoc$ | async as epoc">
-      <ion-button [routerLink]="'/player/bookmarks/'+epoc.id">
+      <ion-button color="medium" [routerLink]="'/player/bookmarks/'+epoc.id">
         <ion-icon size="large" name="bookmarks"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -105,7 +105,7 @@
     <ion-title *ngIf="epoc$ | async as epoc"><small>{{currentPage + 1}}/{{epoc.content.length}}</small></ion-title>
 
     <ion-buttons slot="end" *ngIf="epoc$ | async as epoc">
-      <ion-button [routerLink]="'/player/toc/'+epoc.id">
+      <ion-button color="medium" [routerLink]="'/player/toc/'+epoc.id">
         <ion-icon size="large" name="list"></ion-icon>
       </ion-button>
     </ion-buttons>

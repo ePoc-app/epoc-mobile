@@ -1,0 +1,23 @@
+<ion-header #header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Bookmarks</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="epoc$ | async as epoc">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <b>Bookmarks list :</b>
+        <ul>
+          <li *ngFor="let bookmark of reading.bookmarks" >
+            <ion-router-link [href]="'/player/play/'+epoc.id+'/'+bookmark" class="underline">Page {{bookmark}}</ion-router-link>
+          </li>
+        </ul>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

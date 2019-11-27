@@ -3,4 +3,5 @@ export class Reading {
     progress: number;
     score: number;
     responses: string[];
+    bookmarks: number[];
 }
