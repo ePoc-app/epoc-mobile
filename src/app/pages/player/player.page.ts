@@ -25,6 +25,7 @@ export class PlayerPage implements OnInit {
         autoHeight: true
     };
 
+    currentPage = 0;
     displaySubmit = true;
     displayResume = false;
     displayTryagain = false;
@@ -44,6 +45,7 @@ export class PlayerPage implements OnInit {
         );
 
         this.slidesOptions.initialSlide = +this.route.snapshot.paramMap.get('page');
+        this.currentPage = +this.route.snapshot.paramMap.get('page');
     }
 
     onSubmit(assessmentForm: NgForm, assessments) {
@@ -62,6 +64,7 @@ export class PlayerPage implements OnInit {
 
     slideChanged(epoc) {
         this.slider.getActiveIndex().then((index) => {
+            this.currentPage = index;
             this.readingStore.updateProgress(epoc.id, (index + 1) / epoc.content.length);
         });
         this.displaySubmit = true;
