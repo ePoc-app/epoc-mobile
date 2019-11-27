@@ -98,12 +98,15 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button>
-        <ion-icon size="large" name="list"></ion-icon>
+        <ion-icon size="large" name="bookmarks"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+    <ion-title *ngIf="epoc$ | async as epoc"><small>{{currentPage + 1}}/{{epoc.content.length}}</small></ion-title>
+
     <ion-buttons slot="end">
       <ion-button>
-        <ion-icon size="large" name="more"></ion-icon>
+        <ion-icon size="large" name="list"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
