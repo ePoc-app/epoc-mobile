@@ -14,7 +14,7 @@
         <b>Bookmarks list :</b>
         <ul>
           <li *ngFor="let bookmark of reading.bookmarks" >
-            <ion-router-link [href]="'/player/play/'+epoc.id+'/'+bookmark" class="underline">Page {{bookmark}}</ion-router-link>
+            <a [routerLink]="'/player/play/'+epoc.id+'/'+bookmark" class="underline">Page {{bookmark}}</a>
           </li>
         </ul>
       </ion-col>
