@@ -44,6 +44,14 @@
   --ion-color-inria-contrast-rgb: 255,255,255;
   --ion-color-inria-shade: #b9251a;
   --ion-color-inria-tint: #b9251a;
+
+  ion-img {
+    /**
+     * Bug fix for:
+     * https://github.com/ionic-team/ionic/issues/18734
+     */
+    min-height: 1px !important;
+  }
 }
 
 .ion-color-inria {
