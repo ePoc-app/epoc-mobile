@@ -39,7 +39,11 @@ export const MockLibrary: Epoc[] =  [
                     'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
                     'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
                     'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>' +
-                    '<video src="assets/demo/video.mp4" controls="true"></video>'
+                    '<video src="assets/demo/video.mp4" controls="true"></video>' +
+                    '<h5><b>Lorem ipsum</b></h5><p>Class aptent taciti ' +
+                    'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
+                    'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
+                    'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>'
             },
             {
                 type: 'assessment',
@@ -64,6 +68,28 @@ export const MockLibrary: Epoc[] =  [
                         correctResponse: 'B'
                     }
                 ]
+            },
+            {
+                type: 'chapter',
+                name: 'La suite du cours ZRR',
+                number: '2'
+            },
+            {
+                type: 'html',
+                name: 'Chapter 2',
+                value: '<h1>La suite du cours</h1>' +
+                    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices semper libero, ' +
+                    'sit amet fringilla leo. Donec facilisis volutpat augue, in interdum ligula tincidunt ac. Sed ut ' +
+                    'volutpat dui, sed fringilla purus. Fusce aliquet eros vel sapien dictum tempor.</p>' +
+                    '<video src="assets/demo/video.mp4" controls="true"></video>' +
+                    '<h5><b>Lorem ipsum</b></h5><p>Class aptent taciti ' +
+                    'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
+                    'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
+                    'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>' +
+                    '<h5><b>Lorem ipsum</b></h5><p>Class aptent taciti ' +
+                    'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
+                    'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
+                    'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>'
             },
             {
                 type: 'assessment',
@@ -142,17 +168,14 @@ export const MockLibrary: Epoc[] =  [
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
         content: [
             {
-                type: 'html'
+                type: 'cover',
+                name: 'Cover'
             },
             {
-                type: 'video'
-            },
-            {
-                type: 'video-slide'
-            },
-            {
-                type: 'video-slide'
-            },
+                type: 'chapter',
+                name: 'Chapitre',
+                number: '1'
+            }
         ]
     },
     {
@@ -179,17 +202,14 @@ export const MockLibrary: Epoc[] =  [
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
         content: [
             {
-                type: 'html'
+                type: 'cover',
+                name: 'Cover'
             },
             {
-                type: 'video'
-            },
-            {
-                type: 'video-slide'
-            },
-            {
-                type: 'video-slide'
-            },
+                type: 'chapter',
+                name: 'Chapitre',
+                number: '1'
+            }
         ]
     }
 ];
