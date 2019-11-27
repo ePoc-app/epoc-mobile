@@ -52,7 +52,7 @@ export class ReadingStoreService {
     updateProgress(epocId: string, progress: number) {
         const index = this.readings.findIndex(reading => reading.epocId === epocId);
 
-        this.readings[index].progress = progress;
+        this.readings[index].progress = progress > this.readings[index].progress ? progress : this.readings[index].progress;
 
         this.saveReadings();
     }
