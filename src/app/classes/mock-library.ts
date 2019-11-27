@@ -88,7 +88,7 @@ export const MockLibrary: Epoc[] =  [
                         correctResponse: 'A'
                     },
                     {
-                        type: 'multipleChoice',
+                        type: 'choice',
                         statement: '',
                         label: 'Comment décririez vous cette formation ?',
                         responses: [
@@ -97,7 +97,7 @@ export const MockLibrary: Epoc[] =  [
                                 value: 'A'
                             },
                             {
-                                label: 'Passionnante',
+                                label: 'Bof',
                                 value: 'B'
                             },
                             {
@@ -105,7 +105,7 @@ export const MockLibrary: Epoc[] =  [
                                 value: 'C'
                             }
                         ],
-                        correctResponse: 'AB'
+                        correctResponse: 'A'
                     }
                 ]
             }

@@ -39,7 +39,7 @@ export class ReadingStoreService {
                 ...this.readings,
                 {
                     epocId: epoc.id,
-                    progress: 0.1,
+                    progress: 0,
                     score: 0,
                     responses: []
                 }
@@ -47,6 +47,20 @@ export class ReadingStoreService {
 
             this.saveReadings();
         }
+    }
+
+    updateProgress(epocId: string, progress: number) {
+        const index = this.readings.findIndex(reading => reading.epocId === epocId);
+
+        this.readings[index].progress = progress;
+
+        this.saveReadings();
+    }
+
+    updateScore(epocId: string, addscore: number) {
+        const index = this.readings.findIndex(reading => reading.epocId === epocId);
+
+        this.readings[index].score += addscore;
     }
 
     removeReading(id: string) {

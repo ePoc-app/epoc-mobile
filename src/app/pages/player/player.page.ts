@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router, Params} from '@angular/router';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActionSheetController, AlertController, IonSlides} from '@ionic/angular';
 import {LibraryService} from '../../services/library.service';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
+import {NgForm} from '@angular/forms';
+import {ReadingStoreService} from '../../services/reading-store.service';
 
 @Component({
     selector: 'app-player',
@@ -11,6 +14,8 @@ import {Epoc} from '../../classes/epoc';
     styleUrls: ['player.page.scss']
 })
 export class PlayerPage implements OnInit {
+
+    @ViewChild('slides', { static: false }) protected slider: IonSlides;
 
     epoc$: Observable<Epoc>;
 
@@ -20,10 +25,16 @@ export class PlayerPage implements OnInit {
         autoHeight: true
     };
 
+    displaySubmit = true;
+    displayResume = false;
+    displayTryagain = false;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private libraryService: LibraryService
+        public alertController: AlertController,
+        private libraryService: LibraryService,
+        private readingStore: ReadingStoreService
     ) {}
 
     ngOnInit() {
@@ -33,5 +44,39 @@ export class PlayerPage implements OnInit {
         );
 
         this.slidesOptions.initialSlide = +this.route.snapshot.paramMap.get('page');
+    }
+
+    onSubmit(assessmentForm: NgForm, assessments) {
+        const errors = assessments.some((assessment, index) => {
+            return assessment.correctResponse !== assessmentForm.value[assessment.type + '-' + index];
+        });
+
+        if (errors) {
+            this.displayTryagain = true;
+            this.displaySubmit = false;
+        } else {
+            this.displaySubmit = false;
+            this.displayResume = true;
+        }
+    }
+
+    slideChanged(epoc) {
+        this.slider.getActiveIndex().then((index) => {
+            this.readingStore.updateProgress(epoc.id, (index + 1) / epoc.content.length);
+        });
+        this.displaySubmit = true;
+        this.displayTryagain = false;
+    }
+
+    resume() {
+        this.displaySubmit = true;
+        this.displayResume = false;
+        this.slider.slideNext();
+    }
+
+    tryAgain(assessmentForm: NgForm) {
+        this.displaySubmit = true;
+        this.displayTryagain = false;
+        assessmentForm.reset();
     }
 }
