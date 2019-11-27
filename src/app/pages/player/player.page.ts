@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {NgForm} from '@angular/forms';
 import {ReadingStoreService} from '../../services/reading-store.service';
+import {Reading} from '../../classes/reading';
 
 @Component({
     selector: 'app-player',
@@ -19,6 +20,8 @@ export class PlayerPage implements OnInit {
 
     epoc$: Observable<Epoc>;
 
+    readings: Reading[];
+
     slidesOptions = {
         spaceBetween: 0,
         initialSlide: 0,
@@ -29,6 +32,7 @@ export class PlayerPage implements OnInit {
     displaySubmit = true;
     displayResume = false;
     displayTryagain = false;
+    isBookmarked = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -62,13 +66,25 @@ export class PlayerPage implements OnInit {
         }
     }
 
+    initSlide(epoc) {
+        const currentReading = this.readingStore.readings.find(reading => reading.epocId === epoc.id);
+        this.isBookmarked = currentReading.bookmarks.indexOf(this.currentPage) !== -1;
+    }
+
     slideChanged(epoc) {
         this.slider.getActiveIndex().then((index) => {
             this.currentPage = index;
             this.readingStore.updateProgress(epoc.id, (index + 1) / epoc.content.length);
+            const currentReading = this.readingStore.readings.find(reading => reading.epocId === epoc.id);
+            this.isBookmarked = currentReading.bookmarks.indexOf(this.currentPage) !== -1;
         });
+    }
+
+    beforeSlideChanged() {
+        this.isBookmarked = false;
         this.displaySubmit = true;
         this.displayTryagain = false;
+        this.displayResume = false;
     }
 
     resume() {
@@ -81,5 +97,12 @@ export class PlayerPage implements OnInit {
         this.displaySubmit = true;
         this.displayTryagain = false;
         assessmentForm.reset();
+    }
+
+    toggleBookmark() {
+        this.readingStore.toggleBookmark(this.route.snapshot.paramMap.get('id'), this.currentPage);
+        this.isBookmarked = !this.isBookmarked;
+
+        console.log('tutu')
     }
 }

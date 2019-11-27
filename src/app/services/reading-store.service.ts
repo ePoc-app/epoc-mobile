@@ -41,7 +41,8 @@ export class ReadingStoreService {
                     epocId: epoc.id,
                     progress: 0,
                     score: 0,
-                    responses: []
+                    responses: [],
+                    bookmarks: []
                 }
             ];
 
@@ -65,6 +66,17 @@ export class ReadingStoreService {
 
     removeReading(id: string) {
         this.readings = this.readings.filter(reading => reading.epocId !== id);
+        this.saveReadings();
+    }
+
+    toggleBookmark(epocId: string, index: number) {
+        const readingIndex = this.readings.findIndex(reading => reading.epocId === epocId);
+        if (this.readings[readingIndex].bookmarks.indexOf(index) === -1) {
+            this.readings[readingIndex].bookmarks.push(index);
+        } else {
+            this.readings[readingIndex].bookmarks.splice(this.readings[readingIndex].bookmarks.indexOf(index), 1);
+        }
+
         this.saveReadings();
     }
 }
