@@ -8,6 +8,7 @@ import {HideToolbarDirective} from '../../directives/hide-toolbar.directive';
 import {AboutEpocPage} from './about-epoc/about-epoc.page';
 import {DownloadEpocPage} from './download-epoc/download-epoc.page';
 import {ScoreEpocPage} from './score-epoc/score-epoc.page';
+import {TocEpocPage} from './toc-epoc/toc-epoc.page';
 
 @NgModule({
   imports: [
@@ -20,9 +21,10 @@ import {ScoreEpocPage} from './score-epoc/score-epoc.page';
         { path: 'about/:id', component: AboutEpocPage },
         { path: 'download/:id', component: DownloadEpocPage },
         { path: 'score/:id', component: ScoreEpocPage },
+        { path: 'toc/:id', component: TocEpocPage },
         { path: '**',   redirectTo: '/tabs/tab1' }
     ])
   ],
-  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, HideToolbarDirective]
+  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage, HideToolbarDirective]
 })
 export class PlayerPageModule {}
