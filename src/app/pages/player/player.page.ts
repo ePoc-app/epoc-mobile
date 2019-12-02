@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {ActionSheetController, AlertController, IonSlides} from '@ionic/angular';
+import {ActionSheetController, AlertController, IonSlides, Platform} from '@ionic/angular';
 import {LibraryService} from '../../services/library.service';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
@@ -23,9 +23,15 @@ export class PlayerPage implements OnInit {
     readings: Reading[];
 
     slidesOptions = {
+        slidesPerView: 2,
         spaceBetween: 0,
         initialSlide: 0,
-        autoHeight: true
+        autoHeight: true,
+        breakpoints: {
+            600: {
+                slidesPerView: 1
+            }
+        }
     };
 
     currentPage = 0;
