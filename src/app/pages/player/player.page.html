@@ -15,7 +15,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="hide-toolbar">
+<ion-content class="hide-toolbar" scroll-y="false">
   <div class="hide-toolbar-wrapper">
     <ion-slides *ngIf="epoc$ | async as epoc" #slides [options]="slidesOptions" (ionSlidesDidLoad)="initSlide(epoc)" (ionSlideWillChange)="beforeSlideChanged()" (ionSlideDidChange)="slideChanged(epoc)">
       <ion-slide *ngFor="let content of epoc.content">

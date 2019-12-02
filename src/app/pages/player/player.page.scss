@@ -2,8 +2,9 @@
   position: relative;
   display:block;
   width: 100%;
-  min-height: calc(100vh - 90px);
+  height: calc(100vh - 90px);
   transition: min-height 700ms;
+  overflow-y: scroll;
 }
 
 .hide-toolbar{
@@ -25,13 +26,11 @@
 
 .cover-content{
   h2{
-    margin: 4em 1em 1em 1em;
+    margin: 2em 1em 1em 1em;
   }
 
   .edition{
-    position: absolute;
-    bottom:1em;
-    width:100%;
+    margin-top: 2em;
     font-size: 0.6em;
     color:grey;
   }
