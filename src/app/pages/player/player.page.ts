@@ -41,6 +41,7 @@ export class PlayerPage implements OnInit {
     isBookmarked = false;
 
     constructor(
+        private elRef: ElementRef,
         private route: ActivatedRoute,
         private router: Router,
         public alertController: AlertController,
@@ -91,6 +92,7 @@ export class PlayerPage implements OnInit {
         this.displaySubmit = true;
         this.displayTryagain = false;
         this.displayResume = false;
+        this.elRef.nativeElement.querySelectorAll('video').forEach((video) => video.pause());
     }
 
     resume() {
