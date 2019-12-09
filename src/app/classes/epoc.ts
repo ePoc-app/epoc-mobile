@@ -1,4 +1,5 @@
 import {Author} from './author';
+import {Content} from './contents/content';
 
 export class Epoc {
     id: string;
@@ -6,5 +7,6 @@ export class Epoc {
     image: string;
     authors: Author[];
     summary: string;
-    content: Array<object>;
+    outline: Array<string>;
+    content: Array<Content>;
 }
