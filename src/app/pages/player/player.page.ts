@@ -8,6 +8,7 @@ import {Epoc} from '../../classes/epoc';
 import {NgForm} from '@angular/forms';
 import {ReadingStoreService} from '../../services/reading-store.service';
 import {Reading} from '../../classes/reading';
+import {Assessment} from '../../classes/contents/assessment';
 
 @Component({
     selector: 'app-player',
@@ -59,10 +60,11 @@ export class PlayerPage implements OnInit {
         this.currentPage = +this.route.snapshot.paramMap.get('page');
     }
 
-    onSubmit(assessmentForm: NgForm, assessments) {
-        const errors = assessments.some((assessment, index) => {
-            return assessment.correctResponse !== assessmentForm.value[assessment.type + '-' + index];
+    onSubmit(epoc: Epoc, assessment: Assessment, responses) {
+        const errors = assessment.items.some((question, index) => {
+            return question.correctResponse !== responses[question.type + '-' + index];
         });
+        const currentReading = this.readingStore.readings.find(reading => reading.epocId === epoc.id);
 
         if (errors) {
             this.displayTryagain = true;
@@ -70,7 +72,13 @@ export class PlayerPage implements OnInit {
         } else {
             this.displaySubmit = false;
             this.displayResume = true;
+
+            if (!currentReading.responses[assessment.id]) {
+                this.readingStore.updateScore(epoc.id, assessment.score);
+            }
         }
+
+        this.readingStore.saveResponses(epoc.id, assessment.id, responses);
     }
 
     initSlide(epoc) {
@@ -84,33 +92,44 @@ export class PlayerPage implements OnInit {
             this.readingStore.updateProgress(epoc.id, (index + 1) / epoc.content.length);
             const currentReading = this.readingStore.readings.find(reading => reading.epocId === epoc.id);
             this.isBookmarked = currentReading.bookmarks.indexOf(this.currentPage) !== -1;
+
+            if (epoc.content[this.currentPage].type === 'assessment') {
+                const assessment = epoc.content[this.currentPage];
+                this.displaySubmit = true;
+                if (currentReading.responses[assessment.id]) {
+                    this.onSubmit(epoc, assessment, currentReading.responses[assessment.id])
+                }
+            }
         });
     }
 
     beforeSlideChanged() {
+        this.displaySubmit = false;
         this.isBookmarked = false;
-        this.displaySubmit = true;
         this.displayTryagain = false;
         this.displayResume = false;
         this.elRef.nativeElement.querySelectorAll('video').forEach((video) => video.pause());
     }
 
     resume() {
-        this.displaySubmit = true;
-        this.displayResume = false;
-        this.slider.slideNext();
+        this.slider.isEnd().then((isEnd) => {
+            if (!isEnd) {
+                this.displaySubmit = true;
+                this.displayResume = false;
+                this.slider.slideNext();
+            }
+        });
     }
 
-    tryAgain(assessmentForm: NgForm) {
+    tryAgain(epoc: Epoc, assessment: Assessment, assessmentForm: NgForm) {
         this.displaySubmit = true;
         this.displayTryagain = false;
+        this.readingStore.resetResponses(epoc.id, assessment.id);
         assessmentForm.reset();
     }
 
     toggleBookmark() {
         this.readingStore.toggleBookmark(this.route.snapshot.paramMap.get('id'), this.currentPage);
         this.isBookmarked = !this.isBookmarked;
-
-        console.log('tutu')
     }
 }
