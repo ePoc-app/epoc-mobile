@@ -42,8 +42,15 @@
             <div class="value" [innerHTML]="content.value"></div>
           </div>
 
+          <div class="video-content" *ngIf="content.type === 'video'">
+            <div class="title">
+              <h2>{{content.name}}</h2>
+            </div>
+            <video [src]="content.source" controls="true"></video>
+          </div>
+
           <div class="assessment-content" *ngIf="content.type === 'assessment'">
-            <form #assessmentForm="ngForm" (ngSubmit)="onSubmit(assessmentForm, content.items)">
+            <form #assessmentForm="ngForm" (ngSubmit)="onSubmit(epoc, content, assessmentForm.value)">
               <div class="title"><span>Assessment</span></div>
               <div class="score" [routerLink]="'/player/score/'+epoc.id">
                 <div class="score-bubble">
@@ -60,7 +67,7 @@
                     </div>
                     <ion-radio-group class="assessment-choice-responses" [name]="'choice-'+assessmentIndex" ngModel>
                       <ion-item class="assessment-choice-response" [lines]="'none'" *ngFor="let response of assessment.responses">
-                        <ion-radio mode="md" slot="start" [value]="response.value"></ion-radio>
+                        <ion-radio mode="md" slot="start" [value]="response.value" [disabled]="!displaySubmit"></ion-radio>
                         <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
                       </ion-item>
                     </ion-radio-group>
@@ -83,7 +90,7 @@
               <ion-text color="danger" *ngIf="displayTryagain"><ion-icon name="close-circle-outline"></ion-icon> Wrong answer</ion-text>
               <ion-text color="success" *ngIf="displayResume"><ion-icon name="close-circle-outline"></ion-icon> Correct answer</ion-text>
               <ion-button class="submit-responses" type="submit" expand="block" *ngIf="displaySubmit">Submit</ion-button>
-              <ion-button class="tryagain" color="danger" expand="block" *ngIf="displayTryagain" (click)="tryAgain(assessmentForm)">Try again</ion-button>
+              <ion-button class="tryagain" color="danger" expand="block" *ngIf="displayTryagain" (click)="tryAgain(epoc, content, assessmentForm)">Try again</ion-button>
               <ion-button class="tryagain" color="success" expand="block" *ngIf="displayResume" (click)="resume()">Resume</ion-button>
             </form>
           </div>
