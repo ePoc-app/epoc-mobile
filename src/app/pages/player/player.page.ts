@@ -28,9 +28,11 @@ export class PlayerPage implements OnInit {
         spaceBetween: 0,
         initialSlide: 0,
         autoHeight: true,
+        centeredSlides: true,
+        centeredSlidesBounds: true,
         breakpoints: {
             600: {
-                slidesPerView: 1
+                slidesPerView: 1.05
             }
         }
     };
