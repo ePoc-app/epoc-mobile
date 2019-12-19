@@ -20,36 +20,36 @@
     <ion-slides *ngIf="epoc$ | async as epoc" #slides [options]="slidesOptions" (ionSlidesDidLoad)="initSlide(epoc)" (ionSlideWillChange)="beforeSlideChanged()" (ionSlideDidChange)="slideChanged(epoc)">
       <ion-slide *ngFor="let content of epoc.content">
         <div class="slide-content">
-
-          <div class="cover-content" *ngIf="content.type === 'cover'">
-            <ion-img [src]="epoc.image"></ion-img>
-            <h2>{{epoc.title}}</h2>
-            <div *ngFor="let author of epoc.authors">
-              <ion-text>{{author.name}}</ion-text>
+          <div class="slide-inner-content">
+            <div class="cover-content" *ngIf="content.type === 'cover'">
+              <ion-img [src]="epoc.image"></ion-img>
+              <h2>{{epoc.title}}</h2>
+              <div *ngFor="let author of epoc.authors">
+                <ion-text>{{author.name}}</ion-text>
+              </div>
+              <div class="edition">2020 edition<br/>Inria Learning Lab</div>
             </div>
-            <div class="edition">2020 edition<br/>Inria Learning Lab</div>
-          </div>
 
-          <div class="chapter-content" *ngIf="content.type === 'chapter'">
-            <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
-            <div class="chapter-title">{{content.name}}</div>
-          </div>
-
-          <div class="html-content" *ngIf="content.type === 'html'">
-            <div class="title">
-              <h2>{{content.name}}</h2>
+            <div class="chapter-content" *ngIf="content.type === 'chapter'">
+              <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
+              <div class="chapter-title">{{content.name}}</div>
             </div>
-            <div class="value" [innerHTML]="content.value"></div>
-          </div>
 
-          <div class="video-content" *ngIf="content.type === 'video'">
-            <div class="title">
-              <h2>{{content.name}}</h2>
+            <div class="html-content" *ngIf="content.type === 'html'">
+              <div class="title">
+                <h2>{{content.name}}</h2>
+              </div>
+              <div class="value" [innerHTML]="content.value"></div>
             </div>
-            <video [src]="content.source" controls="true"></video>
-          </div>
 
-          <div class="assessment-content" *ngIf="content.type === 'assessment'">
+            <div class="video-content" *ngIf="content.type === 'video'">
+              <div class="title">
+                <h2>{{content.name}}</h2>
+              </div>
+              <video [src]="content.source" controls="true"></video>
+            </div>
+
+            <div class="assessment-content" *ngIf="content.type === 'assessment'">
             <form #assessmentForm="ngForm" (ngSubmit)="onSubmit(epoc, content, assessmentForm.value)">
               <div class="title"><span>Assessment</span></div>
               <div class="score" [routerLink]="'/player/score/'+epoc.id">
@@ -94,7 +94,7 @@
               <ion-button class="tryagain" color="success" expand="block" *ngIf="displayResume" (click)="resume()">Resume</ion-button>
             </form>
           </div>
-
+          </div>
         </div>
       </ion-slide>
     </ion-slides>
