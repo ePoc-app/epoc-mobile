@@ -93,3 +93,90 @@
     border:1px solid grey;
   }
 }
+
+@function pow($number, $exponent) {
+  $value: 1;
+
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $value: $value * $number;
+    }
+  }
+
+  @return $value;
+}
+
+
+// Player
+
+$inria-red : #e63312;
+$inria-red-bg : lighten($inria-red, 48%);
+$inria-blue : #40455a;
+$inria-blue-border : lighten($inria-blue, 50%);
+$inria-blue-bg : lighten($inria-blue, 64%);
+$inria-grey : #eeeff3;
+
+.pages-wrapper{
+  padding: 20px;
+  max-height: 100vh;
+  overflow: auto;
+  .page{
+    width:400px;
+    height: 600px;
+    padding: 2px;
+    margin: 5px;
+    border:1px solid red;
+    box-sizing: border-box;
+    color: $inria-blue;
+
+    &-content{
+      border:1px solid blue;
+      box-sizing: border-box;
+    }
+
+    video{
+      width:100%;
+      height: 214px;
+    }
+
+    @for $i from 1 through 6 {
+      h#{7 - $i} {
+        font-size: pow(1.125, $i) * 1em;
+        font-weight: 700;
+        line-height: 1;
+        color:$inria-blue;
+        margin: 0 0 .5em 0;
+        padding: 0;
+        text-transform: unset;
+      }
+
+      * + h#{7 - $i} {
+        margin-top: 1em;
+      }
+    }
+
+    p, ul, ol, table {
+      margin: 0 0 1em 0;
+      line-height: 1.4;
+    }
+
+    figure {
+      margin: 0 0 1.5em 0;
+      line-height: 1.4;
+      color: $inria-blue;
+
+      img{
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: auto;
+      }
+
+      figcaption {
+        font: italic smaller sans-serif;
+        padding: 3px;
+        text-align: center;
+      }
+    }
+  }
+}
