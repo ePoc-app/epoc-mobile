@@ -101,7 +101,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
             }
         });
 
-        this.splittedContent = this.splitContent(htmlContents);
+        this.splittedContent = htmlContents.match(/<[^>]*>|[^<\s]+/gm);
         this.renderContent();
     }
 
@@ -175,35 +175,6 @@ export class PlayerPage implements OnInit, AfterViewInit {
 
     checkOverflow(element) {
         return element.parentNode.clientHeight < element.clientHeight;
-    }
-
-    indexOfMultiple(str, compare) {
-        // finds index of first occurence of a character in compare
-        for ( let i = 0; i < str.length; i++ ) {
-            const c = str.charAt(i);
-            for ( let j = 0; j < compare.length; j++ ) {
-                if ( c === compare[ j ] ) {
-                    return i;
-                }
-            }
-        }
-        return str.length;
-    }
-
-    splitContent(content) {
-        // split the content into an array of tags containing arrays of words
-        content = content.replace(/(\r\n\t|\n|\r\t)/gm, '');
-        const words = [];
-        while ( content.length > 0 ) {
-            if ( content.charAt( 0 ) === '<' ) {
-                words.push( content.substr( 0, content.indexOf( '>') + 1 ) );
-                content = content.substr( content.indexOf( '>') + 1 ).trim();
-            }
-            const next = this.indexOfMultiple( content, ' <' );
-            words.push( content.substr( 0, next ) );
-            content = content.substr( next ).trim();
-        }
-        return words;
     }
 
     changeFontSize(delta) {
