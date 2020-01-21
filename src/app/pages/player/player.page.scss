@@ -1,30 +1,3 @@
-.slide-content {
-  position: relative;
-  display:block;
-  width: 100%;
-  height: calc(100vh - 110px);
-  overflow-y: hidden;
-  padding: 6px 4px;
-}
-
-.slide-inner-content {
-  position: relative;
-  display:block;
-  min-height: 100%;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-
-ion-slides{
-  background: var(--ion-color-light);
-
-  .swiper-slide-active{
-    .slide-content {
-      overflow-y: scroll;
-    }
-  }
-}
-
 .hide-toolbar{
   /*.hide-toolbar-wrapper{
     padding:44px 0;
@@ -42,115 +15,45 @@ ion-slides{
   }
 }
 
-.cover-content{
-  h2{
-    margin: 2em 1em 1em 1em;
-  }
+.reader{
+  &-action{
+    line-height: 90vh;
+    font-size: 50px;
+    opacity: .5;
+    cursor: pointer;
 
-  .edition{
-    margin-top: 2em;
-    font-size: 0.6em;
-    color:grey;
+    .page-prev{
+      position: absolute;
+      top:0;
+      left:0;
+      width:50px;
+      height:100%;
+      font-size: 50px;
+    }
+
+    .page-next{
+      position: absolute;
+      top:0;
+      right:0;
+      width:50px;
+      height:100%;
+      text-align: right;
+    }
   }
 }
 
-.chapter-content{
+.pages-container{
   position: absolute;
   width:100%;
   height:100%;
-  background:#e7e6ea;
-  border:1em solid white;
-
-  .chapter-square{
-    position: absolute;
-    top:-1em;
-    left:-1em;
-    width:30%;
-    padding-bottom: 30%;
-    background: var(--ion-color-inria);
-  }
-
-  .chapter-number{
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    font-size: 50px;
-    color:white;
-  }
-
-  .chapter-title{
-    position: absolute;
-    top:50%;
-    left:0;
-    width:100%;
-    padding:1em;
-    transform: translateY(-50%);
-  }
 }
 
-.assessment-content{
-  padding: 1em;
-
-  .title{
-    position:relative;
-    padding: 1em;
-
-    &:after{
-      content:'';
-      position: absolute;
-      width:2em;
-      height:2em;
-      top:-1em;
-      left:-1em;
-      background: var(--ion-color-inria);
-      z-index: 1;
-    }
-
-    span{
-      display: block;
-      position: relative;
-      margin:-1em;
-      padding: .5em;
-      background:#e7e6ea;
-      z-index: 3;
-    }
-  }
-
-  .score{
-    margin: 1em 0;
-    text-align: right;
-
-    .score-bubble{
-      display: inline-block;
-      width:80px;
-      height:80px;
-      border-radius: 100%;
-      background:#94c11e;
-      text-align: center;
-    }
-
-    .score-number{
-      display: block;
-      margin-top: 10px;
-      font-size: 30px;
-      font-weight: 700;
-    }
-  }
-
-  .assessment-item{
-    margin-bottom: 1em;
-    text-align: left;
-  }
-}
-
-.video-content{
-  padding:1em;
-  text-align: left;
-
-  video{
-    width: 100%;
-    height:auto;
-    border: 1px solid lightgrey;
-  }
+.pages-wrapper{
+  height: 100%;
+  padding: 2vw;
+  column-count: auto;
+  column-gap:4vw;
+  column-rule: 1px solid red;
+  word-wrap: break-word;
+  transition: transform .3s ease;
 }
