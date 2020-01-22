@@ -19,13 +19,13 @@
 
 <ion-content class="hide-toolbar" scroll-y="false">
   <div class="hide-toolbar-wrapper">
-    <div class="reader">
+    <div class="reader" (window:resize)="onResize($event)">
       <div class="pages-container" [ngStyle]="contentStyles">
-        <div class="pages-wrapper" [style.columnWidth]="(100 / pagePerView - 16) + 'vw'" [style.transform]="pageWrapperTransform">
+        <div class="pages-wrapper" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
           <ng-container *ngIf="epoc$ | async as epoc">
             <ng-container *ngFor="let content of epoc.content">
               <ng-container *ngIf="content.type === 'html'">
-                <div class="html-content" [innerHTML]="content.value"></div>
+                <div class="page-content page-content-html" [innerHTML]="content.value"></div>
               </ng-container>
             </ng-container>
           </ng-container>
@@ -47,7 +47,7 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title *ngIf="epoc$ | async as epoc"><small>{{currentPage + 1}}/{{pageCount + 1}}</small></ion-title>
+    <ion-title *ngIf="epoc$ | async as epoc"><small>{{currentPage + 1}}<ng-container *ngIf="pagePerView > 1">-{{currentPage + pagePerView}}</ng-container>/{{pageCount + pagePerView}}</small></ion-title>
 
     <ion-buttons slot="end" *ngIf="epoc$ | async as epoc">
       <ion-button color="medium" [routerLink]="'/player/toc/'+epoc.id">

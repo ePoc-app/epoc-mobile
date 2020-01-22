@@ -46,14 +46,21 @@
   position: absolute;
   width:100%;
   height:100%;
+  background: lightgrey;
 }
 
 .pages-wrapper{
   height: 100%;
-  padding: 2vw;
+  padding: 1vw;
   column-count: auto;
-  column-gap:4vw;
-  column-rule: 1px solid red;
+  column-gap:1vw;
   word-wrap: break-word;
   transition: transform .3s ease;
+}
+
+.page-content{
+  position: relative;
+  display:block;
+  padding: 1.5em;
+  background: white;
 }
