@@ -24,6 +24,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
     // Reader
     fontSize = 14;
     pagePerView = window.innerWidth > 640 ? 2 : 1;
+    columnWidth = (100 / this.pagePerView - 2) + 'vw';
     contentStyles = {'font-size' : this.fontSize + 'px'};
     currentPage = 0;
     pageCount = 1;
@@ -59,15 +60,20 @@ export class PlayerPage implements OnInit, AfterViewInit {
         this.initReader();
     }
 
+    onResize() {
+        this.initReader();
+    }
+
     initReader() {
         setTimeout(() => {
             this.pageCount = this.getColumnCount(this.elRef.nativeElement.querySelector('.pages-wrapper'));
+            this.goToPage(this.currentPage);
         }, 100);
     }
 
     getColumnCount(elem) {
         const lastChild = elem.querySelector('div:last-child');
-        return Math.floor((lastChild.offsetLeft + lastChild.clientWidth) / elem.clientWidth) * this.pagePerView;
+        return Math.floor((lastChild.offsetLeft + lastChild.offsetWidth) / elem.clientWidth) * this.pagePerView;
     }
 
     changeFontSize(delta) {
@@ -78,21 +84,21 @@ export class PlayerPage implements OnInit, AfterViewInit {
         }
     }
 
-    goToCurrentPage() {
-        this.pageWrapperTransform = 'translateX(-' + this.currentPage * (window.innerWidth / this.pagePerView) + 'px)';
+    goToPage(pageNumber) {
+        this.pageWrapperTransform = 'translateX(-' + pageNumber * (99 / this.pagePerView) + 'vw)';
     }
 
     prevPage() {
         if (this.currentPage > 0) {
             this.currentPage--;
-            this.goToCurrentPage();
+            this.goToPage(this.currentPage);
         }
     }
 
     nextPage() {
         if (this.currentPage < this.pageCount) {
             this.currentPage++;
-            this.goToCurrentPage();
+            this.goToPage(this.currentPage);
         }
     }
 }
