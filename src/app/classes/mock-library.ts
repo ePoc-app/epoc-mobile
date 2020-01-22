@@ -6,6 +6,98 @@ import {Assessment} from './contents/assessment';
 import {Html} from './contents/html';
 import {Video} from './contents/video';
 
+
+const DummyHtmlContent = (length) => {
+    const dummyContent = [
+        '<h1>Gregor Samsa woke from troubled dreams.</h1>',
+        '<ul>' +
+        '  <li>Lorem ipsum dolor sit amet consectetuer.</li>' +
+        '  <li>Aenean commodo ligula eget dolor.</li>' +
+        '  <li>Aenean massa cum sociis natoque penatibus.</li>' +
+        '</ul>',
+        '<video src="assets/demo/video.mp4" controls="true"></video>',
+        '<h2>The bedding was hardly able to cover it.</h2>',
+        '<ul>' +
+        '  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing ' +
+        '  elit. Aenean commodo ligula eget dolor. Aenean ' +
+        '  massa.</li>' +
+        '  <li>Cum sociis natoque penatibus et magnis dis ' +
+        '  parturient montes, nascetur ridiculus mus. Donec quam ' +
+        '  felis, ultricies nec, pellentesque eu, pretium quis, ' +
+        '  sem.</li>' +
+        '  <li>Nulla consequat massa quis enim. Donec pede justo, ' +
+        '  fringilla vel, aliquet nec, vulputate eget, arcu.</li>' +
+        '  <li>In enim justo, rhoncus ut, imperdiet a, venenatis ' +
+        '  vitae, justo. Nullam dictum felis eu pede mollis ' +
+        '  pretium. Integer tincidunt.</li>' +
+        '</ul>',
+        '<h4>Samsa was a travelling salesman.</h4>',
+        '<p>One morning, when Gregor Samsa woke from troubled ' +
+        'dreams, he found himself transformed in his bed into ' +
+        'a horrible vermin. He lay on his armour-like back, ' +
+        'and if he lifted his head a little he could see his ' +
+        'brown belly, slightly domed and divided by arches into ' +
+        'stiff sections. The bedding was hardly able to cover ' +
+        '<strong>strong</strong> it and seemed ready to slide ' +
+        'off any moment. His many legs, pitifully thin ' +
+        'compared with the size of the rest of him, ' +
+        '<a class="external ext" href="#">link</a> waved about ' +
+        'helplessly as he looked. "What\'s happened to me? " he ' +
+        'thought. It wasn\'t a dream. His room, a proper human ' +
+        'room although a little too small, lay peacefully ' +
+        'between its four familiar walls.</p>',
+        '<p>It showed a lady fitted out with a fur hat and fur ' +
+        'boa who sat upright, raising a heavy fur muff that ' +
+        'covered the whole of her lower arm towards the ' +
+        'viewer.</p>',
+        '<h3>A collection of textile samples lay spread out on the table.</h3>',
+        '<blockquote>' +
+        'Gregor then turned to look out the window at the dull ' +
+        'weather. Drops of rain could be heard hitting the pane, ' +
+        'which made him feel quite sad. "How about if I sleep a ' +
+        'little bit longer and forget all this nonsense", he ' +
+        'thought, but that was something he was unable to do ' +
+        'because he was used to sleeping on his right, and in ' +
+        'his present state couldn\'t get into that position. ' +
+        'However hard he threw himself onto his right, he ' +
+        'always rolled back to where he was.' +
+        '</blockquote>',
+        '<h3>Samples lay spread out on the table.</h3>',
+        '<table class="data">' +
+        '  <tr>' +
+        '    <th>Entry Header 1</th>' +
+        '    <th>Entry Header 2</th>' +
+        '    <th>Entry Header 3</th>' +
+        '  </tr>' +
+        '  <tr>' +
+        '    <td>Entry First Line 1</td>' +
+        '    <td>Entry First Line 2</td>' +
+        '    <td>Entry First Line 3</td>' +
+        '  </tr>' +
+        '  <tr>' +
+        '    <td>Entry Line 1</td>' +
+        '    <td>Entry Line 2</td>' +
+        '    <td>Entry Line 3</td>' +
+        '  </tr>' +
+        '  <tr>' +
+        '    <td>Entry Last Line 1</td>' +
+        '    <td>Entry Last Line 2</td>' +
+        '    <td>Entry Last Line 3</td>' +
+        '  </tr>' +
+        '</table>'
+    ];
+
+    let dummy = '';
+    let i = 0;
+
+    while (dummy.length < length) {
+        dummy += dummyContent[i % dummyContent.length];
+        i++;
+    }
+
+    return dummy;
+};
+
 const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
     {
         id: '1',
@@ -22,45 +114,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: '3',
         type: 'html',
         name: 'Welcome',
-        value: '<h1 class="machin">Welcome!</h1>' +
-            '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices semper libero, ' +
-            'sit amet fringilla leo. Donec facilisis volutpat augue, in interdum ligula tincidunt ac. Sed ut ' +
-            'volutpat dui, sed fringilla purus. Fusce aliquet eros vel sapien dictum tempor.</p>' +
-            '<h5><b>Lorem ipsum</b></h5><p>Class aptent taciti ' +
-            'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
-            'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
-            'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>' +
-            '<video src="assets/demo/video.mp4" controls="true"></video>' +
-            '<h5><b>Lorem ipsum</b></h5><p>Class aptent taciti ' +
-            'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
-            'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
-            'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>' +
-            '<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h1><p>Sed do eiusmod tempor incididunt ut ' +
-            'labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ' +
-            'aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore ' +
-            'eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt ' +
-            'mollit anim id est laborum.</p><p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium ' +
-            'doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae ' +
-            'vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed ' +
-            'quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ' +
-            'ipsum, quia dolor sit amet, consectetur, adipiscin] velit, sed quia non numquam do eius modi tempora incididunt, ' +
-            'ut labore et dolore magnam aliquam quaerat voluptatem.</p><p>Ut enim ad minima veniam, quis nostrum exercitationem ' +
-            'ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, ' +
-            'qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas ' +
-            'nulla pariatur.</p><h2>Vero eos et accusamus et iusto odio dignissimos ducimus</h2><p>Qui blanditiis praesentium ' +
-            'voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, ' +
-            'similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum ' +
-            'facilis est et expedita distinctio. </p><p>Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, ' +
-            'quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Qua temporibus ' +
-            'autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et ' +
-            'molestiae non recusandae pondere ad lineam. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis ' +
-            'voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat</p><p>Quibus ego assentior, dum ' +
-            'modo de iisdem rebus ne Graecos quidem legendos putent. Res vero verbis electis graviter omateque dictas quis i legat? ' +
-            'Nisi qui se plane Graeciun dici velit, ut a 9 Scaeiola est praetore salutatus Athenis Albucius. Quem quidem locum cum ' +
-            'multa venustate et omm sale idem Lucilius, apud quem praeclare Scaevola.</p><p>Qui autem alia matunt scribi a nobis, ' +
-            'aequi esse debent, quod et seripta multa sunt, sic ut plura nemini e nostris, et scribentur fortasse plura si vita ' +
-            'suppetet; et tamen qui diligenter haec quae de philosophia Htteris mandamus legere assueverit, iudicabit nulla ad ' +
-            'legendum his esse potiora.</p>'
+        value: DummyHtmlContent(2000)
     },
     {
         id: '4',
@@ -102,209 +156,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: '7',
         type: 'html',
         name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2',
-        value: '<h3>Tempore intellegi convenire</h3><p>Epicurus autem, in quibus sequitur Democritum, noil fere labitur, Quam- ' +
-            'quam utriusque cum mutta non prolx). turn illiid in priniis, quoJ, cum in rerum nalura duo quaerenda sint, ununi ' +
-            'quae materia sit ex qua quaeque res cfficiatur, alterum quae vis sit quae quidque efficiat, de materia disserucrunt, ' +
-            'vim et causam efficiendi reliquerunt. Sed lioc commune vitiuni; illae Epicur propriae ruinae: censet enim eadem ilia ' +
-            'indlvidua e solida corpora ferri deorsum suo pondere ad lineam i hunc naturalem esse omnium corporum motuni.</p><p>Deinde ' +
-            'ibidem homo acutus, cam illud occorreret, j omnia deorsum e regione ferrentur et, ut dixi, ad lineam, numquam fore ut ' +
-            'atomus altera alteram posset attingere, itaque attulit rem commenticiam.</p><p>Declinare dixit atomum perpaulum, quo ' +
-            'nihil posset fieri minus; ita eifici complexiones et copulationes et adhaesiones atomorum inter se, ex quo eificeretur ' +
-            'mundus omnesque partes mundi quaeque in eo essent. Quae cum res tota fieta sit piieriliter, turn ne efficit quidem^ quod ' +
-            'vult. Nam et ipsa declinatio ad libidinem fiiigitur - ait enim deelinare atomum sine causa, quo nibil turpius physico quam ' +
-            'fieri.</p>'
+        value: DummyHtmlContent(12040)
     },
     {
         id: '8',
