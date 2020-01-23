@@ -25,7 +25,7 @@
     .page-prev{
       position: absolute;
       top:0;
-      left:0;
+      left:-15px;
       width:50px;
       height:100%;
       font-size: 50px;
@@ -34,7 +34,7 @@
     .page-next{
       position: absolute;
       top:0;
-      right:0;
+      right:-15px;
       width:50px;
       height:100%;
       text-align: right;
@@ -46,16 +46,20 @@
   position: absolute;
   width:100%;
   height:100%;
-  background: lightgrey;
+  background: #eee;
 }
 
 .pages-wrapper{
   height: 100%;
-  padding: 1vw;
+  padding: 10px;
   column-count: auto;
-  column-gap:1vw;
+  column-gap:10px;
   word-wrap: break-word;
   transition: transform .3s ease;
+
+  &.scrolling{
+    transition: none;
+  }
 }
 
 .page-content{

@@ -23,12 +23,16 @@ export class PlayerPage implements OnInit, AfterViewInit {
 
     // Reader
     fontSize = 14;
-    pagePerView = window.innerWidth > 640 ? 2 : 1;
+    pagePerView = Math.ceil(window.innerWidth / 640);
     columnWidth = (100 / this.pagePerView - 2) + 'vw';
     contentStyles = {'font-size' : this.fontSize + 'px'};
     currentPage = 0;
     pageCount = 1;
     pageWrapperTransform = 'translateX(0)';
+    isScrolling = false;
+    pageWrapperOffset;
+    startX;
+    startOffset;
 
     // Quiz related
     displaySubmit = true;
@@ -64,16 +68,44 @@ export class PlayerPage implements OnInit, AfterViewInit {
         this.initReader();
     }
 
-    initReader() {
-        setTimeout(() => {
-            this.pageCount = this.getColumnCount(this.elRef.nativeElement.querySelector('.pages-wrapper'));
-            this.goToPage(this.currentPage);
-        }, 100);
+    onMouseDown(e) {
+        this.isScrolling = true;
+        this.startX = e.changedTouches[0].pageX - this.pageWrapperOffset;
+        this.startOffset = this.pageWrapperOffset;
     }
 
-    getColumnCount(elem) {
-        const lastChild = elem.querySelector('div:last-child');
-        return Math.floor((lastChild.offsetLeft + lastChild.offsetWidth) / elem.clientWidth) * this.pagePerView;
+    onMouseUp(e) {
+        this.isScrolling = false;
+        const deltaX = this.startOffset - this.pageWrapperOffset;
+        // Swipe left
+        if (deltaX < -80 && deltaX > -400) {
+            this.prevPage();
+        // Swipe right
+        } else if (this.startOffset - this.pageWrapperOffset > 80 && this.startOffset - this.pageWrapperOffset < 400) {
+            this.nextPage();
+        }
+        this.goToNearestPage();
+    }
+
+    onMouseMove(e) {
+        if (e.changedTouches && e.changedTouches.length) {
+            this.pageWrapperOffset = e.changedTouches[0].pageX - this.startX;
+            this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
+        }
+    }
+
+    initReader() {
+        this.pagePerView = Math.ceil(window.innerWidth / 768);
+        this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
+        setTimeout(() => {
+            this.pageCount = this.getPageCount();
+            this.goToNearestPage();
+        }, 200);
+    }
+
+    getPageCount() {
+        const elem = this.elRef.nativeElement.querySelector('.pages-wrapper');
+        return Math.ceil(elem.scrollWidth / elem.clientWidth) * this.pagePerView - this.pagePerView;
     }
 
     changeFontSize(delta) {
@@ -84,14 +116,33 @@ export class PlayerPage implements OnInit, AfterViewInit {
         }
     }
 
+    goToNearestPage() {
+        let nearestPage = 0;
+        let smallestGap = 9999999;
+        for (let i = 0; i < this.pageCount + 1; i++) {
+            const gap = Math.abs(-i * ((window.innerWidth - 10) / this.pagePerView) - this.pageWrapperOffset);
+            if (gap < smallestGap) {
+                smallestGap = gap;
+                nearestPage = i;
+            }
+        }
+        this.currentPage = nearestPage;
+        this.goToPage(nearestPage);
+    }
+
     goToPage(pageNumber) {
-        this.pageWrapperTransform = 'translateX(-' + pageNumber * (99 / this.pagePerView) + 'vw)';
+        this.pageWrapperOffset = -pageNumber * ((window.innerWidth - 10) / this.pagePerView);
+        this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
     }
 
     prevPage() {
         if (this.currentPage > 0) {
             this.currentPage--;
             this.goToPage(this.currentPage);
+        } else {
+            this.pageWrapperOffset = this.pageWrapperOffset + 100;
+            this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
+            setTimeout(() => this.goToNearestPage(), 300);
         }
     }
 
@@ -99,6 +150,10 @@ export class PlayerPage implements OnInit, AfterViewInit {
         if (this.currentPage < this.pageCount) {
             this.currentPage++;
             this.goToPage(this.currentPage);
+        } else {
+            this.pageWrapperOffset = this.pageWrapperOffset - 100;
+            this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
+            setTimeout(() => this.goToNearestPage(), 300);
         }
     }
 }
