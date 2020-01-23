@@ -1,58 +1,22 @@
-<ion-header #header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button color="medium" (click)="router.navigateByUrl('/tabs/tab1');">
-        <ion-icon name="arrow-back"></ion-icon>
-        <ion-icon name="home"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title *ngIf="epoc$ | async as epoc"><small>{{epoc.title}}</small></ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="changeFontSize(1)">A+</ion-button>
-      <ion-button (click)="changeFontSize(-1)">A-</ion-button>
-      <ion-button (click)="toggleBookmark()">
-        <ion-icon name="bookmark" [color]="isBookmarked ? 'inria':'medium'"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="hide-toolbar" scroll-y="false">
-  <div class="hide-toolbar-wrapper">
-    <div class="reader" (window:resize)="onResize($event)">
-      <div class="pages-container" [ngStyle]="contentStyles" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
-        <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
-          <ng-container *ngIf="epoc$ | async as epoc">
-            <ng-container *ngFor="let content of epoc.content">
-              <ng-container *ngIf="content.type === 'html'">
-                <div class="page-content page-content-html" [innerHTML]="content.value"></div>
-              </ng-container>
+<ion-content scroll-y="false">
+  <div class="reader" (window:resize)="onResize($event)">
+    <div class="pages-container" [ngStyle]="contentStyles" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)" (click)="displayMenu()">
+      <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
+        <ng-container *ngIf="epoc$ | async as epoc">
+          <ng-container *ngFor="let content of epoc.content">
+            <ng-container *ngIf="content.type === 'html'">
+              <div class="page-content page-content-html" [innerHTML]="content.value"></div>
             </ng-container>
           </ng-container>
-        </div>
+        </ng-container>
       </div>
-      <div class="reader-action">
-        <div class="page-prev" (click)="prevPage()"><ion-icon name="ios-arrow-back"></ion-icon></div>
-        <div class="page-next" (click)="nextPage()"><ion-icon name="ios-arrow-forward"></ion-icon></div>
+    </div>
+    <div class="reader-action">
+      <div class="page-prev" (click)="prevPage()"></div>
+      <div class="page-next" (click)="nextPage()"></div>
+      <div class="reader-progress">
+        <ion-progress-bar [value]="getProgress()"></ion-progress-bar>
       </div>
     </div>
   </div>
 </ion-content>
-
-<ion-footer #footer>
-  <ion-toolbar>
-    <ion-buttons slot="start" *ngIf="epoc$ | async as epoc">
-      <ion-button color="medium" [routerLink]="'/player/bookmarks/'+epoc.id">
-        <ion-icon size="large" name="bookmarks"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
-    <ion-title *ngIf="epoc$ | async as epoc"><small>{{currentPage + 1}}<ng-container *ngIf="pagePerView > 1">-{{currentPage + pagePerView}}</ng-container>/{{pageCount + pagePerView}}</small></ion-title>
-
-    <ion-buttons slot="end" *ngIf="epoc$ | async as epoc">
-      <ion-button color="medium" [routerLink]="'/player/toc/'+epoc.id">
-        <ion-icon size="large" name="list"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
