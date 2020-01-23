@@ -1,14 +1,12 @@
 import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {AlertController} from '@ionic/angular';
-import {LibraryService} from '../../services/library.service';
+import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
-import {NgForm} from '@angular/forms';
-import {ReadingStoreService} from '../../services/reading-store.service';
 import {Reading} from '../../classes/reading';
-import {Assessment} from '../../classes/contents/assessment';
+import {ReadingStoreService} from '../../services/reading-store.service';
+import {LibraryService} from '../../services/library.service';
 
 @Component({
     selector: 'app-player',
@@ -34,19 +32,12 @@ export class PlayerPage implements OnInit, AfterViewInit {
     startX;
     startOffset;
 
-    // Quiz related
-    displaySubmit = true;
-    displayResume = false;
-    displayTryagain = false;
-
-    // Bookmarks
-    isBookmarked = false;
-
     constructor(
         private elRef: ElementRef,
         private route: ActivatedRoute,
         private router: Router,
         public alertController: AlertController,
+        public actionSheetController: ActionSheetController,
         private libraryService: LibraryService,
         private readingStore: ReadingStoreService
     ) {}
@@ -105,7 +96,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
 
     getPageCount() {
         const elem = this.elRef.nativeElement.querySelector('.pages-wrapper');
-        return Math.ceil(elem.scrollWidth / elem.clientWidth) * this.pagePerView - this.pagePerView;
+        return Math.ceil(elem.scrollWidth / elem.clientWidth) * this.pagePerView - this.pagePerView - 1;
     }
 
     changeFontSize(delta) {
@@ -120,7 +111,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
         let nearestPage = 0;
         let smallestGap = 9999999;
         for (let i = 0; i < this.pageCount + 1; i++) {
-            const gap = Math.abs(-i * ((window.innerWidth - 10) / this.pagePerView) - this.pageWrapperOffset);
+            const gap = Math.abs(-i * window.innerWidth / this.pagePerView - this.pageWrapperOffset);
             if (gap < smallestGap) {
                 smallestGap = gap;
                 nearestPage = i;
@@ -131,7 +122,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
     }
 
     goToPage(pageNumber) {
-        this.pageWrapperOffset = -pageNumber * ((window.innerWidth - 10) / this.pagePerView);
+        this.pageWrapperOffset = -pageNumber * (window.innerWidth / this.pagePerView);
         this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
     }
 
@@ -155,5 +146,28 @@ export class PlayerPage implements OnInit, AfterViewInit {
             this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
             setTimeout(() => this.goToNearestPage(), 300);
         }
+    }
+
+    getProgress() {
+        return this.currentPage / this.pageCount;
+    }
+
+    displayMenu() {
+        this.presentActionSheet();
+    }
+
+    async presentActionSheet() {
+        const actionSheet = await this.actionSheetController.create({
+            header: 'Albums',
+            buttons: [{
+                text: 'Cancel',
+                icon: 'close',
+                role: 'cancel',
+                handler: () => {
+                    console.log('Cancel clicked');
+                }
+            }]
+        });
+        await actionSheet.present();
     }
 }
