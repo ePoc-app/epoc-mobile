@@ -4,9 +4,26 @@
       <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
         <ng-container *ngIf="epoc$ | async as epoc">
           <ng-container *ngFor="let content of epoc.content">
+
+            <div class="page-content page-content-cover" *ngIf="content.type === 'cover'">
+              <ion-img [src]="epoc.image"></ion-img>
+              <h2>{{epoc.title}}</h2>
+              <div *ngFor="let author of epoc.authors">
+                <ion-text>{{author.name}}</ion-text>
+              </div>
+              <div class="edition">2020 edition<br/>Inria Learning Lab</div>
+            </div>
+
             <ng-container *ngIf="content.type === 'html'">
               <div class="page-content page-content-html" [innerHTML]="content.value"></div>
             </ng-container>
+
+            <ng-container *ngIf="content.type === 'video'">
+              <div class="page-content page-content-video">
+                <h2>{{content.name}}</h2><video [src]="content.source" controls="true"></video>
+              </div>
+            </ng-container>
+
           </ng-container>
         </ng-container>
       </div>
