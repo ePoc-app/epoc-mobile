@@ -68,4 +68,15 @@
   display:block;
   padding: 0 20px;
   background: white;
+
+  &-cover{
+    display: inline-block;
+    width: 100%;
+    height: calc(100vh - 40px);
+  }
+
+  &-video{
+    display: inline-block;
+    width: 100%;
+  }
 }
