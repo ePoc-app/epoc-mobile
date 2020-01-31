@@ -5,14 +5,25 @@
         <ng-container *ngIf="epoc$ | async as epoc">
           <ng-container *ngFor="let content of epoc.content">
 
-            <div class="page-content page-content-cover" *ngIf="content.type === 'cover'">
-              <ion-img [src]="epoc.image"></ion-img>
-              <h2>{{epoc.title}}</h2>
-              <div *ngFor="let author of epoc.authors">
-                <ion-text>{{author.name}}</ion-text>
+            <ng-container *ngIf="content.type === 'cover'">
+              <div class="page-content page-content-cover">
+                <ion-img [src]="epoc.image"></ion-img>
+                <h2>{{epoc.title}}</h2>
+                <div *ngFor="let author of epoc.authors">
+                  <ion-text>{{author.name}}</ion-text>
+                </div>
+                <div class="edition">2020 edition<br/>Inria Learning Lab</div>
               </div>
-              <div class="edition">2020 edition<br/>Inria Learning Lab</div>
-            </div>
+            </ng-container>
+
+            <ng-container *ngIf="content.type === 'chapter'">
+              <div class="page-content page-content-chapter">
+                <div class="chapter-container">
+                  <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
+                  <div class="chapter-title">{{content.name}}</div>
+                </div>
+              </div>
+            </ng-container>
 
             <ng-container *ngIf="content.type === 'html'">
               <div class="page-content page-content-html" [innerHTML]="content.value"></div>
