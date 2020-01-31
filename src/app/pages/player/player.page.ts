@@ -122,7 +122,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
     }
 
     goToPage(pageNumber) {
-        this.pageWrapperOffset = -pageNumber * (window.innerWidth / this.pagePerView);
+        this.pageWrapperOffset = -pageNumber * (window.innerWidth / this.pagePerView + 0.5);
         this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
     }
 
