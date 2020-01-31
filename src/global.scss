@@ -125,6 +125,7 @@ $inria-blue-bg : lighten($inria-blue, 64%);
   p, ul, ol, table, pre, blockquote, video {
     margin: 1em 0 1em 0;
     line-height: 1.4;
+    text-align: justify;
   }
 
   figure {
