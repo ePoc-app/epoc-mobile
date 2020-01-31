@@ -156,7 +156,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: '7',
         type: 'html',
         name: 'Chapter 2',
-        value: DummyHtmlContent(12040)
+        value: DummyHtmlContent(1240)
     },
     {
         id: '8',
@@ -207,6 +207,12 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
                 correctResponse: 'A'
             }
         ]
+    },
+    {
+        id: '10',
+        type: 'html',
+        name: 'Chapter 3',
+        value: DummyHtmlContent(1240)
     }
 ];
 
