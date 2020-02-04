@@ -35,6 +35,12 @@
               </div>
             </ng-container>
 
+            <ng-container *ngIf="content.type === 'assessment'">
+              <div class="page-content page-content-assessment">
+                <assessment-button [content]="content" [epoc]="epoc"></assessment-button>
+              </div>
+            </ng-container>
+
           </ng-container>
         </ng-container>
       </div>

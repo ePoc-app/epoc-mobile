@@ -10,12 +10,14 @@ import {DownloadEpocPage} from './download-epoc/download-epoc.page';
 import {ScoreEpocPage} from './score-epoc/score-epoc.page';
 import {TocEpocPage} from './toc-epoc/toc-epoc.page';
 import {BookmarksEpocPage} from './bookmarks-epoc/bookmarks-epoc.page';
+import {AssessmentButtonModule} from '../../components/assessment-button/assessment-button.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
+    AssessmentButtonModule,
     RouterModule.forChild([
         { path: 'play/:id', component: PlayerPage },
         { path: 'play/:id/:page', component: PlayerPage },
