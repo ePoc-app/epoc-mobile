@@ -40,8 +40,7 @@ export class ReadingStoreService {
                 {
                     epocId: epoc.id,
                     progress: 0,
-                    score: 0,
-                    responses: {},
+                    assessments: [],
                     bookmarks: []
                 }
             ];
@@ -61,23 +60,18 @@ export class ReadingStoreService {
     saveResponses(epocId: string, assessmentId, responses) {
         const index = this.readings.findIndex(reading => reading.epocId === epocId);
 
-        this.readings[index].responses[assessmentId] = responses;
+        const assessmentIndex = this.readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
+
+        this.readings[index].assessments[assessmentIndex] = responses;
 
         this.saveReadings();
     }
 
     resetResponses(epocId: string, assessmentId) {
         const index = this.readings.findIndex(reading => reading.epocId === epocId);
+        const assessmentIndex = this.readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
 
-        delete this.readings[index].responses[assessmentId];
-
-        this.saveReadings();
-    }
-
-    updateScore(epocId: string, addscore: number) {
-        const index = this.readings.findIndex(reading => reading.epocId === epocId);
-
-        this.readings[index].score += addscore;
+        this.readings[index].assessments.splice(assessmentIndex, 1);
 
         this.saveReadings();
     }

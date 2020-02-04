@@ -1,7 +1,13 @@
 export class Reading {
     epocId: string;
     progress: number;
-    score: number;
-    responses: object;
+    assessments: UserAssessment[];
     bookmarks: number[];
 }
+
+class UserAssessment {
+    id: string;
+    responses: string[];
+}
+
+

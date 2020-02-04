@@ -1,12 +1,12 @@
 import {Content} from './content';
 
 export class Assessment extends Content {
-    score: number;
     items: Array<Question>;
 }
 
 class Question {
     type: string;
+    score: number;
     statement: string;
     label: string;
     responses: Array<Response>;
