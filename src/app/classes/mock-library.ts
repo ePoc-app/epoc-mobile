@@ -105,6 +105,41 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         name: 'Cover',
     },
     {
+        id: '1bis',
+        type: 'assessment',
+        name: 'Placement',
+        items: [
+            {
+                type: 'choice',
+                score: 5,
+                statement: '',
+                label: 'Quel est votre niveau ?',
+                responses: [
+                    {
+                        label: 'Débutant',
+                        value: '1'
+                    },
+                    {
+                        label: 'Amateur',
+                        value: '2'
+                    },
+                    {
+                        label: 'Expert',
+                        value: '3'
+                    }
+                ],
+                correctResponse: ''
+            },
+            {
+                type: 'text',
+                score: 20,
+                statement: '',
+                label: 'Quel est votre nom ?',
+                correctResponse: '.*'
+            }
+        ]
+    },
+    {
         id: '2',
         type: 'chapter',
         name: 'Mise en situation pour aborder les règles de fonctionnement d\'une ZRR',
@@ -126,23 +161,23 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: '5',
         type: 'assessment',
         name: 'Que signifie ZRR ?',
-        score: 10,
         items: [
             {
                 type: 'choice',
+                score: 10,
                 statement: '',
                 label: 'Que signifie ZRR ?',
                 responses: [
                     {
-                        label: 'Zone de recherche à accès restreint',
+                        label: 'Zone à régime restrictif',
                         value: 'A'
                     },
                     {
-                        label: 'Zone à régime restrictif',
+                        label: 'Zone de recherche à accès restreint',
                         value: 'B'
                     }
                 ],
-                correctResponse: 'B'
+                correctResponse: 'A'
             }
         ]
     },
@@ -168,10 +203,10 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: '9',
         type: 'assessment',
         name: 'Le référent sécurité',
-        score: 30,
         items: [
             {
                 type: 'choice',
+                score: 15,
                 statement: '',
                 label: 'Quel pouvoir à le référent sécurité ?',
                 responses: [
@@ -188,15 +223,16 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
             },
             {
                 type: 'choice',
+                score: 25,
                 statement: '',
                 label: 'Comment décririez vous cette formation ?',
                 responses: [
                     {
-                        label: 'Géniale',
+                        label: 'Bof',
                         value: 'A'
                     },
                     {
-                        label: 'Bof',
+                        label: 'Géniale',
                         value: 'B'
                     },
                     {
@@ -204,7 +240,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
                         value: 'C'
                     }
                 ],
-                correctResponse: 'A'
+                correctResponse: 'B'
             }
         ]
     },
