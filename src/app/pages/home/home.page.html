@@ -1,0 +1,51 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-button class="about" slot="start" routerLink="about" routerDirection="forward">
+      <ion-icon slot="icon-only" ios="ios-information-circle-outline" md="ios-information-circle-outline"></ion-icon>
+    </ion-button>
+    <div class="logo" slot="end">
+      <ion-img src="/assets/icon/logo.png"></ion-img>
+      <ion-text color="inria">Formation interne</ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scroll-y="false">
+  <div class="home-course">
+    <ion-grid *ngIf="epoc$ | async as epoc">
+      <ion-row>
+        <ion-col>
+          <div class="title-wrapper">
+            <div class="title-container">
+              <h3 class="title">ZRR : {{epoc.title}}</h3>
+              <div class="authors">
+                <span *ngFor="let author of epoc.authors">{{author.name}}</span>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="trailer-course" (click)="togglePlay($event)">
+            <video src="assets/demo/objectifs-pedagogiques.mp4" (play)="play($event)" (pause)="pause($event)"></video>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <a class="about-course" [routerLink]="'player/about/'+zrrId">
+            <ion-text>A propos de cette formation</ion-text>
+            <ion-icon ios="md-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+          </a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <ion-button class="start-course" [routerLink]="'player/play/'+zrrId" routerDirection="forward" expand="block" slot="fixed">
+    Commencer la formation
+  </ion-button>
+</ion-footer>
