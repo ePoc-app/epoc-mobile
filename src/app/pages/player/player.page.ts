@@ -48,7 +48,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
                 this.libraryService.getEpoc(params.get('id')))
         );
 
-        this.currentPage = +this.route.snapshot.paramMap.get('page');
+        this.currentPage = +this.route.snapshot.paramMap.get('page');console.log(this.epoc$);
     }
 
     ngAfterViewInit() {
