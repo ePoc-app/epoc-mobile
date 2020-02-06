@@ -1,5 +1,40 @@
-ion-img{
-  display: inline-block;
-  width: 50%;
-  margin: 2em 0;
+ion-toolbar {
+  margin: 1em 0;
+  --border-width: 0 !important;
+}
+
+.logo {
+  width: 100px;
+  margin: 0 1em;
+
+  ion-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.go-back {
+  margin: 1em 1em 2em 1em;
+}
+
+.about-content-wrapper{
+  padding: 1em;
+  color: var(--ion-color-inria-blue);
+}
+
+.authors{
+  text-align: center;
+
+  p{
+    font-size: 0.8em;
+    text-align: center;
+  }
+
+  img{
+    width:100px;
+    height:auto;
+    border: 1px solid grey;
+    border-radius: 100%;
+  }
 }
