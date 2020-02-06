@@ -19,12 +19,6 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-text-center">
-      <ion-col size="12">
-        <ion-button class="download-button" color="inria" expand="block" *ngIf="!isReading(epoc.id)" (click)="downloadEpoc(epoc.id)">Download the course</ion-button>
-        <ion-button class="download-button" color="inria" expand="block" *ngIf="isReading(epoc.id)" (click)="openEpoc(epoc.id)">Open the course</ion-button>
-      </ion-col>
-    </ion-row>
 
     <ion-row class="epoc-specs ion-text-center">
       <ion-col size="4">

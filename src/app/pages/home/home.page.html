@@ -34,7 +34,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <a class="about-course" [routerLink]="'player/about/'+zrrId">
+          <a class="about-course" [routerLink]="'/player/about/'+zrrId">
             <ion-text>A propos de cette formation</ion-text>
             <ion-icon ios="md-arrow-dropright" md="md-arrow-dropright"></ion-icon>
           </a>
@@ -45,7 +45,7 @@
 </ion-content>
 
 <ion-footer mode="ios">
-  <ion-button class="start-course" [routerLink]="'player/play/'+zrrId" routerDirection="forward" expand="block" slot="fixed">
+  <ion-button class="start-course" [routerLink]="'/player/play/'+zrrId" routerDirection="forward" expand="block" slot="fixed">
     Commencer la formation
   </ion-button>
 </ion-footer>
