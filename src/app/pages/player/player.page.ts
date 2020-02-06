@@ -218,7 +218,10 @@ export class PlayerPage implements OnInit, AfterViewInit {
                 },
                 {
                     text: 'Tables des matières',
-                    icon: 'list'
+                    icon: 'list',
+                    handler: () => {
+                        this.router.navigateByUrl('/player/toc/' + this.epoc.id);
+                    }
                 },
                 {
                     text: 'Pages',
@@ -229,14 +232,20 @@ export class PlayerPage implements OnInit, AfterViewInit {
                 },
                 {
                     text: 'Détails des scores',
-                    icon: 'podium'
+                    icon: 'podium',
+                    handler: () => {
+                        this.router.navigateByUrl('/player/score/' + this.epoc.id);
+                    }
                 },
                 {
                     cssClass: 'splitter'
                 },
                 {
                     text: 'Paramètres',
-                    icon: 'cog'
+                    icon: 'cog',
+                    handler: () => {
+                        this.router.navigateByUrl('/player/settings');
+                    }
                 },
                 {
                     text: 'Fermer',
