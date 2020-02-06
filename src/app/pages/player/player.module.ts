@@ -20,7 +20,7 @@ import {AssessmentButtonModule} from '../../components/assessment-button/assessm
     AssessmentButtonModule,
     RouterModule.forChild([
         { path: 'play/:id', component: PlayerPage },
-        { path: 'play/:id/:page', component: PlayerPage },
+        { path: 'play/:id/:progress', component: PlayerPage },
         { path: 'about/:id', component: AboutEpocPage },
         { path: 'download/:id', component: DownloadEpocPage },
         { path: 'score/:id', component: ScoreEpocPage },
