@@ -59,7 +59,9 @@ export class PlayerPage implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.initReader();
+        setTimeout(() => {
+            this.initReader();
+        }, 200);
     }
 
     onResize() {
@@ -129,7 +131,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
     }
 
     goToPage(pageNumber) {
-        this.pageWrapperOffset = -pageNumber * (window.innerWidth / this.pagePerView + 0.5);
+        this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
         this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
     }
 
