@@ -4,13 +4,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PlayerPage } from './player.page';
-import {HideToolbarDirective} from '../../directives/hide-toolbar.directive';
 import {AboutEpocPage} from './about-epoc/about-epoc.page';
 import {DownloadEpocPage} from './download-epoc/download-epoc.page';
 import {ScoreEpocPage} from './score-epoc/score-epoc.page';
 import {TocEpocPage} from './toc-epoc/toc-epoc.page';
 import {BookmarksEpocPage} from './bookmarks-epoc/bookmarks-epoc.page';
 import {AssessmentButtonModule} from '../../components/assessment-button/assessment-button.module';
+import {PlayerSettingsPage} from './settings/player-settings.page';
 
 @NgModule({
   imports: [
@@ -26,9 +26,10 @@ import {AssessmentButtonModule} from '../../components/assessment-button/assessm
         { path: 'score/:id', component: ScoreEpocPage },
         { path: 'toc/:id', component: TocEpocPage },
         { path: 'bookmarks/:id', component: BookmarksEpocPage },
+        { path: 'settings', component: PlayerSettingsPage },
         { path: '**',   redirectTo: '/tabs/tab1' }
     ])
   ],
-  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage, BookmarksEpocPage, HideToolbarDirective]
+  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage, BookmarksEpocPage, PlayerSettingsPage]
 })
 export class PlayerPageModule {}
