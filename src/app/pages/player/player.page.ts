@@ -17,8 +17,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
-
-    readings: Reading[];
+    reading: Reading;
 
     // Reader
     fontSize = 14;
@@ -50,7 +49,9 @@ export class PlayerPage implements OnInit, AfterViewInit {
                 this.libraryService.getEpoc(params.get('id')))
         );
 
-        this.currentPage = +this.route.snapshot.paramMap.get('page');
+        this.readingStore.readings$.subscribe(readings => {
+            this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
+        });
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
@@ -60,7 +61,9 @@ export class PlayerPage implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.initReader();
+            const progress = this.route.snapshot.paramMap.has('progress') ?
+                +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
+            this.initReader(progress);
         }, 200);
     }
 
@@ -94,12 +97,17 @@ export class PlayerPage implements OnInit, AfterViewInit {
         }
     }
 
-    initReader() {
+    initReader(progress?: number) {
         this.pagePerView = Math.ceil(window.innerWidth / 768);
         this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
         setTimeout(() => {
             this.pageCount = this.getPageCount();
-            this.goToNearestPage();
+            if (progress) {
+                this.currentPage = Math.floor(progress / 100 * this.pageCount);
+                this.goToPage(this.currentPage);
+            } else {
+                this.goToNearestPage();
+            }
         }, 200);
     }
 
@@ -133,6 +141,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
     goToPage(pageNumber) {
         this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
         this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
+        this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.getProgress() * 100));
     }
 
     prevPage() {
@@ -161,6 +170,17 @@ export class PlayerPage implements OnInit, AfterViewInit {
         return this.currentPage / this.pageCount;
     }
 
+    toggleBookmark() {
+        this.readingStore.toggleBookmark(this.epoc.id, Math.ceil(this.getProgress() * 100));
+    }
+
+    isBookmarked() {
+        if (this.reading) {
+            return this.reading.bookmarks.indexOf(Math.ceil(this.getProgress() * 100)) !== -1;
+        }
+        return false;
+    }
+
     displayMenu() {
         this.presentActionSheet();
     }
@@ -186,7 +206,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
                     text: 'Poser un signet',
                     icon: 'bookmark',
                     handler: () => {
-                        console.log('add bookmark');
+                        this.toggleBookmark();
                     }
                 },
                 {
