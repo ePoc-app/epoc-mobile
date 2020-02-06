@@ -49,6 +49,10 @@ export class PlayerPage implements OnInit, AfterViewInit {
         );
 
         this.currentPage = +this.route.snapshot.paramMap.get('page');
+
+        this.epoc$.subscribe(epoc => {
+            this.readingStore.addReading(epoc);
+        });
     }
 
     ngAfterViewInit() {
