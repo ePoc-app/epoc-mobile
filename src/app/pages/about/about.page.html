@@ -1,29 +1,58 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>About</ion-title>
+    <div class="logo" slot="start">
+      <ion-img src="/assets/icon/logo-ill.png"></ion-img>
+    </div>
+    <div class="logo" slot="end">
+      <ion-img src="/assets/icon/logo.png"></ion-img>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col class="ion-text-center">
-        <h1>ePoc Reader</h1>
-        <div>
-          Electronic Pocket Open Course Reader
-        </div>
-        <div>
-          <ion-img src="/assets/icon/favicon.png"></ion-img>
-        </div>
+  <div class="about-content-wrapper">
+    <h4>Le projet ePoc</h4>
+    <p>
+      Les ePoc (Electronic Pocket Open Cours) sont des formations numériques
+      développées au sein d'<a href="https://learninglab.inria.fr" target="_blank" title="Inria Learning Lab">Inria Learning Lab</a>.
+    </p>
 
-        <div class="version">
-          <small>Version 0.2</small><br/>
-          <small>Decembre 2019</small>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <h4>Nous contacter</h4>
+
+    <ion-grid class="authors">
+      <ion-row>
+        <ion-col size="6">
+          <img src="/assets/team/benoit.jpg" />
+          <p>
+            Développeur<br/>
+            Inria Learning Lab<br/>
+            Benoit Rospars
+          </p>
+        </ion-col>
+        <ion-col size="6">
+          <img src="/assets/team/jean-marc.jpg" />
+          <p>
+            Responsable<br/>
+            Inria Learning Lab<br/>
+            Jean-Marc Hasenfratz
+          </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <a href="mailto:ill-mooc-contact@inria.fr" title="Contact Inria Learning Lab">ill-mooc-contact@inria.fr</a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h4>Vie privée</h4>
+    <p>Aucune donnée personnelle n'est collectée. Seules des statistiques de fréquentation
+    pour un usage exclusif à Inria Learning Lab à des fins de calcul d'audience.</p>
+  </div>
 </ion-content>
+
+<ion-footer mode="ios">
+  <ion-button class="go-back" routerLink="/" routerDirection="backward" expand="block" slot="fixed">
+    Ok
+  </ion-button>
+</ion-footer>
