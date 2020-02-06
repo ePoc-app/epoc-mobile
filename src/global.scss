@@ -26,13 +26,37 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 .custom-action-sheet{
+  .action-sheet-title{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--background);
+    color: var(--ion-color-inria-blue);
+    font-size: 18px;
+    font-weight: 600;
+    padding: 4vh 1em 2vh 1em;
+  }
+  .action-sheet-button.splitter{
+    padding:0;
+    height:1px;
+  }
+  .action-sheet-button:not(.splitter){
+    background-image: none;
+  }
   .action-sheet-button-inner{
-    display: block;
-    text-align: left;
-    color: black;
+    justify-content: left;
+    color: #111;
+  }
 
-    .action-sheet-icon{
-      float: right;
+  .action-sheet-icon{
+    margin-right: 18px !important;
+  }
+
+  .action-sheet-group-cancel{
+    .action-sheet-button-inner{
+      justify-content: center;
+      color: var(--ion-color-inria);
     }
   }
 }
@@ -114,6 +138,10 @@
   --ion-color-contrast-rgb: var(--ion-color-inria-spe-contrast-rgb);
   --ion-color-shade: var(--ion-color-inria-spe-shade);
   --ion-color-tint: var(--ion-color-inria-spe-tint);
+}
+
+.ion-page {
+  background: white;
 }
 
 .bold{

@@ -16,6 +16,7 @@ import {LibraryService} from '../../services/library.service';
 export class PlayerPage implements OnInit, AfterViewInit {
 
     epoc$: Observable<Epoc>;
+    epoc: Epoc;
 
     readings: Reading[];
 
@@ -23,7 +24,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
     fontSize = 14;
     pagePerView = Math.ceil(window.innerWidth / 640);
     columnWidth = (100 / this.pagePerView - 2) + 'vw';
-    contentStyles = {'font-size' : this.fontSize + 'px'};
+    contentStyles = {'font-size': this.fontSize + 'px'};
     currentPage = 0;
     pageCount = 1;
     pageWrapperTransform = 'translateX(0)';
@@ -40,7 +41,8 @@ export class PlayerPage implements OnInit, AfterViewInit {
         public actionSheetController: ActionSheetController,
         private libraryService: LibraryService,
         private readingStore: ReadingStoreService
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
@@ -51,6 +53,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
         this.currentPage = +this.route.snapshot.paramMap.get('page');
 
         this.epoc$.subscribe(epoc => {
+            this.epoc = epoc;
             this.readingStore.addReading(epoc);
         });
     }
@@ -75,7 +78,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
         // Swipe left
         if (deltaX < -80 && deltaX > -400) {
             this.prevPage();
-        // Swipe right
+            // Swipe right
         } else if (this.startOffset - this.pageWrapperOffset > 80 && this.startOffset - this.pageWrapperOffset < 400) {
             this.nextPage();
         }
@@ -106,7 +109,7 @@ export class PlayerPage implements OnInit, AfterViewInit {
     changeFontSize(delta) {
         if (this.fontSize + delta > 8 && this.fontSize + delta < 24) {
             this.fontSize = this.fontSize + delta;
-            this.contentStyles = {'font-size' : this.fontSize + 'px'};
+            this.contentStyles = {'font-size': this.fontSize + 'px'};
             this.initReader();
         }
     }
@@ -162,15 +165,62 @@ export class PlayerPage implements OnInit, AfterViewInit {
 
     async presentActionSheet() {
         const actionSheet = await this.actionSheetController.create({
-            header: 'Albums',
-            buttons: [{
-                text: 'Cancel',
-                icon: 'close',
-                role: 'cancel',
-                handler: () => {
-                    console.log('Cancel clicked');
+            cssClass: 'custom-action-sheet',
+            mode: 'ios',
+            header: this.epoc.title,
+            subHeader: 'Score : 25/100',
+            buttons: [
+                {
+                    text: 'Accueil',
+                    icon: 'home',
+                    handler: () => {
+                        this.router.navigate(['/']);
+                    }
+                },
+                {
+                    cssClass: 'splitter'
+                },
+                {
+                    text: 'Poser un signet',
+                    icon: 'bookmark',
+                    handler: () => {
+                        console.log('add bookmark');
+                    }
+                },
+                {
+                    text: 'Liste des signets',
+                    icon: 'bookmarks',
+                    handler: () => {
+                        this.router.navigateByUrl('/player/bookmarks/' + this.epoc.id);
+                    }
+                },
+                {
+                    text: 'Tables des matières',
+                    icon: 'list'
+                },
+                {
+                    text: 'Pages',
+                    icon: 'book'
+                },
+                {
+                    cssClass: 'splitter'
+                },
+                {
+                    text: 'Détails des scores',
+                    icon: 'podium'
+                },
+                {
+                    cssClass: 'splitter'
+                },
+                {
+                    text: 'Paramètres',
+                    icon: 'cog'
+                },
+                {
+                    text: 'Fermer',
+                    role: 'cancel'
                 }
-            }]
+            ]
         });
         await actionSheet.present();
     }
