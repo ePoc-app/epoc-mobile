@@ -99,47 +99,7 @@ const DummyHtmlContent = (length) => {
 };
 
 const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
-    {
-        id: '1',
-        type: 'cover',
-        name: 'Cover',
-    },
-    {
-        id: '1bis',
-        type: 'assessment',
-        name: 'Placement',
-        items: [
-            {
-                type: 'choice',
-                score: 5,
-                statement: '',
-                label: 'Quel est votre niveau ?',
-                responses: [
-                    {
-                        label: 'Débutant',
-                        value: '1'
-                    },
-                    {
-                        label: 'Amateur',
-                        value: '2'
-                    },
-                    {
-                        label: 'Expert',
-                        value: '3'
-                    }
-                ],
-                correctResponse: ''
-            },
-            {
-                type: 'text',
-                score: 20,
-                statement: '',
-                label: 'Quel est votre nom ?',
-                correctResponse: '.*'
-            }
-        ]
-    },
-    {
+        {
         id: '2',
         type: 'chapter',
         name: 'Mise en situation pour aborder les règles de fonctionnement d\'une ZRR',
