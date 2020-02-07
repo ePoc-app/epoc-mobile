@@ -12,23 +12,21 @@ export class AssessmentButtonComponent implements OnInit {
     @Input('epoc') epoc;
     @Input('content') content;
 
-    readings: Reading[];
+    reading: Reading;
 
     constructor(
         private readingStore: ReadingStoreService
     ) {}
 
     ngOnInit() {
-        this.readingStore.readings$.subscribe(readings => this.readings = readings);
+        this.readingStore.readings$.subscribe(readings => {
+            this.reading = readings.find(item => item.epocId === this.epoc.id);
+        });
     }
 
     getScore(content) {
-        const reading = this.readings.find((r) => {
-            return r.epocId === this.epoc.id;
-        });
-
-        if (reading) {
-            const userAssessment = reading.assessments.find(assessment => assessment.id === content.id);
+        if (this.reading) {
+            const userAssessment = this.reading.assessments.find(assessment => assessment.id === content.id);
             if (userAssessment) {
                 return content.items.reduce((score, item, index) => {
                     return item.correctResponse === userAssessment.responses.sort().join('') ? score + item.score : 0;
