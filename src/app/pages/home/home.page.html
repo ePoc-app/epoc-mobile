@@ -28,7 +28,8 @@
       <ion-row>
         <ion-col>
           <div class="trailer-course" (click)="togglePlay($event)">
-            <video src="assets/demo/objectifs-pedagogiques.mp4" (play)="play($event)" (pause)="pause($event)"></video>
+            <ion-img src="assets/demo/vignette.png" *ngIf="!hasPlayed"></ion-img>
+            <video src="assets/demo/objectifs-pedagogiques.mp4" preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
           </div>
         </ion-col>
       </ion-row>
