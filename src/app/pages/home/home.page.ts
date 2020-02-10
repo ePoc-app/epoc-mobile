@@ -12,6 +12,7 @@ export class HomePage implements OnInit {
 
     epoc$: Observable<Epoc>;
     zrrId = 'C042AD';
+    hasPlayed = false;
 
     constructor(
         private elRef: ElementRef,
@@ -24,7 +25,12 @@ export class HomePage implements OnInit {
 
     togglePlay($event) {
         const video = $event.target.nodeName === 'VIDEO' ? $event.target : $event.target.querySelector('video');
-        video.paused ? video.play() : video.pause();
+        if (video.paused) {
+            video.play();
+            this.hasPlayed = true;
+        } else {
+            video.pause();
+        }
     }
 
     play($event) {
