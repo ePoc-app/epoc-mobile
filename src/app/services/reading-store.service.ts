@@ -62,7 +62,13 @@ export class ReadingStoreService {
 
         const assessmentIndex = this.readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
 
-        this.readings[index].assessments[assessmentIndex] = responses;
+        if (assessmentIndex !== -1) {
+            this.readings[index].assessments[assessmentIndex] = responses;
+        } else {
+            this.readings[index].assessments.push(responses);
+        }
+
+        console.log(this.readings);
 
         this.saveReadings();
     }
