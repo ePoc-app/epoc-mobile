@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Activité</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollY]="false" *ngIf="assessment">
+  <ion-slides #questionSlides [options]="slidesOptions">
+    <ng-container *ngFor="let question of assessment.items; let questionIndex = index;">
+      <ion-slide class="assessment-item">
+        <ng-container *ngIf="question.type === 'choice'">
+          <simple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.items.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
+        </ng-container>
+      </ion-slide>
+      <ion-slide class="assessment-item-explanation">
+        <ion-card mode="ios" class="explanation-card">
+          <ion-card-header mode="ios" *ngIf="questionsSuccessed[questionIndex]">
+            <ion-icon name="checkmark-circle-outline" mode="ios" color="success" class="explanation-icon"></ion-icon>
+            <ion-card-subtitle mode="ios">Explication</ion-card-subtitle>
+            <ion-card-title mode="ios">Bravo !</ion-card-title>
+          </ion-card-header>
+          <ion-card-header mode="ios" *ngIf="!questionsSuccessed[questionIndex]">
+            <ion-icon name="close-circle-outline" mode="ios" color="danger" class="explanation-icon"></ion-icon>
+            <ion-card-subtitle mode="ios">Explication</ion-card-subtitle>
+            <ion-card-title mode="ios">Non !</ion-card-title>
+          </ion-card-header>
+          <ion-card-content mode="ios">
+            <ion-text [innerHTML]="question.explanation"></ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ng-container>
+  </ion-slides>
+</ion-content>
+
+<ion-footer>
+  <ion-button class="check-answer" expand="block" slot="center" (click)="checkAnswer()" *ngIf="!explanationShown">Submit</ion-button>
+  <ion-button class="check-answer" expand="block" slot="center" (click)="nextQuestion()" *ngIf="explanationShown">Got it, next !</ion-button>
+</ion-footer>

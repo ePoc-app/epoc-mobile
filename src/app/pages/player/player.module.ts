@@ -11,6 +11,8 @@ import {TocEpocPage} from './toc-epoc/toc-epoc.page';
 import {BookmarksEpocPage} from './bookmarks-epoc/bookmarks-epoc.page';
 import {AssessmentButtonModule} from '../../components/assessment-button/assessment-button.module';
 import {PlayerSettingsPage} from './settings/player-settings.page';
+import {AssessmentPage} from './assessment/assessment.page';
+import {SimpleChoiceComponent} from './assessment/components/simple-choice/simple-choice.component';
 
 @NgModule({
   imports: [
@@ -27,9 +29,10 @@ import {PlayerSettingsPage} from './settings/player-settings.page';
         { path: 'toc/:id', component: TocEpocPage },
         { path: 'bookmarks/:id', component: BookmarksEpocPage },
         { path: 'settings', component: PlayerSettingsPage },
+        { path: 'assessment/:epocId/:assessmentId', component: AssessmentPage },
         { path: '**',   redirectTo: '/tabs/tab1' }
     ])
   ],
-  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage, BookmarksEpocPage, PlayerSettingsPage]
+  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage, BookmarksEpocPage, PlayerSettingsPage, AssessmentPage, SimpleChoiceComponent]
 })
 export class PlayerPageModule {}

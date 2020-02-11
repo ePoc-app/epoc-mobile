@@ -1,15 +1,21 @@
 <div>
-  <ion-button expand="block" strong="true" *ngIf="getScore(content) === null">
+  <ion-button expand="block" strong="true"
+              (click)="$event.preventDefault();$event.stopPropagation()"
+              [routerLink]="['/player/assessment', epoc.id, content.id]" *ngIf="getScore(content) === null">
     Commencer l'activité
     <small>(0/{{getScoreTotal(content)}})</small>
     <ion-icon name="create" mode="md" slot="end"></ion-icon>
   </ion-button>
-  <ion-button expand="block" color="warning" strong="true" *ngIf="getScore(content) !== null && getScore(content) < getScoreTotal(content)">
+  <ion-button expand="block" color="warning" strong="true"
+              (click)="$event.preventDefault();$event.stopPropagation()"
+              [routerLink]="['/player/assessment', epoc.id, content.id]" *ngIf="getScore(content) !== null && getScore(content) < getScoreTotal(content)">
     Réessayer l'activité
     <small>({{getScore(content)}}/{{getScoreTotal(content)}})</small>
     <ion-icon name="create" mode="md" slot="end"></ion-icon>
   </ion-button>
-  <ion-button expand="block" color="success" strong="true" *ngIf="getScore(content) === getScoreTotal(content)">
+  <ion-button expand="block" color="success" strong="true"
+              (click)="$event.preventDefault();$event.stopPropagation()"
+              [routerLink]="['/player/assessment', epoc.id, content.id]" *ngIf="getScore(content) === getScoreTotal(content)">
     Activité réussie
     <small>({{getScore(content)}}/{{getScoreTotal(content)}})</small>
     <ion-icon name="checkmark" mode="md" slot="end"></ion-icon>

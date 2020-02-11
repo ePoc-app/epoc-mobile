@@ -1,0 +1,41 @@
+.assessment{
+  padding:20px;
+}
+
+.check-answer{
+  margin: 1em auto;
+  width: calc(100% - 2em);
+  max-width: 380px;
+}
+
+.swiper-container{
+  height:100%;
+}
+
+.assessment-item{
+  align-items: stretch;
+}
+
+.question{
+  display: flex;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.explanation-card{
+  justify-content: space-evenly;
+  flex-direction: column;
+  display: flex;
+  min-height: calc(100% - 48px);
+  max-width: 480px;
+  width: 100%;
+
+  .card-content-ios{
+    padding-top: 0;
+  }
+
+  .explanation-icon{
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+}

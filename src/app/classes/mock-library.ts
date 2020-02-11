@@ -137,7 +137,53 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
                         value: 'B'
                     }
                 ],
-                correctResponse: 'A'
+                correctResponse: 'A',
+                explanation: '' +
+                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem corporis deleniti fuga minima nisi nobis ' +
+                    'voluptatum. Autem ducimus expedita impedit, nobis numquam optio reprehenderit unde voluptatem? Aliquid, deleniti, ' +
+                    'nostrum.'
+            },
+            {
+                type: 'choice',
+                score: 15,
+                statement: '',
+                label: 'Que signifie ePoc',
+                responses: [
+                    {
+                        label: 'Enorme porte orienté couloir',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Electronic Portable Open Course',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Enigmatique Pokémon',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B'
+            },
+            {
+                type: 'choice',
+                score: 10,
+                statement: '',
+                label: 'Quel est la couleur du cheval blanc d\'Henri IV ?',
+                responses: [
+                    {
+                        label: 'Bleu',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Blanc',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Gris car il s\'est roulé dans la poussière',
+                        value: 'B'
+                    }
+                ],
+                correctResponse: 'B'
             }
         ]
     },
