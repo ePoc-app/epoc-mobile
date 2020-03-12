@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Reading} from '../classes/reading';
-import {Epoc} from '../classes/epoc';
 import {StorageService} from './storage.service';
 
 @Injectable({
@@ -9,7 +8,7 @@ import {StorageService} from './storage.service';
 })
 export class ReadingStoreService {
 
-    private readonly readingsSubject = new BehaviorSubject<Reading[]>([]);
+    private readonly readingsSubject = new BehaviorSubject<Reading[]>(undefined);
     readonly readings$ = this.readingsSubject.asObservable();
 
     constructor(private storageService: StorageService) {
@@ -24,9 +23,10 @@ export class ReadingStoreService {
         this.readingsSubject.next(val);
     }
 
-    async fetchReadings() {
-        const readings = await this.storageService.getValue('readings');
-        this.readings = readings ? JSON.parse(readings) : [];
+    fetchReadings() {
+        this.storageService.getValue('readings').then( (readings) => {
+            this.readings = readings ? JSON.parse(readings) : [];
+        });
     }
 
     saveReadings() {
@@ -52,7 +52,7 @@ export class ReadingStoreService {
     updateProgress(epocId: string, progress: number) {
         const index = this.readings.findIndex(reading => reading.epocId === epocId);
 
-        this.readings[index].progress = progress > this.readings[index].progress ? progress : this.readings[index].progress;
+        this.readings[index].progress = progress;
 
         this.saveReadings();
     }
@@ -67,8 +67,6 @@ export class ReadingStoreService {
         } else {
             this.readings[index].assessments.push(responses);
         }
-
-        console.log(this.readings);
 
         this.saveReadings();
     }

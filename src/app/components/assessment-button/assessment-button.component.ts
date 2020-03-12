@@ -20,7 +20,9 @@ export class AssessmentButtonComponent implements OnInit {
 
     ngOnInit() {
         this.readingStore.readings$.subscribe(readings => {
-            this.reading = readings.find(item => item.epocId === this.epoc.id);
+            if (readings) {
+                this.reading = readings.find(item => item.epocId === this.epoc.id);
+            }
         });
     }
 

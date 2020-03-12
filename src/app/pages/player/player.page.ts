@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {ReadingStoreService} from '../../services/reading-store.service';
@@ -13,7 +13,7 @@ import {LibraryService} from '../../services/library.service';
     templateUrl: 'player.page.html',
     styleUrls: ['player.page.scss']
 })
-export class PlayerPage implements OnInit, AfterViewInit {
+export class PlayerPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -50,9 +50,11 @@ export class PlayerPage implements OnInit, AfterViewInit {
         );
 
         this.readingStore.readings$.subscribe(readings => {
-            const epocId = this.route.snapshot.paramMap.get('id');
-            this.reading = readings.find(item => item.epocId === epocId);
-            this.readingStore.addReading(epocId);
+            if (readings) {
+                const epocId = this.route.snapshot.paramMap.get('id');
+                this.reading = readings.find(item => item.epocId === epocId);
+                this.afterDataInit();
+            }
         });
 
         this.epoc$.subscribe(epoc => {
@@ -60,12 +62,13 @@ export class PlayerPage implements OnInit, AfterViewInit {
         });
     }
 
-    ngAfterViewInit() {
+    afterDataInit() {
         setTimeout(() => {
+            this.readingStore.addReading(this.epoc.id);
             const progress = this.route.snapshot.paramMap.has('progress') ?
                 +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
             this.initReader(progress);
-        }, 200);
+        }, 500);
     }
 
     onResize() {
