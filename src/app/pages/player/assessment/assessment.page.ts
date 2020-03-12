@@ -28,6 +28,8 @@ export class AssessmentPage implements OnInit {
         allowTouchMove: false
     };
 
+    userScore = 0;
+    userResponses: string[] = [];
     questionsSuccessed: boolean[];
     currentQuestion = 0;
     currentAnswer;
@@ -52,7 +54,10 @@ export class AssessmentPage implements OnInit {
         this.assessmentId = this.route.snapshot.paramMap.get('assessmentId');
 
         this.readingStore.readings$.subscribe(readings => {
-            this.reading = readings.find(item => item.epocId === this.epocId);
+            if (readings) {
+                this.reading = readings.find(item => item.epocId === this.epocId);
+                console.log(readings);
+            }
         });
 
         this.epoc$.subscribe(epoc => {
@@ -71,11 +76,13 @@ export class AssessmentPage implements OnInit {
         } else {
             this.questionFailed();
         }
+        this.userResponses.push(this.currentAnswer);
         this.explanationShown = true;
         this.questionSlides.slideNext();
     }
 
     questionSuccessed() {
+        this.userScore += this.assessment.items[this.currentQuestion].score;
         this.questionsSuccessed[this.currentQuestion] = true;
     }
 
@@ -90,6 +97,7 @@ export class AssessmentPage implements OnInit {
             this.explanationShown = false;
             this.questionSlides.slideNext();
         } else {
+            this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
             this.location.back();
         }
     }

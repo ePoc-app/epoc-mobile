@@ -7,6 +7,7 @@ export class Reading {
 
 class UserAssessment {
     id: string;
+    score: number;
     responses: string[];
 }
 
