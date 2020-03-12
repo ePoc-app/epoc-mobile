@@ -33,12 +33,12 @@ export class ReadingStoreService {
         this.storageService.setValue('readings', JSON.stringify(this.readings));
     }
 
-    addReading(epoc: Epoc) {
-        if (this.readings.findIndex(reading => reading.epocId === epoc.id) === -1) {
+    addReading(epocId) {
+        if (this.readings.findIndex(reading => reading.epocId === epocId) === -1) {
             this.readings = [
                 ...this.readings,
                 {
-                    epocId: epoc.id,
+                    epocId,
                     progress: 0,
                     assessments: [],
                     bookmarks: []

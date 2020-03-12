@@ -50,12 +50,13 @@ export class PlayerPage implements OnInit, AfterViewInit {
         );
 
         this.readingStore.readings$.subscribe(readings => {
-            this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
+            const epocId = this.route.snapshot.paramMap.get('id');
+            this.reading = readings.find(item => item.epocId === epocId);
+            this.readingStore.addReading(epocId);
         });
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-            this.readingStore.addReading(epoc);
         });
     }
 
