@@ -30,9 +30,7 @@ export class AssessmentButtonComponent implements OnInit {
         if (this.reading) {
             const userAssessment = this.reading.assessments.find(assessment => assessment.id === content.id);
             if (userAssessment) {
-                return content.items.reduce((score, item, index) => {
-                    return item.correctResponse === userAssessment.responses.sort().join('') ? score + item.score : 0;
-                }, 0);
+                return userAssessment.score;
             }
         }
 

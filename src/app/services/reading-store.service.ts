@@ -57,15 +57,23 @@ export class ReadingStoreService {
         this.saveReadings();
     }
 
-    saveResponses(epocId: string, assessmentId, responses) {
+    saveResponses(epocId: string, assessmentId: string, score: number, responses) {
         const index = this.readings.findIndex(reading => reading.epocId === epocId);
 
         const assessmentIndex = this.readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
 
         if (assessmentIndex !== -1) {
-            this.readings[index].assessments[assessmentIndex] = responses;
+            this.readings[index].assessments[assessmentIndex] = {
+                id: assessmentId,
+                score,
+                responses
+            };
         } else {
-            this.readings[index].assessments.push(responses);
+            this.readings[index].assessments.push({
+                id: assessmentId,
+                score,
+                responses
+            });
         }
 
         this.saveReadings();
