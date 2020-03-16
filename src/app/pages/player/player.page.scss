@@ -46,6 +46,11 @@
     top:0;
     right: 5px;
     font-size: 20px;
+    color: var(--ion-color-light);
+
+    .bookmarked{
+      color: var(--ion-color-inria);
+    }
   }
 }
 
