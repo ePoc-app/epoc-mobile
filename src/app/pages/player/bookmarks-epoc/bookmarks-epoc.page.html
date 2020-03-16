@@ -8,16 +8,14 @@
 </ion-header>
 
 <ion-content *ngIf="epoc$ | async as epoc">
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <b>Bookmarks list :</b>
-        <ul>
-          <li *ngFor="let bookmark of reading.bookmarks" >
-            <a [routerLink]="'/player/play/'+epoc.id+'/'+bookmark" class="underline">Page {{bookmark}}</a>
-          </li>
-        </ul>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list *ngIf="reading.bookmarks.length > 0">
+    <ion-item *ngFor="let bookmark of reading.bookmarks; let i = index;" [routerLink]="'/player/play/'+epoc.id+'/'+bookmark">
+      <ion-icon name="bookmark" color="inria"></ion-icon>
+      <ion-label>Signet {{i + 1}}</ion-label>
+      <ion-note slot="end" color="primary">{{bookmark}}%</ion-note>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="reading.bookmarks.length <= 0">
+    <ion-item>Aucun signet</ion-item>
+  </ion-list>
 </ion-content>

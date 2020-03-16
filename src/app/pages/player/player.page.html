@@ -48,8 +48,8 @@
     <div class="reader-action">
       <div class="page-action page-prev" (click)="prevPage()"></div>
       <div class="page-action page-next" (click)="nextPage()"></div>
-      <div class="reader-bookmark" *ngIf="isBookmarked()" (click)="toggleBookmark()">
-        <ion-icon name="bookmark" color="primary"></ion-icon>
+      <div class="reader-bookmark" (click)="toggleBookmark()">
+        <ion-icon [ngClass]="isBookmarked() ? 'bookmarked':''" name="bookmark"></ion-icon>
       </div>
       <div class="reader-progress">
         <ion-progress-bar color="inria" [value]="getProgress()"></ion-progress-bar>
