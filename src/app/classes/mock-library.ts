@@ -15,7 +15,6 @@ const DummyHtmlContent = (length) => {
         '  <li>Aenean commodo ligula eget dolor.</li>' +
         '  <li>Aenean massa cum sociis natoque penatibus.</li>' +
         '</ul>',
-        '<video src="assets/demo/video.mp4" controls="true"></video>',
         '<h2>The bedding was hardly able to cover it.</h2>',
         '<ul>' +
         '  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing ' +
@@ -264,7 +263,36 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         ]
     },
     {
-        id: '10',
+        id: 'a',
+        type: 'assessment',
+        name: 'Quiz 2',
+        toc: 2,
+        items: [
+            {
+                type: 'choice',
+                score: 10,
+                statement: '',
+                label: 'Qui est le chef ?',
+                responses: [
+                    {
+                        label: 'Laurence',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Benoit',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Jean-Marc',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'C'
+            }
+        ]
+    },
+    {
+        id: 'b',
         type: 'html',
         name: 'Chapter 3',
         value: DummyHtmlContent(1240),
@@ -290,7 +318,7 @@ export const MockLibrary: Epoc[] =  [
             'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
             'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
-        outline: Array.from('123456789'),
+        outline: Array.from('1234567a89b'),
         content: MockContents
     },
     {
