@@ -25,7 +25,9 @@ export class BookmarksEpocPage implements OnInit{
 
     ngOnInit() {
         this.readingStore.readings$.subscribe(readings => {
-            this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
+            if (readings) {
+                this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
+            }
         });
 
         this.epoc$ = this.route.paramMap.pipe(
