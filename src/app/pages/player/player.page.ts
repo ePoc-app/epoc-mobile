@@ -232,11 +232,11 @@ export class PlayerPage implements OnInit {
                     handler: () => {
                         this.router.navigateByUrl('/player/toc/' + this.epoc.id);
                     }
-                },
+                }, /*
                 {
                     text: 'Pages',
                     icon: 'book'
-                },
+                }, */
                 {
                     cssClass: 'splitter'
                 },
