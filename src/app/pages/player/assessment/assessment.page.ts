@@ -56,7 +56,6 @@ export class AssessmentPage implements OnInit {
         this.readingStore.readings$.subscribe(readings => {
             if (readings) {
                 this.reading = readings.find(item => item.epocId === this.epocId);
-                console.log(readings);
             }
         });
 

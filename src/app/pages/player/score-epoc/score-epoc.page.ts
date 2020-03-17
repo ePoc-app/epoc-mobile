@@ -31,6 +31,8 @@ export class ScoreEpocPage implements OnInit {
         totalScore: 0
     };
 
+    chartjs;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -85,8 +87,11 @@ export class ScoreEpocPage implements OnInit {
         this.readingStore.readings$.subscribe(readings => {
             if (readings) {
                 this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
-                this.getAssessmentsData();
-                this.createBarChart();
+
+                setTimeout(() => {
+                    this.getAssessmentsData();
+                    this.createBarChart();
+                }, 200);
             }
         });
         this.epoc$ = this.route.paramMap.pipe(
@@ -116,7 +121,6 @@ export class ScoreEpocPage implements OnInit {
             } else if (userAssessment && userAssessment.score < scoreTotal) {
                 this.assessmentData.totalUserScore += userAssessment.score;
                 this.assessmentData.attemptedScore += scoreTotal;
-                console.log(this.assessmentData);
             } else {
                 this.assessmentData.todoScore += scoreTotal;
             }
@@ -126,7 +130,7 @@ export class ScoreEpocPage implements OnInit {
 
     createBarChart() {
 
-        this.chart = new Chart(this.chart.nativeElement, {
+        this.chartjs = new Chart(this.chart.nativeElement, {
             type: 'doughnut',
             options: {
                 responsive: true,
