@@ -7,11 +7,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="epoc$ | async as epoc">
+<ion-content>
   <ion-grid>
     <ion-row>
       <ion-col>
-        <b>Score of :</b> {{epoc.title}}
+        <canvas #chart></canvas>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf="epoc$ | async as epoc">
+        <b>Accès rapide :</b>
+        <ng-container *ngFor="let assessment of assessments">
+          <assessment-button [content]="assessment" [epoc]="epoc"></assessment-button>
+        </ng-container>
       </ion-col>
     </ion-row>
   </ion-grid>
