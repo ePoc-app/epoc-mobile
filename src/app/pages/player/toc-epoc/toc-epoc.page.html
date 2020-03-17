@@ -8,11 +8,12 @@
 </ion-header>
 
 <ion-content *ngIf="epoc$ | async as epoc">
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <b>Table of content of :</b> {{epoc.title}}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list *ngIf="toc">
+    <ion-item *ngFor="let content of toc;" [class]="'level-' + content.toc" [routerLink]="'/player/play/'+epoc.id">
+      <ion-icon *ngIf="content.type === 'html'" name="paper" slot="end"></ion-icon>
+      <ion-icon *ngIf="content.type === 'video'" name="play" slot="end"></ion-icon>
+      <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="end"></ion-icon>
+      <ion-label>{{content.name}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

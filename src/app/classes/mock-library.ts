@@ -99,17 +99,26 @@ const DummyHtmlContent = (length) => {
 };
 
 const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
-        {
-        id: '2',
+    {
+        id: '1',
         type: 'chapter',
         name: 'Mise en situation pour aborder les règles de fonctionnement d\'une ZRR',
-        number: '1'
+        number: '1',
+        toc: 1
+    },
+    {
+        id: '2',
+        type: 'video',
+        name: 'Video',
+        source: 'assets/demo/video.mp4',
+        toc: 2
     },
     {
         id: '3',
         type: 'html',
         name: 'Welcome',
-        value: DummyHtmlContent(2000)
+        value: DummyHtmlContent(2000),
+        toc: 2
     },
     {
         id: '4',
@@ -185,19 +194,22 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
                 ],
                 correctResponse: 'B'
             }
-        ]
+        ],
+        toc: 2
     },
     {
         id: '6',
         type: 'chapter',
         name: 'La suite du cours ZRR',
-        number: '2'
+        number: '2',
+        toc: 1
     },
     {
         id: '7',
         type: 'html',
-        name: 'Chapter 2',
-        value: DummyHtmlContent(1240)
+        name: 'Chapter 2 content',
+        value: DummyHtmlContent(1240),
+        toc: 2
     },
     {
         id: '8',
@@ -209,6 +221,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: '9',
         type: 'assessment',
         name: 'Le référent sécurité',
+        toc: 2,
         items: [
             {
                 type: 'choice',
@@ -254,7 +267,8 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: '10',
         type: 'html',
         name: 'Chapter 3',
-        value: DummyHtmlContent(1240)
+        value: DummyHtmlContent(1240),
+        toc: 1
     }
 ];
 
@@ -276,7 +290,7 @@ export const MockLibrary: Epoc[] =  [
             'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
             'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
-        outline: Array.from('1234567'),
+        outline: Array.from('123456789'),
         content: MockContents
     },
     {

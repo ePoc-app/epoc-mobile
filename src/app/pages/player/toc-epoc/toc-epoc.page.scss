@@ -1,0 +1,9 @@
+@for $i from 1 through 5 {
+  .level-#{$i} {
+    padding-left: ($i - 1) * 20px;
+  }
+
+  .level-1 {
+    font-weight: bold;
+  }
+}
