@@ -103,4 +103,12 @@ export class ReadingStoreService {
 
         this.saveReadings();
     }
+
+    removeBookmark(epocId: string, index: number) {
+        const readingIndex = this.readings.findIndex(reading => reading.epocId === epocId);
+
+        this.readings[readingIndex].bookmarks.splice(index, 1);
+
+        this.saveReadings();
+    }
 }
