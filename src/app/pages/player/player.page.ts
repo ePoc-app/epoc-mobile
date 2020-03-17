@@ -7,6 +7,7 @@ import {Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {ReadingStoreService} from '../../services/reading-store.service';
 import {LibraryService} from '../../services/library.service';
+import {Content} from '../../classes/contents/content';
 
 @Component({
     selector: 'app-player',
