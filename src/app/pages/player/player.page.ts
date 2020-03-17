@@ -17,6 +17,7 @@ export class PlayerPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
+    contents: Content[];
     reading: Reading;
 
     // Reader
@@ -59,6 +60,10 @@ export class PlayerPage implements OnInit {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
+
+            this.contents = epoc.outline.map((id) => {
+                return epoc.content.find(item => item.id === id);
+            });
         });
     }
 
