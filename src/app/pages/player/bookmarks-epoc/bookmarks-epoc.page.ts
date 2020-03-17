@@ -16,6 +16,7 @@ export class BookmarksEpocPage implements OnInit{
 
     epoc$: Observable<Epoc>;
     reading: Reading;
+    epoc: Epoc;
 
     constructor(
         private route: ActivatedRoute,
@@ -34,5 +35,13 @@ export class BookmarksEpocPage implements OnInit{
             switchMap((params: ParamMap) =>
                 this.libraryService.getEpoc(params.get('id')))
         );
+
+        this.epoc$.subscribe(epoc => {
+            this.epoc = epoc;
+        });
+    }
+
+    deleteBookmark(i) {
+        this.readingStore.removeBookmark(this.epoc.id, i);
     }
 }
