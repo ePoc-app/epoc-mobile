@@ -1,6 +1,6 @@
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PlayerPage } from './player.page';
@@ -13,6 +13,9 @@ import {AssessmentButtonModule} from '../../components/assessment-button/assessm
 import {PlayerSettingsPage} from './settings/player-settings.page';
 import {AssessmentPage} from './assessment/assessment.page';
 import {SimpleChoiceComponent} from './assessment/components/simple-choice/simple-choice.component';
+import { ChartsModule } from 'ng2-charts';
+import { Chart } from 'chart.js';
+import ChartDoughtnutTextCenter from '../../../assets/js/chart-doughnut-textcenter-plugin.js';
 
 @NgModule({
   imports: [
@@ -30,9 +33,15 @@ import {SimpleChoiceComponent} from './assessment/components/simple-choice/simpl
         { path: 'bookmarks/:id', component: BookmarksEpocPage },
         { path: 'settings', component: PlayerSettingsPage },
         { path: 'assessment/:epocId/:assessmentId', component: AssessmentPage },
-        { path: '**',   redirectTo: '/tabs/tab1' }
-    ])
+        { path: '**',   redirectTo: '/tabs/tab1' },
+    ]),
+    ChartsModule
   ],
-  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage, BookmarksEpocPage, PlayerSettingsPage, AssessmentPage, SimpleChoiceComponent]
+  declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
+      BookmarksEpocPage, PlayerSettingsPage, AssessmentPage, SimpleChoiceComponent]
 })
-export class PlayerPageModule {}
+export class PlayerPageModule {
+    constructor() {
+        Chart.pluginService.register(ChartDoughtnutTextCenter);
+    }
+}

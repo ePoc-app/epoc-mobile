@@ -11,7 +11,9 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <canvas #chart></canvas>
+        <canvas baseChart [datasets]="doughnutChartDataset" [labels]="doughnutChartLabels"
+                [options]="doughnutChartOptions" chartType="doughnut">
+        </canvas>
       </ion-col>
     </ion-row>
     <ion-row>
