@@ -1,0 +1,17 @@
+<ion-card mode="ios" class="question-card">
+  <ion-card-header mode="ios">
+    <ion-card-subtitle mode="ios">Question {{questionMeta.index}}/{{questionMeta.total}}</ion-card-subtitle>
+    <ion-card-title mode="ios">{{question.label}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content mode="ios">
+    <p>{{question.statement}}</p>
+  </ion-card-content>
+  <ion-card-content mode="ios">
+    <ion-list>
+      <ion-item [lines]="'none'" *ngFor="let response of question.responses">
+        <ion-checkbox mode="md" slot="start" [value]="response.value" (ionChange)="selectAnswer($event)"></ion-checkbox>
+        <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

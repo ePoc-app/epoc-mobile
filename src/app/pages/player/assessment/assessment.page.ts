@@ -70,8 +70,21 @@ export class AssessmentPage implements OnInit {
     }
 
     checkAnswer() {
-        if (this.assessment.items[this.currentQuestion].correctResponse === this.currentAnswer) {
-            this.questionSuccessed();
+        const correctResponse = this.assessment.items[this.currentQuestion].correctResponse;
+        if (typeof this.currentAnswer === 'string') {
+            if (correctResponse === this.currentAnswer) {
+                this.questionSuccessed();
+            } else {
+                this.questionFailed();
+            }
+        } else if (Array.isArray(correctResponse)) {
+            if (correctResponse.every(answer => {
+                return this.currentAnswer ? this.currentAnswer.indexOf(answer) >= 0 : false;
+            })) {
+                this.questionSuccessed();
+            } else {
+                this.questionFailed();
+            }
         } else {
             this.questionFailed();
         }
