@@ -25,6 +25,14 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@font-face {
+  font-family: 'open-dyslexic';
+  src: url('assets/font/open-dyslexic/otf/OpenDyslexic-Regular.otf') format('opentype');
+  src:   url('assets/font/open-dyslexic/woff/OpenDyslexic-Regular.woff') format('woff'),
+  url('assets/font/open-dyslexic/ttf/OpenDyslexic-Regular.ttf') format('truetype'),
+  url('assets/font/open-dyslexic/svg/OpenDyslexic-Regular.svg#opendyslexicregular') format('svg');
+}
+
 .custom-action-sheet{
   .action-sheet-title{
     position: fixed;

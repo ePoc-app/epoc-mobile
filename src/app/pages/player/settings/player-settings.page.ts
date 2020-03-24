@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {SettingsStoreService} from '../../../services/settings-store.service';
+import {Settings} from '../../../classes/settings';
 
 @Component({
     selector: 'app-player-settings',
@@ -7,21 +9,33 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PlayerSettingsPage {
 
-    settings = {
+    settings: Settings = {
         font: 'sans',
         fontSize: 16,
         lineHeight: 1.4,
         darkMode: false
     };
 
-    constructor() {}
+    constructor(
+        private settingsStore: SettingsStoreService
+    ) {
+
+        this.settingsStore.settings$.subscribe(settings => {
+            if (settings) {
+                this.settings = settings;
+            }
+        });
+    }
 
     getStyle() {
-        console.log(this.settings.fontSize);
         return {
             'font-family': this.settings.font,
             'font-size': this.settings.fontSize + 'px',
             'line-height': this.settings.lineHeight
         };
+    }
+
+    settingsChanged() {
+        this.settingsStore.updateSettings(this.settings);
     }
 }
