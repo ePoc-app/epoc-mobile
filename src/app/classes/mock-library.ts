@@ -173,7 +173,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
                 correctResponse: 'B'
             },
             {
-                type: 'choice',
+                type: 'multiple-choice',
                 score: 10,
                 statement: '',
                 label: 'Quel est la couleur du cheval blanc d\'Henri IV ?',
@@ -188,10 +188,10 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
                     },
                     {
                         label: 'Gris car il s\'est roulé dans la poussière',
-                        value: 'B'
+                        value: 'C'
                     }
                 ],
-                correctResponse: 'B'
+                correctResponse: ['B', 'C']
             }
         ],
         toc: 2
@@ -269,10 +269,10 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         toc: 2,
         items: [
             {
-                type: 'choice',
+                type: 'multiple-choice',
                 score: 10,
                 statement: '',
-                label: 'Qui est le chef ?',
+                label: 'Qui a participé au développment de cette app  ?',
                 responses: [
                     {
                         label: 'Laurence',
@@ -287,7 +287,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
                         value: 'C'
                     }
                 ],
-                correctResponse: 'C'
+                correctResponse: ['B', 'C']
             }
         ]
     },

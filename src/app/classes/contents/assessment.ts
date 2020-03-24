@@ -11,7 +11,7 @@ export class Question {
     statement: string;
     label: string;
     responses: Array<Response>;
-    correctResponse: string;
+    correctResponse: string|Array<string>;
     explanation: string;
 }
 

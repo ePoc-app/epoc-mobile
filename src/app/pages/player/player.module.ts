@@ -16,6 +16,7 @@ import {SimpleChoiceComponent} from './assessment/components/simple-choice/simpl
 import { ChartsModule } from 'ng2-charts';
 import { Chart } from 'chart.js';
 import ChartDoughtnutTextCenter from '../../../assets/js/chart-doughnut-textcenter-plugin.js';
+import {MultipleChoiceComponent} from './assessment/components/multiple-choice/multiple-choice.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,7 @@ import ChartDoughtnutTextCenter from '../../../assets/js/chart-doughnut-textcent
     ChartsModule
   ],
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
-      BookmarksEpocPage, PlayerSettingsPage, AssessmentPage, SimpleChoiceComponent]
+      BookmarksEpocPage, PlayerSettingsPage, AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent]
 })
 export class PlayerPageModule {
     constructor() {
