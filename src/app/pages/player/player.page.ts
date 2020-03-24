@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
-import {forkJoin, Observable} from 'rxjs';
+import {combineLatest, forkJoin, Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {ReadingStoreService} from '../../services/reading-store.service';
@@ -55,7 +55,6 @@ export class PlayerPage implements OnInit {
             if (readings) {
                 const epocId = this.route.snapshot.paramMap.get('id');
                 this.reading = readings.find(item => item.epocId === epocId);
-                this.afterDataInit();
             }
         });
 
@@ -66,15 +65,19 @@ export class PlayerPage implements OnInit {
                 return epoc.content.find(item => item.id === id);
             });
         });
+
+        combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
+            if (pair.epoc && pair.reading) {
+                this.afterDataInit();
+            }
+        });
     }
 
     afterDataInit() {
-        setTimeout(() => {
-            this.readingStore.addReading(this.epoc.id);
-            const progress = this.route.snapshot.paramMap.has('progress') ?
-                +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
-            this.initReader(progress);
-        }, 500);
+        this.readingStore.addReading(this.epoc.id);
+        const progress = this.route.snapshot.paramMap.has('progress') ?
+            +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
+        this.initReader(progress);
     }
 
     onResize() {
