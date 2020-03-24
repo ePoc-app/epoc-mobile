@@ -2,12 +2,14 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
-import {combineLatest, forkJoin, Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {ReadingStoreService} from '../../services/reading-store.service';
 import {LibraryService} from '../../services/library.service';
 import {Content} from '../../classes/contents/content';
+import {Settings} from '../../classes/settings';
+import {SettingsStoreService} from '../../services/settings-store.service';
 
 @Component({
     selector: 'app-player',
@@ -34,6 +36,14 @@ export class PlayerPage implements OnInit {
     startX;
     startOffset;
 
+    // Reading default settings
+    settings: Settings = {
+        font: 'sans',
+        fontSize: 16,
+        lineHeight: 1.4,
+        darkMode: false
+    };
+
     constructor(
         private elRef: ElementRef,
         private route: ActivatedRoute,
@@ -41,7 +51,8 @@ export class PlayerPage implements OnInit {
         public alertController: AlertController,
         public actionSheetController: ActionSheetController,
         private libraryService: LibraryService,
-        private readingStore: ReadingStoreService
+        private readingStore: ReadingStoreService,
+        private settingsStore: SettingsStoreService
     ) {
     }
 
@@ -69,6 +80,12 @@ export class PlayerPage implements OnInit {
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
             if (pair.epoc && pair.reading) {
                 this.afterDataInit();
+            }
+        });
+
+        this.settingsStore.settings$.subscribe(settings => {
+            if (settings) {
+                this.settings = settings;
             }
         });
     }
@@ -267,5 +284,13 @@ export class PlayerPage implements OnInit {
             ]
         });
         await actionSheet.present();
+    }
+
+    getStyle() {
+        return {
+            'font-family': this.settings.font,
+            'font-size': this.settings.fontSize + 'px',
+            'line-height': this.settings.lineHeight
+        };
     }
 }
