@@ -17,6 +17,9 @@
         <ng-container *ngIf="question.type === 'multiple-choice'">
           <multiple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.items.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
         </ng-container>
+        <ng-container *ngIf="question.type === 'reorder'">
+          <reorder class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.items.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
+        </ng-container>
       </ion-slide>
       <ion-slide class="assessment-item-explanation">
         <ion-card mode="ios" class="explanation-card">
