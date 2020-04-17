@@ -269,6 +269,31 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         toc: 2,
         items: [
             {
+                type: 'reorder',
+                score: 30,
+                statement: 'Trier du moins important au plus important les impacts suivants :',
+                label: 'Classification des impacts',
+                responses: [
+                    {
+                        label: 'Diffusion restreinte',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Confidentiel',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Public',
+                        value: 'C'
+                    },
+                    {
+                        label: 'Diffusion limitée',
+                        value: 'D'
+                    },
+                ],
+                correctResponse: 'CBDA'
+            },
+            {
                 type: 'multiple-choice',
                 score: 10,
                 statement: '',

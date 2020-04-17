@@ -1,0 +1,17 @@
+<ion-card mode="ios" class="question-card">
+  <ion-card-header mode="ios">
+    <ion-card-subtitle mode="ios">Question {{questionMeta.index}}/{{questionMeta.total}}</ion-card-subtitle>
+    <ion-card-title mode="ios">{{question.label}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content mode="ios">
+    <p>{{question.statement}}</p>
+  </ion-card-content>
+  <ion-card-content mode="ios">
+    <ion-reorder-group (ionItemReorder)="doReorder($event)" disabled="false">
+      <ion-item *ngFor="let response of responses">
+        <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ion-reorder-group>
+  </ion-card-content>
+</ion-card>
