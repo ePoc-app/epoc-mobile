@@ -164,14 +164,17 @@ export class PlayerPage implements OnInit {
                 nearestPage = i;
             }
         }
-        this.currentPage = nearestPage;
-        this.goToPage(nearestPage);
+        if (this.currentPage !== nearestPage) {
+            this.currentPage = nearestPage;
+            this.goToPage(nearestPage);
+        }
     }
 
     goToPage(pageNumber) {
         this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
         this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
         this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.getProgress() * 100));
+        this.stopAllMedia();
     }
 
     prevPage() {
@@ -213,6 +216,14 @@ export class PlayerPage implements OnInit {
 
     displayMenu() {
         this.presentActionSheet();
+    }
+
+    stopAllMedia() {
+        const medias = document.querySelectorAll('audio,video');
+        medias.forEach((media) => {
+            console.log('pause');
+            media.pause();
+        });
     }
 
     async presentActionSheet() {
