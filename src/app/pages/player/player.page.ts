@@ -133,7 +133,7 @@ export class PlayerPage implements OnInit {
         setTimeout(() => {
             this.pageCount = this.getPageCount();
             if (progress) {
-                this.currentPage = Math.floor(progress / 100 * this.pageCount);
+                this.changeCurrentPage(Math.floor(progress / 100 * this.pageCount));
                 this.goToPage(this.currentPage);
             } else {
                 this.goToNearestPage();
@@ -154,6 +154,13 @@ export class PlayerPage implements OnInit {
         }
     }
 
+    changeCurrentPage(page) {
+        if (this.currentPage !== page){
+            this.currentPage = page;
+            this.stopAllMedia();
+        }
+    }
+
     goToNearestPage() {
         let nearestPage = 0;
         let smallestGap = 9999999;
@@ -164,22 +171,19 @@ export class PlayerPage implements OnInit {
                 nearestPage = i;
             }
         }
-        if (this.currentPage !== nearestPage) {
-            this.currentPage = nearestPage;
-            this.goToPage(nearestPage);
-        }
+        this.changeCurrentPage(nearestPage);
+        this.goToPage(nearestPage);
     }
 
     goToPage(pageNumber) {
         this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
         this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
         this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.getProgress() * 100));
-        this.stopAllMedia();
     }
 
     prevPage() {
         if (this.currentPage > 0) {
-            this.currentPage--;
+            this.changeCurrentPage(this.currentPage - 1);
             this.goToPage(this.currentPage);
         } else {
             this.pageWrapperOffset = this.pageWrapperOffset + 100;
@@ -190,7 +194,7 @@ export class PlayerPage implements OnInit {
 
     nextPage() {
         if (this.currentPage < this.pageCount) {
-            this.currentPage++;
+            this.changeCurrentPage(this.currentPage + 1);
             this.goToPage(this.currentPage);
         } else {
             this.pageWrapperOffset = this.pageWrapperOffset - 100;
@@ -221,7 +225,6 @@ export class PlayerPage implements OnInit {
     stopAllMedia() {
         const medias = document.querySelectorAll('audio,video');
         medias.forEach((media) => {
-            console.log('pause');
             media.pause();
         });
     }
