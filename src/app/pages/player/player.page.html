@@ -17,10 +17,12 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'chapter'">
-              <div class="page-content page-content-chapter">
-                <div class="chapter-container">
-                  <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
-                  <div class="chapter-title">{{content.name}}</div>
+              <div class="page-content page-content-fs page-content-chapter">
+                <div class="page-content-fs-inner">
+                  <div class="chapter-container">
+                    <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
+                    <div class="chapter-title">{{content.name}}</div>
+                  </div>
                 </div>
               </div>
             </ng-container>
@@ -30,9 +32,11 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'video'">
-              <div class="page-content page-content-video">
-                <h2>{{content.name}}</h2>
-                <video-player [options]="{ fluid: true, autoplay: false, controls: true, sources: [{ src: content.source, type: 'video/mp4' }]}"></video-player>
+              <div class="page-content page-content-fs page-content-video">
+                <div class="page-content-fs-inner">
+                  <h2>{{content.name}}</h2>
+                  <video-player [options]="{ fluid: true, autoplay: false, controls: true, sources: [{ src: content.source, type: 'video/mp4' }]}"></video-player>
+                </div>
               </div>
             </ng-container>
 

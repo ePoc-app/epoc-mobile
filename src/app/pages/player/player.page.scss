@@ -81,17 +81,36 @@
   padding: 0 20px;
   background: white;
 
-  &-cover{
-    display: inline-block;
+  &-fs{
+    display: block;
     width: 100%;
-    height: calc(100vh - 45px);
+    height: 100%;
+
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid-column;
+
+    -webkit-column-break-before: always;
+    page-break-before: always;
+    break-before: column;
+
+    -webkit-column-break-after: always;
+    page-break-after: always;
+    break-after: column;
+
+    &-inner{
+      position: absolute;
+      top:5px;
+      left:20px;
+      bottom:5px;
+      right:20px;
+    }
+  }
+
+  &-cover{
   }
 
   &-chapter{
-    display: inline-block;
-    width: 100%;
-    height: calc(100vh - 45px);
-
     .chapter-container{
       position: relative;
       height:100%;
@@ -129,11 +148,8 @@
   }
 
   &-video{
-    display: inline-block;
-    width: 100%;
   }
 
   &-assessment{
-    margin: 2em 0;
   }
 }
