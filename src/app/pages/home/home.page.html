@@ -1,12 +1,12 @@
 <ion-header mode="ios">
   <ion-toolbar>
-    <ion-button class="about" slot="start" routerLink="about" routerDirection="forward">
-      <ion-icon slot="icon-only" ios="ios-information-circle-outline" md="ios-information-circle-outline"></ion-icon>
-    </ion-button>
-    <div class="logo" slot="end">
+    <div class="logo" slot="start">
       <ion-img src="/assets/icon/logo.png"></ion-img>
-      <ion-text color="inria">Formation interne</ion-text>
+      <ion-text color="inria-blue">Formation interne</ion-text>
     </div>
+    <ion-button class="about" slot="end" routerLink="about" routerDirection="forward">
+      <ion-icon slot="icon-only" ios="ios-information-circle" md="ios-information-circle" color="inria-blue"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -28,7 +28,7 @@
       <ion-row>
         <ion-col>
           <div class="trailer-course" (click)="togglePlay($event)">
-            <ion-img src="assets/demo/vignette.png" *ngIf="!hasPlayed"></ion-img>
+            <img src="assets/demo/vignette.png" *ngIf="!hasPlayed"/>
             <video src="assets/demo/objectifs-pedagogiques.mp4" preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
           </div>
         </ion-col>
@@ -36,8 +36,8 @@
       <ion-row>
         <ion-col>
           <a class="about-course" [routerLink]="'/player/about/'+zrrId">
-            <ion-text color="inria">A propos de cette formation</ion-text>
-            <ion-icon ios="md-arrow-dropright" md="md-arrow-dropright" color="inria"></ion-icon>
+            <ion-text color="inria-blue">A propos de cette formation</ion-text>
+            <ion-icon ios="md-arrow-dropright" md="md-arrow-dropright" color="inria-blue"></ion-icon>
           </a>
         </ion-col>
       </ion-row>
@@ -46,7 +46,7 @@
 </ion-content>
 
 <ion-footer mode="ios">
-  <ion-button class="start-course" [routerLink]="'/player/play/'+zrrId" routerDirection="forward" expand="block" color="inria" strong>
+  <ion-button class="start-course" [routerLink]="'/player/play/'+zrrId" routerDirection="forward" expand="block" color="inria-blue" strong>
     Commencer la formation
   </ion-button>
 </ion-footer>
