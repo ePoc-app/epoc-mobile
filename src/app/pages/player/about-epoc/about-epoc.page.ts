@@ -15,6 +15,8 @@ import {ActionSheetController, AlertController} from '@ionic/angular';
 export class AboutEpocPage implements OnInit{
 
     epoc$: Observable<Epoc>;
+    hasPlayed = false;
+    selectedTab = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -58,5 +60,27 @@ export class AboutEpocPage implements OnInit{
         });
 
         await alert.present();
+    }
+
+    togglePlay($event) {
+        const video = $event.target.nodeName === 'VIDEO' ? $event.target : $event.target.querySelector('video');
+        if (video.paused) {
+            video.play();
+            this.hasPlayed = true;
+        } else {
+            video.pause();
+        }
+    }
+
+    play($event) {
+        $event.target.parentNode.classList.add('playing');
+    }
+
+    pause($event) {
+        $event.target.parentNode.classList.remove('playing');
+    }
+
+    selectTab(index) {
+        this.selectedTab = index;
     }
 }
