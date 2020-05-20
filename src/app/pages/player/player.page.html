@@ -34,20 +34,33 @@
             <ng-container *ngIf="content.type === 'video'">
               <div class="page-content page-content-fs page-content-video">
                 <div class="page-content-fs-inner">
-                  <div class="ion-text-center">
+                  <div class="page-header">
                     <ion-icon name="videocam" size="large"></ion-icon>
-                    <h2>{{content.name}}</h2>
+                    <h3>{{content.name}}</h3>
                   </div>
-                  <video-player [options]="{ fluid: true, autoplay: false, controls: true, sources: [{ src: content.source, type: 'video/mp4' }]}"></video-player>
+                  <video-player [src]="content.source"></video-player>
 
-                  <ion-card>
-                    <ion-card-header>
-                      <ion-card-title>Summary</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi corporis, distinctio dolorum ea, eaque esse expedita fugiat laboriosam laborum officia perferendis quaerat quis quisquam reprehenderit ullam. Corporis iste modi ut.</p>
-                    </ion-card-content>
-                  </ion-card>
+                  <div class="video-actions">
+                    <div class="video-actions-left">
+                      <ion-icon name="paper"></ion-icon>
+                    </div>
+                    <div class="video-actions-right">
+                      <ion-icon name="download"></ion-icon>
+                    </div>
+                  </div>
+
+                  <h4>Summary</h4>
+
+                  <div class="video-summary">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. A beatae doloremque iusto qui totam
+                      ullam unde ut! Accusantium delectus, dolorum eius eligendi est ipsa labore laudantium magnam
+                      minus nam? Deleniti.
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. A beatae doloremque iusto qui totam
+                      ullam unde ut! Accusantium delectus, dolorum eius eligendi est ipsa labore laudantium magnam
+                      minus nam? Deleniti.
+                    </p>
+                  </div>
                 </div>
               </div>
             </ng-container>
