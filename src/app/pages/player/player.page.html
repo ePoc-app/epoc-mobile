@@ -1,6 +1,6 @@
 <ion-content scroll-y="false">
   <div class="reader" (window:resize)="onResize($event)" [ngStyle]="getStyle()">
-    <div class="pages-container" [ngStyle]="contentStyles" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)" (click)="displayMenu()">
+    <div class="pages-container" [ngStyle]="contentStyles" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
       <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
         <ng-container *ngIf="epoc$ | async as epoc">
           <ng-container *ngFor="let content of contents">
@@ -34,8 +34,20 @@
             <ng-container *ngIf="content.type === 'video'">
               <div class="page-content page-content-fs page-content-video">
                 <div class="page-content-fs-inner">
-                  <h2>{{content.name}}</h2>
+                  <div class="ion-text-center">
+                    <ion-icon name="videocam" size="large"></ion-icon>
+                    <h2>{{content.name}}</h2>
+                  </div>
                   <video-player [options]="{ fluid: true, autoplay: false, controls: true, sources: [{ src: content.source, type: 'video/mp4' }]}"></video-player>
+
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>Summary</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi corporis, distinctio dolorum ea, eaque esse expedita fugiat laboriosam laborum officia perferendis quaerat quis quisquam reprehenderit ullam. Corporis iste modi ut.</p>
+                    </ion-card-content>
+                  </ion-card>
                 </div>
               </div>
             </ng-container>
