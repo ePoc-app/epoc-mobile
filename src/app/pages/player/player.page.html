@@ -53,8 +53,23 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'assessment'">
-              <div class="page-content page-content-assessment">
-                <assessment-button [content]="content" [epoc]="epoc"></assessment-button>
+              <div class="page-content page-content-fs page-content-assessment">
+                <div class="page-content-fs-inner">
+                  <div class="ion-text-center">
+                    <ion-icon name="checkbox-outline" size="large"></ion-icon>
+                    <h2>Activity</h2>
+                  </div>
+                  <ion-card>
+                    <img src="assets/img/activity.jpg" />
+                    <ion-card-header>
+                      <ion-card-title>{{content.name}}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium assumenda explicabo magnam mollitia perferendis. </p>
+                      <assessment-button [content]="content" [epoc]="epoc"></assessment-button>
+                    </ion-card-content>
+                  </ion-card>
+                </div>
               </div>
             </ng-container>
 
