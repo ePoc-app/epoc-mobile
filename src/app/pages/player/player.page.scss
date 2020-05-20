@@ -152,9 +152,54 @@
   }
 
   &-video, &-assessment{
+    overflow: hidden;
     ion-icon + h2 {
       margin-top: 0;
       margin-bottom: 1em;
+    }
+  }
+
+  &-video{
+    .page-content-fs-inner{
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-actions{
+      display: flex;
+      font-size: 2em;
+      &-left{
+        flex-grow: 1;
+      }
+      &-right{
+        flex-grow: 1;
+        text-align: right;
+      }
+    }
+
+    .video-summary{
+      overflow: auto;
+      flex-grow:1;
+    }
+  }
+
+  .page-header{
+    margin-bottom: 1em;
+    border-bottom: 3px solid #d5d9de;
+    ion-icon{
+      display: inline-block;
+      vertical-align: middle;
+      width: 1em;
+      margin-right: .5em;
+      font-size: 2em;
+    }
+
+    h3{
+      display: inline-block;
+      vertical-align: middle;
+      width: calc(100% - 3em);
+      margin: 0;
+      text-align: center;
     }
   }
 }
