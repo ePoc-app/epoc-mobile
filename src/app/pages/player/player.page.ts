@@ -223,7 +223,7 @@ export class PlayerPage implements OnInit {
     }
 
     stopAllMedia() {
-        const medias = document.querySelectorAll('audio,video');
+        const medias = Array.from(document.querySelectorAll('audio,video')) as HTMLMediaElement[];
         medias.forEach((media) => {
             media.pause();
         });
