@@ -68,16 +68,27 @@
             <ng-container *ngIf="content.type === 'assessment'">
               <div class="page-content page-content-fs page-content-assessment">
                 <div class="page-content-fs-inner">
-                  <div class="ion-text-center">
+                  <div class="page-header">
                     <ion-icon name="checkbox-outline" size="large"></ion-icon>
-                    <h2>Activity</h2>
+                    <h3>Activity</h3>
                   </div>
                   <ion-card>
                     <img src="assets/img/activity.jpg" />
-                    <ion-card-header>
-                      <ion-card-title>{{content.name}}</ion-card-title>
-                    </ion-card-header>
                     <ion-card-content>
+                      <ion-row class="activity-specs ion-text-center">
+                        <ion-col size="4">
+                          <div class="activity-spec-icon"><ion-icon name="school" mode="md" color="inria-blue"></ion-icon></div>
+                          <div class="activity-spec-value">Noté</div>
+                        </ion-col>
+                        <ion-col size="4">
+                          <div class="activity-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
+                          <div class="activity-spec-value">5 min</div>
+                        </ion-col>
+                        <ion-col size="4">
+                          <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>
+                          <div class="activity-spec-value">{{content.items.length}} questions</div>
+                        </ion-col>
+                      </ion-row>
                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium assumenda explicabo magnam mollitia perferendis. </p>
                       <assessment-button [content]="content" [epoc]="epoc"></assessment-button>
                     </ion-card-content>

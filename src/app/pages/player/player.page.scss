@@ -183,6 +183,50 @@
     }
   }
 
+  &-assessment{
+    .page-content-fs-inner{
+      display: flex;
+      flex-direction: column;
+    }
+    ion-card{
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin: 0 0 20px 0;
+    }
+
+    ion-card-content{
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      overflow: hidden;
+      p{
+        flex-grow: 1;
+        overflow: auto;
+      }
+    }
+
+    .activity-specs{
+      margin: 0;
+      padding: .5em;
+      font-size: 12px;
+
+      ion-col{
+        padding: 0;
+      }
+
+      ion-col:nth-child(2){
+        border-left: 2px solid var(--ion-color-inria-blue);
+        border-right: 2px solid var(--ion-color-inria-blue);
+      }
+    }
+
+    .activity-spec-icon{
+      font-size: 2em;
+      line-height: 1;
+    }
+  }
+
   .page-header{
     margin-bottom: 1em;
     border-bottom: 3px solid #d5d9de;
