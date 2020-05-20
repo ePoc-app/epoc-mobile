@@ -14,18 +14,20 @@ ion-toolbar {
 
 .logo {
   width: 150px;
-  text-align: center;
+  text-align: left;
 
   ion-img {
     display: block;
-    width: 80%;
+    width: 120px;
     height: auto;
-    margin: auto;
+    margin-left:20px;
   }
 
   ion-text {
     display: block;
     margin-top: 5px;
+    margin-left:20px;
+    font-size: .8em;
   }
 }
 
@@ -52,22 +54,27 @@ ion-toolbar {
 
 .trailer-course {
   position: relative;
-  margin: 8vh 0;
+  width: 80%;
+  min-width: 250px;
+  margin: 6vh auto;
   video {
     display: block;
-    width: 80%;
-    min-width: 250px;
+    width: 100%;
     height: auto;
     margin: auto;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border: 2px solid var(--ion-color-inria-blue);
+    border-radius: 10px;
   }
 
-  ion-img{
+  img{
     position: absolute;
     top:0;
     left:0;
+    bottom:-2px;
     right:0;
-    bottom:0;
+    border: 2px solid var(--ion-color-inria-blue);
+    border-radius: 10px;
   }
 
   &:after {
@@ -107,11 +114,11 @@ ion-toolbar {
 .about-course {
   display: block;
   text-align: center;
-  text-decoration: none;
 
   ion-text, ion-icon {
     display: inline-block;
     vertical-align: middle;
+    text-decoration: underline;
   }
 }
 
@@ -132,7 +139,7 @@ ion-toolbar {
   }
 
   .trailer-course {
-    margin: 4vh 0;
+    margin: 4vh auto 2vh auto;
   }
 }
 
@@ -147,7 +154,7 @@ ion-toolbar {
   }
 
   .trailer-course {
-    margin: 4vh 0;
+    margin: 4vh auto 2vh auto;
   }
 
   .start-course {
