@@ -63,8 +63,15 @@
       </div>
     </div>
     <div class="reader-action">
-      <div class="page-action page-prev" (click)="prevPage()"></div>
-      <div class="page-action page-next" (click)="nextPage()"></div>
+      <div class="page-action page-prev" (click)="prevPage()">
+        <ion-icon name="arrow-dropleft" mode="md"></ion-icon>
+      </div>
+      <div class="page-action menu" (click)="displayMenu()">
+        <ion-icon name="menu" mode="ios"></ion-icon>
+      </div>
+      <div class="page-action page-next" (click)="nextPage()">
+        <ion-icon name="arrow-dropright" mode="md"></ion-icon>
+      </div>
       <div class="reader-bookmark" (click)="toggleBookmark()">
         <ion-icon [ngClass]="isBookmarked() ? 'bookmarked':''" name="bookmark"></ion-icon>
       </div>
