@@ -7,6 +7,7 @@ export class Epoc {
     image: string;
     authors: Author[];
     summary: string;
+    objectives: string[];
     outline: Array<string>;
     content: Array<Content>;
 }

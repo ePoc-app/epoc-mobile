@@ -343,6 +343,11 @@ export const MockLibrary: Epoc[] =  [
             'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
             'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
+        objectives: [
+            'Apprendre des trucs sur plusieurs ligne car cette phrase est longue',
+            'Connaitre des choses',
+            'Savoir des machins'
+        ],
         outline: Array.from('1234567a89b'),
         content: MockContents
     },
@@ -375,6 +380,11 @@ export const MockLibrary: Epoc[] =  [
             'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
             'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
+        objectives: [
+            'Apprendre des trucs',
+            'Connaitre des choses',
+            'Savoir des machins'
+        ],
         outline: Array.from('1234567'),
         content: MockContents
     },
@@ -400,6 +410,11 @@ export const MockLibrary: Epoc[] =  [
             'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
             'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
             'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
+        objectives: [
+            'Apprendre des trucs',
+            'Connaitre des choses',
+            'Savoir des machins'
+        ],
         outline: Array.from('1234567'),
         content: MockContents
     }
