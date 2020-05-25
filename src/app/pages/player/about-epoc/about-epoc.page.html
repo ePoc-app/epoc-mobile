@@ -25,8 +25,8 @@
     </ion-row>
 
     <div class="trailer-course" (click)="togglePlay($event)">
-      <img src="assets/demo/vignette.png" *ngIf="!hasPlayed"/>
-      <video src="assets/demo/objectifs-pedagogiques.mp4" preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
+      <img [src]="epoc.image" *ngIf="!hasPlayed"/>
+      <video [src]="epoc.teaser" preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
     </div>
 
     <ion-row>

@@ -5,6 +5,7 @@ export class Epoc {
     id: string;
     title: string;
     image: string;
+    teaser?: string;
     authors: Author[];
     summary: string;
     objectives: string[];
