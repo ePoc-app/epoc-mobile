@@ -110,6 +110,10 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         type: 'video',
         name: 'Video',
         source: 'assets/demo/video.mp4',
+        subtitles: 'assets/demo/soustitre.vtt',
+        summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem corporis deleniti fuga minima nisi nobis ' +
+            'voluptatum. Autem ducimus expedita impedit, nobis numquam optio reprehenderit unde voluptatem? Aliquid, deleniti, ' +
+            'nostrum. Autem ducimus expedita impedit.',
         toc: 2
     },
     {
