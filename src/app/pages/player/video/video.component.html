@@ -1,3 +1,14 @@
-<video #target class="video-js" poster="assets/img/video-thumbnail.jpg" disablePictureInPicture controls playsinline preload="none">
-  <track label="Français" kind="subtitles" srclang="fr" *ngIf="subtitles" [src]="subtitles" default>
-</video>
+<div>
+  <video #target class="video-js" poster="assets/img/video-thumbnail.jpg" disablePictureInPicture controls playsinline preload="none">
+    <track label="Français" kind="subtitles" srclang="fr" *ngIf="subtitles" [src]="subtitles" default>
+  </video>
+
+  <div class="video-actions">
+    <div class="video-actions-left">
+      <ion-icon name="paper" *ngIf="subtitles" (click)="showTranscript()"></ion-icon>
+    </div>
+    <div class="video-actions-right">
+      <ion-icon name="download"></ion-icon>
+    </div>
+  </div>
+</div>
