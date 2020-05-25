@@ -11,6 +11,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     @ViewChild('target', {static: true}) target: ElementRef;
 
     @Input() src: string;
+    @Input() subtitles: string;
 
     options;
     player: videojs.Player;
@@ -18,7 +19,16 @@ export class VideoComponent implements OnInit, OnDestroy {
     constructor(private elementRef: ElementRef) {}
 
     ngOnInit() {
-        this.options = { fluid: true, autoplay: false, controls: true, sources: [{ src: this.src, type: 'video/mp4' }]};
+        this.options = {
+            fluid: true,
+            autoplay: false,
+            controls: true,
+            sources: [{ src: this.src, type: 'video/mp4' }],
+            textTrackSettings: false,
+            controlBar: {
+                pictureInPictureToggle: false
+            }
+        };
         this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
         });
     }

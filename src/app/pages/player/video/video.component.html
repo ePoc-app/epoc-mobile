@@ -1,3 +1,3 @@
-<video #target class="video-js" poster="assets/img/video-thumbnail.jpg" controls playsinline preload="none">
-  <track label="Français" kind="subtitles" srclang="fr" src="assets/demo/soustitre.vtt" default>
+<video #target class="video-js" poster="assets/img/video-thumbnail.jpg" disablePictureInPicture controls playsinline preload="none">
+  <track label="Français" kind="subtitles" srclang="fr" *ngIf="subtitles" [src]="subtitles" default>
 </video>
