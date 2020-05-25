@@ -198,6 +198,14 @@ $inria-blue-bg : lighten($inria-blue, 64%);
     text-align: justify;
   }
 
+  ul, ol{
+    padding-left: 1em;
+
+    li{
+      padding-bottom: .5em;
+    }
+  }
+
   figure {
     margin: 1em 0 1.5em 0;
     line-height: 1.4;
