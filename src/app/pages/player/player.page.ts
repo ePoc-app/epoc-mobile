@@ -307,4 +307,8 @@ export class PlayerPage implements OnInit {
             'line-height': this.settings.lineHeight
         };
     }
+
+    getScoreTotal(content) {
+        return content.items.reduce((total, item) => item.score + total, 0);
+    }
 }

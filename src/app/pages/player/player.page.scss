@@ -84,6 +84,10 @@
   padding: 0 20px;
   background: white;
 
+  -webkit-column-break-after: always;
+  page-break-after: always;
+  break-after: column;
+
   &-fs{
     display: block;
     width: 100%;
@@ -96,10 +100,6 @@
     -webkit-column-break-before: always;
     page-break-before: always;
     break-before: column;
-
-    -webkit-column-break-after: always;
-    page-break-after: always;
-    break-after: column;
 
     &-inner{
       position: absolute;
@@ -226,7 +226,7 @@
       font-size: 2em;
     }
 
-    h3{
+    h4{
       display: inline-block;
       vertical-align: middle;
       width: calc(100% - 3em);

@@ -31,7 +31,7 @@
               <div class="page-content page-content-html">
                 <div class="page-header">
                   <ion-icon name="paper" size="large"></ion-icon>
-                  <h3>{{content.name}}</h3>
+                  <h4>{{content.name}}</h4>
                 </div>
                 <div [innerHTML]="content.value"></div>
               </div>
@@ -42,7 +42,7 @@
                 <div class="page-content-fs-inner">
                   <div class="page-header">
                     <ion-icon name="videocam" size="large"></ion-icon>
-                    <h3>{{content.name}}</h3>
+                    <h4>{{content.name}}</h4>
                   </div>
                   <video-player [src]="content.source" [subtitles]="content.subtitles"></video-player>
 
@@ -61,7 +61,7 @@
                 <div class="page-content-fs-inner">
                   <div class="page-header">
                     <ion-icon name="checkbox-outline" size="large"></ion-icon>
-                    <h3>Activity</h3>
+                    <h4>Activity</h4>
                   </div>
                   <ion-card>
                     <img src="assets/img/activity.jpg" />
@@ -69,7 +69,8 @@
                       <ion-row class="activity-specs ion-text-center">
                         <ion-col size="4">
                           <div class="activity-spec-icon"><ion-icon name="school" mode="md" color="inria-blue"></ion-icon></div>
-                          <div class="activity-spec-value">Noté</div>
+                          <div class="activity-spec-value" *ngIf="getScoreTotal(content) > 0">Noté</div>
+                          <div class="activity-spec-value" *ngIf="getScoreTotal(content) <= 0">Non Noté</div>
                         </ion-col>
                         <ion-col size="4">
                           <div class="activity-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
@@ -77,10 +78,10 @@
                         </ion-col>
                         <ion-col size="4">
                           <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>
-                          <div class="activity-spec-value">{{content.items.length}} questions</div>
+                          <div class="activity-spec-value">{{content.items.length}} question<ng-container *ngIf="content.items.length > 1">s</ng-container></div>
                         </ion-col>
                       </ion-row>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium assumenda explicabo magnam mollitia perferendis. </p>
+                      <p>{{content.summary}}</p>
                       <assessment-button [content]="content" [epoc]="epoc"></assessment-button>
                     </ion-card-content>
                   </ion-card>
