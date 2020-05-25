@@ -328,12 +328,316 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         toc: 1
     }
 ];
+const ZRRContents: (Content|Chapter|Assessment|Html|Video)[] = [
+    {
+        id: 'a',
+        type: 'chapter',
+        name: 'Qu\'est-ce que le dispositif de PPST ? (protection du Potentiel Scientifique et Technique de la Nation)',
+        number: '1',
+        toc: 1
+    },
+    {
+        id: 'b',
+        type: 'video',
+        name: 'Dispositif PPST',
+        source: 'assets/demo/video.mp4',
+        subtitles: 'assets/demo/soustitre.vtt',
+        summary: 'Qu\'est-ce que le dispositif de PPST (protection du Potentiel Scientifique et Technique de la Nation). ' +
+            'Pourquoi toutes ces précautions ? Ce dispositif, est-il nouveau ? Quels sont les risques et comment ça fonctionne ? ' +
+            'Les réponses dans cette vidéo.',
+        toc: 2
+    },
+    {
+        id: 'c',
+        type: 'html',
+        name: 'Règlement intérieur',
+        value: '<h4>Ce que dit le règlement intérieur : </h4>' +
+            '<p>Les Zones à Régime Restrictif (ZRR dans le reste du document) constituent l\'un des outils de la PPST ' +
+            '(Protection du Potentiel Scientifique et Technique)</p><ul>' +
+            '<li>' +
+            'Il s\'agit de zones visant à protéger des <strong>éléments essentiels</strong> du potentiel scientifique et technique de ' +
+            'la Nation de captations indues. Les ZRR sont créées par Arrêté du Ministre en charge de l\'Enseignement Supérieur et ' +
+            'de la Recherche.' +
+            '</li>' +
+            '<li>' +
+            'Les ZRR sont des lieux clos dont l\'accès et la circulation sont règlementés afin d\'assurer la ' +
+            'protection des installations, du matériel ou du secret des recherches, études ou fabrication.' +
+            '</li>' +
+            '</ul>',
+        toc: 2
+    },
+    {
+        id: 'd',
+        type: 'html',
+        name: 'A retenir',
+        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+            '<ul>' +
+            '<li>' +
+            'Les recherches scientifiques qui sont faites à l\'Inria sont protégées par le dispositif de protection du potentiel ' +
+            'scientifique et technique (PPST). La liste des secteurs scientifiques et techniques protégés est publiée dans le ' +
+            '<a href="https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000026140136&categorieLien=id" target="_blank">' +
+            'journal officiel' +
+            '</a>' +
+            '</li>' +
+            '<li>' +
+            'Ce dispositif, qui dans sa version actuelle date de 2012, mais qui existe en fait depuis la fin de la 2ème guerre mondiale, ' +
+            'sert à se protéger contre des menaces de puissances étrangères qui cherchent à s\'emparer de nos productions scientifiques ' +
+            'les plus sensibles (par exemple, celles qui peuvent concerner la défense nationale)' +
+            '</li>' +
+            '<li>' +
+            'La mise en place du dispositif de PPST se matérialise par la création de Zones à Régime Restrictif (ZRR) qui protègent ' +
+            'les recherches particulièrement sensibles.' +
+            '</li>' +
+            '</ul>',
+        toc: 2
+    },
+    {
+        id: 'e',
+        type: 'assessment',
+        name: 'Quiz non noté',
+        summary: 'Quiz de compréhension (non noté) lié à la video "Dispositif PPST".',
+        items: [
+            {
+                type: 'choice',
+                score: 0,
+                statement: '',
+                label: 'Quels sont les secteurs scientifiques protégés ?',
+                responses: [
+                    {
+                        label: 'les recherches qui sont liées uniquement aux projets concernant la défense nationale',
+                        value: 'A'
+                    },
+                    {
+                        label: 'les recherches qui ne sont liées qu\'aux domaines de l\'informatique',
+                        value: 'B'
+                    },
+                    {
+                        label: 'toutes les recherches qui sont effectués à l\'Inria',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'C',
+                explanation: '' +
+                    'Bien que toutes les équipes ne soient pas en ZRR, tous les secteurs de recherche Inria sont potentiellement ' +
+                    'sensibles et donc protégés.'
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 'f',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        number: '2',
+        toc: 1
+    },
+    {
+        id: 'g',
+        type: 'video',
+        name: 'Les 4 risques PPST',
+        source: 'assets/demo/video.mp4',
+        subtitles: 'assets/demo/soustitre.vtt',
+        summary: 'Au cours de cette vidéo nous verrons les différents risques PPST',
+        toc: 2
+    },
+    {
+        id: 'h',
+        type: 'html',
+        name: 'Règlement intérieur',
+        value: '<h4>Autorisations : </h4>' +
+            '<p>' +
+            'Chez Inria, le Chef de la ZRR est le Directeur du Centre de Recherche Inria où la ZRR est localisée et le coordinateur de ' +
+            'la PPST (CPPST) est le Délégué à l\'Administration du Centre de Recherche Inria où la ZRR est localisée. Le CPPST est ' +
+            'spécialement chargé de la préparation et de l\'exécution des mesures de\n' +
+            'protection. Il veille à l\'application des procédures.' +
+            '<p>' +
+            'Il existe deux types d\'autorisation d\'accès à une ZRR :' +
+            '</p>' +
+            '<ul>' +
+            '<li>' +
+            'autorisation d\'accès régulier : Elle est engagée par un personnel permanent d\'Inria et autorisée par le FSD ' +
+            '(Fonctionnaire Sécurité Défense) par délégation du PDG d\'Inria' +
+            '</li>' +
+            '<li>' +
+            'autorisation d\'accès ponctuel : l\'autorisation d\'accès ponctuel est délivrée par le chef de la ZRR ou le CPPST ' +
+            'à un visiteur de courte durée (- de 5 jours)' +
+            '</li>' +
+            '</ul>',
+        toc: 2
+    },
+    {
+        id: 'i',
+        type: 'html',
+        name: 'A retenir',
+        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+            '<p>' +
+            'Les recherches scientifiques qui sont faites à l\'Inria sont protégées par le dispositif de protection du potentiel ' +
+            'scientifique et technique (PPST). La liste des secteurs scientifiques et techniques protégés est publiée dans le ' +
+            '<a href="https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000026140136&categorieLien=id" target="_blank">' +
+            'journal officiel' +
+            '</a>' +
+            '</li>' +
+            '<li>' +
+            'Ce dispositif, qui dans sa version actuelle date de 2012, mais qui existe en fait depuis la fin de la 2ème guerre mondiale, ' +
+            'sert à se protéger contre des menaces de puissances étrangères qui cherchent à s\'emparer de nos productions scientifiques ' +
+            'les plus sensibles (par exemple, celles qui peuvent concerner la défense nationale)' +
+            '</li>' +
+            '<li>' +
+            'La mise en place du dispositif de PPST se matérialise par la création de Zones à Régime Restrictif (ZRR) qui protègent ' +
+            'les recherches particulièrement sensibles.' +
+            '</li>' +
+            '</p>',
+        toc: 2
+    },
+    {
+        id: 'j',
+        type: 'assessment',
+        name: 'Quiz non noté',
+        summary: 'Quiz de compréhension (non noté) lié à la video "Les 4 risques PPST".',
+        items: [
+            {
+                type: 'choice',
+                score: 0,
+                statement: 'Les recherches "à caractère sensibles" qui sont faites dans les équipes projets.',
+                label: 'Pourquoi sont-elles protégées ?',
+                responses: [
+                    {
+                        label: 'elles sont uniques et ne doivent pas être diffusées en dehors de l\'Inria',
+                        value: 'A'
+                    },
+                    {
+                        label: 'elles peuvent, si elles sont volées,  nuires aux intérêts de la nation.',
+                        value: 'B'
+                    },
+                    {
+                        label: 'elles peuvent être mises en danger par la nature de leurs publications',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: ''
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 'k',
+        type: 'chapter',
+        name: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
+        number: '3',
+        toc: 1
+    },
+    {
+        id: 'l',
+        type: 'video',
+        name: 'Données sensibles, visiteurs et sanctions',
+        source: 'assets/demo/video.mp4',
+        subtitles: 'assets/demo/soustitre.vtt',
+        summary: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
+        toc: 2
+    },
+    {
+        id: 'm',
+        type: 'html',
+        name: 'Règlement intérieur',
+        value: '<h4>Autorisations : </h4>' +
+            '<p></p>',
+        toc: 2
+    },
+    {
+        id: 'n',
+        type: 'html',
+        name: 'A retenir',
+        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+            '<p></p>',
+        toc: 2
+    },
+    {
+        id: 'o',
+        type: 'assessment',
+        name: 'Quiz non noté',
+        summary: 'Quiz de compréhension (non noté) lié à la video "Accès aux données sensibles, accueil des visiteurs et sanctions".',
+        items: [
+            {
+                type: 'choice',
+                score: 0,
+                statement: 'Les recherches "à caractère sensibles" qui sont faites dans les équipes projets.',
+                label: 'Pourquoi sont-elles protégées ?',
+                responses: [
+                    {
+                        label: 'elles sont uniques et ne doivent pas être diffusées en dehors de l\'Inria',
+                        value: 'A'
+                    },
+                    {
+                        label: 'elles peuvent, si elles sont volées,  nuires aux intérêts de la nation.',
+                        value: 'B'
+                    },
+                    {
+                        label: 'elles peuvent être mises en danger par la nature de leurs publications',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: ''
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 'p',
+        type: 'chapter',
+        name: 'Echelle de sensibilité',
+        number: '3',
+        toc: 1
+    },
+    {
+        id: 'q',
+        type: 'video',
+        name: 'Echelle de sensibilité',
+        source: 'assets/demo/video.mp4',
+        subtitles: 'assets/demo/soustitre.vtt',
+        summary: 'Entretien à propos de l\'échelle de sensibilité',
+        toc: 2
+    },
+    {
+        id: 'r',
+        type: 'assessment',
+        name: 'Quiz noté: Test final',
+        summary: 'Quiz de compréhension (non noté) lié à la video "Accès aux données sensibles, accueil des visiteurs et sanctions".',
+        items: [
+            {
+                type: 'choice',
+                score: 0,
+                statement: 'Les recherches "à caractère sensibles" qui sont faites dans les équipes projets.',
+                label: 'Pourquoi sont-elles protégées ?',
+                responses: [
+                    {
+                        label: 'elles sont uniques et ne doivent pas être diffusées en dehors de l\'Inria',
+                        value: 'A'
+                    },
+                    {
+                        label: 'elles peuvent, si elles sont volées,  nuires aux intérêts de la nation.',
+                        value: 'B'
+                    },
+                    {
+                        label: 'elles peuvent être mises en danger par la nature de leurs publications',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: ''
+            }
+        ],
+        toc: 2
+    }
+];
 
 export const MockLibrary: Epoc[] =  [
     {
         id: 'C042AD',
         title: 'Zone à régime restrictif',
-        image: 'assets/demo/img/security.jpg',
+        image: 'assets/demo/zrr-intro-poster.jpg',
+        teaser: 'assets/demo/zrr-intro.mp4',
         authors: [
             {
                 name: 'Didier Benza',
@@ -352,8 +656,8 @@ export const MockLibrary: Epoc[] =  [
             'Connaitre des choses',
             'Savoir des machins'
         ],
-        outline: Array.from('1234567a89b'),
-        content: MockContents
+        outline: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r'],
+        content: ZRRContents
     },
     {
         id: 'C029CL',
