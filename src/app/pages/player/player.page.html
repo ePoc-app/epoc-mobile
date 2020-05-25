@@ -28,7 +28,13 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'html'">
-              <div class="page-content page-content-html" [innerHTML]="content.value"></div>
+              <div class="page-content page-content-html">
+                <div class="page-header">
+                  <ion-icon name="paper" size="large"></ion-icon>
+                  <h3>{{content.name}}</h3>
+                </div>
+                <div [innerHTML]="content.value"></div>
+              </div>
             </ng-container>
 
             <ng-container *ngIf="content.type === 'video'">
