@@ -1,5 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import videojs from 'video.js';
+import {ModalController} from '@ionic/angular';
+import {TranscriptModalPage} from './transcript-modal/transcript-modal.page';
 
 @Component({
     selector: 'video-player',
@@ -16,7 +18,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     options;
     player: videojs.Player;
 
-    constructor(private elementRef: ElementRef) {}
+    constructor(private elementRef: ElementRef, private modalController: ModalController) {}
 
     ngOnInit() {
         this.options = {
@@ -37,5 +39,15 @@ export class VideoComponent implements OnInit, OnDestroy {
         if (this.player) {
             this.player.dispose();
         }
+    }
+
+    async showTranscript() {
+        const modal = await this.modalController.create({
+            component: TranscriptModalPage,
+            componentProps: {
+                'file': this.subtitles
+            }
+        });
+        return await modal.present();
     }
 }

@@ -6,3 +6,15 @@
   background:none;
   overflow: hidden;
 }
+
+.video-actions{
+  display: flex;
+  font-size: 2em;
+  &-left{
+    flex-grow: 1;
+  }
+  &-right{
+    flex-grow: 1;
+    text-align: right;
+  }
+}

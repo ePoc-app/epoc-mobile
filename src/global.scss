@@ -162,7 +162,7 @@ $inria-blue : #40455a;
 $inria-blue-border : lighten($inria-blue, 50%);
 $inria-blue-bg : lighten($inria-blue, 64%);
 
-.reader .page-content, .about-content-wrapper, .preview-settings{
+.reader .page-content, .about-content-wrapper, .preview-settings, .transcript{
   color: $inria-blue;
 
   & :first-child{

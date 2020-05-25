@@ -165,18 +165,6 @@
       flex-direction: column;
     }
 
-    .video-actions{
-      display: flex;
-      font-size: 2em;
-      &-left{
-        flex-grow: 1;
-      }
-      &-right{
-        flex-grow: 1;
-        text-align: right;
-      }
-    }
-
     .video-summary{
       overflow: auto;
       flex-grow:1;

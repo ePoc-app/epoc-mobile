@@ -19,6 +19,7 @@ import ChartDoughtnutTextCenter from '../../../assets/js/chart-doughnut-textcent
 import {MultipleChoiceComponent} from './assessment/components/multiple-choice/multiple-choice.component';
 import {ReorderComponent} from './assessment/components/reorder/reorder.component';
 import {VideoComponent} from './video/video.component';
+import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.page';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {VideoComponent} from './video/video.component';
   ],
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage, AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent,
-      VideoComponent]
+      VideoComponent, TranscriptModalPage],
+  entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {
     constructor() {
