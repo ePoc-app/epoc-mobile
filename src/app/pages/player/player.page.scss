@@ -37,6 +37,10 @@
       width:calc(50% - 20px);
     }
 
+    &.disable{
+      opacity: .3;
+    }
+
     &.menu{
       left:calc(50% - 20px);
       width: 40px;
