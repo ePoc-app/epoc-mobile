@@ -9,8 +9,8 @@
 
 <ion-content *ngIf="epoc$ | async as epoc">
   <ng-container *ngIf="detailedToc">
-    <ion-list *ngIf="toc">
-      <ion-item *ngFor="let content of toc;" [class]="'level-' + content.toc" [routerLink]="'/player/play/'+epoc.id+'/'+content.id">
+    <ion-list *ngFor="let part of epoc.parts;">
+      <ion-item *ngFor="let content of getContentsFromOutline(part.outline);" [class]="'level-' + content.toc" [routerLink]="'/player/play/'+epoc.id+'/'+content.id">
         <ion-icon *ngIf="content.type === 'html'" name="paper" slot="end"></ion-icon>
         <ion-icon *ngIf="content.type === 'video'" name="play" slot="end"></ion-icon>
         <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="end"></ion-icon>
@@ -19,10 +19,10 @@
     </ion-list>
   </ng-container>
   <ng-container *ngIf="!detailedToc">
-    <div class="part">
-      <h3>Formation ZRR</h3>
-      <ion-slides *ngIf="toc" [options]="sliderOptions">
-        <ng-container *ngFor="let content of toc;">
+    <div class="part" *ngFor="let part of epoc.parts;">
+      <h3>{{part.title}}</h3>
+      <ion-slides [options]="sliderOptions">
+        <ng-container *ngFor="let content of getContentsFromOutline(part.outline);">
           <ion-slide *ngIf="content.type === 'chapter'" [routerLink]="'/player/play/'+epoc.id+'/'+content.id">
             <div class="slide">
               <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>

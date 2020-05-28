@@ -16,8 +16,8 @@ import {Content} from '../../../classes/contents/content';
 export class TocEpocPage implements OnInit{
 
     epoc$: Observable<Epoc>;
-    toc: Content[];
-    detailedToc: true;
+    epoc: Epoc;
+    detailedToc = false;
 
     sliderOptions = {
         slidesPerView: 1.2,
@@ -39,13 +39,17 @@ export class TocEpocPage implements OnInit{
         );
 
         this.epoc$.subscribe(epoc => {
-            this.toc = epoc.outline.reduce((toc, id) => {
-                const content = epoc.content.find(item => item.id === id);
-                if (content && content.toc) {
-                    toc.push(content);
-                }
-                return toc;
-            }, []);
+            this.epoc = epoc;
         });
+    }
+
+    getContentsFromOutline(outline) {
+        return outline.reduce((toc, id) => {
+            const content = this.epoc.content.find(item => item.id === id);
+            if (content && content.toc) {
+                toc.push(content);
+            }
+            return toc;
+        }, []);
     }
 }

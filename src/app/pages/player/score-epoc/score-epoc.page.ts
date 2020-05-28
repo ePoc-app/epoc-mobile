@@ -63,13 +63,17 @@ export class ScoreEpocPage implements OnInit {
         );
 
         this.epoc$.subscribe(epoc => {
-            this.assessments = epoc.outline.reduce((assessments, id) => {
-                const content = epoc.content.find(item => item.id === id);
-                if (content && content.type === 'assessment') {
-                    assessments.push(content);
-                }
-                return assessments;
-            }, []);
+            this.assessments = [];
+
+            epoc.parts.forEach((part) => {
+                part.outline.reduce((assessments, id) => {
+                    const content = epoc.content.find(item => item.id === id);
+                    if (content && content.type === 'assessment') {
+                        assessments.push(content);
+                    }
+                    return assessments;
+                }, this.assessments);
+            });
         });
     }
 
