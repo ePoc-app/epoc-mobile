@@ -7,3 +7,26 @@
     font-weight: bold;
   }
 }
+
+.part{
+  margin-bottom: 15px;
+  padding: 15px 0;
+  background: #f1f1f1;
+
+  h3{
+    margin:0 0 15px 15px;
+  }
+}
+
+ion-slides{
+  padding: 0 15px;
+}
+
+.slide{
+  img{
+    display: block;
+    border: 2px solid var(--ion-color-inria-blue);
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+}

@@ -17,6 +17,12 @@ export class TocEpocPage implements OnInit{
 
     epoc$: Observable<Epoc>;
     toc: Content[];
+    detailedToc: true;
+
+    sliderOptions = {
+        slidesPerView: 1.2,
+        spaceBetween: 25,
+    };
 
     constructor(
         private route: ActivatedRoute,

@@ -8,12 +8,31 @@
 </ion-header>
 
 <ion-content *ngIf="epoc$ | async as epoc">
-  <ion-list *ngIf="toc">
-    <ion-item *ngFor="let content of toc;" [class]="'level-' + content.toc" [routerLink]="'/player/play/'+epoc.id">
-      <ion-icon *ngIf="content.type === 'html'" name="paper" slot="end"></ion-icon>
-      <ion-icon *ngIf="content.type === 'video'" name="play" slot="end"></ion-icon>
-      <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="end"></ion-icon>
-      <ion-label>{{content.name}}</ion-label>
-    </ion-item>
-  </ion-list>
+  <ng-container *ngIf="detailedToc">
+    <ion-list *ngIf="toc">
+      <ion-item *ngFor="let content of toc;" [class]="'level-' + content.toc" [routerLink]="'/player/play/'+epoc.id+'/'+content.id">
+        <ion-icon *ngIf="content.type === 'html'" name="paper" slot="end"></ion-icon>
+        <ion-icon *ngIf="content.type === 'video'" name="play" slot="end"></ion-icon>
+        <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="end"></ion-icon>
+        <ion-label>{{content.name}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="!detailedToc">
+    <div class="part">
+      <h3>Formation ZRR</h3>
+      <ion-slides *ngIf="toc" [options]="sliderOptions">
+        <ng-container *ngFor="let content of toc;">
+          <ion-slide *ngIf="content.type === 'chapter'" [routerLink]="'/player/play/'+epoc.id+'/'+content.id">
+            <div class="slide">
+              <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
+              <div>
+                <b>Chapter {{content.number}} : </b> {{content.name}}
+              </div>
+            </div>
+          </ion-slide>
+        </ng-container>
+      </ion-slides>
+    </div>
+  </ng-container>
 </ion-content>
