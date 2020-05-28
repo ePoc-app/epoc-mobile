@@ -9,6 +9,11 @@ export class Epoc {
     authors: Author[];
     summary: string;
     objectives: string[];
-    outline: Array<string>;
+    parts: Array<Part>;
     content: Array<Content>;
+}
+
+export class Part {
+    title: string;
+    outline: Array<string>;
 }
