@@ -333,6 +333,7 @@ const ZRRContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: 'a',
         type: 'chapter',
         name: 'Qu\'est-ce que le dispositif de PPST ? (protection du Potentiel Scientifique et Technique de la Nation)',
+        image: 'assets/demo/zrr-ppst-security.jpg',
         number: '1',
         toc: 1
     },
