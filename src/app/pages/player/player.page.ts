@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChildren, QueryList} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
@@ -10,7 +10,7 @@ import {LibraryService} from '../../services/library.service';
 import {Content} from '../../classes/contents/content';
 import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
-import {DOCUMENT} from '@angular/common';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-player',
@@ -18,6 +18,8 @@ import {DOCUMENT} from '@angular/common';
     styleUrls: ['player.page.scss']
 })
 export class PlayerPage implements OnInit {
+
+    @ViewChildren('node') nodes: QueryList;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -46,10 +48,10 @@ export class PlayerPage implements OnInit {
     };
 
     constructor(
-        @Inject(DOCUMENT) document,
         private elRef: ElementRef,
         private route: ActivatedRoute,
         private router: Router,
+        private location: Location,
         public alertController: AlertController,
         public actionSheetController: ActionSheetController,
         private libraryService: LibraryService,
@@ -141,13 +143,15 @@ export class PlayerPage implements OnInit {
         setTimeout(() => {
             this.pageCount = this.getPageCount();
             if (contentId) {
-                const contentElem = document.getElementById('content-' + contentId);
+                const contentElem = this.nodes.find((elem) => elem.nativeElement.id === 'content-' + contentId).nativeElement;
                 this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
                 this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
                 this.goToNearestPage();
+                this.location.replaceState('/player/play/' + this.epoc.id);
             } else if (progress) {
                 this.changeCurrentPage(Math.floor(progress / 100 * this.pageCount));
                 this.goToPage(this.currentPage);
+                this.location.replaceState('/player/play/' + this.epoc.id);
             } else {
                 this.goToNearestPage();
             }
