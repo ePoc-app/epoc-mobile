@@ -588,7 +588,7 @@ const ZRRContents: (Content|Chapter|Assessment|Html|Video)[] = [
         id: 'p',
         type: 'chapter',
         name: 'Echelle de sensibilité',
-        number: '3',
+        number: '4',
         toc: 1
     },
     {
@@ -607,8 +607,54 @@ const ZRRContents: (Content|Chapter|Assessment|Html|Video)[] = [
         summary: 'Quiz de compréhension (non noté) lié à la video "Accès aux données sensibles, accueil des visiteurs et sanctions".',
         items: [
             {
+                type: 'reorder',
+                score: 40,
+                statement: 'Trier du moins important au plus important les impacts suivants :',
+                label: 'Classification des impacts',
+                responses: [
+                    {
+                        label: 'Diffusion restreinte',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Confidentiel',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Public',
+                        value: 'C'
+                    },
+                    {
+                        label: 'Diffusion limitée',
+                        value: 'D'
+                    },
+                ],
+                correctResponse: 'CBDA'
+            },
+            {
+                type: 'multiple-choice',
+                score: 20,
+                statement: '',
+                label: 'Qui a participé au développment de cette app  ?',
+                responses: [
+                    {
+                        label: 'Laurence',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Benoit',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Jean-Marc',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: ['B', 'C']
+            },
+            {
                 type: 'choice',
-                score: 0,
+                score: 40,
                 statement: 'Les recherches "à caractère sensibles" qui sont faites dans les équipes projets.',
                 label: 'Pourquoi sont-elles protégées ?',
                 responses: [
