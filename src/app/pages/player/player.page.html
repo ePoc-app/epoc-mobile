@@ -17,7 +17,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'chapter'">
-              <div [id]="'content-'+content.id" class="page-content page-content-fs page-content-chapter">
+              <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-chapter">
                 <div class="page-content-fs-inner">
                   <div class="chapter-container">
                     <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
