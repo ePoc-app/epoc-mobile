@@ -29,6 +29,7 @@ import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.pag
     AssessmentButtonModule,
     RouterModule.forChild([
         { path: 'play/:id', component: PlayerPage },
+        { path: 'play/:id/content/:contentId', component: PlayerPage },
         { path: 'play/:id/:progress', component: PlayerPage },
         { path: 'about/:id', component: AboutEpocPage },
         { path: 'download/:id', component: DownloadEpocPage },

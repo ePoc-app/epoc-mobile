@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
@@ -10,6 +10,7 @@ import {LibraryService} from '../../services/library.service';
 import {Content} from '../../classes/contents/content';
 import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
     selector: 'app-player',
@@ -45,6 +46,7 @@ export class PlayerPage implements OnInit {
     };
 
     constructor(
+        @Inject(DOCUMENT) document,
         private elRef: ElementRef,
         private route: ActivatedRoute,
         private router: Router,
@@ -95,9 +97,12 @@ export class PlayerPage implements OnInit {
 
     afterDataInit() {
         this.readingStore.addReading(this.epoc.id);
-        const progress = this.route.snapshot.paramMap.has('progress') ?
+        // Go to progress (percentage)
+        const progress = this.route.snapshot.paramMap.has('progress') && !Number.isNaN(+this.route.snapshot.paramMap.get('progress')) ?
             +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
-        this.initReader(progress);
+        // Go to specific content
+        const contentId = this.route.snapshot.paramMap.get('contentId');
+        this.initReader(progress, contentId);
     }
 
     onResize() {
@@ -130,12 +135,18 @@ export class PlayerPage implements OnInit {
         }
     }
 
-    initReader(progress?: number) {
+    initReader(progress?: number, contentId?: string) {
         this.pagePerView = Math.ceil(window.innerWidth / 768);
         this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
         setTimeout(() => {
             this.pageCount = this.getPageCount();
-            if (progress) {
+            if (contentId) {
+                console.log(contentId);
+                const contentElem = document.getElementById('content-' + contentId);
+                this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
+                this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
+                this.goToNearestPage();
+            } else if (progress) {
                 this.changeCurrentPage(Math.floor(progress / 100 * this.pageCount));
                 this.goToPage(this.currentPage);
             } else {
