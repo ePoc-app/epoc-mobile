@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChildren, QueryList} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChildren, QueryList} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
@@ -19,7 +19,7 @@ import {Location} from '@angular/common';
 })
 export class PlayerPage implements OnInit {
 
-    @ViewChildren('node') nodes: QueryList;
+    @ViewChildren('node') nodes: QueryList<ElementRef>;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -142,6 +142,7 @@ export class PlayerPage implements OnInit {
         this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
         setTimeout(() => {
             this.pageCount = this.getPageCount();
+            console.log(this.nodes);
             if (contentId) {
                 const contentElem = this.nodes.find((elem) => elem.nativeElement.id === 'content-' + contentId).nativeElement;
                 this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
