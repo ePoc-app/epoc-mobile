@@ -145,6 +145,10 @@
   url('assets/font/open-dyslexic/svg/OpenDyslexic-Regular.svg#opendyslexicregular') format('svg');
 }
 
+ion-header ion-toolbar.ios:first-child{
+  padding-top: 0;
+}
+
 .custom-action-sheet{
   .action-sheet-title{
     position: fixed;
