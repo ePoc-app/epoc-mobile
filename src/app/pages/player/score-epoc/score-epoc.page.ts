@@ -98,12 +98,13 @@ export class ScoreEpocPage implements OnInit {
             const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
             const scoreTotal = assessment.items.reduce((total, item) => total + item.score, 0);
 
-            if (userAssessment && userAssessment.score >= scoreTotal) {
+            if (userAssessment && userAssessment.score > 0) {
                 this.assessmentData.totalUserScore += userAssessment.score;
-                this.assessmentData.successScore += scoreTotal;
-            } else if (userAssessment && userAssessment.score < scoreTotal) {
-                this.assessmentData.totalUserScore += userAssessment.score;
-                this.assessmentData.attemptedScore += scoreTotal;
+                this.assessmentData.successScore += userAssessment.score;
+
+                if (userAssessment.score < scoreTotal) {
+                    this.assessmentData.attemptedScore += scoreTotal - userAssessment.score;
+                }
             } else {
                 this.assessmentData.todoScore += scoreTotal;
             }
@@ -112,8 +113,8 @@ export class ScoreEpocPage implements OnInit {
 
         this.doughnutChartDataset = [{
             label: 'Résumé des scores',
-            data: [this.assessmentData.todoScore, this.assessmentData.attemptedScore, this.assessmentData.successScore],
-            backgroundColor: ['#989aa2', '#ffce00', '#10dc60']
+            data: [this.assessmentData.todoScore, this.assessmentData.successScore, this.assessmentData.attemptedScore],
+            backgroundColor: ['#989aa2', '#10dc60', '#ffce00']
         }];
 
         this.doughnutChartOptions = {

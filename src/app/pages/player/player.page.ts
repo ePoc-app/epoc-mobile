@@ -141,7 +141,6 @@ export class PlayerPage implements OnInit {
         setTimeout(() => {
             this.pageCount = this.getPageCount();
             if (contentId) {
-                console.log(contentId);
                 const contentElem = document.getElementById('content-' + contentId);
                 this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
                 this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
