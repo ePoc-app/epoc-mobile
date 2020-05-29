@@ -39,7 +39,7 @@ export class PlayerPage implements OnInit {
 
     // Reading default settings
     settings: Settings = {
-        font: 'sans',
+        font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.4,
         darkMode: false
