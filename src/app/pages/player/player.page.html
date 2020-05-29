@@ -6,7 +6,7 @@
           <ng-container *ngFor="let content of contents">
 
             <ng-container *ngIf="content.type === 'cover'">
-              <div class="page-content page-content-cover">
+              <div [id]="'content-'+content.id" class="page-content page-content-cover">
                 <ion-img [src]="epoc.image"></ion-img>
                 <h2>{{epoc.title}}</h2>
                 <div *ngFor="let author of epoc.authors">
@@ -17,7 +17,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'chapter'">
-              <div class="page-content page-content-fs page-content-chapter">
+              <div [id]="'content-'+content.id" class="page-content page-content-fs page-content-chapter">
                 <div class="page-content-fs-inner">
                   <div class="chapter-container">
                     <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
@@ -28,7 +28,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'html'">
-              <div class="page-content page-content-html">
+              <div [id]="'content-'+content.id" class="page-content page-content-html">
                 <div class="page-header">
                   <ion-icon name="paper" size="large"></ion-icon>
                   <h4>{{content.name}}</h4>
@@ -38,7 +38,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'video'">
-              <div class="page-content page-content-fs page-content-video">
+              <div [id]="'content-'+content.id" class="page-content page-content-fs page-content-video">
                 <div class="page-content-fs-inner">
                   <div class="page-header">
                     <ion-icon name="videocam" size="large"></ion-icon>
@@ -57,7 +57,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'assessment'">
-              <div class="page-content page-content-fs page-content-assessment">
+              <div [id]="'content-'+content.id" class="page-content page-content-fs page-content-assessment">
                 <div class="page-content-fs-inner">
                   <div class="page-header">
                     <ion-icon name="checkbox-outline" size="large"></ion-icon>
