@@ -10,7 +10,7 @@ import {Settings} from '../../../classes/settings';
 export class PlayerSettingsPage {
 
     settings: Settings = {
-        font: 'sans',
+        font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.4,
         darkMode: false
