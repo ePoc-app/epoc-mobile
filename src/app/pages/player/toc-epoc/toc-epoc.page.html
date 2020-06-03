@@ -20,19 +20,33 @@
   </ng-container>
   <ng-container *ngIf="!detailedToc">
     <div class="part" *ngFor="let part of epoc.parts;">
-      <h3>{{part.title}}</h3>
-      <ion-slides [options]="sliderOptions">
+      <div class="part-header" *ngIf="epoc.parts.length > 1">
+        <span>{{part.title}}</span>
+      </div>
+      <ion-slides [options]="sliderOptions" *ngIf="epoc.parts.length > 1">
         <ng-container *ngFor="let content of getContentsFromOutline(part.outline);">
           <ion-slide *ngIf="content.type === 'chapter'">
-            <div class="slide" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
+            <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
               <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
-              <div>
+              <ion-card-content>
                 <b>Chapter {{content.number}} : </b> {{content.name}}
-              </div>
-            </div>
+              </ion-card-content>
+            </ion-card>
           </ion-slide>
         </ng-container>
       </ion-slides>
+      <ion-grid *ngIf="epoc.parts.length <= 1">
+        <ion-row *ngFor="let content of getContentsFromOutline(part.outline);">
+          <ng-container *ngIf="content.type === 'chapter'">
+            <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
+              <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
+              <ion-card-content>
+                <b>Chapter {{content.number}} : </b> {{content.name}}
+              </ion-card-content>
+            </ion-card>
+          </ng-container>
+        </ion-row>
+      </ion-grid>
     </div>
   </ng-container>
 </ion-content>
