@@ -20,7 +20,17 @@
       <ion-col *ngIf="epoc$ | async as epoc">
         <b>Accès rapide :</b>
         <ng-container *ngFor="let assessment of assessments">
-          <assessment-button [content]="assessment" [epoc]="epoc"></assessment-button>
+          <ion-card>
+            <ion-card-content>
+              <ion-card-subtitle>
+                {{assessment.name}}
+                <ion-text class="score" [color]="getScore(assessment) < getScoreTotal(assessment) ? 'warning':'success'" *ngIf="getScoreTotal(assessment) > 0">
+                  {{getScore(assessment) ? getScore(assessment) : 0}}/{{getScoreTotal(assessment)}}
+                </ion-text>
+              </ion-card-subtitle>
+              <assessment-button [content]="assessment" [epoc]="epoc"></assessment-button>
+            </ion-card-content>
+          </ion-card>
         </ng-container>
       </ion-col>
     </ion-row>
