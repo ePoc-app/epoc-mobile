@@ -131,4 +131,19 @@ export class ScoreEpocPage implements OnInit {
             }
         };
     }
+
+    getScore(content) {
+        if (this.reading) {
+            const userAssessment = this.reading.assessments.find(assessment => assessment.id === content.id);
+            if (userAssessment) {
+                return userAssessment.score;
+            }
+        }
+
+        return null;
+    }
+
+    getScoreTotal(content) {
+        return content.items.reduce((total, item) => item.score + total, 0);
+    }
 }
