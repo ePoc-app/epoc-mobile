@@ -9,24 +9,54 @@
 }
 
 .part{
-  margin-bottom: 15px;
-  padding: 15px 0;
-  background: #f1f1f1;
+  &:last-child{
+    margin-bottom: 0;
+  }
 
-  h3{
-    margin:0 0 15px 15px;
+  &-header{
+    margin:0;
+    padding: 1em;
+
+    span{
+      border-bottom: 2px solid var(--ion-color-inria-blue);
+    }
   }
 }
 
 ion-slides{
-  padding: 0 15px;
+  padding: 0 1em 1em 1em;
+
+  ion-card{
+    flex-grow: 1;
+    margin: 0;
+  }
+
+  ion-slide{
+    flex-direction: column;
+    height:auto;
+  }
 }
 
-.slide{
+.chapter{
+  text-align: center;
+
   img{
     display: block;
     border: 2px solid var(--ion-color-inria-blue);
     border-radius: 10px;
     margin-bottom: 15px;
+  }
+}
+
+ion-card.chapter{
+  margin: 1em;
+  background: white;
+
+  img{
+    border-radius: 10px 10px 0 0;
+  }
+
+  ion-card-content{
+    min-height: 100px;
   }
 }
