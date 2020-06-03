@@ -36,9 +36,4 @@ export class AssessmentButtonComponent implements OnInit {
 
         return null;
     }
-
-    getScoreTotal(content) {
-        return content.items.reduce((total, item) => item.score + total, 0);
-    }
-
 }
