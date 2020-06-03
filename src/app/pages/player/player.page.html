@@ -1,5 +1,5 @@
 <ion-content scroll-y="false">
-  <div class="reader" (window:resize)="onResize($event)" [ngStyle]="getStyle()">
+  <div class="reader" (window:resize)="onResize()" [ngStyle]="getStyle()">
     <div class="pages-container" [ngStyle]="contentStyles" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
       <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
         <ng-container *ngIf="epoc$ | async as epoc">

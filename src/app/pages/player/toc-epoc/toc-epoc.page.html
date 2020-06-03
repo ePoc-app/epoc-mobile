@@ -23,8 +23,8 @@
       <h3>{{part.title}}</h3>
       <ion-slides [options]="sliderOptions">
         <ng-container *ngFor="let content of getContentsFromOutline(part.outline);">
-          <ion-slide *ngIf="content.type === 'chapter'" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
-            <div class="slide">
+          <ion-slide *ngIf="content.type === 'chapter'">
+            <div class="slide" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
               <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
               <div>
                 <b>Chapter {{content.number}} : </b> {{content.name}}
