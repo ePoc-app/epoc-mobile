@@ -1,11 +1,13 @@
 <ion-card mode="ios" class="question-card">
   <ion-card-header mode="ios">
     <ion-card-subtitle mode="ios">Question {{questionMeta.index}}/{{questionMeta.total}}</ion-card-subtitle>
-    <ion-card-title mode="ios">{{question.label}}</ion-card-title>
+    <div class="statement">
+      <p>{{question.statement}}</p>
+      <ion-card-title mode="ios">
+        <div>{{question.label}}</div>
+      </ion-card-title>
+    </div>
   </ion-card-header>
-  <ion-card-content mode="ios">
-    <p>{{question.statement}}</p>
-  </ion-card-content>
   <ion-card-content mode="ios">
     <ion-list>
       <ion-item [lines]="'none'" *ngFor="let response of question.responses">

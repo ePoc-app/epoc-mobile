@@ -9,4 +9,21 @@
   .card-content-ios{
     padding-top: 0;
   }
+
+  .statement{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  ion-card-title{
+    font-size: 1rem;
+  }
+
+  ion-card-header{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
 }
