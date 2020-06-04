@@ -42,7 +42,7 @@
                             </ion-col>
                             <ion-col size="4">
                               <div class="chapter-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
-                              <div class="chapter-spec-value">1 activité</div>
+                              <div class="chapter-spec-value">2 activités</div>
                             </ion-col>
                           </ion-row>
                         </ion-grid>
@@ -82,7 +82,7 @@
                   <h4>Summary</h4>
 
                   <div class="video-summary">
-                    <p *ngIf="content.summary && content.summary.length > 0">{{content.summary}}</p>
+                    <p *ngIf="content.summary && content.summary.length > 0" [innerHTML]="content.summary"></p>
                     <p *ngIf="!content.summary || content.summary.length <= 0">No summary.</p>
                   </div>
                 </div>

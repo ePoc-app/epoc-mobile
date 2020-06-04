@@ -16,7 +16,7 @@
     <ion-row class="epoc-specs ion-text-center">
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="book" mode="md" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value">3 chapitres</div>
+        <div class="epoc-spec-value">9 chapitres</div>
       </ion-col>
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
@@ -24,8 +24,7 @@
       </ion-col>
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value">5 exercices</div>
-        <div><small>Seuil de réussite : 60%</small></div>
+        <div class="epoc-spec-value">29 exercices</div>
       </ion-col>
     </ion-row>
 
@@ -38,13 +37,13 @@
       <ion-col size="12">
         <div class="tabs-headers">
           <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
-            <span>Objectives</span>
+            <span>Objectifs</span>
           </div>
           <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
-            <span>Summary</span>
+            <span>Résumé</span>
           </div>
           <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
-            <span>Authors</span>
+            <span>Auteurs</span>
           </div>
         </div>
         <div class="tabs">
@@ -58,7 +57,6 @@
             <ion-text [innerHTML]="epoc.summary"></ion-text>
           </div>
           <div class="tab" *ngIf="selectedTab === 2">
-            <h3 class="bold">Author<span *ngIf="epoc.authors.length > 1">s</span></h3>
             <div class="epoc-author" *ngFor="let author of epoc.authors">
               <ion-text class="semibold">{{author.name}} : </ion-text>
               <ion-img [src]="author.image"></ion-img>

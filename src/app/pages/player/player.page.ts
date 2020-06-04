@@ -251,7 +251,6 @@ export class PlayerPage implements OnInit {
             cssClass: 'custom-action-sheet',
             mode: 'ios',
             header: this.epoc.title,
-            subHeader: 'Score : 25/100',
             buttons: [
                 {
                     text: 'Accueil',
@@ -262,13 +261,6 @@ export class PlayerPage implements OnInit {
                 },
                 {
                     cssClass: 'splitter'
-                },
-                {
-                    text: 'Poser un signet',
-                    icon: 'bookmark',
-                    handler: () => {
-                        this.toggleBookmark();
-                    }
                 },
                 {
                     text: 'Liste des signets',
