@@ -19,10 +19,43 @@
             <ng-container *ngIf="content.type === 'chapter'">
               <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-chapter">
                 <div class="page-content-fs-inner">
-                  <div class="chapter-container">
-                    <div class="chapter-square"><div class="chapter-number">{{content.number}}</div></div>
-                    <div class="chapter-title">{{content.name}}</div>
-                  </div>
+                  <ion-card class="chapter-container">
+                    <ion-card-content>
+                        <div class="title-wrapper">
+                          <div class="title-container">
+                            <h3 class="number">Chapitre {{content.number}} :</h3>
+                            <h5 class="title">
+                              {{content.name}}
+                            </h5>
+                          </div>
+                        </div>
+
+                        <ion-grid>
+                          <ion-row class="chapter-specs ion-text-center">
+                            <ion-col size="4">
+                              <div class="chapter-spec-icon"><ion-icon name="videocam" mode="md" color="inria-blue"></ion-icon></div>
+                              <div class="chapter-spec-value">1 video</div>
+                            </ion-col>
+                            <ion-col size="4">
+                              <div class="chapter-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
+                              <div class="chapter-spec-value">10 min</div>
+                            </ion-col>
+                            <ion-col size="4">
+                              <div class="chapter-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
+                              <div class="chapter-spec-value">1 activité</div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+
+                        <div class="chapter-objectives" *ngIf="content.objectives">
+                          <h4>{{content.objectives.length > 1 ? 'Objectives' : 'Objective'}}</h4>
+                          <div class="chapter-objective" *ngFor="let objective of content.objectives">
+                            <ion-icon name="locate" mode="md"></ion-icon>
+                            <ion-text>{{objective}}</ion-text>
+                          </div>
+                        </div>
+                    </ion-card-content>
+                  </ion-card>
                 </div>
               </div>
             </ng-container>
