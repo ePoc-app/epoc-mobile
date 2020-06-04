@@ -78,8 +78,12 @@ export class AssessmentPage implements OnInit {
                 this.questionFailed();
             }
         } else if (Array.isArray(correctResponse)) {
-            if (correctResponse.every(answer => {
-                return this.currentAnswer ? this.currentAnswer.indexOf(answer) >= 0 : false;
+            if (correctResponse.every((answer, index) => {
+                if (typeof answer === 'object') {
+                    return this.arraysEqual(this.currentAnswer[index], answer.values);
+                } else {
+                    return this.currentAnswer ? this.currentAnswer.indexOf(answer) >= 0 : false;
+                }
             })) {
                 this.questionSuccessed();
             } else {
@@ -112,5 +116,26 @@ export class AssessmentPage implements OnInit {
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
             this.location.back();
         }
+    }
+
+    arraysEqual(arr1Orig, arr2Orig) {
+
+        if (!Array.isArray(arr1Orig) || ! Array.isArray(arr2Orig) || arr1Orig.length !== arr2Orig.length) {
+            return false;
+        }
+
+        const arr1 = arr1Orig.concat().sort();
+        const arr2 = arr2Orig.concat().sort();
+
+        for (let i = 0; i < arr1.length; i++) {
+
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+
+        }
+
+        return true;
+
     }
 }

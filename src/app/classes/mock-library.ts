@@ -97,7 +97,7 @@ const DummyHtmlContent = (length) => {
     return dummy;
 };
 
-const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
+const MockContents: (Content | Chapter | Assessment | Html | Video)[] = [
     {
         id: '1',
         type: 'chapter',
@@ -328,7 +328,7 @@ const MockContents: (Content|Chapter|Assessment|Html|Video)[] = [
         toc: 1
     }
 ];
-const ZRRContents: (Content|Chapter|Assessment|Html|Video)[] = [
+const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
     {
         id: 'a',
         type: 'chapter',
@@ -399,6 +399,58 @@ const ZRRContents: (Content|Chapter|Assessment|Html|Video)[] = [
         name: 'Quiz non noté',
         summary: 'Quiz de compréhension (non noté) lié à la video "Dispositif PPST".',
         items: [
+            {
+                type: 'drag-and-drop',
+                score: 0,
+                statement: '',
+                label: 'Quelles sont les données qui peuvent être récupérées par notre smartphone ' +
+                        'dans le monde physique et le monde virtuel ?',
+                responses: [
+                    {
+                        label: 'Localisation',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Empreinte digitale',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Reconnaissance faciale',
+                        value: 'C'
+                    },
+                    {
+                        label: 'Rythme cardiaque',
+                        value: 'D'
+                    },
+                    {
+                        label: 'Nombre de pas par jour',
+                        value: 'I'
+                    },
+                    {
+                        label: 'Recherche web',
+                        value: 'E'
+                    },
+                    {
+                        label: 'Contact',
+                        value: 'F'
+                    },
+                    {
+                        label: 'Temps passé dans une application',
+                        value: 'G'
+                    },
+                    {
+                        label: 'Données de formulaire',
+                        value: 'H'
+                    }
+                ],
+                correctResponse: [
+                    {label: 'Monde physique', values: ['A', 'B', 'C', 'D', 'I']},
+                    {label: 'Monde virtuel', values: ['E', 'F', 'G', 'H']}
+                ],
+                explanation: '' +
+                    'Bien que toutes les équipes ne soient pas en ZRR, tous les secteurs de recherche Inria sont potentiellement ' +
+                    'sensibles et donc protégés.'
+            },
             {
                 type: 'choice',
                 score: 0,
@@ -680,7 +732,7 @@ const ZRRContents: (Content|Chapter|Assessment|Html|Video)[] = [
     }
 ];
 
-export const MockLibrary: Epoc[] =  [
+export const MockLibrary: Epoc[] = [
     {
         id: 'C042AD',
         title: 'Zone à régime restrictif',

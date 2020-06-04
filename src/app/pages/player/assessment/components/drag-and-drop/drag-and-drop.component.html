@@ -1,0 +1,29 @@
+<ion-card mode="ios" class="question-card">
+  <ion-card-header mode="ios">
+    <ion-card-subtitle mode="ios">Question {{questionMeta.index}}/{{questionMeta.total}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content mode="ios">
+    <p>{{question.statement}}</p>
+    <b>{{question.label}}</b>
+
+    <div class="drop-zones">
+      <div class="drop-zone" (click)="selectZone(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
+        <span class="zone-label">{{zone.label}}</span>
+        <div class="zone">
+          <span class="zone-info" *ngIf="responses[zoneIndex].length < 1">(Click to drop here)</span>
+          <ng-container *ngFor="let response of responses[zoneIndex]">
+            <div class="response-item">
+              {{response.label}}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="currentResponseIndex < question.responses.length">
+      <div class="response-item" (click)="selectResponse(currentResponse())">
+        {{currentResponse().label}}
+      </div>
+    </ng-container>
+
+  </ion-card-content>
+</ion-card>
