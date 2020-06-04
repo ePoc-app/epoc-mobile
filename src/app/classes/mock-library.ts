@@ -404,7 +404,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
                 score: 0,
                 statement: '',
                 label: 'Quelles sont les données qui peuvent être récupérées par notre smartphone ' +
-                        'dans le monde physique et le monde virtuel ?',
+                    'dans le monde physique et le monde virtuel ?',
                 responses: [
                     {
                         label: 'Localisation',
@@ -732,35 +732,230 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
     }
 ];
 
+const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
+    {
+        id: 'a',
+        type: 'chapter',
+        name: 'Pourquoi le smartphone intéresse-t-il tant ?',
+        image: 'assets/demo/img/vp-chapitre-1.png',
+        number: '1',
+        objectives: ['Identifier des données collectées sur notre portable'],
+        toc: 1
+    },
+    {
+        id: 'b',
+        type: 'assessment',
+        name: 'Quiz non noté',
+        summary: 'Questionnaire de placement.',
+        items: [
+            {
+                type: 'choice',
+                score: 0,
+                statement: '',
+                label: 'Est-ce que votre smartphone récupère de l’information sur vous dans le monde physique (les déplacements, les paramètres biologiques etc.) ? ',
+                responses: [
+                    {
+                        label: 'Oui',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Non',
+                        value: 'B'
+                    }
+                ],
+                correctResponse: 'A',
+                explanation: '<p>La récupération de l’information dans le monde physique est devenue une fonctionnalité incluse dans les smartphones, donc la bonne réponse est oui.</p>' +
+                    '<p>La question sur vos données personnelles et les autorisations que vous pouvez attribuer aux applications sera vue dans les prochains modules.</p>'
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 'c',
+        type: 'video',
+        name: 'Les données',
+        source: 'assets/demo/vp-chapitre-1.mp4',
+        subtitles: 'assets/demo/soustitre.vtt',
+        summary: '<p>Pourquoi nos assistants personnels, smartphones et tablettes, sont-ils devenus tout naturellement, en une dizaine d\'années seulement, un point de collecte majeur de données personnelles.</p>' +
+            '<p>Pourquoi le smartphone intéresse-t-il tant de monde ?</p>' +
+            '<p>Regarder cette vidéo pour en savoir plus !</p>',
+        toc: 2
+    },
+    {
+        id: 'e',
+        type: 'assessment',
+        name: 'Quiz noté',
+        summary: 'Questionnaire noté de fin de chapitre 1.',
+        items: [
+            {
+                type: 'drag-and-drop',
+                score: 100,
+                statement: '',
+                label: 'Quelles sont les données qui peuvent être récupérées par notre smartphone ' +
+                    'dans le monde physique et le monde virtuel ?',
+                responses: [
+                    {
+                        label: 'Localisation',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Empreinte digitale',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Reconnaissance faciale',
+                        value: 'C'
+                    },
+                    {
+                        label: 'Rythme cardiaque',
+                        value: 'D'
+                    },
+                    {
+                        label: 'Nombre de pas par jour',
+                        value: 'I'
+                    },
+                    {
+                        label: 'Recherche web',
+                        value: 'E'
+                    },
+                    {
+                        label: 'Contact',
+                        value: 'F'
+                    },
+                    {
+                        label: 'Temps passé dans une application',
+                        value: 'G'
+                    },
+                    {
+                        label: 'Données de formulaire',
+                        value: 'H'
+                    }
+                ],
+                correctResponse: [
+                    {label: 'Monde physique', values: ['A', 'B', 'C', 'D', 'I']},
+                    {label: 'Monde virtuel', values: ['E', 'F', 'G', 'H']}
+                ],
+                explanation: '<p>C\'est bien là un des aspects clefs de nos smartphones : étant toujours connectés, toujours avec nous, disposant de multiples capteurs ils récupèrent des données.</p><p>Pour un monde physique cela se réalise à travers une caméra, GPS, capteur d’empreintes, capteurs de rythme cardiaque et les autres outils. Pour un monde virtuel c’est souvent à travers des formulaires à remplir et au travers de notre activité dans les applications que l’information est récoltée.</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: '"Le smartphone permet de suivre les utilisateurs dans le monde physique, faisant ainsi pour la première fois le lien entre les activités sur Internet et les activités dans le monde physique."',
+                label: 'Cette phrase vous parait-elle :',
+                responses: [
+                    {
+                        label: 'Correspondre tout à fait à la réalité ',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Être largement abusive',
+                        value: 'B'
+                    }
+                ],
+                correctResponse: 'A',
+                explanation: '<p>En étant toujours avec vous, un smartphone pourra : vous localiser (à moins de bloquer les autorisations associées), savoir que vous être proche d\'un magasin vendant des articles susceptibles de vous intéresser (car vous avez fait des recherches à ce sujet sur votre navigateur), et donc créer une passerelle entre Internet et monde physique. </p>'
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 'f',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-2.png',
+        number: '2',
+        toc: 1
+    },
+    {
+        id: 'g',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-3.jpg',
+        number: '3',
+        toc: 1
+    },
+    {
+        id: 'h',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-4.png',
+        number: '4',
+        toc: 1
+    },
+    {
+        id: 'i',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-5.png',
+        number: '5',
+        toc: 1
+    },
+    {
+        id: 'j',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-6.jpg',
+        number: '6',
+        toc: 1
+    },
+    {
+        id: 'k',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-7.png',
+        number: '7',
+        toc: 1
+    },
+    {
+        id: 'l',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-8.png',
+        number: '8',
+        toc: 1
+    },
+    {
+        id: 'm',
+        type: 'chapter',
+        name: 'Les risques PPST',
+        image: 'assets/demo/img/vp-chapitre-9.png',
+        number: '9',
+        toc: 1
+    }
+];
+
 export const MockLibrary: Epoc[] = [
     {
         id: 'C042AD',
-        title: 'Zone à régime restrictif',
-        image: 'assets/demo/zrr-intro-poster.jpg',
-        teaser: 'assets/demo/zrr-intro.mp4',
+        title: 'Smartphone et vie privée',
+        image: 'assets/demo/img/vp-poster.png',
+        teaser: 'assets/demo/vp-intro.mp4',
         authors: [
             {
-                name: 'Didier Benza',
-                image: 'assets/demo/img/benza.jpg',
-                description: 'At autem dignissimos dolorem illum molestias quas quod repudiandae saepe.'
+                name: 'Vincent Roca',
+                image: 'assets/demo/img/vincent-rond.png',
+                description: 'I\'m permanent researcher, working at Inria, a French public research institute. Since 2013 I am part of the Privatics Inria research team that focuses on privacy.'
             }
         ],
-        summary: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices semper libero, ' +
-            'sit amet fringilla leo. Donec facilisis volutpat augue, in interdum ligula tincidunt ac. Sed ut ' +
-            'volutpat dui, sed fringilla purus. Fusce aliquet eros vel sapien dictum tempor.</p><p>Class aptent taciti ' +
-            'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
-            'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
-            'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
+        summary: '<p>Ce parcours sera dédié à la question du respect de la vie privée lorsque l\'on utilise nos assistants personnels, smartphone ou tablette.</p>' +
+            '<p>Tout d\'abord, nous allons nous intéresser aux écosystèmes assez complexes qui se sont mis en place ces dernières années autour des smartphones. Qui sont les acteurs, comme interagissent-ils, qui fait quoi, qui gagne quoi ?</p>' +
+            '<p>Nous nous intéresserons bien sûr aux problèmes de perte de contrôle de ces données personnelles, auxquels nous sommes tous confrontes. Où est le problème ? </p>' +
+            '<p>C\'est vraiment la question fondamentale. Ceci nous permettra d\'aborder la notion de contrôle utilisateur. Que peut-on faire dans ce contexte, quels sont les outils mis à disposition, que peut-on en dire, est-ce qu\'ils remplissent bien leur mission, est-ce que c\'est juste un leurre ?</p>' +
+            '<p>Enfin, il faut rester conscient que la gratuité totale n\'existe pas. </p>',
         objectives: [
-            'Apprendre des trucs sur plusieurs ligne car cette phrase est longue',
-            'Connaitre des choses',
-            'Savoir des machins'
+            'S\'informer sur l’écosystème autour des applications pour smartphones',
+            'Découvrir les problèmes de fond du modèle économique',
+            'Comparer la politique de confidentialité sur IOS et Android',
+            'D’avoir un regard critique sur le monde numérique des smartphones'
         ],
         parts: [{
-            title: 'Formation ZRR',
-            outline: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
+            title: 'Smartphone',
+            outline: ['a', 'b', 'c', 'e', 'f', 'g', 'h']
+        }, {
+            title: 'Mise en pratique',
+            outline: ['i', 'j', 'k', 'l', 'm']
         }],
-        content: ZRRContents
+        content: VPContents
     }
 ];
 
