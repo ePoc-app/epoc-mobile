@@ -20,6 +20,7 @@ import {MultipleChoiceComponent} from './assessment/components/multiple-choice/m
 import {ReorderComponent} from './assessment/components/reorder/reorder.component';
 import {VideoComponent} from './video/video.component';
 import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.page';
+import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-and-drop.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.pag
     ChartsModule
   ],
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
-      BookmarksEpocPage, PlayerSettingsPage, AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent,
+      BookmarksEpocPage, PlayerSettingsPage,
+      AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
       VideoComponent, TranscriptModalPage],
   entryComponents: [TranscriptModalPage]
 })

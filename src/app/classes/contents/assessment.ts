@@ -11,8 +11,12 @@ export class Question {
     statement: string;
     label: string;
     responses: Array<Response>;
-    correctResponse: string|Array<string>;
+    correctResponse: string|Array<string>|Array<{label: string, values: string[]}>;
     explanation: string;
+}
+
+export class DragAndDropquestion extends Question{
+    correctResponse: Array<{label: string, values: string[]}>;
 }
 
 class Response {
