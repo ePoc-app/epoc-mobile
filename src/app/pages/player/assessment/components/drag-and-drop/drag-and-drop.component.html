@@ -7,23 +7,21 @@
     <b>{{question.label}}</b>
 
     <div class="drop-zones">
-      <div class="drop-zone" (click)="selectZone(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
+      <div class="drop-zone" (click)="addResponse(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
         <span class="zone-label">{{zone.label}}</span>
         <div class="zone">
-          <span class="zone-info" *ngIf="responses[zoneIndex].length < 1">(Click to drop here)</span>
-          <ng-container *ngFor="let response of responses[zoneIndex]">
-            <div class="response-item">
-              {{response.label}}
-            </div>
-          </ng-container>
+          <span class="zone-info" *ngIf="answer[zoneIndex].length < 1">(Click to drop here)</span>
+          <div class="response-item" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;" [@slideInOut]>
+              {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
+          </div>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="currentResponseIndex < question.responses.length">
-      <div class="response-item" (click)="selectResponse(currentResponse())">
-        {{currentResponse().label}}
+    <div class="current-response" *ngIf="responses.length > 0">
+      <div class="response-item" *ngFor="let currentResponse of getCurrentResponse()" [@fadeOut]>
+        {{currentResponse.label}}
       </div>
-    </ng-container>
+    </div>
 
   </ion-card-content>
 </ion-card>
