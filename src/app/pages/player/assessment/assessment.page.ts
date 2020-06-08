@@ -19,6 +19,7 @@ export class AssessmentPage implements OnInit {
     @ViewChild('questionSlides', { static: false }) protected questionSlides: IonSlides;
 
     epoc$: Observable<Epoc>;
+    epoc: Epoc;
     assessment: Assessment;
     epocId;
     assessmentId;
@@ -60,6 +61,7 @@ export class AssessmentPage implements OnInit {
         });
 
         this.epoc$.subscribe(epoc => {
+            this.epoc = epoc;
             this.assessment = epoc.content.find((content) => content.id === this.assessmentId);
             this.questionsSuccessed = new Array(this.assessment.items.length);
         });
@@ -113,8 +115,11 @@ export class AssessmentPage implements OnInit {
             this.explanationShown = false;
             this.questionSlides.slideNext();
         } else {
+            this.currentQuestion++;
+            this.currentAnswer = '';
+            this.explanationShown = false;
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
-            this.location.back();
+            this.questionSlides.slideNext();
         }
     }
 
@@ -137,5 +142,33 @@ export class AssessmentPage implements OnInit {
 
         return true;
 
+    }
+
+    hasNextSlide() {
+        return this.currentQuestion < this.assessment.items.length;
+    }
+
+    getScoreTotal() {
+        return this.assessment.items.reduce((total, item) => item.score + total, 0);
+    }
+
+    retry() {
+        location.reload();
+    }
+
+    resume() {
+        let nextContent;
+        this.epoc.parts.forEach(part => {
+            const index = part.outline.indexOf(this.assessmentId);
+            if (index !== -1 && index + 1 < part.outline.length) {
+                nextContent = part.outline[index + 1];
+            }
+        });
+        console.log(nextContent);
+        if (nextContent) {
+            this.router.navigateByUrl('/player/play/' + this.epoc.id + '/content/' + nextContent);
+        } else {
+            this.router.navigateByUrl('/player/play/' + this.epoc.id + '/content/' + this.assessmentId);
+        }
     }
 }
