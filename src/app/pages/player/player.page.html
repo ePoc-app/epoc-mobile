@@ -1,12 +1,31 @@
 <ion-content scroll-y="false">
-  <div class="reader" (window:resize)="onResize()" [ngStyle]="getStyle()">
+  <div class="loader" *ngIf="loading">
+    <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#364357">
+      <g fill="none" fill-rule="evenodd">
+        <g transform="translate(1 1)" stroke-width="2">
+          <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+          <path d="M36 18c0-9.94-8.06-18-18-18">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 18 18"
+              to="360 18 18"
+              dur="1s"
+              repeatCount="indefinite"/>
+          </path>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="reader" [ngClass]="loading ? 'loading':''" (window:resize)="onResize()" [ngStyle]="getStyle()">
     <div class="pages-container" [ngStyle]="contentStyles" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
       <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
         <ng-container *ngIf="epoc$ | async as epoc">
           <ng-container *ngFor="let content of contents">
 
             <ng-container *ngIf="content.type === 'cover'">
-              <div [id]="'content-'+content.id" class="page-content page-content-cover">
+              <div #node [id]="'content-'+content.id" class="page-content page-content-cover">
                 <ion-img [src]="epoc.image"></ion-img>
                 <h2>{{epoc.title}}</h2>
                 <div *ngFor="let author of epoc.authors">
@@ -61,7 +80,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'html'">
-              <div [id]="'content-'+content.id" class="page-content page-content-html">
+              <div #node [id]="'content-'+content.id" class="page-content page-content-html">
                 <div class="page-header">
                   <ion-icon name="paper" size="large"></ion-icon>
                   <h4>{{content.name}}</h4>
@@ -71,7 +90,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'video'">
-              <div [id]="'content-'+content.id" class="page-content page-content-fs page-content-video">
+              <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-video">
                 <div class="page-content-fs-inner">
                   <div class="page-header">
                     <ion-icon name="videocam" size="large"></ion-icon>
@@ -90,7 +109,7 @@
             </ng-container>
 
             <ng-container *ngIf="content.type === 'assessment'">
-              <div [id]="'content-'+content.id" class="page-content page-content-fs page-content-assessment">
+              <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-assessment">
                 <div class="page-content-fs-inner">
                   <div class="page-header">
                     <ion-icon name="checkbox-outline" size="large"></ion-icon>

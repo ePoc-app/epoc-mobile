@@ -27,6 +27,7 @@ export class PlayerPage implements OnInit {
     reading: Reading;
 
     // Reader
+    loading = true;
     fontSize = 14;
     pagePerView = Math.ceil(window.innerWidth / 640);
     columnWidth = (100 / this.pagePerView - 2) + 'vw';
@@ -155,6 +156,7 @@ export class PlayerPage implements OnInit {
             } else {
                 this.goToNearestPage();
             }
+            setTimeout(() => this.loading = false, 300);
         }, 200);
     }
 
