@@ -39,3 +39,25 @@
     margin-bottom: 20px;
   }
 }
+
+.assessment-end{
+  ion-card-header {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ion-card-content{
+    display: flex;
+  }
+
+  .retry{
+    transform: scaleX(-1);
+  }
+
+  .resume-course{
+    flex-grow: 1;
+  }
+}
