@@ -152,6 +152,12 @@ export class AssessmentPage implements OnInit {
         return this.assessment.items.reduce((total, item) => item.score + total, 0);
     }
 
+    back(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.router.navigateByUrl('/player/play/' + this.epoc.id + '/content/' + this.assessmentId);
+    }
+
     retry() {
         location.reload();
     }
@@ -164,7 +170,6 @@ export class AssessmentPage implements OnInit {
                 nextContent = part.outline[index + 1];
             }
         });
-        console.log(nextContent);
         if (nextContent) {
             this.router.navigateByUrl('/player/play/' + this.epoc.id + '/content/' + nextContent);
         } else {
