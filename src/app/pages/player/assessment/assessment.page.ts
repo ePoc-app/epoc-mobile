@@ -16,7 +16,7 @@ import {Assessment} from '../../../classes/contents/assessment';
     styleUrls: ['assessment.page.scss']
 })
 export class AssessmentPage implements OnInit {
-    @ViewChild('questionSlides', { static: false }) protected questionSlides: IonSlides;
+    @ViewChild('questionSlides', { static: false }) questionSlides: IonSlides;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
