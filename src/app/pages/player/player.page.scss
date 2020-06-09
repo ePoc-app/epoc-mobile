@@ -141,15 +141,12 @@
     .title-wrapper{
       width: 100%;
       margin: 5vh auto 2vh -1em;
-      padding-right: 10vw;
+      padding: 5vh 0;
       background: var(--ion-color-inria);
-      transform: perspective(10vw) rotateY(1deg);
-      transform-origin: left;
+      clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
 
       .title-container {
         padding: 1em;
-        transform: perspective(10vw) rotateY(-1deg);
-        transform-origin: left;
 
         .number{
           color: white;
