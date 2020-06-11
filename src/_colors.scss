@@ -1,0 +1,67 @@
+$inria-red : #e63312;
+$inria-red-bg : lighten($inria-red, 48%);
+$inria-blue : #40455a;
+$inria-blue-border : lighten($inria-blue, 50%);
+$inria-blue-bg : lighten($inria-blue, 64%);
+$inria-spe : #81cbcb;
+
+:root {
+  --ion-color-inria: #ee2d20;
+  --ion-color-inria-rgb: 238,45,32;
+  --ion-color-inria-contrast: #ffffff;
+  --ion-color-inria-contrast-rgb: 255,255,255;
+  --ion-color-inria-shade: #b93122;
+  --ion-color-inria-tint: #f52d20;
+
+  --ion-color-inria-blue: #364357;
+  --ion-color-inria-blue-rgb: 54,67,87;
+  --ion-color-inria-blue-contrast: #ffffff;
+  --ion-color-inria-blue-contrast-rgb: 255,255,255;
+  --ion-color-inria-blue-shadee: #1a2437;
+  --ion-color-inria-blue-tint: #435369;
+
+  --ion-color-inria-spe: #81cbcb;
+  --ion-color-inria-spe-rgb: 129,203, 203;
+  --ion-color-inria-spe-contrast: var(--ion-color-inria-blue);
+  --ion-color-inria-spe-contrast-rgb: var(--ion-color-inria-blue-rgb);
+  --ion-color-inria-spe-shadee: #63aeae;
+  --ion-color-inria-spe-tint: #93e1e1;
+
+  --vjs-theme-forest--primary: #364357!important;
+  --vjs-theme-forest--secondary: #81cbcb!important;
+
+  ion-img {
+    /**
+     * Bug fix for:
+     * https://github.com/ionic-team/ionic/issues/18734
+     */
+    min-height: 1px !important;
+  }
+}
+
+.ion-color-inria {
+  --ion-color-base: var(--ion-color-inria);
+  --ion-color-base-rgb: var(--ion-color-inria-rgb);
+  --ion-color-contrast: var(--ion-color-inria-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-shade);
+  --ion-color-tint: var(--ion-color-inria-tint);
+}
+
+.ion-color-inria-blue {
+  --ion-color-base: var(--ion-color-inria-blue);
+  --ion-color-base-rgb: var(--ion-color-inria-blue-rgb);
+  --ion-color-contrast: var(--ion-color-inria-blue-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-blue-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-blue-shade);
+  --ion-color-tint: var(--ion-color-inria-blue-tint);
+}
+
+.ion-color-inria-spe {
+  --ion-color-base: var(--ion-color-inria-spe);
+  --ion-color-base-rgb: var(--ion-color-inria-spe-rgb);
+  --ion-color-contrast: var(--ion-color-inria-spe-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-spe-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-spe-shade);
+  --ion-color-tint: var(--ion-color-inria-spe-tint);
+}

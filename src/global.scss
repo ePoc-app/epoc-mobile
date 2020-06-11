@@ -27,123 +27,10 @@
 
 @import '~video.js/dist/video-js.css';
 
-@font-face {
-  font-family: 'Inria Sans';
-  src: url("assets/font/inria/InriaSans-Light.eot");
-  src: url("assets/font/inria/InriaSans-Light.eot?#iefix") format("embedded-opentype"), url("assets/font/inria/InriaSans-Light.woff2") format("woff2"), url("assets/font/inria/InriaSans-Light.woff") format("woff"), url("assets/font/inria/InriaSans-Light.svg") format("svg");
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Inria Sans';
-  src: url("assets/font/inria/InriaSans-LightItalic.eot");
-  src: url("assets/font/inria/InriaSans-LightItalic.eot?#iefix") format("embedded-opentype"), url("assets/font/inria/InriaSans-LightItalic.woff2") format("woff2"), url("assets/font/inria/InriaSans-LightItalic.woff") format("woff"), url("assets/font/inria/InriaSans-LightItalic.svg") format("svg");
-  font-weight: 300;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Inria Sans';
-  src: url("assets/font/inria/InriaSans-Italic.eot");
-  src: url("assets/font/inria/InriaSans-Italic.eot?#iefix") format("embedded-opentype"), url("assets/font/inria/InriaSans-Italic.woff2") format("woff2"), url("assets/font/inria/InriaSans-Italic.woff") format("woff"), url("assets/font/inria/InriaSans-Italic.svg") format("svg");
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Inria Sans';
-  src: url("assets/font/inria/InriaSans-Regular.eot");
-  src: url("assets/font/inria/InriaSans-Regular.eot?#iefix") format("embedded-opentype"), url("assets/font/inria/InriaSans-Regular.woff2") format("woff2"), url("assets/font/inria/InriaSans-Regular.woff") format("woff"), url("assets/font/inria/InriaSans-Regular.svg") format("svg");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Inria Sans';
-  src: url("assets/font/inria/InriaSans-Bold.eot");
-  src: url("assets/font/inria/InriaSans-Bold.eot?#iefix") format("embedded-opentype"), url("assets/font/inria/InriaSans-Bold.woff2") format("woff2"), url("assets/font/inria/InriaSans-Bold.woff") format("woff"), url("assets/font/inria/InriaSans-Bold.svg") format("svg");
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Inria Sans';
-  src: url("assets/font/inria/InriaSans-BoldItalic.eot");
-  src: url("assets/font/inria/InriaSans-BoldItalic.eot?#iefix") format("embedded-opentype"), url("assets/font/inria/InriaSans-BoldItalic.woff2") format("woff2"), url("assets/font/inria/InriaSans-BoldItalic.woff") format("woff"), url("assets/font/inria/InriaSans-BoldItalic.svg") format("svg");
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family:'Inria Serif';
-  src:	url('assets/font/inria/InriaSerif-Light.eot');
-  src:	url('assets/font/inria/InriaSerif-Light.eot?#iefix') format('embedded-opentype'),
-  url('assets/font/inria/InriaSerif-Light.woff2') format('woff2'),
-  url('assets/font/inria/InriaSerif-Light.woff') format('woff'),
-  url('assets/font/inria/InriaSerif-Light.svg') format('svg');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family:'Inria Serif';
-  src:	url('assets/font/inria/InriaSerif-LightItalic.eot');
-  src:	url('assets/font/inria/InriaSerif-LightItalic.eot?#iefix') format('embedded-opentype'),
-  url('assets/font/inria/InriaSerif-LightItalic.woff2') format('woff2'),
-  url('assets/font/inria/InriaSerif-LightItalic.woff') format('woff'),
-  url('assets/font/inria/InriaSerif-LightItalic.svg') format('svg');
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family:'Inria Serif';
-  src:	url('assets/font/inria/InriaSerif-Italic.eot');
-  src:	url('assets/font/inria/InriaSerif-Italic.eot?#iefix') format('embedded-opentype'),
-  url('assets/font/inria/InriaSerif-Italic.woff2') format('woff2'),
-  url('assets/font/inria/InriaSerif-Italic.woff') format('woff'),
-  url('assets/font/inria/InriaSerif-Italic.svg') format('svg');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family:'Inria Serif';
-  src:	url('assets/font/inria/InriaSerif-Regular.eot');
-  src:	url('assets/font/inria/InriaSerif-Regular.eot?#iefix') format('embedded-opentype'),
-  url('assets/font/inria/InriaSerif-Regular.woff2') format('woff2'),
-  url('assets/font/inria/InriaSerif-Regular.woff') format('woff'),
-  url('assets/font/inria/InriaSerif-Regular.svg') format('svg');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family:'Inria Serif';
-  src:	url('assets/font/inria/InriaSerif-Bold.eot');
-  src:	url('assets/font/inria/InriaSerif-Bold.eot?#iefix') format('embedded-opentype'),
-  url('assets/font/inria/InriaSerif-Bold.woff2') format('woff2'),
-  url('assets/font/inria/InriaSerif-Bold.woff') format('woff'),
-  url('assets/font/inria/InriaSerif-Bold.svg') format('svg');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family:'Inria Serif';
-  src:	url('assets/font/inria/InriaSerif-BoldItalic.eot');
-  src:	url('assets/font/inria/InriaSerif-BoldItalic.eot?#iefix') format('embedded-opentype'),
-  url('assets/font/inria/InriaSerif-BoldItalic.woff2') format('woff2'),
-  url('assets/font/inria/InriaSerif-BoldItalic.woff') format('woff'),
-  url('assets/font/inria/InriaSerif-BoldItalic.svg') format('svg');
-  font-weight: 700;
-  font-style: italic;
-}
-
-
-@font-face {
-  font-family: 'open-dyslexic';
-  src: url('assets/font/open-dyslexic/otf/OpenDyslexic-Regular.otf') format('opentype');
-  src:   url('assets/font/open-dyslexic/woff/OpenDyslexic-Regular.woff') format('woff'),
-  url('assets/font/open-dyslexic/ttf/OpenDyslexic-Regular.ttf') format('truetype'),
-  url('assets/font/open-dyslexic/svg/OpenDyslexic-Regular.svg#opendyslexicregular') format('svg');
-}
+@import '_colors';
+@import '_utils';
+@import '_fonts';
+@import '_video';
 
 ion-header ion-toolbar.ios:first-child{
   padding-top: 0;
@@ -185,64 +72,6 @@ ion-header ion-toolbar.ios:first-child{
   }
 }
 
-:root {
-  --ion-color-inria: #ee2d20;
-  --ion-color-inria-rgb: 238,45,32;
-  --ion-color-inria-contrast: #ffffff;
-  --ion-color-inria-contrast-rgb: 255,255,255;
-  --ion-color-inria-shade: #b93122;
-  --ion-color-inria-tint: #f52d20;
-
-  --ion-color-inria-blue: #364357;
-  --ion-color-inria-blue-rgb: 54,67,87;
-  --ion-color-inria-blue-contrast: #ffffff;
-  --ion-color-inria-blue-contrast-rgb: 255,255,255;
-  --ion-color-inria-blue-shadee: #1a2437;
-  --ion-color-inria-blue-tint: #435369;
-
-  --ion-color-inria-spe: #81cbcb;
-  --ion-color-inria-spe-rgb: 129,203, 203;
-  --ion-color-inria-spe-contrast: var(--ion-color-inria-blue);
-  --ion-color-inria-spe-contrast-rgb: var(--ion-color-inria-blue-rgb);
-  --ion-color-inria-spe-shadee: #63aeae;
-  --ion-color-inria-spe-tint: #93e1e1;
-
-  ion-img {
-    /**
-     * Bug fix for:
-     * https://github.com/ionic-team/ionic/issues/18734
-     */
-    min-height: 1px !important;
-  }
-}
-
-.ion-color-inria {
-  --ion-color-base: var(--ion-color-inria);
-  --ion-color-base-rgb: var(--ion-color-inria-rgb);
-  --ion-color-contrast: var(--ion-color-inria-contrast);
-  --ion-color-contrast-rgb: var(--ion-color-inria-contrast-rgb);
-  --ion-color-shade: var(--ion-color-inria-shade);
-  --ion-color-tint: var(--ion-color-inria-tint);
-}
-
-.ion-color-inria-blue {
-  --ion-color-base: var(--ion-color-inria-blue);
-  --ion-color-base-rgb: var(--ion-color-inria-blue-rgb);
-  --ion-color-contrast: var(--ion-color-inria-blue-contrast);
-  --ion-color-contrast-rgb: var(--ion-color-inria-blue-contrast-rgb);
-  --ion-color-shade: var(--ion-color-inria-blue-shade);
-  --ion-color-tint: var(--ion-color-inria-blue-tint);
-}
-
-.ion-color-inria-spe {
-  --ion-color-base: var(--ion-color-inria-spe);
-  --ion-color-base-rgb: var(--ion-color-inria-spe-rgb);
-  --ion-color-contrast: var(--ion-color-inria-spe-contrast);
-  --ion-color-contrast-rgb: var(--ion-color-inria-spe-contrast-rgb);
-  --ion-color-shade: var(--ion-color-inria-spe-shade);
-  --ion-color-tint: var(--ion-color-inria-spe-tint);
-}
-
 .ion-page {
   background: white;
 }
@@ -255,26 +84,8 @@ ion-header ion-toolbar.ios:first-child{
   font-weight: 600;
 }
 
-@function pow($number, $exponent) {
-  $value: 1;
-
-  @if $exponent > 0 {
-    @for $i from 1 through $exponent {
-      $value: $value * $number;
-    }
-  }
-
-  @return $value;
-}
-
 
 // Reader
-
-$inria-red : #e63312;
-$inria-red-bg : lighten($inria-red, 48%);
-$inria-blue : #40455a;
-$inria-blue-border : lighten($inria-blue, 50%);
-$inria-blue-bg : lighten($inria-blue, 64%);
 
 .reader .page-content, .about-content-wrapper, .preview-settings, .transcript{
   color: $inria-blue;
@@ -385,12 +196,4 @@ $inria-blue-bg : lighten($inria-blue, 64%);
        }
      }
    }
-}
-
-.video-js{
-  .vjs-big-play-button{
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-  }
 }
