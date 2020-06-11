@@ -86,7 +86,6 @@ ion-header ion-toolbar.ios:first-child{
 
 
 // Reader
-
 .reader .page-content, .about-content-wrapper, .preview-settings, .transcript{
   color: $inria-blue;
 
@@ -196,4 +195,8 @@ ion-header ion-toolbar.ios:first-child{
        }
      }
    }
+}
+
+.transcript{
+  padding: 1em;
 }

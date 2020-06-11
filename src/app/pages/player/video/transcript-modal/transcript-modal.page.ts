@@ -29,7 +29,9 @@ export class TranscriptModalPage implements OnInit {
             parser.parse(data);
             parser.flush();
 
-            this.transcript = cues.reduce((accumulator, currentValue) => accumulator + ' ' + currentValue.text, '');
+            const text = cues.reduce((accumulator, currentValue) => accumulator + ' ' + currentValue.text, '');
+
+            this.transcript = '<p>' + text.split('.').join('.</p><p>') + '</p>';
         });
     }
 
