@@ -31,7 +31,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         this.video.textTracks.addEventListener('change', (event) => {
             this.trackSelected = 'none';
 
-            for (const track of event.currentTarget) {
+            for (const track of event.currentTarget as unknown as any[]) {
                 if (track.mode === 'showing') {
                     this.trackSelected = track.language;
                 }
@@ -57,11 +57,11 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     changeSubtitles($event) {
         if ($event.detail.value === 'none') {
-            for (const track of this.video.textTracks) {
+            for (const track of this.video.textTracks as unknown as any[]) {
                 track.mode = 'disabled';
             }
         } else {
-            for (const track of this.video.textTracks) {
+            for (const track of this.video.textTracks as unknown as any[]) {
                 if (track.language === $event.detail.value) {
                     track.mode = 'showing';
                 } else {
