@@ -1,7 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import videojs from 'video.js';
-import {ModalController} from '@ionic/angular';
-import {TranscriptModalPage} from './transcript-modal/transcript-modal.page';
+import {Video} from '../../../classes/contents/video';
+import {IonSelect} from '@ionic/angular';
 
 @Component({
     selector: 'video-player',
@@ -10,44 +9,69 @@ import {TranscriptModalPage} from './transcript-modal/transcript-modal.page';
 })
 export class VideoComponent implements OnInit, OnDestroy {
 
-    @ViewChild('target', {static: true}) target: ElementRef;
+    @ViewChild('video', {static: true}) videoRef: ElementRef;
+    @ViewChild('tracks', {static: true}) trackSelectRef: IonSelect;
 
-    @Input() src: string;
-    @Input() subtitles: string;
+    @Input() content: Video;
 
-    options;
-    player: videojs.Player;
+    video: HTMLMediaElement;
+    playing = false;
+    trackSelected = 'none';
 
-    constructor(private elementRef: ElementRef, private modalController: ModalController) {}
+    constructor() {}
 
     ngOnInit() {
-        this.options = {
-            fluid: true,
-            autoplay: false,
-            controls: true,
-            sources: [{ src: this.src, type: 'video/mp4' }],
-            textTrackSettings: false,
-            controlBar: {
-                pictureInPictureToggle: false
+        this.video = this.videoRef.nativeElement;
+        this.video.addEventListener('play', (event) => {
+            this.playing = true;
+        });
+        this.video.addEventListener('pause', (event) => {
+            this.playing = false;
+        });
+        this.video.textTracks.addEventListener('change', (event) => {
+            this.trackSelected = 'none';
+
+            for (const track of event.currentTarget) {
+                if (track.mode === 'showing') {
+                    this.trackSelected = track.language;
+                }
             }
-        };
-        this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
         });
     }
 
-    ngOnDestroy() {
-        if (this.player) {
-            this.player.dispose();
+    play() {
+        if (this.video.paused) {
+            this.video.play();
+        } else {
+            this.video.pause();
         }
     }
 
-    async showTranscript() {
-        const modal = await this.modalController.create({
-            component: TranscriptModalPage,
-            componentProps: {
-                'file': this.subtitles
+    fullscreen() {
+        this.video.requestFullscreen();
+    }
+
+    captions() {
+        this.trackSelectRef.open();
+    }
+
+    changeSubtitles($event) {
+        if ($event.detail.value === 'none') {
+            for (const track of this.video.textTracks) {
+                track.mode = 'disabled';
             }
-        });
-        return await modal.present();
+        } else {
+            for (const track of this.video.textTracks) {
+                if (track.language === $event.detail.value) {
+                    track.mode = 'showing';
+                } else {
+                    track.mode = 'disabled';
+                }
+            }
+        }
+    }
+
+    ngOnDestroy() {
+
     }
 }

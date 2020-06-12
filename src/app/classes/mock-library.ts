@@ -110,7 +110,7 @@ const MockContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Video',
         source: 'assets/demo/video.mp4',
-        subtitles: 'assets/demo/soustitre.vtt',
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
         summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem corporis deleniti fuga minima nisi nobis ' +
             'voluptatum. Autem ducimus expedita impedit, nobis numquam optio reprehenderit unde voluptatem? Aliquid, deleniti, ' +
             'nostrum. Autem ducimus expedita impedit.',
@@ -343,7 +343,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Dispositif PPST',
         source: 'assets/demo/video.mp4',
-        subtitles: 'assets/demo/soustitre.vtt',
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
         summary: 'Qu\'est-ce que le dispositif de PPST (protection du Potentiel Scientifique et Technique de la Nation). ' +
             'Pourquoi toutes ces précautions ? Ce dispositif, est-il nouveau ? Quels sont les risques et comment ça fonctionne ? ' +
             'Les réponses dans cette vidéo.',
@@ -490,7 +490,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Les 4 risques PPST',
         source: 'assets/demo/video.mp4',
-        subtitles: 'assets/demo/soustitre.vtt',
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
         summary: 'Au cours de cette vidéo nous verrons les différents risques PPST',
         toc: 2
     },
@@ -586,7 +586,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Données sensibles, visiteurs et sanctions',
         source: 'assets/demo/video.mp4',
-        subtitles: 'assets/demo/soustitre.vtt',
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
         summary: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
         toc: 2
     },
@@ -649,7 +649,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Echelle de sensibilité',
         source: 'assets/demo/video.mp4',
-        subtitles: 'assets/demo/soustitre.vtt',
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
         summary: 'Entretien à propos de l\'échelle de sensibilité',
         toc: 2
     },
@@ -775,7 +775,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Les données',
         source: 'assets/demo/vp-chapitre-1.mp4',
-        subtitles: 'assets/demo/soustitre.vtt',
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}, {label: 'English', lang: 'en', src: 'assets/demo/soustitre.vtt'}],
         summary: '<p>Pourquoi nos assistants personnels, smartphones et tablettes, sont-ils devenus tout naturellement, en une dizaine d\'années seulement, un point de collecte majeur de données personnelles.</p>' +
             '<p>Pourquoi le smartphone intéresse-t-il tant de monde ?</p>' +
             '<p>Regarder cette vidéo pour en savoir plus !</p>',

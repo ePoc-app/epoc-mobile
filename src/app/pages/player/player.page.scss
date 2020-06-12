@@ -232,9 +232,11 @@
       flex-direction: column;
     }
 
-    .video-summary{
-      overflow: auto;
+    video-player{
+      display: flex;
+      flex-direction: column;
       flex-grow:1;
+      overflow: hidden;
     }
   }
 

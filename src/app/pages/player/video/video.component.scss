@@ -1,20 +1,72 @@
-.video-js{
-  margin-bottom: 2em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  border: 2px solid var(--ion-color-inria-blue);
-  border-radius: 10px;
-  background:none;
-  overflow: hidden;
+@import "~src/_colors";
+.video-player{
+  video{
+    width:100%;
+    height:auto;
+    margin:0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border: 2px solid var(--ion-color-inria-blue);
+    border-radius: 10px;
+    background:none;
+    overflow: hidden;
+
+    &:not(:fullscreen)::-webkit-media-controls-overlay-play-button,
+    &::-webkit-media-controls-play-button,
+    &::-webkit-media-controls-toggle-closed-captions-button,
+    &::-webkit-media-controls-volume-slider,
+    &::-webkit-media-controls-mute-button,
+    &:not(:fullscreen)::-webkit-media-controls-fullscreen-button{
+      display: none!important;
+    }
+  }
+
+  .hidden-select{
+    display: none;
+  }
+
+  .video-actions{
+    display: flex;
+    font-size: 25px;
+    justify-content: space-between;
+    &-left{
+      width: 30%;
+
+      ion-icon{
+        margin-right: 5px;
+      }
+    }
+    &-center{
+      width: 40%;
+      text-align: center;
+
+      ion-icon{
+        margin: 0 5px;
+      }
+    }
+    &-right{
+      width: 30%;
+      text-align: right;
+
+      ion-icon{
+        margin-left: 5px;
+      }
+    }
+
+    ion-icon{
+      display: inline-block;
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: $inria-bg;
+
+      &:active, &:focus{
+        color:white;
+        background: $inria-blue;
+      }
+    }
+  }
 }
 
-.video-actions{
-  display: flex;
-  font-size: 2em;
-  &-left{
-    flex-grow: 1;
-  }
-  &-right{
-    flex-grow: 1;
-    text-align: right;
-  }
+.video-summary{
+  overflow: auto;
+  flex-grow:1;
 }
