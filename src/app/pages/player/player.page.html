@@ -96,14 +96,7 @@
                     <ion-icon name="videocam" size="large"></ion-icon>
                     <h4>{{content.name}}</h4>
                   </div>
-                  <video-player [src]="content.source" [subtitles]="content.subtitles"></video-player>
-
-                  <h4>Summary</h4>
-
-                  <div class="video-summary">
-                    <p *ngIf="content.summary && content.summary.length > 0" [innerHTML]="content.summary"></p>
-                    <p *ngIf="!content.summary || content.summary.length <= 0">No summary.</p>
-                  </div>
+                  <video-player [content]="content"></video-player>
                 </div>
               </div>
             </ng-container>
