@@ -110,7 +110,7 @@ const MockContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Video',
         source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
         summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem corporis deleniti fuga minima nisi nobis ' +
             'voluptatum. Autem ducimus expedita impedit, nobis numquam optio reprehenderit unde voluptatem? Aliquid, deleniti, ' +
             'nostrum. Autem ducimus expedita impedit.',
@@ -343,7 +343,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Dispositif PPST',
         source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
         summary: 'Qu\'est-ce que le dispositif de PPST (protection du Potentiel Scientifique et Technique de la Nation). ' +
             'Pourquoi toutes ces précautions ? Ce dispositif, est-il nouveau ? Quels sont les risques et comment ça fonctionne ? ' +
             'Les réponses dans cette vidéo.',
@@ -490,7 +490,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Les 4 risques PPST',
         source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
         summary: 'Au cours de cette vidéo nous verrons les différents risques PPST',
         toc: 2
     },
@@ -586,7 +586,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Données sensibles, visiteurs et sanctions',
         source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
         summary: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
         toc: 2
     },
@@ -649,7 +649,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Echelle de sensibilité',
         source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}],
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
         summary: 'Entretien à propos de l\'échelle de sensibilité',
         toc: 2
     },
@@ -737,7 +737,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'a',
         type: 'chapter',
         name: 'Pourquoi le smartphone intéresse-t-il tant ?',
-        image: 'assets/demo/img/vp-chapitre-1.png',
+        image: 'assets/demo/VP/vp-chapitre-1.png',
         number: '1',
         objectives: ['Identifier des données collectées sur notre portable'],
         toc: 1
@@ -774,8 +774,8 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'c',
         type: 'video',
         name: 'Les données',
-        source: 'assets/demo/vp-chapitre-1.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/soustitre.vtt'}, {label: 'English', lang: 'en', src: 'assets/demo/soustitre.vtt'}],
+        source: 'assets/demo/VP/vp-chapitre-1.mp4',
+        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}, {label: 'English', lang: 'en', src: 'assets/demo/VP/soustitre.vtt'}],
         summary: '<p>Pourquoi nos assistants personnels, smartphones et tablettes, sont-ils devenus tout naturellement, en une dizaine d\'années seulement, un point de collecte majeur de données personnelles.</p>' +
             '<p>Pourquoi le smartphone intéresse-t-il tant de monde ?</p>' +
             '<p>Regarder cette vidéo pour en savoir plus !</p>',
@@ -862,7 +862,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'f',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-2.png',
+        image: 'assets/demo/VP/vp-chapitre-2.png',
         number: '2',
         toc: 1
     },
@@ -870,7 +870,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'g',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-3.jpg',
+        image: 'assets/demo/VP/vp-chapitre-3.jpg',
         number: '3',
         toc: 1
     },
@@ -878,7 +878,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'h',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-4.png',
+        image: 'assets/demo/VP/vp-chapitre-4.png',
         number: '4',
         toc: 1
     },
@@ -886,7 +886,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'i',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-5.png',
+        image: 'assets/demo/VP/vp-chapitre-5.png',
         number: '5',
         toc: 1
     },
@@ -894,7 +894,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'j',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-6.jpg',
+        image: 'assets/demo/VP/vp-chapitre-6.jpg',
         number: '6',
         toc: 1
     },
@@ -902,7 +902,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'k',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-7.png',
+        image: 'assets/demo/VP/vp-chapitre-7.png',
         number: '7',
         toc: 1
     },
@@ -910,7 +910,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'l',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-8.png',
+        image: 'assets/demo/VP/vp-chapitre-8.png',
         number: '8',
         toc: 1
     },
@@ -918,7 +918,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'm',
         type: 'chapter',
         name: 'Les risques PPST',
-        image: 'assets/demo/img/vp-chapitre-9.png',
+        image: 'assets/demo/VP/vp-chapitre-9.png',
         number: '9',
         toc: 1
     }
@@ -928,12 +928,12 @@ export const MockLibrary: Epoc[] = [
     {
         id: 'C042AD',
         title: 'Smartphone et vie privée',
-        image: 'assets/demo/img/vp-poster.png',
-        teaser: 'assets/demo/vp-intro.mp4',
+        image: 'assets/demo/VP/vp-poster.png',
+        teaser: 'assets/demo/VP/vp-intro.mp4',
         authors: [
             {
                 name: 'Vincent Roca',
-                image: 'assets/demo/img/vincent-rond.png',
+                image: 'assets/demo/VP/vincent-rond.png',
                 description: 'I\'m permanent researcher, working at Inria, a French public research institute. Since 2013 I am part of the Privatics Inria research team that focuses on privacy.'
             }
         ],
