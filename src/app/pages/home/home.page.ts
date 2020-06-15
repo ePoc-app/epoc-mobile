@@ -11,7 +11,7 @@ import {LibraryService} from '../../services/library.service';
 export class HomePage implements OnInit {
 
     epoc$: Observable<Epoc>;
-    zrrId = 'C042AD';
+    zrrId = 'VP';
     hasPlayed = false;
 
     constructor(

@@ -29,8 +29,8 @@
     </ion-row>
 
     <div class="trailer-course" (click)="togglePlay($event)">
+      <video [src]="epoc.teaser" [poster]="epoc.image" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
       <img [src]="epoc.image" *ngIf="!hasPlayed"/>
-      <video [src]="epoc.teaser" preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
     </div>
 
     <ion-row>
@@ -68,3 +68,11 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-footer mode="ios">
+  <ion-toolbar>
+    <ion-button class="start-course" [routerLink]="'/player/toc/'+zrrId" routerDirection="forward" expand="block" color="inria-blue" strong>
+      Commencer la formation
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
