@@ -11,7 +11,7 @@ import {LibraryService} from '../../services/library.service';
 export class HomePage implements OnInit {
 
     epoc$: Observable<Epoc>;
-    zrrId = 'VP';
+    epocId = 'VP';
     hasPlayed = false;
 
     constructor(
@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.epoc$ = this.libraryService.getEpoc(this.zrrId);
+        this.epoc$ = this.libraryService.getEpoc(this.epocId);
     }
 
     togglePlay($event) {
