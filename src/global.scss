@@ -81,6 +81,11 @@ ion-header ion-toolbar.ios:first-child{
   font-weight: 600;
 }
 
+// Hot fix scroll flicker
+video{
+  transform: translateZ(0);
+}
+
 
 // Reader
 .reader .page-content, .about-content-wrapper, .preview-settings, .transcript{
