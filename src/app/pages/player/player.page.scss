@@ -217,6 +217,22 @@
         width: calc(100% - 3em);
       }
     }
+
+    @media (max-width: 340px){
+      .title-wrapper{
+        padding: 3vh 0;
+      }
+
+      .chapter-spec-value{
+        font-size: .9em;
+      }
+
+      ion-grid{
+        ion-row{
+          margin: 0 -1em;
+        }
+      }
+    }
   }
 
   &-video, &-assessment{
