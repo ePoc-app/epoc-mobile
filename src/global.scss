@@ -86,10 +86,6 @@ ion-header ion-toolbar.ios:first-child{
 .reader .page-content, .about-content-wrapper, .preview-settings, .transcript{
   color: $inria-blue;
 
-  & :first-child{
-    margin-top: 0;
-  }
-
   video{
     height: 101%;
   }
