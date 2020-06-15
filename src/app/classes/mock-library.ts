@@ -1,339 +1,17 @@
 import {Epoc} from './epoc';
 import {Content} from './contents/content';
-import {Cover} from './contents/cover';
 import {Chapter} from './contents/chapter';
 import {Assessment} from './contents/assessment';
 import {Html} from './contents/html';
 import {Video} from './contents/video';
 
 
-const DummyHtmlContent = (length) => {
-    const dummyContent = [
-        '<h1>Gregor Samsa woke from troubled dreams.</h1>',
-        '<ul>' +
-        '  <li>Lorem ipsum dolor sit amet consectetuer.</li>' +
-        '  <li>Aenean commodo ligula eget dolor.</li>' +
-        '  <li>Aenean massa cum sociis natoque penatibus.</li>' +
-        '</ul>',
-        '<h2>The bedding was hardly able to cover it.</h2>',
-        '<ul>' +
-        '  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing ' +
-        '  elit. Aenean commodo ligula eget dolor. Aenean ' +
-        '  massa.</li>' +
-        '  <li>Cum sociis natoque penatibus et magnis dis ' +
-        '  parturient montes, nascetur ridiculus mus. Donec quam ' +
-        '  felis, ultricies nec, pellentesque eu, pretium quis, ' +
-        '  sem.</li>' +
-        '  <li>Nulla consequat massa quis enim. Donec pede justo, ' +
-        '  fringilla vel, aliquet nec, vulputate eget, arcu.</li>' +
-        '  <li>In enim justo, rhoncus ut, imperdiet a, venenatis ' +
-        '  vitae, justo. Nullam dictum felis eu pede mollis ' +
-        '  pretium. Integer tincidunt.</li>' +
-        '</ul>',
-        '<h4>Samsa was a travelling salesman.</h4>',
-        '<p>One morning, when Gregor Samsa woke from troubled ' +
-        'dreams, he found himself transformed in his bed into ' +
-        'a horrible vermin. He lay on his armour-like back, ' +
-        'and if he lifted his head a little he could see his ' +
-        'brown belly, slightly domed and divided by arches into ' +
-        'stiff sections. The bedding was hardly able to cover ' +
-        '<strong>strong</strong> it and seemed ready to slide ' +
-        'off any moment. His many legs, pitifully thin ' +
-        'compared with the size of the rest of him, ' +
-        '<a class="external ext" href="#">link</a> waved about ' +
-        'helplessly as he looked. "What\'s happened to me? " he ' +
-        'thought. It wasn\'t a dream. His room, a proper human ' +
-        'room although a little too small, lay peacefully ' +
-        'between its four familiar walls.</p>',
-        '<p>It showed a lady fitted out with a fur hat and fur ' +
-        'boa who sat upright, raising a heavy fur muff that ' +
-        'covered the whole of her lower arm towards the ' +
-        'viewer.</p>',
-        '<h3>A collection of textile samples lay spread out on the table.</h3>',
-        '<blockquote>' +
-        'Gregor then turned to look out the window at the dull ' +
-        'weather. Drops of rain could be heard hitting the pane, ' +
-        'which made him feel quite sad. "How about if I sleep a ' +
-        'little bit longer and forget all this nonsense", he ' +
-        'thought, but that was something he was unable to do ' +
-        'because he was used to sleeping on his right, and in ' +
-        'his present state couldn\'t get into that position. ' +
-        'However hard he threw himself onto his right, he ' +
-        'always rolled back to where he was.' +
-        '</blockquote>',
-        '<h3>Samples lay spread out on the table.</h3>',
-        '<table class="data">' +
-        '  <tr>' +
-        '    <th>Entry Header 1</th>' +
-        '    <th>Entry Header 2</th>' +
-        '    <th>Entry Header 3</th>' +
-        '  </tr>' +
-        '  <tr>' +
-        '    <td>Entry First Line 1</td>' +
-        '    <td>Entry First Line 2</td>' +
-        '    <td>Entry First Line 3</td>' +
-        '  </tr>' +
-        '  <tr>' +
-        '    <td>Entry Line 1</td>' +
-        '    <td>Entry Line 2</td>' +
-        '    <td>Entry Line 3</td>' +
-        '  </tr>' +
-        '  <tr>' +
-        '    <td>Entry Last Line 1</td>' +
-        '    <td>Entry Last Line 2</td>' +
-        '    <td>Entry Last Line 3</td>' +
-        '  </tr>' +
-        '</table>'
-    ];
-
-    let dummy = '';
-    let i = 0;
-
-    while (dummy.length < length) {
-        dummy += dummyContent[i % dummyContent.length];
-        i++;
-    }
-
-    return dummy;
-};
-
-const MockContents: (Content | Chapter | Assessment | Html | Video)[] = [
-    {
-        id: '1',
-        type: 'chapter',
-        name: 'Mise en situation pour aborder les règles de fonctionnement d\'une ZRR',
-        number: '1',
-        toc: 1
-    },
-    {
-        id: '2',
-        type: 'video',
-        name: 'Video',
-        source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
-        summary: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem corporis deleniti fuga minima nisi nobis ' +
-            'voluptatum. Autem ducimus expedita impedit, nobis numquam optio reprehenderit unde voluptatem? Aliquid, deleniti, ' +
-            'nostrum. Autem ducimus expedita impedit.',
-        toc: 2
-    },
-    {
-        id: '3',
-        type: 'html',
-        name: 'Welcome',
-        value: DummyHtmlContent(2000),
-        toc: 2
-    },
-    {
-        id: '4',
-        type: 'video',
-        name: 'Video 2',
-        source: 'assets/demo/video.mp4'
-    },
-    {
-        id: '5',
-        type: 'assessment',
-        name: 'Que signifie ZRR ?',
-        items: [
-            {
-                type: 'choice',
-                score: 10,
-                statement: '',
-                label: 'Que signifie ZRR ?',
-                responses: [
-                    {
-                        label: 'Zone à régime restrictif',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Zone de recherche à accès restreint',
-                        value: 'B'
-                    }
-                ],
-                correctResponse: 'A',
-                explanation: '' +
-                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem corporis deleniti fuga minima nisi nobis ' +
-                    'voluptatum. Autem ducimus expedita impedit, nobis numquam optio reprehenderit unde voluptatem? Aliquid, deleniti, ' +
-                    'nostrum.'
-            },
-            {
-                type: 'choice',
-                score: 15,
-                statement: '',
-                label: 'Que signifie ePoc',
-                responses: [
-                    {
-                        label: 'Enorme porte orienté couloir',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Electronic Portable Open Course',
-                        value: 'B'
-                    },
-                    {
-                        label: 'Enigmatique Pokémon',
-                        value: 'C'
-                    }
-                ],
-                correctResponse: 'B'
-            },
-            {
-                type: 'multiple-choice',
-                score: 10,
-                statement: '',
-                label: 'Quel est la couleur du cheval blanc d\'Henri IV ?',
-                responses: [
-                    {
-                        label: 'Bleu',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Blanc',
-                        value: 'B'
-                    },
-                    {
-                        label: 'Gris car il s\'est roulé dans la poussière',
-                        value: 'C'
-                    }
-                ],
-                correctResponse: ['B', 'C']
-            }
-        ],
-        toc: 2
-    },
-    {
-        id: '6',
-        type: 'chapter',
-        name: 'La suite du cours ZRR',
-        number: '2',
-        toc: 1
-    },
-    {
-        id: '7',
-        type: 'html',
-        name: 'Chapter 2 content',
-        value: DummyHtmlContent(1240),
-        toc: 2
-    },
-    {
-        id: '8',
-        type: 'video',
-        name: 'Video 2',
-        source: 'assets/demo/video.mp4'
-    },
-    {
-        id: '9',
-        type: 'assessment',
-        name: 'Le référent sécurité',
-        toc: 2,
-        items: [
-            {
-                type: 'choice',
-                score: 15,
-                statement: '',
-                label: 'Quel pouvoir à le référent sécurité ?',
-                responses: [
-                    {
-                        label: 'Donner des baffes si l\'on ne respecte pas les règles',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Boire des bières',
-                        value: 'B'
-                    }
-                ],
-                correctResponse: 'A'
-            },
-            {
-                type: 'choice',
-                score: 25,
-                statement: '',
-                label: 'Comment décririez vous cette formation ?',
-                responses: [
-                    {
-                        label: 'Bof',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Géniale',
-                        value: 'B'
-                    },
-                    {
-                        label: 'Trop longue',
-                        value: 'C'
-                    }
-                ],
-                correctResponse: 'B'
-            }
-        ]
-    },
-    {
-        id: 'a',
-        type: 'assessment',
-        name: 'Quiz 2',
-        toc: 2,
-        items: [
-            {
-                type: 'reorder',
-                score: 30,
-                statement: 'Trier du moins important au plus important les impacts suivants :',
-                label: 'Classification des impacts',
-                responses: [
-                    {
-                        label: 'Diffusion restreinte',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Confidentiel',
-                        value: 'B'
-                    },
-                    {
-                        label: 'Public',
-                        value: 'C'
-                    },
-                    {
-                        label: 'Diffusion limitée',
-                        value: 'D'
-                    },
-                ],
-                correctResponse: 'CBDA'
-            },
-            {
-                type: 'multiple-choice',
-                score: 10,
-                statement: '',
-                label: 'Qui a participé au développment de cette app  ?',
-                responses: [
-                    {
-                        label: 'Laurence',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Benoit',
-                        value: 'B'
-                    },
-                    {
-                        label: 'Jean-Marc',
-                        value: 'C'
-                    }
-                ],
-                correctResponse: ['B', 'C']
-            }
-        ]
-    },
-    {
-        id: 'b',
-        type: 'html',
-        name: 'Chapter 3',
-        value: DummyHtmlContent(1240),
-        toc: 1
-    }
-];
 const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
     {
         id: 'a',
         type: 'chapter',
         name: 'Qu\'est-ce que le dispositif de PPST ? (protection du Potentiel Scientifique et Technique de la Nation)',
-        image: 'assets/demo/zrr-ppst-security.jpg',
+        image: 'assets/demo/ZRR/zrr-ppst-security.jpg',
         number: '1',
         objectives: ['Apprendre un truc'],
         toc: 1
@@ -342,8 +20,8 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'b',
         type: 'video',
         name: 'Dispositif PPST',
-        source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
+        source: 'assets/demo/ZRR/zrr-inrto.mp4ideo.mp4',
+        subtitles: 'assets/demo/VP/soustitre-chapitre-1.vtt',
         summary: 'Qu\'est-ce que le dispositif de PPST (protection du Potentiel Scientifique et Technique de la Nation). ' +
             'Pourquoi toutes ces précautions ? Ce dispositif, est-il nouveau ? Quels sont les risques et comment ça fonctionne ? ' +
             'Les réponses dans cette vidéo.',
@@ -489,8 +167,8 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'g',
         type: 'video',
         name: 'Les 4 risques PPST',
-        source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
+        source: 'assets/demo/ZRR/zrr-inrto.mp4ideo.mp4',
+        subtitles: 'assets/demo/VP/soustitre-chapitre-1.vtt',
         summary: 'Au cours de cette vidéo nous verrons les différents risques PPST',
         toc: 2
     },
@@ -585,8 +263,8 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'l',
         type: 'video',
         name: 'Données sensibles, visiteurs et sanctions',
-        source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
+        source: 'assets/demo/ZRR/zrr-inrto.mp4ideo.mp4',
+        subtitles: 'assets/demo/VP/soustitre-chapitre-1.vtt',
         summary: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
         toc: 2
     },
@@ -648,8 +326,8 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'q',
         type: 'video',
         name: 'Echelle de sensibilité',
-        source: 'assets/demo/video.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}],
+        source: 'assets/demo/ZRR/zrr-inrto.mp4ideo.mp4',
+        subtitles: 'assets/demo/VP/soustitre-chapitre-1.vtt',
         summary: 'Entretien à propos de l\'échelle de sensibilité',
         toc: 2
     },
@@ -775,7 +453,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         type: 'video',
         name: 'Les données',
         source: 'assets/demo/VP/vp-chapitre-1.mp4',
-        subtitles: [{label: 'Français', lang: 'fr', src: 'assets/demo/VP/soustitre.vtt'}, {label: 'English', lang: 'en', src: 'assets/demo/VP/soustitre.vtt'}],
+        subtitles: '',
         summary: '<p>Pourquoi nos assistants personnels, smartphones et tablettes, sont-ils devenus tout naturellement, en une dizaine d\'années seulement, un point de collecte majeur de données personnelles.</p>' +
             '<p>Pourquoi le smartphone intéresse-t-il tant de monde ?</p>' +
             '<p>Regarder cette vidéo pour en savoir plus !</p>',
@@ -861,10 +539,170 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
     {
         id: 'f',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'L\'écosystème autour des applications pour smartphones',
         image: 'assets/demo/VP/vp-chapitre-2.png',
         number: '2',
+        objectives: ['Identifier les acteurs de cet écosystème autour des applications et leurs fonctions'],
         toc: 1
+    },
+    {
+        id: 'n',
+        type: 'video',
+        name: 'Écosystème autour d’une application',
+        source: 'assets/demo/VP/vp-chapitre-2.1.mp4',
+        subtitles: '',
+        summary: 'Résumé de la vidéo Ecosystème',
+        toc: 2
+    },
+    {
+        id: 'o',
+        type: 'assessment',
+        name: 'Quiz noté',
+        summary: '',
+        items: [
+            {
+                type: 'choice',
+                score: 100,
+                statement: '',
+                label: 'Le développeur d’une application smartphone choisit-il les données personnelles qui seront collectées sur le smartphone des utilisateurs ? ',
+                responses: [
+                    {
+                        label: 'Oui, quand la régie publicitaire leur en fait la demande',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Oui, systématiquement, c’est quand même lui le chef',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Non, en général',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'C',
+                explanation: '<p>Non. Le développeur inclut un (voire plusieurs) petits logiciels fournis par des régies publicitaires dans son application afin de peut-être avoir un retour financier. Les régies publicitaires étant très discrètes sur la nature des données collectées et la fréquence des collectes, le développeur inclut une boite noire dont il ne sait pas grand chose...</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: '',
+                label: 'L’annonceur collecte-t-il des données à caractère personnel des utilisateurs de smartphones ? ',
+                responses: [
+                    {
+                        label: 'Oui ',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Non',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Oui, la régie publicitaire lui transmet toutes les données collectées sur l’utilisateur',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: '<p>Non. L\'annonceur est bien sûr fortement impliqué dans l\'écosystème puisqu\'il en sera souvent le financeur. ' +
+                    'En revanche l\'annonceur n\'est pas concerné par la phase de collecte menée par la régie publicitaire. ' +
+                    'Lors de la phase d\'enchère en temps réel, l\'annonceur obtient uniquement de la régie publicitaire un profil utilisateur  ' +
+                    '(que l\'on peut espérer anonyme mais il est difficile d\'être affirmatif du fait du manque de transparence). </p>'
+            },
+            {
+                type: 'multiple-choice',
+                score: 100,
+                statement: '',
+                label: 'De quelle(s) façon(s) la régie publicitaire intervient-t-elle dans le traitement des données à caractère personnel d’un utilisateur de smartphone ? (une ou plusieurs réponses possibles) ',
+                responses: [
+                    {
+                        label: 'Elle utilise les données personnelles que lui transmettent les développeurs d’applications',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Elle collecte les données personnelles de l’utilisateur au travers des applications où elle est présente',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Elle génère de nouvelles données à caractère personnel lors de l’affinement des profils utilisateurs au moyen des données brutes',
+                        value: 'C'
+                    },
+                    {
+                        label: 'Elle crée des messages publicitaires à partir des données personnelles collectées',
+                        value: 'D'
+                    },
+                    {
+                        label: 'Elle déclenche l’affichage du message publicitaire de l’annonceur qui a remporté l’enchère',
+                        value: 'E'
+                    }
+                ],
+                correctResponse: ['B', 'C', 'E'],
+                explanation: '<p>- la proposition a. est fausse, le développeur ne transmet rien à la régie publicitaire ; </p>' +
+                    '<p>- la proposition b. est exacte, puisque c\'est le rôle de la régie de collecter des données des utilisateurs. ' +
+                    'Elle ne peut le faire qu\'au travers des applications qui intègrent son module de traçage ;</p>' +
+                    '<p>- la proposition d. est exacte, et c\'est le travail de la régie que d\'interpréter les données des utilisateurs pour en créer des profils utilisateurs ' +
+                    '(catégorie, classe d’âge, centrer d\intérêt, etc.) ;</p>' +
+                    '<p>- la proposition e. est fausse, la régie ne forge en aucun cas des messages publicitaires, ce n\'est pas son rôle ;</p>' +
+                    '<p>- la proposition f. est exacte, et c\'est par ce biais (déclenchement de l\'affichage de la publicité sur le smartphone) que la régie se rémunère</p>'
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 'p',
+        type: 'html',
+        name: 'A retenir',
+        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+            '<p>Le premier travail de la régie publicitaire est d\'exploiter les données personnelles brutes collectées et transmises par toutes les applications du smartphone de l\'utilisateur ' +
+            'où elle est présente afin de créer un profil. Dans ce travail de collecte, il n\'y a bien sûr aucune génération de données, toutes les informations étant bel et bien générées sur ' +
+            'le smartphone de l\'utilisateur, au quotidien.</p>' +
+            '<p>Dans la phase de profilage qui suit, il y a par contre une interprétation des données et création de données supplémentaires (par ex. cet utilisateur est intéressé par les articles ' +
+            'de mode). Ces données de profilage, absentes du smartphone, résultent d\'un travail d\'analyse, et étant associées à une personne physique, il s\'agit bien de données personnelles.</p>' +
+            '<p>C\'est ce profil qui permet aux annonceurs de sélectionner s\'il est ou non pertinent d\'afficher un message publicitaire, d\'où la notion de publicité ciblée.</p>' +
+            '<p>Enfin, la régie publicitaire étant à l\'interface entre annonceurs et smartphones, elle déclenche bien sûr l\'affichage du message publicitaire du gagnant de l\'enchère.</p>',
+        toc: 2
+    },
+    {
+        id: 'q',
+        type: 'video',
+        name: 'Exemple des régies publicitaires ',
+        source: 'assets/demo/VP/vp-chapitre-2.2.mp4',
+        subtitles: '',
+        summary: 'Pour aller plus loin : exemple des régies publicitaires',
+        toc: 2
+    },
+    {
+        id: 'r',
+        type: 'assessment',
+        name: 'Quiz non noté',
+        summary: 'Résumé du quiz',
+        items: [
+            {
+                type: 'choice',
+                score: 0,
+                statement: '',
+                label: 'Quelle est la durée d’une vidéo d’un pétaoctet ? (Nous considérons un débit de 3Go/h pour une vidéo Full HD en streaming) ',
+                responses: [
+                    {
+                        label: '38 années',
+                        value: 'A'
+                    },
+                    {
+                        label: '10 années',
+                        value: 'B'
+                    },
+                    {
+                        label: '15 années',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: ['A', 'B'],
+                explanation: '<p>Nous comptons 3Go par heure pour une vidéo en Full HD. Donc : <ul>' +
+                    '<li>1Po = 1 000 000 Go / 3 = 333 333 heures</li>' +
+                    '<li>Soit 333 333 / 24 = 13 888 jours</li>' +
+                    '<li>Soit 13 888 / 365 = 38 années.</li>' +
+                    '</ul></p>'
+            }
+        ],
+        toc: 2
     },
     {
         id: 'g',
@@ -872,7 +710,191 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         name: 'Les risques PPST',
         image: 'assets/demo/VP/vp-chapitre-3.jpg',
         number: '3',
+        objectives: ['Découvrir des problèmes de fond du modèle économique'],
         toc: 1
+    },
+    {
+        id: 's',
+        type: 'assessment',
+        name: 'Quiz non noté',
+        summary: 'Résumé du quiz',
+        items: [
+            {
+                type: 'multiple-choice',
+                score: 0,
+                statement: '',
+                label: 'Qu’est-ce que la phrase « si c\'est gratuit, c\'est que c\'est vous le produit » veut dire :',
+                responses: [
+                    {
+                        label: 'Vous « payez » avec vos données personnelles ',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Il y a quelqu’un d’autre qui paie derrière vous ',
+                        value: 'B'
+                    },
+                    {
+                        label: 'La gratitude de l’application peut être expliqué comme une stratégie du marketing, vous ne donnez aucune donnée ',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'A',
+                explanation: '<p>Il faut être clair, si les services et applications de grande qualité que nous utilisons sont gratuits ou très peu coûteux, ' +
+                    'c\'est grâce au modèle économique sous-jacent qui est essentiellement basé sur la publicité ciblée. </p>' +
+                    '<p>L\'annonceur va payer à la place de l\'utilisateur. Et puisque l\'on parle de publicité ciblée, c\'est-à-dire une publicité qui a une probabilité élevée d\'intéresser ' +
+                    'l\'utilisateur, c\'est que nécessairement en amont on a réussi à percer les centres d\'intérêt de l\'utilisateur, c\'est la notion de profilage des utilisateurs. </p>'
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 't',
+        type: 'video',
+        name: '3 problèmes majeurs du modèle économique ',
+        source: 'assets/demo/VP/vp-chapitre-3.mp4',
+        subtitles: '',
+        summary: 'Résumé de la vidéo',
+        toc: 2
+    },
+    {
+        id: 'u',
+        type: 'assessment',
+        name: 'Quiz noté',
+        summary: 'Résumé quiz',
+        items: [
+            {
+                type: 'drag-and-drop',
+                score: 100,
+                statement: '',
+                label: 'Complexité de l’écosystème : Faites glisser les acteurs d’écosystème à leur niveau correspondant :',
+                responses: [
+                    {
+                        label: 'Les régies publicitaires',
+                        value: 'A'
+                    },
+                    {
+                        label: 'L\'éditeur du système d\'exploitation (Google ou Apple)',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Le gestionnaire du marché d\'applications',
+                        value: 'C'
+                    },
+                    {
+                        label: 'Les annonceurs',
+                        value: 'D'
+                    },
+                    {
+                        label: 'Les éditeurs et les développeurs d\'applications',
+                        value: 'E'
+                    },
+                    {
+                        label: 'Le gestionnaire du marché',
+                        value: 'F'
+                    }
+                ],
+                correctResponse: [
+                    {label: 'Écosystème le monde visible les acteurs qui captent des données', values: ['B', 'C', 'E', 'F']},
+                    {label: 'Écosystème le monde invisible', values: ['A', 'D']}
+                ],
+                explanation: '<p> Dans le monde invisible, il faut mettre les régies publicitaires et les annonceurs. ' +
+                    'Car ils vont également disposer d\'informations personnelles et à aucun moment l\'utilisateur n\'en connaît l\'identité.' +
+                    ' Les autres acteurs correspondent au niveau visible car nous pouvons les facilement identifier.</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: 'Disproportion des données :',
+                label: '« Les données de géolocalisation permettent-elles d\'inférer (c\'est à dire déduire) des données sensibles ? » ',
+                responses: [
+                    {
+                        label: 'Oui',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Non',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Cela dépend de l’usage des données',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'A',
+                explanation: '<p>Les données de géolocalisation sont des données personnelles porteuses de sens. Un acteur qui collecte de façon précise la localisation d\'un utilisateur ' +
+                    'pourra souvent en inférer des données sensibles, c\'est à dire des données qui ne peuvent faire l\'objet d\'aucune collecte ou traitement hormis quelques cas très particuliers.' +
+                    'Ce sera le cas par exemple si l\'utilisateur fréquente régulièrement un lieu de culte, un hôpital/clinique ou un médecin spécialisé.</p>' +
+                    '<p>Bien d\'autres informations sont accessibles tout aussi facilement, tels les lieux de travail et d\'habitation, les points d\'intérêts, les habitudes de consommation ' +
+                    '(fréquentation de centres commerciaux par exemple), ou les loisirs. Ces informations, très personnelles, ne font pas pour autant partie de la catégorie des données sensibles.</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: 'Disproportion des données :',
+                label: '« La législation française interdit elle de façon générale les collectes massives de données personnelles ? »',
+                responses: [
+                    {
+                        label: 'Oui toujours',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Non',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Cela dépend de l\'objectif poursuivi et du service rendu ',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'C',
+                explanation: '<p>La loi informatique et libertés (et maintenant la RGPD) impose une règle de proportionnalité entre l\'intensité de la collecte et les services rendus.' +
+                    'Une collecte massive ne peut être justifiée que si le service l\'exige. Ainsi, s\'il est compréhensible qu\'une application de navigation géolocalise en permanence un utilisateur,' +
+                    ' ce ne pourra pas être le cas pour une application où la localisation ne joue qu\'un rôle annexe. Voir : https://www.cnil.fr/cnil-direct/question/496</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: 'Manque d’information sur la collecte ',
+                label: '« Il est 20h et un utilisateur de smartphone utilise une application de cartographie. ' +
+                    'Tout à coup son smartphone lui propose un message publicitaire pour un restaurant proche. Il s\'agit d\'un restaurant dont il a horreur (il y est allé il y a quelques temps et ' +
+                    'ce fut une expérience traumatisante). Que diriez-vous ? »',
+                responses: [
+                    {
+                        label: 'o   Le système de profilage de l\'utilisateur s\'est bien trompé : la régie publicitaire devrait savoir qu\'il a mis une très mauvaise note à ce restaurant et ' +
+                            'qu\'il n\'y est jamais retourné ! Depuis il va au restaurant d\'en face... ',
+                        value: 'A'
+                    },
+                    {
+                        label: 'C\'est normal, il s\'agit d\'une publicité contextuelle, pas d\'une publicité ciblée',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Le système de profilage travaille sur un profil correspondant à l\'ensemble des utilisateurs qui ont noté le restaurant. Les autres avis devaient être très bons ! ',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: '<p>Une publicité ciblée est basée sur un profil utilisateur. Par exemple une régie publicitaire déclenche l\'affichage d\'une publicité qu\'elle sait correspondre ' +
+                    'aux centres d\'intérêts de l\'utilisateur du fait de collectes préalables d\'informations personnelles</p>' +
+                    '<p>A l\'inverse, une publicité contextuelle est basée uniquement sur un contexte, par exemple la localisation de cet utilisateur et l\'heure courante. ' +
+                    'Un message publicitaire pour un restaurant proche est dans ce cas pertinent du fait du contexte, sans qu\'il y ait recours à un profilage préalable. ' +
+                    'Les publicités contextuelles sont plus respectueuses de la vie privée de l\'utilisateur dans ce cas, et même si c\'est un peu agaçant il faut aussi se poser la question de ' +
+                    'l\'équilibre économique sous-jacent au service gratuit de cartographie.</p>'
+            }
+        ],
+        toc: 2
+    },
+    {
+        id: 'v',
+        type: 'html',
+        name: 'Un fait pour aller plus loin ',
+        value: '<h4>Un fait pour aller plus loin « la régie publicitaire InMobi » (sous une forme textuelle)</h4>' +
+            '<p>A la mi-2016, la régie publicitaire InMobi a été lourdement sanctionnée aux États Unis, un tout petit peu moins qu’un million de dollars pour avoir agi de façon déloyale : ' +
+            'on captait la géolocalisation des jeunes utilisateurs et des moins jeunes également, de façon déloyale, c\'est-à-dire, ni informer, ni demander l\'autorisation et en détournant ' +
+            'une autorisation d’Android. </p>' +
+            '<p>C\'est d\'ailleurs notre équipe qui a les premiers identifié le problème 2 ans plus tôt. Donc, la question de gratuité contre publicité ciblée est plus compliquée qu\'il n\'y ' +
+            'parait et c\'est ce que nous allons creuser.</p>',
+        toc: 2
     },
     {
         id: 'h',
@@ -926,7 +948,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
 
 export const MockLibrary: Epoc[] = [
     {
-        id: 'C042AD',
+        id: 'VP',
         title: 'Smartphone et vie privée',
         image: 'assets/demo/VP/vp-poster.png',
         teaser: 'assets/demo/VP/vp-intro.mp4',
@@ -950,13 +972,40 @@ export const MockLibrary: Epoc[] = [
         ],
         parts: [{
             title: 'Smartphone',
-            outline: ['a', 'b', 'c', 'e', 'f', 'g', 'h']
+            outline: ['a', 'b', 'c', 'e', 'f', 'n', 'o', 'p', 'q', 'r', 'g', 's', 't', 'u', 'v', 'h']
         }, {
             title: 'Mise en pratique',
             outline: ['i', 'j', 'k', 'l', 'm']
         }],
         content: VPContents
+    },
+    {
+        id: 'ZRR',
+        title: 'Zone à régime restrictif',
+        image: 'assets/demo/ZRR/zrr-intro-poster.jpg',
+        teaser: 'assets/demo/ZRR/zrr-intro.mp4',
+        authors: [
+            {
+                name: 'Didier Benza',
+                image: 'assets/demo/ZRR/benza.jpg',
+                description: 'At autem dignissimos dolorem illum molestias quas quod repudiandae saepe.'
+            }
+        ],
+        summary: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices semper libero, ' +
+            'sit amet fringilla leo. Donec facilisis volutpat augue, in interdum ligula tincidunt ac. Sed ut ' +
+            'volutpat dui, sed fringilla purus. Fusce aliquet eros vel sapien dictum tempor.</p><p>Class aptent taciti ' +
+            'sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sit amet quam ' +
+            'ultricies, dignissim leo sit amet, gravida nisi. Fusce id urna quis diam laoreet rutrum. Vivamus porttitor ' +
+            'sed ex sit amet finibus. Sed sed ante nisi. Praesent malesuada rutrum eros, sit amet rhoncus dui.</p>',
+        objectives: [
+            'Apprendre des trucs sur plusieurs ligne car cette phrase est longue',
+            'Connaitre des choses',
+            'Savoir des machins'
+        ],
+        parts: [{
+            title: 'Formation ZRR',
+            outline: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
+        }],
+        content: ZRRContents
     }
 ];
-
-
