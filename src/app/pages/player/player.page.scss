@@ -140,7 +140,7 @@
 
     .title-wrapper{
       width: 100%;
-      margin: 4vh auto 2vh -1em;
+      margin: 0 auto 0 -1em;
       padding: 5vh 0;
       background: var(--ion-color-inria);
       clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
@@ -164,11 +164,14 @@
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      justify-content: space-evenly;
       padding: 1em;
+      overflow: auto;
     }
 
     ion-grid{
       display: flex;
+      flex-grow: 0;
       margin: 0;
 
       ion-row{
@@ -187,8 +190,6 @@
     }
 
     .chapter-objectives{
-      flex-grow: 1;
-
       h4{
         display: inline-block;
         font-size: 1rem;
