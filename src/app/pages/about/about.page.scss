@@ -1,21 +1,17 @@
-ion-toolbar {
+ion-content ion-toolbar {
   margin: 1em 0;
   --border-width: 0 !important;
-}
 
-.logo {
-  width: 100px;
-  margin: 0 1em;
+  .logo {
+    width: 100px;
+    margin: 0 1em;
 
-  ion-img {
-    display: block;
-    width: 100%;
-    height: auto;
+    ion-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
   }
-}
-
-.go-back {
-  margin: 1em 1em 2em 1em;
 }
 
 .about-content-wrapper{
@@ -34,7 +30,7 @@ ion-toolbar {
   img{
     width:100px;
     height:auto;
-    border: 1px solid grey;
+    border: 2px solid  var(--ion-color-inria-blue);
     border-radius: 100%;
   }
 }

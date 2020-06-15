@@ -1,5 +1,13 @@
 <ion-header mode="ios">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab1" color="inria-blue"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
     <div class="logo" slot="start">
       <ion-img src="assets/img/ePoc.svg"></ion-img>
     </div>
@@ -7,9 +15,6 @@
       <ion-img src="assets/img/logo-ill.png"></ion-img>
     </div>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
   <div class="about-content-wrapper">
     <h4>Le projet ePoc</h4>
     <p>
@@ -50,9 +55,3 @@
     pour un usage exclusif à Inria Learning Lab à des fins de calcul d'audience.</p>
   </div>
 </ion-content>
-
-<ion-footer mode="ios">
-  <ion-button class="go-back" routerLink="/" routerDirection="backward" expand="block" color="inria-blue">
-    Ok
-  </ion-button>
-</ion-footer>
