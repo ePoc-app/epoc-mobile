@@ -707,7 +707,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
     {
         id: 'g',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'Gratuité contre publicité ciblée : où est le problème ?',
         image: 'assets/demo/VP/vp-chapitre-3.jpg',
         number: '3',
         objectives: ['Découvrir des problèmes de fond du modèle économique'],
@@ -888,7 +888,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
         id: 'v',
         type: 'html',
         name: 'Un fait pour aller plus loin ',
-        value: '<h4>Un fait pour aller plus loin « la régie publicitaire InMobi » (sous une forme textuelle)</h4>' +
+        value: '<h4>La régie publicitaire InMobi</h4>' +
             '<p>A la mi-2016, la régie publicitaire InMobi a été lourdement sanctionnée aux États Unis, un tout petit peu moins qu’un million de dollars pour avoir agi de façon déloyale : ' +
             'on captait la géolocalisation des jeunes utilisateurs et des moins jeunes également, de façon déloyale, c\'est-à-dire, ni informer, ni demander l\'autorisation et en détournant ' +
             'une autorisation d’Android. </p>' +
