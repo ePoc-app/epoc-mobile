@@ -140,7 +140,7 @@
 
     .title-wrapper{
       width: 100%;
-      margin: 5vh auto 2vh -1em;
+      margin: 4vh auto 2vh -1em;
       padding: 5vh 0;
       background: var(--ion-color-inria);
       clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
@@ -198,7 +198,7 @@
       }
 
       .chapter-objective{
-        margin: 1em 0;
+        margin-bottom: 1em;
       }
 
       ion-icon{
