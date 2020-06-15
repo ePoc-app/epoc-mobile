@@ -69,9 +69,9 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer mode="ios">
+<ion-footer mode="ios" *ngIf="epoc$ | async as epoc">
   <ion-toolbar>
-    <ion-button class="start-course" [routerLink]="'/player/toc/'+zrrId" routerDirection="forward" expand="block" color="inria-blue" strong>
+    <ion-button class="start-course" [routerLink]="'/player/toc/'+epoc.id" routerDirection="forward" expand="block" color="inria-blue" strong>
       Commencer la formation
     </ion-button>
   </ion-toolbar>
