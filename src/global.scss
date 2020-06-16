@@ -82,8 +82,11 @@ ion-header ion-toolbar.ios:first-child{
 }
 
 // Hot fix scroll flicker
-:not(.ios) video{
+video {
   transform: translateZ(0);
+}
+.ios video{
+  transform: none;
 }
 
 

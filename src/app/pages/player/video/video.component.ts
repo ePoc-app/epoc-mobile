@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Video} from '../../../classes/contents/video';
-import {IonSelect} from '@ionic/angular';
+import {IonSelect, ToastController} from '@ionic/angular';
 
 @Component({
     selector: 'video-player',
@@ -14,11 +14,13 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     @Input() content: Video;
 
-    video: HTMLMediaElement;
+    video: HTMLVideoElement;
     playing = false;
     trackSelected = 'none';
 
-    constructor() {}
+    constructor(
+        public toastController: ToastController
+    ) {}
 
     ngOnInit() {
         this.video = this.videoRef.nativeElement;
@@ -48,7 +50,13 @@ export class VideoComponent implements OnInit, OnDestroy {
     }
 
     fullscreen() {
-        this.video.requestFullscreen();
+        if (typeof this.video.webkitEnterFullscreen === 'function') {
+            this.video.webkitEnterFullscreen();
+        } else if (typeof this.video.requestFullscreen === 'function') {
+            this.video.requestFullscreen();
+        } else {
+            this.presentToast('Fullscreen not supported on your phone');
+        }
     }
 
     captions() {
@@ -73,5 +81,14 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
 
+    }
+
+    async presentToast(text) {
+        const toast = await this.toastController.create({
+            position: 'top',
+            message: text,
+            duration: 2000
+        });
+        toast.present();
     }
 }
