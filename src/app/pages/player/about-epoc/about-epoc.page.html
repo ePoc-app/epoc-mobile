@@ -16,15 +16,15 @@
     <ion-row class="epoc-specs ion-text-center">
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="book" mode="md" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value">9 chapitres</div>
+        <div class="epoc-spec-value">{{chapterCount}} {{chapterCount > 1 ? 'chapitres':'chapitre'}}</div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="epoc-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
+        <div class="epoc-spec-value">{{assessmentCount}} {{assessmentCount > 1 ? 'activités':'activité'}}</div>
       </ion-col>
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
         <div class="epoc-spec-value">10 min par chapitre</div>
-      </ion-col>
-      <ion-col size="4">
-        <div class="epoc-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value">29 exercices</div>
       </ion-col>
     </ion-row>
 

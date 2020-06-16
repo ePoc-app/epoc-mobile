@@ -6,6 +6,7 @@ import {LibraryService} from '../../../services/library.service';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
 import {ActionSheetController, AlertController} from '@ionic/angular';
+import {Content} from '../../../classes/contents/content';
 
 @Component({
     selector: 'app-about-epoc',
@@ -15,6 +16,10 @@ import {ActionSheetController, AlertController} from '@ionic/angular';
 export class AboutEpocPage implements OnInit{
 
     epoc$: Observable<Epoc>;
+    epoc: Epoc;
+    contents: Content[] = [];
+    chapterCount = 0;
+    assessmentCount = 0;
     hasPlayed = false;
     selectedTab = 0;
 
@@ -31,6 +36,23 @@ export class AboutEpocPage implements OnInit{
             switchMap((params: ParamMap) =>
                 this.libraryService.getEpoc(params.get('id')))
         );
+
+        this.epoc$.subscribe(epoc => {
+            this.epoc = epoc;
+
+            epoc.parts.forEach((part) => {
+                const contents = part.outline.map((id) => {
+                    const currentContent = epoc.content.find(item => item.id === id);
+                    if (currentContent.type === 'chapter') {
+                        this.chapterCount++;
+                    } else if (currentContent.type === 'assessment') {
+                        this.assessmentCount++;
+                    }
+                    return currentContent;
+                });
+                this.contents = this.contents.concat(contents);
+            });
+        });
     }
 
     isReading(id) {
