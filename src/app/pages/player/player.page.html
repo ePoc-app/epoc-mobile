@@ -22,7 +22,7 @@
     <div class="pages-container" [ngStyle]="contentStyles" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
       <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform">
         <ng-container *ngIf="epoc$ | async as epoc">
-          <ng-container *ngFor="let content of contents">
+          <ng-container *ngFor="let content of contents; let index = index">
 
             <ng-container *ngIf="content.type === 'cover'">
               <div #node [id]="'content-'+content.id" class="page-content page-content-cover">
@@ -52,16 +52,16 @@
                         <ion-grid>
                           <ion-row class="chapter-specs ion-text-center">
                             <ion-col size="4">
-                              <div class="chapter-spec-icon"><ion-icon name="videocam" mode="md" color="inria-blue"></ion-icon></div>
-                              <div class="chapter-spec-value">1 video</div>
+                              <div class="chapter-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
+                              <div class="chapter-spec-value">{{content.time}} min</div>
                             </ion-col>
                             <ion-col size="4">
-                              <div class="chapter-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
-                              <div class="chapter-spec-value">10 min</div>
+                              <div class="chapter-spec-icon"><ion-icon name="videocam" mode="md" color="inria-blue"></ion-icon></div>
+                              <div class="chapter-spec-value">{{content.videoCount}} {{content.videoCount > 1 ? 'videos':'video'}}</div>
                             </ion-col>
                             <ion-col size="4">
                               <div class="chapter-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
-                              <div class="chapter-spec-value">2 activités</div>
+                              <div class="chapter-spec-value">{{content.assessmentCount}} {{content.assessmentCount > 1 ? 'activités':'activité'}}</div>
                             </ion-col>
                           </ion-row>
                         </ion-grid>
@@ -119,7 +119,7 @@
                         </ion-col>
                         <ion-col size="4">
                           <div class="activity-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
-                          <div class="activity-spec-value">5 min</div>
+                          <div class="activity-spec-value">{{content.items.length}} min</div>
                         </ion-col>
                         <ion-col size="4">
                           <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>

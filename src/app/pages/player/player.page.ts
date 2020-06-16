@@ -77,9 +77,29 @@ export class PlayerPage implements OnInit {
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
 
+            let currentChapter;
+
             epoc.parts.forEach((part) => {
                 const contents = part.outline.map((id) => {
-                    return epoc.content.find(item => item.id === id);
+                    const currentContent = epoc.content.find(item => item.id === id);
+
+                    if (currentContent.type === 'chapter') {
+                        currentChapter = currentContent;
+                        currentChapter.time = 0;
+                        currentChapter.videoCount = 0;
+                        currentChapter.assessmentCount = 0;
+                    }
+
+                    if (currentChapter) {
+                        if (currentContent.type === 'video') {
+                            currentChapter.videoCount++;
+                            currentChapter.time = currentChapter.time + 3;
+                        } else if (currentContent.type === 'assessment') {
+                            currentChapter.time = currentChapter.time + currentContent.items.length;
+                            currentChapter.assessmentCount++;
+                        }
+                    }
+                    return currentContent;
                 });
                 this.contents = this.contents.concat(contents);
             });
@@ -321,5 +341,9 @@ export class PlayerPage implements OnInit {
 
     getScoreTotal(content) {
         return content.items.reduce((total, item) => item.score + total, 0);
+    }
+
+    videoChapterCount(index) {
+        console.log(index);
     }
 }
