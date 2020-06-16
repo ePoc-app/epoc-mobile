@@ -35,6 +35,7 @@ export class PlayerPage implements OnInit {
     contentStyles = {'font-size': this.fontSize + 'px'};
     currentPage = 0;
     pageCount = 1;
+    progress = 0;
     pageWrapperTransform = 'translateX(0)';
     isScrolling = false;
     pageWrapperOffset;
@@ -77,33 +78,7 @@ export class PlayerPage implements OnInit {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-
-            let currentChapter;
-
-            epoc.parts.forEach((part) => {
-                const contents = part.outline.map((id) => {
-                    const currentContent = epoc.content.find(item => item.id === id);
-
-                    if (currentContent.type === 'chapter') {
-                        currentChapter = currentContent;
-                        currentChapter.time = 0;
-                        currentChapter.videoCount = 0;
-                        currentChapter.assessmentCount = 0;
-                    }
-
-                    if (currentChapter) {
-                        if (currentContent.type === 'video') {
-                            currentChapter.videoCount++;
-                            currentChapter.time = currentChapter.time + 3;
-                        } else if (currentContent.type === 'assessment') {
-                            currentChapter.time = currentChapter.time + (currentContent as Assessment).items.length;
-                            currentChapter.assessmentCount++;
-                        }
-                    }
-                    return currentContent;
-                });
-                this.contents = this.contents.concat(contents);
-            });
+            this.initData();
         });
 
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
@@ -116,6 +91,39 @@ export class PlayerPage implements OnInit {
             if (settings) {
                 this.settings = settings;
             }
+        });
+    }
+
+    initData() {
+        let currentChapter;
+
+        this.epoc.parts.forEach((part) => {
+            const contents = part.outline.map((id) => {
+                const currentContent = this.epoc.content.find(item => item.id === id);
+
+                if (currentContent.type === 'chapter') {
+                    currentChapter = currentContent;
+                    currentChapter.time = 0;
+                    currentChapter.videoCount = 0;
+                    currentChapter.assessmentCount = 0;
+                } else if (currentContent.type === 'assessment') {
+                    (currentContent as Assessment).scoreTotal = (currentContent as Assessment).items.reduce(
+                        (total, item) => item.score + total, 0
+                    );
+                }
+
+                if (currentChapter) {
+                    if (currentContent.type === 'video') {
+                        currentChapter.videoCount++;
+                        currentChapter.time = currentChapter.time + 3;
+                    } else if (currentContent.type === 'assessment') {
+                        currentChapter.time = currentChapter.time + (currentContent as Assessment).items.length;
+                        currentChapter.assessmentCount++;
+                    }
+                }
+                return currentContent;
+            });
+            this.contents = this.contents.concat(contents);
         });
     }
 
@@ -197,6 +205,7 @@ export class PlayerPage implements OnInit {
     changeCurrentPage(page) {
         if (this.currentPage !== page){
             this.currentPage = page;
+            this.progress = this.currentPage / this.pageCount;
             this.stopAllMedia();
         }
     }
@@ -218,7 +227,7 @@ export class PlayerPage implements OnInit {
     goToPage(pageNumber) {
         this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
         this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
-        this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.getProgress() * 100));
+        this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.progress * 100));
     }
 
     prevPage() {
@@ -241,21 +250,6 @@ export class PlayerPage implements OnInit {
             this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
             setTimeout(() => this.goToNearestPage(), 300);
         }
-    }
-
-    getProgress() {
-        return this.currentPage / this.pageCount;
-    }
-
-    toggleBookmark() {
-        this.readingStore.toggleBookmark(this.epoc.id, Math.ceil(this.getProgress() * 100));
-    }
-
-    isBookmarked() {
-        if (this.reading) {
-            return this.reading.bookmarks.indexOf(Math.ceil(this.getProgress() * 100)) !== -1;
-        }
-        return false;
     }
 
     displayMenu() {
@@ -338,13 +332,5 @@ export class PlayerPage implements OnInit {
             'font-size': this.settings.fontSize + 'px',
             'line-height': this.settings.lineHeight
         };
-    }
-
-    getScoreTotal(content) {
-        return content.items.reduce((total, item) => item.score + total, 0);
-    }
-
-    videoChapterCount(index) {
-        console.log(index);
     }
 }
