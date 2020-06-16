@@ -114,8 +114,8 @@
                       <ion-row class="activity-specs ion-text-center">
                         <ion-col size="6">
                           <div class="activity-spec-icon"><ion-icon name="school" mode="md" color="inria-blue"></ion-icon></div>
-                          <div class="activity-spec-value" *ngIf="getScoreTotal(content) > 0">Noté</div>
-                          <div class="activity-spec-value" *ngIf="getScoreTotal(content) <= 0">Non Noté</div>
+                          <div class="activity-spec-value" *ngIf="content.scoreTotal > 0">Noté</div>
+                          <div class="activity-spec-value" *ngIf="content.scoreTotal <= 0">Non Noté</div>
                         </ion-col>
                         <ion-col size="6">
                           <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>
@@ -144,11 +144,8 @@
       <div class="page-action page-next" [ngClass]="currentPage === pageCount ? 'disable':''" (click)="nextPage()">
         <ion-icon name="arrow-dropright" mode="md"></ion-icon>
       </div>
-      <div class="reader-bookmark" (click)="toggleBookmark()">
-        <ion-icon [ngClass]="isBookmarked() ? 'bookmarked':''" name="bookmark"></ion-icon>
-      </div>
       <div class="reader-progress">
-        <ion-progress-bar color="inria" [value]="getProgress()"></ion-progress-bar>
+        <ion-progress-bar color="inria" [value]="progress"></ion-progress-bar>
       </div>
     </div>
   </div>

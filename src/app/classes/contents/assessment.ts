@@ -3,6 +3,7 @@ import {Content} from './content';
 export class Assessment extends Content {
     items?: Array<Question>;
     time?: number;
+    scoreTotal?: number;
 }
 
 export class Question {
