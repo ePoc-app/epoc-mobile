@@ -136,7 +136,10 @@
       position: relative;
       margin: 0;
       height: calc(100% - 20px);
-      transform: none;
+
+      .ios{
+        transform: none;
+      }
     }
 
     .title-wrapper{
