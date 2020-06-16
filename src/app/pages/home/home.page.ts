@@ -24,12 +24,14 @@ export class HomePage implements OnInit {
     }
 
     togglePlay($event) {
-        const video = $event.target.nodeName === 'VIDEO' ? $event.target : $event.target.querySelector('video');
-        if (video.paused) {
-            video.play();
-            this.hasPlayed = true;
-        } else {
-            video.pause();
+        if ($event.target.nodeName !== 'VIDEO' && $event.target.className.indexOf('controls-bar') === -1) {
+            const video = $event.target.parentNode.querySelector('video');
+            if (video.paused) {
+                video.play();
+                this.hasPlayed = true;
+            } else {
+                video.pause();
+            }
         }
     }
 
