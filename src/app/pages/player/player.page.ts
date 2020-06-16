@@ -11,6 +11,7 @@ import {Content} from '../../classes/contents/content';
 import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
+import {Assessment} from '../../classes/contents/assessment';
 
 @Component({
     selector: 'app-player',
@@ -95,7 +96,7 @@ export class PlayerPage implements OnInit {
                             currentChapter.videoCount++;
                             currentChapter.time = currentChapter.time + 3;
                         } else if (currentContent.type === 'assessment') {
-                            currentChapter.time = currentChapter.time + currentContent.items.length;
+                            currentChapter.time = currentChapter.time + (currentContent as Assessment).items.length;
                             currentChapter.assessmentCount++;
                         }
                     }

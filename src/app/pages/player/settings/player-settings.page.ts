@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {SettingsStoreService} from '../../../services/settings-store.service';
 import {Settings} from '../../../classes/settings';
+import {AlertController} from '@ionic/angular';
+import {ReadingStoreService} from '../../../services/reading-store.service';
 
 @Component({
     selector: 'app-player-settings',
@@ -17,7 +19,9 @@ export class PlayerSettingsPage {
     };
 
     constructor(
-        private settingsStore: SettingsStoreService
+        private settingsStore: SettingsStoreService,
+        private readingStore: ReadingStoreService,
+        public alertController: AlertController
     ) {
 
         this.settingsStore.settings$.subscribe(settings => {
@@ -37,5 +41,28 @@ export class PlayerSettingsPage {
 
     settingsChanged() {
         this.settingsStore.updateSettings(this.settings);
+    }
+
+    async deleteData() {
+        const alert = await this.alertController.create({
+            header: 'Confirmation',
+            message: 'Cette action effacera <strong>toutes vos données</strong> de l\'application (progression, score, exercices)',
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Confirmer',
+                    handler: () => {
+                        this.readingStore.readings = [];
+                        console.log(this.readingStore.readings);
+                        this.readingStore.saveReadings();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }

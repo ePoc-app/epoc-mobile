@@ -3,17 +3,17 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Settings</ion-title>
+    <ion-title>Paramètres</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-list-header>
-      Adjust Display
+      Affichage
     </ion-list-header>
     <ion-item>
-      <ion-label>Font</ion-label>
+      <ion-label>Police</ion-label>
       <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
         <ion-select-option value="Inria Sans">Sans serif</ion-select-option>
         <ion-select-option value="Inria Serif">Serif</ion-select-option>
@@ -33,22 +33,33 @@
       </ion-range>
     </ion-item>
     <ion-item>
-      <ion-label>Dark Mode</ion-label>
+      <ion-label>Mode sombre</ion-label>
       <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
     </ion-item>
   </ion-list>
   <ion-list>
     <ion-list-header>
-      Preview
+      Prévisualisation
     </ion-list-header>
     <ion-item>
       <ion-text class="preview-settings" [ngStyle]="getStyle()">
-        <h4>Heading</h4>
+        <h4>Titre</h4>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias consequatur,
           cumque iusto modi molestiae nihil quibusdam temporibus voluptatem?
         </p>
       </ion-text>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Données
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Supprimer les données</ion-label>
+      <ion-button size="default" color="danger" (click)="deleteData()">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
