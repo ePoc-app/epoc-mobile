@@ -22,54 +22,40 @@
   transform: translate(-50%, -50%);
 }
 
-.reader{
-  opacity: 1;
-  transition: opacity .3s ease;
-  &.loading{
-    opacity: 0;
-  }
+ion-card{
+  background:white;
+  box-shadow: none;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.12));
+}
+
+.reader-action{
+  display:flex;
+  align-items: center;
+  justify-content: space-evenly;
+  line-height: 40px;
+  font-size: 40px;
+  cursor: pointer;
+  text-align: center;
+  color:var(--ion-color-inria);
+
   .page-action{
-    position: absolute;
-    bottom:0;
-    height:40px;
-    line-height: 40px;
-    font-size: 40px;
-    cursor: pointer;
-    text-align: center;
-    background: white;
-    color:var(--ion-color-inria);
-
-    &.page-prev{
-      left:0;
-      width:calc(50% - 20px);
-    }
-
-    &.page-next{
-      right:0;
-      width:calc(50% - 20px);
-    }
-
+    display: block;
+    height: 1em;
     &.disable{
       opacity: .3;
     }
 
     &.menu{
-      left:calc(50% - 20px);
-      width: 40px;
       color:var(--ion-color-inria-blue);
     }
   }
+}
 
-  .reader-bookmark{
-    position: fixed;
-    top:0;
-    right: 5px;
-    font-size: 20px;
-    color: var(--ion-color-light);
-
-    .bookmarked{
-      color: var(--ion-color-inria);
-    }
+.reader{
+  opacity: 1;
+  transition: opacity .3s ease;
+  &.loading{
+    opacity: 0;
   }
 }
 
@@ -77,8 +63,8 @@
   position: absolute;
   width:100%;
   height:100%;
-  padding: 20px 0 40px 0;
-  background: white;
+  padding: 16px 0;
+  background: #fefefe;
 }
 
 .pages-wrapper{
@@ -98,7 +84,6 @@
   position: relative;
   display:block;
   padding: 0 20px;
-  background: white;
 
   -webkit-column-break-after: always;
   page-break-after: always;
@@ -130,16 +115,19 @@
   }
 
   &-chapter{
+    .page-content-fs-inner{
+    }
     .chapter-container{
       display: flex;
       flex-direction: column;
-      position: relative;
+      position: absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      right:0;
       margin: 0;
-      height: calc(100% - 20px);
-
-      &.ios{
-        transform: none;
-      }
+      margin-inline-end:0;
+      margin-inline-start:0;
     }
 
     .title-wrapper{
@@ -240,7 +228,6 @@
   }
 
   &-video, &-assessment{
-    overflow: hidden;
     ion-icon + h2 {
       margin-top: 0;
       margin-bottom: 1em;
@@ -257,7 +244,6 @@
       display: flex;
       flex-direction: column;
       flex-grow:1;
-      overflow: hidden;
     }
   }
 
@@ -270,7 +256,7 @@
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      margin: 0 0 20px 0;
+      margin: 0;
     }
 
     ion-card-content{
