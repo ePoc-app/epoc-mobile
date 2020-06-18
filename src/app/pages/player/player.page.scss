@@ -81,8 +81,6 @@ ion-card{
 }
 
 .page-content{
-  position: relative;
-  display:block;
   padding: 0 20px;
 
   -webkit-column-break-after: always;
@@ -101,6 +99,8 @@ ion-card{
     -webkit-column-break-before: always;
     page-break-before: always;
     break-before: column;
+
+    transform: translateZ(0);
 
     &-inner{
       position: absolute;
@@ -126,8 +126,6 @@ ion-card{
       bottom:0;
       right:0;
       margin: 0;
-      margin-inline-end:0;
-      margin-inline-start:0;
     }
 
     .title-wrapper{
