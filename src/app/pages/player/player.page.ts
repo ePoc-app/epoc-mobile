@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChildren, QueryList} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChildren, QueryList, AfterViewInit, ViewChild, DoCheck} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
-import {switchMap} from 'rxjs/operators';
-import {combineLatest, Observable} from 'rxjs';
+import {switchMap, debounceTime} from 'rxjs/operators';
+import {combineLatest, Observable, fromEvent} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {ReadingStoreService} from '../../services/reading-store.service';
@@ -18,9 +18,11 @@ import {Assessment} from '../../classes/contents/assessment';
     templateUrl: 'player.page.html',
     styleUrls: ['player.page.scss']
 })
-export class PlayerPage implements OnInit {
+export class PlayerPage implements OnInit, DoCheck {
 
     @ViewChildren('node') nodes: QueryList<ElementRef>;
+    @ViewChild('pageContainer', {static: true}) pageContainer: ElementRef;
+    @ViewChild('pageWrapper', {static: true}) pageWrapper: ElementRef;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -28,19 +30,14 @@ export class PlayerPage implements OnInit {
     reading: Reading;
 
     // Reader
+    dataInitialized = false;
+    readerInitialized = false;
     loading = true;
-    fontSize = 14;
     pagePerView = Math.ceil(window.innerWidth / 640);
     columnWidth = (100 / this.pagePerView - 2) + 'vw';
-    contentStyles = {'font-size': this.fontSize + 'px'};
     currentPage = 0;
     pageCount = 1;
     progress = 0;
-    pageWrapperTransform = 'translateX(0)';
-    isScrolling = false;
-    pageWrapperOffset;
-    startX;
-    startOffset;
 
     // Reading default settings
     settings: Settings = {
@@ -48,6 +45,12 @@ export class PlayerPage implements OnInit {
         fontSize: 16,
         lineHeight: 1.4,
         darkMode: false
+    };
+
+    readerStyles = {
+        'font-family': this.settings.font,
+        'font-size': this.settings.fontSize + 'px',
+        'line-height': this.settings.lineHeight
     };
 
     constructor(
@@ -61,6 +64,9 @@ export class PlayerPage implements OnInit {
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService
     ) {
+        fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(() => {
+            this.resize();
+        });
     }
 
     ngOnInit() {
@@ -78,23 +84,45 @@ export class PlayerPage implements OnInit {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-            this.initData();
+            this.initContent();
         });
 
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
             if (pair.epoc && pair.reading) {
-                this.afterDataInit();
+                this.readingStore.addReading(this.epoc.id);
+                this.dataInitialized = true;
             }
         });
 
         this.settingsStore.settings$.subscribe(settings => {
             if (settings) {
                 this.settings = settings;
+                this.readerStyles = {
+                    'font-family': this.settings.font,
+                    'font-size': this.settings.fontSize + 'px',
+                    'line-height': this.settings.lineHeight
+                };
             }
+        });
+
+        fromEvent(this.pageContainer.nativeElement, 'scroll').pipe(debounceTime(200)).subscribe(() => {
+            this.calcCurrentPage();
         });
     }
 
-    initData() {
+    ngDoCheck(): void {
+        if (!this.readerInitialized && this.dataInitialized && this.pageWrapper.nativeElement.scrollWidth > 0) {
+            this.readerInitialized = true;
+            // Go to progress (percentage)
+            const progress = this.route.snapshot.paramMap.has('progress') && !Number.isNaN(+this.route.snapshot.paramMap.get('progress')) ?
+                +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
+            // Go to specific content
+            const contentId = this.route.snapshot.paramMap.get('contentId');
+            this.initReader(progress, contentId);
+        }
+    }
+
+    initContent() {
         let currentChapter;
 
         this.epoc.parts.forEach((part) => {
@@ -127,66 +155,26 @@ export class PlayerPage implements OnInit {
         });
     }
 
-    afterDataInit() {
-        this.readingStore.addReading(this.epoc.id);
-        // Go to progress (percentage)
-        const progress = this.route.snapshot.paramMap.has('progress') && !Number.isNaN(+this.route.snapshot.paramMap.get('progress')) ?
-            +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
-        // Go to specific content
-        const contentId = this.route.snapshot.paramMap.get('contentId');
-        this.initReader(progress, contentId);
-    }
-
-    onResize() {
+    resize() {
         this.initReader();
-    }
-
-    onMouseDown(e) {
-        this.isScrolling = true;
-        this.startX = e.changedTouches[0].pageX - this.pageWrapperOffset;
-        this.startOffset = this.pageWrapperOffset;
-    }
-
-    onMouseUp(e) {
-        this.isScrolling = false;
-        const deltaX = this.startOffset - this.pageWrapperOffset;
-        // Swipe left
-        if (deltaX < -80 && deltaX > -400) {
-            this.prevPage();
-            // Swipe right
-        } else if (this.startOffset - this.pageWrapperOffset > 80 && this.startOffset - this.pageWrapperOffset < 400) {
-            this.nextPage();
-        }
-        this.goToNearestPage();
-    }
-
-    onMouseMove(e) {
-        if (e.changedTouches && e.changedTouches.length) {
-            this.pageWrapperOffset = e.changedTouches[0].pageX - this.startX;
-            this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
-        }
     }
 
     initReader(progress?: number, contentId?: string) {
         this.pagePerView = Math.ceil(window.innerWidth / 768);
         this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
-        setTimeout(() => {
-            this.pageCount = this.getPageCount();
-            if (contentId) {
-                const contentElem = this.nodes.find((elem) => elem.nativeElement.id === 'content-' + contentId).nativeElement;
-                this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
-                this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
-                this.goToNearestPage();
-                this.location.replaceState('/player/play/' + this.epoc.id);
-            } else if (progress) {
-                this.changeCurrentPage(Math.floor(progress / 100 * this.pageCount));
-                this.goToPage(this.currentPage);
-                this.location.replaceState('/player/play/' + this.epoc.id);
-            } else {
-                this.goToNearestPage();
-            }
-            setTimeout(() => this.loading = false, 300);
-        }, 200);
+        this.pageCount = this.getPageCount();
+        if (contentId) {
+            const contentElem = this.nodes.find((elem) => elem.nativeElement.id === 'content-' + contentId).nativeElement;
+            contentElem.scrollIntoView();
+            this.calcCurrentPage();
+        } else if (progress) {
+            this.changeCurrentPage(Math.floor(progress / 100 * this.pageCount));
+            this.goToPage(this.currentPage);
+            this.location.replaceState('/player/play/' + this.epoc.id);
+        } else {
+            this.calcCurrentPage();
+        }
+        this.loading = false;
     }
 
     getPageCount() {
@@ -194,27 +182,19 @@ export class PlayerPage implements OnInit {
         return Math.ceil(elem.scrollWidth / elem.clientWidth) * this.pagePerView - this.pagePerView - 1;
     }
 
-    changeFontSize(delta) {
-        if (this.fontSize + delta > 8 && this.fontSize + delta < 24) {
-            this.fontSize = this.fontSize + delta;
-            this.contentStyles = {'font-size': this.fontSize + 'px'};
-            this.initReader();
-        }
-    }
-
     changeCurrentPage(page) {
-        if (this.currentPage !== page){
+        if (this.currentPage !== page) {
             this.currentPage = page;
             this.progress = this.currentPage / this.pageCount;
             this.stopAllMedia();
         }
     }
 
-    goToNearestPage() {
+    calcCurrentPage() {
         let nearestPage = 0;
         let smallestGap = 9999999;
         for (let i = 0; i < this.pageCount + 1; i++) {
-            const gap = Math.abs(-i * window.innerWidth / this.pagePerView - this.pageWrapperOffset);
+            const gap = Math.abs(i * window.innerWidth / this.pagePerView - this.pageContainer.nativeElement.scrollLeft);
             if (gap < smallestGap) {
                 smallestGap = gap;
                 nearestPage = i;
@@ -225,19 +205,16 @@ export class PlayerPage implements OnInit {
     }
 
     goToPage(pageNumber) {
-        this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
-        this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
-        this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.progress * 100));
+        this.pageContainer.nativeElement.scrollTo({
+            left: (pageNumber * ((window.innerWidth / this.pagePerView) + 1) as number),
+            behavior: 'smooth'
+        });
     }
 
     prevPage() {
         if (this.currentPage > 0) {
             this.changeCurrentPage(this.currentPage - 1);
             this.goToPage(this.currentPage);
-        } else {
-            this.pageWrapperOffset = this.pageWrapperOffset + 100;
-            this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
-            setTimeout(() => this.goToNearestPage(), 300);
         }
     }
 
@@ -245,10 +222,6 @@ export class PlayerPage implements OnInit {
         if (this.currentPage < this.pageCount) {
             this.changeCurrentPage(this.currentPage + 1);
             this.goToPage(this.currentPage);
-        } else {
-            this.pageWrapperOffset = this.pageWrapperOffset - 100;
-            this.pageWrapperTransform = 'translateX(' + this.pageWrapperOffset + 'px)';
-            setTimeout(() => this.goToNearestPage(), 300);
         }
     }
 
@@ -324,13 +297,5 @@ export class PlayerPage implements OnInit {
             ]
         });
         await actionSheet.present();
-    }
-
-    getStyle() {
-        return {
-            'font-family': this.settings.font,
-            'font-size': this.settings.fontSize + 'px',
-            'line-height': this.settings.lineHeight
-        };
     }
 }

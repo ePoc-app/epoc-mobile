@@ -65,6 +65,12 @@ ion-card{
   height:100%;
   padding: 16px 0;
   background: #fefefe;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .pages-wrapper{
