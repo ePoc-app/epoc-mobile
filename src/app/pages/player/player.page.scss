@@ -65,12 +65,6 @@ ion-card{
   height:100%;
   padding: 16px 0;
   background: #fefefe;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .pages-wrapper{
@@ -80,6 +74,10 @@ ion-card{
   column-rule: 1px solid #eee;
   word-wrap: break-word;
   transition: transform .3s ease;
+
+  &.scrolling{
+    transition: none;
+  }
 }
 
 .page-content{
