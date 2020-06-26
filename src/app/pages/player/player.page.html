@@ -19,8 +19,8 @@
   </div>
 
   <div class="reader" [ngClass]="loading ? 'loading':''" [ngStyle]="readerStyles">
-    <div class="pages-container" #pageContainer>
-      <div class="pages-wrapper" [style.columnWidth]="columnWidth" #pageWrapper>
+    <div class="pages-container" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
+      <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform" #pageWrapper>
         <ng-container *ngIf="epoc$ | async as epoc">
           <ng-container *ngFor="let content of contents; let index = index">
 

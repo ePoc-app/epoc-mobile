@@ -21,7 +21,6 @@ import {Assessment} from '../../classes/contents/assessment';
 export class PlayerPage implements OnInit, DoCheck {
 
     @ViewChildren('node') nodes: QueryList<ElementRef>;
-    @ViewChild('pageContainer', {static: true}) pageContainer: ElementRef;
     @ViewChild('pageWrapper', {static: true}) pageWrapper: ElementRef;
 
     epoc$: Observable<Epoc>;
@@ -38,6 +37,11 @@ export class PlayerPage implements OnInit, DoCheck {
     currentPage = 0;
     pageCount = 1;
     progress = 0;
+    pageWrapperTransform = 'translate3d(0,0,0)';
+    isScrolling = false;
+    pageWrapperOffset;
+    startX;
+    startOffset;
 
     // Reading default settings
     settings: Settings = {
@@ -104,10 +108,6 @@ export class PlayerPage implements OnInit, DoCheck {
                 };
             }
         });
-
-        fromEvent(this.pageContainer.nativeElement, 'scroll').pipe(debounceTime(200)).subscribe(() => {
-            this.calcCurrentPage();
-        });
     }
 
     ngDoCheck(): void {
@@ -159,13 +159,42 @@ export class PlayerPage implements OnInit, DoCheck {
         this.initReader();
     }
 
+    onMouseDown(e) {
+        this.isScrolling = true;
+        this.startX = e.changedTouches[0].pageX - this.pageWrapperOffset;
+        this.startOffset = this.pageWrapperOffset;
+    }
+
+    onMouseUp(e) {
+        this.isScrolling = false;
+        const deltaX = this.startOffset - this.pageWrapperOffset;
+        // Swipe left
+        if (deltaX < -80 && deltaX > -400) {
+            this.prevPage();
+            // Swipe right
+        } else if (this.startOffset - this.pageWrapperOffset > 80 && this.startOffset - this.pageWrapperOffset < 400) {
+            this.nextPage();
+        }
+        this.calcCurrentPage();
+    }
+
+    onMouseMove(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.changedTouches && e.changedTouches.length) {
+            this.pageWrapperOffset = e.changedTouches[0].pageX - this.startX;
+            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
+        }
+    }
+
     initReader(progress?: number, contentId?: string) {
         this.pagePerView = Math.ceil(window.innerWidth / 768);
         this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
         this.pageCount = this.getPageCount();
         if (contentId) {
             const contentElem = this.nodes.find((elem) => elem.nativeElement.id === 'content-' + contentId).nativeElement;
-            contentElem.scrollIntoView();
+            this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
+            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
             this.calcCurrentPage();
         } else if (progress) {
             this.changeCurrentPage(Math.floor(progress / 100 * this.pageCount));
@@ -178,7 +207,7 @@ export class PlayerPage implements OnInit, DoCheck {
     }
 
     getPageCount() {
-        const elem = this.elRef.nativeElement.querySelector('.pages-wrapper');
+        const elem = this.pageWrapper.nativeElement;
         return Math.ceil(elem.scrollWidth / elem.clientWidth) * this.pagePerView - this.pagePerView - 1;
     }
 
@@ -194,7 +223,7 @@ export class PlayerPage implements OnInit, DoCheck {
         let nearestPage = 0;
         let smallestGap = 9999999;
         for (let i = 0; i < this.pageCount + 1; i++) {
-            const gap = Math.abs(i * window.innerWidth / this.pagePerView - this.pageContainer.nativeElement.scrollLeft);
+            const gap = Math.abs(-i * window.innerWidth / this.pagePerView - this.pageWrapperOffset);
             if (gap < smallestGap) {
                 smallestGap = gap;
                 nearestPage = i;
@@ -205,16 +234,19 @@ export class PlayerPage implements OnInit, DoCheck {
     }
 
     goToPage(pageNumber) {
-        this.pageContainer.nativeElement.scrollTo({
-            left: (pageNumber * ((window.innerWidth / this.pagePerView) + 1) as number),
-            behavior: 'smooth'
-        });
+        this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
+        this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
+        this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.progress * 100));
     }
 
     prevPage() {
         if (this.currentPage > 0) {
             this.changeCurrentPage(this.currentPage - 1);
             this.goToPage(this.currentPage);
+        } else {
+            this.pageWrapperOffset = this.pageWrapperOffset + 100;
+            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
+            setTimeout(() => this.calcCurrentPage(), 300);
         }
     }
 
@@ -222,6 +254,10 @@ export class PlayerPage implements OnInit, DoCheck {
         if (this.currentPage < this.pageCount) {
             this.changeCurrentPage(this.currentPage + 1);
             this.goToPage(this.currentPage);
+        } else {
+            this.pageWrapperOffset = this.pageWrapperOffset - 100;
+            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
+            setTimeout(() => this.calcCurrentPage(), 300);
         }
     }
 
