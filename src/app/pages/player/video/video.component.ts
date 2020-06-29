@@ -41,13 +41,19 @@ export class VideoComponent implements OnInit, OnDestroy {
         });
     }
 
-    play() {
+play() {
+    if (!this.video.src) {
+        this.video.src = this.content.source;
+        this.video.load();
+        this.video.play();
+    } else {
         if (this.video.paused) {
             this.video.play();
         } else {
             this.video.pause();
         }
     }
+}
 
     fullscreen() {
         if (typeof this.video.webkitEnterFullscreen === 'function') {
