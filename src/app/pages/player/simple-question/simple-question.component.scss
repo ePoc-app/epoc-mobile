@@ -46,6 +46,10 @@
   border-radius: 8px;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
 
+  h2 {
+    margin: 0;
+  }
+
   h4{
     font-size: 1rem;
     color:#666;
@@ -66,6 +70,10 @@
     &:disabled, &.disabled{
       opacity: 0.5;
     }
+  }
+
+  .explanation{
+    overflow: auto;
   }
 
   .explanation-icon{
