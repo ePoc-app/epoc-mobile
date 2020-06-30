@@ -105,6 +105,7 @@ ion-card{
     &-inner{
       display: flex;
       flex-grow: 1;
+      flex-direction: column;
     }
   }
 
@@ -112,8 +113,6 @@ ion-card{
   }
 
   &-chapter{
-    .page-content-fs-inner{
-    }
     .chapter-container{
       display: flex;
       flex-direction: column;
@@ -227,10 +226,6 @@ ion-card{
   }
 
   &-video{
-    .page-content-fs-inner{
-      display: flex;
-      flex-direction: column;
-    }
 
     video-player{
       display: flex;
@@ -240,10 +235,6 @@ ion-card{
   }
 
   &-assessment{
-    .page-content-fs-inner{
-      display: flex;
-      flex-direction: column;
-    }
     ion-card{
       display: flex;
       flex-direction: column;
@@ -279,6 +270,15 @@ ion-card{
     .activity-spec-icon{
       font-size: 2em;
       line-height: 1;
+    }
+  }
+
+  &-simple-question{
+    simple-question{
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin: 0;
     }
   }
 

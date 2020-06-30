@@ -6,6 +6,10 @@ export class Assessment extends Content {
     scoreTotal?: number;
 }
 
+export class SimpleQuestion extends Content {
+    question: Question;
+}
+
 export class Question {
     type: string;
     score: number;

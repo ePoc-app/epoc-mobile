@@ -1,0 +1,45 @@
+<div class="flip-container" [ngClass]="flipped ? 'flipped':''">
+  <div class="flipper" (click)="flip()">
+    <div class="front question-card">
+      <h4>Question</h4>
+      <div class="statement">
+        <div *ngIf="question.statement">{{question.statement}}</div>
+        <b>{{question.label}}</b>
+      </div>
+
+      <ng-container *ngIf="question.type === 'choice'">
+        <ion-radio-group [value]="answer">
+          <ion-item [lines]="'none'" *ngFor="let response of question.responses" (click)="selectAnswer(response.value)">
+            <ion-radio mode="md" slot="start" [value]="response.value" [disabled]="disabled"></ion-radio>
+            <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </ng-container>
+
+      <ng-container *ngIf="question.type === 'multiple-choice'">
+        <ion-list>
+          <ion-item [lines]="'none'" *ngFor="let response of question.responses">
+            <ion-checkbox mode="md" slot="start" [value]="response.value" (ionChange)="selectAnswerMultiple($event)" [disabled]="disabled"></ion-checkbox>
+            <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+
+      <button (click)="checkAnswer($event)" [ngClass]="disabled ? 'disabled':''">Valider</button>
+    </div>
+    <div class="back question-card">
+      <div class="sucess" *ngIf="questionSuccessed">
+        <ion-icon name="checkmark-circle-outline" mode="ios" color="success" class="explanation-icon"></ion-icon>
+        <h2>Bravo !</h2>
+      </div>
+      <div class="fail" *ngIf="!questionSuccessed">
+        <ion-icon name="close-circle-outline" mode="ios" color="danger" class="explanation-icon"></ion-icon>
+        <h2>Non !</h2>
+      </div>
+      <h4>Explication</h4>
+      <div class="explanation">
+        <ion-text [innerHTML]="question.explanation"></ion-text>
+      </div>
+    </div>
+  </div>
+</div>
