@@ -21,6 +21,7 @@ import {ReorderComponent} from './assessment/components/reorder/reorder.componen
 import {VideoComponent} from './video/video.component';
 import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.page';
 import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-and-drop.component';
+import {SimpleQuestionComponent} from './simple-question/simple-question.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,7 @@ import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-a
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
       AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
-      VideoComponent, TranscriptModalPage],
+      VideoComponent, TranscriptModalPage, SimpleQuestionComponent],
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {

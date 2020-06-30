@@ -101,6 +101,18 @@
               </div>
             </ng-container>
 
+            <ng-container *ngIf="content.type === 'simple-question'">
+              <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-simple-question">
+                <div class="page-content-fs-inner">
+                  <div class="page-header">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                    <h4>Selon vous ?</h4>
+                  </div>
+                  <simple-question [epocId]="epoc.id" [content]="content"></simple-question>
+                </div>
+              </div>
+            </ng-container>
+
             <ng-container *ngIf="content.type === 'assessment'">
               <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-assessment">
                 <div class="page-content-fs-inner">
