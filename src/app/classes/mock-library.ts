@@ -1,12 +1,12 @@
 import {Epoc} from './epoc';
 import {Content} from './contents/content';
 import {Chapter} from './contents/chapter';
-import {Assessment} from './contents/assessment';
+import {Assessment, SimpleQuestion} from './contents/assessment';
 import {Html} from './contents/html';
 import {Video} from './contents/video';
 
 
-const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
+const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestion)[] = [
     {
         id: 'a',
         type: 'chapter',
@@ -410,7 +410,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video)[] = [
     }
 ];
 
-const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
+const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestion)[] = [
     {
         id: 'a',
         type: 'chapter',
@@ -422,31 +422,27 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
     },
     {
         id: 'b',
-        type: 'assessment',
-        name: 'Quiz non noté',
-        summary: 'Questionnaire de placement.',
-        items: [
-            {
-                type: 'choice',
-                score: 0,
-                statement: '',
-                label: 'Est-ce que votre smartphone récupère de l’information sur vous dans le monde physique (les déplacements, les paramètres biologiques etc.) ? ',
-                responses: [
-                    {
-                        label: 'Oui',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Non',
-                        value: 'B'
-                    }
-                ],
-                correctResponse: 'A',
-                explanation: '<p>La récupération de l’information dans le monde physique est devenue une fonctionnalité incluse dans les smartphones, donc la bonne réponse est oui.</p>' +
-                    '<p>La question sur vos données personnelles et les autorisations que vous pouvez attribuer aux applications sera vue dans les prochains modules.</p>'
-            }
-        ],
-        toc: 2
+        type: 'simple-question',
+        name: 'Selon vous ?',
+        question: {
+            type: 'choice',
+            score: 0,
+            statement: '',
+            label: 'Est-ce que votre smartphone récupère de l’information sur vous dans le monde physique (les déplacements, les paramètres biologiques etc.) ? ',
+            responses: [
+                {
+                    label: 'Oui',
+                    value: 'A'
+                },
+                {
+                    label: 'Non',
+                    value: 'B'
+                }
+            ],
+            correctResponse: 'A',
+            explanation: '<p>La récupération de l’information dans le monde physique est devenue une fonctionnalité incluse dans les smartphones, donc la bonne réponse est oui.</p>' +
+                '<p>La question sur vos données personnelles et les autorisations que vous pouvez attribuer aux applications sera vue dans les prochains modules.</p>'
+        }
     },
     {
         id: 'c',
@@ -671,37 +667,34 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
     },
     {
         id: 'r',
-        type: 'assessment',
-        name: 'Quiz non noté',
-        summary: 'Résumé du quiz',
-        items: [
-            {
-                type: 'choice',
-                score: 0,
-                statement: '',
-                label: 'Quelle est la durée d’une vidéo d’un pétaoctet ? (Nous considérons un débit de 3Go/h pour une vidéo Full HD en streaming) ',
-                responses: [
-                    {
-                        label: '38 années',
-                        value: 'A'
-                    },
-                    {
-                        label: '10 années',
-                        value: 'B'
-                    },
-                    {
-                        label: '15 années',
-                        value: 'C'
-                    }
-                ],
-                correctResponse: ['A', 'B'],
-                explanation: '<p>Nous comptons 3Go par heure pour une vidéo en Full HD. Donc : <ul>' +
-                    '<li>1Po = 1 000 000 Go / 3 = 333 333 heures</li>' +
-                    '<li>Soit 333 333 / 24 = 13 888 jours</li>' +
-                    '<li>Soit 13 888 / 365 = 38 années.</li>' +
-                    '</ul></p>'
-            }
-        ],
+        type: 'simple-question',
+        name: 'Selon vous ?',
+        question: {
+            type: 'choice',
+            score: 0,
+            statement: '',
+            label: 'Quelle est la durée d’une vidéo d’un pétaoctet ? (Nous considérons un débit de 3Go/h pour une vidéo Full HD en streaming) ',
+            responses: [
+                {
+                    label: '38 années',
+                    value: 'A'
+                },
+                {
+                    label: '10 années',
+                    value: 'B'
+                },
+                {
+                    label: '15 années',
+                    value: 'C'
+                }
+            ],
+            correctResponse: 'A',
+            explanation: '<p>Nous comptons 3Go par heure pour une vidéo en Full HD. Donc : <ul>' +
+                '<li>1Po = 1 000 000 Go / 3 = 333 333 heures</li>' +
+                '<li>Soit 333 333 / 24 = 13 888 jours</li>' +
+                '<li>Soit 13 888 / 365 = 38 années.</li>' +
+                '</ul></p>'
+        },
         toc: 2
     },
     {
@@ -715,36 +708,33 @@ const VPContents: (Content | Chapter | Assessment | Html | Video)[] = [
     },
     {
         id: 's',
-        type: 'assessment',
-        name: 'Quiz non noté',
-        summary: 'Résumé du quiz',
-        items: [
-            {
-                type: 'multiple-choice',
-                score: 0,
-                statement: '',
-                label: 'Qu’est-ce que la phrase « si c\'est gratuit, c\'est que c\'est vous le produit » veut dire :',
-                responses: [
-                    {
-                        label: 'Vous « payez » avec vos données personnelles ',
-                        value: 'A'
-                    },
-                    {
-                        label: 'Il y a quelqu’un d’autre qui paie derrière vous ',
-                        value: 'B'
-                    },
-                    {
-                        label: 'La gratitude de l’application peut être expliqué comme une stratégie du marketing, vous ne donnez aucune donnée ',
-                        value: 'C'
-                    }
-                ],
-                correctResponse: 'A',
-                explanation: '<p>Il faut être clair, si les services et applications de grande qualité que nous utilisons sont gratuits ou très peu coûteux, ' +
-                    'c\'est grâce au modèle économique sous-jacent qui est essentiellement basé sur la publicité ciblée. </p>' +
-                    '<p>L\'annonceur va payer à la place de l\'utilisateur. Et puisque l\'on parle de publicité ciblée, c\'est-à-dire une publicité qui a une probabilité élevée d\'intéresser ' +
-                    'l\'utilisateur, c\'est que nécessairement en amont on a réussi à percer les centres d\'intérêt de l\'utilisateur, c\'est la notion de profilage des utilisateurs. </p>'
-            }
-        ],
+        type: 'simple-question',
+        name: 'Selon-vous',
+        question: {
+            type: 'choice',
+            score: 0,
+            statement: '',
+            label: 'Qu’est-ce que la phrase « si c\'est gratuit, c\'est que c\'est vous le produit » veut dire :',
+            responses: [
+                {
+                    label: 'Vous « payez » avec vos données personnelles ',
+                    value: 'A'
+                },
+                {
+                    label: 'Il y a quelqu’un d’autre qui paie derrière vous ',
+                    value: 'B'
+                },
+                {
+                    label: 'La gratitude de l’application peut être expliqué comme une stratégie du marketing, vous ne donnez aucune donnée ',
+                    value: 'C'
+                }
+            ],
+            correctResponse: 'A',
+            explanation: '<p>Il faut être clair, si les services et applications de grande qualité que nous utilisons sont gratuits ou très peu coûteux, ' +
+                'c\'est grâce au modèle économique sous-jacent qui est essentiellement basé sur la publicité ciblée. </p>' +
+                '<p>L\'annonceur va payer à la place de l\'utilisateur. Et puisque l\'on parle de publicité ciblée, c\'est-à-dire une publicité qui a une probabilité élevée d\'intéresser ' +
+                'l\'utilisateur, c\'est que nécessairement en amont on a réussi à percer les centres d\'intérêt de l\'utilisateur, c\'est la notion de profilage des utilisateurs. </p>'
+        },
         toc: 2
     },
     {
