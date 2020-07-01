@@ -36,7 +36,6 @@ export class SimpleQuestionComponent implements OnInit {
                 if (assessment) {
                     this.disabled = true;
                     this.answer = assessment.responses;
-                    console.log(this.answer);
                 }
             }
         });
