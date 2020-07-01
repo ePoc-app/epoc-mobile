@@ -149,7 +149,7 @@ ion-card{
       flex-grow: 1;
       justify-content: space-evenly;
       padding: 1em;
-      overflow: auto;
+      overflow: hidden;
     }
 
     ion-grid{
@@ -173,8 +173,11 @@ ion-card{
     }
 
     .chapter-objectives{
-      h4{
+      overflow: auto;
+
+      &-label{
         display: inline-block;
+        width: fit-content;
         font-size: 1rem;
         font-weight: 700;
         margin: 1em;
@@ -231,6 +234,7 @@ ion-card{
       display: flex;
       flex-direction: column;
       flex-grow:1;
+      overflow: hidden;
     }
   }
 
