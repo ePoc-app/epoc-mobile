@@ -13,7 +13,7 @@ import {Content} from '../../../classes/contents/content';
     templateUrl: 'about-epoc.page.html',
     styleUrls: ['about-epoc.page.scss']
 })
-export class AboutEpocPage implements OnInit{
+export class AboutEpocPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -39,19 +39,6 @@ export class AboutEpocPage implements OnInit{
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-
-            epoc.parts.forEach((part) => {
-                const contents = part.outline.map((id) => {
-                    const currentContent = epoc.content.find(item => item.id === id);
-                    if (currentContent.type === 'chapter') {
-                        this.chapterCount++;
-                    } else if (currentContent.type === 'assessment') {
-                        this.assessmentCount++;
-                    }
-                    return currentContent;
-                });
-                this.contents = this.contents.concat(contents);
-            });
         });
     }
 

@@ -66,8 +66,7 @@ export class ScoreEpocPage implements OnInit {
             this.assessments = [];
 
             epoc.parts.forEach((part) => {
-                part.outline.reduce((assessments, id) => {
-                    const content = epoc.content.find(item => item.id === id);
+                part.contents.reduce((assessments, content) => {
                     if (content && content.type === 'assessment') {
                         assessments.push(content);
                     }

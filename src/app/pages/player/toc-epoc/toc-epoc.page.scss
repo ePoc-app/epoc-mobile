@@ -1,11 +1,15 @@
+ion-title{
+  font-size: 0.9em;
+}
+
 @for $i from 1 through 5 {
   .level-#{$i} {
     padding-left: ($i - 1) * 20px;
   }
+}
 
-  .level-1 {
-    font-weight: bold;
-  }
+.level-1 {
+  font-weight: bold;
 }
 
 .part{

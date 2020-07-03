@@ -13,8 +13,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         name: 'Qu\'est-ce que le dispositif de PPST ? (protection du Potentiel Scientifique et Technique de la Nation)',
         image: 'assets/demo/ZRR/zrr-ppst-security.jpg',
         number: '1',
-        objectives: ['Apprendre un truc'],
-        toc: 1
+        objectives: ['Apprendre un truc']
     },
     {
         id: 'b',
@@ -25,7 +24,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         summary: 'Qu\'est-ce que le dispositif de PPST (protection du Potentiel Scientifique et Technique de la Nation). ' +
             'Pourquoi toutes ces précautions ? Ce dispositif, est-il nouveau ? Quels sont les risques et comment ça fonctionne ? ' +
             'Les réponses dans cette vidéo.',
-        toc: 2
+
     },
     {
         id: 'c',
@@ -44,7 +43,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
             'protection des installations, du matériel ou du secret des recherches, études ou fabrication.' +
             '</li>' +
             '</ul>',
-        toc: 2
+
     },
     {
         id: 'd',
@@ -69,7 +68,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
             'les recherches particulièrement sensibles.' +
             '</li>' +
             '</ul>',
-        toc: 2
+
     },
     {
         id: 'e',
@@ -154,14 +153,13 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
                     'sensibles et donc protégés.'
             }
         ],
-        toc: 2
+
     },
     {
         id: 'f',
         type: 'chapter',
         name: 'Les risques PPST',
-        number: '2',
-        toc: 1
+        number: '2'
     },
     {
         id: 'g',
@@ -170,7 +168,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         source: 'assets/demo/ZRR/zrr-inrto.mp4ideo.mp4',
         subtitles: 'assets/demo/VP/soustitre-chapitre-1.vtt',
         summary: 'Au cours de cette vidéo nous verrons les différents risques PPST',
-        toc: 2
+
     },
     {
         id: 'h',
@@ -195,7 +193,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
             'à un visiteur de courte durée (- de 5 jours)' +
             '</li>' +
             '</ul>',
-        toc: 2
+
     },
     {
         id: 'i',
@@ -219,7 +217,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
             'les recherches particulièrement sensibles.' +
             '</li>' +
             '</p>',
-        toc: 2
+
     },
     {
         id: 'j',
@@ -250,14 +248,13 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
                 explanation: ''
             }
         ],
-        toc: 2
+
     },
     {
         id: 'k',
         type: 'chapter',
         name: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
-        number: '3',
-        toc: 1
+        number: '3'
     },
     {
         id: 'l',
@@ -266,7 +263,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         source: 'assets/demo/ZRR/zrr-inrto.mp4ideo.mp4',
         subtitles: 'assets/demo/VP/soustitre-chapitre-1.vtt',
         summary: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
-        toc: 2
+
     },
     {
         id: 'm',
@@ -274,7 +271,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         name: 'Règlement intérieur',
         value: '<h4>Autorisations : </h4>' +
             '<p></p>',
-        toc: 2
+
     },
     {
         id: 'n',
@@ -282,7 +279,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         name: 'A retenir',
         value: '<h4>Ce qu\'il faut retenir :</h4>' +
             '<p></p>',
-        toc: 2
+
     },
     {
         id: 'o',
@@ -313,14 +310,13 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
                 explanation: ''
             }
         ],
-        toc: 2
+
     },
     {
         id: 'p',
         type: 'chapter',
         name: 'Echelle de sensibilité',
-        number: '4',
-        toc: 1
+        number: '4'
     },
     {
         id: 'q',
@@ -329,7 +325,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         source: 'assets/demo/ZRR/zrr-inrto.mp4ideo.mp4',
         subtitles: 'assets/demo/VP/soustitre-chapitre-1.vtt',
         summary: 'Entretien à propos de l\'échelle de sensibilité',
-        toc: 2
+
     },
     {
         id: 'r',
@@ -406,7 +402,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
                 explanation: ''
             }
         ],
-        toc: 2
+
     }
 ];
 
@@ -417,8 +413,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         name: 'Pourquoi le smartphone intéresse-t-il tant ?',
         image: 'assets/demo/VP/vp-chapitre-1.png',
         number: '1',
-        objectives: ['Identifier des données collectées sur notre portable'],
-        toc: 1
+        objectives: ['Identifier des données collectées sur notre portable']
     },
     {
         id: 'b',
@@ -453,7 +448,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         summary: '<p>Pourquoi nos assistants personnels, smartphones et tablettes, sont-ils devenus tout naturellement, en une dizaine d\'années seulement, un point de collecte majeur de données personnelles.</p>' +
             '<p>Pourquoi le smartphone intéresse-t-il tant de monde ?</p>' +
             '<p>Regarder cette vidéo pour en savoir plus !</p>',
-        toc: 2
+
     },
     {
         id: 'e',
@@ -530,7 +525,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                 explanation: '<p>En étant toujours avec vous, un smartphone pourra : vous localiser (à moins de bloquer les autorisations associées), savoir que vous être proche d\'un magasin vendant des articles susceptibles de vous intéresser (car vous avez fait des recherches à ce sujet sur votre navigateur), et donc créer une passerelle entre Internet et monde physique. </p>'
             }
         ],
-        toc: 2
+
     },
     {
         id: 'f',
@@ -538,8 +533,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         name: 'L\'écosystème autour des applications pour smartphones',
         image: 'assets/demo/VP/vp-chapitre-2.png',
         number: '2',
-        objectives: ['Identifier les acteurs de cet écosystème autour des applications et leurs fonctions'],
-        toc: 1
+        objectives: ['Identifier les acteurs de cet écosystème autour des applications et leurs fonctions']
     },
     {
         id: 'n',
@@ -548,7 +542,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         source: 'assets/demo/VP/vp-chapitre-2.1.mp4',
         subtitles: '',
         summary: 'Résumé de la vidéo Ecosystème',
-        toc: 2
+
     },
     {
         id: 'o',
@@ -639,8 +633,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                     '<p>- la proposition e. est fausse, la régie ne forge en aucun cas des messages publicitaires, ce n\'est pas son rôle ;</p>' +
                     '<p>- la proposition f. est exacte, et c\'est par ce biais (déclenchement de l\'affichage de la publicité sur le smartphone) que la régie se rémunère</p>'
             }
-        ],
-        toc: 2
+        ]
     },
     {
         id: 'p',
@@ -654,7 +647,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             'de mode). Ces données de profilage, absentes du smartphone, résultent d\'un travail d\'analyse, et étant associées à une personne physique, il s\'agit bien de données personnelles.</p>' +
             '<p>C\'est ce profil qui permet aux annonceurs de sélectionner s\'il est ou non pertinent d\'afficher un message publicitaire, d\'où la notion de publicité ciblée.</p>' +
             '<p>Enfin, la régie publicitaire étant à l\'interface entre annonceurs et smartphones, elle déclenche bien sûr l\'affichage du message publicitaire du gagnant de l\'enchère.</p>',
-        toc: 2
+
     },
     {
         id: 'q',
@@ -663,7 +656,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         source: 'assets/demo/VP/vp-chapitre-2.2.mp4',
         subtitles: '',
         summary: 'Pour aller plus loin : exemple des régies publicitaires',
-        toc: 2
+
     },
     {
         id: 'r',
@@ -695,7 +688,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                 '<li>Soit 13 888 / 365 = 38 années.</li>' +
                 '</ul></p>'
         },
-        toc: 2
+
     },
     {
         id: 'g',
@@ -703,8 +696,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         name: 'Gratuité contre publicité ciblée : où est le problème ?',
         image: 'assets/demo/VP/vp-chapitre-3.jpg',
         number: '3',
-        objectives: ['Découvrir des problèmes de fond du modèle économique'],
-        toc: 1
+        objectives: ['Découvrir des problèmes de fond du modèle économique']
     },
     {
         id: 's',
@@ -735,7 +727,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                 '<p>L\'annonceur va payer à la place de l\'utilisateur. Et puisque l\'on parle de publicité ciblée, c\'est-à-dire une publicité qui a une probabilité élevée d\'intéresser ' +
                 'l\'utilisateur, c\'est que nécessairement en amont on a réussi à percer les centres d\'intérêt de l\'utilisateur, c\'est la notion de profilage des utilisateurs. </p>'
         },
-        toc: 2
+
     },
     {
         id: 't',
@@ -744,7 +736,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         source: 'assets/demo/VP/vp-chapitre-3.mp4',
         subtitles: '',
         summary: 'Résumé de la vidéo',
-        toc: 2
+
     },
     {
         id: 'u',
@@ -872,7 +864,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                     'l\'équilibre économique sous-jacent au service gratuit de cartographie.</p>'
             }
         ],
-        toc: 2
+
     },
     {
         id: 'v',
@@ -884,55 +876,56 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             'une autorisation d’Android. </p>' +
             '<p>C\'est d\'ailleurs notre équipe qui a les premiers identifié le problème 2 ans plus tôt. Donc, la question de gratuité contre publicité ciblée est plus compliquée qu\'il n\'y ' +
             'parait et c\'est ce que nous allons creuser.</p>',
-        toc: 2
+
     },
     {
         id: 'h',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'Données personnelles : Gros plan sur les identifiants techniques',
         image: 'assets/demo/VP/vp-chapitre-4.png',
-        number: '4',
-        toc: 1
+        number: '4'
     },
     {
         id: 'i',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'Contrôle utilisateur',
         image: 'assets/demo/VP/vp-chapitre-5.png',
-        number: '5',
-        toc: 1
+        number: '5'
     },
     {
         id: 'j',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'Contrôle d’utilisateur Apple',
         image: 'assets/demo/VP/vp-chapitre-6.jpg',
-        number: '6',
-        toc: 1
+        number: '6'
     },
     {
         id: 'k',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'Contrôle d’utilisateur Android',
         image: 'assets/demo/VP/vp-chapitre-7.png',
-        number: '7',
-        toc: 1
+        number: '7'
     },
     {
         id: 'l',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'Limites du contrôle utilisateur Apple et Google',
         image: 'assets/demo/VP/vp-chapitre-8.png',
-        number: '8',
-        toc: 1
+        number: '8'
     },
     {
         id: 'm',
         type: 'chapter',
-        name: 'Les risques PPST',
+        name: 'Démo: Exodus Privacy',
         image: 'assets/demo/VP/vp-chapitre-9.png',
-        number: '9',
-        toc: 1
+        number: '9'
+    },
+    {
+        id: 'x',
+        type: 'chapter',
+        name: 'Conclusion',
+        image: 'assets/demo/VP/vp-chapitre-9.png',
+        number: '10'
     }
 ];
 
@@ -962,11 +955,71 @@ export const MockLibrary: Epoc[] = [
         ],
         parts: [{
             title: 'Smartphone',
-            outline: ['a', 'b', 'c', 'e', 'f', 'n', 'o', 'p', 'q', 'r', 'g', 's', 't', 'u', 'v', 'h']
-        }, {
-            title: 'Mise en pratique',
-            outline: ['i', 'j', 'k', 'l', 'm']
-        }],
+            outlineTree: [
+                {
+                    contentId: 'a',
+                    children: [
+                        {
+                            contentId: 'b'
+                        },
+                        {
+                            contentId: 'c'
+                        },
+                        {
+                            contentId: 'e'
+                        }
+                    ]
+                },
+                {
+                    contentId: 'f',
+                    children: [
+                        {
+                            contentId: 'n'
+                        },
+                        {
+                            contentId: 'o'
+                        },
+                        {
+                            contentId: 'p'
+                        },
+                        {
+                            contentId: 'r'
+                        }
+                    ]
+                },
+                {
+                    contentId: 'g',
+                    children: [
+                        {
+                            contentId: 's'
+                        },
+                        {
+                            contentId: 't'
+                        },
+                        {
+                            contentId: 'u'
+                        },
+                        {
+                            contentId: 'v'
+                        }
+                    ]
+                },
+                {
+                    contentId: 'h'
+                }
+            ]
+        },
+            {
+                title: 'Mise en pratique',
+                outlineTree: [
+                    {contentId: 'i', children: []},
+                    {contentId: 'j', children: []},
+                    {contentId: 'k', children: []},
+                    {contentId: 'l', children: []},
+                    {contentId: 'm', children: []},
+                    {contentId: 'x', children: []}
+                ]
+            }],
         content: VPContents
     },
     {
@@ -994,7 +1047,26 @@ export const MockLibrary: Epoc[] = [
         ],
         parts: [{
             title: 'Formation ZRR',
-            outline: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
+            outlineTree: [
+                {contentId: 'a'},
+                {contentId: 'b'},
+                {contentId: 'c'},
+                {contentId: 'd'},
+                {contentId: 'e'},
+                {contentId: 'f'},
+                {contentId: 'g'},
+                {contentId: 'h'},
+                {contentId: 'i'},
+                {contentId: 'j'},
+                {contentId: 'k'},
+                {contentId: 'l'},
+                {contentId: 'm'},
+                {contentId: 'n'},
+                {contentId: 'o'},
+                {contentId: 'p'},
+                {contentId: 'q'},
+                {contentId: 'r'}
+            ]
         }],
         content: ZRRContents
     }

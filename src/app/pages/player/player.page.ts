@@ -88,7 +88,6 @@ export class PlayerPage implements OnInit, DoCheck {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-            this.initContent();
         });
 
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
@@ -120,39 +119,6 @@ export class PlayerPage implements OnInit, DoCheck {
             const contentId = this.route.snapshot.paramMap.get('contentId');
             this.initReader(progress, contentId);
         }
-    }
-
-    initContent() {
-        let currentChapter;
-
-        this.epoc.parts.forEach((part) => {
-            const contents = part.outline.map((id) => {
-                const currentContent = this.epoc.content.find(item => item.id === id);
-
-                if (currentContent.type === 'chapter') {
-                    currentChapter = currentContent;
-                    currentChapter.time = 0;
-                    currentChapter.videoCount = 0;
-                    currentChapter.assessmentCount = 0;
-                } else if (currentContent.type === 'assessment') {
-                    (currentContent as Assessment).scoreTotal = (currentContent as Assessment).items.reduce(
-                        (total, item) => item.score + total, 0
-                    );
-                }
-
-                if (currentChapter) {
-                    if (currentContent.type === 'video') {
-                        currentChapter.videoCount++;
-                        currentChapter.time = currentChapter.time + 3;
-                    } else if (currentContent.type === 'assessment') {
-                        currentChapter.time = currentChapter.time + (currentContent as Assessment).items.length;
-                        currentChapter.assessmentCount++;
-                    }
-                }
-                return currentContent;
-            });
-            this.contents = this.contents.concat(contents);
-        });
     }
 
     resize() {

@@ -4,18 +4,24 @@
       <ion-back-button defaultHref="tabs/tab1" color="inria-blue"></ion-back-button>
     </ion-buttons>
     <ion-title>Tables des matières</ion-title>
+    <ion-toggle slot="end" color="inria-blue" [(ngModel)]="detailedToc"></ion-toggle>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="epoc$ | async as epoc">
   <ng-container *ngIf="detailedToc">
-    <ion-list *ngFor="let part of epoc.parts;">
-      <ion-item *ngFor="let content of getContentsFromOutline(part.outline);" [class]="'level-' + content.toc" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
-        <ion-icon *ngIf="content.type === 'html'" name="paper" slot="end"></ion-icon>
-        <ion-icon *ngIf="content.type === 'video'" name="play" slot="end"></ion-icon>
-        <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="end"></ion-icon>
-        <ion-label>{{content.name}}</ion-label>
-      </ion-item>
+    <ion-list>
+      <ng-container *ngFor="let part of epoc.parts;">
+        <ng-container *ngFor="let content of part.contents;">
+          <ion-item [class]="'level-' + content.depth" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
+            <ion-icon *ngIf="content.type === 'html'" name="paper" slot="end"></ion-icon>
+            <ion-icon *ngIf="content.type === 'video'" name="play" slot="end"></ion-icon>
+            <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="end"></ion-icon>
+            <ion-icon *ngIf="content.type === 'simple-question'" name="search" slot="end"></ion-icon>
+            <ion-label>{{content.name}}</ion-label>
+          </ion-item>
+        </ng-container>
+      </ng-container>
     </ion-list>
   </ng-container>
   <ng-container *ngIf="!detailedToc">
@@ -24,7 +30,7 @@
         <span>{{part.title}}</span>
       </div>
       <ion-slides [options]="sliderOptions" *ngIf="epoc.parts.length > 1">
-        <ng-container *ngFor="let content of getContentsFromOutline(part.outline);">
+        <ng-container *ngFor="let content of part.contents;">
           <ion-slide *ngIf="content.type === 'chapter'">
             <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
               <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
@@ -36,7 +42,7 @@
         </ng-container>
       </ion-slides>
       <ion-grid *ngIf="epoc.parts.length <= 1">
-        <ion-row *ngFor="let content of getContentsFromOutline(part.outline);">
+        <ion-row *ngFor="let content of part.contents;">
           <ng-container *ngIf="content.type === 'chapter'">
             <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
               <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
