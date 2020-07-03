@@ -93,6 +93,16 @@ export class ReadingStoreService {
         this.saveReadings();
     }
 
+    resetAll() {
+        this.readings = this.readings.map((reading) => {
+            reading.progress = 0;
+            reading.assessments = [];
+            reading.bookmarks = [];
+            return reading;
+        });
+        this.saveReadings();
+    }
+
     toggleBookmark(epocId: string, index: number) {
         const readingIndex = this.readings.findIndex(reading => reading.epocId === epocId);
         if (this.readings[readingIndex].bookmarks.indexOf(index) === -1) {
