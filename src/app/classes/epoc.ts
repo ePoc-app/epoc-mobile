@@ -11,9 +11,17 @@ export class Epoc {
     objectives: string[];
     parts: Array<Part>;
     content: Array<Content>;
+    chapterCount?: number;
+    assessmentCount?: number;
 }
 
 export class Part {
     title: string;
-    outline: Array<string>;
+    outlineTree: CourseNode[];
+    contents?: Content[];
+}
+
+export class CourseNode {
+    contentId: string;
+    children?: CourseNode[];
 }

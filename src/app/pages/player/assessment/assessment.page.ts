@@ -165,9 +165,9 @@ export class AssessmentPage implements OnInit {
     resume() {
         let nextContent;
         this.epoc.parts.forEach(part => {
-            const index = part.outline.indexOf(this.assessmentId);
-            if (index !== -1 && index + 1 < part.outline.length) {
-                nextContent = part.outline[index + 1];
+            const index = part.contents.indexOf(this.assessmentId);
+            if (index !== -1 && index + 1 < part.contents.length) {
+                nextContent = part.contents[index + 1];
             }
         });
         if (nextContent) {

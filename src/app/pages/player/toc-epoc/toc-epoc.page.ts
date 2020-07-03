@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import {ReadingStoreService} from '../../../services/reading-store.service';
 import {LibraryService} from '../../../services/library.service';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
-import {ActionSheetController, AlertController} from '@ionic/angular';
-import {Content} from '../../../classes/contents/content';
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-toc-epoc',
@@ -28,7 +26,6 @@ export class TocEpocPage implements OnInit{
         private route: ActivatedRoute,
         private router: Router,
         private libraryService: LibraryService,
-        private readingStore: ReadingStoreService,
         public alertController: AlertController
     ) {}
 
@@ -41,15 +38,5 @@ export class TocEpocPage implements OnInit{
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
         });
-    }
-
-    getContentsFromOutline(outline) {
-        return outline.reduce((toc, id) => {
-            const content = this.epoc.content.find(item => item.id === id);
-            if (content && content.toc) {
-                toc.push(content);
-            }
-            return toc;
-        }, []);
     }
 }
