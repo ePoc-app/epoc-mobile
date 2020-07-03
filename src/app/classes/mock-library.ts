@@ -879,18 +879,338 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'h',
+        id: 'd',
         type: 'chapter',
         name: 'Données personnelles : Gros plan sur les identifiants techniques',
         image: 'assets/demo/VP/vp-chapitre-4.png',
-        number: '4'
+        number: '4',
+        objectives: ['Apprendre des identifiants techniques de base', 'Découvrir des problèmes des identifiants stables']
     },
     {
-        id: 'i',
+        id: 'd1',
+        type: 'simple-question',
+        name: 'Selon-vous',
+        question: {
+            type: 'choice',
+            score: 0,
+            statement: '',
+            label: ' Est-ce que les identifiants techniques de votre smartphone sont anodins ?',
+            responses: [
+                {
+                    label: 'Oui',
+                    value: 'A'
+                },
+                {
+                    label: 'Non',
+                    value: 'B'
+                }
+            ],
+            correctResponse: 'B',
+            explanation: '<p>Les identifiants techniques font souvent l’objet de collecte. Ces identifiants ressemblent à des nombres aléatoires, parfois c\'est le cas. On aurait tendance à dire que c\'est relativement anodin, mais c\'est tout l\'inverse. Pourquoi ? Parce que ce sont des données personnelles puisque ces identifiants sont attachés à un smartphone, et donc à une personne physique, mais aussi parce qu\'ils vont permettre de tracer les utilisateurs.</p>'
+        },
+
+    },
+    {
+        id: 'd2',
+        type: 'video',
+        name: 'Identifiants techniques',
+        source: 'assets/demo/VP/vp-chapitre-4.mp4',
+        subtitles: '',
+        summary: 'Dans cette vidéo, nous allons aborder les questions de fond : Qu’est-ce que c’est les identifiants techniques ? Quelle information contiennent-ils ? Pourquoi il faut les protéger ? Quels sont les types des identifiants techniques ? Est-ce qu’ils permettent de tracer les utilisateurs ?',
+
+    },
+    {
+        id: 'd3',
+        type: 'assessment',
+        name: 'Quiz noté',
+        summary: 'Résumé quiz',
+        items: [
+            {
+                type: 'drag-and-drop',
+                score: 100,
+                statement: '',
+                label: 'Faites glisser les identifiants de smartphone avec leur fonction correspondante :',
+                responses: [
+                    {
+                        label: 'IMEI',
+                        value: 'A'
+                    },
+                    {
+                        label: 'IMSI',
+                        value: 'B'
+                    }
+                ],
+                correctResponse: [
+                    {label: 'Identifiant technique', values: ['A']},
+                    {label: 'Identifiant publicitaire', values: ['B']}
+                ],
+                explanation: '<ul>' +
+                    '<li>IMEI : identifie de façon unique le portable. Dans le cas de vol, permet de le bloquer chez les opérateurs</li>' +
+                    '<li>IMSI : identifie un abonné chez un opérateur de téléphone mobile</li>' +
+                    '</ul>' +
+                    '<p>Chaque identifiant a une fonction bien précise. L’objectif général c’est de pouvoir identifier votre portable et de le protéger. Il faut notamment comprendre que ne se sont pas tous les identifiants. Il y en a encore plus.</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: '',
+                label: 'Est-ce qu’il est possible de visualiser tous les identifiants techniques de votre smartphone ?',
+                responses: [
+                    {
+                        label: 'Oui',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Cela dépend de l’identifiant recherchée',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Non',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: '<p>Il y a certaines informations que vous pouvez trouver dans les réglages de votre smartphone. Par contre certaines informations de sont pas disponibles par mesure de sécurité</p>' +
+                    '<p>Il est possible de visualiser votre IMEI (dans les réglages)</p>' +
+                    '<p>IMSI est stocké sur la carte SIM de l’utilisateur donc il est disponible seulement chez votre opérateur de téléphone mobile. Il est possible de réinitialiser l’identifiant publicitaire mais pas le visualiser. Il est accessible aux annonceurs</p>' +
+                    '<p>Identifiant technique</p>'
+            }
+        ],
+
+    },
+    {
+        id: 'd4',
+        type: 'html',
+        name: 'Pour aller plus loin ',
+        html: '<h4>Réinitialisation d’un identifiant publicitaire</h4>' +
+            '<ol>' +
+            '<li>la régie conserve les données qu\'elle a pu collecter avant la remise à zéro, l\'effet de la réinitialisation est purement local au téléphone et limité à l\'identifiant ;</li>' +
+            '<li>la réinitialisation se fait discrètement sur le téléphone, aucun message n\'est envoyé à qui que ce soit ;</li>' +
+            '<li>cet identifiant est utilisé par les régies, pas par les annonceurs qui n\'ont qu\'une information agrégée de profil, information fournie par la régie dont c\'est le travail.</li>' +
+            '</ol>',
+
+    },
+    {
+        id: 'e',
         type: 'chapter',
         name: 'Contrôle utilisateur',
         image: 'assets/demo/VP/vp-chapitre-5.png',
-        number: '5'
+        number: '5',
+        objectives: ['Comparer une contrôle utilisateur dans le cas de Google et Apple']
+    },
+    {
+        id: 'e1',
+        type: 'simple-question',
+        name: 'Selon-vous',
+        question: {
+            type: 'choice',
+            score: 0,
+            statement: '',
+            label: 'Lors de l’installation de l’application, pouvons-nous accéder à toutes autorisations dont l’application a besoin',
+            responses: [
+                {
+                    label: 'Oui',
+                    value: 'A'
+                },
+                {
+                    label: 'Non',
+                    value: 'B'
+                }
+            ],
+            correctResponse: 'A',
+            explanation: '<p>Effectivement il est possible de visualiser des conditions d’utilisation de l’application choisi. Par contre ce qui peut être frustrant : les conditions d’utilisation ne sont pas toujours disponibles en langue de votre smartphone. La deuxième difficulté c’est la taille de texte proposé à lire. Ce n’est pas souvent que l’utilisateur lit toutes les conditions et cela n’est pas étonnant.</p>'
+        },
+
+    },
+    {
+        id: 'e2',
+        type: 'video',
+        name: 'Notion d’autorisations',
+        source: 'assets/demo/VP/vp-chapitre-5.mp4',
+        subtitles: '',
+        summary: 'Quelles données personnelles peuvent être accédées ? Peuvent-elles être transmises sur Internet ? Peut-on contrôler ces autorisations dynamiquement ? Ce sont quelques questions que nous allons aborder dans ce chapitre.',
+
+    },
+    {
+        id: 'e3',
+        type: 'simple-question',
+        name: 'Question notée',
+        question: {
+            type: 'choice',
+            score: 100,
+            statement: '',
+            label: 'Lors de l’installation de l’application, pouvons-nous accéder à toutes autorisations dont l’application a besoin',
+            responses: [
+                {
+                    label: 'Oui',
+                    value: 'A'
+                },
+                {
+                    label: 'Non',
+                    value: 'B'
+                }
+            ],
+            correctResponse: 'A',
+            explanation: '<p>Effectivement il est possible de visualiser des conditions d’utilisation de l’application choisi. Par contre ce qui peut être frustrant : les conditions d’utilisation ne sont pas toujours disponibles en langue de votre smartphone. La deuxième difficulté c’est la taille de texte proposé à lire. Ce n’est pas souvent que l’utilisateur lit toutes les conditions et cela n’est pas étonnant.</p>'
+        },
+
+    },
+    {
+        id: 'e4',
+        type: 'choice',
+        name: 'Quel OS',
+        source: 'assets/demo/VP/vp-chapitre-5-apple.mp4',
+        subtitles: '',
+        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Apple ainsi que les autorisations qui peut attribuer l’utilisateur.',
+        conditionResolver: {
+            type: 'choice',
+            choices: [
+                { label: 'Apple', value: 'A' },
+                { label: 'Android', value: 'B' }
+            ],
+            conditionalFlag: [
+                { value: 'A', flags: ['e411', 'e412'] },
+                { value: 'B', flags: ['e421', 'e422'] },
+            ]
+        }
+    },
+    {
+        id: 'e411',
+        type: 'video',
+        name: 'Autorisations Apple',
+        source: 'assets/demo/VP/vp-chapitre-5-apple.mp4',
+        subtitles: '',
+        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Apple ainsi que les autorisations qui peut attribuer l’utilisateur.',
+        conditional: true
+
+    },
+    {
+        id: 'e412',
+        type: 'assessment',
+        name: 'Quiz noté',
+        summary: 'Résumé quiz',
+        items: [
+            {
+                type: 'drag-and-drop',
+                score: 100,
+                statement: '',
+                label: 'Faites glisser les identifiants de smartphone avec leur fonction correspondante :',
+                responses: [
+                    {
+                        label: 'IMEI',
+                        value: 'A'
+                    },
+                    {
+                        label: 'IMSI',
+                        value: 'B'
+                    }
+                ],
+                correctResponse: [
+                    {label: 'Identifiant technique', values: ['A']},
+                    {label: 'Identifiant publicitaire', values: ['B']}
+                ],
+                explanation: '<ul>' +
+                    '<li>IMEI : identifie de façon unique le portable. Dans le cas de vol, permet de le bloquer chez les opérateurs</li>' +
+                    '<li>IMSI : identifie un abonné chez un opérateur de téléphone mobile</li>' +
+                    '</ul>' +
+                    '<p>Chaque identifiant a une fonction bien précise. L’objectif général c’est de pouvoir identifier votre portable et de le protéger. Il faut notamment comprendre que ne se sont pas tous les identifiants. Il y en a encore plus.</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: '',
+                label: 'Est-ce qu’il est possible de visualiser tous les identifiants techniques de votre smartphone ?',
+                responses: [
+                    {
+                        label: 'Oui',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Cela dépend de l’identifiant recherchée',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Non',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: '<p>Il y a certaines informations que vous pouvez trouver dans les réglages de votre smartphone. Par contre certaines informations de sont pas disponibles par mesure de sécurité</p>' +
+                    '<p>Il est possible de visualiser votre IMEI (dans les réglages)</p>' +
+                    '<p>IMSI est stocké sur la carte SIM de l’utilisateur donc il est disponible seulement chez votre opérateur de téléphone mobile. Il est possible de réinitialiser l’identifiant publicitaire mais pas le visualiser. Il est accessible aux annonceurs</p>' +
+                    '<p>Identifiant technique</p>'
+            }
+        ],
+        conditional: true
+    },
+    {
+        id: 'e421',
+        type: 'video',
+        name: 'Autorisations Google',
+        source: 'assets/demo/VP/vp-chapitre-5-android.mp4',
+        subtitles: '',
+        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Android ainsi que les autorisations qui peut attribuer l’utilisateur.',
+        conditional: true
+    },
+    {
+        id: 'e422',
+        type: 'assessment',
+        name: 'Quiz noté',
+        summary: 'Résumé quiz',
+        items: [
+            {
+                type: 'drag-and-drop',
+                score: 100,
+                statement: '',
+                label: 'Faites glisser les identifiants de smartphone avec leur fonction correspondante :',
+                responses: [
+                    {
+                        label: 'IMEI',
+                        value: 'A'
+                    },
+                    {
+                        label: 'IMSI',
+                        value: 'B'
+                    }
+                ],
+                correctResponse: [
+                    {label: 'Identifiant technique', values: ['A']},
+                    {label: 'Identifiant publicitaire', values: ['B']}
+                ],
+                explanation: '<ul>' +
+                    '<li>IMEI : identifie de façon unique le portable. Dans le cas de vol, permet de le bloquer chez les opérateurs</li>' +
+                    '<li>IMSI : identifie un abonné chez un opérateur de téléphone mobile</li>' +
+                    '</ul>' +
+                    '<p>Chaque identifiant a une fonction bien précise. L’objectif général c’est de pouvoir identifier votre portable et de le protéger. Il faut notamment comprendre que ne se sont pas tous les identifiants. Il y en a encore plus.</p>'
+            },
+            {
+                type: 'choice',
+                score: 100,
+                statement: '',
+                label: 'Est-ce qu’il est possible de visualiser tous les identifiants techniques de votre smartphone ?',
+                responses: [
+                    {
+                        label: 'Oui',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Cela dépend de l’identifiant recherchée',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Non',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: 'B',
+                explanation: '<p>Il y a certaines informations que vous pouvez trouver dans les réglages de votre smartphone. Par contre certaines informations de sont pas disponibles par mesure de sécurité</p>' +
+                    '<p>Il est possible de visualiser votre IMEI (dans les réglages)</p>' +
+                    '<p>IMSI est stocké sur la carte SIM de l’utilisateur donc il est disponible seulement chez votre opérateur de téléphone mobile. Il est possible de réinitialiser l’identifiant publicitaire mais pas le visualiser. Il est accessible aux annonceurs</p>' +
+                    '<p>Identifiant technique</p>'
+            }
+        ],
+        conditional: true
+
     },
     {
         id: 'f',
@@ -1005,7 +1325,21 @@ export const MockLibrary: Epoc[] = [
                     ]
                 },
                 {
-                    contentId: 'h'
+                    contentId: 'd',
+                    children: [
+                        {
+                            contentId: 'd1'
+                        },
+                        {
+                            contentId: 'd2'
+                        },
+                        {
+                            contentId: 'd3'
+                        },
+                        {
+                            contentId: 'd4'
+                        }
+                    ]
                 }
             ]
         },
