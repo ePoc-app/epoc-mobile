@@ -1,6 +1,8 @@
+import {uid} from '../types';
+
 export abstract class Content {
-    id: string;
-    type: 'cover' | 'chapter' | 'html' | 'assessment' | 'video' | 'simple-question';
+    id: uid;
+    type: 'cover' | 'chapter' | 'html' | 'assessment' | 'video' | 'simple-question' | 'choice';
     name: string;
     depth?: number;
     children?: Content[];

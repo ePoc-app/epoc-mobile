@@ -1,4 +1,5 @@
 import {Content} from './content';
+import {html} from '../types';
 
 export class Assessment extends Content {
     items?: Array<Question>;
@@ -17,7 +18,7 @@ export class Question {
     label: string;
     responses: Array<Response>;
     correctResponse: string|Array<string>|Array<{label: string, values: string[]}>;
-    explanation: string;
+    explanation: html;
 }
 
 export class DragAndDropquestion extends Question{
