@@ -5,7 +5,7 @@ import {Assessment, SimpleQuestion} from './contents/assessment';
 import {Html} from './contents/html';
 import {Video} from './contents/video';
 
-
+/* tslint:disable */
 const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestion)[] = [
     {
         id: 'a',
@@ -30,7 +30,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         id: 'c',
         type: 'html',
         name: 'Règlement intérieur',
-        value: '<h4>Ce que dit le règlement intérieur : </h4>' +
+        html: '<h4>Ce que dit le règlement intérieur : </h4>' +
             '<p>Les Zones à Régime Restrictif (ZRR dans le reste du document) constituent l\'un des outils de la PPST ' +
             '(Protection du Potentiel Scientifique et Technique)</p><ul>' +
             '<li>' +
@@ -49,7 +49,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         id: 'd',
         type: 'html',
         name: 'A retenir',
-        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+        html: '<h4>Ce qu\'il faut retenir :</h4>' +
             '<ul>' +
             '<li>' +
             'Les recherches scientifiques qui sont faites à l\'Inria sont protégées par le dispositif de protection du potentiel ' +
@@ -174,7 +174,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         id: 'h',
         type: 'html',
         name: 'Règlement intérieur',
-        value: '<h4>Autorisations : </h4>' +
+        html: '<h4>Autorisations : </h4>' +
             '<p>' +
             'Chez Inria, le Chef de la ZRR est le Directeur du Centre de Recherche Inria où la ZRR est localisée et le coordinateur de ' +
             'la PPST (CPPST) est le Délégué à l\'Administration du Centre de Recherche Inria où la ZRR est localisée. Le CPPST est ' +
@@ -199,7 +199,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         id: 'i',
         type: 'html',
         name: 'A retenir',
-        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+        html: '<h4>Ce qu\'il faut retenir :</h4>' +
             '<p>' +
             'Les recherches scientifiques qui sont faites à l\'Inria sont protégées par le dispositif de protection du potentiel ' +
             'scientifique et technique (PPST). La liste des secteurs scientifiques et techniques protégés est publiée dans le ' +
@@ -269,7 +269,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         id: 'm',
         type: 'html',
         name: 'Règlement intérieur',
-        value: '<h4>Autorisations : </h4>' +
+        html: '<h4>Autorisations : </h4>' +
             '<p></p>',
 
     },
@@ -277,7 +277,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
         id: 'n',
         type: 'html',
         name: 'A retenir',
-        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+        html: '<h4>Ce qu\'il faut retenir :</h4>' +
             '<p></p>',
 
     },
@@ -416,7 +416,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         objectives: ['Identifier des données collectées sur notre portable']
     },
     {
-        id: 'b',
+        id: 'a1',
         type: 'simple-question',
         name: 'Selon vous ?',
         question: {
@@ -440,7 +440,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         }
     },
     {
-        id: 'c',
+        id: 'a2',
         type: 'video',
         name: 'Les données',
         source: 'assets/demo/VP/vp-chapitre-1.mp4',
@@ -451,7 +451,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'e',
+        id: 'a3',
         type: 'assessment',
         name: 'Quiz noté',
         summary: 'Questionnaire noté de fin de chapitre 1.',
@@ -528,7 +528,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'f',
+        id: 'b',
         type: 'chapter',
         name: 'L\'écosystème autour des applications pour smartphones',
         image: 'assets/demo/VP/vp-chapitre-2.png',
@@ -536,7 +536,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         objectives: ['Identifier les acteurs de cet écosystème autour des applications et leurs fonctions']
     },
     {
-        id: 'n',
+        id: 'b1',
         type: 'video',
         name: 'Écosystème autour d’une application',
         source: 'assets/demo/VP/vp-chapitre-2.1.mp4',
@@ -545,7 +545,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'o',
+        id: 'b2',
         type: 'assessment',
         name: 'Quiz noté',
         summary: '',
@@ -636,10 +636,10 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         ]
     },
     {
-        id: 'p',
+        id: 'b3',
         type: 'html',
         name: 'A retenir',
-        value: '<h4>Ce qu\'il faut retenir :</h4>' +
+        html: '<h4>Ce qu\'il faut retenir :</h4>' +
             '<p>Le premier travail de la régie publicitaire est d\'exploiter les données personnelles brutes collectées et transmises par toutes les applications du smartphone de l\'utilisateur ' +
             'où elle est présente afin de créer un profil. Dans ce travail de collecte, il n\'y a bien sûr aucune génération de données, toutes les informations étant bel et bien générées sur ' +
             'le smartphone de l\'utilisateur, au quotidien.</p>' +
@@ -650,7 +650,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'q',
+        id: 'b4',
         type: 'video',
         name: 'Exemple des régies publicitaires ',
         source: 'assets/demo/VP/vp-chapitre-2.2.mp4',
@@ -659,7 +659,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'r',
+        id: 'b5',
         type: 'simple-question',
         name: 'Selon vous ?',
         question: {
@@ -691,7 +691,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'g',
+        id: 'c',
         type: 'chapter',
         name: 'Gratuité contre publicité ciblée : où est le problème ?',
         image: 'assets/demo/VP/vp-chapitre-3.jpg',
@@ -699,7 +699,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         objectives: ['Découvrir des problèmes de fond du modèle économique']
     },
     {
-        id: 's',
+        id: 'c1',
         type: 'simple-question',
         name: 'Selon-vous',
         question: {
@@ -730,7 +730,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 't',
+        id: 'c2',
         type: 'video',
         name: '3 problèmes majeurs du modèle économique ',
         source: 'assets/demo/VP/vp-chapitre-3.mp4',
@@ -739,7 +739,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'u',
+        id: 'c3',
         type: 'assessment',
         name: 'Quiz noté',
         summary: 'Résumé quiz',
@@ -867,10 +867,10 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'v',
+        id: 'c4',
         type: 'html',
         name: 'Un fait pour aller plus loin ',
-        value: '<h4>La régie publicitaire InMobi</h4>' +
+        html: '<h4>La régie publicitaire InMobi</h4>' +
             '<p>A la mi-2016, la régie publicitaire InMobi a été lourdement sanctionnée aux États Unis, un tout petit peu moins qu’un million de dollars pour avoir agi de façon déloyale : ' +
             'on captait la géolocalisation des jeunes utilisateurs et des moins jeunes également, de façon déloyale, c\'est-à-dire, ni informer, ni demander l\'autorisation et en détournant ' +
             'une autorisation d’Android. </p>' +
@@ -893,35 +893,35 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         number: '5'
     },
     {
-        id: 'j',
+        id: 'f',
         type: 'chapter',
         name: 'Contrôle d’utilisateur Apple',
         image: 'assets/demo/VP/vp-chapitre-6.jpg',
         number: '6'
     },
     {
-        id: 'k',
+        id: 'g',
         type: 'chapter',
         name: 'Contrôle d’utilisateur Android',
         image: 'assets/demo/VP/vp-chapitre-7.png',
         number: '7'
     },
     {
-        id: 'l',
+        id: 'h',
         type: 'chapter',
         name: 'Limites du contrôle utilisateur Apple et Google',
         image: 'assets/demo/VP/vp-chapitre-8.png',
         number: '8'
     },
     {
-        id: 'm',
+        id: 'i',
         type: 'chapter',
         name: 'Démo: Exodus Privacy',
         image: 'assets/demo/VP/vp-chapitre-9.png',
         number: '9'
     },
     {
-        id: 'x',
+        id: 'j',
         type: 'chapter',
         name: 'Conclusion',
         image: 'assets/demo/VP/vp-chapitre-9.png',
@@ -960,47 +960,47 @@ export const MockLibrary: Epoc[] = [
                     contentId: 'a',
                     children: [
                         {
-                            contentId: 'b'
+                            contentId: 'a1'
                         },
                         {
-                            contentId: 'c'
+                            contentId: 'a2'
                         },
                         {
-                            contentId: 'e'
+                            contentId: 'a3'
                         }
                     ]
                 },
                 {
-                    contentId: 'f',
+                    contentId: 'b',
                     children: [
                         {
-                            contentId: 'n'
+                            contentId: 'b1'
                         },
                         {
-                            contentId: 'o'
+                            contentId: 'b2'
                         },
                         {
-                            contentId: 'p'
+                            contentId: 'b3'
                         },
                         {
-                            contentId: 'r'
+                            contentId: 'b4'
                         }
                     ]
                 },
                 {
-                    contentId: 'g',
+                    contentId: 'c',
                     children: [
                         {
-                            contentId: 's'
+                            contentId: 'c1'
                         },
                         {
-                            contentId: 't'
+                            contentId: 'c2'
                         },
                         {
-                            contentId: 'u'
+                            contentId: 'c3'
                         },
                         {
-                            contentId: 'v'
+                            contentId: 'c4'
                         }
                     ]
                 },

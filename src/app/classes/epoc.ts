@@ -1,5 +1,6 @@
 import {Author} from './author';
 import {Content} from './contents/content';
+import {html} from './types';
 
 export class Epoc {
     id: string;
@@ -7,7 +8,7 @@ export class Epoc {
     image: string;
     teaser?: string;
     authors: Author[];
-    summary: string;
+    summary: html;
     objectives: string[];
     parts: Array<Part>;
     content: Array<Content>;
