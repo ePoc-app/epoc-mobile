@@ -55,9 +55,7 @@ export class PlayerSettingsPage {
                 }, {
                     text: 'Confirmer',
                     handler: () => {
-                        this.readingStore.readings = [];
-                        console.log(this.readingStore.readings);
-                        this.readingStore.saveReadings();
+                        this.readingStore.resetAll();
                     }
                 }
             ]
