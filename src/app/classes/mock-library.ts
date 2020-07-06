@@ -330,7 +330,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
     {
         id: 'r',
         type: 'assessment',
-        name: 'Quiz noté: Test final',
+        name: 'Activité noté: Test final',
         summary: 'Quiz de compréhension (non noté) lié à la video "Accès aux données sensibles, accueil des visiteurs et sanctions".',
         items: [
             {
@@ -453,7 +453,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'a3',
         type: 'assessment',
-        name: 'Quiz noté',
+        name: 'Activité noté',
         summary: 'Questionnaire noté de fin de chapitre 1.',
         items: [
             {
@@ -547,7 +547,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'b2',
         type: 'assessment',
-        name: 'Quiz noté',
+        name: 'Activité noté',
         summary: '',
         items: [
             {
@@ -741,7 +741,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'c3',
         type: 'assessment',
-        name: 'Quiz noté',
+        name: 'Activité noté',
         summary: 'Résumé quiz',
         items: [
             {
@@ -922,7 +922,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'd3',
         type: 'assessment',
-        name: 'Quiz noté',
+        name: 'Activité noté',
         summary: 'Résumé quiz',
         items: [
             {
@@ -1115,7 +1115,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'e412',
         type: 'assessment',
-        name: 'Quiz noté',
+        name: 'Activité noté',
         summary: 'Exercice vidéo Apple',
         items: [
             {
@@ -1174,7 +1174,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'e422',
         type: 'assessment',
-        name: 'Quiz noté',
+        name: 'Activité noté',
         summary: 'Exercice vidéo Android',
         items: [
             {
