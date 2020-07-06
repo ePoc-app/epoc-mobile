@@ -122,7 +122,7 @@
                     <div class="page-content-fs-inner">
                       <div class="page-header">
                         <ion-icon name="git-branch"></ion-icon>
-                        <h4>Choix du parcours</h4>
+                        <h4>{{content.name}}</h4>
                       </div>
                       <course-choice [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
                     </div>
@@ -134,7 +134,7 @@
                     <div class="page-content-fs-inner">
                       <div class="page-header">
                         <ion-icon name="checkbox-outline" size="large"></ion-icon>
-                        <h4>Activité</h4>
+                        <h4>{{content.name}}</h4>
                       </div>
                       <ion-card>
                         <img src="assets/img/activity.jpg" />
