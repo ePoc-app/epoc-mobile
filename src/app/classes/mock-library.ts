@@ -701,7 +701,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'c1',
         type: 'simple-question',
-        name: 'Selon-vous',
+        name: 'Selon-vous ?',
         question: {
             type: 'choice',
             score: 0,
@@ -889,7 +889,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'd1',
         type: 'simple-question',
-        name: 'Selon-vous',
+        name: 'Selon-vous ?',
         question: {
             type: 'choice',
             score: 0,
@@ -1001,7 +1001,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'e1',
         type: 'simple-question',
-        name: 'Selon-vous',
+        name: 'Selon-vous ?',
         question: {
             type: 'choice',
             score: 0,
@@ -1039,7 +1039,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             type: 'choice',
             score: 100,
             statement: '',
-            label: 'Lors de l’installation de l’application, pouvons-nous accéder à toutes autorisations dont l’application a besoin',
+            label: 'Le bac à sable dans lequel est exécuté une application interdit-il définitivement tout accès aux informations et services externes ?',
             responses: [
                 {
                     label: 'Oui',
@@ -1050,8 +1050,8 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                     value: 'B'
                 }
             ],
-            correctResponse: 'A',
-            explanation: '<p>Effectivement il est possible de visualiser des conditions d’utilisation de l’application choisi. Par contre ce qui peut être frustrant : les conditions d’utilisation ne sont pas toujours disponibles en langue de votre smartphone. La deuxième difficulté c’est la taille de texte proposé à lire. Ce n’est pas souvent que l’utilisateur lit toutes les conditions et cela n’est pas étonnant.</p>'
+            correctResponse: 'B',
+            explanation: '<p>Non, il s\'agit avant tout de contrôler l\'accès, pas de les interdire définitivement. Par défaut, une application est confinée à son bac à sable. Elle peut néanmoins en sortir à condition d\'en obtenir l\'autorisation, ce qui lui sera accordé ou interdit en fonction par exemple des permissions qu\'elle a obtenues de la part de l\'utilisateur.</p>'
         },
 
     },
@@ -1080,6 +1080,36 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         subtitles: '',
         summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Apple ainsi que les autorisations qui peut attribuer l’utilisateur.',
         conditional: true
+
+    },
+    {
+        id: 'e421',
+        type: 'video',
+        name: 'Autorisations Google',
+        source: 'assets/demo/VP/vp-chapitre-5-android.mp4',
+        subtitles: '',
+        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Android ainsi que les autorisations qui peut attribuer l’utilisateur.',
+        conditional: true
+    },
+    {
+        id: 'e43',
+        type: 'html',
+        name: 'Conclusion',
+        html: '<h4>Le mécanisme d\'autorisation répond à 2 objectifs :</h4>' +
+            '<ul>' +
+            '<li>d\'une part connaître les possibilités d\'accès aux données personnelles par les applications du smartphone</li>' +
+            '<li>d’autre part contrôler ces applications en autorisant ou en interdisant ces accès.' +
+                '<ul>' +
+                '<li>Nous avons vu que ces autorisations peuvent être demandées :' +
+                '<ul>' +
+                    '<li>à l\'installation, mais c\'est dans ce cas-là un contrôle extrêmement limité</li>' +
+                    '<li>ou alors dynamiquement, ce qui est bien plus favorable.</li>' +
+                '</ul>' +
+                '</li>' +
+                '<li>C\'était l\'approche historique d\'Apple avec iOS, et heureusement Google, avec les dernières versions d\'Android, se rallie à ce modèle également.</li>' +
+                '</ul>' +
+            '</li>' +
+            '</ul>',
 
     },
     {
@@ -1142,69 +1172,74 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         conditional: true
     },
     {
-        id: 'e421',
-        type: 'video',
-        name: 'Autorisations Google',
-        source: 'assets/demo/VP/vp-chapitre-5-android.mp4',
-        subtitles: '',
-        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Android ainsi que les autorisations qui peut attribuer l’utilisateur.',
-        conditional: true
-    },
-    {
         id: 'e422',
         type: 'assessment',
         name: 'Quiz noté',
         summary: 'Exercice vidéo Android',
         items: [
             {
-                type: 'drag-and-drop',
-                score: 100,
-                statement: '',
-                label: 'Faites glisser les identifiants de smartphone avec leur fonction correspondante :',
-                responses: [
-                    {
-                        label: 'IMEI',
-                        value: 'A'
-                    },
-                    {
-                        label: 'IMSI',
-                        value: 'B'
-                    }
-                ],
-                correctResponse: [
-                    {label: 'Identifiant technique', values: ['A']},
-                    {label: 'Identifiant publicitaire', values: ['B']}
-                ],
-                explanation: '<ul>' +
-                    '<li>IMEI : identifie de façon unique le portable. Dans le cas de vol, permet de le bloquer chez les opérateurs</li>' +
-                    '<li>IMSI : identifie un abonné chez un opérateur de téléphone mobile</li>' +
-                    '</ul>' +
-                    '<p>Chaque identifiant a une fonction bien précise. L’objectif général c’est de pouvoir identifier votre portable et de le protéger. Il faut notamment comprendre que ne se sont pas tous les identifiants. Il y en a encore plus.</p>'
-            },
-            {
                 type: 'choice',
                 score: 100,
                 statement: '',
-                label: 'Est-ce qu’il est possible de visualiser tous les identifiants techniques de votre smartphone ?',
+                label: 'Quelle version d\'Android a introduit la notion d\'autorisations dynamiques (en plus de l\'ancien système d\'autorisations à l\'installation d\'une application)?',
                 responses: [
                     {
-                        label: 'Oui',
+                        label: 'Android 5.0 (Lollipop), fin 2014',
                         value: 'A'
                     },
                     {
-                        label: 'Cela dépend de l’identifiant recherchée',
+                        label: 'Android 6.0 (Marshmallow), fin 2015',
                         value: 'B'
                     },
                     {
-                        label: 'Non',
+                        label: 'Android 7.0 (Nougat), mi 2016',
                         value: 'C'
+                    },
+                    {
+                        label: 'Android 8.0 (Oreo), mi 2017',
+                        value: 'D'
                     }
                 ],
                 correctResponse: 'B',
-                explanation: '<p>Il y a certaines informations que vous pouvez trouver dans les réglages de votre smartphone. Par contre certaines informations de sont pas disponibles par mesure de sécurité</p>' +
-                    '<p>Il est possible de visualiser votre IMEI (dans les réglages)</p>' +
-                    '<p>IMSI est stocké sur la carte SIM de l’utilisateur donc il est disponible seulement chez votre opérateur de téléphone mobile. Il est possible de réinitialiser l’identifiant publicitaire mais pas le visualiser. Il est accessible aux annonceurs</p>' +
-                    '<p>Identifiant technique</p>'
+                explanation: '<p>Et oui, bien après Apple/iOS, Google/Android a basculé sur une approche d\'autorisations dynamiques avec Android 6.0. La bascule s\'est faite progressivement à partir de fin 2015, à savoir que les applications historiques continuent de reposer uniquement sur l\'approche d\'autorisations à l\'installation, les nouvelles sur les autorisations dynamiques.</p>'
+            },
+            {
+                type: 'multiple-choice',
+                score: 100,
+                statement: '',
+                label: 'Choisissez des caractéristiques qui correspondent à Android',
+                responses: [
+                    {
+                        label: 'Dispose d’un panel du contrôle des applications en vue détaillé et vue générale',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Dispose d’un contrôle des applications seulement en vue détaillé  ',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Dispose d’un contrôle des applications seulement en vue générale',
+                        value: 'C'
+                    },
+                    {
+                        label: 'La manque d’une autorisation peut empêcher un bon fonctionnement d’une application déjà installée ',
+                        value: 'D'
+                    },
+                    {
+                        label: 'La manque d’une autorisation empêche le démarrage d’une application déjà installée',
+                        value: 'E'
+                    },
+                    {
+                        label: 'La plupart des autorisations a attribué automatiquement',
+                        value: 'F'
+                    },
+                    {
+                        label: 'Aucune autorisation a attribué automatiquement ',
+                        value: 'G'
+                    },
+                ],
+                correctResponse: ['A', 'D', 'F'],
+                explanation: '<p>Google/Android a basculé sur une approche d\'autorisations dynamiques avec Android 6.0. La bascule s\'est faite progressivement à partir de fin 2015. Actuellement Android dispose d’un panel du contrôle des applications en vue détaillé et vue générale. Donc l’utilisateur peut à tout moment changer l’autorisation précédemment donnée. Par contre la manque d’une autorisation peut empêcher un bon fonctionnement d’une application déjà installée. Et la plupart des autorisations a attribué automatiquement. Donc il faut rester vigilant et vérifier les autorisations données. L’utilisateur ne doit pas rester un acteur passif d’écosystème</p>'
             }
         ],
         conditional: true
