@@ -7,7 +7,7 @@ import {combineLatest, Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
 import {AlertController} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
-import {Assessment} from '../../../classes/contents/assessment';
+import {Assessment, SimpleQuestion} from '../../../classes/contents/assessment';
 import {Label} from 'ng2-charts';
 
 @Component({
@@ -68,6 +68,9 @@ export class ScoreEpocPage implements OnInit {
             epoc.parts.forEach((part) => {
                 part.contents.reduce((assessments, content) => {
                     if (content && content.type === 'assessment') {
+                        assessments.push(content);
+                    } else if (content && content.type === 'simple-question' && (content as SimpleQuestion).question.score > 0) {
+                        (content as Assessment).items = [(content as SimpleQuestion).question];
                         assessments.push(content);
                     }
                     return assessments;
