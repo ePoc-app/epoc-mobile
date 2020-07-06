@@ -110,7 +110,7 @@ export class PlayerPage implements OnInit, DoCheck {
     }
 
     ngDoCheck(): void {
-        if (!this.readerInitialized && this.dataInitialized && this.pageWrapper.nativeElement.scrollWidth > 0) {
+        if (!this.readerInitialized && this.dataInitialized && this.nodes.length > 0) {
             this.readerInitialized = true;
             // Go to progress (percentage)
             const progress = this.route.snapshot.paramMap.has('progress') && !Number.isNaN(+this.route.snapshot.paramMap.get('progress')) ?

@@ -22,6 +22,7 @@ import {VideoComponent} from './video/video.component';
 import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.page';
 import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-and-drop.component';
 import {SimpleQuestionComponent} from './simple-question/simple-question.component';
+import {CourseChoiceComponent} from './course-choice/course-choice.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,7 @@ import {SimpleQuestionComponent} from './simple-question/simple-question.compone
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
       AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
-      VideoComponent, TranscriptModalPage, SimpleQuestionComponent],
+      VideoComponent, TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent],
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {

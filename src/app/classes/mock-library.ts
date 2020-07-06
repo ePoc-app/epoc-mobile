@@ -1058,12 +1058,10 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'e4',
         type: 'choice',
-        name: 'Quel OS',
-        source: 'assets/demo/VP/vp-chapitre-5-apple.mp4',
-        subtitles: '',
-        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Apple ainsi que les autorisations qui peut attribuer l’utilisateur.',
+        name: 'Choix du parcours',
         conditionResolver: {
             type: 'choice',
+            label: 'Quel est votre OS mobile ?',
             choices: [
                 { label: 'Apple', value: 'A' },
                 { label: 'Android', value: 'B' }
@@ -1088,7 +1086,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'e412',
         type: 'assessment',
         name: 'Quiz noté',
-        summary: 'Résumé quiz',
+        summary: 'Exercice vidéo Apple',
         items: [
             {
                 type: 'drag-and-drop',
@@ -1156,7 +1154,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'e422',
         type: 'assessment',
         name: 'Quiz noté',
-        summary: 'Résumé quiz',
+        summary: 'Exercice vidéo Android',
         items: [
             {
                 type: 'drag-and-drop',
@@ -1338,6 +1336,35 @@ export const MockLibrary: Epoc[] = [
                         },
                         {
                             contentId: 'd4'
+                        }
+                    ]
+                },
+                {
+                    contentId: 'e',
+                    children: [
+                        {
+                            contentId: 'e1'
+                        },
+                        {
+                            contentId: 'e2'
+                        },
+                        {
+                            contentId: 'e3'
+                        },
+                        {
+                            contentId: 'e4'
+                        },
+                        {
+                            contentId: 'e411'
+                        },
+                        {
+                            contentId: 'e412'
+                        },
+                        {
+                            contentId: 'e421'
+                        },
+                        {
+                            contentId: 'e422'
                         }
                     ]
                 }
