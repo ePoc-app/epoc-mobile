@@ -39,13 +39,13 @@ export class CourseChoiceComponent implements OnInit {
     }
 
     saveChoice() {
-        const flags = this.content.conditionResolver.conditionalFlag.find(condition => condition.value === this.answer).flags;
-        const flagsToRemove = this.content.conditionResolver.conditionalFlag.reduce((acc, condition) => acc.concat(condition.flags), []);
-        this.readingStore.saveChoices(this.epocId, this.content.id, this.answer, flags, flagsToRemove);
         this.chosen.emit();
     }
 
     selectAnswer(answer) {
         this.answer = answer;
+        const flags = this.content.conditionResolver.conditionalFlag.find(condition => condition.value === this.answer).flags;
+        const flagsToRemove = this.content.conditionResolver.conditionalFlag.reduce((acc, condition) => acc.concat(condition.flags), []);
+        this.readingStore.saveChoices(this.epocId, this.content.id, this.answer, flags, flagsToRemove);
     }
 }
