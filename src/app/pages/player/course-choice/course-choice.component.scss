@@ -1,0 +1,33 @@
+.question-card{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  text-align: center;
+  padding: 1em;
+  flex-grow: 1;
+  background: #fff;
+  border-radius: 8px;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
+
+  b{
+    line-height: 1;
+  }
+
+  button{
+    padding: 1em;
+    background: var(--ion-color-primary);
+    text-transform: uppercase;
+    font-weight: bold;
+    color:white;
+    border-radius: 4px;
+  }
+
+  ion-radio{
+    background: transparent;
+    border-radius: 100%;
+    transition: all .1s .2s;
+    &.radio-checked{
+      background: var(--ion-color-primary);
+    }
+  }
+}

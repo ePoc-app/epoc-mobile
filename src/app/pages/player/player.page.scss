@@ -286,6 +286,15 @@ ion-card{
     }
   }
 
+  &-course-choice{
+    course-choice{
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin: 0;
+    }
+  }
+
   .page-header{
     margin-bottom: 1em;
     border-bottom: 3px solid #d5d9de;

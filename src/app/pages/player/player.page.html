@@ -21,26 +21,27 @@
   <div class="reader" [ngClass]="loading ? 'loading':''" [ngStyle]="readerStyles">
     <div class="pages-container" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
       <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform" #pageWrapper>
-        <ng-container *ngIf="epoc$ | async as epoc">
+        <ng-container *ngIf="dataInitialized">
           <ng-container *ngFor="let part of epoc.parts;">
             <ng-container *ngFor="let content of part.contents; let index = index">
+              <ng-container *ngIf="!content.conditional || ( content.conditional && reading.flags.indexOf(content.id) !== -1 )">
 
-              <ng-container *ngIf="content.type === 'cover'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-cover">
-                  <ion-img [src]="epoc.image"></ion-img>
-                  <h2>{{epoc.title}}</h2>
-                  <div *ngFor="let author of epoc.authors">
-                    <ion-text>{{author.name}}</ion-text>
+                <ng-container *ngIf="content.type === 'cover'">
+                  <div #node [id]="'content-'+content.id" class="page-content page-content-cover">
+                    <ion-img [src]="epoc.image"></ion-img>
+                    <h2>{{epoc.title}}</h2>
+                    <div *ngFor="let author of epoc.authors">
+                      <ion-text>{{author.name}}</ion-text>
+                    </div>
+                    <div class="edition">2020 edition<br/>Inria Learning Lab</div>
                   </div>
-                  <div class="edition">2020 edition<br/>Inria Learning Lab</div>
-                </div>
-              </ng-container>
+                </ng-container>
 
-              <ng-container *ngIf="content.type === 'chapter'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-chapter">
-                  <div class="page-content-fs-inner">
-                    <ion-card class="chapter-container">
-                      <ion-card-content>
+                <ng-container *ngIf="content.type === 'chapter'">
+                  <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-chapter">
+                    <div class="page-content-fs-inner">
+                      <ion-card class="chapter-container">
+                        <ion-card-content>
                           <div class="title-wrapper">
                             <div class="title-container">
                               <h3 class="number">Chapitre {{content.number}} :</h3>
@@ -76,75 +77,88 @@
                               </div>
                             </div>
                           </ng-container>
-                      </ion-card-content>
-                    </ion-card>
+                        </ion-card-content>
+                      </ion-card>
+                    </div>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
 
-              <ng-container *ngIf="content.type === 'html'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-html">
-                  <div class="page-header">
-                    <ion-icon name="paper" size="large"></ion-icon>
-                    <h4>{{content.name}}</h4>
-                  </div>
-                  <div [innerHTML]="content.html"></div>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="content.type === 'video'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-video">
-                  <div class="page-content-fs-inner">
+                <ng-container *ngIf="content.type === 'html'">
+                  <div #node [id]="'content-'+content.id" class="page-content page-content-html">
                     <div class="page-header">
-                      <ion-icon name="videocam" size="large"></ion-icon>
+                      <ion-icon name="paper" size="large"></ion-icon>
                       <h4>{{content.name}}</h4>
                     </div>
-                    <video-player [content]="content"></video-player>
+                    <div [innerHTML]="content.html"></div>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
 
-              <ng-container *ngIf="content.type === 'simple-question'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-simple-question">
-                  <div class="page-content-fs-inner">
-                    <div class="page-header">
-                      <ion-icon name="checkmark-circle-outline"></ion-icon>
-                      <h4>Selon vous ?</h4>
+                <ng-container *ngIf="content.type === 'video'">
+                  <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-video">
+                    <div class="page-content-fs-inner">
+                      <div class="page-header">
+                        <ion-icon name="videocam" size="large"></ion-icon>
+                        <h4>{{content.name}}</h4>
+                      </div>
+                      <video-player [content]="content"></video-player>
                     </div>
-                    <simple-question [epocId]="epoc.id" [content]="content"></simple-question>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
 
-              <ng-container *ngIf="content.type === 'assessment'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-assessment">
-                  <div class="page-content-fs-inner">
-                    <div class="page-header">
-                      <ion-icon name="checkbox-outline" size="large"></ion-icon>
-                      <h4>Activité</h4>
+                <ng-container *ngIf="content.type === 'simple-question'">
+                  <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-simple-question">
+                    <div class="page-content-fs-inner">
+                      <div class="page-header">
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        <h4>Selon vous ?</h4>
+                      </div>
+                      <simple-question [epocId]="epoc.id" [content]="content"></simple-question>
                     </div>
-                    <ion-card>
-                      <img src="assets/img/activity.jpg" />
-                      <ion-card-content>
-                        <ion-row class="activity-specs ion-text-center">
-                          <ion-col size="6">
-                            <div class="activity-spec-icon"><ion-icon name="school" mode="md" color="inria-blue"></ion-icon></div>
-                            <div class="activity-spec-value" *ngIf="content.scoreTotal > 0">Noté</div>
-                            <div class="activity-spec-value" *ngIf="content.scoreTotal <= 0">Non Noté</div>
-                          </ion-col>
-                          <ion-col size="6">
-                            <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>
-                            <div class="activity-spec-value">{{content.items.length}} question<ng-container *ngIf="content.items.length > 1">s</ng-container></div>
-                          </ion-col>
-                        </ion-row>
-                        <p>{{content.summary}}</p>
-                        <assessment-button [content]="content" [epoc]="epoc"></assessment-button>
-                      </ion-card-content>
-                    </ion-card>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
 
+                <ng-container *ngIf="content.type === 'choice'">
+                  <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-course-choice">
+                    <div class="page-content-fs-inner">
+                      <div class="page-header">
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        <h4>Choix du parcours</h4>
+                      </div>
+                      <course-choice [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="content.type === 'assessment'">
+                  <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-assessment">
+                    <div class="page-content-fs-inner">
+                      <div class="page-header">
+                        <ion-icon name="checkbox-outline" size="large"></ion-icon>
+                        <h4>Activité</h4>
+                      </div>
+                      <ion-card>
+                        <img src="assets/img/activity.jpg" />
+                        <ion-card-content>
+                          <ion-row class="activity-specs ion-text-center">
+                            <ion-col size="6">
+                              <div class="activity-spec-icon"><ion-icon name="school" mode="md" color="inria-blue"></ion-icon></div>
+                              <div class="activity-spec-value" *ngIf="content.scoreTotal > 0">Noté</div>
+                              <div class="activity-spec-value" *ngIf="content.scoreTotal <= 0">Non Noté</div>
+                            </ion-col>
+                            <ion-col size="6">
+                              <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>
+                              <div class="activity-spec-value">{{content.items.length}} question<ng-container *ngIf="content.items.length > 1">s</ng-container></div>
+                            </ion-col>
+                          </ion-row>
+                          <p>{{content.summary}}</p>
+                          <assessment-button [content]="content" [epoc]="epoc"></assessment-button>
+                        </ion-card-content>
+                      </ion-card>
+                    </div>
+                  </div>
+                </ng-container>
+
+              </ng-container>
             </ng-container>
           </ng-container>
         </ng-container>

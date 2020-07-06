@@ -41,7 +41,9 @@ export class ReadingStoreService {
                     epocId,
                     progress: 0,
                     assessments: [],
-                    bookmarks: []
+                    bookmarks: [],
+                    choices: [],
+                    flags: []
                 }
             ];
 
@@ -79,6 +81,28 @@ export class ReadingStoreService {
         this.saveReadings();
     }
 
+    saveChoices(epocId: string, choiceId: string, responses, flags, flagsToRemove) {
+        const index = this.readings.findIndex(reading => reading.epocId === epocId);
+
+        const choiceIndex = this.readings[index].choices.findIndex(assessment => assessment.id === choiceId);
+
+        if (choiceIndex !== -1) {
+            this.readings[index].choices[choiceIndex] = {
+                id: choiceId,
+                responses
+            };
+        } else {
+            this.readings[index].choices.push({
+                id: choiceId,
+                responses
+            });
+        }
+        this.readings[index].flags = this.readings[index].flags.filter(flag => flagsToRemove.indexOf(flag) === -1);
+        this.readings[index].flags = this.readings[index].flags.concat(flags);
+
+        this.saveReadings();
+    }
+
     resetResponses(epocId: string, assessmentId) {
         const index = this.readings.findIndex(reading => reading.epocId === epocId);
         const assessmentIndex = this.readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
@@ -98,6 +122,8 @@ export class ReadingStoreService {
             reading.progress = 0;
             reading.assessments = [];
             reading.bookmarks = [];
+            reading.choices = [];
+            reading.flags = [];
             return reading;
         });
         this.saveReadings();

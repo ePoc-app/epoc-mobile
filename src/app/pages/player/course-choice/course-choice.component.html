@@ -1,0 +1,14 @@
+<div class="question-card">
+  <div class="statement">
+    <b>{{resolver.label}}</b>
+  </div>
+
+  <ion-radio-group [value]="answer">
+    <ion-item [lines]="'none'" *ngFor="let choice of resolver.choices" (click)="selectAnswer(choice.value)">
+      <ion-radio mode="md" slot="start" [value]="choice.value" [disabled]="disabled"></ion-radio>
+      <ion-label class="ion-text-wrap">{{choice.label}}</ion-label>
+    </ion-item>
+  </ion-radio-group>
+
+  <button (click)="saveChoice($event)">Valider</button>
+</div>
