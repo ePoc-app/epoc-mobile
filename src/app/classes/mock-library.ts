@@ -732,7 +732,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'c2',
         type: 'video',
-        name: '3 problèmes majeurs du modèle économique ',
+        name: '3 problèmes du modèle économique ',
         source: 'assets/demo/VP/vp-chapitre-3.mp4',
         subtitles: '',
         summary: 'Résumé de la vidéo',
