@@ -443,7 +443,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'a2',
         type: 'video',
         name: 'Les données',
-        source: 'assets/demo/VP/vp-chapitre-1.mp4',
+        source: 'assets/demo/VP/pourquoi-le-smartphone-interesse-t-il-tant-480p.mp4',
         subtitles: '',
         summary: '<p>Pourquoi nos assistants personnels, smartphones et tablettes, sont-ils devenus tout naturellement, en une dizaine d\'années seulement, un point de collecte majeur de données personnelles.</p>' +
             '<p>Pourquoi le smartphone intéresse-t-il tant de monde ?</p>' +
@@ -539,7 +539,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'b1',
         type: 'video',
         name: 'Écosystème autour d’une application',
-        source: 'assets/demo/VP/vp-chapitre-2.1.mp4',
+        source: 'assets/demo/VP/ecosysteme-480p.mp4',
         subtitles: '',
         summary: 'Résumé de la vidéo Ecosystème',
 
@@ -653,7 +653,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'b4',
         type: 'video',
         name: 'Exemple des régies publicitaires ',
-        source: 'assets/demo/VP/vp-chapitre-2.2.mp4',
+        source: 'assets/demo/VP/pour-aller-plus-loin-480p.mp4',
         subtitles: '',
         summary: 'Pour aller plus loin : exemple des régies publicitaires',
 
@@ -733,7 +733,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'c2',
         type: 'video',
         name: '3 problèmes du modèle économique ',
-        source: 'assets/demo/VP/vp-chapitre-3.mp4',
+        source: 'assets/demo/VP/gratuite-de-public-cible-480p.mp4',
         subtitles: '',
         summary: 'Résumé de la vidéo',
 
@@ -914,7 +914,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'd2',
         type: 'video',
         name: 'Identifiants techniques',
-        source: 'assets/demo/VP/vp-chapitre-4.mp4',
+        source: 'assets/demo/VP/info-perso-sur-smartphone-480p.mp4',
         subtitles: '',
         summary: 'Dans cette vidéo, nous allons aborder les questions de fond : Qu’est-ce que c’est les identifiants techniques ? Quelle information contiennent-ils ? Pourquoi il faut les protéger ? Quels sont les types des identifiants techniques ? Est-ce qu’ils permettent de tracer les utilisateurs ?',
 
@@ -1026,7 +1026,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'e2',
         type: 'video',
         name: 'Notion d’autorisations',
-        source: 'assets/demo/VP/vp-chapitre-5.mp4',
+        source: 'assets/demo/VP/controle-utilisateur-480p.mp4',
         subtitles: '',
         summary: 'Quelles données personnelles peuvent être accédées ? Peuvent-elles être transmises sur Internet ? Peut-on contrôler ces autorisations dynamiquement ? Ce sont quelques questions que nous allons aborder dans ce chapitre.',
 
@@ -1067,8 +1067,8 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                 { label: 'Android', value: 'B' }
             ],
             conditionalFlag: [
-                { value: 'A', flags: ['e411', 'e412'] },
-                { value: 'B', flags: ['e421', 'e422'] },
+                { value: 'A', flags: ['e411', 'e412', 'f21', 'f211', 'f212'] },
+                { value: 'B', flags: ['e421', 'e422', 'f22', 'f221', 'f222'] },
             ]
         }
     },
@@ -1076,7 +1076,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'e411',
         type: 'video',
         name: 'Autorisations Apple',
-        source: 'assets/demo/VP/vp-chapitre-5-apple.mp4',
+        source: 'assets/demo/VP/apple-controle-480p.mp4',
         subtitles: '',
         summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Apple ainsi que les autorisations qui peut attribuer l’utilisateur.',
         conditional: true
@@ -1086,7 +1086,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'e421',
         type: 'video',
         name: 'Autorisations Google',
-        source: 'assets/demo/VP/vp-chapitre-5-android.mp4',
+        source: 'assets/demo/VP/android-controle-480p.mp4',
         subtitles: '',
         summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Android ainsi que les autorisations qui peut attribuer l’utilisateur.',
         conditional: true
@@ -1243,43 +1243,314 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             }
         ],
         conditional: true
-
     },
     {
         id: 'f',
         type: 'chapter',
-        name: 'Contrôle d’utilisateur Apple',
+        name: 'Limites du contrôle utilisateur Apple et Google',
         image: 'assets/demo/VP/vp-chapitre-6.jpg',
-        number: '6'
+        number: '6',
+        objectives: ['Mettre en pratique la protection de vos données']
+    },
+    {
+        id: 'f1',
+        type: 'simple-question',
+        name: 'Selon-vous ?',
+        question: {
+            type: 'multiple-choice',
+            score: 0,
+            statement: '',
+            label: 'De quoi dépendent des limites de contrôle dans votre portable ?',
+            responses: [
+                {
+                    label: 'D’un système d’exploitation',
+                    value: 'A'
+                },
+                {
+                    label: 'D’un accord entre l’entreprise (Apple ou Google) et les régies publicitaires',
+                    value: 'B'
+                },
+                {
+                    label: 'De tous les accords entre tous les acteurs d’écosystème',
+                    value: 'C'
+                }
+            ],
+            correctResponse: ['B', 'C'],
+            explanation: '<p>Il ne faut pas sous-estimer le rôle de l’entreprise dans l’écosystème. Comme nous avons pu voir dans le module précédent, le contrôle des autorisations peut être modifié dans les réglages de notre smartphone : à travers des autorisations dynamiques. Mais les entreprises jouent le rôle entre les intérêts des utilisateurs et des régies publicitaires.</p>'
+        }
+    },
+    {
+        id: 'f2',
+        type: 'video',
+        name: 'Introduction du contrôle de limites',
+        source: 'assets/demo/VP/limites-ios-et-android-480p.mp4',
+        subtitles: '',
+        summary: 'Introduction du contrôle de limites et limites communes : Les applications ont besoin d\'autorisations pour accéder à certaines données personnelles, ou ressources du smartphone. Alors nous aborderons plus précisément des limites qui sont communes aux 2 systèmes d\'exploitation, quant aux aspects comportement de l\'application et composition des autorisations.'
+    },
+    {
+        id: 'f21',
+        type: 'video',
+        name: 'Limites du contrôle Apple',
+        source: 'assets/demo/VP/limites-ios-480p.mp4',
+        subtitles: '',
+        summary: '<p>Dans cette vidéo nous verrons les particularités des limites au sein de système d’exploitation Apple.</p>',
+        conditional: true
+    },
+    {
+        id: 'f211',
+        type: 'html',
+        name: 'Pour résumer : Apple',
+        html: '<b>Les limites communes à Android et iOS :</b>' +
+            '<ul>' +
+            '<li>contrôle comportemental de l\'application</li>' +
+            '<li>contrôle de la composabilité des autorisations.</li>' +
+            '</ul>' +
+            '<b>Les limites iOS :</b>' +
+            '<ul>' +
+            '<li>Un système iOS bien plus respectueux.</li>' +
+            '<li>Une stratégie assumée d’Apple en faveur du respect de la vie privée.</li>' +
+            '<li>Visible depuis longtemps dans iOS.</li>' +
+            '</ul>',
+        conditional: true
+
+    },
+    {
+        id: 'f212',
+        type: 'assessment',
+        name: 'Activité Apple',
+        summary: '',
+        items: [
+            {
+                type: 'choice',
+                score: 100,
+                statement: '',
+                label: 'Chez Apple/iOS, la réinitialisation de l\'identifiant publicitaire empêche-t-elle la collecte de données personnelles ?',
+                responses: [
+                    {
+                        label: 'Oui, c\'est une remise à zéro de toutes les données collectées jusque-là par la régie',
+                        value: 'A'
+                    },
+                    {
+                        label: 'Oui, l\'utilisateur dit explicitement à la régie qu\'il ne veut plus être suivi',
+                        value: 'B'
+                    },
+                    {
+                        label: 'Non, c\'est juste destiné à imposer à la régie de partir sur un nouveau profil',
+                        value: 'C'
+                    },
+                    {
+                        label: 'Non, cet identifiant concerne les annonceurs, pas la régie publicitaire',
+                        value: 'D'
+                    }
+                ],
+                correctResponse: 'C',
+                explanation: '<p>Cet identifiant publicitaire est destiné à limiter le suivi (traçage) de l\'utilisateur par les régies publicitaires : une réinitialisation de l\'identifiant permet (s\'il n\'y a pas de triche) de dissocier le profil construit par une régie avec l\'ancien identifiant de celui qu\'elle devra reconstruire à partir du nouvel identifiant. En pratique cela signifie que la régie ne peut plus exploiter l\'ancien profil (elle ne recevra plus de message associé à cet identifiant) et doit tout recommencer à zéro puisqu\'elle ne connait pas le nouvel identifiant.</p>'
+            }
+        ],
+        conditional: true
+    },
+    {
+        id: 'f22',
+        type: 'video',
+        name: 'Limites du contrôle Android',
+        source: 'assets/demo/VP/limites-android-480p.mp4',
+        subtitles: '',
+        summary: '<p>Dans cette vidéo nous verrons les particularités des limites au sein de système d’exploitation Android.</p>',
+        conditional: true
+    },
+    {
+        id: 'f221',
+        type: 'html',
+        name: 'Pour résumer : Android',
+        html: '<b>Les limites communes à Android et iOS :</b>' +
+            '<ul>' +
+            '<li>contrôle comportemental de l\'application</li>' +
+            '<li>contrôle de la composabilité des autorisations.</li>' +
+            '</ul>' +
+            '<b>Les limites Android :</b>' +
+            '<ul>' +
+            '<li>Un système loin d’être satisfaisant coté Android.</li>' +
+            '<li>Migration progressive d’Android vers des autorisations dynamiques = réel progrès.</li>' +
+            '<li>Les autorisations Android restent très critiquables.</li>' +
+            '</ul>',
+        conditional: true
+
+    },
+    {
+        id: 'f222',
+        type: 'assessment',
+        name: 'Activité Android',
+        summary: '',
+        items: [
+            {
+                type: 'multiple-choice',
+                score: 100,
+                statement: 'Un des objectifs de Google, en basculant sur le mode d\'autorisations dynamiques, était de permettre des installations "plus fluides" sur Android.',
+                label: 'Parmi les affirmations suivantes, en se limitant aux smartphones Android. identifiez celle(s) qui est(sont) exacte(s): ',
+                responses: [
+                    {
+                        label: 'L\'utilisateur garde un certain contrôle sur les autorisations dites "normales" : l\'autorisation est automatiquement accordée, cependant l\'utilisateur peut revenir dessus par la suite afin de révoquer cette autorisation',
+                        value: 'A'
+                    },
+                    {
+                        label: ' L\'utilisateur a un contrôle total sur les autorisations dites "normales" : il doit explicitement accorder l\'autorisation et il peut revenir dessus par la suite afin de révoquer cette autorisation',
+                        value: 'B'
+                    },
+                    {
+                        label: 'L\'utilisateur n\'est jamais sollicité pour les autorisations dites "normales" et n\'a aucun contrôle : l\'autorisation est automatiquement accordée et l\'utilisateur n\'a aucun moyen par la suite de révoquer cette autorisaton',
+                        value: 'C'
+                    }
+                ],
+                correctResponse: ['A', 'C'],
+                explanation: '<p>L\'utilisateur n\'a aucun contrôle et n\'est pas informé systématiquement (il faut aller chercher). Avec les autorisations dites normales, l\'utilisateur ne peut en aucun cas révoquer ces autorisations. C\'est un choix de conception (criticable) de Google.</p>' +
+                    '<p>Un exemple : l\'adresse MAC de l\'interface Wi-Fi est accessible via une autorisation normale (ACCESS_WIFI_STATE) qui est du coup automatiquement accordé, sans révocation possible par l\'utilisateur. Le traçage des utilisateurs par ce biais est possible et très simple.</p>'
+            }
+        ],
+        conditional: true
     },
     {
         id: 'g',
         type: 'chapter',
-        name: 'Contrôle d’utilisateur Android',
+        name: 'Cercle vertueux',
         image: 'assets/demo/VP/vp-chapitre-7.png',
-        number: '7'
+        number: '7',
+        objectives: ['Apprendre les particularités de cercle vertueux : modèle gratuit et payant']
+    },
+    {
+        id: 'g1',
+        type: 'simple-question',
+        name: 'Selon-vous ?',
+        question: {
+            type: 'choice',
+            score: 0,
+            statement: '',
+            label: 'Quel est l\'intérêt d\'avoir un cercle vertueux ?',
+            responses: [
+                {
+                    label: 'Mettre en avant l\'utilisateur dans l\'écosystème',
+                    value: 'A'
+                },
+                {
+                    label: 'Pour que chaque acteur y trouve son intérêt',
+                    value: 'B'
+                }
+            ],
+            correctResponse: 'B',
+            explanation: '<p>A VENIR</p>'
+        }
+    },
+    {
+        id: 'g2',
+        type: 'video',
+        name: 'Cercle vertueux',
+        source: 'assets/demo/VP/cercle-vertueux-480p.mp4',
+        subtitles: '',
+        summary: 'Qu\'est-ce que c\'est le cercle vertueux ? Quelles sont ses particularités ? Quelles sont ses conditions pour que le modèle de cerrcle vertueux fonctionne ? Est-ce que cette notion est utopique ? Regardez cette vidéo pour apprendre plus sur le cercle vertueux !'
+    },
+    {
+        id: 'g3',
+        type: 'simple-question',
+        name: 'Question notée',
+        question: {
+            type: 'multiple-choice',
+            score: 100,
+            statement: '',
+            label: 'En quoi la notion de transparence est-elle souhaitable pour l\'utilisateur ?',
+            responses: [
+                {
+                    label: 'L\'utilisateur devrait connaitre la nature des informations collectées et leur utilisation',
+                    value: 'A'
+                },
+                {
+                    label: 'L\'utilisateur devrait connaitre l\'identité de la (ou des) régies publicitaires collectant des informations personnelles',
+                    value: 'B'
+                },
+                {
+                    label: 'L\'utilisateur devrait connaitre le chiffre d\'affaires des régies publicitaires',
+                    value: 'C'
+                },
+                {
+                    label: 'L\'utilisateur devrait connaitre l\'identité de l\'annonceur affichant une publicité',
+                    value: 'D'
+                }
+            ],
+            correctResponse: ['A', 'B'],
+            explanation: '<p>La transparence est indispensable afin de créer un cercle vertueux. Cependant elle est, pour l\'utilisateur, limitée aux données collectées et tout ce qui les concerne : identité du responsable de traitements (ici la régie publicitaire), traitements effectués, échanges éventuels avec d\'autres acteurs, durée de rétention, mesures de sécurité mises en jeu, etc.</p>' +
+                '<p>Par contre, la connaissance du chiffre d\'affaires de la régie publicitaire est sans rapport avec la protection des données personnelles. De même l\'annonceur va en général s\'identifier auprès de l\'utilisateur, et si ce n\'est pas le cas, c\'est de toute façon sans rapport avec la protection de la vie privée.</p>'
+        },
+
     },
     {
         id: 'h',
         type: 'chapter',
-        name: 'Limites du contrôle utilisateur Apple et Google',
-        image: 'assets/demo/VP/vp-chapitre-8.png',
-        number: '8'
-    },
-    {
-        id: 'i',
-        type: 'chapter',
-        name: 'Démo: Exodus Privacy',
-        image: 'assets/demo/VP/vp-chapitre-9.png',
-        number: '9'
-    },
-    {
-        id: 'j',
-        type: 'chapter',
         name: 'Conclusion',
         image: 'assets/demo/VP/vp-chapitre-9.png',
-        number: '10'
-    }
+        number: '8',
+        objectives: ['Se rendre compte du rôle et des droits des acteurs dans l’écosystème']
+    },
+    {
+        id: 'h1',
+        type: 'simple-question',
+        name: 'Selon-vous ?',
+        question: {
+            type: 'choice',
+            score: 0,
+            statement: '',
+            label: 'Est-ce que l’utilisateur est un acteur passif de l’écosystème ?',
+            responses: [
+                {
+                    label: 'Oui',
+                    value: 'A'
+                },
+                {
+                    label: 'Non',
+                    value: 'B'
+                }
+            ],
+            correctResponse: 'B',
+            explanation: '<p>Malgré les limites existants, l’utilisateur est un acteur actif. C’est à lui de décider quelle application installer et quelles autorisations il faut donner. Il peut influencer sur les ses décisions déjà prises. Donc c’est à lui de décider si exercer le droit et la possibilité d’être actif ou pas.</p>'
+        }
+    },
+    {
+        id: 'h2',
+        type: 'video',
+        name: 'Conclusion',
+        source: 'assets/demo/VP/conclusion-480p.mp4',
+        subtitles: '',
+        summary: '<p>-Il faut comprendre aussi que l\'on est là au début ; ce sont vraiment des questions de fond : la généralisation du paiement sur smartphone, la multiplication des objets connectés, les montres intelligentes par exemple, cette appétence que l\'on peut avoir pour l\'automesure de ses paramètres biologiques, par exemple pour comparer ses performances sportives, mais' +
+            'aussi la maison intelligente, les voitures connectées, l\'Internet des objets... Voilà. Tout cela fait que cette collecte va s\'étendre rapidement à des domaines qui sont aujourd\'hui épargnés, d\'où l\'importance de traiter de ces questions de fond.</p>'
+    },
+    {
+        id: 'h3',
+        type: 'simple-question',
+        name: 'Question notée',
+        question: {
+            type: 'multiple-choice',
+            score: 100,
+            statement: '',
+            label: 'Quelles sont les conséquences si on installe des applications sans arrêt',
+            responses: [
+                {
+                    label: 'Il sera possible de facilement pister les utilisateurs',
+                    value: 'A'
+                },
+                {
+                    label: 'Il sera possible de récupèrer les données pesronnelles',
+                    value: 'B'
+                },
+                {
+                    label: 'Il n\'est pas possible que l\'utilisateur soit au courant des données qui étaient récupérées',
+                    value: 'C'
+                },
+                {
+                    label: 'La législation ne sera pas en mésure de protèger les utilisateurs',
+                    value: 'D'
+                }
+            ],
+            correctResponse: ['A', 'C'],
+            explanation: 'A VENIR'
+        }
+    },
 ];
 
 export const MockLibrary: Epoc[] = [
@@ -1307,7 +1578,7 @@ export const MockLibrary: Epoc[] = [
             'D’avoir un regard critique sur le monde numérique des smartphones'
         ],
         parts: [{
-            title: 'Smartphone',
+            title: 'Partie théorique',
             outlineTree: [
                 {
                     contentId: 'a',
@@ -1402,20 +1673,82 @@ export const MockLibrary: Epoc[] = [
                             contentId: 'e422'
                         }
                     ]
+                },
+                {
+                    contentId: 'f',
+                    children: [
+                        {
+                            contentId: 'f1'
+                        },
+                        {
+                            contentId: 'f2'
+                        },
+                        {
+                            contentId: 'e4'
+                        },
+                        {
+                            contentId: 'f21'
+                        },
+                        {
+                            contentId: 'f211'
+                        },
+                        {
+                            contentId: 'f212'
+                        },
+                        {
+                            contentId: 'f22'
+                        },
+                        {
+                            contentId: 'f221'
+                        },
+                        {
+                            contentId: 'f222'
+                        }
+                    ]
+                },
+                {
+                    contentId: 'g',
+                    children: [
+                        {
+                            contentId: 'g1'
+                        },
+                        {
+                            contentId: 'g2'
+                        },
+                        {
+                            contentId: 'g3'
+                        }
+                    ]
+                },
+                {
+                    contentId: 'h',
+                    children: [
+                        {
+                            contentId: 'h1'
+                        },
+                        {
+                            contentId: 'h2'
+                        },
+                        {
+                            contentId: 'h3'
+                        }
+                    ]
                 }
             ]
         },
-            {
-                title: 'Mise en pratique',
-                outlineTree: [
-                    {contentId: 'i', children: []},
-                    {contentId: 'j', children: []},
-                    {contentId: 'k', children: []},
-                    {contentId: 'l', children: []},
-                    {contentId: 'm', children: []},
-                    {contentId: 'x', children: []}
-                ]
-            }],
+        {
+            title: 'Mise en pratique',
+            outlineTree: [
+                {
+                    contentId: 'i',
+                    children: []
+                },
+                {
+                    contentId: 'j',
+                    children: []
+                }
+            ]
+        }],
         content: VPContents
     },
     {
