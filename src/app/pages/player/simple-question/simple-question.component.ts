@@ -38,7 +38,7 @@ export class SimpleQuestionComponent implements OnInit {
                     this.answer = assessment.responses;
                 } else {
                     this.disabled = false;
-                    this.answer = null;
+                    this.answer = this.content.question.type === 'choice' ? null : [];
                 }
             }
         });

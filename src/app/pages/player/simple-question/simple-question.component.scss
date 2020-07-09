@@ -45,6 +45,7 @@
   background: #fff;
   border-radius: 8px;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
+  overflow:hidden;
 
   h2 {
     margin: 0;
@@ -88,6 +89,10 @@
     &.radio-checked{
       background: var(--ion-color-primary);
     }
+  }
+
+  ion-list{
+    overflow: auto;
   }
 }
 
