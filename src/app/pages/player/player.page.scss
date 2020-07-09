@@ -64,7 +64,7 @@ ion-card{
   width:100%;
   height:100%;
   padding: 16px 0;
-  background: #fefefe;
+  background: var(--ion-color-inria-grey);
 }
 
 .pages-wrapper{
@@ -124,7 +124,6 @@ ion-card{
     .title-wrapper{
       width: 100%;
       margin: 0 auto 0 -1em;
-      padding: 5vh 0;
       background: var(--ion-color-inria);
       clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
 
@@ -136,6 +135,7 @@ ion-card{
         }
 
         .title {
+          min-height: 3em;
           color: white;
           font-weight: 400;
           line-height: 1.2;
@@ -235,6 +235,7 @@ ion-card{
       flex-direction: column;
       flex-grow:1;
       overflow: hidden;
+      filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
     }
   }
 
@@ -296,8 +297,7 @@ ion-card{
   }
 
   .page-header{
-    margin-bottom: 1em;
-    border-bottom: 3px solid #d5d9de;
+    margin-bottom: 10px;
     ion-icon{
       display: inline-block;
       vertical-align: middle;
