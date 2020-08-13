@@ -47,7 +47,11 @@
         <ion-card-header mode="ios">
           <ion-card-subtitle mode="ios">Résumé de l'activité</ion-card-subtitle>
           <ion-card-title mode="ios" *ngIf="getScoreTotal() > 0">Votre score</ion-card-title>
-          <div class="score-donut" *ngIf="getScoreTotal() > 0">(A venir)</div>
+          <div class="score-donut" *ngIf="getScoreTotal() > 0">
+            <canvas baseChart [datasets]="doughnutChartDataset" [labels]="doughnutChartLabels"
+                    [options]="doughnutChartOptions" chartType="doughnut">
+            </canvas>
+          </div>
           <ion-card-title mode="ios" *ngIf="getScoreTotal() <= 0">Non noté</ion-card-title>
         </ion-card-header>
         <ion-card-content mode="ios">
