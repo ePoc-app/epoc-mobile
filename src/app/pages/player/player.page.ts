@@ -256,13 +256,6 @@ export class PlayerPage implements OnInit, DoCheck {
                     cssClass: 'splitter'
                 },
                 {
-                    text: 'Liste des signets',
-                    icon: 'bookmarks',
-                    handler: () => {
-                        this.router.navigateByUrl('/player/bookmarks/' + this.epoc.id);
-                    }
-                },
-                {
                     text: 'Tables des matières',
                     icon: 'list',
                     handler: () => {
