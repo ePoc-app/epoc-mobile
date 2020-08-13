@@ -43,7 +43,8 @@ export class ReadingStoreService {
                     assessments: [],
                     bookmarks: [],
                     choices: [],
-                    flags: []
+                    flags: [],
+                    certificateShown: false
                 }
             ];
 
@@ -124,6 +125,7 @@ export class ReadingStoreService {
             reading.bookmarks = [];
             reading.choices = [];
             reading.flags = [];
+            reading.certificateShown = false;
             return reading;
         });
         this.saveReadings();
@@ -145,6 +147,12 @@ export class ReadingStoreService {
 
         this.readings[readingIndex].bookmarks.splice(index, 1);
 
+        this.saveReadings();
+    }
+
+    updateCertificateShown(epocId: string, value: boolean) {
+        const index = this.readings.findIndex(reading => reading.epocId === epocId);
+        this.readings[index].certificateShown = value;
         this.saveReadings();
     }
 }

@@ -323,3 +323,34 @@ ion-card{
     }
   }
 }
+
+.certificate-container{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,.75);
+  z-index: 12;
+
+  .certificate-success-card{
+    position: absolute;
+    top:40%;
+    text-align: center;
+    transform: translateY(-50%);
+
+    &-header{
+      padding: 20px;
+      font-size: 70px;
+      line-height: 0;
+      color:white;
+      background: var(--ion-color-success);
+    }
+
+    &-content{
+      *{
+        margin-bottom: 1em;
+      }
+    }
+  }
+}
