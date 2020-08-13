@@ -10,6 +10,7 @@ export class Epoc {
     authors: Author[];
     summary: html;
     objectives: string[];
+    certificateScore: number;
     parts: Array<Part>;
     content: Array<Content>;
     chapterCount?: number;
