@@ -14,20 +14,19 @@
   }
 
   button{
+    display: block;
+    width:100%;
+    margin-top: 1em;
     padding: 1em;
-    background: var(--ion-color-primary);
-    text-transform: uppercase;
+    background: #fefefe;
     font-weight: bold;
-    color:white;
+    color:var(--ion-color-inria-blue);
     border-radius: 4px;
-  }
+    border: 1px solid var(--ion-color-inria-blue);
 
-  ion-radio{
-    background: transparent;
-    border-radius: 100%;
-    transition: all .1s .2s;
-    &.radio-checked{
-      background: var(--ion-color-primary);
+    &.selected{
+      color:white;
+      background: var(--ion-color-inria-blue);
     }
   }
 }
