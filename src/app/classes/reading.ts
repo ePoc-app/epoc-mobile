@@ -7,6 +7,7 @@ export class Reading {
     bookmarks: number[];
     choices: UserChoice[];
     flags: uid[];
+    certificateShown: boolean;
 }
 
 class UserAssessment {

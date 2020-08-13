@@ -11,7 +11,6 @@ import {Content} from '../../classes/contents/content';
 import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
-import {Assessment} from '../../classes/contents/assessment';
 
 @Component({
     selector: 'app-player',
@@ -42,6 +41,7 @@ export class PlayerPage implements OnInit, DoCheck {
     pageWrapperOffset;
     startX;
     startOffset;
+    certificateShown = false;
 
     // Reading default settings
     settings: Settings = {
@@ -237,6 +237,22 @@ export class PlayerPage implements OnInit, DoCheck {
         medias.forEach((media) => {
             media.pause();
         });
+    }
+
+    goToCertificate() {
+        this.dismissCertificateCard();
+        this.router.navigateByUrl('/player/score/' + this.epoc.id);
+    }
+
+    showCertificateCard() {
+        if (!this.reading.certificateShown) {
+            this.certificateShown = true;
+            this.readingStore.updateCertificateShown(this.epoc.id, true);
+        }
+    }
+
+    dismissCertificateCard() {
+        this.certificateShown = false;
     }
 
     async presentActionSheet() {
