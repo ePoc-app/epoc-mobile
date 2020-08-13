@@ -8,12 +8,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+  <ion-grid *ngIf="assessmentData">
     <ion-row>
       <ion-col>
         <canvas baseChart [datasets]="doughnutChartDataset" [labels]="doughnutChartLabels"
                 [options]="doughnutChartOptions" chartType="doughnut">
         </canvas>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button [color]="assessmentData.totalUserScoreInPercent >= epoc.certificateScore ? 'success':'medium'" expand="block" (click)="getCertificate()">Télécharger l'attestation <ion-icon name="download" slot="end"></ion-icon></ion-button>
       </ion-col>
     </ion-row>
     <ion-row>

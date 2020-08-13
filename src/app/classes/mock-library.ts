@@ -1577,6 +1577,7 @@ export const MockLibrary: Epoc[] = [
             'Comparer la politique de confidentialité sur IOS et Android',
             'D’avoir un regard critique sur le monde numérique des smartphones'
         ],
+        certificateScore: 5,
         parts: [{
             title: 'Partie théorique',
             outlineTree: [
@@ -1774,6 +1775,7 @@ export const MockLibrary: Epoc[] = [
             'Connaitre des choses',
             'Savoir des machins'
         ],
+        certificateScore: 60,
         parts: [{
             title: 'Formation ZRR',
             outlineTree: [
