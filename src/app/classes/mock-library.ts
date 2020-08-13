@@ -1061,9 +1061,9 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         name: 'Choix du parcours',
         conditionResolver: {
             type: 'choice',
-            label: 'Quel est votre OS mobile ?',
+            label: 'De quel OS voulez-vous que nous parlons ?\n\n(Vous pourrez toujours changer votre choix)',
             choices: [
-                { label: 'Apple', value: 'A' },
+                { label: 'iOS', value: 'A' },
                 { label: 'Android', value: 'B' }
             ],
             conditionalFlag: [
@@ -1075,10 +1075,10 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'e411',
         type: 'video',
-        name: 'Autorisations Apple',
+        name: 'Autorisations iOS',
         source: 'assets/demo/VP/apple-controle-480p.mp4',
         subtitles: '',
-        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’Apple ainsi que les autorisations qui peut attribuer l’utilisateur.',
+        summary: 'Dans cette vidéo nous verrons les particularités des autorisations d’iOS ainsi que les autorisations qui peut attribuer l’utilisateur.',
         conditional: true
 
     },
@@ -1116,7 +1116,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'e412',
         type: 'assessment',
         name: 'Activité noté',
-        summary: 'Exercice vidéo Apple',
+        summary: 'Exercice vidéo iOS',
         items: [
             {
                 type: 'drag-and-drop',
@@ -1290,16 +1290,16 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'f21',
         type: 'video',
-        name: 'Limites du contrôle Apple',
+        name: 'Limites du contrôle iOS',
         source: 'assets/demo/VP/limites-ios-480p.mp4',
         subtitles: '',
-        summary: '<p>Dans cette vidéo nous verrons les particularités des limites au sein de système d’exploitation Apple.</p>',
+        summary: '<p>Dans cette vidéo nous verrons les particularités des limites au sein de système d’exploitation iOS.</p>',
         conditional: true
     },
     {
         id: 'f211',
         type: 'html',
-        name: 'Pour résumer : Apple',
+        name: 'Pour résumer : iOS',
         html: '<b>Les limites communes à Android et iOS :</b>' +
             '<ul>' +
             '<li>contrôle comportemental de l\'application</li>' +
@@ -1317,7 +1317,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
     {
         id: 'f212',
         type: 'assessment',
-        name: 'Activité Apple',
+        name: 'Activité iOS',
         summary: '',
         items: [
             {
@@ -1563,7 +1563,7 @@ export const MockLibrary: Epoc[] = [
             {
                 name: 'Vincent Roca',
                 image: 'assets/demo/VP/vincent-rond.png',
-                description: 'I\'m permanent researcher, working at Inria, a French public research institute. Since 2013 I am part of the Privatics Inria research team that focuses on privacy.'
+                description: 'Chercheur titulaire travaillant à l\'Inria, un institut de recherche français. Depuis 2013 je fais parti de l\'équipe Inria Privatics qui concentre sa recherche sur la vie privée.'
             }
         ],
         summary: '<p>Ce parcours sera dédié à la question du respect de la vie privée lorsque l\'on utilise nos assistants personnels, smartphone ou tablette.</p>' +
