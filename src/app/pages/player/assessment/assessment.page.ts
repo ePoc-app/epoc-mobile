@@ -9,6 +9,7 @@ import {Epoc} from '../../../classes/epoc';
 import {AlertController, IonSlides} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
 import {Assessment} from '../../../classes/contents/assessment';
+import {Label} from 'ng2-charts';
 
 @Component({
     selector: 'app-assessment',
@@ -35,6 +36,26 @@ export class AssessmentPage implements OnInit {
     currentQuestion = 0;
     currentAnswer;
     explanationShown = false;
+
+    doughnutChartOptions = {
+        responsive: true,
+        aspectRatio: 1,
+        legend: {
+            position: 'bottom'
+        },
+        elements: {
+            center: {
+                text: '',
+                sidePadding: 15
+            }
+        }
+    };
+    doughnutChartLabels: Label[] = [];
+    doughnutChartDataset = [{
+        label: 'Résumé des scores',
+        data: [],
+        backgroundColor: ['#10dc60', '#ffce00']
+    }];
 
     constructor(
         private route: ActivatedRoute,
@@ -120,6 +141,23 @@ export class AssessmentPage implements OnInit {
             this.explanationShown = false;
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
             this.questionSlides.slideNext();
+            this.doughnutChartOptions = {
+                responsive: true,
+                aspectRatio: 1,
+                legend: {
+                    position: 'bottom'
+                },
+                elements: {
+                    center: {
+                        text: Math.round(this.userScore / this.getScoreTotal() * 100) + '%',
+                        sidePadding: 15
+                    }
+                }
+            };
+            this.doughnutChartDataset[0].data = [
+                this.questionsSuccessed.reduce((a, e) => e ? a + 1 : a, 0),
+                this.questionsSuccessed.reduce((a, e) => !e ? a + 1 : a, 0),
+            ];
         }
     }
 
