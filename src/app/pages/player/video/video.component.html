@@ -1,10 +1,13 @@
 <div class="video-card">
   <div class="video-player">
-    <video #video [poster]="content.poster ? content.poster : 'assets/img/video-thumbnail.jpg'" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata">
-      <ng-container *ngFor="let sub of content.subtitles">
-        <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang" [src]="sub.src">
-      </ng-container>
-    </video>
+      <div class="video-container" [ngClass]="{'notPlayed':!hasPlayed}">
+        <video #video controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata">
+          <ng-container *ngFor="let sub of content.subtitles">
+            <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang" [src]="sub.src">
+          </ng-container>
+        </video>
+        <img *ngIf="!hasPlayed" [src]="content.poster ? content.poster : 'assets/img/video-thumbnail.jpg'" (click)="play()"/>
+      </div>
 
     <ion-item class="hidden-select">
       <ion-label>Sous-titres</ion-label>

@@ -16,10 +16,47 @@
 }
 
 .video-player{
-  video{
-    display:block;
+  .video-container{
+    position: relative;
     width:100%;
-    height:auto;
+    height:0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+
+    &.notPlayed:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 74px;
+      cursor: pointer;
+      background: transparent;
+      box-sizing: border-box;
+      border: 0 solid transparent;
+      border-color: transparent transparent transparent var(--ion-color-primary);
+      border-style: solid;
+      border-width: 37px 0 37px 60px;
+      transform: translate(-50%, -50%);
+      transition: 100ms all ease;
+    }
+
+    img{
+      position: absolute;
+      display:block;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+    }
+  }
+  video{
+    position: absolute;
+    display:block;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
     margin:0;
     background:none;
     overflow: hidden;
