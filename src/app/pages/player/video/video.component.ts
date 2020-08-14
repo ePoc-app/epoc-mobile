@@ -15,6 +15,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     @Input() content: Video;
 
     video: HTMLVideoElement;
+    hasPlayed = false;
     playing = false;
     trackSelected = 'none';
 
@@ -23,6 +24,12 @@ export class VideoComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
+    }
+
+play() {
+    if (!this.hasPlayed) {
+        this.hasPlayed = true;
+
         this.video = this.videoRef.nativeElement;
         this.video.addEventListener('play', (event) => {
             this.playing = true;
@@ -39,10 +46,6 @@ export class VideoComponent implements OnInit, OnDestroy {
                 }
             }
         });
-    }
-
-play() {
-    if (!this.video.src) {
         this.video.src = this.content.source;
         this.video.load();
         this.video.play();
