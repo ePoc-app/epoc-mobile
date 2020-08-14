@@ -11,6 +11,7 @@ import {Content} from '../../classes/contents/content';
 import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
+import {Assessment, SimpleQuestion} from '../../classes/contents/assessment';
 
 @Component({
     selector: 'app-player',
@@ -41,6 +42,9 @@ export class PlayerPage implements OnInit, DoCheck {
     pageWrapperOffset;
     startX;
     startOffset;
+
+    assessments: Assessment[];
+    assessmentData;
     certificateShown = false;
 
     // Reading default settings
@@ -88,6 +92,20 @@ export class PlayerPage implements OnInit, DoCheck {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
+
+            this.assessments = [];
+
+            epoc.parts.forEach((part) => {
+                part.contents.reduce((assessments, content) => {
+                    if (content && content.type === 'assessment') {
+                        assessments.push(content);
+                    } else if (content && content.type === 'simple-question' && (content as SimpleQuestion).question.score > 0) {
+                        (content as Assessment).items = [(content as SimpleQuestion).question];
+                        assessments.push(content);
+                    }
+                    return assessments;
+                }, this.assessments);
+            });
         });
 
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
@@ -105,6 +123,14 @@ export class PlayerPage implements OnInit, DoCheck {
                     'font-size': this.settings.fontSize + 'px',
                     'line-height': this.settings.lineHeight
                 };
+            }
+        });
+    }
+
+    ionViewDidEnter() {
+        combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
+            if (pair.epoc && pair.reading) {
+                this.setAssessmentsData();
             }
         });
     }
@@ -242,6 +268,30 @@ export class PlayerPage implements OnInit, DoCheck {
     goToCertificate() {
         this.dismissCertificateCard();
         this.router.navigateByUrl('/player/score/' + this.epoc.id);
+    }
+
+    setAssessmentsData() {
+        this.assessmentData = {
+            totalUserScore: 0,
+            totalUserScoreInPercent: 0,
+            totalScore: 0
+        };
+
+        this.assessments.forEach((assessment) => {
+            const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
+            const scoreTotal = assessment.items.reduce((total, item) => total + item.score, 0);
+
+            if (userAssessment && userAssessment.score > 0) {
+                this.assessmentData.totalUserScore += userAssessment.score;
+            }
+            this.assessmentData.totalScore += scoreTotal;
+        });
+
+        this.assessmentData.totalUserScoreInPercent = Math.round(this.assessmentData.totalUserScore / this.assessmentData.totalScore * 100);
+
+        if (this.assessmentData.totalUserScoreInPercent >= this.epoc.certificateScore) {
+            this.showCertificateCard();
+        }
     }
 
     showCertificateCard() {
