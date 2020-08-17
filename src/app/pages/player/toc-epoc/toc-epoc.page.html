@@ -14,10 +14,12 @@
       <ng-container *ngFor="let part of epoc.parts;">
         <ng-container *ngFor="let content of part.contents;">
           <ion-item [class]="'level-' + content.depth" [routerLink]="'/player/play/'+epoc.id+'/content/'+content.id">
-            <ion-icon *ngIf="content.type === 'html'" name="paper" slot="end"></ion-icon>
-            <ion-icon *ngIf="content.type === 'video'" name="play" slot="end"></ion-icon>
-            <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="end"></ion-icon>
-            <ion-icon *ngIf="content.type === 'simple-question'" name="search" slot="end"></ion-icon>
+            <ion-icon *ngIf="content.type === 'html'" name="paper" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'video'" name="play" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'simple-question' && !content.question.score" name="bulb" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'simple-question' && content.question.score" name="checkbox-outline" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'choice'" name="git-branch" slot="start"></ion-icon>
             <ion-label>{{content.name}}</ion-label>
           </ion-item>
         </ng-container>
