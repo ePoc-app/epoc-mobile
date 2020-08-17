@@ -47,7 +47,7 @@ ion-slides{
   img{
     display: block;
     width:100%;
-    height: 30vh;
+    height: 22vh;
     border: 2px solid var(--ion-color-inria-blue);
     border-radius: 10px;
     margin-bottom: 15px;
@@ -65,5 +65,13 @@ ion-card.chapter{
 
   ion-card-content{
     min-height: 100px;
+  }
+}
+
+ion-grid{
+  ion-row{
+    ion-card.chapter{
+      margin:0.5em;
+    }
   }
 }
