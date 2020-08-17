@@ -1248,7 +1248,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'f',
         type: 'chapter',
         name: 'Limites du contrôle utilisateur Apple et Google',
-        image: 'assets/demo/VP/vp-chapitre-6.jpg',
+        image: 'assets/demo/VP/vp-chapitre-5.png',
         number: '6',
         objectives: ['Mettre en pratique la protection de vos données']
     },
@@ -1555,7 +1555,7 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         id: 'i',
         type: 'chapter',
         name: 'Contrôle d’utilisateur',
-        image: 'assets/demo/VP/vp-chapitre-8.png',
+        image: 'assets/demo/VP/vp-chapitre-6.jpg',
         number: 'Démo',
         objectives: ['Apprendre à contrôler les autorisations']
     },
