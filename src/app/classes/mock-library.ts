@@ -1551,6 +1551,156 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             explanation: 'A VENIR'
         }
     },
+    {
+        id: 'i',
+        type: 'chapter',
+        name: 'Contrôle d’utilisateur',
+        image: 'assets/demo/VP/vp-chapitre-8.png',
+        number: 'Démo',
+        objectives: ['Apprendre à contrôler les autorisations']
+    },
+    {
+        id: 'i1',
+        type: 'choice',
+        name: 'Choix du parcours',
+        conditionResolver: {
+            type: 'choice',
+            label: 'Que voulez-vous suivre ?\n\n(Vous pourrez toujours changer votre choix)',
+            choices: [
+                { label: 'iOS haut niveau', value: 'A' },
+                { label: 'iOS bas niveau', value: 'B' },
+                { label: 'Android haut niveau', value: 'C' },
+                { label: 'Android bas niveau', value: 'D' }
+            ],
+            conditionalFlag: [
+                { value: 'A', flags: ['i10', 'i11'] },
+                { value: 'B', flags: ['i10', 'i12'] },
+                { value: 'C', flags: ['i20', 'i21', 'i23'] },
+                { value: 'D', flags: ['i20', 'i22', 'i23'] },
+            ]
+        }
+    },
+    {
+        id: 'i10',
+        type: 'simple-question',
+        name: 'Selon-vous ?',
+        question: {
+            type: 'multiple-choice',
+            score: 0,
+            statement: '',
+            label: 'Lors de l’installation de l’application nous pouvons à toutes les autorisations demandées dans les rubriques :',
+            responses: [
+                {
+                    label: 'Confidentialité de l’application',
+                    value: 'A'
+                },
+                {
+                    label: 'Règles de confidentialité',
+                    value: 'B'
+                },
+                {
+                    label: 'Détaille des autorisations',
+                    value: 'C'
+                }
+            ],
+            correctResponse: ['A'],
+            explanation: '<p> Cela s’appelle différemment selon votre système d’exploitation. De toute façon toute l’information législative se trouve dans le magasin d’application pour que vous puissiez en prendre conscience avant de téléchargement d’une application. Dans le cas d’iOS cela s’appelle « Confidentialité de l’application ». Dans le cadre d’Android cela s’appelle « Règles de confidentialité » et « Détaille des autorisations ».</p>'
+        },
+        conditional: true
+    },
+    {
+        id: 'i11',
+        type: 'video',
+        name: 'Vidéo Apple : haut niveau',
+        source: 'assets/demo/haut-niveau-ios-480p.mp4',
+        subtitles: '',
+        summary: '<ul>' +
+            '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications à bas niveau sur un iPhone</li>' +
+            '<li><b>Téléphone :</b> iPhone sous iOS 10. 3</li>' +
+            '<li><b>Pour voir votre version d’exécution :</b> Réglages => Générales => Informations => Version du logiciel</li>' +
+            '</ul>',
+        conditional: true
+    },
+    {
+        id: 'i12',
+        type: 'video',
+        name: 'Vidéo Apple : bas niveau',
+        source: 'assets/demo/bas-niveau-ios-480p.mp4',
+        subtitles: '',
+        summary: '<ul>' +
+            '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications à bas niveau sur un iPhone</li>' +
+            '<li><b>Téléphone :</b> iPhone sous iOS 10. 3</li>' +
+            '<li><b>Pour voir votre version d’exécution :</b> Réglages => Générales => Informations => Version du logiciel</li>' +
+            '</ul>',
+        conditional: true
+    },
+    {
+        id: 'i20',
+        type: 'simple-question',
+        name: 'Selon-vous ?',
+        question: {
+            type: 'multiple-choice',
+            score: 0,
+            statement: '',
+            label: 'Lors de l’installation de l’application nous pouvons à toutes les autorisations demandées dans les rubriques :',
+            responses: [
+                {
+                    label: 'Confidentialité de l’application',
+                    value: 'A'
+                },
+                {
+                    label: 'Règles de confidentialité',
+                    value: 'B'
+                },
+                {
+                    label: 'Détaille des autorisations',
+                    value: 'C'
+                }
+            ],
+            correctResponse: ['B', 'C'],
+            explanation: '<p>Cela s’appelle différemment selon votre système d’exploitation. De toute façon toute l’information législative se trouve dans le magasin d’application pour que vous puissiez en prendre conscience avant de téléchargement d’une application. Dans le cas d’iOS cela s’appelle « Confidentialité de l’application ». Dans le cadre d’Android cela s’appelle « Règles de confidentialité » et « Détaille des autorisations ».</p>'
+        },
+        conditional: true
+    },
+    {
+        id: 'i21',
+        type: 'video',
+        name: 'Vidéo Android haut niveau',
+        source: 'assets/demo/android-haut-niveau-480p.mp4',
+        subtitles: '',
+        summary: '<ul>' +
+            '<li>Objectif : voir comment un utilisateur peut contrôler les autorisations associées à ses applications lors de l’installation sur un Android</li>' +
+            '<li>Téléphone : Nexus 5 sous Androïd. 6. 0</li>' +
+            '<li>Pour voir votre version d’exécution : Paramètres => A propos du téléphone => Version d’Android</li>' +
+            '</ul>',
+        conditional: true
+    },
+    {
+        id: 'i22',
+        type: 'video',
+        name: 'Vidéo Android bas niveau',
+        source: 'assets/demo/bas-niveau-android-480p.mp4',
+        subtitles: '',
+        summary: '<ul>' +
+            '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications lors de l’installation sur un Android</li>' +
+            '<li><b>Téléphone :</b> Nexus 5 sous Androïd. 6. 0</li>' +
+            '<li><b>Pour voir votre version d’exécution :</b> Paramètres => A propos du téléphone => Version d’Android</li>' +
+            '</ul>',
+        conditional: true
+    },
+    {
+        id: 'i23',
+        type: 'video',
+        name: 'Vidéo Android installation',
+        source: 'assets/demo/bas-niveau-android-480p.mp4',
+        subtitles: '',
+        summary: '<ul>' +
+            '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications sur un Android</li>' +
+            '<li><b>Téléphone :</b> Nexus 5 sous Androïd. 6. 0</li>' +
+            '<li><b>Pour voir votre version d’exécution :</b> Paramètres => A propos du téléphone => Version d’Android</li>' +
+            '</ul>',
+        conditional: true
+    },
 ];
 
 export const MockLibrary: Epoc[] = [
@@ -1676,6 +1826,35 @@ export const MockLibrary: Epoc[] = [
                     ]
                 },
                 {
+                    contentId: 'i',
+                    children: [
+                        {
+                            contentId: 'i1'
+                        },
+                        {
+                            contentId: 'i10'
+                        },
+                        {
+                            contentId: 'i11'
+                        },
+                        {
+                            contentId: 'i12'
+                        },
+                        {
+                            contentId: 'i20'
+                        },
+                        {
+                            contentId: 'i21'
+                        },
+                        {
+                            contentId: 'i22'
+                        },
+                        {
+                            contentId: 'i23'
+                        }
+                    ],
+                },
+                {
                     contentId: 'f',
                     children: [
                         {
@@ -1734,19 +1913,6 @@ export const MockLibrary: Epoc[] = [
                             contentId: 'h3'
                         }
                     ]
-                }
-            ]
-        },
-        {
-            title: 'Mise en pratique',
-            outlineTree: [
-                {
-                    contentId: 'i',
-                    children: []
-                },
-                {
-                    contentId: 'j',
-                    children: []
                 }
             ]
         }],
