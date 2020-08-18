@@ -3,11 +3,10 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {switchMap, debounceTime} from 'rxjs/operators';
 import {combineLatest, Observable, fromEvent} from 'rxjs';
-import {Epoc} from '../../classes/epoc';
+import {Chapter, Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {ReadingStoreService} from '../../services/reading-store.service';
 import {LibraryService} from '../../services/library.service';
-import {Content} from '../../classes/contents/content';
 import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
@@ -25,8 +24,9 @@ export class PlayerPage implements OnInit, DoCheck {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
-    contents: Content[] = [];
-    nextChapter;
+    chapterId: number;
+    chapter: Chapter;
+    nextChapter: Chapter;
     reading: Reading;
 
     // Reader
@@ -93,28 +93,13 @@ export class PlayerPage implements OnInit, DoCheck {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
+            this.chapterId = +this.route.snapshot.paramMap.get('chapter');
+            this.chapter = epoc.chapters[this.chapterId];
+            this.assessments = epoc.assessments;
 
-            const chapterId = this.route.snapshot.paramMap.get('chapter');
-            const chapterIndex = epoc.chapters.findIndex(chapter => chapter.contentId === chapterId);
-
-            if (chapterIndex < epoc.chapters.length - 1) {
-                this.nextChapter = epoc.chapters[chapterIndex + 1].contents[0];
+            if (this.chapterId < epoc.chapters.length - 1) {
+                this.nextChapter = epoc.chapters[this.chapterId + 1];
             }
-
-            this.contents = epoc.chapters[chapterIndex].contents;
-            this.assessments = [];
-
-            epoc.parts.forEach((part) => {
-                part.contents.reduce((assessments, content) => {
-                    if (content && content.type === 'assessment') {
-                        assessments.push(content);
-                    } else if (content && content.type === 'simple-question' && (content as SimpleQuestion).question.score > 0) {
-                        (content as Assessment).items = [(content as SimpleQuestion).question];
-                        assessments.push(content);
-                    }
-                    return assessments;
-                }, this.assessments);
-            });
         });
 
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {

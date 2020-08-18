@@ -11,9 +11,12 @@
 <ion-content *ngIf="epoc$ | async as epoc">
   <ng-container *ngIf="detailedToc">
     <ion-list>
-      <ng-container *ngFor="let chapter of epoc.chapters;">
+      <ng-container *ngFor="let chapter of epoc.chapters;let index = index">
+        <ion-item class="level-1" [routerLink]="'/player/play/'+epoc.id+'/'+index">
+          <ion-label>{{chapter.name}}</ion-label>
+        </ion-item>
         <ng-container *ngFor="let content of chapter.contents;">
-          <ion-item [class]="'level-' + content.depth" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.contentId+'/content/'+content.id">
+          <ion-item class="level-2" [routerLink]="'/player/play/'+epoc.id+'/'+index+'/content/'+content.id">
             <ion-icon *ngIf="content.type === 'html'" name="paper" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'video'" name="play" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
@@ -27,34 +30,17 @@
     </ion-list>
   </ng-container>
   <ng-container *ngIf="!detailedToc">
-    <div class="part" *ngFor="let part of epoc.parts;">
-      <div class="part-header" *ngIf="epoc.parts.length > 1">
-        <span>{{part.title}}</span>
-      </div>
-      <ion-slides [options]="sliderOptions" *ngIf="epoc.parts.length > 1">
-        <ng-container *ngFor="let content of part.contents;">
-          <ion-slide *ngIf="content.type === 'chapter'">
-            <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/'+content.id">
-              <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
+    <div class="chapters">
+      <ion-grid>
+        <ion-row *ngFor="let chapter of epoc.chapters;let index = index">
+          <ion-col size="10" offset="1">
+            <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/'+index">
+              <img [src]="chapter.image ? chapter.image : 'assets/img/placeholder.png'"/>
               <ion-card-content>
-                <b>Chapter {{content.number}} : </b> {{content.name}}
+                <b>Chapitre {{index + 1}} : </b> {{chapter.name}}
               </ion-card-content>
             </ion-card>
-          </ion-slide>
-        </ng-container>
-      </ion-slides>
-      <ion-grid *ngIf="epoc.parts.length <= 1">
-        <ion-row *ngFor="let content of part.contents;">
-          <ng-container *ngIf="content.type === 'chapter'">
-            <ion-col size="10" offset="1">
-              <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/'+content.id">
-                <img [src]="content.image ? content.image : 'assets/img/placeholder.png'"/>
-                <ion-card-content>
-                  <b>Chapter {{content.number}} : </b> {{content.name}}
-                </ion-card-content>
-              </ion-card>
             </ion-col>
-          </ng-container>
         </ion-row>
       </ion-grid>
     </div>

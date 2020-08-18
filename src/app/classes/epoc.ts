@@ -1,6 +1,7 @@
 import {Author} from './author';
 import {Content} from './contents/content';
-import {html} from './types';
+import {html, uid} from './types';
+import {Assessment} from './contents/assessment';
 
 export class Epoc {
     id: string;
@@ -11,21 +12,20 @@ export class Epoc {
     summary: html;
     objectives: string[];
     certificateScore: number;
-    parts: Array<Part>;
-    content: Array<Content>;
-    chapters?: CourseNode[];
-    chapterCount?: number;
+    content: Content[];
+    chapters: Chapter[];
+    // initialized at runtime
+    assessments?: Assessment[];
+}
+
+export class Chapter {
+    name: string;
+    image?: string;
+    objectives?: string[];
+    contentsIds: uid[];
+    // initialized at runtime
+    time?: number;
+    videoCount?: number;
     assessmentCount?: number;
-}
-
-export class Part {
-    title: string;
-    outlineTree: CourseNode[];
-    contents?: Content[];
-}
-
-export class CourseNode {
-    contentId: string;
-    children?: CourseNode[];
     contents?: Content[];
 }

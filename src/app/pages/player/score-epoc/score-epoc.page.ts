@@ -66,19 +66,7 @@ export class ScoreEpocPage implements OnInit {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-            this.assessments = [];
-
-            epoc.parts.forEach((part) => {
-                part.contents.reduce((assessments, content) => {
-                    if (content && content.type === 'assessment') {
-                        assessments.push(content);
-                    } else if (content && content.type === 'simple-question' && (content as SimpleQuestion).question.score > 0) {
-                        (content as Assessment).items = [(content as SimpleQuestion).question];
-                        assessments.push(content);
-                    }
-                    return assessments;
-                }, this.assessments);
-            });
+            this.assessments = epoc.assessments;
         });
     }
 
