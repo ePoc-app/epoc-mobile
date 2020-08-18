@@ -4,9 +4,7 @@ import {Observable, of, ReplaySubject} from 'rxjs';
 import {MockLibrary} from '../classes/mock-library';
 import {Epoc} from '../classes/epoc';
 import {distinctUntilChanged, map} from 'rxjs/operators';
-import {Content} from '../classes/contents/content';
-import {Assessment} from '../classes/contents/assessment';
-import {Chapter} from '../classes/contents/chapter';
+import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
 
 @Injectable({
     providedIn: 'root'
@@ -36,60 +34,32 @@ export class LibraryService {
     }
 
     initCourseContent(epoc: Epoc) {
-        epoc.chapters = [];
-        epoc.parts.forEach((part) => {
-            part.contents = this.contentsFromTree(epoc, part.outlineTree, 1);
-            part.outlineTree.forEach( (chapter) => {
-                const currentChapter = (epoc.content.find(item => item.id === chapter.contentId) as Chapter);
-                currentChapter.time = 0;
-                currentChapter.videoCount = 0;
-                currentChapter.assessmentCount = 0;
-                epoc.chapterCount = epoc.chapterCount ?  epoc.chapterCount + 1 : 1;
-                chapter.contents = [currentChapter];
-                chapter.contents = chapter.contents.concat(this.contentsFromTree(epoc, chapter.children, 2, currentChapter));
-                epoc.chapters.push(chapter);
-            });
-        });
-        return epoc;
-    }
+        epoc.assessments = [];
+        epoc.chapters.forEach((chapter) => {
+            chapter.time = 0;
+            chapter.videoCount = 0;
+            chapter.contents = chapter.contentsIds.reduce((contents, uid) => {
+                const currentContent = epoc.content.find(item => item.id === uid);
 
-    contentsFromTree(epoc, outlineTree, depth, currentChapter?): Content[] {
-        return outlineTree.reduce((contents, node) => {
-            const currentContent = epoc.content.find(item => item.id === node.contentId);
-            if (currentContent) {
-                currentContent.depth = depth;
-
-                if (currentContent.type === 'chapter') {
-                    currentChapter = currentContent;
-                    currentChapter.time = 0;
-                    currentChapter.videoCount = 0;
-                    currentChapter.assessmentCount = 0;
-                    epoc.chapterCount = epoc.chapterCount ?  epoc.chapterCount + 1 : 1;
-                } else if (currentContent.type === 'assessment') {
+                if (
+                    currentContent.type === 'assessment' ||
+                    currentContent.type === 'assessment' && (currentContent as SimpleQuestion).question.score > 0
+                ) {
                     (currentContent as Assessment).scoreTotal = (currentContent as Assessment).items.reduce(
                         (total, item) => item.score + total, 0
                     );
-                    if (currentChapter) {
-                        currentChapter.time = currentChapter.time + (currentContent as Assessment).items.length;
-                        currentChapter.assessmentCount++;
-                    }
-                    epoc.assessmentCount = epoc.assessmentCount ? epoc.assessmentCount +  1 : 1;
+                    chapter.time = chapter.time + (currentContent as Assessment).items.length;
+                    epoc.assessments.push((currentContent as Assessment));
                 } else if (currentContent.type === 'video') {
-                    if (currentChapter) {
-                        currentChapter.videoCount++;
-                        currentChapter.time = currentChapter.time + 3;
-                    }
+                    chapter.videoCount++;
+                    chapter.time = chapter.time + 3;
                 }
-                if (currentChapter) {
-                    currentContent.chapterId = currentChapter.id;
-                }
-                contents.push(currentContent);
 
-                if (node.children) {
-                    contents = contents.concat(this.contentsFromTree(epoc, node.children, depth + 1, currentChapter));
-                }
-            }
-            return contents;
-        }, []);
+                contents.push(currentContent);
+                return contents;
+            }, []);
+        });
+
+        return epoc;
     }
 }

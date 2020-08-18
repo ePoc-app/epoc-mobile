@@ -1,20 +1,10 @@
 import {Epoc} from './epoc';
-import {Content} from './contents/content';
-import {Chapter} from './contents/chapter';
 import {Assessment, SimpleQuestion} from './contents/assessment';
 import {Html} from './contents/html';
 import {Video} from './contents/video';
 
 /* tslint:disable */
-const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestion)[] = [
-    {
-        id: 'a',
-        type: 'chapter',
-        name: 'Qu\'est-ce que le dispositif de PPST ? (protection du Potentiel Scientifique et Technique de la Nation)',
-        image: 'assets/demo/ZRR/zrr-ppst-security.jpg',
-        number: '1',
-        objectives: ['Apprendre un truc']
-    },
+const ZRRContents: (Assessment | Html | Video | SimpleQuestion)[] = [
     {
         id: 'b',
         type: 'video',
@@ -156,12 +146,6 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
 
     },
     {
-        id: 'f',
-        type: 'chapter',
-        name: 'Les risques PPST',
-        number: '2'
-    },
-    {
         id: 'g',
         type: 'video',
         name: 'Les 4 risques PPST',
@@ -251,12 +235,6 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
 
     },
     {
-        id: 'k',
-        type: 'chapter',
-        name: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
-        number: '3'
-    },
-    {
         id: 'l',
         type: 'video',
         name: 'Données sensibles, visiteurs et sanctions',
@@ -311,12 +289,6 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
             }
         ],
 
-    },
-    {
-        id: 'p',
-        type: 'chapter',
-        name: 'Echelle de sensibilité',
-        number: '4'
     },
     {
         id: 'q',
@@ -406,15 +378,7 @@ const ZRRContents: (Content | Chapter | Assessment | Html | Video | SimpleQuesti
     }
 ];
 
-const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestion)[] = [
-    {
-        id: 'a',
-        type: 'chapter',
-        name: 'Pourquoi le smartphone intéresse-t-il tant ?',
-        image: 'assets/demo/VP/vp-chapitre-1.png',
-        number: '1',
-        objectives: ['Identifier des données collectées sur notre portable']
-    },
+const VPContents: (Assessment | Html | Video | SimpleQuestion)[] = [
     {
         id: 'a1',
         type: 'simple-question',
@@ -526,14 +490,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             }
         ],
 
-    },
-    {
-        id: 'b',
-        type: 'chapter',
-        name: 'L\'écosystème autour des applications pour smartphones',
-        image: 'assets/demo/VP/vp-chapitre-2.png',
-        number: '2',
-        objectives: ['Identifier les acteurs de cet écosystème autour des applications et leurs fonctions']
     },
     {
         id: 'b1',
@@ -689,14 +645,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
                 '</ul></p>'
         },
 
-    },
-    {
-        id: 'c',
-        type: 'chapter',
-        name: 'Gratuité contre publicité ciblée : où est le problème ?',
-        image: 'assets/demo/VP/vp-chapitre-3.jpg',
-        number: '3',
-        objectives: ['Découvrir des problèmes de fond du modèle économique']
     },
     {
         id: 'c1',
@@ -879,14 +827,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'd',
-        type: 'chapter',
-        name: 'Données personnelles : Gros plan sur les identifiants techniques',
-        image: 'assets/demo/VP/vp-chapitre-4.png',
-        number: '4',
-        objectives: ['Apprendre des identifiants techniques de base', 'Découvrir des problèmes des identifiants stables']
-    },
-    {
         id: 'd1',
         type: 'simple-question',
         name: 'Selon-vous ?',
@@ -989,14 +929,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             '<li>cet identifiant est utilisé par les régies, pas par les annonceurs qui n\'ont qu\'une information agrégée de profil, information fournie par la régie dont c\'est le travail.</li>' +
             '</ol>',
 
-    },
-    {
-        id: 'e',
-        type: 'chapter',
-        name: 'Contrôle utilisateur',
-        image: 'assets/demo/VP/vp-chapitre-5.png',
-        number: '5',
-        objectives: ['Comparer une contrôle utilisateur dans le cas de Google et Apple']
     },
     {
         id: 'e1',
@@ -1245,14 +1177,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         conditional: true
     },
     {
-        id: 'f',
-        type: 'chapter',
-        name: 'Limites du contrôle utilisateur Apple et Google',
-        image: 'assets/demo/VP/vp-chapitre-5.png',
-        number: '6',
-        objectives: ['Mettre en pratique la protection de vos données']
-    },
-    {
         id: 'f1',
         type: 'simple-question',
         name: 'Selon-vous ?',
@@ -1409,14 +1333,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
         conditional: true
     },
     {
-        id: 'g',
-        type: 'chapter',
-        name: 'Cercle vertueux',
-        image: 'assets/demo/VP/vp-chapitre-7.png',
-        number: '7',
-        objectives: ['Apprendre les particularités de cercle vertueux : modèle gratuit et payant']
-    },
-    {
         id: 'g1',
         type: 'simple-question',
         name: 'Selon-vous ?',
@@ -1481,14 +1397,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
 
     },
     {
-        id: 'h',
-        type: 'chapter',
-        name: 'Conclusion',
-        image: 'assets/demo/VP/vp-chapitre-9.png',
-        number: '8',
-        objectives: ['Se rendre compte du rôle et des droits des acteurs dans l’écosystème']
-    },
-    {
         id: 'h1',
         type: 'simple-question',
         name: 'Selon-vous ?',
@@ -1550,14 +1458,6 @@ const VPContents: (Content | Chapter | Assessment | Html | Video | SimpleQuestio
             correctResponse: ['A', 'C'],
             explanation: 'A VENIR'
         }
-    },
-    {
-        id: 'i',
-        type: 'chapter',
-        name: 'Contrôle d’utilisateur',
-        image: 'assets/demo/VP/vp-chapitre-6.jpg',
-        number: 'Démo',
-        objectives: ['Apprendre à contrôler les autorisations']
     },
     {
         id: 'i1',
@@ -1728,194 +1628,62 @@ export const MockLibrary: Epoc[] = [
             'D’avoir un regard critique sur le monde numérique des smartphones'
         ],
         certificateScore: 5,
-        parts: [{
-            title: 'Partie théorique',
-            outlineTree: [
-                {
-                    contentId: 'a',
-                    children: [
-                        {
-                            contentId: 'a1'
-                        },
-                        {
-                            contentId: 'a2'
-                        },
-                        {
-                            contentId: 'a3'
-                        }
-                    ]
-                },
-                {
-                    contentId: 'b',
-                    children: [
-                        {
-                            contentId: 'b1'
-                        },
-                        {
-                            contentId: 'b2'
-                        },
-                        {
-                            contentId: 'b3'
-                        },
-                        {
-                            contentId: 'b4'
-                        }
-                    ]
-                },
-                {
-                    contentId: 'c',
-                    children: [
-                        {
-                            contentId: 'c1'
-                        },
-                        {
-                            contentId: 'c2'
-                        },
-                        {
-                            contentId: 'c3'
-                        },
-                        {
-                            contentId: 'c4'
-                        }
-                    ]
-                },
-                {
-                    contentId: 'd',
-                    children: [
-                        {
-                            contentId: 'd1'
-                        },
-                        {
-                            contentId: 'd2'
-                        },
-                        {
-                            contentId: 'd3'
-                        },
-                        {
-                            contentId: 'd4'
-                        }
-                    ]
-                },
-                {
-                    contentId: 'e',
-                    children: [
-                        {
-                            contentId: 'e1'
-                        },
-                        {
-                            contentId: 'e2'
-                        },
-                        {
-                            contentId: 'e3'
-                        },
-                        {
-                            contentId: 'e4'
-                        },
-                        {
-                            contentId: 'e411'
-                        },
-                        {
-                            contentId: 'e412'
-                        },
-                        {
-                            contentId: 'e421'
-                        },
-                        {
-                            contentId: 'e422'
-                        }
-                    ]
-                },
-                {
-                    contentId: 'i',
-                    children: [
-                        {
-                            contentId: 'i1'
-                        },
-                        {
-                            contentId: 'i10'
-                        },
-                        {
-                            contentId: 'i11'
-                        },
-                        {
-                            contentId: 'i12'
-                        },
-                        {
-                            contentId: 'i20'
-                        },
-                        {
-                            contentId: 'i21'
-                        },
-                        {
-                            contentId: 'i22'
-                        },
-                        {
-                            contentId: 'i23'
-                        }
-                    ],
-                },
-                {
-                    contentId: 'f',
-                    children: [
-                        {
-                            contentId: 'f1'
-                        },
-                        {
-                            contentId: 'f2'
-                        },
-                        {
-                            contentId: 'e4'
-                        },
-                        {
-                            contentId: 'f21'
-                        },
-                        {
-                            contentId: 'f211'
-                        },
-                        {
-                            contentId: 'f212'
-                        },
-                        {
-                            contentId: 'f22'
-                        },
-                        {
-                            contentId: 'f221'
-                        },
-                        {
-                            contentId: 'f222'
-                        }
-                    ]
-                },
-                {
-                    contentId: 'g',
-                    children: [
-                        {
-                            contentId: 'g1'
-                        },
-                        {
-                            contentId: 'g2'
-                        },
-                        {
-                            contentId: 'g3'
-                        }
-                    ]
-                },
-                {
-                    contentId: 'h',
-                    children: [
-                        {
-                            contentId: 'h1'
-                        },
-                        {
-                            contentId: 'h2'
-                        },
-                        {
-                            contentId: 'h3'
-                        }
-                    ]
-                }
-            ]
-        }],
+        chapters: [
+            {
+                name: 'Pourquoi le smartphone intéresse-t-il tant ?',
+                image: 'assets/demo/VP/vp-chapitre-1.png',
+                objectives: ['Identifier des données collectées sur notre portable'],
+                contentsIds:['a1', 'a2', 'a3']
+            },
+            {
+                name: 'L\'écosystème autour des applications pour smartphones',
+                image: 'assets/demo/VP/vp-chapitre-2.png',
+                objectives: ['Identifier les acteurs de cet écosystème autour des applications et leurs fonctions'],
+                contentsIds:['b1', 'b2', 'b3', 'b4', 'b5']
+            },
+            {
+                name: 'Gratuité contre publicité ciblée : où est le problème ?',
+                image: 'assets/demo/VP/vp-chapitre-3.jpg',
+                objectives: ['Découvrir des problèmes de fond du modèle économique'],
+                contentsIds:['c1', 'c2', 'c3', 'c4']
+            },
+            {
+                name: 'Données personnelles : Gros plan sur les identifiants techniques',
+                image: 'assets/demo/VP/vp-chapitre-4.png',
+                objectives: ['Apprendre des identifiants techniques de base', 'Découvrir des problèmes des identifiants stables'],
+                contentsIds:['d1', 'd2', 'd3', 'd4']
+            },
+            {
+                name: 'Contrôle utilisateur',
+                image: 'assets/demo/VP/vp-chapitre-5.png',
+                objectives: ['Comparer une contrôle utilisateur dans le cas de Google et Apple'],
+                contentsIds:['e1', 'e2', 'e3', 'e4', 'e411', 'e412', 'e421', 'e422', 'e43']
+            },
+            {
+                name: 'Contrôle d’utilisateur',
+                image: 'assets/demo/VP/vp-chapitre-6.jpg',
+                objectives: ['Apprendre à contrôler les autorisations'],
+                contentsIds:['i1', 'i10', 'i11', 'i12', 'i20', 'i21', 'i22', 'i23']
+            },
+            {
+                name: 'Limites du contrôle utilisateur Apple et Google',
+                image: 'assets/demo/VP/vp-chapitre-5.png',
+                objectives: ['Mettre en pratique la protection de vos données'],
+                contentsIds:['f1', 'f2', 'e4', 'f21', 'f211', 'f212', 'f22', 'f221', 'f222']
+            },
+            {
+                name: 'Cercle vertueux',
+                image: 'assets/demo/VP/vp-chapitre-7.png',
+                objectives: ['Apprendre les particularités de cercle vertueux : modèle gratuit et payant'],
+                contentsIds:['g1', 'g2', 'g3']
+            },
+            {
+                name: 'Conclusion',
+                image: 'assets/demo/VP/vp-chapitre-9.png',
+                objectives: ['Se rendre compte du rôle et des droits des acteurs dans l’écosystème'],
+                contentsIds:['h1', 'h2', 'h3']
+            }
+        ],
         content: VPContents
     },
     {
@@ -1942,29 +1710,26 @@ export const MockLibrary: Epoc[] = [
             'Savoir des machins'
         ],
         certificateScore: 60,
-        parts: [{
-            title: 'Formation ZRR',
-            outlineTree: [
-                {contentId: 'a'},
-                {contentId: 'b'},
-                {contentId: 'c'},
-                {contentId: 'd'},
-                {contentId: 'e'},
-                {contentId: 'f'},
-                {contentId: 'g'},
-                {contentId: 'h'},
-                {contentId: 'i'},
-                {contentId: 'j'},
-                {contentId: 'k'},
-                {contentId: 'l'},
-                {contentId: 'm'},
-                {contentId: 'n'},
-                {contentId: 'o'},
-                {contentId: 'p'},
-                {contentId: 'q'},
-                {contentId: 'r'}
-            ]
-        }],
+        chapters: [
+            {
+                name: 'Qu\'est-ce que le dispositif de PPST ? (protection du Potentiel Scientifique et Technique de la Nation)',
+                image: 'assets/demo/ZRR/zrr-ppst-security.jpg',
+                objectives: ['Apprendre un truc'],
+                contentsIds: []
+            },
+            {
+                name: 'Les risques PPST',
+                contentsIds: []
+            },
+            {
+                name: 'Accès aux données sensibles, accueil des visiteurs et sanctions',
+                contentsIds: []
+            },
+            {
+                name: 'Echelle de sensibilité',
+                contentsIds: []
+            },
+        ],
         content: ZRRContents
     }
 ];

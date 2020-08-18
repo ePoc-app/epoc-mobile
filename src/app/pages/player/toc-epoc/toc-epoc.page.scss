@@ -12,18 +12,9 @@ ion-title{
   font-weight: bold;
 }
 
-.part{
+.chapters{
   &:last-child{
     margin-bottom: 0;
-  }
-
-  &-header{
-    margin:0;
-    padding: 1em;
-
-    span{
-      border-bottom: 2px solid var(--ion-color-inria-blue);
-    }
   }
 }
 

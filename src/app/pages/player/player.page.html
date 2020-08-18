@@ -22,65 +22,51 @@
     <div class="pages-container" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
       <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform" #pageWrapper>
         <ng-container *ngIf="dataInitialized">
-          <ng-container *ngFor="let content of contents; let index = index">
+          <div #node id="content-chapter" class="page-content page-content-fs page-content-chapter">
+            <div class="page-content-fs-inner">
+              <ion-card class="chapter-container">
+                <ion-card-content>
+                  <div class="title-wrapper">
+                    <div class="title-container">
+                      <h3 class="number">Chapitre {{chapterId + 1}} :</h3>
+                      <h5 class="title">
+                        {{chapter.name}}
+                      </h5>
+                    </div>
+                  </div>
+
+                  <ion-grid>
+                    <ion-row class="chapter-specs ion-text-center">
+                      <ion-col size="4">
+                        <div class="chapter-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
+                        <div class="chapter-spec-value">{{chapter.time}} min</div>
+                      </ion-col>
+                      <ion-col size="4">
+                        <div class="chapter-spec-icon"><ion-icon name="videocam" mode="md" color="inria-blue"></ion-icon></div>
+                        <div class="chapter-spec-value">{{chapter.videoCount}} {{chapter.videoCount > 1 ? 'videos':'video'}}</div>
+                      </ion-col>
+                      <ion-col size="4">
+                        <div class="chapter-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
+                        <div class="chapter-spec-value">{{chapter.assessmentCount}} {{chapter.assessmentCount > 1 ? 'activités':'activité'}}</div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+
+                  <ng-container *ngIf="chapter.objectives">
+                    <h4 class="chapter-objectives-label">{{chapter.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</h4>
+                    <div class="chapter-objectives">
+                      <div class="chapter-objective" *ngFor="let objective of chapter.objectives">
+                        <ion-icon name="locate" mode="md"></ion-icon>
+                        <ion-text>{{objective}}</ion-text>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ion-card-content>
+              </ion-card>
+            </div>
+          </div>
+          <ng-container *ngFor="let content of chapter.contents; let index = index">
             <ng-container *ngIf="!content.conditional || ( content.conditional && reading.flags.indexOf(content.id) !== -1 )">
-
-              <ng-container *ngIf="content.type === 'cover'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-cover">
-                  <ion-img [src]="epoc.image"></ion-img>
-                  <h2>{{epoc.title}}</h2>
-                  <div *ngFor="let author of epoc.authors">
-                    <ion-text>{{author.name}}</ion-text>
-                  </div>
-                  <div class="edition">2020 edition<br/>Inria Learning Lab</div>
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="content.type === 'chapter'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-chapter">
-                  <div class="page-content-fs-inner">
-                    <ion-card class="chapter-container">
-                      <ion-card-content>
-                        <div class="title-wrapper">
-                          <div class="title-container">
-                            <h3 class="number">Chapitre {{content.number}} :</h3>
-                            <h5 class="title">
-                              {{content.name}}
-                            </h5>
-                          </div>
-                        </div>
-
-                        <ion-grid>
-                          <ion-row class="chapter-specs ion-text-center">
-                            <ion-col size="4">
-                              <div class="chapter-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
-                              <div class="chapter-spec-value">{{content.time}} min</div>
-                            </ion-col>
-                            <ion-col size="4">
-                              <div class="chapter-spec-icon"><ion-icon name="videocam" mode="md" color="inria-blue"></ion-icon></div>
-                              <div class="chapter-spec-value">{{content.videoCount}} {{content.videoCount > 1 ? 'videos':'video'}}</div>
-                            </ion-col>
-                            <ion-col size="4">
-                              <div class="chapter-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
-                              <div class="chapter-spec-value">{{content.assessmentCount}} {{content.assessmentCount > 1 ? 'activités':'activité'}}</div>
-                            </ion-col>
-                          </ion-row>
-                        </ion-grid>
-
-                        <ng-container *ngIf="content.objectives">
-                          <h4 class="chapter-objectives-label">{{content.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</h4>
-                          <div class="chapter-objectives">
-                            <div class="chapter-objective" *ngFor="let objective of content.objectives">
-                              <ion-icon name="locate" mode="md"></ion-icon>
-                              <ion-text>{{objective}}</ion-text>
-                            </div>
-                          </div>
-                        </ng-container>
-                      </ion-card-content>
-                    </ion-card>
-                  </div>
-                </div>
-              </ng-container>
 
               <ng-container *ngIf="content.type === 'html'">
                 <div #node [id]="'content-'+content.id" class="page-content page-content-html">
@@ -165,7 +151,7 @@
                 <ion-icon name="ribbon" size="large"></ion-icon>
                 <h4>Fin du chapitre</h4>
               </div>
-              <div class="custom-card next-chapter-card">
+              <div class="custom-card next-chapter-card" *ngIf="nextChapter">
                 <div class="custom-card-header">
                   <img [src]="nextChapter.image" [alt]="nextChapter.name"/>
                 </div>
@@ -177,9 +163,17 @@
                     <ion-icon name="list" slot="start" mode="ios"></ion-icon>
                     Table des matières
                   </ion-button>
-                  <ion-button expand="block" [routerLink]="'/player/play/'+epoc.id+'/'+nextChapter.id" *ngIf="nextChapter">
+                  <ion-button expand="block" [routerLink]="'/player/play/'+epoc.id+'/'+(chapterId+1)">
                     <ion-icon name="arrow-dropright" slot="end" mode="md"></ion-icon>
                     Chapitre suivant
+                  </ion-button>
+                </div>
+              </div>
+              <div class="custom-card next-chapter-card" *ngIf="!nextChapter">
+                <div class="custom-card-footer">
+                  <ion-button color="medium" expand="block" [routerLink]="'/player/toc/'+epoc.id">
+                    <ion-icon name="list" slot="start" mode="ios"></ion-icon>
+                    Table des matières
                   </ion-button>
                 </div>
               </div>

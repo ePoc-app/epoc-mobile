@@ -4,6 +4,7 @@ import {html} from '../types';
 export class Assessment extends Content {
     items?: Array<Question>;
     time?: number;
+    // initialized at runtime
     scoreTotal?: number;
 }
 
