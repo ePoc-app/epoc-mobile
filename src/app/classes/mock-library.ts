@@ -328,7 +328,8 @@ const ZRRContents: (Assessment | Html | Video | SimpleQuestion)[] = [
                         value: 'D'
                     },
                 ],
-                correctResponse: 'CBDA'
+                correctResponse: 'CBDA',
+                explanation:''
             },
             {
                 type: 'multiple-choice',
@@ -349,7 +350,8 @@ const ZRRContents: (Assessment | Html | Video | SimpleQuestion)[] = [
                         value: 'C'
                     }
                 ],
-                correctResponse: ['B', 'C']
+                correctResponse: ['B', 'C'],
+                explanation:''
             },
             {
                 type: 'choice',

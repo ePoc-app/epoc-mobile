@@ -6,10 +6,13 @@ export class Assessment extends Content {
     time?: number;
     // initialized at runtime
     scoreTotal?: number;
+    chapterId?: number;
 }
 
 export class SimpleQuestion extends Content {
     question: Question;
+    // initialized at runtime
+    chapterId?: number;
 }
 
 export class Question {
