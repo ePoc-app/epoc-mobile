@@ -35,20 +35,22 @@ export class LibraryService {
 
     initCourseContent(epoc: Epoc) {
         epoc.assessments = [];
-        epoc.chapters.forEach((chapter) => {
+        epoc.chapters.forEach((chapter, index) => {
             chapter.time = 0;
             chapter.videoCount = 0;
             chapter.contents = chapter.contentsIds.reduce((contents, uid) => {
                 const currentContent = epoc.content.find(item => item.id === uid);
 
-                if (
-                    currentContent.type === 'assessment' ||
-                    currentContent.type === 'assessment' && (currentContent as SimpleQuestion).question.score > 0
-                ) {
+                if (currentContent.type === 'assessment') {
                     (currentContent as Assessment).scoreTotal = (currentContent as Assessment).items.reduce(
                         (total, item) => item.score + total, 0
                     );
+                    (currentContent as Assessment).chapterId = index;
                     chapter.time = chapter.time + (currentContent as Assessment).items.length;
+                    epoc.assessments.push((currentContent as Assessment));
+                } else if (currentContent.type === 'simple-question' && (currentContent as SimpleQuestion).question.score > 0) {
+                    (currentContent as Assessment).items = [(currentContent as SimpleQuestion).question];
+                    (currentContent as Assessment).chapterId = index;
                     epoc.assessments.push((currentContent as Assessment));
                 } else if (currentContent.type === 'video') {
                     chapter.videoCount++;
