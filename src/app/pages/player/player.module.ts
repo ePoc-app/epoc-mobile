@@ -31,9 +31,9 @@ import {CourseChoiceComponent} from './course-choice/course-choice.component';
     FormsModule,
     AssessmentButtonModule,
     RouterModule.forChild([
-        { path: 'play/:id', component: PlayerPage },
-        { path: 'play/:id/content/:contentId', component: PlayerPage },
-        { path: 'play/:id/:progress', component: PlayerPage },
+        { path: 'play/:id', component: TocEpocPage },
+        { path: 'play/:id/:chapter', component: PlayerPage },
+        { path: 'play/:id/:chapter/content/:contentId', component: PlayerPage },
         { path: 'about/:id', component: AboutEpocPage },
         { path: 'download/:id', component: DownloadEpocPage },
         { path: 'score/:id', component: ScoreEpocPage },
@@ -41,7 +41,7 @@ import {CourseChoiceComponent} from './course-choice/course-choice.component';
         { path: 'bookmarks/:id', component: BookmarksEpocPage },
         { path: 'settings', component: PlayerSettingsPage },
         { path: 'assessment/:epocId/:assessmentId', component: AssessmentPage },
-        { path: '**',   redirectTo: '/tabs/tab1' },
+        { path: '**',   redirectTo: '/' },
     ]),
     ChartsModule
   ],

@@ -37,7 +37,7 @@
                 <assessment-button [content]="assessment" [epoc]="epoc"></assessment-button>
               </ng-container>
               <ng-container *ngIf="assessment.type === 'simple-question'">
-                <ion-button expand="block" strong="true" [routerLink]="'/player/play/'+epoc.id+'/content/'+assessment.id">Voir la question</ion-button>
+                <ion-button expand="block" strong="true" [routerLink]="'/player/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">Voir la question</ion-button>
               </ng-container>
             </ion-card-content>
           </ion-card>

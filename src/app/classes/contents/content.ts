@@ -7,6 +7,7 @@ export abstract class Content {
     depth?: number;
     conditional?: boolean;
     conditionResolver?: ScoreResolver | ChoiceResolver;
+    chapterId?: uid;
 }
 
 abstract class Resolver {
