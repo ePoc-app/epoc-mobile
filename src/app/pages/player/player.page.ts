@@ -26,6 +26,7 @@ export class PlayerPage implements OnInit, DoCheck {
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     contents: Content[] = [];
+    nextChapter;
     reading: Reading;
 
     // Reader
@@ -93,6 +94,14 @@ export class PlayerPage implements OnInit, DoCheck {
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
 
+            const chapterId = this.route.snapshot.paramMap.get('chapter');
+            const chapterIndex = epoc.chapters.findIndex(chapter => chapter.contentId === chapterId);
+
+            if (chapterIndex < epoc.chapters.length - 1) {
+                this.nextChapter = epoc.chapters[chapterIndex + 1].contents[0];
+            }
+
+            this.contents = epoc.chapters[chapterIndex].contents;
             this.assessments = [];
 
             epoc.parts.forEach((part) => {
@@ -139,12 +148,9 @@ export class PlayerPage implements OnInit, DoCheck {
         if (!this.readerInitialized && this.dataInitialized && this.nodes
             && this.nodes.length > 0 && this.pageWrapper.nativeElement.scrollWidth > 0) {
             this.readerInitialized = true;
-            // Go to progress (percentage)
-            const progress = this.route.snapshot.paramMap.has('progress') && !Number.isNaN(+this.route.snapshot.paramMap.get('progress')) ?
-                +this.route.snapshot.paramMap.get('progress') : this.reading.progress;
             // Go to specific content
             const contentId = this.route.snapshot.paramMap.get('contentId');
-            this.initReader(progress, contentId);
+            this.initReader(contentId);
         }
     }
 
@@ -180,7 +186,7 @@ export class PlayerPage implements OnInit, DoCheck {
         }
     }
 
-    initReader(progress?: number, contentId?: string) {
+    initReader(contentId?: string) {
         this.pagePerView = Math.ceil(window.innerWidth / 768);
         this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
         this.pageCount = this.getPageCount();
@@ -189,14 +195,10 @@ export class PlayerPage implements OnInit, DoCheck {
             this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
             this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
             this.calcCurrentPage();
-        } else if (progress) {
-            this.changeCurrentPage(Math.floor(progress / 100 * this.pageCount));
-            this.goToPage(this.currentPage);
-            this.location.replaceState('/player/play/' + this.epoc.id);
         } else {
             this.calcCurrentPage();
         }
-        this.loading = false;
+        setTimeout(() => { this.loading = false }, 300);
     }
 
     getPageCount() {

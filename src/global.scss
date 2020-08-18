@@ -199,6 +199,21 @@ video {
    }
 }
 
+.custom-card{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-grow: 1;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
+
+  .custom-card-content, .custom-card-footer {
+    padding: 1em;
+  }
+}
+
 .transcript{
   padding: 1em;
 }

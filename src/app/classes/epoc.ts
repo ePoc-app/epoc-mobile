@@ -13,6 +13,7 @@ export class Epoc {
     certificateScore: number;
     parts: Array<Part>;
     content: Array<Content>;
+    chapters?: CourseNode[];
     chapterCount?: number;
     assessmentCount?: number;
 }
@@ -26,4 +27,5 @@ export class Part {
 export class CourseNode {
     contentId: string;
     children?: CourseNode[];
+    contents?: Content[];
 }

@@ -193,7 +193,7 @@ export class AssessmentPage implements OnInit {
     back(event) {
         event.preventDefault();
         event.stopPropagation();
-        this.router.navigateByUrl('/player/play/' + this.epoc.id + '/content/' + this.assessmentId);
+        this.router.navigateByUrl('/player/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId);
     }
 
     retry() {
@@ -201,17 +201,6 @@ export class AssessmentPage implements OnInit {
     }
 
     resume() {
-        let nextContent;
-        this.epoc.parts.forEach(part => {
-            const index = part.contents.indexOf(this.assessmentId);
-            if (index !== -1 && index + 1 < part.contents.length) {
-                nextContent = part.contents[index + 1];
-            }
-        });
-        if (nextContent) {
-            this.router.navigateByUrl('/player/play/' + this.epoc.id + '/content/' + nextContent);
-        } else {
-            this.router.navigateByUrl('/player/play/' + this.epoc.id + '/content/' + this.assessmentId);
-        }
+        this.router.navigateByUrl('/player/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId);
     }
 }

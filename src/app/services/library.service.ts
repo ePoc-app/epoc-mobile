@@ -6,6 +6,7 @@ import {Epoc} from '../classes/epoc';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {Content} from '../classes/contents/content';
 import {Assessment} from '../classes/contents/assessment';
+import {Chapter} from '../classes/contents/chapter';
 
 @Injectable({
     providedIn: 'root'
@@ -35,8 +36,19 @@ export class LibraryService {
     }
 
     initCourseContent(epoc: Epoc) {
+        epoc.chapters = [];
         epoc.parts.forEach((part) => {
             part.contents = this.contentsFromTree(epoc, part.outlineTree, 1);
+            part.outlineTree.forEach( (chapter) => {
+                const currentChapter = (epoc.content.find(item => item.id === chapter.contentId) as Chapter);
+                currentChapter.time = 0;
+                currentChapter.videoCount = 0;
+                currentChapter.assessmentCount = 0;
+                epoc.chapterCount = epoc.chapterCount ?  epoc.chapterCount + 1 : 1;
+                chapter.contents = [currentChapter];
+                chapter.contents = chapter.contents.concat(this.contentsFromTree(epoc, chapter.children, 2, currentChapter));
+                epoc.chapters.push(chapter);
+            });
         });
         return epoc;
     }
@@ -67,6 +79,9 @@ export class LibraryService {
                         currentChapter.videoCount++;
                         currentChapter.time = currentChapter.time + 3;
                     }
+                }
+                if (currentChapter) {
+                    currentContent.chapterId = currentChapter.id;
                 }
                 contents.push(currentContent);
 
