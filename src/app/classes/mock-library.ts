@@ -1514,7 +1514,7 @@ const VPContents: (Assessment | Html | Video | SimpleQuestion)[] = [
         id: 'i11',
         type: 'video',
         name: 'Vidéo Apple : haut niveau',
-        source: 'assets/demo/haut-niveau-ios-480p.mp4',
+        source: 'assets/demo/VP/haut-niveau-ios-480p.mp4',
         subtitles: '',
         summary: '<ul>' +
             '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications à bas niveau sur un iPhone</li>' +
@@ -1527,7 +1527,7 @@ const VPContents: (Assessment | Html | Video | SimpleQuestion)[] = [
         id: 'i12',
         type: 'video',
         name: 'Vidéo Apple : bas niveau',
-        source: 'assets/demo/bas-niveau-ios-480p.mp4',
+        source: 'assets/demo/VP/bas-niveau-ios-480p.mp4',
         subtitles: '',
         summary: '<ul>' +
             '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications à bas niveau sur un iPhone</li>' +
@@ -1568,7 +1568,7 @@ const VPContents: (Assessment | Html | Video | SimpleQuestion)[] = [
         id: 'i21',
         type: 'video',
         name: 'Vidéo Android haut niveau',
-        source: 'assets/demo/android-haut-niveau-480p.mp4',
+        source: 'assets/demo/VP/android-haut-niveau-480p.mp4',
         subtitles: '',
         summary: '<ul>' +
             '<li>Objectif : voir comment un utilisateur peut contrôler les autorisations associées à ses applications lors de l’installation sur un Android</li>' +
@@ -1581,7 +1581,7 @@ const VPContents: (Assessment | Html | Video | SimpleQuestion)[] = [
         id: 'i22',
         type: 'video',
         name: 'Vidéo Android bas niveau',
-        source: 'assets/demo/bas-niveau-android-480p.mp4',
+        source: 'assets/demo/VP/bas-niveau-android-480p.mp4',
         subtitles: '',
         summary: '<ul>' +
             '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications lors de l’installation sur un Android</li>' +
@@ -1594,7 +1594,7 @@ const VPContents: (Assessment | Html | Video | SimpleQuestion)[] = [
         id: 'i23',
         type: 'video',
         name: 'Vidéo Android installation',
-        source: 'assets/demo/bas-niveau-android-480p.mp4',
+        source: 'assets/demo/VP/installation-android-480p.mp4',
         subtitles: '',
         summary: '<ul>' +
             '<li><b>Objectif :</b> voir comment un utilisateur peut contrôler les autorisations associées à ses applications sur un Android</li>' +
