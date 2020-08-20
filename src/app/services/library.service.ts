@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Observable, of, ReplaySubject} from 'rxjs';
-
-import {MockLibrary} from '../classes/mock-library';
 import {Epoc} from '../classes/epoc';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
@@ -13,21 +12,17 @@ export class LibraryService {
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
     protected epocId: string;
 
-    constructor() {}
+    constructor(private http: HttpClient) {}
 
     getLibrary(): Observable<Epoc[]> {
-        return of(MockLibrary);
+        return null;
     }
 
     getEpoc(id: string): Observable<Epoc> {
         if (this.epocId !== id) {
             this.epocId = id;
-            this.getLibrary().pipe(
-                map((epocs: Epoc[]) => {
-                    return epocs.find(item => item.id === id);
-                })
-            ).subscribe((epoc) => {
-                this.epoc$.next(this.initCourseContent(epoc));
+            this.http.get('./assets/demo/' + this.epocId + '/content.json').subscribe((epoc) => {
+                this.epoc$.next(this.initCourseContent(epoc as Epoc));
             });
         }
         return this.epoc$.asObservable().pipe(distinctUntilChanged());
