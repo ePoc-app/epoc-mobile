@@ -21,7 +21,7 @@ export class LibraryService {
     getEpoc(id: string): Observable<Epoc> {
         if (this.epocId !== id) {
             this.epocId = id;
-            this.http.get('./assets/demo/' + this.epocId + '/content.json').subscribe((epoc) => {
+            this.http.get('./assets/demo/content.json').subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
             });
         }
