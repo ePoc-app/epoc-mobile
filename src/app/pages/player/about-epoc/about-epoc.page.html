@@ -16,11 +16,11 @@
     <ion-row class="epoc-specs ion-text-center">
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="book" mode="md" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value">{{epoc.chapterCount}} {{epoc.chapterCount > 1 ? 'chapitres':'chapitre'}}</div>
+        <div class="epoc-spec-value">{{epoc.chapters.length}} {{epoc.chapters.length > 1 ? 'chapitres':'chapitre'}}</div>
       </ion-col>
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value">{{epoc.assessmentCount}} {{epoc.assessmentCount > 1 ? 'activités':'activité'}}</div>
+        <div class="epoc-spec-value">{{epoc.assessments.length}} {{epoc.assessments.length > 1 ? 'activités':'activité'}}</div>
       </ion-col>
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>

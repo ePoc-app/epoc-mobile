@@ -18,8 +18,6 @@ export class AboutEpocPage implements OnInit {
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     contents: Content[] = [];
-    chapterCount = 0;
-    assessmentCount = 0;
     hasPlayed = false;
     selectedTab = 0;
 

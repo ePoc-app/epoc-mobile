@@ -33,6 +33,7 @@ export class LibraryService {
         epoc.chapters.forEach((chapter, index) => {
             chapter.time = 0;
             chapter.videoCount = 0;
+            chapter.assessmentCount = 0;
             chapter.contents = chapter.contentsIds.reduce((contents, uid) => {
                 const currentContent = epoc.content.find(item => item.id === uid);
 
@@ -42,6 +43,7 @@ export class LibraryService {
                     );
                     (currentContent as Assessment).chapterId = index;
                     chapter.time = chapter.time + (currentContent as Assessment).items.length;
+                    chapter.assessmentCount++;
                     epoc.assessments.push((currentContent as Assessment));
                 } else if (currentContent.type === 'simple-question' && (currentContent as SimpleQuestion).question.score > 0) {
                     (currentContent as Assessment).items = [(currentContent as SimpleQuestion).question];
