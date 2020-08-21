@@ -33,7 +33,8 @@ export class PlayerPage implements OnInit {
     loading = true;
     currentPage = 0;
     slidesOptions = {
-        slidesPerView: Math.ceil(window.innerWidth / 640)
+        slidesPerView: Math.ceil(window.innerWidth / 640),
+        initialSlide: 0
     };
 
     assessments: Assessment[];
@@ -158,7 +159,6 @@ export class PlayerPage implements OnInit {
     setAssessmentsData() {
         this.assessmentData = {
             totalUserScore: 0,
-            totalUserScoreInPercent: 0,
             totalScore: 0
         };
 
@@ -172,9 +172,7 @@ export class PlayerPage implements OnInit {
             this.assessmentData.totalScore += scoreTotal;
         });
 
-        this.assessmentData.totalUserScoreInPercent = Math.round(this.assessmentData.totalUserScore / this.assessmentData.totalScore * 100);
-
-        if (this.assessmentData.totalUserScoreInPercent >= this.epoc.certificateScore) {
+        if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
             this.showCertificateCard();
         }
     }

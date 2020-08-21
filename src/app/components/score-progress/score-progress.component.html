@@ -1,0 +1,7 @@
+<div class="progress-container">
+  <div class="progress-track">
+    <div class="progress" [ngStyle]="{'width': progress + '%'}"></div>
+    <div class="progress-delta" [ngStyle]="{'left': progress + '%', 'width': currentDelta + '%'}"></div>
+    <div class="progress-threshold" [ngStyle]="{'left': threshold + '%'}"></div>
+  </div>
+</div>

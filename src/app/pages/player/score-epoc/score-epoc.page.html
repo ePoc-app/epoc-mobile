@@ -10,15 +10,16 @@
 <ion-content>
   <ion-grid *ngIf="assessmentData">
     <ion-row>
-      <ion-col>
-        <canvas baseChart [datasets]="doughnutChartDataset" [labels]="doughnutChartLabels"
-                [options]="doughnutChartOptions" chartType="doughnut">
-        </canvas>
+      <ion-col class="total-score">
+        <h2>Votre score</h2>
+        <b>{{assessmentData.totalUserScore}} pts</b>
+        <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
+                        [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"></score-progress>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button [color]="assessmentData.totalUserScoreInPercent >= epoc.certificateScore ? 'success':'medium'" expand="block" (click)="getCertificate()">Télécharger l'attestation <ion-icon name="download" slot="end"></ion-icon></ion-button>
+        <ion-button [color]="assessmentData.totalUserScore >= epoc.certificateScore ? 'success':'medium'" expand="block" (click)="getCertificate()">Télécharger l'attestation <ion-icon name="download" slot="end"></ion-icon></ion-button>
       </ion-col>
     </ion-row>
     <ion-row>

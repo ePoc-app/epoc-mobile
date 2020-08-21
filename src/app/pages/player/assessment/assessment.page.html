@@ -44,19 +44,22 @@
     </ng-container>
     <ion-slide class="assessment-end">
       <ion-card mode="ios" class="explanation-card">
-        <ion-card-header mode="ios">
+        <ion-card-header mode="ios" *ngIf="assessmentData">
           <ion-card-subtitle mode="ios">Résumé de l'activité</ion-card-subtitle>
-          <ion-card-title mode="ios" *ngIf="getScoreTotal() > 0">Votre score</ion-card-title>
-          <div class="score-donut" *ngIf="getScoreTotal() > 0">
-            <canvas baseChart [datasets]="doughnutChartDataset" [labels]="doughnutChartLabels"
-                    [options]="doughnutChartOptions" chartType="doughnut">
-            </canvas>
+          <ion-card-title mode="ios" *ngIf="scoreMax > 0">Score</ion-card-title>
+          <div class="score-chart" *ngIf="scoreMax > 0">
+            <div><b>{{assessmentData.userScore}} / {{scoreMax}} pts</b></div>
+            <div><b>Score total :</b> {{assessmentData.totalUserScore + assessmentData.userScore}} pts</div>
+            <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
+                            [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
+                            [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"></score-progress>
           </div>
-          <ion-card-title mode="ios" *ngIf="getScoreTotal() <= 0">Non noté</ion-card-title>
+
+          <ion-card-title mode="ios" *ngIf="scoreMax <= 0">Non noté</ion-card-title>
         </ion-card-header>
         <ion-card-content mode="ios">
-          <ion-button class="retry" color="warning" fill="outline" (click)="retry()"><ion-icon name="refresh"></ion-icon></ion-button>
-          <ion-button class="resume-course" (click)="resume()">Continuer le cours <ion-icon name="arrow-dropright" slot="end" mode="md"></ion-icon></ion-button>
+          <ion-button class="retry" color="medium" expand="block" (click)="retry()"><ion-icon name="refresh"></ion-icon> Réessayer</ion-button>
+          <ion-button class="resume-course" expand="block" (click)="resume()">Continuer le cours <ion-icon name="arrow-dropright" slot="end" mode="md"></ion-icon></ion-button>
         </ion-card-content>
       </ion-card>
     </ion-slide>
