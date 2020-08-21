@@ -238,6 +238,27 @@ ion-card{
           margin-bottom: 1em;
         }
       }
+
+      .follow-up{
+        padding: 4%;
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      .next-chapter-image{
+        width: 100%;
+        margin-bottom: 2%;
+        padding-bottom: 56.25%;
+        background: transparent no-repeat center center;
+        background-size: cover;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .next-chapter-image + p{
+        margin: 0;
+        padding: 4%;
+        text-align: left;
+      }
     }
   }
 }
