@@ -19,11 +19,12 @@
   </div>
 
   <div class="reader" [ngClass]="loading ? 'loading':''" [ngStyle]="readerStyles">
-    <div class="pages-container" (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)">
-      <div class="pages-wrapper" [ngClass]="{'scrolling': isScrolling}" [style.columnWidth]="columnWidth" [style.transform]="pageWrapperTransform" #pageWrapper>
-        <ng-container *ngIf="dataInitialized">
-          <div #node id="content-chapter" class="page-content page-content-fs page-content-chapter">
-            <div class="page-content-fs-inner">
+
+    <ng-container *ngIf="dataInitialized">
+      <ion-slides #readerSlides [options]="slidesOptions" (ionSlideWillChange)="onSlideChange()" class="reader-slider">
+        <ion-slide>
+          <div class="page-wrapper">
+            <div class="page-content page-content-chapter">
               <ion-card class="chapter-container">
                 <ion-card-content>
                   <div class="title-wrapper">
@@ -65,62 +66,67 @@
               </ion-card>
             </div>
           </div>
-          <ng-container *ngFor="let content of chapter.contents; let index = index">
-            <ng-container *ngIf="!content.conditional || ( content.conditional && reading.flags.indexOf(content.id) !== -1 )">
-
+        </ion-slide>
+        <ng-container *ngFor="let content of chapter.contents; let index = index">
+          <ng-container *ngIf="!content.conditional || ( content.conditional && reading.flags.indexOf(content.id) !== -1 )">
+            <ion-slide>
               <ng-container *ngIf="content.type === 'html'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-html">
+                <div class="page-wrapper">
                   <div class="page-header">
                     <ion-icon name="paper" size="large"></ion-icon>
                     <h4>{{content.name}}</h4>
                   </div>
-                  <div class="html-content" [innerHTML]="content.html"></div>
+                  <div class="page-content page-content-html">
+                    <div class="custom-card">
+                      <div class="custom-card-content" [innerHTML]="content.html"></div>
+                    </div>
+                  </div>
                 </div>
               </ng-container>
 
               <ng-container *ngIf="content.type === 'video'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-video">
-                  <div class="page-content-fs-inner">
-                    <div class="page-header">
-                      <ion-icon name="videocam" size="large"></ion-icon>
-                      <h4>{{content.name}}</h4>
-                    </div>
+                <div class="page-wrapper">
+                  <div class="page-header">
+                    <ion-icon name="videocam" size="large"></ion-icon>
+                    <h4>{{content.name}}</h4>
+                  </div>
+                  <div class="page-content page-content-video">
                     <video-player [content]="content"></video-player>
                   </div>
                 </div>
               </ng-container>
 
               <ng-container *ngIf="content.type === 'simple-question'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-simple-question">
-                  <div class="page-content-fs-inner">
-                    <div class="page-header">
-                      <ion-icon name="checkmark-circle-outline"></ion-icon>
-                      <h4>{{content.name}}</h4>
-                    </div>
+                <div class="page-wrapper">
+                  <div class="page-header">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                    <h4>{{content.name}}</h4>
+                  </div>
+                  <div class="page-content page-content-simple-question">
                     <simple-question [epocId]="epoc.id" [content]="content"></simple-question>
                   </div>
                 </div>
               </ng-container>
 
               <ng-container *ngIf="content.type === 'choice'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-course-choice">
-                  <div class="page-content-fs-inner">
-                    <div class="page-header">
-                      <ion-icon name="git-branch"></ion-icon>
-                      <h4>{{content.name}}</h4>
-                    </div>
+                <div class="page-wrapper">
+                  <div class="page-header">
+                    <ion-icon name="git-branch"></ion-icon>
+                    <h4>{{content.name}}</h4>
+                  </div>
+                  <div class="page-content page-content-course-choice">
                     <course-choice [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
                   </div>
                 </div>
               </ng-container>
 
               <ng-container *ngIf="content.type === 'assessment'">
-                <div #node [id]="'content-'+content.id" class="page-content page-content-fs page-content-assessment">
-                  <div class="page-content-fs-inner">
-                    <div class="page-header">
-                      <ion-icon name="checkbox-outline" size="large"></ion-icon>
-                      <h4>{{content.name}}</h4>
-                    </div>
+                <div class="page-wrapper">
+                  <div class="page-header">
+                    <ion-icon name="checkbox-outline" size="large"></ion-icon>
+                    <h4>{{content.name}}</h4>
+                  </div>
+                  <div class="page-content page-content-assessment">
                     <ion-card>
                       <img src="assets/img/activity.jpg" />
                       <ion-card-content>
@@ -142,18 +148,19 @@
                   </div>
                 </div>
               </ng-container>
-
-            </ng-container>
+            </ion-slide>
           </ng-container>
-          <div #node id="content-next" class="page-content page-content-fs page-content-next">
-            <div class="page-content-fs-inner">
-              <div class="page-header">
-                <ion-icon name="ribbon" size="large"></ion-icon>
-                <h4>Fin du chapitre</h4>
-              </div>
+        </ng-container>
+        <ion-slide>
+          <div class="page-wrapper">
+            <div class="page-header">
+              <ion-icon name="ribbon" size="large"></ion-icon>
+              <h4>Fin du chapitre</h4>
+            </div>
+            <div class="page-content page-content-next">
               <div class="custom-card next-chapter-card" *ngIf="nextChapter">
                 <div class="custom-card-header">
-                  <img [src]="nextChapter.image" [alt]="nextChapter.name"/>
+                  <img [src]="libraryService.rootFolder +  nextChapter.image" [alt]="nextChapter.name"/>
                 </div>
                 <div class="custom-card-content">
                   <b>Prochain chapitre : </b> {{nextChapter.name}}
@@ -179,9 +186,9 @@
               </div>
             </div>
           </div>
-        </ng-container>
-      </div>
-    </div>
+        </ion-slide>
+      </ion-slides>
+    </ng-container>
   </div>
   <div class="reader-progress">
     <ion-progress-bar color="inria" [value]="progress"></ion-progress-bar>
@@ -204,13 +211,13 @@
 <ion-footer>
   <ion-toolbar>
     <div class="reader-action">
-      <div class="page-action page-prev" [ngClass]="currentPage === 0 ? 'disable':''" (click)="prevPage()">
+      <div class="page-action page-prev" [ngClass]="currentPage === 0 ? 'disable':''" (click)="prevPage()" *ngIf="dataInitialized">
         <ion-icon name="arrow-dropleft" mode="md"></ion-icon>
       </div>
       <div class="page-action menu" (click)="displayMenu()">
         <ion-icon name="menu" mode="ios"></ion-icon>
       </div>
-      <div class="page-action page-next" [ngClass]="currentPage === pageCount ? 'disable':''" (click)="nextPage()">
+      <div class="page-action page-next" [ngClass]="currentPage >= chapter.contents.length + 1 ? 'disable':''" (click)="nextPage()" *ngIf="dataInitialized">
         <ion-icon name="arrow-dropright" mode="md"></ion-icon>
       </div>
     </div>

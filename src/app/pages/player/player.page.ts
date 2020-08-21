@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChildren, QueryList, AfterViewInit, ViewChild, DoCheck} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {ActionSheetController, AlertController} from '@ionic/angular';
+import {ActionSheetController, AlertController, IonSlides} from '@ionic/angular';
 import {switchMap, debounceTime} from 'rxjs/operators';
 import {combineLatest, Observable, fromEvent} from 'rxjs';
 import {Chapter, Epoc} from '../../classes/epoc';
@@ -17,10 +17,9 @@ import {Assessment, SimpleQuestion} from '../../classes/contents/assessment';
     templateUrl: 'player.page.html',
     styleUrls: ['player.page.scss']
 })
-export class PlayerPage implements OnInit, DoCheck {
+export class PlayerPage implements OnInit {
 
-    @ViewChildren('node') nodes: QueryList<ElementRef>;
-    @ViewChild('pageWrapper', {static: true}) pageWrapper: ElementRef;
+    @ViewChild('readerSlides', { static: false }) readerSlides: IonSlides;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -31,18 +30,11 @@ export class PlayerPage implements OnInit, DoCheck {
 
     // Reader
     dataInitialized = false;
-    readerInitialized = false;
     loading = true;
-    pagePerView = Math.ceil(window.innerWidth / 640);
-    columnWidth = (100 / this.pagePerView - 2) + 'vw';
     currentPage = 0;
-    pageCount = 1;
-    progress = 0;
-    pageWrapperTransform = 'translate3d(0,0,0)';
-    isScrolling = false;
-    pageWrapperOffset;
-    startX;
-    startOffset;
+    slidesOptions = {
+        slidesPerView: Math.ceil(window.innerWidth / 640)
+    };
 
     assessments: Assessment[];
     assessmentData;
@@ -72,11 +64,7 @@ export class PlayerPage implements OnInit, DoCheck {
         private libraryService: LibraryService,
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService
-    ) {
-        fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe(() => {
-            this.resize();
-        });
-    }
+    ) {}
 
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
@@ -106,6 +94,14 @@ export class PlayerPage implements OnInit, DoCheck {
             if (pair.epoc && pair.reading) {
                 this.readingStore.addReading(this.epoc.id);
                 this.dataInitialized = true;
+                this.loading = false;
+
+                const contentId = this.route.snapshot.paramMap.get('contentId');
+
+                if (contentId) {
+                    const pageIndex = this.chapter.contents.findIndex(e => e.id === contentId);
+                    this.slidesOptions.initialSlide = pageIndex + 1;
+                }
             }
         });
 
@@ -129,116 +125,18 @@ export class PlayerPage implements OnInit, DoCheck {
         });
     }
 
-    ngDoCheck(): void {
-        if (!this.readerInitialized && this.dataInitialized && this.nodes
-            && this.nodes.length > 0 && this.pageWrapper.nativeElement.scrollWidth > 0) {
-            this.readerInitialized = true;
-            // Go to specific content
-            const contentId = this.route.snapshot.paramMap.get('contentId');
-            this.initReader(contentId);
-        }
-    }
-
-    resize() {
-        this.initReader();
-    }
-
-    onMouseDown(e) {
-        this.isScrolling = true;
-        this.startX = e.changedTouches[0].pageX - this.pageWrapperOffset;
-        this.startOffset = this.pageWrapperOffset;
-    }
-
-    onMouseUp(e) {
-        this.isScrolling = false;
-        const deltaX = this.startOffset - this.pageWrapperOffset;
-        // Swipe left
-        if (deltaX < -80 && deltaX > -400) {
-            this.prevPage();
-            // Swipe right
-        } else if (this.startOffset - this.pageWrapperOffset > 80 && this.startOffset - this.pageWrapperOffset < 400) {
-            this.nextPage();
-        }
-        this.calcCurrentPage();
-    }
-
-    onMouseMove(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (e.changedTouches && e.changedTouches.length) {
-            this.pageWrapperOffset = e.changedTouches[0].pageX - this.startX;
-            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
-        }
-    }
-
-    initReader(contentId?: string) {
-        this.pagePerView = Math.ceil(window.innerWidth / 768);
-        this.columnWidth = (100 / this.pagePerView - 2) + 'vw';
-        this.pageCount = this.getPageCount();
-        if (contentId) {
-            const contentElem = this.nodes.find((elem) => elem.nativeElement.id === 'content-' + contentId).nativeElement;
-            this.pageWrapperOffset = contentElem ? -contentElem.offsetLeft : 0;
-            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
-            this.calcCurrentPage();
-        } else {
-            this.calcCurrentPage();
-        }
-        setTimeout(() => { this.loading = false }, 300);
-    }
-
-    getPageCount() {
-        const elem = this.pageWrapper.nativeElement;
-        return Math.ceil(elem.scrollWidth / elem.clientWidth) * this.pagePerView - this.pagePerView - 1;
-    }
-
-    changeCurrentPage(page) {
-        if (this.currentPage !== page) {
-            this.currentPage = page;
-            this.progress = this.currentPage / this.pageCount;
-            this.stopAllMedia();
-        }
-    }
-
-    calcCurrentPage() {
-        let nearestPage = 0;
-        let smallestGap = 9999999;
-        for (let i = 0; i < this.pageCount + 1; i++) {
-            const gap = Math.abs(-i * window.innerWidth / this.pagePerView - this.pageWrapperOffset);
-            if (gap < smallestGap) {
-                smallestGap = gap;
-                nearestPage = i;
-            }
-        }
-        this.changeCurrentPage(nearestPage);
-        this.goToPage(nearestPage);
-    }
-
-    goToPage(pageNumber) {
-        this.pageWrapperOffset = -pageNumber * ((window.innerWidth / this.pagePerView) + 1);
-        this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
-        this.readingStore.updateProgress(this.epoc.id, Math.ceil(this.progress * 100));
+    onSlideChange() {
+        this.readerSlides.getActiveIndex().then((index) => {
+            this.currentPage = index;
+        });
     }
 
     prevPage() {
-        if (this.currentPage > 0) {
-            this.changeCurrentPage(this.currentPage - 1);
-            this.goToPage(this.currentPage);
-        } else {
-            this.pageWrapperOffset = this.pageWrapperOffset + 100;
-            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
-            setTimeout(() => this.calcCurrentPage(), 300);
-        }
+        this.readerSlides.slidePrev();
     }
 
     nextPage() {
-        if (this.currentPage < this.pageCount) {
-            this.changeCurrentPage(this.currentPage + 1);
-            this.goToPage(this.currentPage);
-        } else {
-            this.pageWrapperOffset = this.pageWrapperOffset - 100;
-            this.pageWrapperTransform = 'translate3d(' + this.pageWrapperOffset + 'px,0,0)';
-            setTimeout(() => this.calcCurrentPage(), 300);
-        }
+        this.readerSlides.slideNext();
     }
 
     displayMenu() {
