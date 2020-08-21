@@ -148,7 +148,7 @@ export class ScoreEpocPage implements OnInit {
             const doc = new jsPDF();
 
             doc.text('Attestation de réussite de l\'ePoc ' + this.epoc.title, 10, 10);
-            doc.save('a4.pdf');
+            window.open(doc.output('bloburl', { filename: 'attestation.pdf' }));
             this.presentSuccess();
         } else {
             this.presentFail();
