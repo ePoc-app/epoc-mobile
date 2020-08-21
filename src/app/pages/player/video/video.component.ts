@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Video} from '../../../classes/contents/video';
 import {IonSelect, ToastController} from '@ionic/angular';
+import {LibraryService} from '../../../services/library.service';
 
 @Component({
     selector: 'video-player',
@@ -20,6 +21,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     trackSelected = 'none';
 
     constructor(
+        private libraryService: LibraryService,
         public toastController: ToastController
     ) {}
 
@@ -46,7 +48,7 @@ play() {
                 }
             }
         });
-        this.video.src = this.content.source;
+        this.video.src = this.libraryService.rootFolder + this.content.source;
         this.video.load();
         this.video.play();
     } else {
