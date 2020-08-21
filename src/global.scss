@@ -34,17 +34,6 @@ ion-header ion-toolbar.ios:first-child{
 }
 
 .custom-action-sheet{
-  .action-sheet-title{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: var(--background);
-    color: var(--ion-color-inria-blue);
-    font-size: 18px;
-    font-weight: 600;
-    padding: 4vh 1em 2vh 1em;
-  }
   .action-sheet-button.splitter{
     padding:0;
     height:1px;
