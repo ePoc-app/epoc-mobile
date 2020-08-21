@@ -24,7 +24,7 @@ export class AboutEpocPage implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         private readingStore: ReadingStoreService,
         public alertController: AlertController
     ) {}

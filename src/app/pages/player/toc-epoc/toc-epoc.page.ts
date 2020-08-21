@@ -25,7 +25,7 @@ export class TocEpocPage implements OnInit{
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         public alertController: AlertController
     ) {}
 

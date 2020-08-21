@@ -43,7 +43,7 @@ export class AssessmentPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         private readingStore: ReadingStoreService,
         public alertController: AlertController
     ) {}

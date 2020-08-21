@@ -20,7 +20,7 @@ export class BookmarksEpocPage implements OnInit{
 
     constructor(
         private route: ActivatedRoute,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         private readingStore: ReadingStoreService
     ) {}
 

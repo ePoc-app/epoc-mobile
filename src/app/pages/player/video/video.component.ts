@@ -20,7 +20,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     trackSelected = 'none';
 
     constructor(
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         public toastController: ToastController
     ) {}
 

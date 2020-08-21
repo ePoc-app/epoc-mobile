@@ -32,6 +32,7 @@ export class PlayerPage implements OnInit {
     dataInitialized = false;
     loading = true;
     currentPage = 0;
+    progress = 0;
     slidesOptions = {
         slidesPerView: Math.ceil(window.innerWidth / 640),
         initialSlide: 0
@@ -62,7 +63,7 @@ export class PlayerPage implements OnInit {
         private location: Location,
         public alertController: AlertController,
         public actionSheetController: ActionSheetController,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService
     ) {}
@@ -102,6 +103,8 @@ export class PlayerPage implements OnInit {
                 if (contentId) {
                     const pageIndex = this.chapter.contents.findIndex(e => e.id === contentId);
                     this.slidesOptions.initialSlide = pageIndex + 1;
+                    this.progress = pageIndex / (this.chapter.contents.length + 1);
+                    console.log(this.progress);
                 }
             }
         });
@@ -129,6 +132,7 @@ export class PlayerPage implements OnInit {
     onSlideChange() {
         this.readerSlides.getActiveIndex().then((index) => {
             this.currentPage = index;
+            this.progress = index / (this.chapter.contents.length + 1);
         });
     }
 
