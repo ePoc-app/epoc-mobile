@@ -3,10 +3,10 @@
       <div class="video-container" [ngClass]="{'notPlayed':!hasPlayed}">
         <video #video controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata">
           <ng-container *ngFor="let sub of content.subtitles">
-            <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang" [src]="sub.src">
+            <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang" [src]="libraryService.rootFolder +  sub.src">
           </ng-container>
         </video>
-        <img *ngIf="!hasPlayed" [src]="content.poster ? content.poster : 'assets/img/video-thumbnail.jpg'" (click)="play()"/>
+        <img *ngIf="!hasPlayed" [src]="content.poster ? libraryService.rootFolder +  content.poster : 'assets/img/video-thumbnail.jpg'" (click)="play()"/>
       </div>
 
     <ion-item class="hidden-select">
