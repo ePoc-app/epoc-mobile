@@ -130,6 +130,7 @@ export class PlayerPage implements OnInit {
     }
 
     onSlideChange() {
+        this.stopAllMedia();
         this.readerSlides.getActiveIndex().then((index) => {
             this.currentPage = index;
             this.progress = index / (this.chapter.contents.length + 1);
