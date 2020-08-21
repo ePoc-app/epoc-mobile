@@ -11,6 +11,7 @@ import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
 export class LibraryService {
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
     protected epocId: string;
+    public rootFolder: string;
 
     constructor(private http: HttpClient) {}
 
@@ -21,6 +22,7 @@ export class LibraryService {
     getEpoc(id: string): Observable<Epoc> {
         if (this.epocId !== id) {
             this.epocId = id;
+            this.rootFolder = 'assets/demo/';
             this.http.get('./assets/demo/content.json').subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
             });

@@ -27,8 +27,8 @@
       <ion-row>
         <ion-col>
           <div class="trailer-course" (click)="togglePlay($event)">
-            <video [src]="epoc.teaser" [poster]="epoc.image" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
-            <img [src]="epoc.image" *ngIf="!hasPlayed"/>
+            <video [src]="libraryService.rootFolder +  epoc.teaser" [poster]="epoc.image" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
+            <img [src]="libraryService.rootFolder +  epoc.image" *ngIf="!hasPlayed"/>
           </div>
         </ion-col>
       </ion-row>

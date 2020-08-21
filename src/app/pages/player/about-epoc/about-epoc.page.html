@@ -29,8 +29,8 @@
     </ion-row>
 
     <div class="trailer-course" (click)="togglePlay($event)">
-      <video [src]="epoc.teaser" [poster]="epoc.image" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
-      <img [src]="epoc.image" *ngIf="!hasPlayed"/>
+      <video [src]="libraryService.rootFolder +  epoc.teaser" [poster]="epoc.image" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
+      <img [src]="libraryService.rootFolder +  epoc.image" *ngIf="!hasPlayed"/>
     </div>
 
     <ion-row>
@@ -59,7 +59,7 @@
           <div class="tab" *ngIf="selectedTab === 2">
             <div class="epoc-author" *ngFor="let author of epoc.authors">
               <ion-text class="semibold">{{author.name}} : </ion-text>
-              <ion-img [src]="author.image"></ion-img>
+              <ion-img [src]="libraryService.rootFolder +  author.image"></ion-img>
               <ion-text [innerHTML]="author.description"></ion-text>
             </div>
           </div>
