@@ -42,5 +42,12 @@ export class HomePage implements OnInit {
     pause($event) {
         $event.target.parentNode.classList.remove('playing');
     }
+
+    ionViewWillLeave() {
+        const medias = Array.from(document.querySelectorAll('audio,video')) as HTMLMediaElement[];
+        medias.forEach((media) => {
+            media.pause();
+        });
+    }
 }
 
