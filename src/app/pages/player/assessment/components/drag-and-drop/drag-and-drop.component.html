@@ -10,7 +10,7 @@
       <div class="drop-zone" (click)="addResponse(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
         <span class="zone-label">{{zone.label}}</span>
         <div class="zone">
-          <span class="zone-info" *ngIf="answer[zoneIndex].length < 1">(Click to drop here)</span>
+          <span class="zone-info" *ngIf="answer[zoneIndex].length < 1">Cliquer pour déposer</span>
           <div class="response-item" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;" [@slideInOut]>
               {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
           </div>
