@@ -24,7 +24,7 @@ export class Tab1Page implements OnInit {
 
     constructor(
         public platform: Platform,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         private readingStore: ReadingStoreService
     ) {
         this.InitPlatformIfReady();

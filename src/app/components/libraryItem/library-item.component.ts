@@ -16,7 +16,7 @@ export class LibraryItemComponent {
 
     constructor(
         private router: Router,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         private readingStore: ReadingStoreService,
         public actionSheetController: ActionSheetController,
         public alertController: AlertController

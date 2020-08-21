@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
 
     constructor(
         private elRef: ElementRef,
-        private libraryService: LibraryService
+        public libraryService: LibraryService
     ) {}
 
     ngOnInit() {
