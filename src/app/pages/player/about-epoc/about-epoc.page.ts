@@ -92,4 +92,11 @@ export class AboutEpocPage implements OnInit {
     selectTab(index) {
         this.selectedTab = index;
     }
+
+    ionViewWillLeave() {
+        const medias = Array.from(document.querySelectorAll('audio,video')) as HTMLMediaElement[];
+        medias.forEach((media) => {
+            media.pause();
+        });
+    }
 }

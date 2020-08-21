@@ -248,4 +248,8 @@ export class PlayerPage implements OnInit {
         });
         await actionSheet.present();
     }
+
+    ionViewWillLeave() {
+        this.stopAllMedia();
+    }
 }
