@@ -9,7 +9,6 @@ import {Epoc} from '../../../classes/epoc';
 import {AlertController, IonSlides} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
 import {Assessment} from '../../../classes/contents/assessment';
-import {Label} from 'ng2-charts';
 
 @Component({
     selector: 'app-assessment',
@@ -21,6 +20,7 @@ export class AssessmentPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
+    assessments: Assessment[];
     assessment: Assessment;
     epocId;
     assessmentId;
@@ -30,32 +30,14 @@ export class AssessmentPage implements OnInit {
         allowTouchMove: false
     };
 
+    scoreMax = 0;
     userScore = 0;
     userResponses: string[] = [];
     questionsSuccessed: boolean[];
     currentQuestion = 0;
     currentAnswer;
     explanationShown = false;
-
-    doughnutChartOptions = {
-        responsive: true,
-        aspectRatio: 1,
-        legend: {
-            position: 'bottom'
-        },
-        elements: {
-            center: {
-                text: '',
-                sidePadding: 15
-            }
-        }
-    };
-    doughnutChartLabels: Label[] = [];
-    doughnutChartDataset = [{
-        label: 'Résumé des scores',
-        data: [],
-        backgroundColor: ['#10dc60', '#ffce00']
-    }];
+    assessmentData = null;
 
     constructor(
         private route: ActivatedRoute,
@@ -83,7 +65,9 @@ export class AssessmentPage implements OnInit {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
+            this.assessments = epoc.assessments;
             this.assessment = epoc.content.find((content) => content.id === this.assessmentId);
+            this.scoreMax = this.assessment.items.reduce((total, item) => item.score + total, 0)
             this.questionsSuccessed = new Array(this.assessment.items.length);
         });
     }
@@ -139,25 +123,9 @@ export class AssessmentPage implements OnInit {
             this.currentQuestion++;
             this.currentAnswer = '';
             this.explanationShown = false;
+            this.setAssessmentsData();
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
             this.questionSlides.slideNext();
-            this.doughnutChartOptions = {
-                responsive: true,
-                aspectRatio: 1,
-                legend: {
-                    position: 'bottom'
-                },
-                elements: {
-                    center: {
-                        text: Math.round(this.userScore / this.getScoreTotal() * 100) + '%',
-                        sidePadding: 15
-                    }
-                }
-            };
-            this.doughnutChartDataset[0].data = [
-                this.questionsSuccessed.reduce((a, e) => e ? a + 1 : a, 0),
-                this.questionsSuccessed.reduce((a, e) => !e ? a + 1 : a, 0),
-            ];
         }
     }
 
@@ -186,8 +154,24 @@ export class AssessmentPage implements OnInit {
         return this.currentQuestion < this.assessment.items.length;
     }
 
-    getScoreTotal() {
-        return this.assessment.items.reduce((total, item) => item.score + total, 0);
+    setAssessmentsData() {
+        this.assessmentData = {
+            userScore: this.userScore,
+            totalUserScore: 0,
+            totalScore: 0
+        };
+
+        this.assessments.forEach((assessment) => {
+            if (assessment.id !== this.assessmentId) {
+                const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
+                const scoreTotal = assessment.items.reduce((total, item) => total + item.score, 0);
+
+                if (userAssessment && userAssessment.score > 0) {
+                    this.assessmentData.totalUserScore += userAssessment.score;
+                }
+                this.assessmentData.totalScore += scoreTotal;
+            }
+        });
     }
 
     back(event) {

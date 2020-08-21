@@ -13,9 +13,6 @@ import {AssessmentButtonModule} from '../../components/assessment-button/assessm
 import {PlayerSettingsPage} from './settings/player-settings.page';
 import {AssessmentPage} from './assessment/assessment.page';
 import {SimpleChoiceComponent} from './assessment/components/simple-choice/simple-choice.component';
-import { ChartsModule } from 'ng2-charts';
-import { Chart } from 'chart.js';
-import ChartDoughtnutTextCenter from '../../../assets/js/chart-doughnut-textcenter-plugin.js';
 import {MultipleChoiceComponent} from './assessment/components/multiple-choice/multiple-choice.component';
 import {ReorderComponent} from './assessment/components/reorder/reorder.component';
 import {VideoComponent} from './video/video.component';
@@ -23,6 +20,7 @@ import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.pag
 import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-and-drop.component';
 import {SimpleQuestionComponent} from './simple-question/simple-question.component';
 import {CourseChoiceComponent} from './course-choice/course-choice.component';
+import {ScoreProgressModule} from '../../components/score-progress/score-progress.module';
 
 @NgModule({
   imports: [
@@ -30,6 +28,7 @@ import {CourseChoiceComponent} from './course-choice/course-choice.component';
     CommonModule,
     FormsModule,
     AssessmentButtonModule,
+    ScoreProgressModule,
     RouterModule.forChild([
         { path: 'play/:id', component: TocEpocPage },
         { path: 'play/:id/:chapter', component: PlayerPage },
@@ -42,8 +41,7 @@ import {CourseChoiceComponent} from './course-choice/course-choice.component';
         { path: 'settings', component: PlayerSettingsPage },
         { path: 'assessment/:epocId/:assessmentId', component: AssessmentPage },
         { path: '**',   redirectTo: '/' },
-    ]),
-    ChartsModule
+    ])
   ],
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
@@ -52,7 +50,5 @@ import {CourseChoiceComponent} from './course-choice/course-choice.component';
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {
-    constructor() {
-        Chart.pluginService.register(ChartDoughtnutTextCenter);
-    }
+    constructor() {}
 }

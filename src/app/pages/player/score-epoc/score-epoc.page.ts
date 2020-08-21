@@ -7,8 +7,7 @@ import {combineLatest, Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
 import {AlertController} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
-import {Assessment, SimpleQuestion} from '../../../classes/contents/assessment';
-import {Label} from 'ng2-charts';
+import {Assessment} from '../../../classes/contents/assessment';
 import {jsPDF} from 'jspdf';
 
 @Component({
@@ -24,26 +23,6 @@ export class ScoreEpocPage implements OnInit {
     assessments: Assessment[];
 
     assessmentData;
-
-    doughnutChartOptions = {
-        responsive: true,
-        aspectRatio: 1,
-        legend: {
-            position: 'bottom'
-        },
-        elements: {
-            center: {
-                text: '',
-                sidePadding: 15
-            }
-        }
-    };
-    doughnutChartLabels: Label[] = [];
-    doughnutChartDataset = [{
-        label: 'Résumé des scores',
-        data: [],
-        backgroundColor: ['#989aa2', '#ffce00', '#10dc60']
-    }];
 
     constructor(
         private route: ActivatedRoute,
@@ -84,7 +63,6 @@ export class ScoreEpocPage implements OnInit {
             attemptedScore: 0,
             todoScore: 0,
             totalUserScore: 0,
-            totalUserScoreInPercent: 0,
             totalScore: 0
         };
 
@@ -104,28 +82,6 @@ export class ScoreEpocPage implements OnInit {
             }
             this.assessmentData.totalScore += scoreTotal;
         });
-
-        this.assessmentData.totalUserScoreInPercent = Math.round(this.assessmentData.totalUserScore / this.assessmentData.totalScore * 100);
-
-        this.doughnutChartDataset = [{
-            label: 'Résumé des scores',
-            data: [this.assessmentData.todoScore, this.assessmentData.successScore, this.assessmentData.attemptedScore],
-            backgroundColor: ['#989aa2', '#10dc60', '#ffce00']
-        }];
-
-        this.doughnutChartOptions = {
-            responsive: true,
-            aspectRatio: 1,
-            legend: {
-                position: 'bottom'
-            },
-            elements: {
-                center: {
-                    text: this.assessmentData.totalUserScoreInPercent + '%',
-                    sidePadding: 15
-                }
-            }
-        };
     }
 
     getScore(content) {
@@ -144,7 +100,7 @@ export class ScoreEpocPage implements OnInit {
     }
 
     getCertificate() {
-        if (this.assessmentData.totalUserScoreInPercent >= this.epoc.certificateScore) {
+        if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
             const doc = new jsPDF();
 
             doc.text('Attestation de réussite de l\'ePoc ' + this.epoc.title, 10, 10);
@@ -158,7 +114,7 @@ export class ScoreEpocPage implements OnInit {
     async presentFail() {
         const alert = await this.alertController.create({
             header: 'Non disponible',
-            message: 'Vous n\'avez pas encore atteint le score nécessaire (' + this.epoc.certificateScore + '%) pour obtenir l\'attestation.',
+            message: 'Vous n\'avez pas encore atteint le score nécessaire (' + this.epoc.certificateScore + ' pts) pour obtenir l\'attestation.',
             buttons: ['OK']
         });
 
