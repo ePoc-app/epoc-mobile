@@ -9,7 +9,7 @@
         <img *ngIf="!hasPlayed" [src]="content.poster ? libraryService.rootFolder +  content.poster : 'assets/img/video-thumbnail.jpg'" (click)="play()"/>
       </div>
 
-    <ion-item class="hidden-select">
+    <ion-item class="hidden-select" *ngIf="content.subtitles && content.subtitles.length >0">
       <ion-label>Sous-titres</ion-label>
       <ion-select #tracks [value]="trackSelected" (ionChange)='changeSubtitles($event)'>
         <ion-select-option value="none">Aucun</ion-select-option>
@@ -19,7 +19,7 @@
 
     <div class="video-actions">
       <div class="video-actions-left">
-        <ion-icon name="logo-closed-captioning" (click)="captions()"></ion-icon>
+        <ion-icon name="logo-closed-captioning" (click)="captions()" *ngIf="content.subtitles && content.subtitles.length >0"></ion-icon>
       </div>
       <div class="video-actions-center">
         <ion-icon [name]="playing ? 'pause':'play'" (click)="play()"></ion-icon>
