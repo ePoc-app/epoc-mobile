@@ -1,7 +1,7 @@
 <ion-header #header>
   <ion-toolbar>
     <ion-buttons slot="start" *ngIf="epoc$ | async as epoc">
-      <ion-back-button [defaultHref]="'player/about/' + epoc.id"></ion-back-button>
+      <ion-back-button text="Retour" color="inria-blue" [defaultHref]="'player/about/' + epoc.id"></ion-back-button>
     </ion-buttons>
     <ion-title>Download</ion-title>
   </ion-toolbar>
