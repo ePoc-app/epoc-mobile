@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button *ngIf="assessment" (click)="back($event)" [defaultHref]="'/player/play/' + epoc.id + '/content/' + assessmentId"></ion-back-button>
+      <ion-back-button text="Retour" color="inria-blue" *ngIf="assessment" (click)="back($event)" [defaultHref]="'/player/play/' + epoc.id + '/content/' + assessmentId"></ion-back-button>
     </ion-buttons>
     <ion-title>Activité</ion-title>
   </ion-toolbar>
