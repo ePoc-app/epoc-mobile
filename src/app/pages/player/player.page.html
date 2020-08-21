@@ -159,11 +159,10 @@
             </div>
             <div class="page-content page-content-next">
               <div class="custom-card next-chapter-card" *ngIf="nextChapter">
-                <div class="custom-card-header">
-                  <img [src]="libraryService.rootFolder +  nextChapter.image" [alt]="nextChapter.name"/>
-                </div>
                 <div class="custom-card-content">
-                  <b>Prochain chapitre : </b> {{nextChapter.name}}
+                  <h2 class="follow-up">À suivre :</h2>
+                  <div class="next-chapter-image" [ngStyle]="{'background-image': 'url(' + libraryService.rootFolder +  nextChapter.image + ')'}"></div>
+                  <p><b>Chapitre {{chapterId + 2}} :</b> {{nextChapter.name}} </p>
                 </div>
                 <div class="custom-card-footer">
                   <ion-button color="medium" expand="block" [routerLink]="'/player/toc/'+epoc.id">
