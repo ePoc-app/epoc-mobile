@@ -29,7 +29,7 @@
           <ion-card>
             <ion-card-content>
               <ion-card-subtitle>
-                {{assessment.name}}
+                {{assessment.title}}
                 <ion-text class="score" [color]="getScore(assessment) < getScoreTotal(assessment) ? 'warning':'success'" *ngIf="getScoreTotal(assessment) > 0">
                   {{getScore(assessment) ? getScore(assessment) : 0}}/{{getScoreTotal(assessment)}}
                 </ion-text>

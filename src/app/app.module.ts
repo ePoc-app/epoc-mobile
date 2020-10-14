@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { IonicStorageModule } from '@ionic/storage';
       IonicModule.forRoot(),
       AppRoutingModule,
       HttpClientModule,
-      IonicStorageModule.forRoot()
+      IonicStorageModule.forRoot(),
+      PipesModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

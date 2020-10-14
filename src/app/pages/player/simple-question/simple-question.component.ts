@@ -11,9 +11,8 @@ import {Reading} from '../../../classes/reading';
 export class SimpleQuestionComponent implements OnInit {
 
     @Input() content: SimpleQuestion;
+    @Input() question: Question;
     @Input() epocId: string;
-
-    question: Question;
     disabled = false;
     flipped = false;
     answer;
@@ -25,8 +24,6 @@ export class SimpleQuestionComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.question = this.content.question;
-
         this.readingStore.readings$.subscribe(readings => {
             if (readings) {
                 this.reading = readings.find(item => item.epocId === this.epocId);
@@ -38,7 +35,7 @@ export class SimpleQuestionComponent implements OnInit {
                     this.answer = assessment.responses;
                 } else {
                     this.disabled = false;
-                    this.answer = this.content.question.type === 'choice' ? null : [];
+                    this.answer = this.question.type === 'choice' ? null : [];
                 }
             }
         });

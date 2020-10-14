@@ -68,7 +68,7 @@ export class ScoreEpocPage implements OnInit {
 
         this.assessments.forEach((assessment) => {
             const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-            const scoreTotal = assessment.items.reduce((total, item) => total + item.score, 0);
+            const scoreTotal = assessment.questions.reduce((total, questionId) => total + this.epoc.questions[questionId].score, 0);
 
             if (userAssessment && userAssessment.score > 0) {
                 this.assessmentData.totalUserScore += userAssessment.score;
@@ -96,7 +96,7 @@ export class ScoreEpocPage implements OnInit {
     }
 
     getScoreTotal(content) {
-        return content.items.reduce((total, item) => item.score + total, 0);
+        return content.questions.reduce((total, question) => question.score + total, 0);
     }
 
     getCertificate() {
