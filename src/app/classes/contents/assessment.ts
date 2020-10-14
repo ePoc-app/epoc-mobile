@@ -1,16 +1,16 @@
 import {Content} from './content';
-import {html} from '../types';
+import {html, uid} from '../types';
 
 export class Assessment extends Content {
-    items?: Array<Question>;
+    questions?: uid[];
     time?: number;
     // initialized at runtime
     scoreTotal?: number;
-    chapterId?: number;
+    chapterId?: uid;
 }
 
 export class SimpleQuestion extends Content {
-    question: Question;
+    question: uid;
     // initialized at runtime
     chapterId?: number;
 }

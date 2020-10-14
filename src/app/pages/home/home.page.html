@@ -18,7 +18,7 @@
             <div class="title-container">
               <h3 class="title">{{epoc.title}}</h3>
               <div class="authors">
-                <span *ngFor="let author of epoc.authors">{{author.name}}</span>
+                <span *ngFor="let author of epoc.authors | values">{{author.name}}</span>
               </div>
             </div>
           </div>
@@ -27,7 +27,7 @@
       <ion-row>
         <ion-col>
           <div class="trailer-course" (click)="togglePlay($event)">
-            <video [src]="libraryService.rootFolder +  epoc.teaser" [poster]="epoc.image" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
+            <video [src]="libraryService.rootFolder +  epoc.teaser" [poster]="epoc.image ? libraryService.rootFolder +  epoc.image : ''" controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata" (play)="play($event)" (pause)="pause($event)"></video>
             <img [src]="libraryService.rootFolder +  epoc.image" *ngIf="!hasPlayed"/>
           </div>
         </ion-col>

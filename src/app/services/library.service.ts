@@ -32,34 +32,31 @@ export class LibraryService {
 
     initCourseContent(epoc: Epoc) {
         epoc.assessments = [];
-        epoc.chapters.forEach((chapter, index) => {
+
+        for (const [chapterId, chapter] of Object.entries(epoc.chapters)) {
             chapter.time = 0;
             chapter.videoCount = 0;
             chapter.assessmentCount = 0;
-            chapter.contents = chapter.contentsIds.reduce((contents, uid) => {
-                const currentContent = epoc.content.find(item => item.id === uid);
-
+            chapter.initializedContents = chapter.contents.map((uid) => {
+                const currentContent = epoc.contents[uid];
+                currentContent.id = uid;
                 if (currentContent.type === 'assessment') {
-                    (currentContent as Assessment).scoreTotal = (currentContent as Assessment).items.reduce(
-                        (total, item) => item.score + total, 0
-                    );
-                    (currentContent as Assessment).chapterId = index;
-                    chapter.time = chapter.time + (currentContent as Assessment).items.length;
+                    (currentContent as Assessment).scoreTotal = (currentContent as Assessment).questions.reduce((total, questionId) => total + epoc.questions[questionId].score, 0);
+                    (currentContent as Assessment).chapterId = chapterId;
+                    chapter.time = chapter.time + (currentContent as Assessment).questions.length;
                     chapter.assessmentCount++;
                     epoc.assessments.push((currentContent as Assessment));
-                } else if (currentContent.type === 'simple-question' && (currentContent as SimpleQuestion).question.score > 0) {
-                    (currentContent as Assessment).items = [(currentContent as SimpleQuestion).question];
-                    (currentContent as Assessment).chapterId = index;
+                } else if (currentContent.type === 'simple-question' && epoc.questions[(currentContent as SimpleQuestion).question].score > 0) {
+                    (currentContent as Assessment).questions = [(currentContent as SimpleQuestion).question];
+                    (currentContent as Assessment).chapterId = chapterId;
                     epoc.assessments.push((currentContent as Assessment));
                 } else if (currentContent.type === 'video') {
                     chapter.videoCount++;
                     chapter.time = chapter.time + 3;
                 }
-
-                contents.push(currentContent);
-                return contents;
-            }, []);
-        });
+                return currentContent;
+            });
+        }
 
         return epoc;
     }

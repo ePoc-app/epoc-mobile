@@ -11,19 +11,19 @@
 <ion-content *ngIf="epoc$ | async as epoc">
   <ng-container *ngIf="detailedToc">
     <ion-list>
-      <ng-container *ngFor="let chapter of epoc.chapters;let index = index">
-        <ion-item class="level-1" [routerLink]="'/player/play/'+epoc.id+'/'+index">
-          <ion-label>{{chapter.name}}</ion-label>
+      <ng-container *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
+        <ion-item class="level-1" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id">
+          <ion-label>{{chapter.title}}</ion-label>
         </ion-item>
-        <ng-container *ngFor="let content of chapter.contents;">
-          <ion-item class="level-2" [routerLink]="'/player/play/'+epoc.id+'/'+index+'/content/'+content.id">
+        <ng-container *ngFor="let content of chapter.contents | denormalize:epoc.contents;">
+          <ion-item class="level-2" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
             <ion-icon *ngIf="content.type === 'html'" name="paper" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'video'" name="play" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'simple-question' && !content.question.score" name="bulb" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'simple-question' && content.question.score" name="checkbox-outline" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'choice'" name="git-branch" slot="start"></ion-icon>
-            <ion-label>{{content.name}}</ion-label>
+            <ion-label>{{content.title}}</ion-label>
           </ion-item>
         </ng-container>
       </ng-container>
@@ -32,12 +32,12 @@
   <ng-container *ngIf="!detailedToc">
     <div class="chapters">
       <ion-grid>
-        <ion-row *ngFor="let chapter of epoc.chapters;let index = index">
+        <ion-row *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
           <ion-col size="10" offset="1">
-            <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/'+index">
+            <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id">
               <img [src]="chapter.image ? libraryService.rootFolder +  chapter.image : 'assets/img/placeholder.png'"/>
               <ion-card-content>
-                <b>Chapitre {{index + 1}} : </b> {{chapter.name}}
+                <b>Chapitre {{index + 1}} : </b> {{chapter.title}}
               </ion-card-content>
             </ion-card>
             </ion-col>

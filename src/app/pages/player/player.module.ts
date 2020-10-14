@@ -21,6 +21,7 @@ import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-a
 import {SimpleQuestionComponent} from './simple-question/simple-question.component';
 import {CourseChoiceComponent} from './course-choice/course-choice.component';
 import {ScoreProgressModule} from '../../components/score-progress/score-progress.module';
+import {PipesModule} from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import {ScoreProgressModule} from '../../components/score-progress/score-progres
         { path: 'settings', component: PlayerSettingsPage },
         { path: 'assessment/:epocId/:assessmentId', component: AssessmentPage },
         { path: '**',   redirectTo: '/' },
-    ])
+    ]),
+    PipesModule
   ],
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,

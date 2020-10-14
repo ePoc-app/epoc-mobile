@@ -9,19 +9,19 @@
 
 <ion-content [scrollY]="false" *ngIf="assessment">
   <ion-slides #questionSlides [options]="slidesOptions">
-    <ng-container *ngFor="let question of assessment.items; let questionIndex = index;">
+    <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
       <ion-slide class="assessment-item">
         <ng-container *ngIf="question.type === 'choice'">
-          <simple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.items.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
+          <simple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
         </ng-container>
         <ng-container *ngIf="question.type === 'multiple-choice'">
-          <multiple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.items.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
+          <multiple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
         </ng-container>
         <ng-container *ngIf="question.type === 'reorder'">
-          <reorder class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.items.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
+          <reorder class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
         </ng-container>
         <ng-container *ngIf="question.type === 'drag-and-drop'">
-          <drag-and-drop class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.items.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
+          <drag-and-drop class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
         </ng-container>
       </ion-slide>
       <ion-slide class="assessment-item-explanation">
@@ -66,7 +66,7 @@
   </ion-slides>
 </ion-content>
 
-<ion-footer *ngIf="questionSlides && hasNextSlide()">
+<ion-footer *ngIf="questionSlides && currentQuestion < questions.length">
   <ion-button class="check-answer" expand="block" slot="center" [disabled]="!currentAnswer" (click)="checkAnswer()" *ngIf="!explanationShown">Valider</ion-button>
   <ion-button class="check-answer" expand="block" slot="center" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>

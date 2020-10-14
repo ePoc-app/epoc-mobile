@@ -11,6 +11,7 @@ import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
 import {Assessment, SimpleQuestion} from '../../classes/contents/assessment';
+import {uid} from '../../classes/types';
 
 @Component({
     selector: 'app-player',
@@ -23,9 +24,11 @@ export class PlayerPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
-    chapterId: number;
+    chapterId: uid;
+    chapterIndex: number;
     chapter: Chapter;
     nextChapter: Chapter;
+    nextChapterId: uid;
     reading: Reading;
 
     // Reader
@@ -83,12 +86,14 @@ export class PlayerPage implements OnInit {
 
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-            this.chapterId = +this.route.snapshot.paramMap.get('chapter');
+            this.chapterId = this.route.snapshot.paramMap.get('chapter');
+            this.chapterIndex = Object.keys(epoc.chapters).indexOf(this.chapterId);
             this.chapter = epoc.chapters[this.chapterId];
             this.assessments = epoc.assessments;
 
-            if (this.chapterId < epoc.chapters.length - 1) {
-                this.nextChapter = epoc.chapters[this.chapterId + 1];
+            if (this.chapterIndex < Object.entries(epoc.chapters).length - 1) {
+                this.nextChapterId = Object.keys(epoc.chapters)[this.chapterIndex + 1]
+                this.nextChapter = epoc.chapters[this.nextChapterId];
             }
         });
 
@@ -101,7 +106,7 @@ export class PlayerPage implements OnInit {
                 const contentId = this.route.snapshot.paramMap.get('contentId');
 
                 if (contentId) {
-                    const pageIndex = this.chapter.contents.findIndex(e => e.id === contentId);
+                    const pageIndex = this.chapter.contents.findIndex(id => id === contentId);
                     this.slidesOptions.initialSlide = pageIndex + 1;
                     this.progress = pageIndex / (this.chapter.contents.length + 1);
                     console.log(this.progress);
@@ -169,7 +174,7 @@ export class PlayerPage implements OnInit {
 
         this.assessments.forEach((assessment) => {
             const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-            const scoreTotal = assessment.items.reduce((total, item) => total + item.score, 0);
+            const scoreTotal = assessment.questions.reduce((total, questionId) => total + this.epoc.questions[questionId].score, 0);
 
             if (userAssessment && userAssessment.score > 0) {
                 this.assessmentData.totalUserScore += userAssessment.score;

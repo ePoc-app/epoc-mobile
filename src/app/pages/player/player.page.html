@@ -29,9 +29,9 @@
                 <ion-card-content>
                   <div class="title-wrapper">
                     <div class="title-container">
-                      <h3 class="number">Chapitre {{chapterId + 1}} :</h3>
+                      <h3 class="number">Chapitre {{chapterIndex + 1}} :</h3>
                       <h5 class="title">
-                        {{chapter.name}}
+                        {{chapter.title}}
                       </h5>
                     </div>
                   </div>
@@ -67,14 +67,14 @@
             </div>
           </div>
         </ion-slide>
-        <ng-container *ngFor="let content of chapter.contents; let index = index">
+        <ng-container *ngFor="let content of chapter.initializedContents; let index = index">
           <ng-container *ngIf="!content.conditional || ( content.conditional && reading.flags.indexOf(content.id) !== -1 )">
             <ion-slide>
               <ng-container *ngIf="content.type === 'html'">
                 <div class="page-wrapper">
                   <div class="page-header">
                     <ion-icon name="paper" size="large"></ion-icon>
-                    <h4>{{content.name}}</h4>
+                    <h4>{{content.title}}</h4>
                   </div>
                   <div class="page-content page-content-html">
                     <div class="custom-card">
@@ -88,7 +88,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <ion-icon name="videocam" size="large"></ion-icon>
-                    <h4>{{content.name}}</h4>
+                    <h4>{{content.title}}</h4>
                   </div>
                   <div class="page-content page-content-video">
                     <video-player [content]="content"></video-player>
@@ -100,10 +100,10 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <ion-icon name="checkmark-circle-outline"></ion-icon>
-                    <h4>{{content.name}}</h4>
+                    <h4>{{content.title}}</h4>
                   </div>
                   <div class="page-content page-content-simple-question">
-                    <simple-question [epocId]="epoc.id" [content]="content"></simple-question>
+                    <simple-question [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]"></simple-question>
                   </div>
                 </div>
               </ng-container>
@@ -112,7 +112,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <ion-icon name="git-branch"></ion-icon>
-                    <h4>{{content.name}}</h4>
+                    <h4>{{content.title}}</h4>
                   </div>
                   <div class="page-content page-content-course-choice">
                     <course-choice [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
@@ -124,7 +124,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <ion-icon name="checkbox-outline" size="large"></ion-icon>
-                    <h4>{{content.name}}</h4>
+                    <h4>{{content.title}}</h4>
                   </div>
                   <div class="page-content page-content-assessment">
                     <ion-card>
@@ -138,7 +138,7 @@
                           </ion-col>
                           <ion-col size="6">
                             <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>
-                            <div class="activity-spec-value">{{content.items.length}} question<ng-container *ngIf="content.items.length > 1">s</ng-container></div>
+                            <div class="activity-spec-value">{{content.questions.length}} question<ng-container *ngIf="content.questions.length > 1">s</ng-container></div>
                           </ion-col>
                         </ion-row>
                         <p>{{content.summary}}</p>
@@ -162,14 +162,14 @@
                 <div class="custom-card-content">
                   <h2 class="follow-up">À suivre :</h2>
                   <div class="next-chapter-image" [ngStyle]="{'background-image': 'url(' + libraryService.rootFolder +  nextChapter.image + ')'}"></div>
-                  <p><b>Chapitre {{chapterId + 2}} :</b> {{nextChapter.name}} </p>
+                  <p><b>Chapitre {{chapterIndex + 2}} :</b> {{nextChapter.title}} </p>
                 </div>
                 <div class="custom-card-footer">
                   <ion-button color="medium" expand="block" [routerLink]="'/player/toc/'+epoc.id">
                     <ion-icon name="list" slot="start" mode="ios"></ion-icon>
                     Table des matières
                   </ion-button>
-                  <ion-button expand="block" [routerLink]="'/player/play/'+epoc.id+'/'+(chapterId+1)">
+                  <ion-button expand="block" [routerLink]="'/player/play/'+epoc.id+'/'+nextChapterId">
                     <ion-icon name="arrow-dropright" slot="end" mode="md"></ion-icon>
                     Chapitre suivant
                   </ion-button>

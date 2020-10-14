@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
 import {AlertController, IonSlides} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
-import {Assessment} from '../../../classes/contents/assessment';
+import {Assessment, Question} from '../../../classes/contents/assessment';
 
 @Component({
     selector: 'app-assessment',
@@ -33,6 +33,7 @@ export class AssessmentPage implements OnInit {
     scoreMax = 0;
     userScore = 0;
     userResponses: string[] = [];
+    questions: Question[];
     questionsSuccessed: boolean[];
     currentQuestion = 0;
     currentAnswer;
@@ -66,9 +67,10 @@ export class AssessmentPage implements OnInit {
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
             this.assessments = epoc.assessments;
-            this.assessment = epoc.content.find((content) => content.id === this.assessmentId);
-            this.scoreMax = this.assessment.items.reduce((total, item) => item.score + total, 0)
-            this.questionsSuccessed = new Array(this.assessment.items.length);
+            this.assessment = epoc.contents[this.assessmentId];
+            this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
+            this.scoreMax = this.questions.reduce((total, question) => question.score + total, 0)
+            this.questionsSuccessed = new Array(this.questions.length);
         });
     }
 
@@ -77,7 +79,7 @@ export class AssessmentPage implements OnInit {
     }
 
     checkAnswer() {
-        const correctResponse = this.assessment.items[this.currentQuestion].correctResponse;
+        const correctResponse = this.questions[this.currentQuestion].correctResponse;
         if (typeof this.currentAnswer === 'string') {
             if (correctResponse === this.currentAnswer) {
                 this.questionSuccessed();
@@ -105,7 +107,7 @@ export class AssessmentPage implements OnInit {
     }
 
     questionSuccessed() {
-        this.userScore += this.assessment.items[this.currentQuestion].score;
+        this.userScore += this.questions[this.currentQuestion].score;
         this.questionsSuccessed[this.currentQuestion] = true;
     }
 
@@ -114,7 +116,7 @@ export class AssessmentPage implements OnInit {
     }
 
     nextQuestion() {
-        if (this.currentQuestion < this.assessment.items.length - 1) {
+        if (this.currentQuestion < this.questions.length - 1) {
             this.currentQuestion++;
             this.currentAnswer = '';
             this.explanationShown = false;
@@ -150,10 +152,6 @@ export class AssessmentPage implements OnInit {
 
     }
 
-    hasNextSlide() {
-        return this.currentQuestion < this.assessment.items.length;
-    }
-
     setAssessmentsData() {
         this.assessmentData = {
             userScore: this.userScore,
@@ -164,7 +162,7 @@ export class AssessmentPage implements OnInit {
         this.assessments.forEach((assessment) => {
             if (assessment.id !== this.assessmentId) {
                 const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-                const scoreTotal = assessment.items.reduce((total, item) => total + item.score, 0);
+                const scoreTotal = this.questions.reduce((total, question) => total + question.score, 0);
 
                 if (userAssessment && userAssessment.score > 0) {
                     this.assessmentData.totalUserScore += userAssessment.score;
