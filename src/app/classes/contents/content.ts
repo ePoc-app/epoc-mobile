@@ -3,7 +3,7 @@ import {uid} from '../types';
 export abstract class Content {
     id: uid;
     type: 'html' | 'assessment' | 'video' | 'simple-question' | 'choice';
-    name: string;
+    title: string;
     conditional?: boolean;
     conditionResolver?: ScoreResolver | ChoiceResolver;
 }

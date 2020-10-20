@@ -21,7 +21,7 @@ export class Epoc {
 
 export class Chapter {
     id: uid;
-    name: string;
+    title: string;
     image?: string;
     objectives?: string[];
     contents: uid[];

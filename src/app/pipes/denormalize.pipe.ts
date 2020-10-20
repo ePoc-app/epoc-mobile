@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DenormalizePipe implements PipeTransform {
 
-  transform(value: any, record: any): any {
+  transform(value: any, record?: any): any {
     // map array of ids with corresponding object values
     if (value && record) {
       return value.map(itemId => {
