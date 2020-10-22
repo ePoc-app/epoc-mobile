@@ -11,7 +11,7 @@ import {LibraryService} from '../../../services/library.service';
 export class VideoComponent implements OnInit, OnDestroy {
 
     @ViewChild('video', {static: true}) videoRef: ElementRef;
-    @ViewChild('tracks', {static: true}) trackSelectRef: IonSelect;
+    @ViewChild('tracks', {static: false}) trackSelectRef: IonSelect;
 
     @Input() content: Video;
 
