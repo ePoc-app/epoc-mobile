@@ -1,0 +1,11 @@
+{
+  "/oauth": {
+    "target": "https://qlf-cas.inria.fr/cas/oauth2.0",
+    "changeOrigin": true,
+    "secure": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/oauth": ""
+    }
+  }
+}
