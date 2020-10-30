@@ -1,38 +1,45 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouteReuseStrategy } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouteReuseStrategy} from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { IonicStorageModule } from '@ionic/storage';
-import { PipesModule } from './pipes/pipes.module';
+import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {FileTransfer, FileTransferObject} from '@ionic-native/file-transfer/ngx';
+import {File} from '@ionic-native/file/ngx';
+import {IonicStorageModule} from '@ionic/storage';
+import {PipesModule} from './pipes/pipes.module';
+import {LoginComponent} from './login/login.component';
+import {LoginCallbackComponent} from './login/login-callback.component';
+import {AuthGuardService} from './services/auth-guard.service';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-      BrowserModule,
-      BrowserAnimationsModule,
-      IonicModule.forRoot(),
-      AppRoutingModule,
-      HttpClientModule,
-      IonicStorageModule.forRoot(),
-      PipesModule
-  ],
-  providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    FileTransfer,
-    FileTransferObject,
-    File
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
+    entryComponents: [],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        IonicStorageModule.forRoot(),
+        PipesModule
+    ],
+    providers: [
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        FileTransfer,
+        FileTransferObject,
+        File,
+        InAppBrowser,
+        AuthGuardService
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
