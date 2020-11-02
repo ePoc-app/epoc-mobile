@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {LibraryService} from '../../services/library.service';
@@ -9,13 +9,11 @@ import {LibraryService} from '../../services/library.service';
     styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
-
     epoc$: Observable<Epoc>;
     epocId = 'VP';
     hasPlayed = false;
 
     constructor(
-        private elRef: ElementRef,
         public libraryService: LibraryService
     ) {}
 
