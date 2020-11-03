@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of, ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
+import {distinctUntilChanged} from 'rxjs/operators';
+import {File} from '@ionic-native/file/ngx';
+import {Capacitor} from '@capacitor/core';
 import {Epoc} from '../classes/epoc';
-import {distinctUntilChanged, map} from 'rxjs/operators';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
 
 @Injectable({
@@ -13,7 +15,7 @@ export class LibraryService {
     protected epocId: string;
     public rootFolder: string;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private file: File) {}
 
     getLibrary(): Observable<Epoc[]> {
         return null;
@@ -22,8 +24,8 @@ export class LibraryService {
     getEpoc(id: string): Observable<Epoc> {
         if (this.epocId !== id) {
             this.epocId = id;
-            this.rootFolder = 'assets/demo/';
-            this.http.get('./assets/demo/content.json').subscribe((epoc) => {
+            this.rootFolder = Capacitor.convertFileSrc(this.file.dataDirectory + 'epoc/');
+            this.http.get(this.rootFolder + 'content.json').subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
             });
         }
