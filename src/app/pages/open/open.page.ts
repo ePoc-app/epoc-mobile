@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {File, FileEntry, FileWriter} from '@ionic-native/file/ngx';
-import {Zip} from '@ionic-native/zip/ngx';
+import {Zip} from 'capacitor-zip';
 import {Plugins, FilesystemDirectory, FilesystemEncoding} from '@capacitor/core';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
@@ -17,6 +17,7 @@ export class OpenPage {
     @ViewChild('file', {static: false}) fileRef: ElementRef;
 
     progress = 0;
+    zip: Zip;
     zipList = [];
     message = '';
     working = false;
@@ -26,9 +27,10 @@ export class OpenPage {
         private ref: ChangeDetectorRef,
         private elRef: ElementRef,
         private router: Router,
-        private file: File,
-        private zip: Zip
-    ) {}
+        private file: File
+    ) {
+      this.zip = new Zip();
+    }
 
     ionViewDidEnter() {
         this.readdir();
@@ -98,42 +100,35 @@ export class OpenPage {
         });
     }
 
-    unzip(zip) {
+    unzip(filename) {
         return new Promise((resolve, reject) => {
             this.file.checkDir(this.file.dataDirectory, 'epoc').then(() =>
                 this.file.removeRecursively(this.file.dataDirectory, 'epoc')
-            ).catch(() =>
+            ).catch((e) =>
                 console.log('Nothing to delete')
-            ).finally(() =>
-                this.zip.unzip(this.file.dataDirectory + zip, this.file.dataDirectory + 'epoc', (progress) => {
-                    this.progress = progress.loaded / progress.total;
-                    this.ref.detectChanges();
-                }).then((result) => {
-                    if (result === 0) {
-                        Filesystem.readFile({
-                            path: 'epoc/content.json',
-                            directory: FilesystemDirectory.Data,
-                            encoding: FilesystemEncoding.UTF8
-                        }).then(() => {
-                            resolve();
-                        }).catch( () => {
-                            reject('Erreur lors de l\'ouverture du content.json');
-                        });
-                    }
-                    if (result === -1) {
-                        reject('Erreur lors du dézipage');
-                    }
-                })
-            );
+            ).finally(() => {
+              this.zip.unZip({
+                  source : this.file.dataDirectory + filename,
+                  destination: this.file.dataDirectory + 'epoc',
+              }, (progress) => {
+                  this.progress = progress.value / 100;
+                  this.ref.detectChanges();
+              }).then(() => {
+                this.file.checkFile(
+                  this.file.dataDirectory, 'epoc/content.json'
+                ).then(() => {
+                    resolve();
+                }).catch( () => {
+                    reject('Erreur lors de l\'ouverture du content.json');
+                });
+              }).catch(() => reject('Erreur lors du dézipage'));
+            });
         });
     }
 
     readdir(path?) {
-        Filesystem.readdir({
-            path: path ? path : '',
-            directory: FilesystemDirectory.Data
-        }).then((result) => {
-            this.zipList = result.files.filter(filename => filename.split('.').pop() === 'zip');
+        this.file.listDir(this.file.dataDirectory, path ? path : '').then((result) => {
+            this.zipList = result.map(file => file.name).filter(filename => filename.split('.').pop() === 'zip');
         }).catch(() => {
             console.error('Unable to read dir');
         });
