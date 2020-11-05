@@ -44,8 +44,8 @@
             </ion-card-header>
             <ion-card-content>{{message}}</ion-card-content>
             <ion-card-content class="loader">
-              <ion-spinner *ngIf="!progress"></ion-spinner>
-              <ion-progress-bar color="primary" [value]="progress" *ngIf="progress"></ion-progress-bar>
+              <ion-spinner></ion-spinner>
+              <ion-progress-bar color="primary" [value]="progress"></ion-progress-bar>
             </ion-card-content>
           </ion-card>
         </ion-col>
