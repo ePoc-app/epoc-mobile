@@ -2,10 +2,11 @@
   <div class="video-player">
       <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
         <video #video controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata"
-               [src]="libraryService.rootFolder + content.source"
-               [poster]="content.poster ? libraryService.rootFolder +  content.poster : ''">
+               [src]="(libraryService.rootFolder + content.source) | safe: 'url'"
+               [poster]="(content.poster ? libraryService.rootFolder +  content.poster : '') | safe: 'url'">
           <ng-container *ngFor="let sub of content.subtitles">
-            <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang" [src]="libraryService.rootFolder +  sub.src">
+            <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang"
+                   [src]="(libraryService.rootFolder +  sub.src) | safe: 'url'">
           </ng-container>
         </video>
       </div>
