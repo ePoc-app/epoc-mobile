@@ -205,10 +205,17 @@ export class PlayerPage implements OnInit {
             header: this.epoc.title,
             buttons: [
                 {
+                    text: 'Ouvrir un ePoc',
+                    icon: 'folder-open',
+                    handler: () => {
+                        this.router.navigate(['/']);
+                    }
+                },
+                {
                     text: 'Accueil',
                     icon: 'home',
                     handler: () => {
-                        this.router.navigate(['/']);
+                        this.router.navigate(['/home']);
                     }
                 },
                 {
