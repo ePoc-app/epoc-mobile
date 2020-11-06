@@ -3,9 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, ReplaySubject} from 'rxjs';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {File} from '@ionic-native/file/ngx';
-import {Capacitor} from '@capacitor/core';
+import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {Epoc} from '../classes/epoc';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
+
+const { Filesystem } = Plugins;
 
 @Injectable({
     providedIn: 'root'
@@ -27,6 +29,16 @@ export class LibraryService {
             this.rootFolder = Capacitor.convertFileSrc(this.file.dataDirectory + 'epoc/');
             this.http.get(this.rootFolder + 'content.json').subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
+            }, () => {
+                // Backup support for iOS livereload (dev environment)
+                Filesystem.readFile({
+                    path: '../Library/NoCloud/epoc/content.json',
+                    directory: FilesystemDirectory.Data,
+                    encoding: FilesystemEncoding.UTF8
+                }).then((result) => {
+                    const epoc = JSON.parse(result.data);
+                    this.epoc$.next(this.initCourseContent(epoc as Epoc));
+                });
             });
         }
         return this.epoc$.asObservable().pipe(distinctUntilChanged());
