@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core
 import {Router} from '@angular/router';
 import {File, FileEntry, FileWriter} from '@ionic-native/file/ngx';
 import {Zip} from 'capacitor-zip';
-import {Plugins, FilesystemDirectory, FilesystemEncoding} from '@capacitor/core';
+import {Plugins, FilesystemDirectory, FilesystemEncoding, Capacitor} from '@capacitor/core';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
 
@@ -136,7 +136,8 @@ export class OpenPage {
 
     fileDelete(filename) {
         Filesystem.deleteFile({
-            path: filename,
+            // Path to NoCloud documents on iOS to be the same as cordova file plugin
+            path: Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' + filename : filename,
             directory: FilesystemDirectory.Data
         }).then(() => {
             this.readdir();
