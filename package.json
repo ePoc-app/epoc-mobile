@@ -26,7 +26,7 @@
     "@capacitor/android": "^1.5.1",
     "@capacitor/cli": "^1.5.1",
     "@capacitor/core": "^1.5.1",
-    "@capacitor/ios": "^1.5.2",
+    "@capacitor/ios": "^2.4.2",
     "@ionic-native/core": "^5.22.0",
     "@ionic-native/file": "^5.22.0",
     "@ionic-native/file-transfer": "^5.22.0",
