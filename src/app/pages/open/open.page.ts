@@ -88,9 +88,9 @@ export class OpenPage {
         this.working = true;
         this.progress = 0;
         this.loadingLog(`Ouverture de ${filename}`);
-        this.unzip(filename).then(() => {
+        this.unzip(filename).then((epocId) => {
             this.toast('Démarrage', 'success');
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/home/' + epocId);
         }).catch((message) => {
             this.toast(message, 'danger');
         }).finally(() => {
@@ -117,7 +117,7 @@ export class OpenPage {
                 this.file.checkFile(
                   this.file.dataDirectory, 'epoc/content.json'
                 ).then(() => {
-                    resolve();
+                    resolve(Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5));
                 }).catch( () => {
                     reject('Erreur lors de l\'ouverture du content.json');
                 });
