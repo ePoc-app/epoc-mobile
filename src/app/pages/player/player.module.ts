@@ -34,6 +34,7 @@ import {PipesModule} from '../../pipes/pipes.module';
         { path: 'play/:id', component: TocEpocPage },
         { path: 'play/:id/:chapter', component: PlayerPage },
         { path: 'play/:id/:chapter/content/:contentId', component: PlayerPage },
+        { path: 'play/:id/:chapter/content/:contentId/:next', component: PlayerPage },
         { path: 'about/:id', component: AboutEpocPage },
         { path: 'download/:id', component: DownloadEpocPage },
         { path: 'score/:id', component: ScoreEpocPage },
