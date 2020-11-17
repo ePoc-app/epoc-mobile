@@ -4,6 +4,7 @@ import {Observable, of, ReplaySubject} from 'rxjs';
 import {Epoc} from '../classes/epoc';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
+import {uid} from '../classes/types';
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +31,9 @@ export class LibraryService {
         return this.epoc$.asObservable().pipe(distinctUntilChanged());
     }
 
+    /**
+     * Initiliaze ePoc runtime properties
+     */
     initCourseContent(epoc: Epoc) {
         epoc.assessments = [];
 
@@ -37,16 +41,17 @@ export class LibraryService {
             chapter.time = 0;
             chapter.videoCount = 0;
             chapter.assessmentCount = 0;
-            chapter.initializedContents = chapter.contents.map((uid) => {
-                const currentContent = epoc.contents[uid];
-                currentContent.id = uid;
+            chapter.initializedContents = chapter.contents.map((id) => {
+                const currentContent = epoc.contents[id];
+                currentContent.id = id;
                 if (currentContent.type === 'assessment') {
-                    (currentContent as Assessment).scoreTotal = (currentContent as Assessment).questions.reduce((total, questionId) => total + epoc.questions[questionId].score, 0);
+                    (currentContent as Assessment).scoreTotal = this.calcScoreTotal(epoc, (currentContent as Assessment).questions);
                     (currentContent as Assessment).chapterId = chapterId;
                     chapter.time = chapter.time + (currentContent as Assessment).questions.length;
                     chapter.assessmentCount++;
                     epoc.assessments.push((currentContent as Assessment));
-                } else if (currentContent.type === 'simple-question' && epoc.questions[(currentContent as SimpleQuestion).question].score > 0) {
+                } else if (currentContent.type === 'simple-question' &&
+                    Number(epoc.questions[(currentContent as SimpleQuestion).question].score) > 0) {
                     (currentContent as Assessment).questions = [(currentContent as SimpleQuestion).question];
                     (currentContent as Assessment).chapterId = chapterId;
                     epoc.assessments.push((currentContent as Assessment));
@@ -59,5 +64,12 @@ export class LibraryService {
         }
 
         return epoc;
+    }
+
+    /**
+     * Calcule le score total d'un ensemble de questions
+     */
+    public calcScoreTotal(epoc: Epoc, questions: Array<uid>) {
+        return questions.reduce((total, questionId) => total + Number(epoc.questions[questionId].score), 0);
     }
 }
