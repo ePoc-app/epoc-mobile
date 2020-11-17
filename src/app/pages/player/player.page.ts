@@ -104,10 +104,12 @@ export class PlayerPage implements OnInit {
                 this.loading = false;
 
                 const contentId = this.route.snapshot.paramMap.get('contentId');
+                // Go to the next content after contentId
+                const next = !!this.route.snapshot.paramMap.get('next');
 
                 if (contentId) {
                     const pageIndex = this.chapter.contents.findIndex(id => id === contentId);
-                    this.slidesOptions.initialSlide = pageIndex + 1;
+                    this.slidesOptions.initialSlide = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
                     this.progress = pageIndex / (this.chapter.contents.length + 1);
                 }
             }

@@ -183,6 +183,6 @@ export class AssessmentPage implements OnInit {
     }
 
     resume() {
-        this.router.navigateByUrl('/player/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId);
+        this.router.navigateByUrl(`/player/play/${this.epoc.id}/${this.assessment.chapterId}/content/${this.assessmentId}/next`);
     }
 }
