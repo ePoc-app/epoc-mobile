@@ -109,7 +109,6 @@ export class PlayerPage implements OnInit {
                     const pageIndex = this.chapter.contents.findIndex(id => id === contentId);
                     this.slidesOptions.initialSlide = pageIndex + 1;
                     this.progress = pageIndex / (this.chapter.contents.length + 1);
-                    console.log(this.progress);
                 }
             }
         });
@@ -174,7 +173,7 @@ export class PlayerPage implements OnInit {
 
         this.assessments.forEach((assessment) => {
             const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-            const scoreTotal = assessment.questions.reduce((total, questionId) => total + this.epoc.questions[questionId].score, 0);
+            const scoreTotal = this.libraryService.calcScoreTotal(this.epoc, assessment.questions);
 
             if (userAssessment && userAssessment.score > 0) {
                 this.assessmentData.totalUserScore += userAssessment.score;

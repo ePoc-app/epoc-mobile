@@ -66,7 +66,7 @@
   </ion-slides>
 </ion-content>
 
-<ion-footer *ngIf="questionSlides && currentQuestion < questions.length">
+<ion-footer *ngIf="questions && currentQuestion < questions.length">
   <ion-button class="check-answer" expand="block" slot="center" [disabled]="!currentAnswer" (click)="checkAnswer()" *ngIf="!explanationShown">Valider</ion-button>
   <ion-button class="check-answer" expand="block" slot="center" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>

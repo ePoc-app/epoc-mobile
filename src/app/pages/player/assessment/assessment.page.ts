@@ -69,7 +69,7 @@ export class AssessmentPage implements OnInit {
             this.assessments = epoc.assessments;
             this.assessment = epoc.contents[this.assessmentId];
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
-            this.scoreMax = this.questions.reduce((total, question) => question.score + total, 0)
+            this.scoreMax = this.libraryService.calcScoreTotal(this.epoc, this.assessment.questions);
             this.questionsSuccessed = new Array(this.questions.length);
         });
     }
@@ -107,7 +107,7 @@ export class AssessmentPage implements OnInit {
     }
 
     questionSuccessed() {
-        this.userScore += this.questions[this.currentQuestion].score;
+        this.userScore += +this.questions[this.currentQuestion].score;
         this.questionsSuccessed[this.currentQuestion] = true;
     }
 
@@ -162,7 +162,7 @@ export class AssessmentPage implements OnInit {
         this.assessments.forEach((assessment) => {
             if (assessment.id !== this.assessmentId) {
                 const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-                const scoreTotal = this.questions.reduce((total, question) => total + question.score, 0);
+                const scoreTotal = this.libraryService.calcScoreTotal(this.epoc, this.assessment.questions);
 
                 if (userAssessment && userAssessment.score > 0) {
                     this.assessmentData.totalUserScore += userAssessment.score;
