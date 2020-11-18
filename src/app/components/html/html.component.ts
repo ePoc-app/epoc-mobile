@@ -1,10 +1,11 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'html-content',
     templateUrl: './html.component.html',
     styleUrls: ['./html.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class HtmlComponent implements OnInit, OnDestroy {
     @Input() html: string;

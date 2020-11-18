@@ -1,0 +1,111 @@
+.html-content{
+  $inria-red : #e63312;
+  $inria-red-bg : lighten($inria-red, 48%);
+  $inria-blue : #40455a;
+  $inria-blue-border : lighten($inria-blue, 50%);
+  $inria-blue-bg : lighten($inria-blue, 64%);
+  $inria-grey : #eeeff3;
+
+  @function pow($number, $exponent) {
+    $value: 1;
+
+    @if $exponent > 0 {
+      @for $i from 1 through $exponent {
+        $value: $value * $number;
+      }
+    }
+
+    @return $value;
+  }
+
+  @for $i from 1 through 6 {
+    h#{7 - $i} {
+      font-size: pow(1.125, $i) * 16px;
+      font-weight: 700;
+      line-height: 1;
+      color:$inria-blue;
+      margin: 0 0 .5em 0;
+      padding: 0;
+      text-transform: unset;
+    }
+
+    * + h#{7 - $i} {
+      margin-top: 1em;
+    }
+  }
+
+  .ill-icon{
+    font-style: normal!important;
+  }
+
+  .ill-alert{
+    display: flex;
+    align-items: center;
+    margin: 1em 0;
+    font-size: 0;
+    background: $inria-red;
+
+    .ill-icon{
+      min-width: 50px;
+      text-align: center;
+      line-height: 50px;
+      font-size: 20px;
+      color:white;
+    }
+
+    p, ul, ol, div{
+      padding: 1em;
+      margin: 0;
+      font-size: 16px;
+      color:white;
+    }
+
+    .ill-icon + p, .ill-icon + *{
+      padding:5px;
+    }
+
+    &.alert-blue{
+      background: $inria-blue;
+    }
+
+    &.alert-grey{
+      background: $inria-grey;
+
+      div, p, ul, ol, .ill-icon, .ill-icon + * {
+        color: $inria-blue;
+      }
+    }
+  }
+
+  .accordion{
+    margin: 1em 0;
+    color: $inria-blue;
+
+    i{
+      display: inline-block;
+      transition: transform .25s;
+    }
+
+    .accordion-header{
+      display: block;
+      border-bottom: 1px solid $inria-blue-border;
+      cursor: pointer;
+    }
+
+    .accordion-body {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      background: $inria-blue-bg;
+    }
+
+    input:checked ~ .accordion-body{
+      max-height: 150rem;
+      padding: .5rem;
+    }
+
+    input:checked ~ .accordion-header i{
+      transform: rotate(90deg);
+    }
+  }
+}
