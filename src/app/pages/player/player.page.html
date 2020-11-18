@@ -77,9 +77,7 @@
                     <h4>{{content.title}}</h4>
                   </div>
                   <div class="page-content page-content-html">
-                    <div class="custom-card">
-                      <div class="custom-card-content" [innerHTML]="content.html"></div>
-                    </div>
+                      <html-content [epocId]="epoc.id" [html]="content.html"></html-content>
                   </div>
                 </div>
               </ng-container>

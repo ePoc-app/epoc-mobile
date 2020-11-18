@@ -22,6 +22,7 @@ import {SimpleQuestionComponent} from './simple-question/simple-question.compone
 import {CourseChoiceComponent} from './course-choice/course-choice.component';
 import {ScoreProgressModule} from '../../components/score-progress/score-progress.module';
 import {PipesModule} from '../../pipes/pipes.module';
+import {HtmlComponent} from './html/html.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,7 @@ import {PipesModule} from '../../pipes/pipes.module';
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
       AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
-      VideoComponent, TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent],
+      VideoComponent, TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent, HtmlComponent],
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {
