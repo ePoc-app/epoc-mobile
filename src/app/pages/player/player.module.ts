@@ -21,7 +21,6 @@ import {SimpleQuestionComponent} from './simple-question/simple-question.compone
 import {CourseChoiceComponent} from './course-choice/course-choice.component';
 import {SharedModule} from '../../components/shared.module';
 import {PipesModule} from '../../pipes/pipes.module';
-import {HtmlComponent} from './html/html.component';
 
 @NgModule({
   imports: [
@@ -48,7 +47,7 @@ import {HtmlComponent} from './html/html.component';
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
       AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
-      VideoComponent, TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent, HtmlComponent],
+      VideoComponent, TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent],
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {
