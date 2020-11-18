@@ -9,7 +9,6 @@ import {DownloadEpocPage} from './download-epoc/download-epoc.page';
 import {ScoreEpocPage} from './score-epoc/score-epoc.page';
 import {TocEpocPage} from './toc-epoc/toc-epoc.page';
 import {BookmarksEpocPage} from './bookmarks-epoc/bookmarks-epoc.page';
-import {AssessmentButtonModule} from '../../components/assessment-button/assessment-button.module';
 import {PlayerSettingsPage} from './settings/player-settings.page';
 import {AssessmentPage} from './assessment/assessment.page';
 import {SimpleChoiceComponent} from './assessment/components/simple-choice/simple-choice.component';
@@ -20,7 +19,7 @@ import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.pag
 import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-and-drop.component';
 import {SimpleQuestionComponent} from './simple-question/simple-question.component';
 import {CourseChoiceComponent} from './course-choice/course-choice.component';
-import {ScoreProgressModule} from '../../components/score-progress/score-progress.module';
+import {SharedModule} from '../../components/shared.module';
 import {PipesModule} from '../../pipes/pipes.module';
 import {HtmlComponent} from './html/html.component';
 
@@ -29,8 +28,7 @@ import {HtmlComponent} from './html/html.component';
     IonicModule,
     CommonModule,
     FormsModule,
-    AssessmentButtonModule,
-    ScoreProgressModule,
+    SharedModule,
     RouterModule.forChild([
         { path: 'play/:id', component: TocEpocPage },
         { path: 'play/:id/:chapter', component: PlayerPage },
