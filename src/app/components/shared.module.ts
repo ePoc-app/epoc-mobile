@@ -5,23 +5,28 @@ import {ScoreProgressComponent} from './score-progress/score-progress.component'
 import {AssessmentButtonComponent} from './assessment-button/assessment-button.component';
 import {LibraryItemComponent} from './libraryItem/library-item.component';
 import {PipesModule} from '../pipes/pipes.module';
+import {HtmlComponent} from './html/html.component';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
-        PipesModule
+        PipesModule,
+        RouterModule
     ],
     declarations: [
         ScoreProgressComponent,
         AssessmentButtonComponent,
-        LibraryItemComponent
+        LibraryItemComponent,
+        HtmlComponent
     ],
     exports: [
         ScoreProgressComponent,
         AssessmentButtonComponent,
-        LibraryItemComponent
+        LibraryItemComponent,
+        HtmlComponent
     ]
 })
 export class SharedModule { }
