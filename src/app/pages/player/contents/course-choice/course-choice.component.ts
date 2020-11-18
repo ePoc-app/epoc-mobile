@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ReadingStoreService} from '../../../services/reading-store.service';
-import {Reading} from '../../../classes/reading';
-import {Content} from '../../../classes/contents/content';
+import {ReadingStoreService} from '../../../../services/reading-store.service';
+import {Reading} from '../../../../classes/reading';
+import {Content} from '../../../../classes/contents/content';
 
 @Component({
     selector: 'course-choice',

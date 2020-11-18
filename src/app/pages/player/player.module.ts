@@ -14,11 +14,11 @@ import {AssessmentPage} from './assessment/assessment.page';
 import {SimpleChoiceComponent} from './assessment/components/simple-choice/simple-choice.component';
 import {MultipleChoiceComponent} from './assessment/components/multiple-choice/multiple-choice.component';
 import {ReorderComponent} from './assessment/components/reorder/reorder.component';
-import {VideoComponent} from './video/video.component';
-import {TranscriptModalPage} from './video/transcript-modal/transcript-modal.page';
+import {VideoComponent} from './contents/video/video.component';
+import {TranscriptModalPage} from './contents/video/transcript-modal/transcript-modal.page';
 import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-and-drop.component';
-import {SimpleQuestionComponent} from './simple-question/simple-question.component';
-import {CourseChoiceComponent} from './course-choice/course-choice.component';
+import {SimpleQuestionComponent} from './contents/simple-question/simple-question.component';
+import {CourseChoiceComponent} from './contents/course-choice/course-choice.component';
 import {SharedModule} from '../../components/shared.module';
 import {PipesModule} from '../../pipes/pipes.module';
 

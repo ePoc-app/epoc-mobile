@@ -1,0 +1,9 @@
+<div class="video-card">
+
+  <h4>Résumé</h4>
+
+  <div class="video-summary">
+    <p *ngIf="content.summary && content.summary.length > 0" [innerHTML]="content.summary"></p>
+    <p *ngIf="!content.summary || content.summary.length <= 0">No summary.</p>
+  </div>
+</div>
