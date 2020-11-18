@@ -43,16 +43,26 @@ ion-card{
       display: inline-block;
       vertical-align: middle;
       width: 1em;
-      margin-right: .5em;
-      font-size: 2em;
+      margin-right: .2em;
     }
 
-    h4{
+    .title{
       display: inline-block;
       vertical-align: middle;
       width: calc(100% - 3em);
       margin: 0;
-      text-align: center;
+
+      h1{
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .breadcrumb{
+        font-size: 12px;
+        span{
+          color: var(--ion-color-inria);
+        }
+      }
     }
   }
 
