@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Video} from '../../../classes/contents/video';
+import {Video} from '../../../../classes/contents/video';
 import {IonSelect, ToastController} from '@ionic/angular';
-import {LibraryService} from '../../../services/library.service';
+import {LibraryService} from '../../../../services/library.service';
 
 @Component({
     selector: 'video-player',

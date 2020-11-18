@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question, SimpleQuestion} from '../../../classes/contents/assessment';
-import {ReadingStoreService} from '../../../services/reading-store.service';
-import {Reading} from '../../../classes/reading';
+import {Question, SimpleQuestion} from '../../../../classes/contents/assessment';
+import {ReadingStoreService} from '../../../../services/reading-store.service';
+import {Reading} from '../../../../classes/reading';
 
 @Component({
     selector: 'simple-question',
