@@ -1,5 +1,5 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {IonSelect, ToastController} from '@ionic/angular';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {IonSelect, ToastController, Gesture, GestureController} from '@ionic/angular';
 import {LibraryService} from '../../services/library.service';
 
 @Component({
@@ -7,15 +7,19 @@ import {LibraryService} from '../../services/library.service';
   templateUrl: './video-player.component.html',
   styleUrls: ['./video-player.component.scss'],
 })
-export class VideoPlayerComponent implements OnInit {
+export class VideoPlayerComponent implements OnInit, AfterViewInit {
 
     @ViewChild('video', {static: true}) videoRef: ElementRef;
     @ViewChild('tracks', {static: false}) trackSelectRef: IonSelect;
+    @ViewChild('timelineProgress', {static: false}) timelineProgress: ElementRef;
+    @ViewChild('timelineCursor', {static: false}) timelineCursorRef: ElementRef;
 
     @Input() src: string;
     @Input() poster: string;
     @Input() subtitles: string;
     @Input() controls;
+
+    @Output() timelineDragging = new EventEmitter<string>();
 
     defaultControls = {
         show: true,
@@ -34,7 +38,8 @@ export class VideoPlayerComponent implements OnInit {
 
     constructor(
         public libraryService: LibraryService,
-        public toastController: ToastController
+        public toastController: ToastController,
+        private gestureCtrl: GestureController
     ) {}
 
     ngOnInit() {
@@ -66,6 +71,36 @@ export class VideoPlayerComponent implements OnInit {
                 }
             }
         });
+    }
+
+    ngAfterViewInit() {
+        let startCursorPos;
+        let timelinePos;
+        const gesture: Gesture = this.gestureCtrl.create({
+            el: this.timelineCursorRef.nativeElement,
+            threshold: 0,
+            gestureName: 'my-gesture',
+            passive: false,
+            gesturePriority: 10,
+            onStart: () => {
+                startCursorPos = this.timelineCursorRef.nativeElement.getBoundingClientRect();
+                timelinePos = this.timelineCursorRef.nativeElement.parentNode.getBoundingClientRect();
+                this.timelineDragging.emit('dragstart');
+            },
+            onEnd: () => {
+                this.timelineDragging.emit('dragend');
+            },
+            onMove: (ev) => {
+                const newX = Math.min(Math.max(startCursorPos.left - timelinePos.left + ev.deltaX, 0), timelinePos.width);
+                const progress = newX / timelinePos.width;
+                this.hasPlayed = true;
+                this.timelineProgress.nativeElement.style.width = (progress * 100) + '%';
+                this.timelineCursorRef.nativeElement.style.left = (progress * 100) + '%';
+                this.video.currentTime = Math.round(progress * this.video.duration);
+            }
+        }, true);
+
+        gesture.enable(true);
     }
 
     play() {

@@ -103,7 +103,15 @@
                     </div>
                   </div>
                   <div class="page-content page-content-video">
-                    <video-content [content]="content"></video-content>
+                    <div class="video-card">
+                      <video-player [src]="content.source" [poster]="content.poster" [subtitles]="content.subtitles" (timelineDragging)="timelineDragging($event)"></video-player>
+                      <h4>Résumé</h4>
+
+                      <div class="video-summary">
+                        <p *ngIf="content.summary && content.summary.length > 0" [innerHTML]="content.summary"></p>
+                        <p *ngIf="!content.summary || content.summary.length <= 0">No summary.</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </ng-container>

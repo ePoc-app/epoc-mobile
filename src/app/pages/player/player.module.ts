@@ -14,8 +14,7 @@ import {AssessmentPage} from './assessment/assessment.page';
 import {SimpleChoiceComponent} from './assessment/components/simple-choice/simple-choice.component';
 import {MultipleChoiceComponent} from './assessment/components/multiple-choice/multiple-choice.component';
 import {ReorderComponent} from './assessment/components/reorder/reorder.component';
-import {VideoComponent} from './contents/video/video.component';
-import {TranscriptModalPage} from './contents/video/transcript-modal/transcript-modal.page';
+import {TranscriptModalPage} from './contents/transcript-modal/transcript-modal.page';
 import {DragAndDropComponent} from './assessment/components/drag-and-drop/drag-and-drop.component';
 import {SimpleQuestionComponent} from './contents/simple-question/simple-question.component';
 import {CourseChoiceComponent} from './contents/course-choice/course-choice.component';
@@ -47,7 +46,7 @@ import {PipesModule} from '../../pipes/pipes.module';
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
       AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
-      VideoComponent, TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent],
+      TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent],
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {
