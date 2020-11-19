@@ -4,13 +4,29 @@
   .video-container{
     position: relative;
 
-    img{
+    .poster{
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: absolute;
       width:100%;
       top:0;
       left:0;
-      bottom:-2px;
+      bottom:0;
       right:0;
+      background: var(--ion-color-inria-blue);
+
+      .title{
+        padding: 20px;
+        color: white;
+        text-align: center;
+      }
+
+      img{
+        position: absolute;
+        width:100%;
+        height: auto;
+      }
     }
 
     &:before {

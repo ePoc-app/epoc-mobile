@@ -17,6 +17,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     @Input() src: string;
     @Input() poster: string;
     @Input() subtitles: string;
+    @Input() title: string;
     @Input() controls;
 
     @Output() timelineDragging = new EventEmitter<string>();

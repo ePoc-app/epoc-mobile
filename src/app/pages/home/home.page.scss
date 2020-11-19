@@ -61,6 +61,8 @@ ion-toolbar {
   border: 2px solid var(--ion-color-inria-blue);
   border-radius: 10px;
   overflow: hidden;
+  // hack to fix overflow hidden safari
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 .about-course {

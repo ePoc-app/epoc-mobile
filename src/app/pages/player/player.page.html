@@ -104,7 +104,9 @@
                   </div>
                   <div class="page-content page-content-video">
                     <div class="video-card">
-                      <video-player [src]="content.source" [poster]="content.poster" [subtitles]="content.subtitles" (timelineDragging)="timelineDragging($event)"></video-player>
+                      <video-player [src]="content.source" [poster]="content.poster"
+                                    [subtitles]="content.subtitles" [title]="content.title"
+                                    (timelineDragging)="timelineDragging($event)"></video-player>
                       <h4>Résumé</h4>
 
                       <div class="video-summary">
