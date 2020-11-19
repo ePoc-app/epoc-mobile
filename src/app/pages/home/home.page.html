@@ -26,13 +26,8 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <div class="trailer-course" (click)="togglePlay($event)">
-            <video [src]="(libraryService.rootFolder +  epoc.teaser) | safe: 'url'"
-                   [poster]="(epoc.image ? libraryService.rootFolder +  epoc.image : '') | safe: 'url'"
-                   controls controlslist="nodownload" disablePictureInPicture playsinline preload="metadata"
-                   (play)="play($event)" (pause)="pause($event)">
-            </video>
-            <img [src]="(libraryService.rootFolder +  epoc.image) | safe: 'url'" *ngIf="!hasPlayed"/>
+          <div class="trailer-course">
+            <video-player [src]="epoc.teaser" [poster]="epoc.image" [controls]="{show:false}"></video-player>
           </div>
         </ion-col>
       </ion-row>
