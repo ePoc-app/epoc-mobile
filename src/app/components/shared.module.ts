@@ -7,6 +7,7 @@ import {LibraryItemComponent} from './libraryItem/library-item.component';
 import {PipesModule} from '../pipes/pipes.module';
 import {HtmlComponent} from './html/html.component';
 import {RouterModule} from '@angular/router';
+import {VideoPlayerComponent} from './video-player/video-player.component';
 
 
 @NgModule({
@@ -20,13 +21,15 @@ import {RouterModule} from '@angular/router';
         ScoreProgressComponent,
         AssessmentButtonComponent,
         LibraryItemComponent,
-        HtmlComponent
+        HtmlComponent,
+        VideoPlayerComponent
     ],
     exports: [
         ScoreProgressComponent,
         AssessmentButtonComponent,
         LibraryItemComponent,
-        HtmlComponent
+        HtmlComponent,
+        VideoPlayerComponent
     ]
 })
 export class SharedModule { }

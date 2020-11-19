@@ -1,0 +1,39 @@
+<div class="video-player">
+  <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()" (dblclick)="fullscreen()">
+    <video #video disablePictureInPicture playsinline preload="metadata"
+           [src]="(libraryService.rootFolder + src) | safe: 'url'"
+           [poster]="(poster ? libraryService.rootFolder +  poster : '') | safe: 'url'">
+      <ng-container *ngFor="let sub of subtitles">
+        <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang"
+               [src]="(libraryService.rootFolder +  sub.src) | safe: 'url'">
+      </ng-container>
+    </video>
+    <img [src]="(libraryService.rootFolder +  poster) | safe: 'url'" *ngIf="!hasPlayed"/>
+    <div class="video-timeline" (click)="seek($event)" *ngIf="controls.show">
+      <div class="video-timeline-progress" [style.width]="progress +'%'"></div>
+      <div class="video-timeline-cursor" [style.left]="progress +'%'"></div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="controls.show">
+    <ion-item class="hidden-select" *ngIf="controls.subtitles && subtitles && subtitles.length >0">
+      <ion-label>Sous-titres</ion-label>
+      <ion-select #tracks [value]="trackSelected" (ionChange)='changeSubtitles($event)'>
+        <ion-select-option value="none">Aucun</ion-select-option>
+        <ion-select-option [value]="sub.lang" *ngFor="let sub of subtitles">{{sub.label}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div class="video-actions">
+      <div class="video-actions-left" *ngIf="controls.subtitles">
+        <ion-icon name="logo-closed-captioning" (click)="captions()" *ngIf="subtitles && subtitles.length >0"></ion-icon>
+      </div>
+      <div class="video-actions-center" *ngIf="controls.playbutton">
+        <ion-icon [name]="playing ? 'pause':'play'" (click)="play()"></ion-icon>
+      </div>
+      <div class="video-actions-right" *ngIf="controls.fullscreen">
+        <ion-icon name="expand" (click)="fullscreen()"></ion-icon>
+      </div>
+    </div>
+  </ng-container>
+</div>

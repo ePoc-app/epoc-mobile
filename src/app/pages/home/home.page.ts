@@ -11,7 +11,6 @@ import {LibraryService} from '../../services/library.service';
 export class HomePage implements OnInit {
     epoc$: Observable<Epoc>;
     epocId = 'VP';
-    hasPlayed = false;
 
     constructor(
         public libraryService: LibraryService
@@ -19,26 +18,6 @@ export class HomePage implements OnInit {
 
     ngOnInit() {
         this.epoc$ = this.libraryService.getEpoc(this.epocId);
-    }
-
-    togglePlay($event) {
-        if ($event.target.nodeName !== 'VIDEO' && $event.target.className.indexOf('controls-bar') === -1) {
-            const video = $event.target.parentNode.querySelector('video');
-            if (video.paused) {
-                video.play();
-                this.hasPlayed = true;
-            } else {
-                video.pause();
-            }
-        }
-    }
-
-    play($event) {
-        $event.target.parentNode.classList.add('playing');
-    }
-
-    pause($event) {
-        $event.target.parentNode.classList.remove('playing');
     }
 
     ionViewWillLeave() {
