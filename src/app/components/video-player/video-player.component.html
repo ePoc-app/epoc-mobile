@@ -9,9 +9,9 @@
       </ng-container>
     </video>
     <img [src]="(libraryService.rootFolder +  poster) | safe: 'url'" *ngIf="!hasPlayed"/>
-    <div class="video-timeline" (click)="seek($event)" *ngIf="controls.show">
-      <div class="video-timeline-progress" [style.width]="progress +'%'"></div>
-      <div class="video-timeline-cursor" [style.left]="progress +'%'"></div>
+    <div class="video-timeline" (click)="seek($event)" [style.display]="controls.show && controls.timeline ? 'block':'none'">
+      <div class="video-timeline-progress" [style.width]="progress +'%'" #timelineProgress></div>
+      <div class="video-timeline-cursor" [style.left]="progress +'%'" #timelineCursor></div>
     </div>
   </div>
 

@@ -197,13 +197,31 @@ ion-card{
     }
 
     &-video{
-      video-player{
+      .video-card{
         display: flex;
+        justify-content: space-evenly;
         flex-direction: column;
-        flex-grow:1;
+        flex-grow: 1;
+        background: #fff;
+        border-radius: 8px;
         overflow: hidden;
-        filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
+
+        & > h4 {
+          margin-top: 0;
+          padding: 0 16px;
+        }
       }
+
+      .video-summary{
+        overflow: auto;
+        flex-grow:1;
+        padding: 0 16px;
+
+        p{
+          margin-top: 0;
+        }
+      }
+
     }
 
     &-assessment{

@@ -151,6 +151,15 @@ export class PlayerPage implements OnInit {
         this.readerSlides.slideNext();
     }
 
+    // /!\ this event is binded from videplayer
+    timelineDragging(event) {
+        if (event === 'dragstart') {
+            this.readerSlides.lockSwipes(true);
+        } else {
+            this.readerSlides.lockSwipes(false);
+        }
+    }
+
     displayMenu() {
         this.presentActionSheet();
     }
