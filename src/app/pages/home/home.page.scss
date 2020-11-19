@@ -57,6 +57,10 @@ ion-toolbar {
   width: 80%;
   min-width: 250px;
   margin: 6vh auto;
+  background: var(--ion-color-inria-blue);
+  border: 2px solid var(--ion-color-inria-blue);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .about-course {
