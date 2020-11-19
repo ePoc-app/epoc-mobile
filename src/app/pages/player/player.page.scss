@@ -205,6 +205,8 @@ ion-card{
         background: #fff;
         border-radius: 8px;
         overflow: hidden;
+        // hack to fix overflow hidden safari
+        -webkit-mask-image: -webkit-radial-gradient(white, black);
 
         & > h4 {
           margin-top: 0;
