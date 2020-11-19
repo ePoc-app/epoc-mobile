@@ -27,12 +27,12 @@
       <ion-slide class="assessment-item-explanation">
         <ion-card mode="ios" class="explanation-card">
           <ion-card-header mode="ios" *ngIf="questionsSuccessed[questionIndex]">
-            <ion-icon name="checkmark-circle-outline" mode="ios" color="success" class="explanation-icon"></ion-icon>
+            <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
             <ion-card-subtitle mode="ios">Explication</ion-card-subtitle>
             <ion-card-title mode="ios">Bravo !</ion-card-title>
           </ion-card-header>
           <ion-card-header mode="ios" *ngIf="!questionsSuccessed[questionIndex]">
-            <ion-icon name="close-circle-outline" mode="ios" color="danger" class="explanation-icon"></ion-icon>
+            <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
             <ion-card-subtitle mode="ios">Explication</ion-card-subtitle>
             <ion-card-title mode="ios">Non !</ion-card-title>
           </ion-card-header>
@@ -59,7 +59,7 @@
         </ion-card-header>
         <ion-card-content mode="ios">
           <ion-button class="retry" color="medium" expand="block" (click)="retry()"><ion-icon name="refresh"></ion-icon> Réessayer</ion-button>
-          <ion-button class="resume-course" expand="block" (click)="resume()">Continuer le cours <ion-icon name="arrow-dropright" slot="end" mode="md"></ion-icon></ion-button>
+          <ion-button class="resume-course" expand="block" (click)="resume()">Continuer le cours <ion-icon name="arrow-forward" slot="end"></ion-icon></ion-button>
         </ion-card-content>
       </ion-card>
     </ion-slide>
@@ -67,6 +67,6 @@
 </ion-content>
 
 <ion-footer *ngIf="questions && currentQuestion < questions.length">
-  <ion-button class="check-answer" expand="block" slot="center" [disabled]="!currentAnswer" (click)="checkAnswer()" *ngIf="!explanationShown">Valider</ion-button>
-  <ion-button class="check-answer" expand="block" slot="center" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
+  <ion-button class="check-answer" expand="block" [disabled]="!currentAnswer" (click)="checkAnswer()" *ngIf="!explanationShown">Valider</ion-button>
+  <ion-button class="check-answer" expand="block" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>

@@ -17,12 +17,12 @@
         </ion-item>
         <ng-container *ngFor="let content of chapter.contents | denormalize:epoc.contents;">
           <ion-item class="level-2" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
-            <ion-icon *ngIf="content.type === 'html'" name="paper" slot="start"></ion-icon>
-            <ion-icon *ngIf="content.type === 'video'" name="play" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
-            <ion-icon *ngIf="content.type === 'simple-question' && !content.question.score" name="bulb" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'simple-question' && !content.question.score" name="bulb-outline" slot="start"></ion-icon>
             <ion-icon *ngIf="content.type === 'simple-question' && content.question.score" name="checkbox-outline" slot="start"></ion-icon>
-            <ion-icon *ngIf="content.type === 'choice'" name="git-branch" slot="start"></ion-icon>
+            <ion-icon *ngIf="content.type === 'choice'" name="git-branch-outline" slot="start"></ion-icon>
             <ion-label>{{content.title}}</ion-label>
           </ion-item>
         </ng-container>

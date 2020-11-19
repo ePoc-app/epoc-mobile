@@ -39,15 +39,15 @@
                   <ion-grid>
                     <ion-row class="chapter-specs ion-text-center">
                       <ion-col size="4">
-                        <div class="chapter-spec-icon"><ion-icon name="stopwatch" mode="md" color="inria-blue"></ion-icon></div>
+                        <div class="chapter-spec-icon"><ion-icon name="time" color="inria-blue"></ion-icon></div>
                         <div class="chapter-spec-value">{{chapter.time}} min</div>
                       </ion-col>
                       <ion-col size="4">
-                        <div class="chapter-spec-icon"><ion-icon name="videocam" mode="md" color="inria-blue"></ion-icon></div>
+                        <div class="chapter-spec-icon"><ion-icon name="videocam" color="inria-blue"></ion-icon></div>
                         <div class="chapter-spec-value">{{chapter.videoCount}} {{chapter.videoCount > 1 ? 'videos':'video'}}</div>
                       </ion-col>
                       <ion-col size="4">
-                        <div class="chapter-spec-icon"><ion-icon name="checkbox-outline" mode="md" color="inria-blue"></ion-icon></div>
+                        <div class="chapter-spec-icon"><ion-icon name="checkbox" color="inria-blue"></ion-icon></div>
                         <div class="chapter-spec-value">{{chapter.assessmentCount}} {{chapter.assessmentCount > 1 ? 'activités':'activité'}}</div>
                       </ion-col>
                     </ion-row>
@@ -73,7 +73,7 @@
               <ng-container *ngIf="content.type === 'html'">
                 <div class="page-wrapper">
                   <div class="page-header">
-                    <ion-icon name="paper" size="large"></ion-icon>
+                    <ion-icon name="document-text" size="large"></ion-icon>
                     <div class="title">
                       <div class="breadcrumb">
                         <span >Chapitre {{chapterIndex + 1}} :</span> {{chapter.title}}
@@ -153,7 +153,7 @@
               <ng-container *ngIf="content.type === 'assessment'">
                 <div class="page-wrapper">
                   <div class="page-header">
-                    <ion-icon name="checkbox-outline" size="large"></ion-icon>
+                    <ion-icon name="checkbox" size="large"></ion-icon>
                     <div class="title">
                       <div class="breadcrumb">
                         <span >Chapitre {{chapterIndex + 1}} :</span> {{chapter.title}}
@@ -167,12 +167,12 @@
                       <ion-card-content>
                         <ion-row class="activity-specs ion-text-center">
                           <ion-col size="6">
-                            <div class="activity-spec-icon"><ion-icon name="school" mode="md" color="inria-blue"></ion-icon></div>
+                            <div class="activity-spec-icon"><ion-icon name="school" color="inria-blue"></ion-icon></div>
                             <div class="activity-spec-value" *ngIf="content.scoreTotal > 0">Noté</div>
                             <div class="activity-spec-value" *ngIf="content.scoreTotal <= 0">Non Noté</div>
                           </ion-col>
                           <ion-col size="6">
-                            <div class="activity-spec-icon"><ion-icon name="help" mode="md" color="inria-blue"></ion-icon></div>
+                            <div class="activity-spec-icon"><ion-icon name="help" color="inria-blue"></ion-icon></div>
                             <div class="activity-spec-value">{{content.questions.length}} question<ng-container *ngIf="content.questions.length > 1">s</ng-container></div>
                           </ion-col>
                         </ion-row>
@@ -190,7 +190,9 @@
           <div class="page-wrapper">
             <div class="page-header">
               <ion-icon name="ribbon" size="large"></ion-icon>
-              <h4>Fin du chapitre</h4>
+              <div class="title">
+                <h1>Fin du chapitre</h1>
+              </div>
             </div>
             <div class="page-content page-content-next">
               <div class="custom-card next-chapter-card" *ngIf="nextChapter">
@@ -205,7 +207,7 @@
                     Table des matières
                   </ion-button>
                   <ion-button expand="block" [routerLink]="'/player/play/'+epoc.id+'/'+nextChapterId">
-                    <ion-icon name="arrow-dropright" slot="end" mode="md"></ion-icon>
+                    <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
                     Chapitre suivant
                   </ion-button>
                 </div>
@@ -213,7 +215,7 @@
               <div class="custom-card next-chapter-card" *ngIf="!nextChapter">
                 <div class="custom-card-footer">
                   <ion-button color="medium" expand="block" [routerLink]="'/player/toc/'+epoc.id">
-                    <ion-icon name="list" slot="start" mode="ios"></ion-icon>
+                    <ion-icon name="list" slot="start"></ion-icon>
                     Table des matières
                   </ion-button>
                 </div>
@@ -246,13 +248,13 @@
   <ion-toolbar>
     <div class="reader-action">
       <div class="page-action page-prev" [ngClass]="currentPage === 0 ? 'disable':''" (click)="prevPage()" *ngIf="dataInitialized">
-        <ion-icon name="arrow-dropleft" mode="md"></ion-icon>
+        <ion-icon name="caret-back"></ion-icon>
       </div>
       <div class="page-action menu" (click)="displayMenu()">
-        <ion-icon name="menu" mode="ios"></ion-icon>
+        <ion-icon name="menu"></ion-icon>
       </div>
       <div class="page-action page-next" [ngClass]="currentPage >= chapter.contents.length + 1 ? 'disable':''" (click)="nextPage()" *ngIf="dataInitialized">
-        <ion-icon name="arrow-dropright" mode="md"></ion-icon>
+        <ion-icon name="caret-forward"></ion-icon>
       </div>
     </div>
   </ion-toolbar>

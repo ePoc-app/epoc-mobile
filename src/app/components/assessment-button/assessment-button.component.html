@@ -2,11 +2,11 @@
   <ion-button expand="block" strong="true" [routerLink]="['/player/assessment', epoc.id, content.id]">
     <ng-container *ngIf="getScore(content) === null">
       Commencer l'activité
-      <ion-icon name="create" mode="md" slot="end"></ion-icon>
+      <ion-icon name="create-outline" slot="end"></ion-icon>
     </ng-container>
     <ng-container *ngIf="getScore(content) !== null">
       Refaire l'activité
-      <ion-icon name="refresh" mode="md" slot="end"></ion-icon>
+      <ion-icon name="refresh" slot="end"></ion-icon>
     </ng-container>
   </ion-button>
 </div>
