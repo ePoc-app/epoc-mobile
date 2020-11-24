@@ -28,9 +28,7 @@ export class HomePage implements OnInit {
             switchMap((params: ParamMap) =>
                 this.libraryService.getEpoc(params.get('id')))
         );
-        this.epoc$.subscribe(epoc => {
-            this.epocId = epoc.id;
-        });
+        this.epocId = this.route.snapshot.paramMap.get('id');
     }
 
     ionViewWillLeave() {
