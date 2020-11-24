@@ -1,0 +1,49 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <div class="logo" slot="start">
+      <ion-img src="assets/img/ePoc.svg"></ion-img>
+    </div>
+    <ion-button class="about" slot="end" routerLink="/about" routerDirection="forward">
+      <ion-icon slot="icon-only" ios="ios-information-circle" md="ios-information-circle" color="inria-blue"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scrollY="false">
+  <div class="login">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Bienvenue</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Pour accéder aux contenus des ePoc Inria, merci de vous connecter.</p>
+            </ion-card-content>
+            <ion-card-content>
+              <ion-segment color="inria-blue" mode="md" [value]="activeTab" (ionChange)="changeLoginTab($event)">
+                <ion-segment-button mode="md" value="inria">
+                  <ion-label>Inria</ion-label>
+                </ion-segment-button>
+                <ion-segment-button mode="md" value="externe">
+                  <ion-label>Externe</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+              <div class="segment-content" *ngIf="activeTab === 'inria'">
+                <ion-button (click)="oauthLogin()" color="inria-blue" expand="block" strong>Connexion CAS Inria</ion-button>
+              </div>
+              <div class="segment-content" *ngIf="activeTab === 'externe'">
+                <form (submit)="firebaseLogin($event)">
+                  <input placeholder="Nom d'utilisateur" (input)="updateUserForm('login', $event)" required/>
+                  <input placeholder="Mot de passe" type="password" (input)="updateUserForm('password', $event)" required/>
+                  <ion-button type="submit" color="inria-blue" expand="block" [disabled]="!userForm.login || !userForm.password">Connexion externe</ion-button>
+                </form>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
