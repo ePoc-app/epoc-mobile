@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core
 import {Router} from '@angular/router';
 import {File, FileEntry, FileWriter} from '@ionic-native/file/ngx';
 import {Zip} from 'capacitor-zip';
-import {Plugins, FilesystemDirectory, FilesystemEncoding, Capacitor} from '@capacitor/core';
+import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
 
@@ -29,7 +29,7 @@ export class OpenPage {
         private router: Router,
         private file: File
     ) {
-      this.zip = new Zip();
+        this.zip = new Zip();
     }
 
     ionViewDidEnter() {
@@ -54,7 +54,9 @@ export class OpenPage {
 
 
     pickFile() {
-        if (this.working) { return; }
+        if (this.working) {
+            return;
+        }
         this.fileRef.nativeElement.click();
     }
 
@@ -84,7 +86,9 @@ export class OpenPage {
     }
 
     openEpoc(filename) {
-        if (this.working) { return; }
+        if (this.working) {
+            return;
+        }
         this.working = true;
         this.progress = 0;
         this.loadingLog(`Ouverture de ${filename}`);
@@ -108,21 +112,25 @@ export class OpenPage {
             ).catch((e) =>
                 console.log('Nothing to delete')
             ).finally(() => {
-              this.zip.unZip({
-                  source : this.file.dataDirectory + filename,
-                  destination: this.file.dataDirectory + 'epoc',
-              }, (progress) => {
-                  this.progress = progress.value / 100;
-                  this.ref.detectChanges();
-              }).then(() => {
-                this.file.checkFile(
-                  this.file.dataDirectory, 'epoc/content.json'
-                ).then(() => {
-                    resolve(Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5));
-                }).catch( () => {
-                    reject('Erreur lors de l\'ouverture du content.json');
-                });
-              }).catch(() => reject('Erreur lors du dézipage'));
+                this.zip.unZip({
+                    source: this.file.dataDirectory + filename,
+                    destination: this.file.dataDirectory + 'epoc',
+                }, (progress) => {
+                    this.progress = progress.value / 100;
+                    this.ref.detectChanges();
+                }).then(() => {
+                    Filesystem.readFile({
+                        // Path to NoCloud documents on iOS to be the same as cordova file plugin
+                        path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + 'epoc/content.json',
+                        directory: FilesystemDirectory.Data,
+                        encoding: FilesystemEncoding.UTF8
+                    }).then((result) => {
+                        const epoc = JSON.parse(result.data);
+                        resolve(epoc.id);
+                    }).catch(() => {
+                        reject('Erreur lors de l\'ouverture du content.json');
+                    });
+                }).catch(() => reject('Erreur lors du dézipage'));
             });
         });
     }
