@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {File, FileEntry, FileWriter} from '@ionic-native/file/ngx';
 import {Zip} from 'capacitor-zip';
@@ -23,6 +23,7 @@ export class OpenPage {
     working = false;
 
     constructor(
+        private ngZone: NgZone,
         public toastController: ToastController,
         private ref: ChangeDetectorRef,
         private elRef: ElementRef,
@@ -94,8 +95,9 @@ export class OpenPage {
         this.loadingLog(`Ouverture de ${filename}`);
         this.unzip(filename).then((epocId) => {
             this.toast('Démarrage', 'success');
-            console.log(epocId);
-            this.router.navigateByUrl('/home/' + epocId);
+            this.ngZone.run(() => {
+                this.router.navigateByUrl('/home/' + epocId);
+            })
         }).catch((message) => {
             this.toast(message, 'danger');
         }).finally(() => {
