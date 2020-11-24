@@ -34,7 +34,7 @@ export class LoginCallbackComponent implements OnInit {
 
         this.auth.retrieveUser(token, expiresIn).then((user) => {
             this.auth.setUser(user).then(() => {
-                this.router.navigate(['/home']);
+                this.router.navigateByUrl('/home/default');
             });
         }, (error) => {
             this.router.navigateByUrl('/login', { state: {error} });

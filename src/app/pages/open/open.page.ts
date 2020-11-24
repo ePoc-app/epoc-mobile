@@ -90,6 +90,7 @@ export class OpenPage {
         this.loadingLog(`Ouverture de ${filename}`);
         this.unzip(filename).then((epocId) => {
             this.toast('Démarrage', 'success');
+            console.log(epocId);
             this.router.navigateByUrl('/home/' + epocId);
         }).catch((message) => {
             this.toast(message, 'danger');

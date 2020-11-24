@@ -5,7 +5,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {OpenPage} from './open.page';
 import {File} from '@ionic-native/file/ngx';
-import {Zip} from '@ionic-native/zip/ngx';
 
 @NgModule({
     imports: [
@@ -16,8 +15,7 @@ import {Zip} from '@ionic-native/zip/ngx';
     ],
     declarations: [OpenPage],
     providers: [
-        File,
-        Zip
+        File
     ]
 })
 export class OpenPageModule {

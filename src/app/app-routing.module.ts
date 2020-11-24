@@ -3,16 +3,17 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {LoginCallbackComponent} from './login/login-callback.component';
+import {mode} from '../environments/environment.mode';
 
 const routes: Routes = [
     {
-        path: 'home/:id',
-        canActivate: [AuthGuardService],
+        path: 'home',
+        ...( mode.inria && {canActivate: [AuthGuardService]}),
         loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
     },
     {
         path: 'player',
-        canActivate: [AuthGuardService],
+        ...( mode.inria && {canActivate: [AuthGuardService]}),
         loadChildren: () =>
             import('./pages/player/player.module').then(m => m.PlayerPageModule)
     },
@@ -38,7 +39,7 @@ const routes: Routes = [
     loadChildren: () =>
         import('./pages/open/open.module').then(m => m.OpenPageModule)
   },
-  { path: '**', redirectTo: 'open'}
+  { path: '**', redirectTo: mode.ill ? 'open' : '/home/default'}
 ];
 
 @NgModule({

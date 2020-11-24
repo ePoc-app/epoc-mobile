@@ -3,6 +3,9 @@
     <div class="logo" slot="start">
       <ion-img src="assets/img/ePoc.svg"></ion-img>
     </div>
+    <ion-button class="about" slot="end" routerLink="/" routerDirection="backward" *ngIf="mode.ill">
+      <ion-icon slot="icon-only" name="folder-open" color="inria-blue"></ion-icon>
+    </ion-button>
     <ion-button class="about" slot="end" routerLink="/about" routerDirection="forward">
       <ion-icon slot="icon-only" name="information-circle-outline" color="inria-blue"></ion-icon>
     </ion-button>
@@ -43,7 +46,7 @@
   </div>
 </ion-content>
 
-<ion-footer mode="ios">
+<ion-footer mode="ios" *ngIf="epocId">
   <ion-button class="start-course" [routerLink]="'/player/toc/'+epocId" routerDirection="forward" expand="block" color="inria-blue" strong>
     Commencer la formation
   </ion-button>

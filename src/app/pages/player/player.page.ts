@@ -12,6 +12,7 @@ import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
 import {Assessment, SimpleQuestion} from '../../classes/contents/assessment';
 import {uid} from '../../classes/types';
+import {mode} from '../../../environments/environment.mode';
 
 @Component({
     selector: 'app-player',
@@ -209,64 +210,69 @@ export class PlayerPage implements OnInit {
     }
 
     async presentActionSheet() {
-        const actionSheet = await this.actionSheetController.create({
-            cssClass: 'custom-action-sheet',
-            mode: 'ios',
-            header: this.epoc.title,
-            buttons: [
-                {
-                    text: 'Ouvrir un ePoc',
-                    icon: 'folder-open',
-                    handler: () => {
-                        this.router.navigate(['/']);
-                    }
-                },
-                {
-                    text: 'Accueil',
-                    icon: 'home',
-                    handler: () => {
-                        this.router.navigate(['/home']);
-                    }
-                },
-                {
-                    cssClass: 'splitter'
-                },
-                {
-                    text: 'Tables des matières',
-                    icon: 'list',
-                    handler: () => {
-                        this.router.navigateByUrl('/player/toc/' + this.epoc.id);
-                    }
-                }, /*
+        const buttons = [
+            {
+                text: 'Accueil',
+                icon: 'home',
+                handler: () => {
+                    this.router.navigateByUrl('/home/' + this.epoc.id);
+                }
+            },
+            {
+                cssClass: 'splitter'
+            },
+            {
+                text: 'Tables des matières',
+                icon: 'list',
+                handler: () => {
+                    this.router.navigateByUrl('/player/toc/' + this.epoc.id);
+                }
+            }, /*
                 {
                     text: 'Pages',
                     icon: 'book'
                 }, */
-                {
-                    cssClass: 'splitter'
-                },
-                {
-                    text: 'Détails des scores',
-                    icon: 'podium',
-                    handler: () => {
-                        this.router.navigateByUrl('/player/score/' + this.epoc.id);
-                    }
-                },
-                {
-                    cssClass: 'splitter'
-                },
-                {
-                    text: 'Paramètres',
-                    icon: 'cog',
-                    handler: () => {
-                        this.router.navigateByUrl('/player/settings');
-                    }
-                },
-                {
-                    text: 'Fermer',
-                    role: 'cancel'
+            {
+                cssClass: 'splitter'
+            },
+            {
+                text: 'Détails des scores',
+                icon: 'podium',
+                handler: () => {
+                    this.router.navigateByUrl('/player/score/' + this.epoc.id);
                 }
-            ]
+            },
+            {
+                cssClass: 'splitter'
+            },
+            {
+                text: 'Paramètres',
+                icon: 'cog',
+                handler: () => {
+                    this.router.navigateByUrl('/player/settings');
+                }
+            },
+            {
+                text: 'Fermer',
+                role: 'cancel'
+            }
+        ];
+
+        if (mode.ill) {
+            buttons.unshift(
+            {
+                text: 'Ouvrir un ePoc',
+                icon: 'folder-open',
+                handler: () => {
+                    this.router.navigate(['/']);
+                }
+            });
+        }
+        const actionSheet = await this.actionSheetController.create({
+            cssClass: 'custom-action-sheet',
+            mode: 'ios',
+            header: this.epoc.title,
+            buttons
         });
         await actionSheet.present();
     }
