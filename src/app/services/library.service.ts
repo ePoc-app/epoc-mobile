@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of, ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
+import {distinctUntilChanged} from 'rxjs/operators';
+import {File} from '@ionic-native/file/ngx';
+import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {Epoc} from '../classes/epoc';
-import {distinctUntilChanged, map} from 'rxjs/operators';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
 import {uid} from '../classes/types';
+
+const { Filesystem } = Plugins;
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +18,7 @@ export class LibraryService {
     protected epocId: string;
     public rootFolder: string;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private file: File) {}
 
     getLibrary(): Observable<Epoc[]> {
         return null;
@@ -23,9 +27,19 @@ export class LibraryService {
     getEpoc(id: string): Observable<Epoc> {
         if (this.epocId !== id) {
             this.epocId = id;
-            this.rootFolder = 'assets/demo/';
-            this.http.get('./assets/demo/content.json').subscribe((epoc) => {
+            this.rootFolder = Capacitor.convertFileSrc(this.file.dataDirectory + 'epoc/');
+            this.http.get(this.rootFolder + 'content.json').subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
+            }, () => {
+                // Backup support for iOS livereload (dev environment)
+                Filesystem.readFile({
+                    path: '../Library/NoCloud/epoc/content.json',
+                    directory: FilesystemDirectory.Data,
+                    encoding: FilesystemEncoding.UTF8
+                }).then((result) => {
+                    const epoc = JSON.parse(result.data);
+                    this.epoc$.next(this.initCourseContent(epoc as Epoc));
+                });
             });
         }
         return this.epoc$.asObservable().pipe(distinctUntilChanged());

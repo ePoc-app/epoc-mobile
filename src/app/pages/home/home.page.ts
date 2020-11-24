@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {LibraryService} from '../../services/library.service';
+import {switchMap} from 'rxjs/operators';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -10,14 +12,17 @@ import {LibraryService} from '../../services/library.service';
 })
 export class HomePage implements OnInit {
     epoc$: Observable<Epoc>;
-    epocId = 'VP';
 
     constructor(
+        private route: ActivatedRoute,
         public libraryService: LibraryService
     ) {}
 
     ngOnInit() {
-        this.epoc$ = this.libraryService.getEpoc(this.epocId);
+        this.epoc$ = this.route.paramMap.pipe(
+            switchMap((params: ParamMap) =>
+                this.libraryService.getEpoc(params.get('id')))
+        );
     }
 
     ionViewWillLeave() {
