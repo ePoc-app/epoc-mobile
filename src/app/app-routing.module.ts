@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home/:id',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
@@ -16,7 +16,12 @@ const routes: Routes = [
     loadChildren: () =>
         import('./pages/about/about.module').then(m => m.AboutPageModule)
   },
-  { path: '**', redirectTo: '' }
+  {
+    path: 'open',
+    loadChildren: () =>
+        import('./pages/open/open.module').then(m => m.OpenPageModule)
+  },
+  { path: '**', redirectTo: 'open' }
 ];
 @NgModule({
   imports: [
