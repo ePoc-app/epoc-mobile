@@ -57,3 +57,21 @@ ionic capacitor run ios -l --address=[YOUR_IP_ADRESS]
 This should have open Xcode and you just need to run the app on a device. 
 
 More info on : https://ionicframework.com/docs/building/ios
+
+## Authentication
+
+Authentication is based on oAuth and the callback url is 
+`http://localhost/callback` this works on mobile by using `InAppBrowser`
+thats catches the callback and save it. 
+
+To make it work on development environment you need to redirect the 
+browser callback to `http://localhost:8100/callback` or whatever port
+you are using. For this you can use an iptable rule :
+
+```bash
+# Add
+sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8100
+
+# Remove
+sudo iptables -t nat -D OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8100
+```
