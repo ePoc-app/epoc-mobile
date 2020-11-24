@@ -58,7 +58,22 @@ This should have open Xcode and you just need to run the app on a device.
 
 More info on : https://ionicframework.com/docs/building/ios
 
-## Authentication
+## App mode version (normal, inria, ill)
+
+### ILL
+
+This mode build the app for Inria Learning Lab internal use and allow to open an ePoc from a zip.
+
+`ionic serve --mode=ill` ou `ionic cap run android --mode=ill`
+
+### Inria
+
+This mode build the app for Inria internal use (ZRR) and lock the cotnent behind an authentication guard.
+
+`ionic serve --mode=inria` ou `ionic cap run android --mode=inria`
+
+
+#### Inria : Authentication
 
 Authentication is based on oAuth and the callback url is 
 `http://localhost/callback` this works on mobile by using `InAppBrowser`

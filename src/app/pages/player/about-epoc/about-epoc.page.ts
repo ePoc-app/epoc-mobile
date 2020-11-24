@@ -47,6 +47,10 @@ export class AboutEpocPage implements OnInit {
         this.router.navigateByUrl('/player/play/' + id);
     }
 
+    selectTab(index) {
+        this.selectedTab = index;
+    }
+
     async downloadEpoc(id) {
         const alert = await this.alertController.create({
             header: 'Confirm download',

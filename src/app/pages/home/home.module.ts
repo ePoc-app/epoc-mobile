@@ -12,7 +12,7 @@ import {SharedModule} from '../../components/shared.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: HomePage }]),
+    RouterModule.forChild([{ path: ':id', component: HomePage }]),
     PipesModule,
     SharedModule
   ],

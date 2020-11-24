@@ -7,6 +7,7 @@ import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capa
 import {Epoc} from '../classes/epoc';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
 import {uid} from '../classes/types';
+import {mode} from '../../environments/environment.mode';
 
 const { Filesystem } = Plugins;
 
@@ -27,8 +28,9 @@ export class LibraryService {
     getEpoc(id: string): Observable<Epoc> {
         if (this.epocId !== id) {
             this.epocId = id;
-            this.rootFolder = Capacitor.convertFileSrc(this.file.dataDirectory + 'epoc/');
-            this.http.get(this.rootFolder + 'content.json').subscribe((epoc) => {
+            this.rootFolder = mode.ill ? Capacitor.convertFileSrc(this.file.dataDirectory + 'epoc/') : 'assets/demo/';
+            const url = mode.ill ? this.rootFolder + 'content.json' : './assets/demo/content.json';
+            this.http.get(url).subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
             }, () => {
                 // Backup support for iOS livereload (dev environment)
