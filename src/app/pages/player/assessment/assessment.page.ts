@@ -39,6 +39,8 @@ export class AssessmentPage implements OnInit {
     currentAnswer;
     explanationShown = false;
     assessmentData = null;
+    notransition = false;
+    flipped = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -103,7 +105,8 @@ export class AssessmentPage implements OnInit {
         }
         this.userResponses.push(this.currentAnswer);
         this.explanationShown = true;
-        this.questionSlides.slideNext();
+        this.notransition = false;
+        this.flipped = true;
     }
 
     questionSuccessed() {
@@ -116,19 +119,16 @@ export class AssessmentPage implements OnInit {
     }
 
     nextQuestion() {
-        if (this.currentQuestion < this.questions.length - 1) {
-            this.currentQuestion++;
-            this.currentAnswer = '';
-            this.explanationShown = false;
-            this.questionSlides.slideNext();
-        } else {
-            this.currentQuestion++;
-            this.currentAnswer = '';
-            this.explanationShown = false;
+        this.currentQuestion++;
+        this.currentAnswer = '';
+        this.explanationShown = false;
+        this.notransition = true;
+        this.flipped = false;
+        if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
-            this.questionSlides.slideNext();
         }
+        this.questionSlides.slideNext();
     }
 
     arraysEqual(arr1Orig, arr2Orig) {
@@ -184,5 +184,11 @@ export class AssessmentPage implements OnInit {
 
     resume() {
         this.router.navigateByUrl(`/player/play/${this.epoc.id}/${this.assessment.chapterId}/content/${this.assessmentId}/next`);
+    }
+
+    flip() {
+        if (this.explanationShown) {
+            this.flipped = !this.flipped;
+        }
     }
 }

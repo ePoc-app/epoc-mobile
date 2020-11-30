@@ -9,7 +9,7 @@ import {Question} from '../../../../../classes/contents/assessment';
 export class MultipleChoiceComponent {
 
     @Input('question') question: Question;
-    @Input('questionMeta') questionMeta: {index: number, total: number};
+    @Input('disabled') disabled: boolean;
     @Output() onSelectAnswer = new EventEmitter<any>();
 
     selectedAnswers = [];
