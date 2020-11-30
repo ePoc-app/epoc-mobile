@@ -27,7 +27,7 @@ import {DragAndDropquestion} from '../../../../../classes/contents/assessment';
 export class DragAndDropComponent implements OnInit {
 
     @Input('question') question: DragAndDropquestion;
-    @Input('questionMeta') questionMeta: {index: number, total: number};
+    @Input('disabled') disabled: boolean;
     @Output() onSelectAnswer = new EventEmitter<any>();
 
     current

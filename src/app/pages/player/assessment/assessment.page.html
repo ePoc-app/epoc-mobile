@@ -10,40 +10,49 @@
 <ion-content [scrollY]="false" *ngIf="assessment">
   <ion-slides #questionSlides [options]="slidesOptions">
     <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
-      <ion-slide class="assessment-item">
-        <ng-container *ngIf="question.type === 'choice'">
-          <simple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
-        </ng-container>
-        <ng-container *ngIf="question.type === 'multiple-choice'">
-          <multiple-choice class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
-        </ng-container>
-        <ng-container *ngIf="question.type === 'reorder'">
-          <reorder class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
-        </ng-container>
-        <ng-container *ngIf="question.type === 'drag-and-drop'">
-          <drag-and-drop class="question" [question]="question" [questionMeta]="{index: questionIndex+1, total: assessment.questions.length}" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
-        </ng-container>
-      </ion-slide>
-      <ion-slide class="assessment-item-explanation">
-        <ion-card mode="ios" class="explanation-card">
-          <ion-card-header mode="ios" *ngIf="questionsSuccessed[questionIndex]">
-            <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
-            <ion-card-subtitle mode="ios">Explication</ion-card-subtitle>
-            <ion-card-title mode="ios">Bravo !</ion-card-title>
-          </ion-card-header>
-          <ion-card-header mode="ios" *ngIf="!questionsSuccessed[questionIndex]">
-            <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
-            <ion-card-subtitle mode="ios">Explication</ion-card-subtitle>
-            <ion-card-title mode="ios">Non !</ion-card-title>
-          </ion-card-header>
-          <ion-card-content mode="ios">
-            <html-content class="explanation-text" [html]="question.explanation"></html-content>
-          </ion-card-content>
-        </ion-card>
+      <ion-slide>
+        <div class="flip-container" [ngClass]="{'flipped': flipped}">
+          <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
+            <div class="front question-card">
+              <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
+              <div class="statement">
+                <div *ngIf="question.statement">{{question.statement}}</div>
+                <b>{{question.label}}</b>
+              </div>
+
+              <ng-container *ngIf="question.type === 'choice'">
+                <simple-choice class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
+              </ng-container>
+              <ng-container *ngIf="question.type === 'multiple-choice'">
+                <multiple-choice class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
+              </ng-container>
+              <ng-container *ngIf="question.type === 'reorder'">
+                <reorder class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
+              </ng-container>
+              <ng-container *ngIf="question.type === 'drag-and-drop'">
+                <drag-and-drop class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
+              </ng-container>
+            </div>
+            <div class="back question-card">
+              <div class="sucess" *ngIf="questionsSuccessed[questionIndex]">
+                <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
+                <h2>Bravo !</h2>
+              </div>
+              <div class="fail" *ngIf="!questionsSuccessed[questionIndex]">
+                <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
+                <h2>Non !</h2>
+              </div>
+              <div class="explanation">
+                <h4 class="question-card-header">Explication :</h4>
+                <html-content [html]="question.explanation"></html-content>
+              </div>
+            </div>
+          </div>
+        </div>
       </ion-slide>
     </ng-container>
     <ion-slide class="assessment-end">
-      <ion-card mode="ios" class="explanation-card">
+      <ion-card mode="ios" class="end-card">
         <ion-card-header mode="ios" *ngIf="assessmentData">
           <ion-card-subtitle mode="ios">Résumé de l'activité</ion-card-subtitle>
           <ion-card-title mode="ios" *ngIf="scoreMax > 0">Score</ion-card-title>
@@ -67,6 +76,7 @@
 </ion-content>
 
 <ion-footer *ngIf="questions && currentQuestion < questions.length">
-  <ion-button class="check-answer" expand="block" [disabled]="!currentAnswer" (click)="checkAnswer()" *ngIf="!explanationShown">Valider</ion-button>
-  <ion-button class="check-answer" expand="block" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
+  <ion-button color="medium" (click)="flip()" *ngIf="explanationShown"><ion-icon name="repeat-outline"></ion-icon></ion-button>
+  <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer()" *ngIf="!explanationShown">Valider</ion-button>
+  <ion-button class="check-answer" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>

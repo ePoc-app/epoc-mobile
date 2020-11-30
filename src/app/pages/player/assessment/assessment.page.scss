@@ -2,33 +2,130 @@
   padding:20px;
 }
 
-.check-answer{
-  margin: 1em auto;
-  width: calc(100% - 2em);
-  max-width: 380px;
+ion-footer{
+  display: flex;
+  padding: 0.5em 1em;
+  .check-answer{
+    flex: 1;
+  }
 }
-
 .swiper-container{
   height:100%;
 }
 
-.assessment-item{
-  align-items: stretch;
-}
-
-.question{
+.flip-container {
   display: flex;
-  align-items: flex-start;
-  overflow-y: auto;
+  padding: 1em;
+  flex-grow: 1;
+  height:100%;
+  perspective: 1000px;
+
+  &.flipped .flipper {
+    transform: rotate3d(0, -1, 0, 180deg);
+  }
+
+  .flipper {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    animation: flashflip 0.05s;
+
+    &.notransition{
+      transition: none!important;
+    }
+
+    .front, .back {
+      display: flex;
+      position: absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      right:0;
+      backface-visibility: hidden;
+    }
+
+    .front {
+      transform: rotate3d(0, 0, 0, 0);
+    }
+
+    .back {
+      transform: rotate3d(0, -1, 0, 180deg);
+    }
+  }
 }
 
-.explanation-card{
+.question-card{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  text-align: center;
+  padding: 1em;
+  flex-grow: 1;
+  background: #fff;
+  border-radius: 8px;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
+  overflow:hidden;
+
+  h2 {
+    margin: 0;
+  }
+
+  &-header{
+    font-size: 12px;
+    font-weight: 700;
+    color:#666;
+    text-transform: uppercase;
+  }
+
+  b{
+    line-height: 1;
+  }
+
+  button{
+    padding: 1em;
+    background: var(--ion-color-primary);
+    text-transform: uppercase;
+    font-weight: bold;
+    color:white;
+    border-radius: 4px;
+
+    &:disabled, &.disabled{
+      opacity: 0.5;
+    }
+  }
+
+  .explanation{
+    overflow: auto;
+    font-size:14px;
+  }
+
+  .explanation-icon{
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+
+  ion-radio{
+    background: transparent;
+    border-radius: 100%;
+    transition: all .1s .2s;
+    &.radio-checked{
+      background: var(--ion-color-primary);
+    }
+  }
+
+  ion-list{
+    overflow: auto;
+  }
+}
+
+.end-card{
   justify-content: space-evenly;
   flex-direction: column;
   display: flex;
-  max-width: 480px;
   width: 100%;
-  height: calc(100% - 48px);
+  min-height: calc(100% - 48px);
 
   .card-content-ios{
     padding-top: 0;
@@ -54,5 +151,14 @@
 .assessment-end{
   ion-button{
     margin-bottom: 1em;
+  }
+}
+
+@keyframes flashflip {
+  0% {
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
+  100% {
+    transform: rotate3d(0, 0, 0, 180deg);
   }
 }

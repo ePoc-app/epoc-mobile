@@ -1,27 +1,16 @@
-<ion-card mode="ios" class="question-card">
-  <ion-card-header mode="ios">
-    <ion-card-subtitle mode="ios">Question {{questionMeta.index}}/{{questionMeta.total}}</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content mode="ios">
-    <p>{{question.statement}}</p>
-    <b>{{question.label}}</b>
-
-    <div class="drop-zones">
-      <div class="drop-zone" (click)="addResponse(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
-        <span class="zone-label">{{zone.label}}</span>
-        <div class="zone">
-          <span class="zone-info" *ngIf="answer[zoneIndex].length < 1">Cliquer pour déposer</span>
-          <div class="response-item" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;" [@slideInOut]>
-              {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
-          </div>
-        </div>
+<div class="drop-zones">
+  <div class="drop-zone" (click)="addResponse(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
+    <span class="zone-label">{{zone.label}}</span>
+    <div class="zone">
+      <span class="zone-info" *ngIf="answer[zoneIndex].length < 1">Cliquer pour déposer</span>
+      <div class="response-item" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;" [@slideInOut]>
+          {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
       </div>
     </div>
-    <div class="current-response" *ngIf="responses.length > 0">
-      <div class="response-item" *ngFor="let currentResponse of getCurrentResponse()" [@fadeOut]>
-        {{currentResponse.label}}
-      </div>
-    </div>
-
-  </ion-card-content>
-</ion-card>
+  </div>
+</div>
+<div class="current-response" *ngIf="responses.length > 0">
+  <div class="response-item" *ngFor="let currentResponse of getCurrentResponse()" [@fadeOut]>
+    {{currentResponse.label}}
+  </div>
+</div>
