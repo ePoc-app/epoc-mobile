@@ -24,25 +24,17 @@
     </ion-row>
     <ion-row>
       <ion-col *ngIf="epoc$ | async as epoc">
-        <b>Accès rapide :</b>
-        <ng-container *ngFor="let assessment of assessments">
-          <ion-card>
-            <ion-card-content>
-              <ion-card-subtitle>
-                {{assessment.title}}
-                <ion-text class="score" [color]="getScore(assessment) < getScoreTotal(assessment) ? 'warning':'success'" *ngIf="getScoreTotal(assessment) > 0">
-                  {{getScore(assessment) ? getScore(assessment) : 0}}/{{getScoreTotal(assessment)}}
-                </ion-text>
-              </ion-card-subtitle>
-              <ng-container *ngIf="assessment.type === 'assessment'">
-                <assessment-button [content]="assessment" [epoc]="epoc"></assessment-button>
-              </ng-container>
-              <ng-container *ngIf="assessment.type === 'simple-question'">
-                <ion-button expand="block" strong="true" [routerLink]="'/player/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">Voir la question</ion-button>
-              </ng-container>
-            </ion-card-content>
-          </ion-card>
-        </ng-container>
+        <ion-list>
+          <ion-list-header mode="ios">Accès rapide :</ion-list-header>
+          <ng-container *ngFor="let assessment of assessments">
+            <ion-item mode="ios" [routerLink]="'/player/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">
+              <ion-label>{{assessment.title}}</ion-label>
+              <ion-note [color]="getScore(assessment) < getScoreTotal(assessment) ? 'warning':'success'" *ngIf="getScoreTotal(assessment) > 0">
+                {{getScore(assessment) ? getScore(assessment) : 0}}/{{getScoreTotal(assessment)}}
+              </ion-note>
+            </ion-item>
+          </ng-container>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>
