@@ -3,7 +3,7 @@ stages:
 
 before_script:
 - apt-get update -qy
-- apt-get -y install zip unzip
+- apt-get -y install zip
 
 build:
   image: node:10
@@ -16,6 +16,6 @@ build:
   artifacts:
     expire_in: 1 yr
     paths:
-    - www/preview.zip
+    - preview.zip
   only:
   - master
