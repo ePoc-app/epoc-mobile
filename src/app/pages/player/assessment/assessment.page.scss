@@ -98,6 +98,12 @@ ion-footer{
 
   .response{
     overflow-y: auto;
+
+    &.no-overflow{
+      display: flex;
+      flex-direction: column;
+      overflow-y: hidden;
+    }
   }
 
   .explanation{
