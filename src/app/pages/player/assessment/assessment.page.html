@@ -20,18 +20,20 @@
                 <b>{{question.label}}</b>
               </div>
 
-              <ng-container *ngIf="question.type === 'choice'">
-                <simple-choice class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
-              </ng-container>
-              <ng-container *ngIf="question.type === 'multiple-choice'">
-                <multiple-choice class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
-              </ng-container>
-              <ng-container *ngIf="question.type === 'reorder'">
-                <reorder class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
-              </ng-container>
-              <ng-container *ngIf="question.type === 'drag-and-drop'">
-                <drag-and-drop class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
-              </ng-container>
+              <div class="response">
+                <ng-container *ngIf="question.type === 'choice'">
+                  <simple-choice class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
+                </ng-container>
+                <ng-container *ngIf="question.type === 'multiple-choice'">
+                  <multiple-choice class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
+                </ng-container>
+                <ng-container *ngIf="question.type === 'reorder'">
+                  <reorder class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
+                </ng-container>
+                <ng-container *ngIf="question.type === 'drag-and-drop'">
+                  <drag-and-drop class="question" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
+                </ng-container>
+              </div>
             </div>
             <div class="back question-card">
               <div class="sucess" *ngIf="questionsSuccessed[questionIndex]">
