@@ -1,4 +1,4 @@
-<ion-reorder-group (ionItemReorder)="doReorder($event)" disabled="false">
+<ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="disabled">
   <ion-item *ngFor="let response of responses">
     <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
     <ion-reorder slot="end"></ion-reorder>
