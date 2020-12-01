@@ -4,7 +4,7 @@
     <div class="zone">
       <span class="zone-info" *ngIf="answer[zoneIndex].length < 1">Cliquer pour déposer</span>
       <div class="response-item" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;" [@slideInOut]>
-          {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
+          {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)" *ngIf="!disabled"></ion-icon>
       </div>
     </div>
   </div>
