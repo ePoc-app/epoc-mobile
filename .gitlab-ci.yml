@@ -1,0 +1,21 @@
+stages:
+- build
+
+before_script:
+- apt-get update -qy
+- apt-get -y install zip unzip
+
+build:
+  image: node:10
+  stage: build
+  script:
+  - export NG_CLI_ANALYTICS=ci
+  - npm i
+  - npm run build
+  - cd www && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd -
+  artifacts:
+    expire_in: 1 yr
+    paths:
+    - www/preview.zip
+  only:
+  - master
