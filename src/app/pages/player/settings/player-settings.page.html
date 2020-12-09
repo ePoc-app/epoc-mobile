@@ -51,12 +51,24 @@
       </ion-text>
     </ion-item>
   </ion-list>
+  <ion-list *ngIf="user">
+    <ion-list-header>
+      Compte
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Email : {{user.email}}</ion-label>
+      <ion-button size="default" (click)="logout()">
+        Déconnexion
+        <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
   <ion-list>
     <ion-list-header>
       Données
     </ion-list-header>
     <ion-item>
-      <ion-label>Supprimer les données</ion-label>
+      <ion-label>Supprimer les données (quiz, activités, progression, etc)</ion-label>
       <ion-button size="default" color="danger" (click)="deleteData()">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>

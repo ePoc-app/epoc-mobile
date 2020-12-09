@@ -1,15 +1,19 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SettingsStoreService} from '../../../services/settings-store.service';
 import {Settings} from '../../../classes/settings';
 import {AlertController} from '@ionic/angular';
 import {ReadingStoreService} from '../../../services/reading-store.service';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AuthService} from '../../../services/auth.service';
+import {Router} from '@angular/router';
+import {User} from '../../../classes/user';
 
 @Component({
     selector: 'app-player-settings',
     templateUrl: 'player-settings.page.html',
     styleUrls: ['player-settings.page.scss']
 })
-export class PlayerSettingsPage {
+export class PlayerSettingsPage implements OnInit {
 
     settings: Settings = {
         font: 'Inria Sans',
@@ -18,10 +22,14 @@ export class PlayerSettingsPage {
         darkMode: false
     };
 
+    user: User;
+
     constructor(
         private settingsStore: SettingsStoreService,
         private readingStore: ReadingStoreService,
-        public alertController: AlertController
+        public alertController: AlertController,
+        private router: Router,
+        private auth: AuthService
     ) {
 
         this.settingsStore.settings$.subscribe(settings => {
@@ -29,6 +37,12 @@ export class PlayerSettingsPage {
                 this.settings = settings;
             }
         });
+    }
+
+    ngOnInit() {
+        this.auth.getUser().subscribe(user => {
+            this.user = user;
+        })
     }
 
     getStyle() {
@@ -62,5 +76,11 @@ export class PlayerSettingsPage {
         });
 
         await alert.present();
+    }
+
+    logout() {
+        this.auth.setUser(null).then(() => {
+            this.router.navigateByUrl('/login');
+        });
     }
 }
