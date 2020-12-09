@@ -16,8 +16,10 @@ import {PipesModule} from './pipes/pipes.module';
 import {LoginComponent} from './login/login.component';
 import {LoginCallbackComponent} from './login/login-callback.component';
 import {AuthGuardService} from './services/auth-guard.service';
-
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 import {File} from '@ionic-native/file/ngx';
+import {environment} from '../environments/environment';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
@@ -29,7 +31,9 @@ import {File} from '@ionic-native/file/ngx';
         AppRoutingModule,
         HttpClientModule,
         IonicStorageModule.forRoot(),
-        PipesModule
+        PipesModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule
     ],
     providers: [
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},

@@ -35,7 +35,7 @@
               </div>
               <div class="segment-content" *ngIf="activeTab === 'externe'">
                 <form (submit)="firebaseLogin($event)">
-                  <input placeholder="Nom d'utilisateur" (input)="updateUserForm('login', $event)" required/>
+                  <input placeholder="Email" type="email" (input)="updateUserForm('login', $event)" required/>
                   <input placeholder="Mot de passe" type="password" (input)="updateUserForm('password', $event)" required/>
                   <ion-button type="submit" color="inria-blue" expand="block" [disabled]="!userForm.login || !userForm.password">Connexion externe</ion-button>
                 </form>
