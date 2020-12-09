@@ -57,9 +57,8 @@
     </ion-list-header>
     <ion-item>
       <ion-label>Email : {{user.email}}</ion-label>
-      <ion-button size="default" (click)="logout()">
-        Déconnexion
-        <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      <ion-button size="default" color="medium" (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-item>
   </ion-list>
