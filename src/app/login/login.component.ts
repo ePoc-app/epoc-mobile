@@ -4,6 +4,8 @@ import {environment as env} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {Platform, ToastController} from '@ionic/angular';
 import {Browser} from '@capacitor/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AuthService} from '../services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -17,7 +19,14 @@ export class LoginComponent implements OnInit {
     };
     activeTab = 'inria';
 
-    constructor(public platform: Platform, private iab: InAppBrowser, private router: Router, public toastController: ToastController) {
+    constructor(
+        public platform: Platform,
+        private iab: InAppBrowser,
+        private router: Router,
+        public toastController: ToastController,
+        public fireAuth: AngularFireAuth,
+        private auth: AuthService
+    ) {
     }
 
     ngOnInit() {
@@ -50,7 +59,7 @@ export class LoginComponent implements OnInit {
         } else {
             let responseParams;
             const parsedResponse = {access_token: null};
-            const browser = this.iab.create(oauthUrl, '_self',{hideurlbar: 'yes', hidenavigationbuttons: 'yes'});
+            const browser = this.iab.create(oauthUrl, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes'});
             browser.on('loadstart').subscribe((evt) => {
                 if ((evt.url).indexOf(env.oauth.redirectUri) === 0) {
                     responseParams = ((evt.url).split('#')[1]).split('&');
@@ -75,8 +84,23 @@ export class LoginComponent implements OnInit {
 
     firebaseLogin(event) {
         event.preventDefault();
-        console.log(this.userForm);
-        // @TODO
+        this.fireAuth.signInWithEmailAndPassword(this.userForm.login, this.userForm.password)
+        .then(result => {
+            this.auth.setUser({
+                username: this.userForm.login,
+                firstname: this.userForm.login,
+                lastname: this.userForm.login,
+                email: this.userForm.login,
+                authenticationToken: '',
+                authenticationDate: 0,
+                authenticationExpires: 0
+            }).then(() => {
+                this.router.navigateByUrl('/home/default');
+            });
+        })
+        .catch(error => {
+            this.errorToast(error.message);
+        });
     }
 
     changeLoginTab(event) {
