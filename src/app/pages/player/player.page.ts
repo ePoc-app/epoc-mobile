@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChildren, QueryList, AfterViewInit, ViewChild, DoCheck} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController, IonSlides} from '@ionic/angular';
-import {switchMap, debounceTime} from 'rxjs/operators';
-import {combineLatest, Observable, fromEvent} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {combineLatest, Observable} from 'rxjs';
 import {Chapter, Epoc} from '../../classes/epoc';
 import {Reading} from '../../classes/reading';
 import {ReadingStoreService} from '../../services/reading-store.service';
@@ -10,9 +10,8 @@ import {LibraryService} from '../../services/library.service';
 import {Settings} from '../../classes/settings';
 import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
-import {Assessment, SimpleQuestion} from '../../classes/contents/assessment';
+import {Assessment} from '../../classes/contents/assessment';
 import {uid} from '../../classes/types';
-import {mode} from '../../../environments/environment.mode';
 
 @Component({
     selector: 'app-player',
@@ -75,7 +74,7 @@ export class PlayerPage implements OnInit {
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc(params.get('id')))
+                this.libraryService.getEpoc())
         );
 
         this.readingStore.readings$.subscribe(readings => {
@@ -257,17 +256,6 @@ export class PlayerPage implements OnInit {
                 role: 'cancel'
             }
         ];
-
-        if (mode.ill) {
-            buttons.unshift(
-            {
-                text: 'Ouvrir un ePoc',
-                icon: 'folder-open',
-                handler: () => {
-                    this.router.navigate(['/']);
-                }
-            });
-        }
         const actionSheet = await this.actionSheetController.create({
             cssClass: 'custom-action-sheet',
             mode: 'ios',

@@ -2,12 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, ReplaySubject} from 'rxjs';
 import {distinctUntilChanged} from 'rxjs/operators';
-import {File} from '@ionic-native/file/ngx';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {Epoc} from '../classes/epoc';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
 import {uid} from '../classes/types';
-import {mode} from '../../environments/environment.mode';
 
 const { Filesystem } = Plugins;
 
@@ -16,20 +14,21 @@ const { Filesystem } = Plugins;
 })
 export class LibraryService {
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
-    protected epocId: string;
-    public rootFolder: string;
+    public rootFolder = './assets/demo/';
 
-    constructor(private http: HttpClient, private file: File) {}
+    constructor(private http: HttpClient) {}
 
     getLibrary(): Observable<Epoc[]> {
         return null;
     }
 
-    getEpoc(id: string): Observable<Epoc> {
-        if (this.epocId !== id) {
-            this.epocId = id;
-            this.rootFolder = mode.ill ? Capacitor.convertFileSrc(this.file.dataDirectory + 'epoc/') : 'assets/demo/';
-            const url = mode.ill ? this.rootFolder + 'content.json' : './assets/demo/content.json';
+    setRootFolder(rootFolder: string) {
+        this.rootFolder = Capacitor.convertFileSrc(rootFolder);
+    }
+
+    getEpoc(id?: string): Observable<Epoc> {
+        if (id) {
+            const url = this.rootFolder + 'content.json';
             this.http.get(url).subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
             }, () => {
