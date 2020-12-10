@@ -3,10 +3,10 @@ import {SettingsStoreService} from '../../../services/settings-store.service';
 import {Settings} from '../../../classes/settings';
 import {AlertController} from '@ionic/angular';
 import {ReadingStoreService} from '../../../services/reading-store.service';
-import {AngularFireAuth} from '@angular/fire/auth';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {User} from '../../../classes/user';
+import {environment as env} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-player-settings',
@@ -23,6 +23,7 @@ export class PlayerSettingsPage implements OnInit {
     };
 
     user: User;
+    admins = env.admins;
 
     constructor(
         private settingsStore: SettingsStoreService,
@@ -42,7 +43,7 @@ export class PlayerSettingsPage implements OnInit {
     ngOnInit() {
         this.auth.getUser().subscribe(user => {
             this.user = user;
-        })
+        });
     }
 
     getStyle() {
