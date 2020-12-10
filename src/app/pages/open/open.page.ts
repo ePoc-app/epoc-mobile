@@ -5,6 +5,8 @@ import {Zip} from 'capacitor-zip';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
+import {mode} from '../../../environments/environment.mode';
+import {LibraryService} from '../../services/library.service';
 
 const {Filesystem} = Plugins;
 
@@ -28,7 +30,8 @@ export class OpenPage {
         private ref: ChangeDetectorRef,
         private elRef: ElementRef,
         private router: Router,
-        private file: File
+        private file: File,
+        public libraryService: LibraryService
     ) {
         this.zip = new Zip();
     }
@@ -39,7 +42,6 @@ export class OpenPage {
 
     loadingLog(message) {
         this.message = message;
-        console.log(message);
         this.ref.detectChanges();
     }
 
@@ -93,6 +95,7 @@ export class OpenPage {
         this.working = true;
         this.progress = 0;
         this.loadingLog(`Ouverture de ${filename}`);
+        this.libraryService.setRootFolder(this.file.dataDirectory + 'epoc/');
         this.unzip(filename).then((epocId) => {
             this.toast('Démarrage', 'success');
             this.ngZone.run(() => {

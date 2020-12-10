@@ -1,5 +1,4 @@
-// This file is replaced during build by using --mode=ill|inria
+// This file is replaced during build by using --mode=inria
 export const mode = {
-  ill: false,
-  inria: false
+  inria: true
 };

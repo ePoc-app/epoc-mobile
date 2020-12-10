@@ -39,7 +39,7 @@ const routes: Routes = [
     loadChildren: () =>
         import('./pages/open/open.module').then(m => m.OpenPageModule)
   },
-  { path: '**', redirectTo: mode.ill ? 'open' : '/home/default'}
+  { path: '**', redirectTo: '/home/default'}
 ];
 
 @NgModule({

@@ -33,7 +33,7 @@ export class BookmarksEpocPage implements OnInit{
 
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc(params.get('id')))
+                this.libraryService.getEpoc())
         );
 
         this.epoc$.subscribe(epoc => {
