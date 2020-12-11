@@ -20,6 +20,7 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {File} from '@ionic-native/file/ngx';
 import {environment} from '../environments/environment';
+import {HTTP} from '@ionic-native/http/ngx';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
@@ -39,7 +40,8 @@ import {environment} from '../environments/environment';
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         File,
         InAppBrowser,
-        AuthGuardService
+        AuthGuardService,
+        HTTP
     ],
     bootstrap: [AppComponent]
 })

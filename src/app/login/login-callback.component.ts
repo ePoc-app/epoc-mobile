@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HTTP} from '@ionic-native/http/ngx';
 import {environment as env} from '../../environments/environment';
 import {AuthService} from '../services/auth.service';
-import {User} from '../classes/user';
+import {HTTP} from '@ionic-native/http/ngx';
 
 @Component({
     selector: 'login-callback',
@@ -22,7 +22,8 @@ export class LoginCallbackComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private auth: AuthService
+        private auth: AuthService,
+        private http: HTTP
     ) {
     }
 
@@ -30,10 +31,16 @@ export class LoginCallbackComponent implements OnInit {
         // The callback url is something like this 'http://localhost/callback#access_token=WFQz7Q-z6-KH0&token_type=bearer&expires_in=28800'
         const fragment = this.route.snapshot.fragment;
         const token = new URLSearchParams(fragment).get('access_token');
-        const expiresIn = new URLSearchParams(fragment).get('expires_in');
 
-        this.auth.retrieveUser(token, expiresIn).then((user) => {
-            this.auth.setUser(user).then(() => {
+        this.http.get(env.oauth.resourceUrl + `?access_token=${token}`, {}, {})
+        .then((response) => {
+            const user = JSON.parse(response.data);
+            this.auth.setUser({
+                username: user.id,
+                firstname: user.givenName,
+                lastname: user.sn,
+                email: user.mail
+            }).then(() => {
                 this.router.navigateByUrl('/home/default');
             });
         }, (error) => {
