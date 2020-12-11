@@ -5,11 +5,11 @@
 export const environment = {
     production: false,
     oauth: {
-        authorizationUrl: 'https://qlf-cas.inria.fr/cas/oauth2.0/authorize',
-        accessTokenEndpoint: 'https://qlf-cas.inria.fr/cas/oauth2.0/accessToken',
-        resourceUrl: 'http://localhost/oauth/profile', // proxied by angular
-        clientId: 'inria-qlf-learningLab',
-        clientSecret: 'upw7xn9jvh',
+        authorizationUrl: 'https://cas.inria.fr/cas/oauth2.0/authorize',
+        accessTokenEndpoint: 'https://cas.inria.fr/cas/oauth2.0/accessToken',
+        resourceUrl: 'https://cas.inria.fr/cas/oauth2.0/profile',
+        clientId: 'inria-learningLab',
+        clientSecret: 'T#P+yTJ+3#z8&i',
         responseType: 'token',
         redirectUri: 'http://localhost/callback',
         scope: ''

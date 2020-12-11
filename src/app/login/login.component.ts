@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {HTTP} from '@ionic-native/http/ngx';
 import {environment as env} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {Platform, ToastController} from '@ionic/angular';
@@ -25,7 +26,9 @@ export class LoginComponent implements OnInit {
         private router: Router,
         public toastController: ToastController,
         public fireAuth: AngularFireAuth,
-        private auth: AuthService
+        private auth: AuthService,
+        private http: HTTP,
+        private ref: ChangeDetectorRef
     ) {
     }
 
@@ -34,15 +37,15 @@ export class LoginComponent implements OnInit {
         const error = navigation.extras.state ? navigation.extras.state.error : null;
 
         if (error) {
-            this.errorToast(error);
+            this.toast(error);
         }
     }
 
-    async errorToast(message) {
+    async toast(message, color?) {
         const toast = await this.toastController.create({
             message,
             position: 'top',
-            color: 'danger',
+            color: color ? color : 'danger',
             duration: 2000
         });
         toast.present();
@@ -62,22 +65,33 @@ export class LoginComponent implements OnInit {
             const browser = this.iab.create(oauthUrl, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes'});
             browser.on('loadstart').subscribe((evt) => {
                 if ((evt.url).indexOf(env.oauth.redirectUri) === 0) {
+                    console.log(evt.url)
                     responseParams = ((evt.url).split('#')[1]).split('&');
                     for (const param of responseParams) {
-                        parsedResponse[responseParams[param].split('=')[0]] = responseParams[param].split('=')[1];
+                        parsedResponse[param.split('=')[0]] = param.split('=')[1];
                     }
-                    if (parsedResponse.access_token !== undefined &&
-                        parsedResponse.access_token !== null) {
-                        console.log(parsedResponse);
+                    if (parsedResponse.access_token !== undefined && parsedResponse.access_token !== null) {
+                        this.http.get(env.oauth.resourceUrl + `?access_token=${parsedResponse.access_token}`, {}, {})
+                        .then((response) => {
+                            const user = JSON.parse(response.data);
+                            this.auth.setUser({
+                                username: user.id,
+                                firstname: user.givenName,
+                                lastname: user.sn,
+                                email: user.mail
+                            }).then(() => {
+                                this.toast(`Bienvenue ${user.givenName} ${user.sn}`, 'success');
+                                this.ref.detectChanges();
+                                this.router.navigateByUrl('/home/default');
+                            });
+                        }, (err) => {
+                            this.toast('Problème de récupération du profil');
+                        });
                     } else {
-                        this.errorToast('Problème d’authentification');
+                        this.toast('Problème d’authentification');
                     }
                     browser.close();
                 }
-            });
-
-            browser.on('exit').subscribe((evt) => {
-                this.errorToast('Une erreur est survenue lors de la tentative de connexion');
             });
         }
     }
@@ -87,19 +101,16 @@ export class LoginComponent implements OnInit {
         this.fireAuth.signInWithEmailAndPassword(this.userForm.login, this.userForm.password)
         .then(result => {
             this.auth.setUser({
-                username: this.userForm.login,
-                firstname: this.userForm.login,
-                lastname: this.userForm.login,
+                username: 'admin',
+                firstname: 'Admin',
+                lastname: 'User',
                 email: this.userForm.login,
-                authenticationToken: '',
-                authenticationDate: 0,
-                authenticationExpires: 0
             }).then(() => {
                 this.router.navigateByUrl('/home/default');
             });
         })
         .catch(error => {
-            this.errorToast(error.message);
+            this.toast(error.message);
         });
     }
 
