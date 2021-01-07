@@ -14,6 +14,7 @@ const { Filesystem } = Plugins;
 })
 export class LibraryService {
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
+    private initialized = false;
     public rootFolder = './assets/demo/';
 
     constructor(private http: HttpClient) {}
@@ -27,7 +28,7 @@ export class LibraryService {
     }
 
     getEpoc(id?: string): Observable<Epoc> {
-        if (id) {
+        if (id || !this.initialized) {
             const url = this.rootFolder + 'content.json';
             this.http.get(url).subscribe((epoc) => {
                 this.epoc$.next(this.initCourseContent(epoc as Epoc));
@@ -50,6 +51,8 @@ export class LibraryService {
      * Initiliaze ePoc runtime properties
      */
     initCourseContent(epoc: Epoc) {
+        console.log('init');
+        this.initialized = true;
         epoc.assessments = [];
 
         for (const [chapterId, chapter] of Object.entries(epoc.chapters)) {
