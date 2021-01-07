@@ -14,7 +14,8 @@
         <h2>Votre score</h2>
         <b>{{assessmentData.totalUserScore}} pts</b>
         <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
-                        [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"></score-progress>
+                        [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
+                        [minLabel]="'0'" [maxLabel]="assessmentData.totalScore + 'pts'"></score-progress>
       </ion-col>
     </ion-row>
     <ion-row>
