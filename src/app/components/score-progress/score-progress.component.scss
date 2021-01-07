@@ -32,8 +32,32 @@
 .progress-threshold{
   position: absolute;
   top:-10px;
-  bottom: -10px;
+  bottom: -15px;
   border-left: 2px dashed var(--ion-color-warning);
+
+  &-label {
+    position: absolute;
+    bottom: 0;
+    right: calc(100% + 5px);
+    line-height: 1;
+    font-size: 10px;
+    color: var(--ion-color-warning)
+  }
+}
+
+.progress-labels{
+  display: flex;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--ion-color-medium);
+  justify-content: space-between;
+
+  .progress-min{
+  }
+
+  .progress-max{
+    text-align: right;
+  }
 }
 
 
