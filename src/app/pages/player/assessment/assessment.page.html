@@ -59,7 +59,7 @@
           <ion-card-title mode="ios" *ngIf="scoreMax > 0">Score</ion-card-title>
           <div class="score-chart" *ngIf="scoreMax > 0">
             <div><b>{{assessmentData.userScore}} / {{scoreMax}} pts</b></div>
-            <div><b>Score total :</b> {{assessmentData.totalUserScore + assessmentData.userScore}} pts</div>
+            <div><b>Score total :</b> {{assessmentData.totalUserScore + assessmentData.userScore}} / {{assessmentData.totalScore}}</div>
             <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
                             [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
                             [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"

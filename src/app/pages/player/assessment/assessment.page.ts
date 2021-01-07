@@ -162,13 +162,11 @@ export class AssessmentPage implements OnInit {
         this.assessments.forEach((assessment) => {
             if (assessment.id !== this.assessmentId) {
                 const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-                const scoreTotal = this.libraryService.calcScoreTotal(this.epoc, this.assessment.questions);
-
                 if (userAssessment && userAssessment.score > 0) {
                     this.assessmentData.totalUserScore += userAssessment.score;
                 }
-                this.assessmentData.totalScore += scoreTotal;
             }
+            this.assessmentData.totalScore += assessment.scoreTotal;
         });
     }
 
