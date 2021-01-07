@@ -36,13 +36,13 @@
       <ion-col size="12">
         <div class="tabs-headers">
           <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
-            <span>Objectifs</span>
+            <span>{{epoc.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</span>
           </div>
           <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
             <span>Résumé</span>
           </div>
           <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
-            <span>Auteurs</span>
+            <span>{{epoc.authors.length > 1 ? 'Auteurs' : 'Auteur'}}</span>
           </div>
         </div>
         <div class="tabs">
@@ -71,7 +71,7 @@
 <ion-footer mode="ios" *ngIf="epoc$ | async as epoc">
   <ion-toolbar>
     <ion-button class="start-course" [routerLink]="'/player/toc/'+epoc.id" routerDirection="forward" expand="block" color="inria-blue" strong>
-      Commencer la formation
+      C'est parti !
     </ion-button>
   </ion-toolbar>
 </ion-footer>
