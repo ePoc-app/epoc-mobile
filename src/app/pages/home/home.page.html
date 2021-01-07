@@ -21,7 +21,7 @@
             <div class="title-container">
               <h3 class="title">{{epoc.title}}</h3>
               <div class="authors">
-                <span *ngFor="let author of epoc.authors | values">{{author.name}}</span>
+                <div *ngFor="let author of epoc.authors | values">{{author.name}}</div>
               </div>
             </div>
           </div>
@@ -34,20 +34,12 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-          <a class="about-course" [routerLink]="'/player/about/'+epocId">
-            <ion-text color="inria-blue">A propos de cette formation</ion-text>
-            <ion-icon name="caret-forward" color="inria-blue"></ion-icon>
-          </a>
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </div>
 </ion-content>
 
 <ion-footer mode="ios" *ngIf="epocId">
-  <ion-button class="start-course" [routerLink]="'/player/toc/'+epocId" routerDirection="forward" expand="block" color="inria-blue" strong>
+  <ion-button class="start-course" [routerLink]="'/player/about/'+epocId" routerDirection="forward" expand="block" color="inria-blue" strong>
     Commencer la formation
   </ion-button>
 </ion-footer>
