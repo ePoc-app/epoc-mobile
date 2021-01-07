@@ -221,6 +221,16 @@ export class PlayerPage implements OnInit {
                 cssClass: 'splitter'
             },
             {
+                text: 'Informations',
+                icon: 'information-circle-outline',
+                handler: () => {
+                    this.router.navigateByUrl('/player/toc/' + this.epoc.id);
+                }
+            },
+            {
+                cssClass: 'splitter'
+            },
+            {
                 text: 'Tables des matières',
                 icon: 'list',
                 handler: () => {
