@@ -200,7 +200,10 @@
               <div class="custom-card next-chapter-card" *ngIf="nextChapter">
                 <div class="custom-card-content">
                   <h2 class="follow-up">À suivre :</h2>
-                  <div class="next-chapter-image" [ngStyle]="{'background-image': 'url(' + libraryService.rootFolder +  nextChapter.image + ')'}"></div>
+                  <div class="next-chapter-image"
+                       [routerLink]="'/player/play/'+epoc.id+'/'+nextChapterId"
+                       [ngStyle]="{'background-image': 'url(' + libraryService.rootFolder +  nextChapter.image + ')'}">
+                  </div>
                   <p><b>Chapitre {{chapterIndex + 2}} :</b> {{nextChapter.title}} </p>
                 </div>
                 <div class="custom-card-footer">
