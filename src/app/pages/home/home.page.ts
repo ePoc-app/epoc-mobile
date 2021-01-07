@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../classes/epoc';
 import {LibraryService} from '../../services/library.service';
@@ -14,9 +14,11 @@ import {mode} from '../../../environments/environment.mode';
 export class HomePage implements OnInit {
     epocId;
     epoc$: Observable<Epoc>;
+    epoc: Epoc;
     mode;
 
     constructor(
+        private ngZone: NgZone,
         private route: ActivatedRoute,
         public libraryService: LibraryService
     ) {
@@ -29,6 +31,11 @@ export class HomePage implements OnInit {
                 this.libraryService.getEpoc(params.get('id')))
         );
         this.epocId = this.route.snapshot.paramMap.get('id');
+        this.epoc$.subscribe(epoc => {
+            this.ngZone.run( () => {
+                this.epoc = epoc;
+            });
+        });
     }
 
     ionViewWillLeave() {
