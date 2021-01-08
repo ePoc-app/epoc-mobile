@@ -89,7 +89,7 @@ export class AssessmentPage implements OnInit {
                 this.questionFailed();
             }
         } else if (Array.isArray(correctResponse)) {
-            if (correctResponse.every((answer, index) => {
+            if (correctResponse.length === this.currentAnswer.length && correctResponse.every((answer, index) => {
                 if (typeof answer === 'object') {
                     return this.arraysEqual(this.currentAnswer[index], answer.values);
                 } else {
