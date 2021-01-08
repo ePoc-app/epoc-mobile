@@ -268,6 +268,10 @@ ion-card{
         }
       }
 
+      .end-chapter-card{
+        justify-content: space-evenly;
+      }
+
       .follow-up{
         padding: 4%;
         margin: 0;
@@ -281,6 +285,11 @@ ion-card{
         background: transparent no-repeat center center;
         background-size: cover;
         border-radius: 10px 10px 0 0;
+      }
+
+      .end-icon{
+        margin-top: 20px;
+        font-size: 60px;
       }
 
       .next-chapter-image + p{

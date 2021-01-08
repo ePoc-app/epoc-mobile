@@ -217,11 +217,22 @@
                   </ion-button>
                 </div>
               </div>
-              <div class="custom-card next-chapter-card" *ngIf="!nextChapter">
+              <div class="custom-card next-chapter-card end-chapter-card" *ngIf="!nextChapter">
+                <div class="custom-card-content">
+                  <ion-icon name="checkmark-done-circle-outline" color="success" class="end-icon"></ion-icon>
+                  <h2 class="follow-up">C'est terminé !</h2>
+                  <p>Bravo, vous avez atteint la fin de la formation.</p>
+                  <p>Pour obtenir l'attestation, consultez la page des scores.</p>
+                  <p>Ou retournez à la table des matières pour rejouer un chapitre.</p>
+                </div>
                 <div class="custom-card-footer">
                   <ion-button color="medium" expand="block" [routerLink]="'/player/toc/'+epoc.id">
                     <ion-icon name="list" slot="start"></ion-icon>
                     Table des matières
+                  </ion-button>
+                  <ion-button expand="block" [routerLink]="'/player/score/'+epoc.id">
+                    <ion-icon name="podium" slot="start"></ion-icon>
+                    Page des scores
                   </ion-button>
                 </div>
               </div>
