@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
         } else {
             let responseParams;
             const parsedResponse = {access_token: null};
-            const browser = this.iab.create(oauthUrl, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes'});
+            const browser = this.iab.create(oauthUrl, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes', location: 'no', closebuttoncaption: 'X Fermer'});
             browser.on('loadstart').subscribe((evt) => {
                 if ((evt.url).indexOf(env.oauth.redirectUri) === 0) {
                     console.log(evt.url)

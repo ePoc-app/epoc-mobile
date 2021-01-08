@@ -8,7 +8,10 @@ import {Epoc} from '../../../classes/epoc';
 import {AlertController} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
 import {Assessment} from '../../../classes/contents/assessment';
+import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {jsPDF} from 'jspdf';
+import {User} from '../../../classes/user';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
     selector: 'app-score-epoc',
@@ -24,11 +27,15 @@ export class ScoreEpocPage implements OnInit {
 
     assessmentData;
 
+    user: User;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService,
         private readingStore: ReadingStoreService,
+        private iab: InAppBrowser,
+        private auth: AuthService,
         public alertController: AlertController
     ) {}
 
@@ -46,6 +53,10 @@ export class ScoreEpocPage implements OnInit {
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
             this.assessments = epoc.assessments;
+        });
+
+        this.auth.getUser().subscribe(user => {
+            this.user = user;
         });
     }
 
@@ -100,11 +111,29 @@ export class ScoreEpocPage implements OnInit {
     }
 
     getCertificate() {
-        if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
-            const doc = new jsPDF();
-
-            doc.text('Attestation de réussite de l\'ePoc ' + this.epoc.title, 10, 10);
-            window.open(URL.createObjectURL(doc.output()));
+        if (true || this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
+            const doc = new jsPDF({orientation: 'landscape'});
+            const img = new Image();
+            console.log('test');
+            img.src = 'assets/img/fond-attestation.png';
+            doc.addImage(img, 'png', 0, 0, 297, 210);
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.setTextColor('#ffffff');
+            doc.text('Ce document atteste de la participation et de la réussite au cours :', 25, 90);
+            doc.setFontSize(15);
+            doc.setFont('Helvetica', 'bold');
+            doc.text(this.epoc.title, 25, 100);
+            doc.setFontSize(12);
+            doc.setFont('Helvetica', 'normal');
+            if (this.user) {
+                doc.text('Pour le participant :', 25, 120);
+                doc.setFontSize(18);
+                doc.setFont('Helvetica', 'bold');
+                doc.text(this.user.firstname + ' ' + this.user.lastname, 25, 130);
+            }
+            const url = doc.output('dataurlstring', {filename: 'attestation.pdf'});
+            this.iab.create(url, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes', location: 'no', closebuttoncaption: 'X Fermer'});
             this.presentSuccess();
         } else {
             this.presentFail();
