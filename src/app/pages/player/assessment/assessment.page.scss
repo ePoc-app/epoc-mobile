@@ -25,12 +25,12 @@ ion-footer{
   }
 
   .flipper {
-    position: relative;
     display: flex;
     flex-grow: 1;
     transition: 0.6s;
     transform-style: preserve-3d;
     animation: flashflip 0.05s;
+    will-change: transform;
 
     &.notransition{
       transition: none!important;
@@ -38,11 +38,8 @@ ion-footer{
 
     .front, .back {
       display: flex;
-      position: absolute;
-      top:0;
-      left:0;
-      bottom:0;
-      right:0;
+      width: 100%;
+      flex: 0 0 auto;
       backface-visibility: hidden;
     }
 
@@ -52,6 +49,7 @@ ion-footer{
 
     .back {
       transform: rotate3d(0, -1, 0, 180deg);
+      margin-left: -100%;
     }
   }
 }
