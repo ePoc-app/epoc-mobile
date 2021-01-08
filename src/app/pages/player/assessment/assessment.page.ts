@@ -41,6 +41,7 @@ export class AssessmentPage implements OnInit {
     assessmentData = null;
     notransition = false;
     flipped = false;
+    certificateShown = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -168,6 +169,25 @@ export class AssessmentPage implements OnInit {
             }
             this.assessmentData.totalScore += assessment.scoreTotal;
         });
+        if (this.assessmentData.totalUserScore + this.assessmentData.userScore >= this.epoc.certificateScore) {
+            this.showCertificateCard();
+        }
+    }
+
+    showCertificateCard() {
+        if (!this.reading.certificateShown) {
+            this.certificateShown = true;
+            this.readingStore.updateCertificateShown(this.epoc.id, true);
+        }
+    }
+
+    goToCertificate() {
+        this.dismissCertificateCard();
+        this.router.navigateByUrl('/player/score/' + this.epoc.id);
+    }
+
+    dismissCertificateCard() {
+        this.certificateShown = false;
     }
 
     back(event) {
