@@ -5,6 +5,10 @@
 
   &.flipped .flipper {
     transform: rotate3d(0, -1, 0, 180deg);
+
+    .back {
+      z-index: 1;
+    }
   }
 
   .flipper {
@@ -25,6 +29,7 @@
 
     .front {
       transform: rotate3d(0, 0, 0, 0);
+      z-index: 1;
     }
 
     .back {
