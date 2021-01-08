@@ -37,7 +37,7 @@ export class PlayerPage implements OnInit {
     currentPage = 0;
     progress = 0;
     slidesOptions = {
-        slidesPerView: Math.ceil(window.innerWidth / 640),
+        slidesPerView: window.innerWidth > window.innerHeight ? 2 : 1,
         initialSlide: 0
     };
 
