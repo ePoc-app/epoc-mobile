@@ -224,7 +224,7 @@ export class PlayerPage implements OnInit {
                 text: 'Informations',
                 icon: 'information-circle-outline',
                 handler: () => {
-                    this.router.navigateByUrl('/player/toc/' + this.epoc.id);
+                    this.router.navigateByUrl('/player/about/' + this.epoc.id);
                 }
             },
             {
