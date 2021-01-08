@@ -111,7 +111,7 @@ export class ScoreEpocPage implements OnInit {
     }
 
     getCertificate() {
-        if (true || this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
+        if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
             const doc = new jsPDF({orientation: 'landscape'});
             const img = new Image();
             console.log('test');
