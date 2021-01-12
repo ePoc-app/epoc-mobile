@@ -83,15 +83,15 @@
 
     i{
       display: inline-block;
-      margin-left: 5px;
+      margin-right: 5px;
       transition: transform .25s;
       color: $inria-red;
+      height: 1em;
     }
 
     .accordion-header{
       position: relative;
       display: flex;
-      flex-direction: row-reverse;
       align-items: center;
       padding: 7px 5px 5px 5px;
       border: 1px solid $inria-blue-border;
