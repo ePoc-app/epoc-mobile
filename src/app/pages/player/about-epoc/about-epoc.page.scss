@@ -94,6 +94,12 @@ ion-grid{
     border-radius: 50%;
     overflow: hidden;
   }
+
+  &:after{
+    content: '';
+    display: block;
+    clear: both;
+  }
 }
 
 ion-text{
