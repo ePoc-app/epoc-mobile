@@ -18,7 +18,14 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     @Input() poster: string;
     @Input() subtitles: string;
     @Input() title: string;
-    @Input() controls;
+    @Input() controls: {
+        show?: boolean,
+        timeline?: boolean,
+        subtitles?: boolean,
+        playbutton?: boolean,
+        fullscreen?: boolean,
+        overlay?: boolean
+    };
 
     @Output() timelineDragging = new EventEmitter<string>();
 
@@ -112,7 +119,9 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         }
     }
 
-    fullscreen() {
+    fullscreen(event) {
+        event.preventDefault();
+        event.stopPropagation();
         if (typeof this.video.requestFullscreen === 'function') {
             this.video.requestFullscreen();
         } else if (typeof this.video.webkitEnterFullscreen === 'function') {
