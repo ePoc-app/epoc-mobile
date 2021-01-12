@@ -1,5 +1,5 @@
 <div class="video-player">
-  <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()" (dblclick)="fullscreen()">
+  <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
     <video #video disablePictureInPicture playsinline preload="metadata"
            [src]="(libraryService.rootFolder + src) | safe: 'url'">
       <ng-container *ngFor="let sub of subtitles">
@@ -14,6 +14,9 @@
     <div class="video-timeline" (click)="seek($event)" [style.display]="controls.show && controls.timeline ? 'block':'none'">
       <div class="video-timeline-progress" [style.width]="progress +'%'" #timelineProgress></div>
       <div class="video-timeline-cursor" [style.left]="progress +'%'" #timelineCursor></div>
+    </div>
+    <div class="video-overlay-controls">
+      <ion-icon name="scan-outline" (click)="fullscreen($event)" *ngIf="controls.overlay"></ion-icon>
     </div>
   </div>
 
@@ -34,7 +37,7 @@
         <ion-icon [name]="playing ? 'pause':'play'" (click)="play()"></ion-icon>
       </div>
       <div class="video-actions-right" *ngIf="controls.fullscreen">
-        <ion-icon name="expand" (click)="fullscreen()"></ion-icon>
+        <ion-icon name="expand" (click)="fullscreen($event)"></ion-icon>
       </div>
     </div>
   </ng-container>

@@ -68,6 +68,21 @@
       }
     }
 
+    .video-overlay-controls{
+      position: absolute;
+      bottom: 0;
+      right:0;
+      padding: 5px;
+
+      ion-icon{
+        font-size: 20px;
+        line-height: 1;
+        color:white;
+        cursor: pointer;
+        filter: drop-shadow(0 0 2px $inria-blue);
+      }
+    }
+
     @keyframes fadeOut {
       from {
         opacity: 1;
