@@ -42,7 +42,6 @@
     display: flex;
     align-items: center;
     margin: 1em 0;
-    font-size: 0;
     background: $inria-red;
 
     .ill-icon{
@@ -84,7 +83,7 @@
 
     i{
       display: inline-block;
-      margin-right: 5px;
+      margin-left: 5px;
       transition: transform .25s;
       color: $inria-red;
     }
@@ -97,11 +96,12 @@
       padding: 7px 5px 5px 5px;
       border: 1px solid $inria-blue-border;
       border-radius: 3px;
+      color:$inria-blue;
       cursor: pointer;
 
       span {
         flex-grow: 1;
-        color:white!important;
+        color:$inria-blue!important;
       }
     }
 
