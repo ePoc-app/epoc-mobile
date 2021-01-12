@@ -21,6 +21,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {File} from '@ionic-native/file/ngx';
 import {environment} from '../environments/environment';
 import {HTTP} from '@ionic-native/http/ngx';
+import {FileOpener} from '@ionic-native/file-opener/ngx';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
@@ -41,7 +42,8 @@ import {HTTP} from '@ionic-native/http/ngx';
         File,
         InAppBrowser,
         AuthGuardService,
-        HTTP
+        HTTP,
+        FileOpener
     ],
     bootstrap: [AppComponent]
 })

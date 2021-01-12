@@ -8,10 +8,12 @@ import {Epoc} from '../../../classes/epoc';
 import {AlertController} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
 import {Assessment} from '../../../classes/contents/assessment';
-import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {jsPDF} from 'jspdf';
 import {User} from '../../../classes/user';
 import {AuthService} from '../../../services/auth.service';
+import {Capacitor, FilesystemDirectory, Plugins} from '@capacitor/core';
+import {FileOpener} from '@ionic-native/file-opener/ngx';
+import {LoadingController} from '@ionic/angular';
 
 @Component({
     selector: 'app-score-epoc',
@@ -28,15 +30,17 @@ export class ScoreEpocPage implements OnInit {
     assessmentData;
 
     user: User;
+    loading: boolean;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService,
         private readingStore: ReadingStoreService,
-        private iab: InAppBrowser,
         private auth: AuthService,
-        public alertController: AlertController
+        private fileOpener: FileOpener,
+        public alertController: AlertController,
+        public loadingController: LoadingController
     ) {}
 
     ngOnInit() {
@@ -111,33 +115,90 @@ export class ScoreEpocPage implements OnInit {
     }
 
     getCertificate() {
-        if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
-            const doc = new jsPDF({orientation: 'landscape'});
-            const img = new Image();
-            console.log('test');
-            img.src = 'assets/img/fond-attestation.png';
-            doc.addImage(img, 'png', 0, 0, 297, 210);
-            doc.setFont('Helvetica', 'normal');
-            doc.setFontSize(12);
-            doc.setTextColor('#ffffff');
-            doc.text('Ce document atteste de la participation et de la réussite au cours :', 25, 90);
-            doc.setFontSize(15);
-            doc.setFont('Helvetica', 'bold');
-            doc.text(this.epoc.title, 25, 100);
-            doc.setFontSize(12);
-            doc.setFont('Helvetica', 'normal');
-            if (this.user) {
-                doc.text('Pour le participant :', 25, 120);
-                doc.setFontSize(18);
-                doc.setFont('Helvetica', 'bold');
-                doc.text(this.user.firstname + ' ' + this.user.lastname, 25, 130);
+        if (!this.loading) {
+            if (this.assessmentData.totalUserScore >= 0 /* @todo this.epoc.certificateScore */) {
+                this.presentLoading().then(() => {
+                    this.downloadPdf(this.generatePdf());
+                });
+            } else {
+                this.presentFail();
             }
-            const url = doc.output('dataurlstring', {filename: 'attestation.pdf'});
-            this.iab.create(url, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes', location: 'no', closebuttoncaption: 'X Fermer'});
-            this.presentSuccess();
-        } else {
-            this.presentFail();
         }
+    }
+
+    generatePdf(): jsPDF {
+        const doc = new jsPDF({orientation: 'landscape', compress: true});
+        const img = new Image();
+        img.src = 'assets/img/fond-attestation.png';
+        doc.addImage(img, 'PNG', 0, 0, 297, 210, undefined, 2, undefined);
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(12);
+        doc.setTextColor('#ffffff');
+        doc.text('Ce document atteste de la participation et de la réussite au cours :', 25, 90);
+        doc.setFontSize(15);
+        doc.setFont('Helvetica', 'bold');
+        doc.text(this.epoc.title, 25, 100);
+        doc.setFontSize(12);
+        doc.setFont('Helvetica', 'normal');
+        if (this.user) {
+            doc.text('Pour le participant :', 25, 120);
+            doc.setFontSize(18);
+            doc.setFont('Helvetica', 'bold');
+            doc.text(this.user.firstname + ' ' + this.user.lastname, 25, 130);
+        }
+        return doc;
+    }
+
+    downloadPdf(doc: jsPDF) {
+        const { Filesystem } = Plugins;
+        const fileName = `attestation-${this.epoc.id}.pdf`;
+
+        if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === 'android') {
+            // Save the PDF to the device
+            const output = doc.output('datauristring');
+            try {
+                Filesystem.writeFile({
+                    path: fileName,
+                    data: output,
+                    directory: FilesystemDirectory.Documents
+                }).then((writeFileResult) => {
+                    Filesystem.getUri({
+                        directory: FilesystemDirectory.Documents,
+                        path: fileName
+                    }).then((getUriResult) => {
+                        const path = getUriResult.uri;
+                        this.fileOpener.open(path, 'application/pdf')
+                            .then(() => {
+                                this.dismissLoading().then(() => {
+                                    this.presentSuccess();
+                                });
+                            })
+                            .catch(error => console.log('Error openening file', error));
+                    }, (error) => {
+                        console.log(error);
+                    });
+                });
+            } catch (error) {
+                console.error('Unable to write file', error);
+            }
+        } else {
+            doc.save(fileName);
+            this.dismissLoading();
+            this.presentSuccess();
+        }
+    }
+
+    async presentLoading() {
+        this.loading = true;
+        const loading = await this.loadingController.create({
+            message: 'Veuillez patienter...',
+        });
+        await loading.present();
+    }
+
+    async dismissLoading() {
+        this.loading = false;
+        this.loadingController.dismiss();
     }
 
     async presentFail() {
