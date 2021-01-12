@@ -170,7 +170,9 @@ export class AssessmentPage implements OnInit {
             this.assessmentData.totalScore += assessment.scoreTotal;
         });
         if (this.assessmentData.totalUserScore + this.assessmentData.userScore >= this.epoc.certificateScore) {
-            this.showCertificateCard();
+            setTimeout(() => {
+                this.showCertificateCard();
+            }, 1500);
         }
     }
 
