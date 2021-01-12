@@ -116,7 +116,7 @@ export class ScoreEpocPage implements OnInit {
 
     getCertificate() {
         if (!this.loading) {
-            if (this.assessmentData.totalUserScore >= 0 /* @todo this.epoc.certificateScore */) {
+            if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
                 this.presentLoading().then(() => {
                     this.downloadPdf(this.generatePdf());
                 });
