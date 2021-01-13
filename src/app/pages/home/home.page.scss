@@ -1,6 +1,5 @@
 ion-toolbar {
-  margin: 1em 0;
-  padding-bottom: 1em;
+  margin: 1em 0 0 0;
   --border-width: 0 !important;
 
   .icon-btn {
@@ -32,10 +31,15 @@ ion-toolbar {
 }
 
 .home-course {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .title-wrapper {
   width: 85%;
+  min-width: 300px;
   margin-right: -10px;
   margin-left: auto;
   padding: 2em;
