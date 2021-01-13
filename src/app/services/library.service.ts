@@ -51,7 +51,6 @@ export class LibraryService {
      * Initiliaze ePoc runtime properties
      */
     initCourseContent(epoc: Epoc) {
-        console.log('init');
         this.initialized = true;
         epoc.assessments = [];
 

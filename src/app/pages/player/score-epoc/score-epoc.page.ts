@@ -173,13 +173,13 @@ export class ScoreEpocPage implements OnInit {
                                     this.presentSuccess();
                                 });
                             })
-                            .catch(error => console.log('Error openening file', error));
+                            .catch(error => console.warn('Error openening file', error));
                     }, (error) => {
-                        console.log(error);
+                        console.warn(error);
                     });
                 });
             } catch (error) {
-                console.error('Unable to write file', error);
+                console.warn('Unable to write file', error);
             }
         } else {
             doc.save(fileName);

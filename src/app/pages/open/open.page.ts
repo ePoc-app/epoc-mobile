@@ -115,7 +115,7 @@ export class OpenPage {
             this.file.checkDir(this.file.dataDirectory, 'epoc').then(() =>
                 this.file.removeRecursively(this.file.dataDirectory, 'epoc')
             ).catch((e) =>
-                console.log('Nothing to delete')
+                console.warn('Nothing to delete')
             ).finally(() => {
                 this.zip.unZip({
                     source: this.file.dataDirectory + filename,
@@ -144,7 +144,7 @@ export class OpenPage {
         this.file.listDir(this.file.dataDirectory, path ? path : '').then((result) => {
             this.zipList = result.map(file => file.name).filter(filename => filename.split('.').pop() === 'zip');
         }).catch(() => {
-            console.error('Unable to read dir');
+            console.warn('Unable to read dir');
         });
     }
 
