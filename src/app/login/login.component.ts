@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit {
             const browser = this.iab.create(oauthUrl, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes', location: 'no', closebuttoncaption: 'X Fermer'});
             browser.on('loadstart').subscribe((evt) => {
                 if ((evt.url).indexOf(env.oauth.redirectUri) === 0) {
-                    console.log(evt.url)
                     responseParams = ((evt.url).split('#')[1]).split('&');
                     for (const param of responseParams) {
                         parsedResponse[param.split('=')[0]] = param.split('=')[1];
