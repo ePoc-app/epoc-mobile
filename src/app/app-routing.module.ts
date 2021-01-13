@@ -5,22 +5,40 @@ import {AuthGuardService} from './services/auth-guard.service';
 import {LoginCallbackComponent} from './login/login-callback.component';
 import {mode} from '../environments/environment.mode';
 
-const routes: Routes = [
+const routesDefault: Routes = [
     {
         path: 'home',
-        ...( mode.inria && {canActivate: [AuthGuardService]}),
         loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
     },
     {
         path: 'player',
-        ...( mode.inria && {canActivate: [AuthGuardService]}),
-        loadChildren: () =>
-            import('./pages/player/player.module').then(m => m.PlayerPageModule)
+        loadChildren: () => import('./pages/player/player.module').then(m => m.PlayerPageModule)
     },
     {
         path: 'about',
-        loadChildren: () =>
-            import('./pages/about/about.module').then(m => m.AboutPageModule)
+        loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
+    },
+    {
+        path: 'open',
+        loadChildren: () => import('./pages/open/open.module').then(m => m.OpenPageModule)
+    },
+    {path: '**', redirectTo: '/home/default'}
+];
+
+const routesInria: Routes = [
+    {
+        path: 'home',
+        canActivate: [AuthGuardService],
+        loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
+    },
+    {
+        path: 'player',
+        canActivate: [AuthGuardService],
+        loadChildren: () => import('./pages/player/player.module').then(m => m.PlayerPageModule)
+    },
+    {
+        path: 'about',
+        loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
     },
     {
         path: 'login',
@@ -33,18 +51,17 @@ const routes: Routes = [
     {
         path: 'callback',
         component: LoginCallbackComponent
-  },
-  {
-    path: 'open',
-    loadChildren: () =>
-        import('./pages/open/open.module').then(m => m.OpenPageModule)
-  },
-  { path: '**', redirectTo: '/home/default'}
+    },
+    {
+        path: 'open',
+        loadChildren: () => import('./pages/open/open.module').then(m => m.OpenPageModule)
+    },
+    {path: '**', redirectTo: '/home/default'}
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+        RouterModule.forRoot(mode.inria ? routesInria : routesDefault, {preloadingStrategy: PreloadAllModules})
     ],
     exports: [RouterModule]
 })
