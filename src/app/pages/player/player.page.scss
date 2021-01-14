@@ -260,7 +260,13 @@ ion-card{
     }
 
     &-next{
+      display: block;
+      margin: 0 -4% -4% -4%;
+      padding: 0 4% 4% 4%;
+      overflow: auto;
+
       .custom-card{
+        min-height: 100%;
         text-align: center;
 
         ion-button{
