@@ -19,6 +19,7 @@ ion-footer{
   flex-grow: 1;
   height:100%;
   perspective: 1000px;
+  overflow-x: hidden;
 
   &.flipped .flipper {
     transform: rotate3d(0, -1, 0, 180deg);
