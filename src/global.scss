@@ -207,6 +207,11 @@ video {
   }
 }
 
+// Fix question card overflow
+.question-card .ion-text-wrap{
+  word-break: break-word;
+}
+
 .transcript{
   padding: 1em;
 }
