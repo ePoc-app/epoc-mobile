@@ -3,8 +3,5 @@
   "appName": "ePoc",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www",
-  "ios": {
-    "contentInset": "always"
-  }
+  "webDir": "www"
 }
