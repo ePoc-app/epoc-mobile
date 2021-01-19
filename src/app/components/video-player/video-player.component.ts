@@ -124,7 +124,9 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         event.stopPropagation();
         if (typeof this.video.requestFullscreen === 'function') {
             this.video.requestFullscreen();
+        // @ts-ignore
         } else if (typeof this.video.webkitEnterFullscreen === 'function') {
+            // @ts-ignore
             this.video.webkitEnterFullscreen();
         } else {
             this.presentToast('Fullscreen not supported on your phone');

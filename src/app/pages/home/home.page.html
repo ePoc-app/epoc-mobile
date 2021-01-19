@@ -39,7 +39,9 @@
 </ion-content>
 
 <ion-footer mode="ios" *ngIf="epocId">
-  <ion-button class="start-course" [routerLink]="'/player/about/'+epocId" routerDirection="forward" expand="block" color="inria-blue" strong>
-    Commencer la formation
-  </ion-button>
+  <ion-toolbar>
+    <ion-button class="start-course" [routerLink]="'/player/about/'+epocId" routerDirection="forward" expand="block" color="inria-blue" strong>
+      Commencer la formation
+    </ion-button>
+  </ion-toolbar>
 </ion-footer>

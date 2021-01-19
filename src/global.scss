@@ -29,10 +29,6 @@
 @import '_utils';
 @import '_fonts';
 
-ion-header ion-toolbar.ios:first-child{
-  padding-top: 0;
-}
-
 // hide back button text on android
 .sc-ion-back-button-md{
   display: none;
