@@ -130,7 +130,7 @@ export class ScoreEpocPage implements OnInit {
         const doc = new jsPDF({orientation: 'landscape', compress: true});
         const img = new Image();
         img.src = 'assets/img/fond-attestation.png';
-        doc.addImage(img, 'PNG', 0, 0, 297, 210, undefined, 'FAST', undefined);
+        doc.addImage(img, 'PNG', 0, 0, 297, 210);
         doc.setFont('Helvetica', 'normal');
         doc.setFontSize(12);
         doc.setTextColor('#ffffff');
