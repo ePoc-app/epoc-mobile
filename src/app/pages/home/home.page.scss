@@ -1,7 +1,4 @@
 ion-toolbar {
-  margin: 1em 0 0 0;
-  --border-width: 0 !important;
-
   .icon-btn {
     --background: white;
     --background-activated: white;
@@ -84,10 +81,6 @@ ion-toolbar {
     vertical-align: middle;
     text-decoration: underline;
   }
-}
-
-.start-course {
-  margin: 1em 1em 2em 1em;
 }
 
 @media (max-height: 668px) {

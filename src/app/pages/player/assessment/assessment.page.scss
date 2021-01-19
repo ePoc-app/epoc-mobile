@@ -4,7 +4,7 @@
 
 ion-footer{
   display: flex;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
   .check-answer{
     flex: 1;
   }
