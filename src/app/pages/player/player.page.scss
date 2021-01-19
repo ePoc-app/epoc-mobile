@@ -1,3 +1,7 @@
+ion-content{
+  --offset-top: var(--ion-safe-area-top) * -1!important;
+}
+
 .loader{
   position: fixed;
   top:50%;
