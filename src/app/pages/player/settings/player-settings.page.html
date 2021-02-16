@@ -72,7 +72,7 @@
     <ion-list-header>
       Données ePocs
     </ion-list-header>
-    <ion-item *ngIf="user && admins.indexOf(user.email) !== -1">
+    <ion-item *ngIf="mode.ill">
       <ion-label>Ouvrir un autre ePoc</ion-label>
       <ion-button size="default" color="inria-blue" routerLink="/open">
         <ion-icon slot="icon-only" name="folder-open"></ion-icon>
