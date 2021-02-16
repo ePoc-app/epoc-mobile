@@ -6,7 +6,7 @@ import {ReadingStoreService} from '../../../services/reading-store.service';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {User} from '../../../classes/user';
-import {environment as env} from '../../../../environments/environment';
+import {mode} from '../../../../environments/environment.mode';
 
 @Component({
     selector: 'app-player-settings',
@@ -23,7 +23,7 @@ export class PlayerSettingsPage implements OnInit {
     };
 
     user: User;
-    admins = env.admins;
+    mode = mode;
 
     constructor(
         private settingsStore: SettingsStoreService,

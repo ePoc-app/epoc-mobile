@@ -22,8 +22,7 @@ export const environment = {
         storageBucket: 'epoc-39f52.appspot.com',
         messagingSenderId: '434830911492',
         appId: '1:434830911492:web:87989fac3d0742571d2d51'
-    },
-    admins: ['benoit.rospars@inria.fr', 'jean-marc.hasenfratz@inria.fr']
+    }
 };
 
 /*
