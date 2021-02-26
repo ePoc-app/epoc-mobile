@@ -46,7 +46,7 @@ export class SimpleQuestionComponent implements OnInit {
         e.stopPropagation();
         if (!this.disabled) {
             this.disabled = true;
-            if (typeof this.answer === 'string') {
+            if (typeof this.question.correctResponse === 'string') {
                 if (this.question.correctResponse === this.answer) {
                     this.questionSuccessed = true;
                 } else {
@@ -64,7 +64,7 @@ export class SimpleQuestionComponent implements OnInit {
                 this.questionSuccessed = false;
             }
 
-            this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
+            // this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
         }
         this.flip();
     }

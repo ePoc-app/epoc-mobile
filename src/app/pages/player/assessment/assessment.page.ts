@@ -83,7 +83,7 @@ export class AssessmentPage implements OnInit {
 
     checkAnswer() {
         const correctResponse = this.questions[this.currentQuestion].correctResponse;
-        if (typeof this.currentAnswer === 'string') {
+        if (typeof correctResponse === 'string') {
             if (correctResponse === this.currentAnswer) {
                 this.questionSuccessed();
             } else {
