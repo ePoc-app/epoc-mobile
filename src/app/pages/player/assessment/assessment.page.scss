@@ -36,6 +36,7 @@ ion-footer{
     transform-style: preserve-3d;
     animation: flashflip 0.05s;
     will-change: transform;
+    width:0;
 
     &.notransition{
       transition: none!important;
