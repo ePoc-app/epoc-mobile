@@ -53,7 +53,8 @@ export class SimpleQuestionComponent implements OnInit {
                     this.questionSuccessed = false;
                 }
             } else if (Array.isArray(this.question.correctResponse)) {
-                if (this.question.correctResponse.every((answer, index) => {
+                if (this.question.correctResponse.length === this.answer.length &&
+                    this.question.correctResponse.every((answer, index) => {
                     return this.answer ? this.answer.indexOf(answer) >= 0 : false;
                 })) {
                     this.questionSuccessed = true;
