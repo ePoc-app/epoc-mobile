@@ -65,7 +65,7 @@ export class SimpleQuestionComponent implements OnInit {
                 this.questionSuccessed = false;
             }
 
-            // this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
+            this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
         }
         this.flip();
     }
