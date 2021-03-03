@@ -6,7 +6,7 @@
           <h4>Question ({{question.score}}pts)</h4>
         </ng-container>
         <ng-container *ngIf="question.score === 0">
-          <h4 class="banner">Selon vous ?</h4>
+          <h4>Question non notée</h4>
         </ng-container>
         <div class="statement">
           <div *ngIf="question.statement">{{question.statement}}</div>
