@@ -1,3 +1,8 @@
+<div class="current-response" *ngIf="responses.length > 0">
+  <div class="response-item" *ngFor="let currentResponse of getCurrentResponse()" [@fadeOut]>
+    {{currentResponse.label}}
+  </div>
+</div>
 <div class="drop-zones">
   <div class="drop-zone" (click)="addResponse(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
     <span class="zone-label">{{zone.label}}</span>
@@ -7,10 +12,5 @@
           {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)" *ngIf="!disabled"></ion-icon>
       </div>
     </div>
-  </div>
-</div>
-<div class="current-response" *ngIf="responses.length > 0">
-  <div class="response-item" *ngFor="let currentResponse of getCurrentResponse()" [@fadeOut]>
-    {{currentResponse.label}}
   </div>
 </div>
