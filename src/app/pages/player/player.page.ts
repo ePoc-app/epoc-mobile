@@ -77,13 +77,6 @@ export class PlayerPage implements OnInit {
                 this.libraryService.getEpoc())
         );
 
-        this.readingStore.readings$.subscribe(readings => {
-            if (readings) {
-                const epocId = this.route.snapshot.paramMap.get('id');
-                this.reading = readings.find(item => item.epocId === epocId);
-            }
-        });
-
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
             this.chapterId = this.route.snapshot.paramMap.get('chapter');
@@ -99,6 +92,7 @@ export class PlayerPage implements OnInit {
 
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
             if (pair.epoc && pair.reading) {
+                this.reading = pair.reading.find(item => item.epocId === this.epoc.id);
                 this.readingStore.addReading(this.epoc.id);
                 this.dataInitialized = true;
                 this.loading = false;
