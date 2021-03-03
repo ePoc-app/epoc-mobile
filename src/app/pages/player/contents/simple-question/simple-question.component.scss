@@ -1,10 +1,16 @@
 .flip-container {
   display: flex;
   flex-grow: 1;
+  height:100%;
   perspective: 1000px;
+  overflow-x: hidden;
 
-  &.flipped .flipper {
-    transform: rotate3d(0, -1, 0, 180deg);
+  &.flipped {
+    overflow: hidden;
+
+    .flipper {
+      transform: rotate3d(0, -1, 0, 180deg);
+    }
 
     .back {
       z-index: 1;
@@ -12,29 +18,34 @@
   }
 
   .flipper {
-    position: relative;
     display: flex;
     flex-grow: 1;
+    flex-flow: row wrap;
     transition: 0.6s;
     transform-style: preserve-3d;
     animation: flashflip 0.05s;
     will-change: transform;
+    width:0;
+
+    &.notransition{
+      transition: none!important;
+    }
 
     .front, .back {
-      display: flex;
-      width: 100%;
-      flex: 0 0 auto;
+      width:100%;
       backface-visibility: hidden;
     }
 
     .front {
       transform: rotate3d(0, 0, 0, 0);
       z-index: 1;
+      padding-bottom: 20px;
     }
 
     .back {
       transform: rotate3d(0, -1, 0, 180deg);
       margin-left: -100%;
+      max-height: 100%;
     }
   }
 }
