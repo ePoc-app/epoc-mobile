@@ -86,6 +86,10 @@ ion-card{
       margin: 0;
     }
 
+    simple-question{
+       margin-bottom: 10px;
+    }
+
     &-chapter{
       .chapter-container{
         display: flex;
@@ -194,6 +198,7 @@ ion-card{
     }
 
     &-html, &-simple-question{
+      position: relative;
       display: block;
       margin: 0 -4% -4% -4%;
       padding: 0 4% 4% 4%;
@@ -201,6 +206,11 @@ ion-card{
 
       .custom-card{
         min-height: 100%;
+      }
+
+      & > * {
+        min-height: 100%;
+        margin-bottom: 10px;
       }
     }
 
