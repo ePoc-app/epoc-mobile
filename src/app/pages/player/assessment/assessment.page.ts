@@ -108,6 +108,7 @@ export class AssessmentPage implements OnInit {
         this.explanationShown = true;
         this.notransition = false;
         this.flipped = true;
+        document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
     }
 
     questionSuccessed() {
@@ -208,6 +209,7 @@ export class AssessmentPage implements OnInit {
 
     flip() {
         if (this.explanationShown) {
+            document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
             this.flipped = !this.flipped;
         }
     }

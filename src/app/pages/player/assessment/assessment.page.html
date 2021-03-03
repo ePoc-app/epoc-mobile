@@ -13,39 +13,46 @@
       <ion-slide>
         <div class="flip-container" [ngClass]="{'flipped': flipped}">
           <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
-            <div class="front question-card">
-              <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
-              <div class="statement">
-                <div *ngIf="question.statement">{{question.statement}}</div>
-                <b>{{question.label}}</b>
+            <div class="front">
+              <div class="question-card">
+                <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
+                <div class="statement">
+                  <div *ngIf="question.statement">{{question.statement}}</div>
+                  <b>{{question.label}}</b>
+                </div>
+
+                <ng-container *ngIf="question.type === 'choice'">
+                  <simple-choice class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
+                </ng-container>
+                <ng-container *ngIf="question.type === 'multiple-choice'">
+                  <multiple-choice class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
+                </ng-container>
+                <ng-container *ngIf="question.type === 'reorder'">
+                  <reorder class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
+                </ng-container>
+                <ng-container *ngIf="question.type === 'drag-and-drop'">
+                  <drag-and-drop class="response no-overflow" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
+                </ng-container>
+
               </div>
-
-              <ng-container *ngIf="question.type === 'choice'">
-                <simple-choice class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
-              </ng-container>
-              <ng-container *ngIf="question.type === 'multiple-choice'">
-                <multiple-choice class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
-              </ng-container>
-              <ng-container *ngIf="question.type === 'reorder'">
-                <reorder class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
-              </ng-container>
-              <ng-container *ngIf="question.type === 'drag-and-drop'">
-                <drag-and-drop class="response no-overflow" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
-              </ng-container>
-
             </div>
-            <div class="back question-card">
-              <div class="sucess" *ngIf="questionsSuccessed[questionIndex]">
-                <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
-                <h2>Bravo !</h2>
-              </div>
-              <div class="fail" *ngIf="!questionsSuccessed[questionIndex]">
-                <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
-                <h2>Non !</h2>
-              </div>
-              <div class="explanation">
-                <h4 class="question-card-header">Explication :</h4>
-                <html-content [html]="question.explanation"></html-content>
+
+            <div class="back">
+              <div class="question-card">
+                <div class="sucess" *ngIf="questionsSuccessed[questionIndex]">
+                  <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
+                  <h2>Bravo !</h2>
+                </div>
+                <div class="fail" *ngIf="!questionsSuccessed[questionIndex]">
+                  <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
+                  <h2>Non !</h2>
+                </div>
+                <div class="explanation">
+                  <h4 class="question-card-header">Explication :</h4>
+                  <div class="explanation-text">
+                    <html-content [html]="question.explanation"></html-content>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
