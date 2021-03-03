@@ -118,6 +118,10 @@ ion-footer{
   .explanation{
     overflow: auto;
     font-size:14px;
+
+    html-content{
+      text-align: left;
+    }
   }
 
   .explanation-icon{
@@ -154,10 +158,6 @@ ion-footer{
   .explanation-icon{
     font-size: 50px;
     margin-bottom: 20px;
-  }
-
-  .explanation-text {
-    font-size:14px;
   }
 }
 
