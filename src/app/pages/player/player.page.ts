@@ -264,6 +264,7 @@ export class PlayerPage implements OnInit {
             cssClass: 'custom-action-sheet',
             mode: 'ios',
             header: this.epoc.title,
+            subHeader: `${this.chapterIndex + 1}. ${this.chapter.title}`,
             buttons
         });
         await actionSheet.present();
