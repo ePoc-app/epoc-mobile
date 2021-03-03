@@ -35,6 +35,16 @@
 }
 
 .custom-action-sheet{
+  .action-sheet-title{
+    font-size: 14px;
+    color: $inria-blue;
+  }
+  .action-sheet-sub-title{
+    padding: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: $inria-red;
+  }
   .action-sheet-button.splitter{
     padding:0;
     height:1px;
