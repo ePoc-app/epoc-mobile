@@ -1,5 +1,5 @@
-<ion-content scroll-y="false">
-  <div class="loader" *ngIf="loading">
+<ion-content>
+  <div class="loader" slot="fixed" *ngIf="loading">
     <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#364357">
       <g fill="none" fill-rule="evenodd">
         <g transform="translate(1 1)" stroke-width="2">
@@ -18,7 +18,7 @@
     </svg>
   </div>
 
-  <div class="reader" [ngClass]="loading ? 'loading':''" [ngStyle]="readerStyles">
+  <div class="reader" slot="fixed" [ngClass]="loading ? 'loading':''" [ngStyle]="readerStyles">
 
     <ng-container *ngIf="dataInitialized">
       <ion-slides #readerSlides [options]="slidesOptions" (ionSlideWillChange)="onSlideChange()" class="reader-slider">
@@ -242,10 +242,10 @@
       </ion-slides>
     </ng-container>
   </div>
-  <div class="reader-progress">
+  <div class="reader-progress" slot="fixed">
     <ion-progress-bar color="inria" [value]="progress"></ion-progress-bar>
   </div>
-  <div class="certificate-container" *ngIf="certificateShown">
+  <div class="certificate-container" slot="fixed" *ngIf="certificateShown">
     <ion-card class="certificate-success-card">
       <ion-card-header class="certificate-success-card-header">
         <ion-icon name="checkmark-circle-outline"></ion-icon>
