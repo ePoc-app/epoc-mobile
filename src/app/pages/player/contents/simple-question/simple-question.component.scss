@@ -69,6 +69,15 @@
   h4{
     font-size: 1rem;
     color:#666;
+
+    &.banner{
+      width: 100%;
+      padding: 1.2rem 1rem 1rem 1rem;
+      margin: 0;
+      color:white;
+      background: var(--ion-color-inria-blue);
+      clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+    }
   }
 
   b{
