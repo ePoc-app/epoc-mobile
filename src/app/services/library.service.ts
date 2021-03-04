@@ -69,6 +69,7 @@ export class LibraryService {
                     epoc.assessments.push((currentContent as Assessment));
                 } else if (currentContent.type === 'simple-question' &&
                     Number(epoc.questions[(currentContent as SimpleQuestion).question].score) > 0) {
+                    (currentContent as Assessment).scoreTotal = this.calcScoreTotal(epoc, [(currentContent as SimpleQuestion).question]);
                     (currentContent as Assessment).questions = [(currentContent as SimpleQuestion).question];
                     (currentContent as Assessment).chapterId = chapterId;
                     epoc.assessments.push((currentContent as Assessment));
