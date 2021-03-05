@@ -2,6 +2,15 @@
   padding:20px;
 }
 
+.slide{
+  position: relative;
+  display: block;
+}
+
+.slide-wrapper{
+  height: 100%;
+}
+
 ion-footer{
   display: flex;
   padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
@@ -16,11 +25,9 @@ ion-footer{
 
 .flip-container {
   display: flex;
-  padding: 1em;
   flex-grow: 1;
   height:100%;
   perspective: 1000px;
-  overflow-x: hidden;
 
   &.flipped {
     overflow: hidden;
@@ -50,35 +57,34 @@ ion-footer{
 
     .front, .back {
       width:100%;
+      padding: 1em;
+      overflow: auto;
       backface-visibility: hidden;
+      background: white;
     }
 
     .front {
       transform: rotate3d(0, 0, 0, 0);
       z-index: 1;
-      padding-bottom: 20px;
     }
 
     .back {
       transform: rotate3d(0, -1, 0, 180deg);
       margin-left: -100%;
-      max-height: 100%;
     }
   }
 }
 
 .question-card{
   display: flex;
+  min-height: 100%;
   justify-content: space-evenly;
   flex-direction: column;
-  height: 100%;
   text-align: center;
   padding: 1em;
-  margin-bottom: 1em;
   background: #fff;
   border-radius: 8px;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
-  overflow:hidden;
 
   h2 {
     margin: 0;
@@ -114,8 +120,6 @@ ion-footer{
   }
 
   .response{
-    overflow-y: auto;
-
     &.no-overflow{
       display: flex;
       flex-direction: column;
@@ -127,10 +131,8 @@ ion-footer{
     display: flex;
     flex-direction: column;
     font-size:14px;
-    overflow: hidden;
 
     .explanation-text{
-      overflow: auto;
       text-align: left;
     }
   }
