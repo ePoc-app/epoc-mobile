@@ -7,6 +7,10 @@ import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 import {User} from '../../../classes/user';
 import {mode} from '../../../../environments/environment.mode';
+import {Plugins} from '@capacitor/core';
+import {DeviceInfo} from '@capacitor/core/dist/esm/core-plugin-definitions';
+
+const {Device} = Plugins;
 
 @Component({
     selector: 'app-player-settings',
@@ -22,6 +26,7 @@ export class PlayerSettingsPage implements OnInit {
         darkMode: false
     };
 
+    info: DeviceInfo;
     user: User;
     mode = mode;
 
@@ -43,6 +48,10 @@ export class PlayerSettingsPage implements OnInit {
     ngOnInit() {
         this.auth.getUser().subscribe(user => {
             this.user = user;
+        });
+
+        Device.getInfo().then((info) => {
+            this.info = info;
         });
     }
 
