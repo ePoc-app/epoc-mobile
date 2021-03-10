@@ -10,9 +10,8 @@
 <ion-content [scrollY]="false" *ngIf="assessment">
   <ion-slides #questionSlides [options]="slidesOptions">
     <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
-      <ion-slide class="slide">
-        <div class="slide-wrapper">
-          <div class="flip-container" [ngClass]="{'flipped': flipped}">
+      <ion-slide>
+        <div class="flip-container" [ngClass]="{'flipped': flipped}">
           <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
             <div class="front">
               <div class="question-card">
@@ -57,7 +56,6 @@
               </div>
             </div>
           </div>
-        </div>
         </div>
       </ion-slide>
     </ng-container>
