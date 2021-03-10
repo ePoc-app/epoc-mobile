@@ -2,15 +2,6 @@
   padding:20px;
 }
 
-.slide{
-  position: relative;
-  display: block;
-}
-
-.slide-wrapper{
-  height: 100%;
-}
-
 ion-footer{
   display: flex;
   padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
@@ -42,6 +33,7 @@ ion-footer{
   }
 
   .flipper {
+    position: relative;
     display: flex;
     flex-grow: 1;
     flex-flow: row wrap;
@@ -57,10 +49,10 @@ ion-footer{
 
     .front, .back {
       width:100%;
-      padding: 1em;
-      overflow: auto;
+      height: 100%;
       backface-visibility: hidden;
       background: white;
+      overflow: auto;
     }
 
     .front {
@@ -77,11 +69,12 @@ ion-footer{
 
 .question-card{
   display: flex;
-  min-height: 100%;
+  min-height: calc(100% - 2em);
   justify-content: space-evenly;
   flex-direction: column;
   text-align: center;
   padding: 1em;
+  margin: 1em;
   background: #fff;
   border-radius: 8px;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
