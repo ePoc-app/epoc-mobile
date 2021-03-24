@@ -215,8 +215,8 @@ export class PlayerPage implements OnInit {
                 cssClass: 'splitter'
             },
             {
-                text: 'Informations',
-                icon: 'information-circle-outline',
+                text: 'À propos du cours',
+                icon: 'reader-outline',
                 handler: () => {
                     this.router.navigateByUrl('/player/about/' + this.epoc.id);
                 }
