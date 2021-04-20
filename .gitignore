@@ -29,8 +29,6 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-/android
-/ios
 
 resources/*
 !resources/icon.png
