@@ -29,6 +29,7 @@ export class PlayerPage implements OnInit {
     chapter: Chapter;
     nextChapter: Chapter;
     nextChapterId: uid;
+    pagesCount: number;
     reading: Reading;
 
     // Reader
@@ -104,7 +105,8 @@ export class PlayerPage implements OnInit {
                 if (contentId) {
                     const pageIndex = this.chapter.contents.findIndex(id => id === contentId);
                     this.slidesOptions.initialSlide = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
-                    this.progress = pageIndex / (this.chapter.contents.length + 1);
+                    this.countPages();
+                    this.progress = pageIndex / this.pagesCount
                 }
             }
         });
@@ -121,6 +123,12 @@ export class PlayerPage implements OnInit {
         });
     }
 
+    countPages() {
+        this.pagesCount = this.chapter.initializedContents.filter(
+            content => !content.conditional || ( content.conditional && this.reading.flags.indexOf(content.id) !== -1 )
+        ).length + 1;
+    }
+
     ionViewDidEnter() {
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
             if (pair.epoc && pair.reading) {
@@ -133,7 +141,8 @@ export class PlayerPage implements OnInit {
         this.stopAllMedia();
         this.readerSlides.getActiveIndex().then((index) => {
             this.currentPage = index;
-            this.progress = index / (this.chapter.contents.length + 1);
+            this.countPages();
+            this.progress = index / this.pagesCount;
         });
     }
 
