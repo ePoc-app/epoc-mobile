@@ -32,6 +32,7 @@ describe('SwipeCardComponent', () => {
   it ('should not update selectedAnswer', () => {
     expect(Error);
   })
+  // Cas de tests pour la méthode sendAnswer()
   // Tester qu'un évènement onSelectAnswer est déclenché
   const expectedAnswer = 'Vrai';
   it ('should emit a onSelectAnswer event to the parent when (swipe)', () => {
