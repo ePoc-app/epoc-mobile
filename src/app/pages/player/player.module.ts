@@ -20,6 +20,8 @@ import {SimpleQuestionComponent} from './contents/simple-question/simple-questio
 import {CourseChoiceComponent} from './contents/course-choice/course-choice.component';
 import {SharedModule} from '../../components/shared.module';
 import {PipesModule} from '../../pipes/pipes.module';
+import {SwipeCardComponent} from './assessment/components/swipe/swip-card/swipe-card.component';
+import {SwipeComponent} from './assessment/components/swipe/swipe.component';
 
 @NgModule({
   imports: [
@@ -46,7 +48,7 @@ import {PipesModule} from '../../pipes/pipes.module';
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
       AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
-      TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent],
+      TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent, SwipeCardComponent, SwipeComponent],
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {
