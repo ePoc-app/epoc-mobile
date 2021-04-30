@@ -20,4 +20,9 @@ export class SwipeComponent implements OnInit {
     this.cartesRestantes = this.question.swipeCards;
   }
 
+  undo() {
+  }
+
+  onSelectAnswer() {
+  }
 }
