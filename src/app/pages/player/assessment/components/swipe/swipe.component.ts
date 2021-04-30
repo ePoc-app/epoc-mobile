@@ -21,7 +21,20 @@ export class SwipeComponent implements OnInit {
   }
 
   undo() {
-  }
+    if (this.cartesTriees !== []){
+      this.cartesRestantes.push(this.cartesTriees[this.cartesTriees.length - 1]);
+      this.cartesTriees.pop();
+      this.cartesRestantes.sort((card1, card2) => {
+        if (card1.id < card2.id) {
+          return -1
+        } else if (card1.id === card2.id) {
+          return 0;
+        } else {
+          return 1;
+        }
+      });
+      }
+    }
 
   onSelectAnswer() {
   }
