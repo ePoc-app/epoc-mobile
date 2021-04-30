@@ -20,5 +20,9 @@ export class SwipCardComponent implements OnInit {
   ngOnInit() {}
 
   selectAnswer(answer) {
+    if (this.responses.includes(answer)) {
+      this.selectedAnswer = answer;
+      this.onSelectAnswer.emit(this.selectedAnswer);
+    }
   }
 }
