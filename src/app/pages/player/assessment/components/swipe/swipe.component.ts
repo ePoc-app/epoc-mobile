@@ -2,7 +2,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {SwipeCard, SwipeQuestion} from '../../../../../classes/contents/assessment';
 
 @Component({
-  selector: 'app-swipe',
+  selector: 'swipe',
   templateUrl: './swipe.component.html',
   styleUrls: ['./swipe.component.scss'],
 })

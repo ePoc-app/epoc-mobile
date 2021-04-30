@@ -11,7 +11,7 @@ import {SwipeCard} from '../../../../../../classes/contents/assessment';
 import {GestureController, IonCard, Platform} from '@ionic/angular';
 
 @Component({
-  selector: 'app-swip-card',
+  selector: 'swipe-card',
   templateUrl: './swipe-card.component.html',
   styleUrls: ['./swipe-card.component.scss'],
 })
