@@ -40,7 +40,7 @@ export class SwipeQuestion extends Question {
     globalExplanation: boolean;
 }
 
-class SwipCard {
+export class SwipCard {
     id: number;
     text: string;
     explanation?: string
