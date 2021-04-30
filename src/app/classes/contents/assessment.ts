@@ -35,12 +35,12 @@ class Response {
 }
 
 export class SwipeQuestion extends Question {
-    swipCards: Array<SwipCard>;
+    swipeCards: Array<SwipeCard>;
     // Ce booléen permet de vérifier si l'éditeur à choisit une explication globale ou individuelle à chaques cartes
     globalExplanation: boolean;
 }
 
-export class SwipCard {
+export class SwipeCard {
     id: number;
     text: string;
     explanation?: string

@@ -7,17 +7,17 @@ import {
   ViewChildren,
   AfterViewInit
 } from '@angular/core';
-import {SwipCard} from '../../../../../../classes/contents/assessment';
+import {SwipeCard} from '../../../../../../classes/contents/assessment';
 import {GestureController, IonCard, Platform} from '@ionic/angular';
 
 @Component({
   selector: 'app-swip-card',
-  templateUrl: './swip-card.component.html',
-  styleUrls: ['./swip-card.component.scss'],
+  templateUrl: './swipe-card.component.html',
+  styleUrls: ['./swipe-card.component.scss'],
 })
-export class SwipCardComponent implements AfterViewInit {
+export class SwipeCardComponent implements AfterViewInit {
   @Input ('responses') responses: Array<string>;
-  @Input ('SwipCard') swipCard: SwipCard;
+  @Input ('SwipeCard') swipeCard: SwipeCard;
   @Input('disabled') disabled: boolean;
 
   @Output() onSelectAnswer = new EventEmitter<string>();
@@ -28,8 +28,8 @@ export class SwipCardComponent implements AfterViewInit {
   constructor(private gestureCtrl: GestureController, private plt: Platform) { }
 
   ngAfterViewInit() {
-    const swipCard = this.card;
-    this.useSwipe(swipCard);
+    const swipeCard = this.card;
+    this.useSwipe(swipeCard);
   }
 
   selectAnswer(answer) {
