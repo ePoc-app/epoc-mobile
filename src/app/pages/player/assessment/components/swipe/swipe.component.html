@@ -1,9 +1,9 @@
 <div *ngFor ="let card of cartesRestantes">
-  <app-swipe-card
+  <swipe-card
           [responses] = "this.question.responses"
-          [swipeCard] = "card" [disabled] = "false"
-          (onSelectAnswer)="onSelectAnswer($event.answer)"
-  ></app-swipe-card>
+          [SwipeCard] = "card" [disabled] = "false"
+          (onSelectAnswer)="onSelectAnswer($event)"
+  ></swipe-card>
 </div>
 
 <ion-button (click)="this.undo()">
