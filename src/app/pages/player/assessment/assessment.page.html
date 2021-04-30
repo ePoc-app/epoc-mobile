@@ -33,6 +33,9 @@
                 <ng-container *ngIf="question.type === 'drag-and-drop'">
                   <drag-and-drop class="response no-overflow" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
                 </ng-container>
+                <ng-container *ngIf="question.type === 'drag-and-drop'">
+                  <swipe class="response" [question]="question" [disabled]="explanationShown" (onEndActivity)="updateCurrentAnswer($event)"></swipe>
+                </ng-container>
 
               </div>
             </div>
