@@ -1,3 +1,10 @@
-<p>
-  swip-card works!
-</p>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title *ngIf="selectedAnswer !== ''">
+      {{selectedAnswer}}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content *ngIf="swipCard.text !== ''">
+    {{swipCard.text}}
+  </ion-card-content>
+</ion-card>
