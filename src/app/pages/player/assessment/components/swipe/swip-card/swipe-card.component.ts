@@ -35,8 +35,10 @@ export class SwipeCardComponent implements AfterViewInit {
   selectAnswer(answer) {
     if (this.responses.includes(answer)) {
       this.selectedAnswer = answer;
-      this.onSelectAnswer.emit(this.selectedAnswer);
     }
+  }
+  sendAnswer() {
+    this.onSelectAnswer.emit(this.selectedAnswer);
   }
   useSwipe(card) {
     const gesture = this.gestureCtrl.create({
