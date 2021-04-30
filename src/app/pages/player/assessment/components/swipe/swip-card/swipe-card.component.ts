@@ -66,15 +66,15 @@ export class SwipeCardComponent implements AfterViewInit {
     gesture.enable(true);
   }
   displayTitle(deltaX) {
+    const elt = document.getElementsByTagName('ion-card-title');
     if (deltaX > 0) {
       this.selectedAnswer = this.responses[1];
-      // Changer la couleur
+      elt[0].style.background='#92BBAF';
     } else if (deltaX < 0) {
       this.selectedAnswer = this.responses[0];
-      // Changer la couleur
+      elt[0].style.background='#FFCE20';
     } else {
       this.selectedAnswer = '';
-      // Enlever la couleur
     }
   }
 }
