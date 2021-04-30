@@ -38,16 +38,10 @@ export class SwipeCardComponent implements AfterViewInit {
       this.onSelectAnswer.emit(this.selectedAnswer);
     }
   }
-  sendAnswer() {
-    this.onSelectAnswer.emit(this.selectedAnswer);
-  }
   useSwipe(card) {
     const gesture = this.gestureCtrl.create({
       el: card.nativeElement,
       gestureName: 'swipe',
-      onStart: ev => {
-
-      },
       onMove: ev => {
         card.nativeElement.style.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
         // Change the title based on the deltaX
@@ -55,13 +49,16 @@ export class SwipeCardComponent implements AfterViewInit {
       onEnd: ev => {
         card.nativeElement.style.transition = '0.5s ease-out';
         if (ev.deltaX > 150) {
+          this.selectAnswer(this.responses[1]);
           card.nativeElement.style.transform = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
         } else if (ev.deltaX < -150) {
+          this.selectAnswer(this.responses[0]);
           card.nativeElement.style.transform = `translateX(-${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`
         } else {
           card.nativeElement.style.transform = ``;
         }
       }
     });
+    gesture.enable(true);
   }
 }

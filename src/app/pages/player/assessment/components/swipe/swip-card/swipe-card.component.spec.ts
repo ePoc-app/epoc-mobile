@@ -32,13 +32,12 @@ describe('SwipeCardComponent', () => {
   it ('should not update selectedAnswer', () => {
     expect(Error);
   })
-  // Cas de tests pour la méthode sendAnswer()
   // Tester qu'un évènement onSelectAnswer est déclenché
   const expectedAnswer = 'Vrai';
-  it ('should emit a onSelectAnswer event to the parent when (swipe)', () => {
+  it ('should emit a onSelectAnswer event to the parent when (onEnd)', () => {
     let selectedAnswer;
     component.onSelectAnswer.subscribe((answer: string) => selectedAnswer = answer);
-    fixture.debugElement.triggerEventHandler('swipe', null);
+    fixture.debugElement.triggerEventHandler('onEnd', null);
     expect(expectedAnswer).toBe(selectedAnswer);
   })
 });
