@@ -1,3 +1,7 @@
-<p>
-  swipe works!
-</p>
+<div *ngFor ="let card of cartesRestantes">
+  <app-swipe-card [responses] = "this.question.responses" [swipeCard] = "card" [disabled] = "false" (onSelectAnswer)="onSelectAnswer()"></app-swipe-card>
+</div>
+
+<ion-button (click)="this.undo()">
+  Annuler
+</ion-button>
