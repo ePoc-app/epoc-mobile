@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { SwipeComponent } from './swipe.component';
-import {SwipeCard} from "../../../../../classes/contents/assessment";
+import {SwipeCard} from '../../../../../classes/contents/assessment';
 
 describe('SwipeComponent', () => {
   let component: SwipeComponent;

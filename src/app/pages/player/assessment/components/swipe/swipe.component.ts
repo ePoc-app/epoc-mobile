@@ -13,6 +13,7 @@ export class SwipeComponent implements OnInit {
 
   cartesRestantes : Array<SwipeCard>;
   cartesTriees : Array<SwipeCard>;
+  responses: Array<string>;
 
   constructor() { }
 
@@ -36,6 +37,12 @@ export class SwipeComponent implements OnInit {
       }
     }
 
-  onSelectAnswer() {
+  onSelectAnswer(answer) {
+    if (this.question.responses.includes(answer)) {
+      this.responses.push(answer);
+    }
+    if (this.cartesRestantes.length === 0) {
+      this.onEndActivity.emit(this.responses);
+    }
   }
 }
