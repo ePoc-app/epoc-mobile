@@ -5,7 +5,7 @@ import {
   EventEmitter,
   ElementRef,
   ViewChildren,
-  AfterViewInit
+  AfterViewInit, NgZone
 } from '@angular/core';
 import {SwipeCard} from '../../../../../../classes/contents/assessment';
 import {GestureController, IonCard, Platform} from '@ionic/angular';
@@ -25,7 +25,7 @@ export class SwipeCardComponent implements AfterViewInit {
   selectedAnswer;
   @ViewChildren(IonCard, {read:ElementRef}) card: ElementRef;
 
-  constructor(private gestureCtrl: GestureController, private plt: Platform) { }
+  constructor(private gestureCtrl: GestureController, private plt: Platform, private zone: NgZone) { }
 
   ngAfterViewInit() {
     const swipeCard = this.card;
@@ -44,7 +44,11 @@ export class SwipeCardComponent implements AfterViewInit {
       gestureName: 'swipe',
       onMove: ev => {
         card.nativeElement.style.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
-        // Change the title based on the deltaX
+        // On utilise la zone d'angular pour réactualiser le titre à chaque fois qu'on bouge.
+        // Dans cette fonction, on mettra le changement de couleur en fct de deltaX aussi
+        this.zone.run(() => {
+          this.displayAnswer(ev.deltaX);
+        })
       },
       onEnd: ev => {
         card.nativeElement.style.transition = '0.5s ease-out';
@@ -60,5 +64,17 @@ export class SwipeCardComponent implements AfterViewInit {
       }
     });
     gesture.enable(true);
+  }
+  displayAnswer(deltaX) {
+    if (deltaX > 0) {
+      this.selectedAnswer = this.responses[1];
+      // Changer la couleur
+    } else if (deltaX < 0) {
+      this.selectedAnswer = this.responses[0];
+      // Changer la couleur
+    } else {
+      this.selectedAnswer = '';
+      // Enlever la couleur
+    }
   }
 }
