@@ -47,7 +47,7 @@ export class SwipeCardComponent implements AfterViewInit {
         // On utilise la zone d'angular pour réactualiser le titre à chaque fois qu'on bouge.
         // Dans cette fonction, on mettra le changement de couleur en fct de deltaX aussi
         this.zone.run(() => {
-          this.displayAnswer(ev.deltaX);
+          this.displayTitle(ev.deltaX);
         })
       },
       onEnd: ev => {
@@ -65,7 +65,7 @@ export class SwipeCardComponent implements AfterViewInit {
     });
     gesture.enable(true);
   }
-  displayAnswer(deltaX) {
+  displayTitle(deltaX) {
     if (deltaX > 0) {
       this.selectedAnswer = this.responses[1];
       // Changer la couleur
