@@ -35,7 +35,7 @@ export class SwipeCardComponent implements AfterViewInit {
 
   selectAnswer(answer) {
     if (!this.responses.includes(answer)) {
-      throw new Error('Answer is not a response');
+      throw new Error('Answer is not a possibility');
     }
     this.selectedAnswer = answer;
     this.onSelectAnswer.emit(this.selectedAnswer);

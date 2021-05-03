@@ -1,6 +1,6 @@
 <div *ngFor ="let card of cartesRestantes">
   <swipe-card
-          [responses] = "this.question.responses"
+          [responses] = "this.question.possibilities"
           [SwipeCard] = "card"
           [disabled] = "false"
           (onSelectAnswer)="onSelectAnswer($event)"
