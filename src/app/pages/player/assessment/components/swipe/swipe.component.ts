@@ -1,5 +1,6 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {SwipeCard, SwipeQuestion} from '../../../../../classes/contents/assessment';
+import {fromEvent, Observable} from "rxjs";
 
 @Component({
   selector: 'swipe',
@@ -24,19 +25,20 @@ export class SwipeComponent implements OnInit {
   }
 
   undo() {
-    if (this.cartesTriees !== []){
-      this.cartesRestantes.push(this.cartesTriees[this.cartesTriees.length - 1]);
-      this.cartesTriees.pop();
-      this.cartesRestantes.sort((card1, card2) => {
-        if (card1.id < card2.id) {
-          return -1
-        } else if (card1.id === card2.id) {
-          return 0;
-        } else {
-          return 1;
-        }
-      });
+    if (this.cartesTriees.length === 0){
+      throw new Error('Array of cards left is empty');
+    }
+    this.cartesRestantes.push(this.cartesTriees[this.cartesTriees.length - 1]);
+    this.cartesTriees.pop();
+    this.cartesRestantes.sort((card1, card2) => {
+      if (card1.id < card2.id) {
+        return -1
+      } else if (card1.id === card2.id) {
+        return 0;
+      } else {
+        return 1;
       }
+    });
     }
 
   onSelectAnswer(answer) {

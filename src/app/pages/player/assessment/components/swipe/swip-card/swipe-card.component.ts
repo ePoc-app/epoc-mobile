@@ -5,10 +5,11 @@ import {
   EventEmitter,
   ElementRef,
   ViewChildren,
-  AfterViewInit, NgZone
+  AfterViewInit, NgZone, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA
 } from '@angular/core';
 import {SwipeCard} from '../../../../../../classes/contents/assessment';
 import {GestureController, IonCard, Platform} from '@ionic/angular';
+import {fromEvent, Observable} from "rxjs";
 
 @Component({
   selector: 'swipe-card',
@@ -22,21 +23,22 @@ export class SwipeCardComponent implements AfterViewInit {
 
   @Output() onSelectAnswer = new EventEmitter<string>();
 
+  @ViewChild('card') card: ElementRef;
+
   selectedAnswer;
-  @ViewChildren(IonCard, {read:ElementRef}) card: ElementRef;
 
   constructor(private gestureCtrl: GestureController, private plt: Platform, private zone: NgZone) { }
 
   ngAfterViewInit() {
-    const swipeCard = this.card;
-    this.useSwipe(swipeCard);
+    this.useSwipe(this.card);
   }
 
   selectAnswer(answer) {
-    if (this.responses.includes(answer)) {
-      this.selectedAnswer = answer;
-      this.onSelectAnswer.emit(this.selectedAnswer);
+    if (!this.responses.includes(answer)) {
+      throw new Error('Answer is not a response');
     }
+    this.selectedAnswer = answer;
+    this.onSelectAnswer.emit(this.selectedAnswer);
   }
   useSwipe(card) {
     const gesture = this.gestureCtrl.create({
@@ -68,13 +70,15 @@ export class SwipeCardComponent implements AfterViewInit {
   displayTitle(deltaX) {
     const elt = document.getElementsByTagName('ion-card-title');
     if (deltaX > 0) {
-      this.selectedAnswer = this.responses[1];
+      this.selectedAnswer = this.responses[0];
       elt[0].style.background='#92BBAF';
     } else if (deltaX < 0) {
-      this.selectedAnswer = this.responses[0];
+      this.selectedAnswer = this.responses[1];
       elt[0].style.background='#FFCE20';
     } else {
       this.selectedAnswer = '';
+      elt[0].style.background='transparent';
     }
+    elt[0].innerHTML = this.selectedAnswer;
   }
 }
