@@ -40,7 +40,7 @@ describe('SwipeCardComponent', () => {
 
     // Tester que selectedAnswer ne se met pas à jour si la réponse n'est pas dans responses
     it ('should not update selectedAnswer', () => {
-      expect(function() { component.selectAnswer('Impossible'); }).toThrow(new Error('Answer is not a response'));
+      expect(function() { component.selectAnswer('Impossible'); }).toThrow(new Error('Answer is not a possibility'));
       });
 /*
     // Tester qu'un évènement onSelectAnswer est déclenché
