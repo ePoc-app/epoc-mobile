@@ -42,11 +42,13 @@ export class SwipeComponent implements OnInit {
     }
 
   onSelectAnswer(answer) {
-    if (this.question.responses.includes(answer)) {
+    if (!this.question.possibilities.includes(answer)) {
+      throw new Error('Answer is not a possibility');
+    } else {
       this.responses.push(answer);
-    }
-    if (this.cartesRestantes.length === 0) {
-      this.onEndActivity.emit(this.responses);
+      if (this.cartesRestantes.length === 0) {
+        this.onEndActivity.emit(this.responses);
+      }
     }
   }
 }
