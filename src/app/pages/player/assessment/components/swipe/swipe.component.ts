@@ -9,6 +9,8 @@ import {SwipeCard, SwipeQuestion} from '../../../../../classes/contents/assessme
 export class SwipeComponent implements OnInit {
 
   @Input ('question') question: SwipeQuestion;
+  @Input('disabled') disabled: boolean;
+
   @Output() onEndActivity = new EventEmitter<Array<string>>();
 
   cartesRestantes : Array<SwipeCard>;
