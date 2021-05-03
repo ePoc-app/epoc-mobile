@@ -42,17 +42,17 @@ describe('SwipeCardComponent', () => {
     it ('should not update selectedAnswer', () => {
       expect(function() { component.selectAnswer('Impossible'); }).toThrow(new Error('Answer is not a possibility'));
       });
-/*
+
     // Tester qu'un évènement onSelectAnswer est déclenché
     const expectedAnswer = 'Vrai';
-    it ('should emit a onSelectAnswer event to the parent', () => {
-      let selectedAnswer;
-      const observator: Observable<any> = fromEvent(document, 'onSelectAnswer');
-      observator.subscribe(() => selectedAnswer = 'Vrai');
-      fixture.debugElement.triggerEventHandler('onSelectAnswer', null);
-      expect(expectedAnswer).toBe(selectedAnswer);
+    it ('should emit a onSelectAnswer event', () => {
+      spyOn(component.onSelectAnswer, 'emit');
+
+      // trigger l'évènement en appelant la méthode
+      component.selectAnswer('Faux');
+      expect(component.onSelectAnswer.emit).toHaveBeenCalledWith(component.selectedAnswer);
     })
-*/
+
   // Cas de tests pour la méthode displayTitle
   it ('should update the HTML element with \'\'', () => {
     const deltaX = 0;
