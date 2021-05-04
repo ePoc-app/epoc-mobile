@@ -53,15 +53,16 @@ export class SwipeCardComponent implements AfterViewInit {
         })
       },
       onEnd: ev => {
-        card.nativeElement.style.transition = '0.5s ease-out';
+        card.nativeElement.style.transition = '1s ease-out';
         if (ev.deltaX > 150) {
           this.selectAnswer(this.responses[1]);
           card.nativeElement.style.transform = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
         } else if (ev.deltaX < -150) {
           this.selectAnswer(this.responses[0]);
-          card.nativeElement.style.transform = `translateX(-${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`
+          card.nativeElement.style.transform = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
         } else {
           card.nativeElement.style.transform = ``;
+          this.displayTitle(0);
         }
       }
     });
@@ -69,15 +70,17 @@ export class SwipeCardComponent implements AfterViewInit {
   }
   displayTitle(deltaX) {
     const elt = document.getElementsByTagName('ion-card-title');
+    const header = document.getElementById('header');
+
     if (deltaX > 0) {
       this.selectedAnswer = this.responses[0];
-      elt[0].style.background='#92BBAF';
+      header.style.background='#92BBAF';
     } else if (deltaX < 0) {
       this.selectedAnswer = this.responses[1];
-      elt[0].style.background='#FFCE20';
+      header.style.background='#FFCE20';
     } else {
       this.selectedAnswer = '';
-      elt[0].style.background='transparent';
+      header.style.background='transparent';
     }
     elt[0].innerHTML = this.selectedAnswer;
   }
