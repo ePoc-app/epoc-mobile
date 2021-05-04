@@ -5,18 +5,16 @@ ion-card {
   user-select: none;
   border: 1px solid black;
   border-radius: 1em ;
-  width: 60%;
 }
 
-#header {
+ion-header {
   grid-column: 1;
   grid-row: 1;
   font-weight: bold;
   text-align: center;
 }
 
-#content {
-  height: 15em;
+ion-content {
   grid-column: 1;
   grid-row: 2;
   text-align: center;

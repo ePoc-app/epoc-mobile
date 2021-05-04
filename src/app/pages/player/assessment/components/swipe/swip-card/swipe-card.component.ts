@@ -67,19 +67,19 @@ export class SwipeCardComponent implements AfterViewInit {
     gesture.enable(true);
   }
   displayTitle(deltaX) {
-    const elt = document.getElementsByTagName('ion-card-title');
-    const header = document.getElementById('header');
+    const title = document.getElementsByTagName('ion-card-title');
+    const header = document.getElementsByTagName('ion-card-header');
 
     if (deltaX > 0) {
       this.selectedSide = this.possibilities[0];
-      header.style.background='#92BBAF';
+      header[0].style.background='#92BBAF';
     } else if (deltaX < 0) {
       this.selectedSide = this.possibilities[1];
-      header.style.background='#FFCE20';
+      header[0].style.background='#FFCE20';
     } else {
       this.selectedSide = '';
-      header.style.background='transparent';
+      header[0].style.background='transparent';
     }
-    elt[0].innerHTML = this.selectedSide;
+    title[0].innerHTML = this.selectedSide;
   }
 }
