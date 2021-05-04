@@ -6,9 +6,9 @@ import {SwipeCard, SwipeQuestion} from '../../../../../classes/contents/assessme
 describe('SwipeComponent', () => {
   let component: SwipeComponent;
   let fixture: ComponentFixture<SwipeComponent>;
-  let c1 = new SwipeCard();
-  let c2 = new SwipeCard();
-  let c3 = new SwipeCard();
+  const c1 = new SwipeCard();
+  const c2 = new SwipeCard();
+  const c3 = new SwipeCard();
 
 
   beforeEach(async(() => {
