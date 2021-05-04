@@ -21,14 +21,14 @@ export class SwipeCardComponent implements AfterViewInit {
 
   @Output() onSelectSide = new EventEmitter<{ rep:Response, category:string }>();
 
-  @ViewChild('card') card: ElementRef;
+  @ViewChild('card', {read:ElementRef}) card: ElementRef
 
   selectedSide;
 
   constructor(private gestureCtrl: GestureController, private plt: Platform, private zone: NgZone) { }
 
   ngAfterViewInit() {
-    this.useSwipe(this.card);
+    this.useSwipe();
   }
 
   selectSide(side) {
@@ -38,12 +38,12 @@ export class SwipeCardComponent implements AfterViewInit {
     this.selectedSide = side;
     this.onSelectSide.emit({rep:this.response, category:side});
   }
-  useSwipe(card) {
+  useSwipe() {
     const gesture = this.gestureCtrl.create({
-      el: card.nativeElement,
+      el: this.card.nativeElement,
       gestureName: 'swipe',
       onMove: ev => {
-        card.nativeElement.style.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
+        this.card.nativeElement.style.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
         // On utilise la zone d'angular pour réactualiser le titre à chaque fois qu'on bouge.
         // Dans cette fonction, on mettra le changement de couleur en fct de deltaX aussi
         this.zone.run(() => {
@@ -51,15 +51,15 @@ export class SwipeCardComponent implements AfterViewInit {
         })
       },
       onEnd: ev => {
-        card.nativeElement.style.transition = '0.5s ease-out';
+        this.card.nativeElement.style.transition = '0.5s ease-out';
         if (ev.deltaX > 150) {
           this.selectSide(this.possibilities[1]);
-          card.nativeElement.style.transform = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
+          this.card.nativeElement.style.transform = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
         } else if (ev.deltaX < -150) {
           this.selectSide(this.possibilities[0]);
-          card.nativeElement.style.transform = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
+          this.card.nativeElement.style.transform = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
         } else {
-          card.nativeElement.style.transform = ``;
+          this.card.nativeElement.style.transform = ``;
           this.displayTitle(0);
         }
       }
