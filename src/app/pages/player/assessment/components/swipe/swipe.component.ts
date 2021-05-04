@@ -11,10 +11,10 @@ export class SwipeComponent implements OnInit {
   @Input ('question') question: SwipeQuestion;
   @Input('disabled') disabled: boolean;
 
-  @Output() onEndActivity = new EventEmitter<Array<{label: string, list: Array<string>}>>();
+  @Output() onEndActivity = new EventEmitter<Array<{label: string, values: Array<string>}>>();
 
-  cartesRestantes : Array<Response> = [];
-  cartesTriees : Array<Response> = [];
+  cartesRestantes: Array<Response> = [];
+  cartesTriees: Array<Response> = [];
   cardsToTheLeft: Array<string> = [];
   cardsToTheRight: Array<string> = [];
 
@@ -55,10 +55,9 @@ export class SwipeComponent implements OnInit {
         this.cartesRestantes.pop();
       }
       if (this.cartesRestantes.length === 0) {
-        const correctResponse: Array<{label: string, list: Array<string>}> = [];
-        correctResponse.push({label: this.question.possibilities[0], list: this.cardsToTheLeft});
-        correctResponse.push({label: this.question.possibilities[1], list: this.cardsToTheRight});
-        this.onEndActivity.emit(correctResponse);
+        this.question.correctResponse.push({label: this.question.possibilities[0], values: this.cardsToTheLeft});
+        this.question.correctResponse.push({label: this.question.possibilities[1], values: this.cardsToTheRight});
+        this.onEndActivity.emit(this.question.correctResponse);
       }
     }
   }
