@@ -4,12 +4,10 @@ import {
   Output,
   EventEmitter,
   ElementRef,
-  ViewChildren,
-  AfterViewInit, NgZone, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA
+  AfterViewInit, NgZone, ViewChild
 } from '@angular/core';
-import {SwipeCard} from '../../../../../../classes/contents/assessment';
-import {GestureController, IonCard, Platform} from '@ionic/angular';
-import {fromEvent, Observable} from "rxjs";
+import {GestureController, Platform} from '@ionic/angular';
+import {Response} from '../../../../../../classes/contents/assessment';
 
 @Component({
   selector: 'swipe-card',
@@ -17,15 +15,15 @@ import {fromEvent, Observable} from "rxjs";
   styleUrls: ['./swipe-card.component.scss'],
 })
 export class SwipeCardComponent implements AfterViewInit {
-  @Input ('responses') responses: Array<string>;
-  @Input ('SwipeCard') swipeCard: SwipeCard;
+  @Input ('possibilities') possibilities: Array<string>;
+  @Input ('response') response: Response;
   @Input('disabled') disabled: boolean;
 
-  @Output() onSelectAnswer = new EventEmitter<string>();
+  @Output() onSelectSide = new EventEmitter<{ rep:Response, category:string }>();
 
   @ViewChild('card') card: ElementRef;
 
-  selectedAnswer;
+  selectedSide;
 
   constructor(private gestureCtrl: GestureController, private plt: Platform, private zone: NgZone) { }
 
@@ -33,12 +31,12 @@ export class SwipeCardComponent implements AfterViewInit {
     this.useSwipe(this.card);
   }
 
-  selectAnswer(answer) {
-    if (!this.responses.includes(answer)) {
+  selectSide(side) {
+    if (!this.possibilities.includes(side)) {
       throw new Error('Answer is not a possibility');
     }
-    this.selectedAnswer = answer;
-    this.onSelectAnswer.emit(this.selectedAnswer);
+    this.selectedSide = side;
+    this.onSelectSide.emit({rep:this.response, category:side});
   }
   useSwipe(card) {
     const gesture = this.gestureCtrl.create({
@@ -53,12 +51,12 @@ export class SwipeCardComponent implements AfterViewInit {
         })
       },
       onEnd: ev => {
-        card.nativeElement.style.transition = '1s ease-out';
+        card.nativeElement.style.transition = '0.5s ease-out';
         if (ev.deltaX > 150) {
-          this.selectAnswer(this.responses[1]);
+          this.selectSide(this.possibilities[1]);
           card.nativeElement.style.transform = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
         } else if (ev.deltaX < -150) {
-          this.selectAnswer(this.responses[0]);
+          this.selectSide(this.possibilities[0]);
           card.nativeElement.style.transform = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
         } else {
           card.nativeElement.style.transform = ``;
@@ -73,15 +71,15 @@ export class SwipeCardComponent implements AfterViewInit {
     const header = document.getElementById('header');
 
     if (deltaX > 0) {
-      this.selectedAnswer = this.responses[0];
+      this.selectedSide = this.possibilities[0];
       header.style.background='#92BBAF';
     } else if (deltaX < 0) {
-      this.selectedAnswer = this.responses[1];
+      this.selectedSide = this.possibilities[1];
       header.style.background='#FFCE20';
     } else {
-      this.selectedAnswer = '';
+      this.selectedSide = '';
       header.style.background='transparent';
     }
-    elt[0].innerHTML = this.selectedAnswer;
+    elt[0].innerHTML = this.selectedSide;
   }
 }
