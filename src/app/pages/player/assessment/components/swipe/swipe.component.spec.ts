@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SwipeComponent } from './swipe.component';
 import {Response, SwipeQuestion} from '../../../../../classes/contents/assessment';
 
