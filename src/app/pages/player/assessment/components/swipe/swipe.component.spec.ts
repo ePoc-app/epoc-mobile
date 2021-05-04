@@ -28,7 +28,7 @@ describe('SwipeComponent', () => {
     c3.value = '3';
     c3.label = 'Troisième texte';
     component.question.possibilities = ['Faux','Vrai'];
-    component.question.swipeCards = [c1, c2, c3];
+    component.question.responses = [c1, c2, c3];
     component.cartesRestantes = [c2, c3];
     component.cartesTriees = [c1];
     component.cardsToTheLeft = [];
@@ -44,7 +44,7 @@ describe('SwipeComponent', () => {
   it('should undo', () => {
     component.undo();
     expect(component.cartesTriees).toEqual([]);
-    expect(component.cartesRestantes).toEqual(component.question.swipeCards);
+    expect(component.cartesRestantes).toEqual(component.question.responses);
   });
   it('should not undo', () => {
     component.cartesRestantes = [c1, c2, c3];
