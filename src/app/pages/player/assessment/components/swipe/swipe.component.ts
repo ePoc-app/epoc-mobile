@@ -13,15 +13,15 @@ export class SwipeComponent implements OnInit {
 
   @Output() onEndActivity = new EventEmitter<Array<{label: string, list: Array<string>}>>();
 
-  cartesRestantes : Array<Response>;
-  cartesTriees : Array<Response>;
+  cartesRestantes : Array<Response> = [];
+  cartesTriees : Array<Response> = [];
   cardsToTheLeft: Array<string> = [];
   cardsToTheRight: Array<string> = [];
 
   constructor() { }
 
   ngOnInit() {
-    this.cartesRestantes = this.question.swipeCards;
+    this.cartesRestantes = this.question.responses;
   }
 
   undo() {

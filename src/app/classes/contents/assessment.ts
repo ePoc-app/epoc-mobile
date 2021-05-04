@@ -36,6 +36,5 @@ export class Response {
 }
 
 export class SwipeQuestion extends Question {
-    swipeCards: Array<Response>;
     possibilities: Array<string>;
 }
