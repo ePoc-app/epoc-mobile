@@ -29,20 +29,13 @@ export class DragAndDropquestion extends Question{
     correctResponse: Array<{label: string, values: string[]}>;
 }
 
-class Response {
+export class Response {
     label: string;
     value: string;
+    explanation?: string;
 }
 
 export class SwipeQuestion extends Question {
-    swipeCards: Array<SwipeCard>;
+    swipeCards: Array<Response>;
     possibilities: Array<string>;
-    // Ce booléen permet de vérifier si l'éditeur à choisit une explication globale ou individuelle à chaques cartes
-    globalExplanation: boolean;
-}
-
-export class SwipeCard {
-    id: number;
-    text: string;
-    explanation?: string
 }

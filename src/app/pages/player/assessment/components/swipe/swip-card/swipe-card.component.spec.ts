@@ -1,13 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
 import { SwipeCardComponent } from './swipe-card.component';
-import {SwipeCard} from '../../../../../../classes/contents/assessment';
-import {SwipeComponent} from '../swipe.component';
-import {fromEvent, Observable} from "rxjs";
-
-
-
+import {Response} from '../../../../../../classes/contents/assessment';
 
 describe('SwipeCardComponent', () => {
   let component: SwipeCardComponent;
@@ -19,10 +12,11 @@ describe('SwipeCardComponent', () => {
     fixture = TestBed.createComponent(SwipeCardComponent);
     component = fixture.componentInstance;
     const debugElement = fixture.debugElement;
-    component.responses = ['Vrai','Faux'];
-    component.swipeCard = new SwipeCard();
-    component.swipeCard.id = 1;
-    component.swipeCard.text = 'Texte à afficher';
+    component.possibilities = ['Vrai','Faux'];
+    const rep = new Response();
+    rep.label = 'Texte à afficher';
+    rep.value = '1';
+    component.response = rep;
     component.disabled = false;
     fixture.detectChanges();
   }));
@@ -31,26 +25,25 @@ describe('SwipeCardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Cas de tests pour la méthode selectAnswer
+  // Cas de tests pour la méthode selectSide
   // Tester que selectedAnswer se met à jour
   it ('should update selectedAnswer', () => {
-    component.selectAnswer('Vrai');
-    expect(component.selectedAnswer).toBe('Vrai');
+    component.selectSide('Vrai');
+    expect(component.selectedSide).toBe('Vrai');
   });
 
     // Tester que selectedAnswer ne se met pas à jour si la réponse n'est pas dans responses
     it ('should not update selectedAnswer', () => {
-      expect(function() { component.selectAnswer('Impossible'); }).toThrow(new Error('Answer is not a possibility'));
+      expect(() => { component.selectSide('Impossible'); }).toThrow(new Error('Answer is not a possibility'));
       });
 
-    // Tester qu'un évènement onSelectAnswer est déclenché
-    const expectedAnswer = 'Vrai';
-    it ('should emit a onSelectAnswer event', () => {
-      spyOn(component.onSelectAnswer, 'emit');
+    // Tester qu'un évènement onSelectSide est déclenché
+    it ('should emit a onSelectSide event', () => {
+      spyOn(component.onSelectSide, 'emit');
 
       // trigger l'évènement en appelant la méthode
-      component.selectAnswer('Faux');
-      expect(component.onSelectAnswer.emit).toHaveBeenCalledWith(component.selectedAnswer);
+      component.selectSide('Faux');
+      expect(component.onSelectSide.emit).toHaveBeenCalledWith({rep: component.response, category:'Faux'});
     })
 
   // Cas de tests pour la méthode displayTitle
@@ -65,14 +58,14 @@ describe('SwipeCardComponent', () => {
     const deltaX = 1;
     component.displayTitle(deltaX);
     const elt = document.getElementsByTagName('ion-card-title')[0];
-    expect(elt.innerHTML).toEqual(component.responses[0]);
+    expect(elt.innerHTML).toEqual(component.possibilities[0]);
   })
 
   it ('should update the HTML element with \'Faux\'', () => {
     const deltaX = -1;
     component.displayTitle(deltaX);
     const elt = document.getElementsByTagName('ion-card-title')[0];
-    expect(elt.innerHTML).toEqual(component.responses[1]);
+    expect(elt.innerHTML).toEqual(component.possibilities[1]);
   })
 
 
