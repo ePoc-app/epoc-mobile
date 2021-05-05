@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import {GestureController, Platform} from '@ionic/angular';
 import {Response} from '../../../../../../classes/contents/assessment';
+import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'swipe-card',
@@ -20,10 +21,9 @@ export class SwipeCardComponent implements AfterViewInit {
   @Input('disabled') disabled: boolean;
 
   @Output() onSelectSide = new EventEmitter<{ rep:Response, category:string }>();
-
   @ViewChild('card', {read:ElementRef}) card: ElementRef
 
-  selectedSide;
+  selectedSide = '?';
 
   constructor(private gestureCtrl: GestureController, private plt: Platform, private zone: NgZone) { }
 
@@ -54,20 +54,25 @@ export class SwipeCardComponent implements AfterViewInit {
         this.card.nativeElement.style.transition = '0.5s ease-out';
         if (ev.deltaX > 150) {
           this.selectSide(this.possibilities[1]);
-          this.card.nativeElement.style.transform = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
-          this.card.nativeElement.style.visibility = 'hidden';
+          this.card.nativeElement.style.transform  = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
+          this.card.nativeElement.style.visibility  = 'hidden';
         } else if (ev.deltaX < -150) {
           this.selectSide(this.possibilities[0]);
-          this.card.nativeElement.style.transform = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
-          this.card.nativeElement.style.visibility = 'hidden';
+          this.card.nativeElement.style.transform  = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
+          this.card.nativeElement.style.visibility  = 'hidden';
         } else {
-          this.card.nativeElement.style.transform = ``;
+          this.card.nativeElement.style.transform  = ``;
           this.displayTitle(0, this.card.nativeElement);
         }
+        setTimeout(() => {
+          this.zone.run( () => {
+          })
+        }, 500)
       }
     });
     gesture.enable(true);
   }
+
   displayTitle(deltaX, cardElement) {
     const title = cardElement.querySelector('ion-card-title');
     const header = cardElement.querySelector('ion-card-header');
@@ -78,7 +83,7 @@ export class SwipeCardComponent implements AfterViewInit {
       this.selectedSide = this.possibilities[0];
       header.style.background='#FFCE20';
     } else {
-      this.selectedSide = '';
+      this.selectedSide = '?';
       header.style.background='transparent';
     }
     title.innerHTML = this.selectedSide;

@@ -51,9 +51,6 @@ export class SwipeComponent implements OnInit {
         this.cartesTriees.push(answer.rep);
         this.cartesRestantes.pop();
       }
-      console.log(this.cartesTriees);
-      console.log(this.cartesRestantes);
-      console.log(answer);
       if (this.cartesRestantes.length <= 0) {
         this.onSelectAnswer.emit([
           {label: this.question.possibilities[0], values: this.cardsToTheLeft},
