@@ -113,11 +113,15 @@ ion-footer{
   }
 
   .response{
-    &.no-overflow{
+    &.no-overflow {
       display: flex;
       flex-direction: column;
       overflow-y: hidden;
     }
+  }
+
+  swipe {
+    flex: 1;
   }
 
   .explanation{
