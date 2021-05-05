@@ -50,22 +50,22 @@ describe('SwipeCardComponent', () => {
   it ('should update the HTML element with \'\'', () => {
     const deltaX = 0;
     const elt = document.getElementsByTagName('ion-card-title')[0];
-    component.displayTitle(deltaX);
+    component.displayTitle(deltaX, debugElement.nativeElement);
     expect(elt.innerHTML).toEqual('');
   })
 
   it ('should update the HTML element with \'Vrai\'', () => {
     const deltaX = 1;
-    component.displayTitle(deltaX);
+    component.displayTitle(deltaX, debugElement.nativeElement);
     const elt = document.getElementsByTagName('ion-card-title')[0];
-    expect(elt.innerHTML).toEqual(component.possibilities[0]);
+    expect(elt.innerHTML).toEqual(component.possibilities[1]);
   })
 
   it ('should update the HTML element with \'Faux\'', () => {
     const deltaX = -1;
-    component.displayTitle(deltaX);
+    component.displayTitle(deltaX, debugElement.nativeElement);
     const elt = document.getElementsByTagName('ion-card-title')[0];
-    expect(elt.innerHTML).toEqual(component.possibilities[1]);
+    expect(elt.innerHTML).toEqual(component.possibilities[0]);
   })
 
 
