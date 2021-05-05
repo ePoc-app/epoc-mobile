@@ -1,24 +1,24 @@
 ion-card {
-  display: grid;
-  grid-template-columns: repeat(1,1fr);
-  grid-gap: 1em;
+  display: flex;
+  flex-direction: column;
   user-select: none;
   border: 1px solid black;
-  border-radius: 1em ;
-  height: 70%;
-  width: 80%;
-  position: absolute;
+  border-radius: 2em ;
+  height: 100%;
+  width: 100%;
+  margin-top: 0px;
+  margin-left: 0px;
+  background-color: #E6F4F4;
 }
 
 ion-header {
-  grid-column: 1;
-  grid-row: 1;
+  height: 20%;
   font-weight: bold;
   text-align: center;
 }
 
 ion-content {
-  grid-column: 1;
-  grid-row: 2;
+  height:80%;
+  flex: 1;
   text-align: center;
 }

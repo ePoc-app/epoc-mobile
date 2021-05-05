@@ -7,6 +7,7 @@
   ></swipe-card>
 </div>
 
-<ion-button *ngIf="this.cartesTriees.length !== 0" (click)="this.undo()">
+<ion-button [disabled]="this.cartesTriees.length === 0" (click)="this.undo()">
   Annuler
 </ion-button>
+
