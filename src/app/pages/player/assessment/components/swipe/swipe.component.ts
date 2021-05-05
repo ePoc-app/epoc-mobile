@@ -11,7 +11,7 @@ export class SwipeComponent implements OnInit {
   @Input ('question') question: SwipeQuestion;
   @Input('disabled') disabled: boolean;
 
-  @Output() onEndActivity = new EventEmitter<Array<{label: string, values: Array<string>}>>();
+  @Output() onSelectAnswer = new EventEmitter<Array<{label: string, values: Array<string>}>>();
 
   cartesRestantes: Array<Response> = [];
   cartesTriees: Array<Response> = [];
@@ -28,18 +28,15 @@ export class SwipeComponent implements OnInit {
     if (this.cartesTriees.length === 0){
       throw new Error('Array of cards swiped is empty');
     }
-    this.cartesRestantes.push(this.cartesTriees[this.cartesTriees.length - 1]);
-    this.cartesTriees.pop();
-    this.cartesRestantes.sort((card1, card2) => {
-      if (card1.value < card2.value) {
-        return -1
-      } else if (card1.value === card2.value) {
-        return 0;
-      } else {
-        return 1;
-      }
-    });
+    const response = this.cartesTriees[this.cartesTriees.length - 1];
+    this.cartesRestantes.push(response);
+    if (this.cardsToTheLeft.includes(response.value)) {
+      this.cardsToTheLeft.splice(this.cardsToTheLeft.indexOf(response.value), 1);
+    } else {
+      this.cardsToTheRight.splice(this.cardsToTheRight.indexOf(response.value), 1);
     }
+    this.cartesTriees.pop();
+  }
 
   onSelectSide(answer) {
     if (!this.question.possibilities.includes(answer.category)) {
@@ -54,10 +51,14 @@ export class SwipeComponent implements OnInit {
         this.cartesTriees.push(answer.rep);
         this.cartesRestantes.pop();
       }
-      if (this.cartesRestantes.length === 0) {
-        this.question.correctResponse.push({label: this.question.possibilities[0], values: this.cardsToTheLeft});
-        this.question.correctResponse.push({label: this.question.possibilities[1], values: this.cardsToTheRight});
-        this.onEndActivity.emit(this.question.correctResponse);
+      console.log(this.cartesTriees);
+      console.log(this.cartesRestantes);
+      console.log(answer);
+      if (this.cartesRestantes.length <= 0) {
+        this.onSelectAnswer.emit([
+          {label: this.question.possibilities[0], values: this.cardsToTheLeft},
+          {label: this.question.possibilities[1], values: this.cardsToTheRight}
+        ]);
       }
     }
   }
