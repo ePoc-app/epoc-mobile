@@ -58,20 +58,55 @@ describe('SwipeComponent', () => {
     expect(component.cardsToTheLeft).toEqual(['1']);
   });
 
-  it ('should emit onEndActivity event', () => {
+  it ('should emit onSelectAnswer event', () => {
     component.onSelectSide({rep:c1, category:'Faux'});
     component.onSelectSide({rep:c2, category:'Faux'});
     // Vérifier que l'évènement est bien émis
-    spyOn(component.onEndActivity, 'emit');
+    spyOn(component.onSelectAnswer, 'emit');
 
     // trigger l'évènement en appelant la méthode
     component.onSelectSide({rep:c3, category:'Vrai'});
-    expect(component.onEndActivity.emit).toHaveBeenCalledWith([{label: 'Faux', list: ['1','2']}, {label: 'Vrai', list: ['3']}]);
+    expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([{label: 'Faux', values: ['1','2']}, {label: 'Vrai', values: ['3']}]);
   });
   // Cas d'erreur : answer n'est pas une réponse valable
   it ('should raise an error', () => {
     expect(() => { component.onSelectSide('Impossible');}).toThrow(new Error('Answer is not a possibility'));
   });
+  // Cas : met à jour les deux tableaux cartesTriees, Cartesrestantes
+  it ('should update all arrays', () => {
+    component.cartesRestantes = [c1,c2,c3];
+    component.cartesTriees = [];
+    component.cardsToTheLeft = [];
+    component.cardsToTheRight = [];
+
+    // Swipe de la première carte qui s'affiche (donc la dernière de l'array) vers la gauche 'catégory : faux'
+    component.onSelectSide({rep:c3, category:'Faux'});
+    expect(component.cartesRestantes).toEqual([c1,c2]);
+    expect(component.cartesTriees).toEqual([c3]);
+    expect(component.cardsToTheLeft).toEqual([c3.value]);
+    expect(component.cardsToTheRight).toEqual([]);
+
+    // Swipe de la deuxième carte qui s'affiche (donc la dernière -1 de l'array) vers la droite 'catégory : vrai'
+    component.onSelectSide({rep: c2, category:'Vrai'});
+    expect(component.cartesRestantes).toEqual([c1]);
+    expect(component.cartesTriees).toEqual([c3,c2]);
+    expect(component.cardsToTheLeft).toEqual([c3.value]);
+    expect(component.cardsToTheRight).toEqual([c2.value]);
+
+    // Appel de la méthode undo
+    component.undo();
+    expect(component.cartesRestantes).toEqual([c1,c2]);
+    expect(component.cartesTriees).toEqual([c3]);
+    expect(component.cardsToTheLeft).toEqual([c3.value]);
+    expect(component.cardsToTheRight).toEqual([]);
+
+    // Appel de la méthode undo
+    component.undo();
+    expect(component.cartesRestantes).toEqual([c1,c2,c3]);
+    expect(component.cartesTriees).toEqual([]);
+    expect(component.cardsToTheLeft).toEqual([]);
+    expect(component.cardsToTheRight).toEqual([]);
+  })
 
 });
 

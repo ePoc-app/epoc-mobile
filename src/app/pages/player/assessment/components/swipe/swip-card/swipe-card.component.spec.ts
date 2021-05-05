@@ -5,13 +5,14 @@ import {Response} from '../../../../../../classes/contents/assessment';
 describe('SwipeCardComponent', () => {
   let component: SwipeCardComponent;
   let fixture: ComponentFixture<SwipeCardComponent>;
+  let debugElement;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: []
     }).compileComponents();
     fixture = TestBed.createComponent(SwipeCardComponent);
     component = fixture.componentInstance;
-    const debugElement = fixture.debugElement;
+    debugElement = fixture.debugElement;
     component.possibilities = ['Vrai','Faux'];
     const rep = new Response();
     rep.label = 'Texte à afficher';
