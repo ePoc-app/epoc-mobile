@@ -47,7 +47,7 @@ export class SwipeCardComponent implements AfterViewInit {
         // On utilise la zone d'angular pour réactualiser le titre à chaque fois qu'on bouge.
         // Dans cette fonction, on mettra le changement de couleur en fct de deltaX aussi
         this.zone.run(() => {
-          this.displayTitle(ev.deltaX);
+          this.displayTitle(ev.deltaX, this.card.nativeElement);
         })
       },
       onEnd: ev => {
@@ -55,31 +55,32 @@ export class SwipeCardComponent implements AfterViewInit {
         if (ev.deltaX > 150) {
           this.selectSide(this.possibilities[1]);
           this.card.nativeElement.style.transform = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
+          this.card.nativeElement.style.visibility = 'hidden';
         } else if (ev.deltaX < -150) {
           this.selectSide(this.possibilities[0]);
           this.card.nativeElement.style.transform = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
+          this.card.nativeElement.style.visibility = 'hidden';
         } else {
           this.card.nativeElement.style.transform = ``;
-          this.displayTitle(0);
+          this.displayTitle(0, this.card.nativeElement);
         }
       }
     });
     gesture.enable(true);
   }
-  displayTitle(deltaX) {
-    const title = document.getElementsByTagName('ion-card-title');
-    const header = document.getElementsByTagName('ion-card-header');
-
+  displayTitle(deltaX, cardElement) {
+    const title = cardElement.querySelector('ion-card-title');
+    const header = cardElement.querySelector('ion-card-header');
     if (deltaX > 0) {
-      this.selectedSide = this.possibilities[0];
-      header[0].style.background='#92BBAF';
-    } else if (deltaX < 0) {
       this.selectedSide = this.possibilities[1];
-      header[0].style.background='#FFCE20';
+      header.style.background='#92BBAF';
+    } else if (deltaX < 0) {
+      this.selectedSide = this.possibilities[0];
+      header.style.background='#FFCE20';
     } else {
       this.selectedSide = '';
-      header[0].style.background='transparent';
+      header.style.background='transparent';
     }
-    title[0].innerHTML = this.selectedSide;
+    title.innerHTML = this.selectedSide;
   }
 }
