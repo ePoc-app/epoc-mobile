@@ -1,12 +1,12 @@
-<div *ngFor ="let card of cartesRestantes">
-  <swipe-card
-          [possibilities] = "this.question.possibilities"
-          [response] = "card"
-          [disabled] = "false"
-          (onSelectSide)="onSelectSide($event)"
+<div class="swipe-cards">
+  <swipe-card *ngFor ="let card of cartesRestantes"
+            [possibilities] = "this.question.possibilities"
+            [response] = "card"
+            [disabled] = "false"
+            (onSelectSide)="onSelectSide($event)"
   ></swipe-card>
 </div>
 
-<ion-button (click)="this.undo()">
+<ion-button *ngIf="this.cartesTriees.length !== 0" (click)="this.undo()">
   Annuler
 </ion-button>
