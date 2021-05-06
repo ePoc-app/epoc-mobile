@@ -17,10 +17,10 @@ import {animate, style, transition, trigger} from '@angular/animations';
   animations: [
     trigger('swipeAnimations', [
       transition('* => swipeLeft', [
-        animate('5000ms ease-in', style({transform:`translateX(${-800}px) rotate(${-75}deg)`}))
+        animate('500ms ease-in', style({transform:`translateX(${-800}px) rotate(${-75}deg)`}))
       ]),
       transition('* => swipeRight', [
-        animate('5000ms ease-in', style({transform:`translateX(${800}px) rotate(${75}deg)`}))
+        animate('500ms ease-in', style({transform:`translateX(${800}px) rotate(${75}deg)`}))
       ]),
     ])
   ]
@@ -58,7 +58,6 @@ export class SwipeCardComponent implements AfterViewInit {
   }
 
   animationDone(event) {
-    console.log(event);
     if(event.fromState === 'swipeRight') {
       this.selectSide(this.possibilities[1]);
     } else if (event.fromState === 'swipeLeft') {
