@@ -1,10 +1,19 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Response, SwipeQuestion} from '../../../../../classes/contents/assessment';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'swipe',
   templateUrl: './swipe.component.html',
   styleUrls: ['./swipe.component.scss'],
+  animations: [
+      trigger('slideIn', [
+        transition(':enter', [
+          style({opacity: 0, transform: 'translateY(100%)'}),
+          animate('200ms 100ms ease-in', style({opacity: 1, transform: 'translateY(0%)'}))
+        ])
+      ])
+  ]
 })
 export class SwipeComponent implements OnInit {
 

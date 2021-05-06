@@ -9,7 +9,7 @@
 </ion-button>
 
 <div class="swipe-cards" *ngIf="cartesRestantes.length !==0">
-  <swipe-card *ngFor ="let card of cartesRestantes"
+  <swipe-card *ngFor ="let card of cartesRestantes" [@slideIn]
             [possibilities] = "this.question.possibilities"
             [response] = "card"
             [disabled] = "false"
