@@ -17,6 +17,7 @@ export class SwipeComponent implements OnInit {
   cartesTriees: Array<Response> = [];
   cardsToTheLeft: Array<string> = [];
   cardsToTheRight: Array<string> = [];
+  undoDisabled: boolean;
 
   constructor() { }
 
@@ -36,6 +37,9 @@ export class SwipeComponent implements OnInit {
       this.cardsToTheRight.splice(this.cardsToTheRight.indexOf(response.value), 1);
     }
     this.cartesTriees.pop();
+  }
+  onAnimation(value) {
+    this.undoDisabled = value;
   }
 
   onSelectSide(answer) {

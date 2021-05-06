@@ -1,4 +1,4 @@
-<ion-card #card>
+<ion-card [@swipeAnimations]="animationState" (@swipeAnimations.done)="animationDone($event)" #card >
     <ion-card-header>
       <ion-card-title>
         {{selectedSide}}
