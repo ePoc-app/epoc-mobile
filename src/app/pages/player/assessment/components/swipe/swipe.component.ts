@@ -38,7 +38,8 @@ export class SwipeComponent implements OnInit {
     }
     this.cartesTriees.pop();
   }
-  onAnimation(value) {
+
+  onAnimation(value: boolean) {
     this.undoDisabled = value;
   }
 

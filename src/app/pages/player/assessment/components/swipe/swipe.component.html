@@ -1,4 +1,14 @@
-<div class="swipe-cards">
+<div class="header">
+  <p>Glissez la carte à droite ou à gauche</p>
+  <h2>{{this.cartesTriees.length}} / {{this.cartesTriees.length + this.question.responses.length}}</h2>
+  <ion-progress-bar [value]="this.cartesTriees.length/(this.question.responses.length + this.cartesTriees.length)"></ion-progress-bar>
+</div>
+
+<ion-button class="correction" [hidden]="this.question.responses.length !== 0">
+  Correction
+</ion-button>
+
+<div class="swipe-cards" *ngIf="cartesRestantes.length !==0">
   <swipe-card *ngFor ="let card of cartesRestantes"
             [possibilities] = "this.question.possibilities"
             [response] = "card"
@@ -8,6 +18,6 @@
   >
   </swipe-card>
 </div>
-<ion-button [disabled]="this.cartesTriees.length === 0 || this.undoDisabled" (click)="this.undo()">
+<ion-button class="undo" [disabled]="this.cartesTriees.length === 0 || this.undoDisabled" (click)="this.undo()">
   Annuler
 </ion-button>

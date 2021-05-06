@@ -1,11 +1,47 @@
+.header {
+  height:15%;
+  margin-bottom: 5%;
+}
+
+.header p {
+  margin-top: 0;
+  font-style: italic;
+  font-weight: lighter;
+  font-size: x-small;
+}
+
+.header h2 {
+  margin-top: 0;
+  color: #81a5a5;
+}
+
+.header ion-progress-bar {
+  color: #b5dcdc;
+}
+
+.correction {
+  width: 80%;
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
+
+.undo {
+  width:80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
 .swipe-cards {
   flex: 1;
   position:relative;
-  height: 75%;
+  height: 60%;
   margin-bottom: 5%;
   width: 90%;
   align-self: center;
 }
+
 swipe-card {
   position: absolute;
   height: 100%;
