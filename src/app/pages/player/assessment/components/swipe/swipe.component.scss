@@ -1,7 +1,6 @@
 .swipe-cards {
   flex: 1;
   position:relative;
-  overflow: hidden;
   height: 75%;
   margin-bottom: 5%;
   width: 90%;
@@ -13,4 +12,5 @@ swipe-card {
   width: 100%;
   top: 0px;
   left: 0px;
+  z-index: 1;
 }
