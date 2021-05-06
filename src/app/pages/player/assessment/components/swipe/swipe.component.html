@@ -4,10 +4,10 @@
             [response] = "card"
             [disabled] = "false"
             (onSelectSide)="onSelectSide($event)"
-  ></swipe-card>
+              (onAnimationRunning)="onAnimation($event)"
+  >
+  </swipe-card>
 </div>
-
-<ion-button [disabled]="this.cartesTriees.length === 0" (click)="this.undo()">
+<ion-button [disabled]="this.cartesTriees.length === 0 || this.undoDisabled" (click)="this.undo()">
   Annuler
 </ion-button>
-

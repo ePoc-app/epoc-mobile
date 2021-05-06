@@ -8,27 +8,64 @@ import {
 } from '@angular/core';
 import {GestureController, Platform} from '@ionic/angular';
 import {Response} from '../../../../../../classes/contents/assessment';
-import {timeout} from "rxjs/operators";
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'swipe-card',
   templateUrl: './swipe-card.component.html',
   styleUrls: ['./swipe-card.component.scss'],
+  animations: [
+    trigger('swipeAnimations', [
+      transition('* => swipeLeft', [
+        animate('5000ms ease-in', style({transform:`translateX(${-800}px) rotate(${-75}deg)`}))
+      ]),
+      transition('* => swipeRight', [
+        animate('5000ms ease-in', style({transform:`translateX(${800}px) rotate(${75}deg)`}))
+      ]),
+    ])
+  ]
 })
+
 export class SwipeCardComponent implements AfterViewInit {
   @Input ('possibilities') possibilities: Array<string>;
   @Input ('response') response: Response;
   @Input('disabled') disabled: boolean;
 
   @Output() onSelectSide = new EventEmitter<{ rep:Response, category:string }>();
+  @Output() onAnimationRunning = new EventEmitter<boolean>();
   @ViewChild('card', {read:ElementRef}) card: ElementRef
 
   selectedSide = '?';
+  animationState:string;
 
-  constructor(private gestureCtrl: GestureController, private plt: Platform, private zone: NgZone) { }
+  constructor(
+      private gestureCtrl: GestureController,
+      private plt: Platform,
+      private zone: NgZone,
+  ) { }
 
   ngAfterViewInit() {
     this.useSwipe();
+  }
+
+  startAnimation(state) {
+    if (!this.animationState) {
+      this.zone.run(() => {
+        this.onAnimationRunning.emit(true);
+        this.animationState = state;
+      })
+    }
+  }
+
+  animationDone(event) {
+    console.log(event);
+    if(event.fromState === 'swipeRight') {
+      this.selectSide(this.possibilities[1]);
+    } else if (event.fromState === 'swipeLeft') {
+      this.selectSide(this.possibilities[0]);
+    }
+    this.onAnimationRunning.emit(false);
+    this.animationState = '';
   }
 
   selectSide(side) {
@@ -51,23 +88,15 @@ export class SwipeCardComponent implements AfterViewInit {
         })
       },
       onEnd: ev => {
-        this.card.nativeElement.style.transition = '0.5s ease-out';
         if (ev.deltaX > 150) {
-          this.selectSide(this.possibilities[1]);
-          this.card.nativeElement.style.transform  = `translateX(${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
-          this.card.nativeElement.style.visibility  = 'hidden';
+          this.startAnimation('swipeRight');
         } else if (ev.deltaX < -150) {
-          this.selectSide(this.possibilities[0]);
-          this.card.nativeElement.style.transform  = `translateX(-${+this.plt.width() * 2}px) rotate(${ev.deltaX / 2}deg)`;
-          this.card.nativeElement.style.visibility  = 'hidden';
+          this.startAnimation('swipeLeft');
         } else {
+          this.card.nativeElement.style.transition = '0.5s ease-out';
           this.card.nativeElement.style.transform  = ``;
           this.displayTitle(0, this.card.nativeElement);
         }
-        setTimeout(() => {
-          this.zone.run( () => {
-          })
-        }, 500)
       }
     });
     gesture.enable(true);
