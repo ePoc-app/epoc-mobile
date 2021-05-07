@@ -9,6 +9,9 @@ ion-footer{
   .check-answer{
     flex: 1;
   }
+  &.collapse {
+    visibility: collapse;
+  }
 }
 .swiper-container{
   height:100%;

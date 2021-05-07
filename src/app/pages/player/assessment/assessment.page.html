@@ -101,8 +101,10 @@
   </div>
 </ion-content>
 
-<ion-footer *ngIf="questions && currentQuestion < questions.length">
+<ion-footer *ngIf="questions && currentQuestion < questions.length"
+            [ngClass]="{'collapse': questions[currentQuestion].type ==='swipe' && !currentAnswer}"
+>
   <ion-button color="medium" (click)="flip()" *ngIf="explanationShown"><ion-icon name="repeat-outline"></ion-icon></ion-button>
-  <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer()" *ngIf="!explanationShown">Valider</ion-button>
+  <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer(); correctionState = true" *ngIf="!explanationShown">Valider</ion-button>
   <ion-button class="check-answer" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>

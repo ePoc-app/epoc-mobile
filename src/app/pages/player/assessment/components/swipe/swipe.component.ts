@@ -46,6 +46,9 @@ export class SwipeComponent implements OnInit {
       this.cardsToTheRight.splice(this.cardsToTheRight.indexOf(response.value), 1);
     }
     this.cartesTriees.pop();
+    if (this.cartesRestantes.length === 1) {
+      this.onSelectAnswer.emit();
+    }
   }
 
   onAnimation(value: boolean) {
@@ -66,10 +69,7 @@ export class SwipeComponent implements OnInit {
         this.cartesRestantes.pop();
       }
       if (this.cartesRestantes.length <= 0) {
-        this.onSelectAnswer.emit([
-          {label: this.question.possibilities[0], values: this.cardsToTheLeft},
-          {label: this.question.possibilities[1], values: this.cardsToTheRight}
-        ]);
+        this.onSelectAnswer.emit([this.cardsToTheLeft, this.cardsToTheRight]);
       }
     }
   }
