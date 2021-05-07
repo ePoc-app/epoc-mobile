@@ -39,3 +39,9 @@ export class SwipeQuestion extends Question {
     possibilities: Array<string>;
     correctResponse: Array<{label: string, values: string[]}>;
 }
+
+export class CorrectedCard {
+    side: number;
+    correct: boolean;
+    response: Response;
+}

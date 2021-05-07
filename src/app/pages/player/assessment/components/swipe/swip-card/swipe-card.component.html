@@ -7,4 +7,8 @@
     <ion-card-content>
       {{response.label}}
     </ion-card-content>
+    <div class="correction" *ngIf="check">
+        <ion-icon [ngClass]="{'icon-correction': this.check}" name="checkmark-circle-outline" color="success" *ngIf="this.correct"></ion-icon>
+        <ion-icon [ngClass]="{'icon-correction': this.check}" name="close-outline" color="danger" *ngIf="!this.correct"></ion-icon>
+    </div>
 </ion-card>

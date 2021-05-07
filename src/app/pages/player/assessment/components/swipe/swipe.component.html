@@ -4,20 +4,31 @@
   <ion-progress-bar [value]="this.cartesTriees.length/(this.question.responses.length + this.cartesTriees.length)"></ion-progress-bar>
 </div>
 
-<ion-button class="correction" [hidden]="this.question.responses.length !== 0">
-  Correction
-</ion-button>
-
 <div class="swipe-cards" *ngIf="cartesRestantes.length !==0">
   <swipe-card *ngFor ="let card of cartesRestantes" [@slideIn]
-            [possibilities] = "this.question.possibilities"
-            [response] = "card"
-            [disabled] = "false"
-            (onSelectSide)="onSelectSide($event)"
+              [possibilities] = "this.question.possibilities"
+              [response] = "card"
+              [disabled] = "false"
+              [selectedSide]="'?'"
+              [check] = 'false'
+              (onSelectSide)="onSelectSide($event)"
               (onAnimationRunning)="onAnimation($event)"
   >
   </swipe-card>
 </div>
-<ion-button class="undo" [disabled]="this.cartesTriees.length === 0 || this.undoDisabled" (click)="this.undo()">
+
+<div class ="grid" *ngIf="this.correctionState">
+  <swipe-card *ngFor ="let card of correctedCards"
+              [possibilities] = "this.question.possibilities"
+              [response] = "card.response"
+              [disabled] = "true"
+              [check] = 'true'
+              [selectedSide]="this.question.possibilities[card.side]"
+              [correct]="card.correct"
+              (click)="this.openPopUp()"
+  >
+  </swipe-card>
+</div>
+<ion-button class="undo" [hidden]="this.correctionState" [disabled]="this.cartesTriees.length === 0 || this.undoDisabled" (click)="this.undo()">
   Annuler
 </ion-button>
