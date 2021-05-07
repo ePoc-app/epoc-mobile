@@ -1,7 +1,7 @@
-<div class="header">
+<div class="header" [hidden]="this.correctionState">
   <p>Glissez la carte à droite ou à gauche</p>
-  <h2>{{this.cartesTriees.length}} / {{this.cartesTriees.length + this.question.responses.length}}</h2>
-  <ion-progress-bar [value]="this.cartesTriees.length/(this.question.responses.length + this.cartesTriees.length)"></ion-progress-bar>
+  <h2>{{this.cartesTriees.length}} / {{this.cartesTriees.length + this.cartesRestantes.length}}</h2>
+  <ion-progress-bar [value]="this.cartesTriees.length/(this.cartesRestantes.length + this.cartesTriees.length)"></ion-progress-bar>
 </div>
 
 <div class="swipe-cards" *ngIf="cartesRestantes.length !==0">

@@ -3,6 +3,18 @@
   margin-bottom: 5%;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2 ,150px);
+  grid-template-rows: repeat(3, 200px);
+}
+
+.grid swipe-card {
+  margin: auto;
+  height: 100%;
+  width: 100%;
+}
+
 .header p {
   margin-top: 0;
   font-style: italic;
@@ -21,10 +33,7 @@
 
 .correction {
   width: 80%;
-  margin-right: 10%;
-  margin-left: 10%;
-  margin-top: 20%;
-  margin-bottom: 20%;
+  margin: 10% 10% 20% 20%;
 }
 
 .undo {
@@ -42,7 +51,7 @@
   align-self: center;
 }
 
-swipe-card {
+.swipe-cards swipe-card {
   position: absolute;
   height: 100%;
   width: 100%;

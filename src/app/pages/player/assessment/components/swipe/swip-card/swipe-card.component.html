@@ -1,10 +1,11 @@
 <ion-card [@swipeAnimations]="animationState" (@swipeAnimations.done)="animationDone($event)" #card >
     <ion-card-header>
-      <ion-card-title>
+      <ion-card-title [ngClass]="{'title-correction': this.check}">
         {{selectedSide}}
       </ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content [ngClass]="{'content-correction': this.check}"
+    >
       {{response.label}}
     </ion-card-content>
     <div class="correction" *ngIf="check">
