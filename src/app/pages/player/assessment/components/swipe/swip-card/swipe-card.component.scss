@@ -10,14 +10,29 @@ ion-card {
   background-color: #E6F4F4;
 }
 
+.correction ion-icon {
+  height: 5em;
+  width: 5em;
+  &.icon-correction {
+    height: 3em;
+    width: 3em;
+  }
+}
+
 ion-header {
-  height: 20%;
   font-weight: bold;
   text-align: center;
 }
 
-ion-content {
-  height:80%;
-  flex: 1;
-  text-align: center;
+ion-card-title {
+  &.title-correction {
+    font-size: inherit;
+  }
+}
+
+ion-card-content {
+  &.content-correction {
+    font-size: x-small;
+    margin: auto;
+  }
 }

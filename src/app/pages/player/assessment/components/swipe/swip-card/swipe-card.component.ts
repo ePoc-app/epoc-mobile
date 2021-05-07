@@ -115,16 +115,27 @@ export class SwipeCardComponent implements AfterViewInit {
   displayTitle(deltaX, cardElement) {
     const title = cardElement.querySelector('ion-card-title');
     const header = cardElement.querySelector('ion-card-header');
+
     if (deltaX > 0) {
-      this.selectedSide = this.possibilities[1];
-      header.style.background='#92BBAF';
+      this.setSelectedSide(this.possibilities[1]);
+      this.setBackgroundColor(header, '#92BBAF');
     } else if (deltaX < 0) {
-      this.selectedSide = this.possibilities[0];
-      header.style.background='#FFCE20';
+      this.setSelectedSide(this.possibilities[0]);
+      this.setBackgroundColor(header, '#FFCE20');
     } else {
-      this.selectedSide = '?';
-      header.style.background='transparent';
+      this.setSelectedSide('?');
+      this.setBackgroundColor(header, 'transparent');
     }
     title.innerHTML = this.selectedSide;
   }
+
+  setBackgroundColor(elem, color: string) {
+    elem.style.background = color;
+  }
+
+  setSelectedSide(side: string) {
+    this.selectedSide = side;
+  }
 }
+
+

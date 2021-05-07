@@ -74,4 +74,8 @@ export class SwipeComponent implements OnInit {
       }
     }
   }
+
+  openPopUp() {
+    // This should open the a popup with individual explanation if there is one
+  }
 }
