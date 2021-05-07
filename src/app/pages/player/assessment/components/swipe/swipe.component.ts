@@ -19,8 +19,9 @@ export class SwipeComponent implements OnInit {
 
   @Input ('question') question: SwipeQuestion;
   @Input('disabled') disabled: boolean;
-
-  @Output() onSelectAnswer = new EventEmitter<Array<{label: string, values: Array<string>}>>();
+  @Input('correctionState') correctionState: boolean;
+  @Input('correctedCards') correctedCards: Array<{ side: number, correct: boolean, response: Response }>;
+  @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
   cartesRestantes: Array<Response> = [];
   cartesTriees: Array<Response> = [];
@@ -31,7 +32,7 @@ export class SwipeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.cartesRestantes = this.question.responses;
+    this.cartesRestantes = this.question.responses.slice(0);
   }
 
   undo() {

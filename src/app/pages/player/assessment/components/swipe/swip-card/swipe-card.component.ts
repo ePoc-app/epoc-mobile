@@ -30,12 +30,14 @@ export class SwipeCardComponent implements AfterViewInit {
   @Input ('possibilities') possibilities: Array<string>;
   @Input ('response') response: Response;
   @Input('disabled') disabled: boolean;
+  @Input('correct') correct: boolean;
+  @Input('selectedSide') selectedSide: string;
+  @Input('check') check: boolean;
 
   @Output() onSelectSide = new EventEmitter<{ rep:Response, category:string }>();
   @Output() onAnimationRunning = new EventEmitter<boolean>();
   @ViewChild('card', {read:ElementRef}) card: ElementRef
 
-  selectedSide = '?';
   animationState:string;
 
   constructor(
@@ -44,7 +46,17 @@ export class SwipeCardComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.useSwipe();
+    if (!this.disabled){
+      this.useSwipe();
+    }
+    if (this.check) {
+      const header = this.card.nativeElement.querySelector('ion-card-header');
+      if (this.selectedSide === this.possibilities[0]) {
+        this.setBackgroundColor(header, '#FFCE20');
+      } else {
+        this.setBackgroundColor(header, '#92BBAF');
+      }
+    }
   }
 
   startAnimation(state) {
