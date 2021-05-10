@@ -108,7 +108,9 @@ export class AssessmentPage implements OnInit {
         this.userResponses.push(this.currentAnswer);
         this.explanationShown = true;
         this.notransition = false;
-        this.flipped = true;
+        if (this.questions[this.currentQuestion].type !== 'swipe') {
+            this.flipped = true;
+        }
         document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
     }
 
