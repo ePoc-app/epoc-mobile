@@ -1,15 +1,15 @@
 <ion-card [@swipeAnimations]="animationState" (@swipeAnimations.done)="animationDone($event)" #card >
     <ion-card-header>
-      <ion-card-title [ngClass]="{'title-correction': this.check}">
+      <ion-card-title [ngClass]="{'title-correction': this.correct !== undefined}">
         {{selectedSide}}
       </ion-card-title>
     </ion-card-header>
-    <ion-card-content [ngClass]="{'content-correction': this.check}"
+    <ion-card-content [ngClass]="{'content-correction': this.correct !== undefined}"
     >
       {{response.label}}
     </ion-card-content>
-    <div class="correction" *ngIf="check">
-        <ion-icon [ngClass]="{'icon-correction': this.check}" name="checkmark-circle-outline" color="success" *ngIf="this.correct"></ion-icon>
-        <ion-icon [ngClass]="{'icon-correction': this.check}" name="close-outline" color="danger" *ngIf="!this.correct"></ion-icon>
+    <div class="correction" *ngIf="this.correct !== undefined">
+        <ion-icon [ngClass]="{'icon-correction': this.correct !== undefined}" name="checkmark-circle-outline" color="success" *ngIf="this.correct"></ion-icon>
+        <ion-icon [ngClass]="{'icon-correction': this.correct !== undefined}" name="close-outline" color="danger" *ngIf="!this.correct"></ion-icon>
     </div>
 </ion-card>
