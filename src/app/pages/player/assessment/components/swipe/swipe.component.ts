@@ -29,6 +29,7 @@ export class SwipeComponent implements OnInit {
   cardsToTheLeft: Array<string> = [];
   cardsToTheRight: Array<string> = [];
   undoDisabled: boolean;
+  nbCorrect = 0;
 
   // Modal
   correct: boolean;
@@ -67,6 +68,9 @@ export class SwipeComponent implements OnInit {
     } else {
       this.cardsToTheRight.splice(this.cardsToTheRight.indexOf(response.value), 1);
     }
+    if (this.cartesTriees[this.cartesTriees.length -1].correct){
+      this.nbCorrect -= 1;
+    }
     this.cartesTriees.pop();
     if (this.cartesRestantes.length === 1) {
       this.onSelectAnswer.emit();
@@ -93,6 +97,9 @@ export class SwipeComponent implements OnInit {
         category: answer.category,
         correct: this.question.correctResponse[answer.category].values.includes(answer.rep.value)
       };
+      if (correctedCard.correct) {
+        this.nbCorrect += 1;
+      }
       this.cartesTriees.push(correctedCard);
       if (this.cartesRestantes.length <= 0) {
         this.onSelectAnswer.emit([this.cardsToTheLeft, this.cardsToTheRight]);
