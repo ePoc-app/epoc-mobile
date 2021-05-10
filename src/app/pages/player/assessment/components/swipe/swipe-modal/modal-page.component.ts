@@ -3,7 +3,8 @@ import {ModalController} from '@ionic/angular';
 
 @Component({
     selector: 'modal-page',
-    templateUrl: './modal-page.component.html'
+    templateUrl: './modal-page.component.html',
+    styleUrls: ['./modal-page.component.scss'],
 })
 export class ModalPage {
     @Input() correct: boolean;

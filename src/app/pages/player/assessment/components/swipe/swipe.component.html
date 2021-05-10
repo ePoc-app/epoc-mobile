@@ -16,7 +16,7 @@
   </swipe-card>
 </div>
 
-<div class ="grid" *ngIf="this.correctionState">
+<div class ="correctedCards" *ngIf="this.correctionState">
   <swipe-card *ngFor ="let card of cartesTriees"
               [possibilities] = "this.question.possibilities"
               [response] = "card.response"
