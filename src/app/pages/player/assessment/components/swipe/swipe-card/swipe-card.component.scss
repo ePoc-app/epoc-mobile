@@ -8,6 +8,9 @@ ion-card {
   width: 100%;
   margin: 0;
   background-color: #E6F4F4;
+  &.card-correction {
+    border-radius: 2em;
+  }
 }
 
 .correction ion-icon {
