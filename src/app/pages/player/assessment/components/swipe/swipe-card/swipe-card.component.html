@@ -1,4 +1,4 @@
-<ion-card [@swipeAnimations]="animationState" (@swipeAnimations.done)="animationDone($event)" #card >
+<ion-card [ngClass]="{'card-correction': this.correct !== undefined}" [@swipeAnimations]="animationState" (@swipeAnimations.done)="animationDone($event)" #card >
     <ion-card-header>
       <ion-card-title [ngClass]="{'title-correction': this.correct !== undefined}">
         {{selectedSide}}
