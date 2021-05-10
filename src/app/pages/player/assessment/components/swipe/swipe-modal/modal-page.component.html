@@ -1,0 +1,14 @@
+<ion-icon *ngIf="this.correct" name="checkmark-circle-outline" color="success"></ion-icon>
+<ion-icon *ngIf="!this.correct" name="close-outline" color="danger"></ion-icon>
+    <p>
+        Vous avez répondu {{this.category}}.
+        La bonne réponse était {{this.answer}}.
+    </p>
+
+    <p>
+        Explication : {{this.explanation}}
+    </p>
+
+
+
+    <ion-icon name="close-outline" (click) = dismiss()></ion-icon>

@@ -23,7 +23,7 @@
               [disabled] = "true"
               [selectedSide]="this.question.possibilities[card.category]"
               [correct]="card.correct"
-              (click)="this.openPopUp()"
+              (click)="this.openPopUp($event, card)"
   >
   </swipe-card>
 </div>
