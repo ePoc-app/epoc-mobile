@@ -4,6 +4,10 @@
   <ion-progress-bar [value]="this.cartesTriees.length/(this.cartesRestantes.length + this.cartesTriees.length)"></ion-progress-bar>
 </div>
 
+<div class="header-correction" [hidden]="!this.correctionState">
+  <p>{{this.nbCorrect}} / {{this.cartesTriees.length}} réponses justes.</p>
+</div>
+
 <div class="swipe-cards" *ngIf="cartesRestantes.length !==0">
   <swipe-card *ngFor ="let card of cartesRestantes" [@slideIn]
               [possibilities] = "this.question.possibilities"
