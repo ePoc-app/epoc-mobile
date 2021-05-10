@@ -3,16 +3,15 @@
   margin-bottom: 5%;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2 ,150px);
-  grid-template-rows: repeat(3, 200px);
+.correctedCards {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.grid swipe-card {
-  margin: auto;
-  height: 100%;
-  width: 100%;
+.correctedCards swipe-card {
+  width: calc(50% - 0.4em);
+  min-height: 200px;
+  margin: 0.2em;
 }
 
 .header p {

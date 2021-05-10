@@ -1,14 +1,17 @@
-<ion-icon *ngIf="this.correct" name="checkmark-circle-outline" color="success"></ion-icon>
-<ion-icon *ngIf="!this.correct" name="close-outline" color="danger"></ion-icon>
-    <p>
-        Vous avez répondu {{this.category}}.
-        La bonne réponse était {{this.answer}}.
-    </p>
+<ion-icon class="arrow-down" name="arrow-down-circle-outline" (click) = dismiss()></ion-icon>
 
-    <p>
-        Explication : {{this.explanation}}
-    </p>
+<ion-icon class="correction" *ngIf="this.correct" name="checkmark-circle-outline" color="success"></ion-icon>
+<ion-icon class="correction" *ngIf="!this.correct" name="close-outline" color="danger"></ion-icon>
 
+<p class="response">
+    Vous avez répondu <strong>{{this.category}}</strong>.
+</p>
+<p class="answer">
+    La bonne réponse était <strong>{{this.answer}}</strong>.
 
+<p class="exp">Explication : </p>
 
-    <ion-icon name="close-outline" (click) = dismiss()></ion-icon>
+<p class="explanation">
+    {{this.explanation}}
+    <br>
+</p>
