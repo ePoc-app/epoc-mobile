@@ -13,7 +13,7 @@
       <ion-slide>
         <div class="flip-container" [ngClass]="{'flipped': flipped}">
           <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
-            <div class="front" [ngClass]="{'no-overflow': question.type==='swipe'}">
+            <div class="front" [ngClass]="{'no-overflow': question.type === 'swipe'}">
               <div class="question-card">
                 <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
                 <div class="statement">
@@ -104,7 +104,7 @@
 <ion-footer *ngIf="questions && currentQuestion < questions.length"
             [ngClass]="{'collapse': questions[currentQuestion].type ==='swipe' && !currentAnswer}"
 >
-  <ion-button color="medium" (click)="flip()" *ngIf="explanationShown"><ion-icon name="repeat-outline"></ion-icon></ion-button>
+  <ion-button color="medium" (click)="flip()" *ngIf="explanationShown && this.questions[currentQuestion].explanation !== undefined"><ion-icon name="repeat-outline"></ion-icon></ion-button>
   <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer(); correctionState = true" *ngIf="!explanationShown">Valider</ion-button>
   <ion-button class="check-answer" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>
