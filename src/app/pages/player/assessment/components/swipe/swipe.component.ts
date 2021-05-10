@@ -1,6 +1,8 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Response, SwipeQuestion} from '../../../../../classes/contents/assessment';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {ModalController} from '@ionic/angular';
+import {ModalPage} from './swipe-modal/modal-page.component';
 
 @Component({
   selector: 'swipe',
@@ -28,10 +30,30 @@ export class SwipeComponent implements OnInit {
   cardsToTheRight: Array<string> = [];
   undoDisabled: boolean;
 
-  constructor() { }
+  // Modal
+  correct: boolean;
+  category: string;
+  explanation: string;
+  answer: string;
+
+  constructor(public modalController: ModalController) { }
 
   ngOnInit() {
     this.cartesRestantes = this.question.responses.slice(0);
+  }
+
+  async swipeModal() {
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        correct: this.correct,
+        category: this.category,
+        explanation: this.explanation,
+        answer: this.answer
+      }
+    });
+    return await modal.present();
   }
 
   undo() {
@@ -78,7 +100,18 @@ export class SwipeComponent implements OnInit {
     }
   }
 
-  openPopUp() {
-    console.log("Ouverture de la popUp");
+  openPopUp(event, card) {
+    event.stopPropagation();
+    if (card.response.explanation) {
+      this.correct = card.correct;
+      this.category = this.question.possibilities[card.category];
+      this.answer = card.correct?
+          this.question.possibilities[card.category]:
+          card.category === 0?
+              this.question.possibilities[1]:
+              this.question.possibilities[0];
+      this.explanation = card.response.explanation;
+      this.swipeModal().then();
+    }
   }
 }
