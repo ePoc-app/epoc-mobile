@@ -10,6 +10,6 @@
     </ion-card-content>
     <div class="correction" *ngIf="this.correct !== undefined">
         <ion-icon [ngClass]="{'icon-correction': this.correct !== undefined}" name="checkmark-circle-outline" color="success" *ngIf="this.correct"></ion-icon>
-        <ion-icon [ngClass]="{'icon-correction': this.correct !== undefined}" name="close-outline" color="danger" *ngIf="!this.correct"></ion-icon>
+        <ion-icon [ngClass]="{'icon-correction': this.correct !== undefined}" name="close-circle-outline" color="danger" *ngIf="!this.correct"></ion-icon>
     </div>
 </ion-card>

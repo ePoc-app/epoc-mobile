@@ -22,6 +22,7 @@ ion-card {
 ion-header {
   font-weight: bold;
   text-align: center;
+  height:30%;
 }
 
 ion-card-title {
@@ -31,8 +32,11 @@ ion-card-title {
 }
 
 ion-card-content {
+  height:70%;
   &.content-correction {
     font-size: x-small;
-    margin: auto;
+    margin-top: 5%;
+    height: auto;
+    min-height: 100px;
   }
 }

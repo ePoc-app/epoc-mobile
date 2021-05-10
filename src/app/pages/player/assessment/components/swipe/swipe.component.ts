@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, asNativeElements, ViewChild, ElementRef} from '@angular/core';
 import {Response, SwipeQuestion} from '../../../../../classes/contents/assessment';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ModalController} from '@ionic/angular';
@@ -40,7 +40,12 @@ export class SwipeComponent implements OnInit {
   constructor(public modalController: ModalController) { }
 
   ngOnInit() {
-    this.cartesRestantes = this.question.responses.slice(0);
+    const shuffleArray = arr => arr
+        .map(a => [Math.random(), a])
+        .sort((a, b) => a[0] - b[0])
+        .map(a => a[1]);
+
+    this.cartesRestantes = shuffleArray(this.question.responses);
   }
 
   async swipeModal() {
