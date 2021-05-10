@@ -32,9 +32,8 @@ export class SwipeCardComponent implements AfterViewInit {
   @Input('disabled') disabled: boolean;
   @Input('correct') correct: boolean;
   @Input('selectedSide') selectedSide: string;
-  @Input('check') check: boolean;
 
-  @Output() onSelectSide = new EventEmitter<{ rep:Response, category:string }>();
+  @Output() onSelectSide = new EventEmitter<{rep: Response, category: number}>();
   @Output() onAnimationRunning = new EventEmitter<boolean>();
   @ViewChild('card', {read:ElementRef}) card: ElementRef
 
@@ -49,7 +48,7 @@ export class SwipeCardComponent implements AfterViewInit {
     if (!this.disabled){
       this.useSwipe();
     }
-    if (this.check) {
+    if (this.correct !== undefined) {
       const header = this.card.nativeElement.querySelector('ion-card-header');
       if (this.selectedSide === this.possibilities[0]) {
         this.setBackgroundColor(header, '#FFCE20');
@@ -70,19 +69,19 @@ export class SwipeCardComponent implements AfterViewInit {
 
   animationDone(event) {
     if(event.fromState === 'swipeRight') {
-      this.selectSide(this.possibilities[1]);
+      this.selectSide(1);
     } else if (event.fromState === 'swipeLeft') {
-      this.selectSide(this.possibilities[0]);
+      this.selectSide(0);
     }
     this.onAnimationRunning.emit(false);
     this.animationState = '';
   }
 
-  selectSide(side) {
-    if (!this.possibilities.includes(side)) {
+  selectSide(side: number) {
+    if (!this.possibilities.includes(this.possibilities[side])) {
       throw new Error('Answer is not a possibility');
     }
-    this.selectedSide = side;
+    this.selectedSide = this.possibilities[side];
     this.onSelectSide.emit({rep:this.response, category:side});
   }
   useSwipe() {

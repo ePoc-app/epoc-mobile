@@ -20,11 +20,10 @@ export class SwipeComponent implements OnInit {
   @Input ('question') question: SwipeQuestion;
   @Input('disabled') disabled: boolean;
   @Input('correctionState') correctionState: boolean;
-  @Input('correctedCards') correctedCards: Array<{ side: number, correct: boolean, response: Response }>;
   @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
   cartesRestantes: Array<Response> = [];
-  cartesTriees: Array<Response> = [];
+  cartesTriees: Array<{response: Response, category: number, correct: boolean}> = [];
   cardsToTheLeft: Array<string> = [];
   cardsToTheRight: Array<string> = [];
   undoDisabled: boolean;
@@ -39,7 +38,7 @@ export class SwipeComponent implements OnInit {
     if (this.cartesTriees.length === 0){
       throw new Error('Array of cards swiped is empty');
     }
-    const response = this.cartesTriees[this.cartesTriees.length - 1];
+    const response = this.cartesTriees[this.cartesTriees.length - 1].response;
     this.cartesRestantes.push(response);
     if (this.cardsToTheLeft.includes(response.value)) {
       this.cardsToTheLeft.splice(this.cardsToTheLeft.indexOf(response.value), 1);
@@ -57,18 +56,22 @@ export class SwipeComponent implements OnInit {
   }
 
   onSelectSide(answer) {
-    if (!this.question.possibilities.includes(answer.category)) {
+    if (!this.question.possibilities.includes(this.question.possibilities[answer.category])) {
       throw new Error('Answer is not a possibility');
     } else {
-      if (answer.category === this.question.possibilities[0]) {
+      if (answer.category === 0) {
         this.cardsToTheLeft.push(answer.rep.value);
-        this.cartesTriees.push(answer.rep);
         this.cartesRestantes.pop();
-      } else if (answer.category === this.question.possibilities[1]) {
+      } else if (answer.category === 1) {
         this.cardsToTheRight.push(answer.rep.value);
-        this.cartesTriees.push(answer.rep);
         this.cartesRestantes.pop();
       }
+      const correctedCard = {
+        response: answer.rep,
+        category: answer.category,
+        correct: this.question.correctResponse[answer.category].values.includes(answer.rep.value)
+      };
+      this.cartesTriees.push(correctedCard);
       if (this.cartesRestantes.length <= 0) {
         this.onSelectAnswer.emit([this.cardsToTheLeft, this.cardsToTheRight]);
       }
@@ -76,6 +79,6 @@ export class SwipeComponent implements OnInit {
   }
 
   openPopUp() {
-    // This should open the a popup with individual explanation if there is one
+    console.log("Ouverture de la popUp");
   }
 }

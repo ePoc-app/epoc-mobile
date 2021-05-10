@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
 import {AlertController, IonSlides} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
-import {Assessment, CorrectedCard, Question, Response} from '../../../classes/contents/assessment';
+import {Assessment, Question} from '../../../classes/contents/assessment';
 
 @Component({
     selector: 'app-assessment',
@@ -42,7 +42,6 @@ export class AssessmentPage implements OnInit {
     notransition = false;
     flipped = false;
     certificateShown = false;
-    correctedCards = [];
     correctionState: boolean;
 
     constructor(
@@ -92,20 +91,6 @@ export class AssessmentPage implements OnInit {
                 this.questionFailed();
             }
         } else if (Array.isArray(correctResponse)) {
-            if (this.questions[this.currentQuestion].type === 'swipe') {
-                for (let i = 0; i < this.currentAnswer.length; i++) {
-                    for (let j = 0; j < this.currentAnswer[i].length; j++) {
-                        const correctedCard = new CorrectedCard();
-                        correctedCard.side = i;
-                        correctedCard.response = this.questions[this.currentQuestion].responses[this.currentAnswer[i][j]-1];
-                        const answer = correctResponse[i];
-                        if (typeof answer === 'object') {
-                            correctedCard.correct = answer.values.includes(this.currentAnswer[i][j]);
-                        }
-                        this.correctedCards.push(correctedCard);
-                    }
-                }
-            }
             if (correctResponse.length === this.currentAnswer.length && correctResponse.every((answer, index) => {
                 if (typeof answer === 'object') {
                     return this.arraysEqual(this.currentAnswer[index], answer.values);
