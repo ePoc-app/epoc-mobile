@@ -36,9 +36,16 @@
 }
 
 .undo {
-  width:80%;
-  margin-left: 10%;
-  margin-right: 10%;
+  width:50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  color: black;
+}
+
+.undo ion-icon {
+  margin: 0.2em;
+  width: 2em;
+  height: 2em;
 }
 
 .swipe-cards {

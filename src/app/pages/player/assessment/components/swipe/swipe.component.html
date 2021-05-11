@@ -31,6 +31,11 @@
   >
   </swipe-card>
 </div>
-<ion-button class="undo" [hidden]="this.correctionState" [disabled]="this.cartesTriees.length === 0 || this.undoDisabled" (click)="this.undo()">
-  Annuler
+<ion-button class="undo" color="#EAEAEA"
+            style="--background:#EAEAEA; --border-radius: 15px;"
+            [hidden]="this.correctionState"
+            [disabled]="this.cartesTriees.length === 0 || this.undoDisabled"
+            (click)="this.undo()">
+  <ion-icon name="arrow-undo-outline"></ion-icon>
+  <p>Annuler</p>
 </ion-button>
