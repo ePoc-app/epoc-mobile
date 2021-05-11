@@ -57,4 +57,13 @@
   top: 0px;
   left: 0px;
   z-index: 1;
+  transition: 0.2s ease-in-out;
+}
+
+.swipe-cards swipe-card:nth-last-child(2) {
+  transform: rotate(5deg);
+}
+
+.swipe-cards swipe-card:nth-last-child(3) {
+  transform: rotate(-5deg);
 }
