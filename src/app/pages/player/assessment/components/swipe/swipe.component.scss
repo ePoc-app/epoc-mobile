@@ -74,3 +74,14 @@
 .swipe-cards swipe-card:nth-last-child(3) {
   transform: rotate(-5deg);
 }
+
+.informatif {
+  display: flex;
+  height: 60%;
+  flex: 1;
+  margin: auto;
+}
+
+.informatif p {
+  margin: auto;
+}
