@@ -6,7 +6,7 @@ ion-card {
   border-radius: 3em ;
   height: 100%;
   width: 100%;
-  margin: 0;
+  margin: auto;
   background-color: #E6F4F4;
   &.card-correction {
     border-radius: 2em;
@@ -22,10 +22,11 @@ ion-card {
   }
 }
 
-ion-header {
+ion-card-header {
   font-weight: bold;
   text-align: center;
-  height:30%;
+  height: 20%;
+  transition: 0.3s ease-in-out;
 }
 
 ion-card-title {
@@ -35,11 +36,16 @@ ion-card-title {
 }
 
 ion-card-content {
-  height:70%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   &.content-correction {
     font-size: x-small;
-    margin-top: 5%;
-    height: 70%;
+    height: 80%;
     min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }

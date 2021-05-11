@@ -31,6 +31,11 @@
   >
   </swipe-card>
 </div>
+
+<div class="informatif" [hidden]="this.correctionState || this.cartesRestantes.length !== 0">
+  <p>Cliquez sur valider pour confirmer vos réponses et accéder à la correction.</p>
+</div>
+
 <ion-button class="undo" color="#EAEAEA"
             style="--background:#EAEAEA; --border-radius: 15px;"
             [hidden]="this.correctionState"
