@@ -97,12 +97,11 @@ export class SwipeCardComponent implements AfterViewInit {
         })
       },
       onEnd: ev => {
-        if (ev.deltaX > 150) {
+        if (ev.deltaX > 100) {
           this.startAnimation('swipeRight');
-        } else if (ev.deltaX < -150) {
+        } else if (ev.deltaX < -100) {
           this.startAnimation('swipeLeft');
         } else {
-          this.card.nativeElement.style.transition = '0.5s ease-out';
           this.card.nativeElement.style.transform  = ``;
           this.displayTitle(0, this.card.nativeElement);
         }
