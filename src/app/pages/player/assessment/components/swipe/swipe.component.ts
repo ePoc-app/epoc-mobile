@@ -9,12 +9,16 @@ import {ModalPage} from './swipe-modal/modal-page.component';
   templateUrl: './swipe.component.html',
   styleUrls: ['./swipe.component.scss'],
   animations: [
-      trigger('slideIn', [
-        transition(':enter', [
-          style({opacity: 0, transform: 'translateY(100%)'}),
-          animate('200ms 100ms ease-in', style({opacity: 1, transform: 'translateY(0%)'}))
-        ])
-      ])
+    trigger('undoAnimations', [
+      transition('void => rightToLeft', [
+        style({transform:`translateX(${500}px) rotate(${50}deg)`}),
+        animate('300ms ease-out', style({transform:`none`}))
+      ]),
+      transition('void => leftToRight', [
+        style({transform:`translateX(${-500}px) rotate(${-50}deg)`}),
+        animate('300ms ease-out', style({transform:`none`}))
+      ]),
+    ])
   ]
 })
 export class SwipeComponent implements OnInit {
@@ -30,6 +34,7 @@ export class SwipeComponent implements OnInit {
   cardsToTheRight: Array<string> = [];
   undoDisabled: boolean;
   nbCorrect = 0;
+  animationState: string;
 
   // Modal
   correct: boolean;
@@ -62,6 +67,10 @@ export class SwipeComponent implements OnInit {
     return await modal.present();
   }
 
+  startAnimation(state) {
+    this.animationState = state;
+  }
+
   undo() {
     if (this.cartesTriees.length === 0){
       throw new Error('Array of cards swiped is empty');
@@ -75,6 +84,11 @@ export class SwipeComponent implements OnInit {
     }
     if (this.cartesTriees[this.cartesTriees.length -1].correct){
       this.nbCorrect -= 1;
+    }
+    if (this.cartesTriees[this.cartesTriees.length -1].category === 0) {
+      this.startAnimation('leftToRight');
+    } else if (this.cartesTriees[this.cartesTriees.length - 1].category === 1) {
+      this.startAnimation('rightToLeft');
     }
     this.cartesTriees.pop();
     if (this.cartesRestantes.length === 1) {

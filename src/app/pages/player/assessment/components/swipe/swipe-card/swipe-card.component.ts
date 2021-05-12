@@ -17,10 +17,10 @@ import {animate, style, transition, trigger} from '@angular/animations';
   animations: [
     trigger('swipeAnimations', [
       transition('* => swipeLeft', [
-        animate('500ms ease-in', style({transform:`translateX(${-800}px) rotate(${-75}deg)`}))
+        animate('300ms ease-in', style({transform:`translateX(${-500}px) rotate(${-50}deg)`}))
       ]),
       transition('* => swipeRight', [
-        animate('500ms ease-in', style({transform:`translateX(${800}px) rotate(${75}deg)`}))
+        animate('300ms ease-in', style({transform:`translateX(${500}px) rotate(${50}deg)`}))
       ]),
     ])
   ]
@@ -37,7 +37,7 @@ export class SwipeCardComponent implements AfterViewInit {
   @Output() onAnimationRunning = new EventEmitter<boolean>();
   @ViewChild('card', {read:ElementRef}) card: ElementRef
 
-  animationState:string;
+  animationState: string;
 
   constructor(
       private gestureCtrl: GestureController,
