@@ -36,14 +36,17 @@ ion-card-title {
 }
 
 ion-card-content {
-  height: 80%;
+  height: 100px;
+  overflow: hidden;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   &.content-correction {
+    padding: 1em;
     font-size: x-small;
-    height: 80%;
-    min-height: 100px;
+    height: 100px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
