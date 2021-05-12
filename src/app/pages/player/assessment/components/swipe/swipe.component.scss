@@ -67,14 +67,35 @@
   top: 0px;
   left: 0px;
   z-index: 3;
-  transition: 0.2s ease-in-out;
 }
 
-.swipe-cards swipe-card:nth-last-child(2) {
+.swipe-cards swipe-card:nth-last-child(2):before {
+  content:'';
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  border: 1px solid black;
+  border-radius: 3em ;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  background-color: #E6F4F4;
+  position: absolute;
   transform: rotate(2.5deg);
 }
 
-.swipe-cards swipe-card:nth-last-child(3) {
+.swipe-cards swipe-card:nth-last-child(3):before {
+  content:'';
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  border: 1px solid black;
+  border-radius: 3em ;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  background-color: #E6F4F4;
+  position: absolute;
   transform: rotate(-2.5deg);
 }
 
