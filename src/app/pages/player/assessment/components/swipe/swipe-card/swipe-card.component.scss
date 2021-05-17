@@ -27,6 +27,8 @@ ion-card-header {
   text-align: center;
   height: 20%;
   transition: 0.3s ease-in-out;
+  &.header-correction {
+  }
 }
 
 ion-card-title {

@@ -1,12 +1,11 @@
 <ion-card mode="ios" [ngClass]="{'card-correction': this.correct !== undefined}" [@swipeAnimations]="animationState" (@swipeAnimations.done)="animationDone($event)" #card >
-    <ion-card-header mode="ios">
+    <ion-card-header mode="ios" [ngClass]="{'content-correction': this.correct !== undefined}">
       <ion-card-title mode="ios" [ngClass]="{'title-correction': this.correct !== undefined}">
         {{selectedSide}}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content mode="ios" [ngClass]="{'content-correction': this.correct !== undefined}">
-      {{response.label.length > 100 ? response.label.slice(0, 100)+'...' : response.label}}
-    </ion-card-content>
+        {{response.label.length > 100 ? response.label.slice(0, 100)+'...' : response.label}}    </ion-card-content>
     <div class="correction" *ngIf="this.correct !== undefined">
         <ion-icon mode="ios" [ngClass]="{'icon-correction': this.correct !== undefined}" name="checkmark-circle-outline" color="success" *ngIf="this.correct"></ion-icon>
         <ion-icon mode="ios" [ngClass]="{'icon-correction': this.correct !== undefined}" name="close-circle-outline" color="danger" *ngIf="!this.correct"></ion-icon>
