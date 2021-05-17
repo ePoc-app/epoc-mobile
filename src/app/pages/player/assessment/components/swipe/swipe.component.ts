@@ -1,7 +1,7 @@
-import {Component, Input, OnInit, Output, EventEmitter, asNativeElements, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Response, SwipeQuestion} from '../../../../../classes/contents/assessment';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {ModalController} from '@ionic/angular';
+import {AnimationController, ModalController, Platform} from '@ionic/angular';
 import {ModalPage} from './swipe-modal/modal-page.component';
 
 @Component({
@@ -42,7 +42,7 @@ export class SwipeComponent implements OnInit {
   explanation: string;
   answer: string;
 
-  constructor(public modalController: ModalController) { }
+  constructor(public modalController: ModalController, public animationController: AnimationController, private plt: Platform) {}
 
   ngOnInit() {
     const shuffleArray = arr => arr
@@ -51,20 +51,6 @@ export class SwipeComponent implements OnInit {
         .map(a => a[1]);
 
     this.cartesRestantes = shuffleArray(this.question.responses);
-  }
-
-  async swipeModal() {
-    const modal = await this.modalController.create({
-      component: ModalPage,
-      cssClass: 'my-custom-class',
-      componentProps: {
-        correct: this.correct,
-        category: this.category,
-        explanation: this.explanation,
-        answer: this.answer
-      }
-    });
-    return await modal.present();
   }
 
   startAnimation(state) {
@@ -96,8 +82,9 @@ export class SwipeComponent implements OnInit {
     }
   }
 
-  onAnimation(value: boolean) {
-    this.undoDisabled = value;
+  onAnimation(event) {
+    this.undoDisabled = event.disabled;
+    this.startAnimation(event.anim);
   }
 
   onSelectSide(answer) {
@@ -128,16 +115,62 @@ export class SwipeComponent implements OnInit {
 
   openPopUp(event, card) {
     event.stopPropagation();
-    if (card.response.explanation) {
-      this.correct = card.correct;
-      this.category = this.question.possibilities[card.category];
-      this.answer = card.correct?
-          this.question.possibilities[card.category]:
-          card.category === 0?
-              this.question.possibilities[1]:
-              this.question.possibilities[0];
-      this.explanation = card.response.explanation;
-      this.swipeModal().then();
+    if (!card.response.explanation) {
+      return;
     }
+    this.correct = card.correct;
+    this.category = this.question.possibilities[card.category];
+    this.answer = card.correct?
+        this.question.possibilities[card.category]:
+        card.category === 0?
+            this.question.possibilities[1]:
+            this.question.possibilities[0];
+    this.explanation = card.response.explanation;
+
+    const x = event.currentTarget.getBoundingClientRect().left;
+    const y = event.currentTarget.getBoundingClientRect().top;
+    const cardWidth = event.currentTarget.getBoundingClientRect().width;
+    const cardHeight = event.currentTarget.getBoundingClientRect().height;
+
+    const offsetX = -(this.plt.width()/2 - x) + cardWidth/2;
+    const offsetY = -(this.plt.height()/2 - y) + cardHeight/2;
+
+    // Animations
+    const popupEnterAnimation = (baseEl: HTMLElement) => {
+      const backdropAnimation = this.animationController.create()
+          .addElement(baseEl.querySelector('ion-backdrop'))
+          .fromTo('opacity', '0.1', 'var(--backdrop-opacity)');
+
+      const wrapperAnimation = this.animationController.create()
+          .addElement(baseEl.querySelector('.modal-wrapper'))
+          .fromTo('borderRadius','4em', '0')
+          .fromTo('transform',
+              `translate3d(${offsetX}px, ${offsetY}px, 0) scaleX(0.1) scaleY(0.1)`,
+              'translate3d(0, 0, 0) scaleX(1) scaleY(1)');
+
+      return this.animationController.create()
+          .addElement(baseEl)
+          .easing('ease-out')
+          .duration(300)
+          .addAnimation([backdropAnimation, wrapperAnimation]);
+    }
+
+    const popupLeaveAnimation = (baseEl: any) => {
+      return popupEnterAnimation(baseEl).direction('reverse');
+    }
+    this.modalController.create({
+      component: ModalPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        correct: this.correct,
+        category: this.category,
+        explanation: this.explanation,
+        answer: this.answer
+      },
+      enterAnimation: popupEnterAnimation,
+      leaveAnimation: popupLeaveAnimation
+    }).then((modal) => {
+      modal.present();
+    });
   }
 }
