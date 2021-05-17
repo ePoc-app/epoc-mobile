@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {GestureController} from '@ionic/angular';
 import {Response} from '../../../../../../classes/contents/assessment';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'swipe-card',
@@ -16,12 +16,13 @@ import {animate, style, transition, trigger} from '@angular/animations';
   styleUrls: ['./swipe-card.component.scss'],
   animations: [
     trigger('swipeAnimations', [
-      transition('* => swipeLeft', [
-        animate('300ms ease-in', style({transform:`translateX(${-500}px) rotate(${-50}deg)`}))
-      ]),
-      transition('* => swipeRight', [
-        animate('300ms ease-in', style({transform:`translateX(${500}px) rotate(${50}deg)`}))
-      ]),
+      state('initial', style({
+        transform: '*'
+      })),
+      state('swipeLeft', style({transform:`translateX(${-500}px) rotate(${-50}deg)`})),
+      state('swipeRight', style({transform:`translateX(${500}px) rotate(${50}deg)`})),
+      transition('initial => swipeLeft', animate('300ms ease-in')),
+      transition('initial => swipeRight', animate('300ms ease-in')),
     ])
   ]
 })
@@ -37,7 +38,7 @@ export class SwipeCardComponent implements AfterViewInit {
   @Output() onAnimationRunning = new EventEmitter<boolean>();
   @ViewChild('card', {read:ElementRef}) card: ElementRef
 
-  animationState: string;
+  animationState = 'initial';
 
   constructor(
       private gestureCtrl: GestureController,
@@ -58,13 +59,11 @@ export class SwipeCardComponent implements AfterViewInit {
     }
   }
 
-  startAnimation(state) {
-    if (!this.animationState) {
-      this.zone.run(() => {
-        this.onAnimationRunning.emit(true);
-        this.animationState = state;
-      })
-    }
+  startAnimation(newState) {
+    this.zone.run(() => {
+      this.onAnimationRunning.emit(true);
+      this.animationState = newState;
+    })
   }
 
   animationDone(event) {
@@ -74,7 +73,7 @@ export class SwipeCardComponent implements AfterViewInit {
       this.selectSide(0);
     }
     this.onAnimationRunning.emit(false);
-    this.animationState = '';
+    this.animationState = 'initial';
   }
 
   selectSide(side: number) {
