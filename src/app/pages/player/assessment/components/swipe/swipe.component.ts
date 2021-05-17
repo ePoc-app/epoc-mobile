@@ -143,6 +143,7 @@ export class SwipeComponent implements OnInit {
 
       const wrapperAnimation = this.animationController.create()
           .addElement(baseEl.querySelector('.modal-wrapper'))
+          .from('opacity','1')
           .fromTo('borderRadius','4em', '0')
           .fromTo('transform',
               `translate3d(${offsetX}px, ${offsetY}px, 0) scaleX(0.1) scaleY(0.1)`,
@@ -160,7 +161,7 @@ export class SwipeComponent implements OnInit {
     }
     this.modalController.create({
       component: ModalPage,
-      cssClass: 'my-custom-class',
+      mode : 'ios',
       componentProps: {
         correct: this.correct,
         category: this.category,
