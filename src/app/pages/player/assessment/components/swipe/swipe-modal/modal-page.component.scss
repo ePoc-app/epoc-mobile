@@ -1,0 +1,39 @@
+.arrow-down {
+  align-self: end;
+  margin: 1em;
+  height: 8%;
+  width: 15%;
+}
+
+ion-item-divider {
+  height: 2%;
+}
+
+.correction {
+  align-self: center;
+  width: 40%;
+  height: 20%;
+  display: inline;
+}
+
+.response {
+  height: calc(5% - 2em);
+  margin: 2em 0 2em 2em;
+}
+
+.answer {
+  height: 5%;
+  margin: 0 2em 2em 2em;
+}
+
+.exp {
+  height: 5%;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.explanation {
+  height:55%;
+  margin-left: 2em;
+  margin-right: 2em;
+}

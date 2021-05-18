@@ -29,7 +29,13 @@ export class DragAndDropquestion extends Question{
     correctResponse: Array<{label: string, values: string[]}>;
 }
 
-class Response {
+export class Response {
     label: string;
     value: string;
+    explanation?: string;
+}
+
+export class SwipeQuestion extends Question {
+    possibilities: Array<string>;
+    correctResponse: Array<{label: string, values: string[]}>;
 }
