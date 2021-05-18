@@ -48,16 +48,16 @@ describe('DropdownListComponent', () => {
     spyOn(component.onSelectAnswer, 'emit');
     // trigger l'évènement en appelant la méthode
     component.onSelectProp({prop: p3, response: r2});
-    expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([[p1, p2], [p3], []]);
+    expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([[r1.value], [r1.value], [r2.value]]);
   });
 
 
   it ('should update the array answers[string[]]', () => {
     component.onSelectProp({prop: p1, response: r1});
-    expect(component.answers).toEqual([[p1], [], []]);
+    expect(component.answers).toEqual([[r1.value], [], []]);
     component.onSelectProp({prop: p2, response: r1});
-    expect(component.answers).toEqual([[p1, p2], [], []]);
+    expect(component.answers).toEqual([[r1.value], [r1.value], []]);
     component.onSelectProp({prop: p3, response: r2});
-    expect(component.answers).toEqual([[p1, p2], [p3], []]);
+    expect(component.answers).toEqual([[r1.value], [r1.value], [r2.value]]);
   });
 });

@@ -1,8 +1,8 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {DropdownListQuestion} from '../../../../../classes/contents/assessment';
+import {DropdownListQuestion, Response} from '../../../../../classes/contents/assessment';
 
 @Component({
-  selector: 'app-dropdown-list',
+  selector: 'dropdown-list',
   templateUrl: './dropdown-list.component.html',
   styleUrls: ['./dropdown-list.component.scss'],
 })
@@ -13,17 +13,18 @@ export class DropdownListComponent implements OnInit {
 
   @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
-  answers: Array<Array<string>>
+  correctedAnswers: Array<{proposition: string, answer: Response, correct: boolean}> = [];
+  answers: Array<Array<string>> = [];
   constructor() { }
 
   ngOnInit() {
-    this.question.responses.forEach((response) => {
-      this.answers[this.question.responses.indexOf(response)] = [];
+    this.question.propositions.forEach((prop) => {
+      this.answers[this.question.propositions.indexOf(prop)] = [];
     })
   }
 
   onSelectProp({prop, response}) {
-    this.answers[this.question.responses.indexOf(response)].push(prop);
+    this.answers[this.question.propositions.indexOf(prop)].push(response.value);
     if (this.answers.length === this.question.propositions.length) {
       this.selectAnswers();
     }
