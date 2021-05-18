@@ -1,8 +1,12 @@
 <div class="propositions" *ngFor="let prop of this.question.propositions">
   <p>{{prop}}</p>
-  <div class="select" (click)="openActionSheet()">
+  <div class="select" (click)="openActionSheet($event)">
     <p>
-      {{this.correctedAnswers[this.question.propositions.indexOf(prop)]?this.correctedAnswers[this.question.propositions.indexOf(prop)].answer: ''}}
+      {{this.correctedAnswers[this.question.propositions.indexOf(prop)]
+            ?this.correctedAnswers[this.question.propositions.indexOf(prop)].answer.label.length > 19
+                    ?this.correctedAnswers[this.question.propositions.indexOf(prop)].answer.label.slice(0,16) + '...'
+                    :this.correctedAnswers[this.question.propositions.indexOf(prop)].answer.label
+            : ''}}
     </p>
     <ion-icon name="chevron-down-outline"></ion-icon>
   </div>

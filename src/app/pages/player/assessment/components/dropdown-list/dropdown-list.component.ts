@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {DropdownListQuestion, Response} from '../../../../../classes/contents/assessment';
+import {ActionSheetController} from '@ionic/angular';
 
 @Component({
   selector: 'dropdown-list',
@@ -15,27 +16,49 @@ export class DropdownListComponent implements OnInit {
 
   correctedAnswers: Array<{proposition: string, answer: Response, correct: boolean}> = [];
   answers: Array<Array<string>> = [];
-  constructor() { }
+  constructor(private actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
-    this.question.propositions.forEach((prop) => {
-      this.answers[this.question.propositions.indexOf(prop)] = [];
-    })
   }
 
   onSelectProp({prop, response}) {
-    this.answers[this.question.propositions.indexOf(prop)].push(response.value);
-    if (this.answers.length === this.question.propositions.length) {
+    if (!this.question.responses.includes(response)) {
+      throw Error('La réponse n\'est pas valide');
+    } else {
+      this.answers[this.question.propositions.indexOf(prop)] = [response.value];
+        const correctedAnswer = {
+          proposition: prop,
+          answer: response,
+          correct: true
+          // correct: this.question.correctResponse[this.question.propositions.indexOf(prop)].values.includes(response.value)
+        };
+        this.correctedAnswers.slice(this.question.propositions.indexOf(prop), 1);
+        this.correctedAnswers[this.question.propositions.indexOf(prop)] = correctedAnswer;
+        if (this.answers.length !== this.question.propositions.length || this.answers.includes(undefined)) {
+          return;
+        }
       this.selectAnswers();
     }
+
   }
 
   selectAnswers() {
     this.onSelectAnswer.emit(this.answers);
   }
 
-  openActionSheet() {
-
+  async openActionSheet(event) {
+    const prop = event.currentTarget.parentElement.firstChild.innerText;
+      const actionSheet = await this.actionSheetController.create();
+      actionSheet.header = '?';
+      this.question.responses.forEach((response) => {
+        actionSheet.buttons.push({
+          text: response.label,
+          handler: () => {
+            this.onSelectProp({prop, response});
+          }
+        })
+      })
+      await actionSheet.present();
   }
 
 }
