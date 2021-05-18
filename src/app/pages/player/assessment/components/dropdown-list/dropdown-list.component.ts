@@ -16,6 +16,25 @@ export class DropdownListComponent implements OnInit {
   answers: Array<Array<string>>
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.question.responses.forEach((response) => {
+      this.answers[this.question.responses.indexOf(response)] = [];
+    })
+  }
+
+  onSelectProp({prop, response}) {
+    this.answers[this.question.responses.indexOf(response)].push(prop);
+    if (this.answers.length === this.question.propositions.length) {
+      this.selectAnswers();
+    }
+  }
+
+  selectAnswers() {
+    this.onSelectAnswer.emit(this.answers);
+  }
+
+  openActionSheet() {
+
+  }
 
 }
