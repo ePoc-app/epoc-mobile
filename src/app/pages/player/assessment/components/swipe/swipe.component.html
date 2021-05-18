@@ -1,0 +1,48 @@
+<div class="header" [hidden]="this.correctionState">
+  <p>Glissez la carte à droite ou à gauche</p>
+  <h2>{{this.cartesTriees.length}} / {{this.cartesTriees.length + this.cartesRestantes.length}}</h2>
+  <ion-progress-bar [value]="this.cartesTriees.length/(this.cartesRestantes.length + this.cartesTriees.length)"></ion-progress-bar>
+</div>
+
+<div class="header-correction" [hidden]="!this.correctionState">
+  <p>{{this.nbCorrect}} / {{this.cartesTriees.length}} réponses justes.</p>
+</div>
+
+<div class="swipe-cards" *ngIf="cartesRestantes.length !==0">
+  <swipe-card *ngFor ="let card of cartesRestantes"
+              [@undoAnimations]="animationState"
+              [possibilities] = "this.question.possibilities"
+              [response] = "card"
+              [disabled] = "false"
+              [selectedSide]="'?'"
+              (onSelectSide)="onSelectSide($event)"
+              (onAnimationRunning)="onAnimation($event)"
+  >
+  </swipe-card>
+</div>
+
+<div class ="correctedCards" *ngIf="this.correctionState">
+  <swipe-card *ngFor ="let card of cartesTriees"
+              [possibilities] = "this.question.possibilities"
+              [response] = "card.response"
+              [disabled] = "true"
+              [selectedSide]="this.question.possibilities[card.category]"
+              [correct]="card.correct"
+              (click)="this.openPopUp($event, card)"
+  >
+  </swipe-card>
+</div>
+
+<div class="informatif" [hidden]="this.correctionState || this.cartesRestantes.length !== 0">
+  <p>Cliquez sur valider pour confirmer vos réponses et accéder à la correction.</p>
+</div>
+
+<ion-button mode="ios" class="undo" color="#EAEAEA"
+            style="--background:#EAEAEA; --border-radius: 15px;"
+            [ngClass]="this.cartesTriees.length <= 0?'hidden':''"
+            [hidden]="this.correctionState"
+            [disabled]="this.cartesTriees.length <= 0 || this.undoDisabled"
+            (click)="this.undo()">
+  <ion-icon name="arrow-undo-outline"></ion-icon>
+  <p>Annuler</p>
+</ion-button>

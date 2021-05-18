@@ -30,7 +30,7 @@ export class DragAndDropComponent implements OnInit {
     @Input('disabled') disabled: boolean;
     @Output() onSelectAnswer = new EventEmitter<any>();
 
-    current
+    current;
     responses;
     answer;
 
