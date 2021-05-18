@@ -1,4 +1,9 @@
 <div class="propositions" *ngFor="let prop of this.question.propositions">
   <p>{{prop}}</p>
-
+  <div class="select" (click)="openActionSheet()">
+    <p>
+      {{this.correctedAnswers[this.question.propositions.indexOf(prop)]?this.correctedAnswers[this.question.propositions.indexOf(prop)].answer: ''}}
+    </p>
+    <ion-icon name="chevron-down-outline"></ion-icon>
+  </div>
 </div>

@@ -1,0 +1,34 @@
+.propositions {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.propositions p {
+  text-align: justify;
+  width: 100%;
+}
+
+.select {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  width: 80%;
+  height: 30%;
+  min-height: 30px;
+  border-radius: 2em;
+  border: 1px solid black;
+}
+
+.select p {
+  width: 80%;
+  height: 100%;
+  margin: 0;
+  min-height: 30px;
+}
+
+.select ion-icon {
+  width: 20%;
+  height: 100%;
+  min-height: 30px;
+}
