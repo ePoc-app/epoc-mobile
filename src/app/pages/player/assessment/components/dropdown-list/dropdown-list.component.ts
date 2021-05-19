@@ -16,9 +16,12 @@ export class DropdownListComponent implements OnInit {
 
   correctedAnswers: Array<{proposition: string, answer: Response, correct: boolean}> = [];
   answers: Array<Array<string>> = [];
+  nbCorrect: number;
+
   constructor(private actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
+    this.nbCorrect = 0;
   }
 
   onSelectProp({prop, response}) {
@@ -59,6 +62,12 @@ export class DropdownListComponent implements OnInit {
         })
       })
       await actionSheet.present();
+  }
+
+  getCorrectResponse(prop: string) {
+    return this.question.responses.find(
+        (response) =>
+            response.value === this.question.correctResponse[this.question.categories.indexOf(prop)].values[0]).label;
   }
 
 }
