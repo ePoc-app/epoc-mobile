@@ -1,7 +1,3 @@
-ion-content{
-  --offset-top: var(--ion-safe-area-top) * -1!important;
-}
-
 .loader{
   position: fixed;
   top:50%;
@@ -17,10 +13,12 @@ ion-card{
 
 .reader-progress{
   width: 100%;
+  top: var(--ion-safe-area-top);
 }
 
 .reader{
   position: absolute;
+  top: var(--ion-safe-area-top);
   height:100%;
   width: 100%;
   opacity: 1;
