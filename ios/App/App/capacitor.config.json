@@ -1,0 +1,10 @@
+{
+  "appId": "fr.inria.epoc",
+  "appName": "ePoc",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "server": {
+    "url": "http://192.168.1.18:8100"
+  }
+}
