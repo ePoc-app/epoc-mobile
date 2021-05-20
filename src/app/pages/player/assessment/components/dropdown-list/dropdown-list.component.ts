@@ -17,6 +17,7 @@ export class DropdownListComponent implements OnInit {
   correctedAnswers: Array<{category: string, answer: Response, correct: boolean}> = [];
   answers: Array<Array<string>> = [];
   nbCorrect: number;
+  correctAnswers: Array<{answer: Response, correctAnswer: string}>;
 
   constructor(private actionSheetController: ActionSheetController) { }
 
@@ -25,6 +26,9 @@ export class DropdownListComponent implements OnInit {
     this.answers = this.question.correctResponse.map((zone) => {
       return [];
     });
+    this.correctAnswers = this.question.responses.map((response) => {
+      return {answer: response, correctAnswer: this.getCorrectResponse(response.value)};
+    })
   }
 
   onSelectProp({category, label}) {
@@ -79,9 +83,5 @@ export class DropdownListComponent implements OnInit {
 
   getCorrectResponse(value: string) {
     return this.question.correctResponse.find(correctResponses => correctResponses.values.includes(value)).label;
-  }
-
-  getIndex(label: string) {
-    return this.question.responses.findIndex(response => response.label === label);
   }
 }
