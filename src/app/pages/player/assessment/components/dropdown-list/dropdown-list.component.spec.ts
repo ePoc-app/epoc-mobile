@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {DropdownListQuestion, Response} from '../../../../../classes/contents/assessment'
+import {DropDownListQuestion, Response} from '../../../../../classes/contents/assessment'
 import { DropdownListComponent } from './dropdown-list.component';
 
 describe('DropdownListComponent', () => {
@@ -8,9 +8,10 @@ describe('DropdownListComponent', () => {
   const r1 = new Response();
   const r2 = new Response();
   const r3 = new Response();
-  const p1 = 'IA est une discipline scientifique. ';
-  const p2 = 'Les programmes basés sur l\'IA sont le fruit d\'un savoir par apprentissage. ';
-  const p3 = 'Tous les robots sont dotés d’intelligence artificielle. ';
+  const r4 = new Response();
+  const c1 = 'Imaginaire collectif';
+  const c2 = 'Fait scientifique';
+  const c3 = 'Troisième catégorie';
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DropdownListComponent ]
@@ -18,20 +19,22 @@ describe('DropdownListComponent', () => {
 
     fixture = TestBed.createComponent(DropdownListComponent);
     component = fixture.componentInstance;
-    r1.value = '315431';
-    r1.label = 'Fait scientifique';
-    r2.value = '221455';
-    r2.label = 'Imaginaire collectif';
-    r3.value = '367854';
-    r3.label = 'Troisième catégorie';
+    r1.value = 'A';
+    r1.label = 'IA est une discipline scientifique. ';
+    r2.value = 'B';
+    r2.label = 'Les programmes basés sur l\'IA sont le fruit d\'un savoir par apprentissage. ';
+    r3.value = 'C';
+    r3.label = 'Tous les robots sont dotés d’intelligence artificielle. ';
+    r4.value = 'D';
+    r4.label = ' Certaines IA se procurent elles-mêmes les données et n\'auront pas besoin de l\'homme. ';
     component.answers = new Array<Array<string>>();
-    component.question = new DropdownListQuestion();
-    component.question.responses = [r1, r2, r3];
-    component.question.propositions = [p1, p2, p3];
+    component.question = new DropDownListQuestion();
+    component.question.responses = [r1, r2, r3, r4];
+    component.question.categories = [c1, c2, c3];
     component.question.correctResponse =
         [
-          {label: 'Fait scientifique', values:[p1, p2]},
-          {label:'Imaginaire collectif', values:[p3]},
+          {label: 'Imaginaire collectif', values:['B', 'D']},
+          {label:'Fait scientifique', values:['A', 'C']},
           {label: 'Troisième catégorie', values: []}
         ];
     fixture.detectChanges();
@@ -42,22 +45,25 @@ describe('DropdownListComponent', () => {
   });
 
   it ('should emit onSelectAnswer event', () => {
-    component.onSelectProp({prop: p1, response: r1});
-    component.onSelectProp({prop: p2, response: r1});
+    component.onSelectProp({category: c1, label: r1.label});
+    component.onSelectProp({category: c2, label: r2.label});
+    component.onSelectProp({category: c1, label: r3.label});
     // Vérifier que l'évènement est bien émis
     spyOn(component.onSelectAnswer, 'emit');
     // trigger l'évènement en appelant la méthode
-    component.onSelectProp({prop: p3, response: r2});
-    expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([[r1.value], [r1.value], [r2.value]]);
+    component.onSelectProp({category: c2, label: r4.label});
+    expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([[r1.value, r3.value], [r2.value, r4.value], []]);
   });
 
 
   it ('should update the array answers[string[]]', () => {
-    component.onSelectProp({prop: p1, response: r1});
+    component.onSelectProp({category: c1, label: r1.label});
     expect(component.answers).toEqual([[r1.value], [], []]);
-    component.onSelectProp({prop: p2, response: r1});
-    expect(component.answers).toEqual([[r1.value], [r1.value], []]);
-    component.onSelectProp({prop: p3, response: r2});
-    expect(component.answers).toEqual([[r1.value], [r1.value], [r2.value]]);
+    component.onSelectProp({category: c2, label: r2.label});
+    expect(component.answers).toEqual([[r1.value], [r2.value], []]);
+    component.onSelectProp({category: c1, label: r3.label});
+    expect(component.answers).toEqual([[r1.value, r3.value], [r2.value], []]);
+    component.onSelectProp({category: c2, label: r4.label});
+    expect(component.answers).toEqual([[r1.value, r3.value], [r2.value, r4.value], []]);
   });
 });

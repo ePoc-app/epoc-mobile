@@ -13,8 +13,17 @@
   }
 }
 
-.propositions p:last-child {
-  text-align: left;
+.correctResponse {
+  display: flex;
+  flex-direction: row;
+  font-size: medium;
+  color: var(--ion-color-inria-blue);
+  align-items: center;
+}
+
+.correctResponse ion-icon {
+  height: 30px;
+  width: 30px;
 }
 
 .select {
@@ -41,6 +50,7 @@
 
 .select ion-icon {
   width: 50px;
+  height: 25px;
 }
 
 .correction {

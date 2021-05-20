@@ -1,23 +1,26 @@
-<p *ngIf="this.correctionState">{{this.nbCorrect}} / {{this.question.propositions.length}} réponses justes</p>
-<div class="propositions" *ngFor="let prop of this.question.propositions">
-  <p [ngClass]="{'italic': this.correctionState}">{{prop}}</p>
+<p *ngIf="this.correctionState">{{this.nbCorrect}} / {{this.question.responses.length}} réponses justes</p>
+<div class="propositions" *ngFor="let rep of this.question.responses">
+  <p [ngClass]="{'italic': this.correctionState}">{{rep.label}}</p>
   <div class="correction" (click)="!this.correctionState?openActionSheet($event):null">
     <div class="select" [ngClass]="{'disabled': this.correctionState}">
-      <p *ngIf="this.correctedAnswers[this.question.propositions.indexOf(prop)]">
-        {{this.correctedAnswers[this.question.propositions.indexOf(prop)].answer.label}}
+      <p *ngIf="this.correctedAnswers[getIndex(rep.label)]">
+        {{this.correctedAnswers[getIndex(rep.label)].category}}
       </p>
-      <p *ngIf="!this.correctedAnswers[this.question.propositions.indexOf(prop)]">
+      <p *ngIf="!this.correctedAnswers[getIndex(rep.label)]">
         Cliquez pour sélectionner
       </p>
       <ion-icon color="inria-spe" mode="ios"  name="chevron-down-outline"></ion-icon>
     </div>
     <div class ="icons">
-      <ion-icon mode="ios"  *ngIf="this.correctionState && this.correctedAnswers[this.question.propositions.indexOf(prop)].correct" name="checkmark-circle-outline" color="success" ></ion-icon>
-      <ion-icon mode="ios"  *ngIf="this.correctionState && !this.correctedAnswers[this.question.propositions.indexOf(prop)].correct" name="close-circle-outline" color="danger" ></ion-icon>
+      <ion-icon mode="ios" *ngIf="this.correctionState && this.correctedAnswers[getIndex(rep.label)].correct" name="checkmark-circle-outline" color="success" ></ion-icon>
+      <ion-icon mode="ios" *ngIf="this.correctionState && !this.correctedAnswers[getIndex(rep.label)].correct" name="close-circle-outline" color="danger" ></ion-icon>
     </div>
   </div>
-  <p *ngIf="this.correctionState && !this.correctedAnswers[this.question.propositions.indexOf(prop)].correct">
-    La bonne réponse était : <br>{{this.getCorrectResponse(prop)}}
-  </p>
+  <div class ="correctResponse" *ngIf="this.correctionState && !this.correctedAnswers[getIndex(rep.label)].correct">
+    <ion-icon color="success" name="chevron-forward-outline"></ion-icon>
+    <p>
+      {{this.getCorrectResponse(rep.value)}}
+    </p>
+  </div>
   <hr *ngIf="this.correctionState">
 </div>
