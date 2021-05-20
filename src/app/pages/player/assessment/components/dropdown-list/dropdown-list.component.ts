@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {DropdownListQuestion, Response} from '../../../../../classes/contents/assessment';
+import {DropDownListQuestion, Response} from '../../../../../classes/contents/assessment';
 import {ActionSheetController} from '@ionic/angular';
 
 @Component({
@@ -8,13 +8,13 @@ import {ActionSheetController} from '@ionic/angular';
   styleUrls: ['./dropdown-list.component.scss'],
 })
 export class DropdownListComponent implements OnInit {
-  @Input('question') question: DropdownListQuestion;
+  @Input('question') question: DropDownListQuestion;
   @Input('disabled') disabled: boolean;
   @Input('correctionState') correctionState: boolean;
 
   @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
-  correctedAnswers: Array<{proposition: string, answer: Response, correct: boolean}> = [];
+  correctedAnswers: Array<{category: string, answer: Response, correct: boolean}> = [];
   answers: Array<Array<string>> = [];
   nbCorrect: number;
 
@@ -22,52 +22,66 @@ export class DropdownListComponent implements OnInit {
 
   ngOnInit() {
     this.nbCorrect = 0;
+    this.answers = this.question.correctResponse.map((zone) => {
+      return [];
+    });
   }
 
-  onSelectProp({prop, response}) {
-    if (!this.question.responses.includes(response)) {
+  onSelectProp({category, label}) {
+    if (!this.question.responses.find(resp => resp.label === label)) {
       throw Error('La réponse n\'est pas valide');
     } else {
-      this.answers[this.question.propositions.indexOf(prop)] = [response.value];
+      this.answers[this.question.categories.indexOf(category)].push(this.question.responses.find(rep => rep.label === label).value);
         const correctedAnswer = {
-          proposition: prop,
-          answer: response,
-          correct: true
-          // correct: this.question.correctResponse[this.question.propositions.indexOf(prop)].values.includes(response.value)
+          category,
+          answer: this.question.responses.find(rep => rep.label === label),
+          correct: this.question.correctResponse[this.question.categories.indexOf(category)]
+              .values.includes(this.question.responses.find(rep => rep.label === label).value)
         };
-        this.correctedAnswers.slice(this.question.propositions.indexOf(prop), 1);
-        this.correctedAnswers[this.question.propositions.indexOf(prop)] = correctedAnswer;
-        if (this.answers.length !== this.question.propositions.length || this.answers.includes(undefined)) {
-          return;
-        }
-      this.selectAnswers();
+        this.correctedAnswers.slice(this.question.categories.indexOf(category), 1);
+        this.correctedAnswers[this.question.responses.findIndex(rep => rep.label === label)] = correctedAnswer;
+        this.selectAnswers();
     }
 
   }
 
   selectAnswers() {
+    let nbAnswer = 0;
+    this.answers.forEach((answer) => {
+      nbAnswer += answer.length;
+    })
+    if (nbAnswer !== this.question.responses.length) {
+      return;
+    }
+    this.correctedAnswers.forEach((answer) => {
+      if (answer.correct) {
+        this.nbCorrect += 1;
+      }
+    })
     this.onSelectAnswer.emit(this.answers);
   }
 
   async openActionSheet(event) {
-    const prop = event.currentTarget.parentElement.firstChild.innerText;
+    const label = event.currentTarget.parentElement.firstChild.innerText;
       const actionSheet = await this.actionSheetController.create();
-      actionSheet.header = '?';
-      this.question.responses.forEach((response) => {
+      actionSheet.mode ='ios';
+      actionSheet.cssClass = 'dropdown-actionSheet'
+      this.question.categories.forEach((category) => {
         actionSheet.buttons.push({
-          text: response.label,
+          text: category,
           handler: () => {
-            this.onSelectProp({prop, response});
+            this.onSelectProp({category, label});
           }
         })
       })
       await actionSheet.present();
   }
 
-  getCorrectResponse(prop: string) {
-    return this.question.responses.find(
-        (response) =>
-            response.value === this.question.correctResponse[this.question.categories.indexOf(prop)].values[0]).label;
+  getCorrectResponse(value: string) {
+    return this.question.correctResponse.find(correctResponses => correctResponses.values.includes(value)).label;
   }
 
+  getIndex(label: string) {
+    return this.question.responses.findIndex(response => response.label === label);
+  }
 }
