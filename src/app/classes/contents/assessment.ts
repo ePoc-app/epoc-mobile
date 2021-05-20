@@ -39,3 +39,8 @@ export class SwipeQuestion extends Question {
     possibilities: Array<string>;
     correctResponse: Array<{label: string, values: string[]}>;
 }
+
+export class DropDownListQuestion extends Question {
+    categories: Array<string>;
+    correctResponse: Array<{label: string, values: string[]}>;
+}
