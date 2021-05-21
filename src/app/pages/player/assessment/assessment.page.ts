@@ -124,6 +124,7 @@ export class AssessmentPage implements OnInit {
     }
 
     nextQuestion() {
+        this.correctionState = false;
         this.currentQuestion++;
         this.currentAnswer = '';
         this.explanationShown = false;
