@@ -126,10 +126,12 @@ export class AssessmentPage implements OnInit {
 
     initQuestion() {
         this.correctionState = false;
-        this.currentAnswer = this.questions[this.currentQuestion].responses.length ? '' : true;
         this.explanationShown = false;
         this.notransition = true;
         this.flipped = false;
+        if (this.questions[this.currentQuestion]) {
+            this.currentAnswer = this.questions[this.currentQuestion].responses.length ? '' : true;
+        }
     }
 
     nextQuestion() {
