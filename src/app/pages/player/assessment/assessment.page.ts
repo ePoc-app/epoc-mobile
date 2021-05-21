@@ -75,6 +75,7 @@ export class AssessmentPage implements OnInit {
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
             this.scoreMax = this.libraryService.calcScoreTotal(this.epoc, this.assessment.questions);
             this.questionsSuccessed = new Array(this.questions.length);
+            this.initQuestion();
         });
     }
 
@@ -123,13 +124,17 @@ export class AssessmentPage implements OnInit {
         this.questionsSuccessed[this.currentQuestion] = false;
     }
 
-    nextQuestion() {
+    initQuestion() {
         this.correctionState = false;
-        this.currentQuestion++;
-        this.currentAnswer = '';
+        this.currentAnswer = this.questions[this.currentQuestion].responses.length ? '' : true;
         this.explanationShown = false;
         this.notransition = true;
         this.flipped = false;
+    }
+
+    nextQuestion() {
+        this.currentQuestion++;
+        this.initQuestion();
         if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
