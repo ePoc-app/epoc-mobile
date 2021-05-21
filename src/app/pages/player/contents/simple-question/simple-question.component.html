@@ -36,14 +36,16 @@
     </div>
     <div class="back">
       <div class="question-card">
-        <div class="sucess" *ngIf="questionSuccessed">
-          <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
-          <h2>Bravo !</h2>
-        </div>
-        <div class="fail" *ngIf="!questionSuccessed">
-          <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
-          <h2>Non !</h2>
-        </div>
+        <ng-container *ngIf="this.question.responses.length">
+          <div class="sucess" *ngIf="questionSuccessed">
+            <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
+            <h2>Bravo !</h2>
+          </div>
+          <div class="fail" *ngIf="!questionSuccessed">
+            <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
+            <h2>Non !</h2>
+          </div>
+        </ng-container>
         <h4>Explication</h4>
         <div class="explanation">
           <div class="explanation-text">
