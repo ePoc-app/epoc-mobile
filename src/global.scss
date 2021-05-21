@@ -231,28 +231,36 @@ video {
   background: rgba(0,0,0,.75);
   z-index: 12;
 
-  .certificate-success-card{
+  .certificate-success-card {
     position: absolute;
-    top:45%;
-    left:50%;
+    top: 45%;
+    left: 50%;
     width: 90%;
     margin: 0;
     max-width: 500px;
     text-align: center;
     transform: translate(-50%, -50%);
 
-    &-header{
+    &-header {
       padding: 20px;
       font-size: 70px;
       line-height: 0;
-      color:white;
+      color: white;
       background: var(--ion-color-success);
     }
 
-    &-content{
-      *{
+    &-content {
+      * {
         margin: 1em;
       }
     }
   }
+}
+
+.dropdown-actionSheet {
+  --button-background: #384157;
+}
+
+.dropdown-actionSheet span {
+  color: #ADABC2;
 }

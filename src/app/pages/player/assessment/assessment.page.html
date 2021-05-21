@@ -36,6 +36,9 @@
                 <ng-container *ngIf="question.type === 'swipe'">
                   <swipe class="response" [question]="question" [disabled]="explanationShown" [correctionState]=this.correctionState (onSelectAnswer)="updateCurrentAnswer($event)"></swipe>
                 </ng-container>
+                <ng-container *ngIf="question.type === 'dropdown-list'">
+                  <dropdown-list class="response" [question]="question" [disabled]="explanationShown" [correctionState]=this.correctionState (onSelectAnswer)="updateCurrentAnswer($event)"></dropdown-list>
+                </ng-container>
 
               </div>
             </div>
