@@ -63,6 +63,10 @@ ion-card{
         font-size: 17px;
       }
 
+      span{
+        text-transform: lowercase;
+      }
+
       .breadcrumb{
         font-size: 12px;
         span{
@@ -106,6 +110,7 @@ ion-card{
 
           .number{
             color: white;
+            text-transform: capitalize;
           }
 
           .title {
@@ -344,4 +349,8 @@ ion-card{
       color:var(--ion-color-inria-blue);
     }
   }
+}
+
+p b {
+  text-transform: capitalize;
 }

@@ -34,5 +34,5 @@ export class Chapter {
 }
 
 export class Parameters {
-    chapterToModule: boolean;
+    chapterParameter?: string;
 }
