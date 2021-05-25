@@ -38,7 +38,7 @@
             <ion-card class="chapter" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id">
               <img [src]="(chapter.image ? libraryService.rootFolder +  chapter.image : 'assets/img/placeholder.png') | safe: 'url'"/>
               <ion-card-content>
-                <b>Chapitre {{index + 1}} : </b> {{chapter.title}}
+                <b>{{epoc.parameters.chapterToModule?'Module':'Chapitre'}} {{index + 1}} : </b> {{chapter.title}}
               </ion-card-content>
             </ion-card>
             </ion-col>
