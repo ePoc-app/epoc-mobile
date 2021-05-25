@@ -12,6 +12,7 @@ export class Epoc {
     summary: html;
     objectives: string[];
     certificateScore: number;
+    parameters: Parameters;
     contents: Record<uid, Content>;
     chapters: Record<uid, Chapter>;
     questions: Record<uid, Question>;
@@ -30,4 +31,8 @@ export class Chapter {
     videoCount?: number;
     assessmentCount?: number;
     initializedContents: Content[];
+}
+
+export class Parameters {
+    chapterToModule: boolean;
 }
