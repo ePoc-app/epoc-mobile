@@ -17,11 +17,11 @@
     <ion-row class="epoc-specs ion-text-center">
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="book" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value" *ngIf="!epoc.parameters.chapterToModule">
-          {{(epoc.chapters | values).length}} {{(epoc.chapters | values).length > 1 ? 'chapitres' :'chapitre'}}
-        </div>
-        <div class="epoc-spec-value" *ngIf="epoc.parameters.chapterToModule">
-          {{(epoc.chapters | values).length}} {{(epoc.chapters | values).length > 1 ? 'modules' :'module'}}
+        <div class="epoc-spec-value">
+          {{(epoc.chapters | values).length}} {{(epoc.chapters | values).length > 1 ?
+                (epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter + 's' : 'chapitres')
+                :(epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'chapitre')
+          }}
         </div>
       </ion-col>
       <ion-col size="4">
@@ -30,7 +30,7 @@
       </ion-col>
       <ion-col size="4">
         <div class="epoc-spec-icon"><ion-icon name="time" color="inria-blue"></ion-icon></div>
-        <div class="epoc-spec-value">10 min par {{epoc.parameters.chapterToModule? 'module' : 'chapitre'}}</div>
+        <div class="epoc-spec-value">10 min par {{epoc.parameters.chapterParameter? epoc.parameters.chapterParameter : 'chapitre'}}</div>
       </ion-col>
     </ion-row>
 
