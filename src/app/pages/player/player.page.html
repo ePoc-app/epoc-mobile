@@ -114,6 +114,12 @@
 
               <ng-container *ngIf="content.type === 'simple-question'">
                 <div class="page-wrapper">
+                  <div class="page-header" *ngIf="content.title">
+                    <ion-icon name="help-circle-outline" size="large"></ion-icon>
+                    <div class="title">
+                      <h1>{{content.title}}</h1>
+                    </div>
+                  </div>
                   <div class="page-content page-content-simple-question">
                     <simple-question [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]"></simple-question>
                   </div>
