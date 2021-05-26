@@ -11,6 +11,7 @@ export class DropdownListComponent implements OnInit {
   @Input('question') question: DropDownListQuestion;
   @Input('disabled') disabled: boolean;
   @Input('correctionState') correctionState: boolean;
+  @Input('solution') solution: boolean;
 
   @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
@@ -23,6 +24,8 @@ export class DropdownListComponent implements OnInit {
 
   ngOnInit() {
     this.nbCorrect = 0;
+    this.correctionState = false;
+    this.solution = false;
     this.answers = this.question.correctResponse.map((zone) => {
       return [];
     });
@@ -35,7 +38,12 @@ export class DropdownListComponent implements OnInit {
     if (!this.question.responses.find(resp => resp.label === label)) {
       throw Error('La réponse n\'est pas valide');
     } else {
-      this.answers[this.question.categories.indexOf(category)].push(this.question.responses.find(rep => rep.label === label).value);
+        this.answers.forEach((categ) => {
+          if (categ.includes(this.question.responses.find(rep => rep.label === label).value)) {
+            categ.splice(categ.indexOf(this.question.responses.find(rep => rep.label === label).value), 1);
+          }
+        })
+        this.answers[this.question.categories.indexOf(category)].push(this.question.responses.find(rep => rep.label === label).value);
         const correctedAnswer = {
           category,
           answer: this.question.responses.find(rep => rep.label === label),
@@ -54,9 +62,10 @@ export class DropdownListComponent implements OnInit {
     this.answers.forEach((answer) => {
       nbAnswer += answer.length;
     })
-    if (nbAnswer !== this.question.responses.length) {
+    if (nbAnswer < this.question.responses.length) {
       return;
     }
+    this.nbCorrect = 0;
     this.correctedAnswers.forEach((answer) => {
       if (answer.correct) {
         this.nbCorrect += 1;
@@ -83,5 +92,11 @@ export class DropdownListComponent implements OnInit {
 
   getCorrectResponse(value: string) {
     return this.question.correctResponse.find(correctResponses => correctResponses.values.includes(value)).label;
+  }
+
+  toggleSolution(event) {
+    event.stopPropagation();
+    const a = this.solution;
+    this.solution = !a;
   }
 }
