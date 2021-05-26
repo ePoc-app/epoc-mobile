@@ -37,7 +37,7 @@
                   <swipe class="response" [question]="question" [disabled]="explanationShown" [correctionState]=this.correctionState (onSelectAnswer)="updateCurrentAnswer($event)"></swipe>
                 </ng-container>
                 <ng-container *ngIf="question.type === 'dropdown-list'">
-                  <dropdown-list class="response" [question]="question" [disabled]="explanationShown" [correctionState]=this.correctionState (onSelectAnswer)="updateCurrentAnswer($event)"></dropdown-list>
+                  <dropdown-list class="response" [question]="question" [disabled]="explanationShown" [correctionState]=this.correctionState [solution]="this.solution" (onSelectAnswer)="updateCurrentAnswer($event)"></dropdown-list>
                 </ng-container>
 
               </div>
@@ -109,7 +109,23 @@
 <ion-footer *ngIf="questions && currentQuestion < questions.length"
             [ngClass]="{'collapse': questions[currentQuestion].type ==='swipe' && !currentAnswer}"
 >
-  <ion-button color="medium" (click)="flip()" *ngIf="explanationShown && this.questions[currentQuestion].explanation !== undefined"><ion-icon name="repeat-outline"></ion-icon></ion-button>
+
+  <div class="buttons" *ngIf="this.questions[currentQuestion].type === 'dropdown-list'">
+<!-- Ajouter le disabled de toggleSolution si l'utilisateur à tout juste -->
+    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.correctionState">
+      <div class="answerState" *ngIf="!solution">
+        <ion-icon name="bulb-outline"></ion-icon>
+        <p>SOLUTION</p>
+      </div>
+      <div class="solutionState" *ngIf="solution">
+        <p>VOS REPONSES</p>
+      </div>
+    </ion-button>
+    <ion-button class="explication" *ngIf="this.correctionState" (click)="flip()">
+      <ion-icon name="id-card-outline"></ion-icon>
+      <p>EXPLICATION</p>
+    </ion-button>
+  </div>
   <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer(); correctionState = true" *ngIf="!explanationShown">Valider</ion-button>
   <ion-button class="check-answer" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>

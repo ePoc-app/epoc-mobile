@@ -4,11 +4,9 @@
 
 ion-footer{
   display: flex;
+  flex-direction: column;
   padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
   border-top: 1px solid var(--ion-color-light);
-  .check-answer{
-    flex: 1;
-  }
   &.collapse {
     visibility: collapse;
   }
@@ -198,4 +196,39 @@ ion-footer{
   100% {
     transform: rotate3d(0, 0, 0, 180deg);
   }
+}
+
+
+.toggleSolution {
+  width: 50%;
+}
+
+.answerState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.solutionState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.explication {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 }

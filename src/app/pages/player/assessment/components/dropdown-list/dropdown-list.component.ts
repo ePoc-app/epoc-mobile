@@ -93,10 +93,4 @@ export class DropdownListComponent implements OnInit {
   getCorrectResponse(value: string) {
     return this.question.correctResponse.find(correctResponses => correctResponses.values.includes(value)).label;
   }
-
-  toggleSolution(event) {
-    event.stopPropagation();
-    const a = this.solution;
-    this.solution = !a;
-  }
 }

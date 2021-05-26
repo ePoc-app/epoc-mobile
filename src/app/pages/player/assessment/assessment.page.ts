@@ -43,6 +43,7 @@ export class AssessmentPage implements OnInit {
     flipped = false;
     certificateShown = false;
     correctionState: boolean;
+    solution = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -125,6 +126,7 @@ export class AssessmentPage implements OnInit {
     }
 
     initQuestion() {
+        this.solution = false;
         this.correctionState = false;
         this.explanationShown = false;
         this.notransition = true;
@@ -223,5 +225,11 @@ export class AssessmentPage implements OnInit {
             document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
             this.flipped = !this.flipped;
         }
+    }
+
+    toggleSolution(event) {
+        event.stopPropagation();
+        const a = this.solution;
+        this.solution = !a;
     }
 }
