@@ -42,6 +42,12 @@
   &.disabled {
     background-color: var(--ion-color-inria-grey);
   }
+  &.correct {
+    background: var(--ion-color-inria-correct-rgba60);
+  }
+  &.incorrect {
+    background: var(--ion-color-inria-incorrect-rgba60);
+  }
 }
 
 .select p {
@@ -77,4 +83,46 @@ hr {
   width: 100%;
   background-color: black;
   height: 1px;
+}
+
+.toggleSolution {
+  background-color: var(--ion-color-primary);
+  color: white;
+  text-transform: uppercase;
+  height: 50px;
+  width: 45%;
+}
+
+.answerState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.solutionState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.explication {
+  background-color: var(--ion-color-primary);
+  color: white;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 50px;
+  width: 45%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 }

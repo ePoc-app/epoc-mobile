@@ -1,26 +1,43 @@
-<p class="nbCorrect" *ngIf="this.correctionState">{{this.nbCorrect}} / {{this.question.responses.length}} réponses justes</p>
+<p class="nbCorrect" *ngIf="this.correctionState && !this.solution">{{this.nbCorrect}} / {{this.question.responses.length}} réponses justes</p>
+<p class="nbCorrect" *ngIf="this.correctionState && this.solution">Solution</p>
 <div class="propositions" *ngFor="let rep of this.question.responses">
   <p [ngClass]="{'italic': this.correctionState}">{{rep.label}}</p>
   <div class="correction" (click)="!this.correctionState?this.openActionSheet($event):null">
-    <div class="select" [ngClass]="{'disabled': this.correctionState}">
-      <p *ngIf="this.correctedAnswers[this.question.responses.indexOf(rep)]">
+    <div class="select"
+         [ngClass]="
+         {'disabled': this.correctionState,
+         'correct': (this.solution) || (this.correctionState && this.correctedAnswers[this.question.responses.indexOf(rep)].correct),
+         'incorrect': !this.solution && this.correctionState && !this.correctedAnswers[this.question.responses.indexOf(rep)].correct}">
+      <p *ngIf="this.correctedAnswers[this.question.responses.indexOf(rep)] && !this.correctionState">
         {{this.correctedAnswers[this.question.responses.indexOf(rep)].category}}
       </p>
-      <p *ngIf="!this.correctedAnswers[this.question.responses.indexOf(rep)]">
+      <p *ngIf="!this.correctedAnswers[this.question.responses.indexOf(rep)] && !this.correctionState">
         Cliquez pour sélectionner
       </p>
-      <ion-icon color="inria-spe" mode="ios"  name="chevron-down-outline"></ion-icon>
+      <p *ngIf="this.correctionState && this.solution">
+        {{this.correctAnswers[this.question.responses.indexOf(rep)].correctAnswer}}
+      </p>
+      <p *ngIf="this.correctionState && !this.solution">
+        {{this.correctedAnswers[this.question.responses.indexOf(rep)].category}}
+      </p>
+      <ion-icon *ngIf="!this.correctionState" color="inria-spe" mode="ios"  name="chevron-down-outline"></ion-icon>
     </div>
-    <div class ="icons">
-      <ion-icon mode="ios" *ngIf="this.correctionState && this.correctedAnswers[this.question.responses.indexOf(rep)].correct" name="checkmark-circle-outline" color="success" ></ion-icon>
-      <ion-icon mode="ios" *ngIf="this.correctionState && !this.correctedAnswers[this.question.responses.indexOf(rep)].correct" name="close-circle-outline" color="danger" ></ion-icon>
-    </div>
-  </div>
-  <div class ="correctResponse" *ngIf="this.correctionState && !this.correctedAnswers[this.question.responses.indexOf(rep)].correct">
-    <ion-icon color="success" name="checkmark-outline"></ion-icon>
-    <p>
-      {{this.correctAnswers[this.question.responses.indexOf(rep)].correctAnswer}}
-    </p>
   </div>
   <hr *ngIf="this.correctionState">
+</div>
+
+<div class="buttons">
+  <button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.correctionState" [disabled]="this.nbCorrect === this.question.responses.length">
+    <div class="answerState" *ngIf="!solution">
+      <ion-icon name="bulb-outline"></ion-icon>
+      <p>SOLUTION</p>
+    </div>
+    <div class="solutionState" *ngIf="solution">
+      <p>VOS REPONSES</p>
+    </div>
+  </button>
+  <button class="explication" *ngIf="this.correctionState">
+    <ion-icon name="id-card-outline"></ion-icon>
+    <p>EXPLICATION</p>
+  </button>
 </div>
