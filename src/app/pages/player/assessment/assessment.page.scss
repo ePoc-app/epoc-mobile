@@ -201,6 +201,7 @@ ion-footer{
 
 .toggleSolution {
   width: 50%;
+  justify-content: space-around;
 }
 
 .answerState {
@@ -231,4 +232,8 @@ ion-footer{
   width: 100%;
   justify-content: space-around;
   align-items: center;
+  ion-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
