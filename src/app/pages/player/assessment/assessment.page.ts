@@ -42,8 +42,7 @@ export class AssessmentPage implements OnInit {
     notransition = false;
     flipped = false;
     certificateShown = false;
-    correctionState: boolean;
-    solution = false;
+    solutionShown = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -126,8 +125,7 @@ export class AssessmentPage implements OnInit {
     }
 
     initQuestion() {
-        this.solution = false;
-        this.correctionState = false;
+        this.solutionShown = false;
         this.explanationShown = false;
         this.notransition = true;
         this.flipped = false;
@@ -229,7 +227,6 @@ export class AssessmentPage implements OnInit {
 
     toggleSolution(event) {
         event.stopPropagation();
-        const a = this.solution;
-        this.solution = !a;
+        this.solutionShown = !this.solutionShown;
     }
 }

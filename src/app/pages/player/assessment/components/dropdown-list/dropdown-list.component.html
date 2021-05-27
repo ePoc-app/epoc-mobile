@@ -1,24 +1,14 @@
-<p class="nbCorrect" *ngIf="this.correctionState && !this.solution">{{this.nbCorrect}} / {{this.question.responses.length}} réponses justes</p>
-<p class="nbCorrect" *ngIf="this.correctionState && this.solution">Solution</p>
-<div class="propositions" *ngFor="let rep of this.question.responses">
-  <p [ngClass]="{'italic': this.correctionState}">{{rep.label}}</p>
-  <div class="correction" (click)="!this.correctionState?this.openActionSheet($event):null">
+<p class="nbCorrect">{{selectHeader}}</p>
+<div class="propositions" *ngFor="let rep of question.responses">
+  <p [ngClass]="{'italic': correctionState}">{{rep.label}}</p>
+  <div class="correction" (click)="!correctionState?openActionSheet($event):null">
     <div class="select"
          [ngClass]="
-         {'disabled': this.correctionState,
-         'correct': (this.solution) || (this.correctionState && this.correctedAnswers[this.question.responses.indexOf(rep)].correct),
-         'incorrect': !this.solution && this.correctionState && !this.correctedAnswers[this.question.responses.indexOf(rep)].correct}">
-      <p *ngIf="this.correctedAnswers[this.question.responses.indexOf(rep)] && !this.correctionState">
-        {{this.correctedAnswers[this.question.responses.indexOf(rep)].category}}
-      </p>
-      <p *ngIf="!this.correctedAnswers[this.question.responses.indexOf(rep)] && !this.correctionState">
-        Cliquez pour sélectionner
-      </p>
-      <p *ngIf="this.correctionState && this.solution">
-        {{this.correctAnswers[this.question.responses.indexOf(rep)].correctAnswer}}
-      </p>
-      <p *ngIf="this.correctionState && !this.solution">
-        {{this.correctedAnswers[this.question.responses.indexOf(rep)].category}}
+         {'disabled': correctionState,
+         'correct': selectClass[question.responses.indexOf(rep)] === 'correct',
+         'incorrect': selectClass[question.responses.indexOf(rep)] === 'incorrect'}">
+      <p>
+        {{selectLabel[question.responses.indexOf(rep)]}}
       </p>
       <ion-icon *ngIf="!this.correctionState" color="inria-spe" mode="ios"  name="chevron-down-outline"></ion-icon>
     </div>
