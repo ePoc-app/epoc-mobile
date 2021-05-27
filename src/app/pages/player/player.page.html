@@ -72,7 +72,7 @@
             <ion-slide>
               <ng-container *ngIf="content.type === 'html'">
                 <div class="page-wrapper">
-                  <div class="page-header">
+                  <div class="page-header" *ngIf="content.title">
                     <ion-icon name="document-text" size="large"></ion-icon>
                     <div class="title">
                       <h1>{{content.title}}</h1>
@@ -90,7 +90,7 @@
 
               <ng-container *ngIf="content.type === 'video'">
                 <div class="page-wrapper">
-                  <div class="page-header">
+                  <div class="page-header" *ngIf="content.title">
                     <ion-icon name="videocam" size="large"></ion-icon>
                     <div class="title">
                       <h1>{{content.title}}</h1>
@@ -114,6 +114,12 @@
 
               <ng-container *ngIf="content.type === 'simple-question'">
                 <div class="page-wrapper">
+                  <div class="page-header" *ngIf="content.title">
+                    <ion-icon name="help-circle-outline" size="large"></ion-icon>
+                    <div class="title">
+                      <h1>{{content.title}}</h1>
+                    </div>
+                  </div>
                   <div class="page-content page-content-simple-question">
                     <simple-question [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]"></simple-question>
                   </div>
@@ -122,7 +128,7 @@
 
               <ng-container *ngIf="content.type === 'choice'">
                 <div class="page-wrapper">
-                  <div class="page-header">
+                  <div class="page-header" *ngIf="content.title">
                     <ion-icon name="git-branch"></ion-icon>
                     <div class="title">
                       <h1>{{content.title}}</h1>
@@ -136,7 +142,7 @@
 
               <ng-container *ngIf="content.type === 'assessment'">
                 <div class="page-wrapper">
-                  <div class="page-header">
+                  <div class="page-header" *ngIf="content.title">
                     <ion-icon name="checkbox" size="large"></ion-icon>
                     <div class="title">
                       <h1>{{content.title}}</h1>
