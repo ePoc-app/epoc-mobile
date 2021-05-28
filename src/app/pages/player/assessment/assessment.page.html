@@ -22,7 +22,7 @@
                 </div>
 
                 <ng-container *ngIf="question.type === 'choice'">
-                  <simple-choice class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
+                  <simple-choice class="response" [question]="question" [correctionState]="explanationShown" [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
                 </ng-container>
                 <ng-container *ngIf="question.type === 'multiple-choice'">
                   <multiple-choice class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
@@ -110,7 +110,7 @@
             [ngClass]="{'collapse': questions[currentQuestion].type === 'swipe' && !currentAnswer}"
 >
 
-  <div class="buttons" *ngIf="(this.questions[currentQuestion].type === 'dropdown-list' || this.questions[currentQuestion].type === 'swipe')">
+  <div class="buttons" *ngIf="(this.questions[currentQuestion].type === 'dropdown-list' || this.questions[currentQuestion].type === 'swipe' || this.questions[currentQuestion].type === 'choice')">
 <!-- Ajouter le disabled de toggleSolution si l'utilisateur à tout juste -->
     <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown">
       <div class="answerState" *ngIf="!solutionShown">
