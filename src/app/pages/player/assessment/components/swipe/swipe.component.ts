@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import {Response, SwipeQuestion} from '../../../../../classes/contents/assessment';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {AnimationController, ModalController, Platform} from '@ionic/angular';
@@ -21,20 +21,33 @@ import {ModalPage} from './swipe-modal/modal-page.component';
     ])
   ]
 })
-export class SwipeComponent implements OnInit {
+export class SwipeComponent implements OnInit, OnChanges {
 
   @Input ('question') question: SwipeQuestion;
-  @Input('disabled') disabled: boolean;
   @Input('correctionState') correctionState: boolean;
+  @Input('solutionShown') solutionShown: boolean;
+
   @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
-  cartesRestantes: Array<Response> = [];
-  cartesTriees: Array<{response: Response, category: number, correct: boolean}> = [];
-  cardsToTheLeft: Array<string> = [];
-  cardsToTheRight: Array<string> = [];
-  undoDisabled: boolean;
-  nbCorrect = 0;
+  cardsSorted: Array<{response: Response, category: number, correct: boolean}> = [];
+  // Arrays to loop on when in correction mode
+  cardsSortedToLeft: Array<{response: Response, correct: boolean}> = [];
+  cardsSortedToRight: Array<{response: Response, correct: boolean}> = [];
+
+  // Array to loop on when in normal mode
+  cardsRemaining: Array<Response> = [];
+
+  // Used in html to display values
+  nbCorrect: number;
+  selectHeader: string;
+
+  // Sent to parent
+  answersToTheLeft: Array<string> = [];
+  answersToTheRight: Array<string> = [];
+
+  // Related to animation
   animationState: string;
+  undoDisabled: boolean;
 
   // Modal
   correct: boolean;
@@ -45,12 +58,70 @@ export class SwipeComponent implements OnInit {
   constructor(public modalController: ModalController, public animationController: AnimationController, private plt: Platform) {}
 
   ngOnInit() {
+    this.nbCorrect = 0;
+    this.correctionState = false;
+    this.solutionShown = false;
     const shuffleArray = arr => arr
         .map(a => [Math.random(), a])
         .sort((a, b) => a[0] - b[0])
         .map(a => a[1]);
+    this.cardsRemaining = shuffleArray(this.question.responses);
+  }
 
-    this.cartesRestantes = shuffleArray(this.question.responses);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.correctionState && changes.correctionState.currentValue) {
+      this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
+    } else if (changes.correctionState && changes.correctionState.currentValue === false) {
+      this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
+    }
+    if (changes.solutionShown && changes.solutionShown.currentValue) {
+      this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
+    } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
+      this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
+    }
+  }
+
+  updateDisplay(correctionState: boolean, solutionShown: boolean) {
+      if (!correctionState) {
+        this.selectHeader = 'Glissez la carte à gauche ou à droite';
+      } else {
+        this.fillCorrectionArray(solutionShown);
+        if (!solutionShown) {
+          this.selectHeader = this.nbCorrect + ' / ' + this.question.responses.length + ' réponses justes';
+        } else {
+          this.selectHeader = 'Solution';
+        }
+      }
+  }
+
+  fillCorrectionArray(solutionShown: boolean) {
+    if (solutionShown) {
+      this.cardsSortedToLeft = [];
+      this.cardsSortedToRight = [];
+      console.log(this.question.correctResponse);
+      this.question.correctResponse[0].values.forEach((value) => {
+        this.cardsSortedToLeft.push({
+          response: this.question.responses.find(response => response.value === value),
+          correct: true
+        });
+      })
+      this.question.correctResponse[1].values.forEach((value) => {
+        this.cardsSortedToRight.push({
+          response: this.question.responses.find(response => response.value === value),
+          correct: true
+        });
+      })
+    } else {
+      this.cardsSortedToLeft = [];
+      this.cardsSortedToRight = [];
+      this.cardsSorted.forEach((card) => {
+        if (card.category === 0) {
+          this.cardsSortedToLeft.push(card);
+        } else if (card.category === 1) {
+          this.cardsSortedToRight.push(card);
+        }
+      })
+    }
   }
 
   startAnimation(state) {
@@ -58,26 +129,26 @@ export class SwipeComponent implements OnInit {
   }
 
   undo() {
-    if (this.cartesTriees.length === 0){
+    if (this.cardsSorted.length === 0){
       throw new Error('Array of cards swiped is empty');
     }
-    const response = this.cartesTriees[this.cartesTriees.length - 1].response;
-    this.cartesRestantes.push(response);
-    if (this.cardsToTheLeft.includes(response.value)) {
-      this.cardsToTheLeft.splice(this.cardsToTheLeft.indexOf(response.value), 1);
+    const response = this.cardsSorted[this.cardsSorted.length - 1].response;
+    this.cardsRemaining.push(response);
+    if (this.answersToTheLeft.includes(response.value)) {
+      this.answersToTheLeft.splice(this.answersToTheLeft.indexOf(response.value), 1);
     } else {
-      this.cardsToTheRight.splice(this.cardsToTheRight.indexOf(response.value), 1);
+      this.answersToTheRight.splice(this.answersToTheRight.indexOf(response.value), 1);
     }
-    if (this.cartesTriees[this.cartesTriees.length -1].correct){
+    if (this.cardsSorted[this.cardsSorted.length -1].correct){
       this.nbCorrect -= 1;
     }
-    if (this.cartesTriees[this.cartesTriees.length -1].category === 0) {
+    if (this.cardsSorted[this.cardsSorted.length -1].category === 0) {
       this.startAnimation('leftToRight');
-    } else if (this.cartesTriees[this.cartesTriees.length - 1].category === 1) {
+    } else if (this.cardsSorted[this.cardsSorted.length - 1].category === 1) {
       this.startAnimation('rightToLeft');
     }
-    this.cartesTriees.pop();
-    if (this.cartesRestantes.length === 1) {
+    this.cardsSorted.pop();
+    if (this.cardsRemaining.length === 1) {
       this.onSelectAnswer.emit();
     }
   }
@@ -92,11 +163,11 @@ export class SwipeComponent implements OnInit {
       throw new Error('Answer is not a possibility');
     } else {
       if (answer.category === 0) {
-        this.cardsToTheLeft.push(answer.rep.value);
-        this.cartesRestantes.pop();
+        this.answersToTheLeft.push(answer.rep.value);
+        this.cardsRemaining.pop();
       } else if (answer.category === 1) {
-        this.cardsToTheRight.push(answer.rep.value);
-        this.cartesRestantes.pop();
+        this.answersToTheRight.push(answer.rep.value);
+        this.cardsRemaining.pop();
       }
       const correctedCard = {
         response: answer.rep,
@@ -106,16 +177,17 @@ export class SwipeComponent implements OnInit {
       if (correctedCard.correct) {
         this.nbCorrect += 1;
       }
-      this.cartesTriees.push(correctedCard);
-      if (this.cartesRestantes.length <= 0) {
-        this.onSelectAnswer.emit([this.cardsToTheLeft, this.cardsToTheRight]);
+      this.cardsSorted.push(correctedCard);
+      if (this.cardsRemaining.length <= 0) {
+        this.fillCorrectionArray(false);
+        this.onSelectAnswer.emit([this.answersToTheLeft, this.answersToTheRight]);
       }
     }
   }
 
   openPopUp(event, card) {
     event.stopPropagation();
-    if (!card.response.explanation) {
+    if (!card.response.explanation || this.solutionShown) {
       return;
     }
     this.correct = card.correct;

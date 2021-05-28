@@ -3,22 +3,12 @@
   margin-bottom: 5%;
 }
 
-.correctedCards {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.correctedCards swipe-card {
-  width: calc(50% - 0.4em);
-  min-height: 190px;
-  margin: 0.2em;
-}
-
 .header p {
   margin-top: 0;
-  font-style: italic;
-  font-weight: lighter;
-  font-size: x-small;
+  color: var(--ion-color-inria-blue);
+  &.notInCorrection{
+    font-size: small;
+  }
 }
 
 .header h2 {
@@ -28,11 +18,6 @@
 
 .header ion-progress-bar {
   color: #b5dcdc;
-}
-
-.correction {
-  width: 80%;
-  margin: 10% 10% 20% 20%;
 }
 
 .undo {
@@ -94,7 +79,7 @@
   height: 100%;
   width: 100%;
   margin: auto;
-  background-color: #E6F4F4;
+  background: var(--ion-color-inria-card);
   position: absolute;
   transform: rotate(-5deg);
 }
@@ -108,4 +93,26 @@
 
 .informatif p {
   margin: auto;
+}
+
+.correction {
+  display: flex;
+  flex-direction: row;
+  .left {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: calc(50% - 0.4em);
+    margin: 0.2em;
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: calc(50% - 0.4em);
+  }
+  swipe-card {
+    min-height: 190px;
+    margin: 0.2em;
+  }
 }
