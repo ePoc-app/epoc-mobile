@@ -33,6 +33,7 @@ export class SwipeCardComponent implements AfterViewInit {
   @Input('disabled') disabled: boolean;
   @Input('correct') correct: boolean;
   @Input('selectedSide') selectedSide: string;
+  @Input('solutionShown') solutionShown: boolean;
 
   @Output() onSelectSide = new EventEmitter<{rep: Response, category: number}>();
   @Output() onAnimationRunning = new EventEmitter<boolean>();

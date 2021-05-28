@@ -9,16 +9,13 @@ ion-card {
   margin: auto;
   background-color: #E6F4F4;
   &.card-correction {
-    border-radius: 2em;
+    border-radius: 1em;
   }
-}
-
-.correction ion-icon {
-  height: 5em;
-  width: 5em;
-  &.icon-correction {
-    height: 3em;
-    width: 3em;
+  &.correct {
+    background: var(--ion-color-inria-correct-rgba60);
+  }
+  &.incorrect {
+    background: var(--ion-color-inria-incorrect-rgba60);
   }
 }
 
@@ -27,18 +24,9 @@ ion-card-header {
   text-align: center;
   height: 20%;
   transition: 0.3s ease-in-out;
-  &.header-correction {
-  }
-}
-
-ion-card-title {
-  &.title-correction {
-    font-size: inherit;
-  }
 }
 
 ion-card-content {
-  height: 100px;
   overflow: hidden;
   padding: 1em;
   display: flex;
@@ -47,10 +35,9 @@ ion-card-content {
   &.content-correction {
     padding: 1em;
     font-size: x-small;
-    height: 100px;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    flex: 1;
   }
 }
