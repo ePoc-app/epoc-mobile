@@ -13,7 +13,7 @@
       <ion-slide>
         <div class="flip-container" [ngClass]="{'flipped': flipped}">
           <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
-            <div class="front" [ngClass]="{'no-overflow': question.type === 'swipe' && !this.correctionState}">
+            <div class="front" [ngClass]="{'no-overflow': question.type === 'swipe' && !this.explanationShown}">
               <div class="question-card">
                 <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
                 <div class="statement">
@@ -34,7 +34,7 @@
                   <drag-and-drop class="response no-overflow" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
                 </ng-container>
                 <ng-container *ngIf="question.type === 'swipe'">
-                  <swipe class="response" [question]="question" [disabled]="explanationShown" [correctionState]=explanationShown (onSelectAnswer)="updateCurrentAnswer($event)"></swipe>
+                  <swipe class="response" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></swipe>
                 </ng-container>
                 <ng-container *ngIf="question.type === 'dropdown-list'">
                   <dropdown-list class="response" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></dropdown-list>
@@ -107,10 +107,10 @@
 </ion-content>
 
 <ion-footer *ngIf="questions && currentQuestion < questions.length"
-            [ngClass]="{'collapse': questions[currentQuestion].type ==='swipe' && !currentAnswer}"
+            [ngClass]="{'collapse': questions[currentQuestion].type === 'swipe' && !currentAnswer}"
 >
 
-  <div class="buttons" *ngIf="this.questions[currentQuestion].type === 'dropdown-list'">
+  <div class="buttons" *ngIf="(this.questions[currentQuestion].type === 'dropdown-list' || this.questions[currentQuestion].type === 'swipe')">
 <!-- Ajouter le disabled de toggleSolution si l'utilisateur à tout juste -->
     <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown">
       <div class="answerState" *ngIf="!solutionShown">

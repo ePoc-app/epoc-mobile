@@ -14,13 +14,20 @@ export class DropdownListComponent implements OnInit, OnChanges {
 
   @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
+  // Array to loop on when in correction mode
   correctedAnswers: Array<{category: string, answer: Response, correct: boolean}> = [];
-  answers: Array<Array<string>> = [];
-  nbCorrect: number;
+
+  // Array to loop on when in normal mode
   correctAnswers: Array<{answer: Response, correctAnswer: string}>;
+
+  // Used in html to display values
+  nbCorrect: number;
   selectLabel = [];
   selectClass = [];
   selectHeader: string;
+
+  // Sent to parent
+  answers: Array<Array<string>> = [];
 
   constructor(private actionSheetController: ActionSheetController) { }
 
