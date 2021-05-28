@@ -8,7 +8,7 @@ ion-footer{
   padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
   border-top: 1px solid var(--ion-color-light);
   &.collapse {
-    visibility: collapse;
+    height: 0;
   }
 }
 .swiper-container{
@@ -200,7 +200,6 @@ ion-footer{
 
 
 .toggleSolution {
-  width: 50%;
   justify-content: space-around;
 }
 
@@ -223,7 +222,6 @@ ion-footer{
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  width: 50%;
 }
 
 .buttons {
@@ -232,8 +230,7 @@ ion-footer{
   width: 100%;
   justify-content: space-around;
   align-items: center;
-  ion-icon {
-    width: 24px;
-    height: 24px;
+  ion-button {
+    min-width: 153px;
   }
 }

@@ -50,6 +50,8 @@ $inria-bg : #eceef9;
   --ion-color-inria-incorrect-rgb : rgb(255, 156, 156);
   --ion-color-inria-incorrect-rgba60: rgba(255, 156, 156, 0.6);
 
+  --ion-color-inria-card: #E6F4F4;
+
   --vjs-theme-forest--primary: #364357!important;
   --vjs-theme-forest--secondary: #81cbcb!important;
 
@@ -97,5 +99,10 @@ $inria-bg : #eceef9;
 
 .ion-color-inria-incorrect {
   --ion-color-base: var(--ion-color-inria-incorrect);
+  --ion-color-base-rgb: var(--ion-color-inria-incorrect-rgb);
   --ion-color-base-rgba60: var(--ion-color-inria-incorrect-rgba60);
+}
+
+.ion-color-inria-card {
+  --ion-color-base: var(--ion-color-inria-card);
 }
