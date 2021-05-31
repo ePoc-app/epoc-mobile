@@ -111,7 +111,8 @@ export class AssessmentPage implements OnInit {
         this.notransition = false;
         if (this.questions[this.currentQuestion].type !== 'swipe'
             && this.questions[this.currentQuestion].type !== 'dropdown-list'
-            && this.questions[this.currentQuestion].type !== 'choice' ) {
+            && this.questions[this.currentQuestion].type !== 'choice'
+            && this.questions[this.currentQuestion].type !== 'multiple-choice') {
             this.flipped = true;
         }
         document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
