@@ -22,7 +22,7 @@ export class DropdownListComponent implements OnInit, OnChanges {
 
   // Used in html to display values
   nbCorrect: number;
-  selectLabel = [];
+  selectValue = [];
   selectClass = [];
   selectHeader: string;
 
@@ -42,7 +42,7 @@ export class DropdownListComponent implements OnInit, OnChanges {
       return {answer: response, correctAnswer: this.getCorrectResponse(response.value)};
     })
     this.question.responses.forEach(() => {
-      this.selectLabel.push('Cliquez pour sélectionner');
+      this.selectValue.push('Cliquez pour sélectionner');
     })
   }
 
@@ -63,18 +63,18 @@ export class DropdownListComponent implements OnInit, OnChanges {
         if (!this.correctedAnswers[this.question.responses.indexOf(response)]) {
           return;
         } else {
-          this.selectLabel[this.question.responses.indexOf(response)] =
+          this.selectValue[this.question.responses.indexOf(response)] =
               this.correctedAnswers[this.question.responses.indexOf(response)].category;
         }
       } else {
         if (!solutionShown) {
-          this.selectLabel[this.question.responses.indexOf(response)] =
+          this.selectValue[this.question.responses.indexOf(response)] =
               this.correctedAnswers[this.question.responses.indexOf(response)].category;
           this.selectClass[this.question.responses.indexOf(response)] =
               this.correctedAnswers[this.question.responses.indexOf(response)].correct ? 'correct' : 'incorrect';
           this.selectHeader = this.nbCorrect + ' / ' + this.question.responses.length + ' réponses justes';
         } else {
-          this.selectLabel[this.question.responses.indexOf(response)] =
+          this.selectValue[this.question.responses.indexOf(response)] =
               this.correctAnswers[this.question.responses.indexOf(response)].correctAnswer;
           this.selectClass[this.question.responses.indexOf(response)] = 'correct';
           this.selectHeader = 'Solution';
