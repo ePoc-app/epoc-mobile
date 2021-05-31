@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Question, Response} from '../../../../../classes/contents/assessment';
+import {Question} from '../../../../../classes/contents/assessment';
 
 @Component({
     selector: 'multiple-choice',
@@ -18,7 +18,6 @@ export class MultipleChoiceComponent implements OnInit, OnChanges {
     selectedAnswers = [];
 
     // Used in html to display values
-    nbCorrect: number;
     selectValue = [];
     selectClass = [];
     selectHeader: string;
@@ -26,7 +25,6 @@ export class MultipleChoiceComponent implements OnInit, OnChanges {
     constructor() {}
 
     ngOnInit() {
-        this.nbCorrect = 0;
         this.solutionShown = false;
         this.correctionState = false;
     }
