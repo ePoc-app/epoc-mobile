@@ -31,7 +31,7 @@
                   <reorder class="response" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
                 </ng-container>
                 <ng-container *ngIf="question.type === 'drag-and-drop'">
-                  <drag-and-drop class="response no-overflow" [question]="question" [disabled]="explanationShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
+                  <drag-and-drop class="response no-overflow" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
                 </ng-container>
                 <ng-container *ngIf="question.type === 'swipe'">
                   <swipe class="response" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></swipe>
@@ -110,7 +110,7 @@
             [ngClass]="{'collapse': questions[currentQuestion].type === 'swipe' && !currentAnswer}"
 >
 
-  <div class="buttons" *ngIf="(this.questions[currentQuestion].type === 'dropdown-list' || this.questions[currentQuestion].type === 'swipe' || this.questions[currentQuestion].type === 'choice' || this.questions[currentQuestion].type === 'multiple-choice')">
+  <div class="buttons" *ngIf="this.questions[currentQuestion].type !== 'reorder'">
 <!-- Ajouter le disabled de toggleSolution si l'utilisateur à tout juste -->
     <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown">
       <div class="answerState" *ngIf="!solutionShown">
