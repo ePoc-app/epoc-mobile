@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {trigger, transition, animate, style} from '@angular/animations';
 import {DragAndDropquestion} from '../../../../../classes/contents/assessment';
 
@@ -24,19 +24,30 @@ import {DragAndDropquestion} from '../../../../../classes/contents/assessment';
         ])
     ]
 })
-export class DragAndDropComponent implements OnInit {
+export class DragAndDropComponent implements OnInit, OnChanges {
 
     @Input('question') question: DragAndDropquestion;
-    @Input('disabled') disabled: boolean;
+    @Input('correctionState') correctionState: boolean;
+    @Input('solutionShown') solutionShown: boolean;
+
     @Output() onSelectAnswer = new EventEmitter<any>();
 
     current;
     responses;
     answer;
 
+    // Used in html to display values
+    nbCorrect: number;
+    selectValue = [];
+    selectClass: any;
+    selectHeader: string;
+
     constructor() {}
 
     ngOnInit(): void {
+        this.nbCorrect = 0;
+        this.correctionState = false;
+        this.solutionShown = false;
         const shuffleArray = arr => arr
             .map(a => [Math.random(), a])
             .sort((a, b) => a[0] - b[0])
@@ -47,6 +58,53 @@ export class DragAndDropComponent implements OnInit {
         this.answer = this.question.correctResponse.map((zone) => {
             return [];
         });
+        this.selectClass = this.question.correctResponse.map((zone) => {
+            return [];
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.correctionState && changes.correctionState.currentValue) {
+            this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
+        }
+        if (changes.solutionShown && changes.solutionShown.currentValue) {
+            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
+        } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
+            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
+        }
+    }
+
+    updateDisplay(correctionState: boolean, solutionShown: boolean) {
+        if (!correctionState) {
+            return;
+        } else {
+            if (!solutionShown) {
+                this.selectHeader = this.nbCorrect + ' / ' + this.question.responses.length + ' réponses justes';
+            } else {
+                this.selectHeader = 'Solution';
+                // Mettre les bonnes valeurs au bon endroit lors de l'affichage de la solution
+                this.question.responses.forEach((response) => {
+                    this.selectValue[response.value] = response.label;
+                })
+            }
+            // Mettre les bonnes couleurs au bon endroit
+            this.question.correctResponse.forEach((zone) => {
+                this.answer[this.question.correctResponse.indexOf(zone)].forEach((response) => {
+                    if (!solutionShown) {
+                        this.selectClass
+                            [this.question.correctResponse.indexOf(zone)]
+                            [this.answer[this.question.correctResponse.indexOf(zone)].indexOf(response)]
+                            = this.question.correctResponse[this.question.correctResponse.indexOf(zone)].values.includes(response.value)
+                            ? 'correct' : 'incorrect';
+                    } else {
+                        this.selectClass
+                            [this.question.correctResponse.indexOf(zone)]
+                            [this.answer[this.question.correctResponse.indexOf(zone)].indexOf(response)]
+                            = 'correct';
+                    }
+                })
+            })
+        }
     }
 
     // trick to trigger angular aniamtion
@@ -77,10 +135,15 @@ export class DragAndDropComponent implements OnInit {
 
     updateAnswer() {
         const answer = [];
+        this.nbCorrect = 0;
         this.answer.forEach((zone) => {
             answer.push(zone.map(response => response.value));
+            zone.forEach((rep) => {
+                if (this.question.correctResponse[this.answer.indexOf(zone)].values.includes(rep.value)) {
+                    this.nbCorrect++;
+                }
+            })
         });
-
         this.onSelectAnswer.emit(answer);
     }
 }
