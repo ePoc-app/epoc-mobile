@@ -8,7 +8,7 @@
          'correct': selectClass[question.responses.indexOf(rep)] === 'correct',
          'incorrect': selectClass[question.responses.indexOf(rep)] === 'incorrect'}">
       <p>
-        {{selectLabel[question.responses.indexOf(rep)]}}
+        {{selectValue[question.responses.indexOf(rep)]}}
       </p>
       <ion-icon *ngIf="!this.correctionState" color="inria-spe" mode="ios"  name="chevron-down-outline"></ion-icon>
     </div>
