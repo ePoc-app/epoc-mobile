@@ -5,8 +5,8 @@
     <div class="select"
          [ngClass]="
          {'disabled': correctionState,
-         'correct': selectClass[question.responses.indexOf(rep)] === 'correct',
-         'incorrect': selectClass[question.responses.indexOf(rep)] === 'incorrect'}">
+         'correct': correctionState && selectClass[question.responses.indexOf(rep)] === 'correct',
+         'incorrect': correctionState && selectClass[question.responses.indexOf(rep)] === 'incorrect'}">
       <p>
         {{selectValue[question.responses.indexOf(rep)]}}
       </p>

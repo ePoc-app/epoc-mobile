@@ -71,8 +71,6 @@ export class SwipeComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.correctionState && changes.correctionState.currentValue) {
       this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
-    } else if (changes.correctionState && changes.correctionState.currentValue === false) {
-      this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
     }
     if (changes.solutionShown && changes.solutionShown.currentValue) {
       this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
@@ -83,7 +81,7 @@ export class SwipeComponent implements OnInit, OnChanges {
 
   updateDisplay(correctionState: boolean, solutionShown: boolean) {
       if (!correctionState) {
-        this.selectHeader = 'Glissez la carte à gauche ou à droite';
+        this.selectHeader = '';
       } else {
         this.fillCorrectionArray(solutionShown);
         if (!solutionShown) {

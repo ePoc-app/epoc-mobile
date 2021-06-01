@@ -3,8 +3,8 @@
   <ion-item *ngFor="let response of this.solutionShown ? correction : responses"
             [ngClass]="{
               'disabled': correctionState,
-              'correct': selectClass[this.question.responses.indexOf(response)] === 'correct',
-              'incorrect': selectClass[this.question.responses.indexOf(response)] === 'incorrect'}"
+              'correct': correctionState && selectClass[this.question.responses.indexOf(response)] === 'correct',
+              'incorrect': correctionState && selectClass[this.question.responses.indexOf(response)] === 'incorrect'}"
   >
     <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
     <ion-reorder slot="end"></ion-reorder>
