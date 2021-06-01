@@ -77,7 +77,6 @@ export class DragAndDropComponent implements OnInit, OnChanges {
     updateDisplay(correctionState: boolean, solutionShown: boolean) {
         if (!correctionState) {
             this.selectHeader = '';
-            this.selectClass = [];
             this.selectValue = [];
         } else {
             if (!solutionShown) {
