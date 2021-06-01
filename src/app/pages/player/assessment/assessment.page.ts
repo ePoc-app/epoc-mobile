@@ -109,9 +109,6 @@ export class AssessmentPage implements OnInit {
         this.userResponses.push(this.currentAnswer);
         this.explanationShown = true;
         this.notransition = false;
-        if (this.questions[this.currentQuestion].type === 'reorder') {
-            this.flipped = true;
-        }
         document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
     }
 
