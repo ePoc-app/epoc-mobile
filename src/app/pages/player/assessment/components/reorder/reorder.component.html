@@ -1,6 +1,6 @@
 <p class="nbCorrect">{{selectHeader}}</p>
 <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="correctionState">
-  <ion-item *ngFor="let response of this.solutionShown ? correction : responses"
+  <ion-item class="item" *ngFor="let response of this.solutionShown ? correction : responses"
             [ngClass]="{
               'disabled': correctionState,
               'correct': correctionState && selectClass[this.question.responses.indexOf(response)] === 'correct',
