@@ -218,6 +218,14 @@ video {
   word-break: break-word;
 }
 
+// Remove transition to not show answer
+.flipper.notransition{
+  transition: none!important;
+  ion-item{
+    --transition: none;
+  }
+}
+
 .transcript{
   padding: 1em;
 }

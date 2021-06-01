@@ -44,10 +44,6 @@ ion-footer{
     will-change: transform;
     width:0;
 
-    &.notransition{
-      transition: none!important;
-    }
-
     .front, .back {
       width:100%;
       height: 100%;
