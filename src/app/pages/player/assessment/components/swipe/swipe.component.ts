@@ -71,6 +71,8 @@ export class SwipeComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.correctionState && changes.correctionState.currentValue) {
       this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
+    } else if (changes.correctionState && changes.correctionState.currentValue === false) {
+      this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
     }
     if (changes.solutionShown && changes.solutionShown.currentValue) {
       this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
