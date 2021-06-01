@@ -60,6 +60,8 @@ export class DropdownListComponent implements OnInit, OnChanges {
   updateDisplay(correctionState: boolean, solutionShown: boolean) {
     this.question.responses.forEach((response) => {
       if (!correctionState) {
+        this.selectClass = [];
+        this.selectHeader = '';
         if (!this.correctedAnswers[this.question.responses.indexOf(response)]) {
           return;
         } else {

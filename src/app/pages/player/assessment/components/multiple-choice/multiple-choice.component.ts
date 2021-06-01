@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Question} from '../../../../../classes/contents/assessment';
+import {MultipleChoiceQuestion} from '../../../../../classes/contents/assessment';
 
 @Component({
     selector: 'multiple-choice',
@@ -8,7 +8,7 @@ import {Question} from '../../../../../classes/contents/assessment';
 })
 export class MultipleChoiceComponent implements OnInit, OnChanges {
 
-    @Input('question') question: Question;
+    @Input('question') question: MultipleChoiceQuestion;
     @Input('correctionState') correctionState: boolean;
     @Input('solutionShown') solutionShown: boolean;
 
@@ -41,23 +41,29 @@ export class MultipleChoiceComponent implements OnInit, OnChanges {
     }
 
     updateDisplay(correctionState: boolean, solutionShown: boolean) {
-        this.question.responses.forEach((response) => {
             if (!correctionState) {
+                this.selectHeader = '';
+                this.selectClass = [];
+                this.selectValue = [];
                 return;
             } else {
                 if (!solutionShown) {
                     this.selectHeader = '';
-                    this.selectClass[this.question.responses.indexOf(response)] = this.selectedAnswers.includes(response.value) ?
-                        (this.question.correctResponse.includes(response.value) ? 'correct' : 'incorrect') : '';
-                    this.selectValue[this.question.responses.indexOf(response)] = this.selectedAnswers.includes(response.value);
+                    this.question.responses.forEach((response) => {
+                        this.selectClass[this.question.responses.indexOf(response)] = this.selectedAnswers.includes(response.value) ?
+                            (this.question.correctResponse.includes(response.value) ? 'correct' : 'incorrect') : '';
+                        this.selectValue[this.question.responses.indexOf(response)] = this.selectedAnswers.includes(response.value);
+                    })
                 } else {
-                    this.selectClass[this.question.responses.indexOf(response)] =
-                        this.question.correctResponse.includes(response.value) ? 'correct' : '';
-                    this.selectHeader = 'Solution';
-                    this.selectValue[this.question.responses.indexOf(response)] = this.question.correctResponse.includes(response.value);
+                    this.question.responses.forEach((response) => {
+                        this.selectClass[this.question.responses.indexOf(response)] =
+                            this.question.correctResponse.includes(response.value) ? 'correct' : '';
+                        this.selectHeader = 'Solution';
+                        this.selectValue[this.question.responses.indexOf(response)] =
+                            this.question.correctResponse.includes(response.value);
+                    })
                 }
             }
-        })
     }
 
     selectAnswer(answer) {

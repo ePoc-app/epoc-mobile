@@ -1,4 +1,4 @@
-<p class="nbCorrect">{{selectHeader}}</p>
+<p class="nbCorrect">{{this.correctionState ? selectHeader : ''}}</p>
 <div class="current-response" *ngIf="responses.length > 0">
   <div class="response-item" *ngFor="let currentResponse of getCurrentResponse()" [@fadeOut]>
     {{currentResponse.label}}
@@ -18,7 +18,7 @@
             {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)" *ngIf="!correctionState"></ion-icon>
         </div>
       </div>
-      <div class="solutionShown" *ngIf="this.solutionShown">
+      <div class="solutionShown" *ngIf="correctionState && this.solutionShown">
         <div class="response-item" *ngFor="let value of question.correctResponse[zoneIndex].values; let valueIndex = index;" [@slideInOut]
              [ngClass]="{
               'disabled': correctionState,

@@ -52,7 +52,8 @@ export class ReorderComponent implements OnInit, OnChanges {
 
     updateDisplay(correctionState: boolean, solutionShown: boolean) {
         if (!correctionState) {
-            return;
+            this.selectHeader = '';
+            this.selectClass = [];
         } else {
             if (!solutionShown) {
                 this.selectHeader = this.nbCorrect + ' / ' + this.question.responses.length + ' réponses justes';
