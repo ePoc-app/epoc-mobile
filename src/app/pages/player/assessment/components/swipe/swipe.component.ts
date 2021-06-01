@@ -98,7 +98,6 @@ export class SwipeComponent implements OnInit, OnChanges {
     if (solutionShown) {
       this.cardsSortedToLeft = [];
       this.cardsSortedToRight = [];
-      console.log(this.question.correctResponse);
       this.question.correctResponse[0].values.forEach((value) => {
         this.cardsSortedToLeft.push({
           response: this.question.responses.find(response => response.value === value),
@@ -224,7 +223,7 @@ export class SwipeComponent implements OnInit, OnChanges {
       return this.animationController.create()
           .addElement(baseEl)
           .easing('ease-out')
-          .duration(300)
+          .duration(400)
           .addAnimation([backdropAnimation, wrapperAnimation]);
     }
 
@@ -234,6 +233,7 @@ export class SwipeComponent implements OnInit, OnChanges {
     this.modalController.create({
       component: ModalPage,
       mode : 'ios',
+      cssClass: 'swipe-modal',
       componentProps: {
         correct: this.correct,
         category: this.category,

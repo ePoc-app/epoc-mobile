@@ -1,39 +1,41 @@
 .arrow-down {
-  align-self: end;
   margin: 1em;
-  height: 8%;
-  width: 15%;
-}
-
-ion-item-divider {
-  height: 2%;
+  height: 5%;
+  width: 10%;
+  align-self: flex-end;
 }
 
 .correction {
-  align-self: center;
-  width: 40%;
+  width: 100%;
   height: 20%;
-  display: inline;
 }
 
 .response {
-  height: calc(5% - 2em);
-  margin: 2em 0 2em 2em;
+  margin: 0;
 }
 
 .answer {
-  height: 5%;
-  margin: 0 2em 2em 2em;
+  margin: 0;
 }
 
-.exp {
-  height: 5%;
-  margin-left: 2em;
-  margin-right: 2em;
+.background {
+  background: var(--ion-color-inria-card);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+hr {
+  border: 0;
+  clear: both;
+  display: block;
+  width: calc(100% - 2em);
+  background-color: black;
+  height: 1px;
+  margin-bottom: 1em;
 }
 
 .explanation {
-  height:55%;
-  margin-left: 2em;
-  margin-right: 2em;
+  margin: 0 1em 0 1em;
 }

@@ -13,7 +13,7 @@
 
 .header h2 {
   margin-top: 0;
-  color: #81a5a5;
+  color: var(--vjs-theme-forest--secondary);
 }
 
 .header ion-progress-bar {
@@ -21,19 +21,11 @@
 }
 
 .undo {
-  width:50%;
-  margin-left: 25%;
-  margin-right: 25%;
-  color: black;
+  align-self: center;
+  min-width: 153px;
   &.hidden {
     opacity: 0;
   }
-}
-
-.undo ion-icon {
-  margin: 0.2em;
-  width: 2em;
-  height: 2em;
 }
 
 .swipe-cards {
@@ -64,7 +56,7 @@
   height: 100%;
   width: 100%;
   margin: auto;
-  background-color: #E6F4F4;
+  background-color: var(--ion-color-inria-card);
   position: absolute;
   transform: rotate(5deg);
 }
@@ -103,13 +95,31 @@
     flex-direction: column;
     flex: 1;
     width: calc(50% - 0.4em);
-    margin: 0.2em;
+    .leftTitle {
+      background: var(--ion-color-inria-card-left);
+      border-radius: 10px;
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.2em;
+    }
   }
   .right {
     display: flex;
     flex-direction: column;
     flex: 1;
     width: calc(50% - 0.4em);
+
+    .rightTitle {
+      background: var(--ion-color-inria-card-right);
+      border-radius: 10px;
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.2em;
+    }
   }
   swipe-card {
     min-height: 190px;
