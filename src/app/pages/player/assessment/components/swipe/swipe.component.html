@@ -19,7 +19,7 @@
 
 <div class = "correction" *ngIf="this.correctionState">
   <div class="left">
-    {{this.question.possibilities[0]}}
+    <span class="leftTitle">{{this.question.possibilities[0]}}</span>
     <swipe-card *ngFor ="let card of cardsSortedToLeft"
                 [possibilities] = "this.question.possibilities"
                 [response] = "card.response"
@@ -32,7 +32,7 @@
     </swipe-card>
   </div>
   <div class="right">
-    {{this.question.possibilities[1]}}
+    <span class="rightTitle">{{this.question.possibilities[1]}}</span>
     <swipe-card *ngFor ="let card of cardsSortedToRight"
                 [possibilities] = "this.question.possibilities"
                 [response] = "card.response"
@@ -50,8 +50,7 @@
   <p>Cliquez sur valider pour confirmer vos réponses et accéder à la correction.</p>
 </div>
 
-<ion-button mode="ios" class="undo" color="#EAEAEA"
-            style="--background:#EAEAEA; --border-radius: 15px;"
+<ion-button mode="ios" class="undo"
             [ngClass]="this.cardsSorted.length <= 0?'hidden':''"
             [hidden]="this.correctionState"
             [disabled]="this.cardsSorted.length <= 0 || this.undoDisabled"
