@@ -24,6 +24,7 @@ import {SwipeCardComponent} from './assessment/components/swipe/swipe-card/swipe
 import {SwipeComponent} from './assessment/components/swipe/swipe.component';
 import {ModalPage} from './assessment/components/swipe/swipe-modal/modal-page.component';
 import {DropdownListComponent} from './assessment/components/dropdown-list/dropdown-list.component';
+import {AbstractActivityContainerComponent} from './assessment/activity-container.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import {DropdownListComponent} from './assessment/components/dropdown-list/dropd
   declarations: [PlayerPage, AboutEpocPage, DownloadEpocPage, ScoreEpocPage, TocEpocPage,
       BookmarksEpocPage, PlayerSettingsPage,
       AssessmentPage, SimpleChoiceComponent, MultipleChoiceComponent, ReorderComponent, DragAndDropComponent,
-      TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent, SwipeCardComponent, SwipeComponent, ModalPage, DropdownListComponent],
+      TranscriptModalPage, SimpleQuestionComponent, CourseChoiceComponent, SwipeCardComponent, SwipeComponent,
+      ModalPage, DropdownListComponent, AbstractActivityContainerComponent],
   entryComponents: [TranscriptModalPage]
 })
 export class PlayerPageModule {
