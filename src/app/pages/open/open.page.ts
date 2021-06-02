@@ -88,6 +88,11 @@ export class OpenPage {
         });
     }
 
+    openDefault(){
+        this.libraryService.setRootFolder(null);
+        this.router.navigateByUrl('/home/default');
+    }
+
     openEpoc(filename) {
         if (this.working) {
             return;
