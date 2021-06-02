@@ -1,18 +1,15 @@
-import {Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DropDownListQuestion, Response} from '../../../../../classes/contents/assessment';
 import {ActionSheetController} from '@ionic/angular';
+import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
 
 @Component({
   selector: 'dropdown-list',
   templateUrl: './dropdown-list.component.html',
   styleUrls: ['./dropdown-list.component.scss'],
 })
-export class DropdownListComponent implements OnInit, OnChanges {
+export class DropdownListComponent extends AbstractActivityContainerComponent implements OnInit {
   @Input('question') question: DropDownListQuestion;
-  @Input('correctionState') correctionState: boolean;
-  @Input('solutionShown') solutionShown: boolean;
-
-  @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
   // Array to loop on when in correction mode
   correctedAnswers: Array<{category: string, answer: Response, correct: boolean}> = [];
@@ -21,20 +18,17 @@ export class DropdownListComponent implements OnInit, OnChanges {
   correctAnswers: Array<{answer: Response, correctAnswer: string}>;
 
   // Used in html to display values
-  nbCorrect: number;
   selectValue = [];
   selectClass = [];
-  selectHeader: string;
 
   // Sent to parent
   answers: Array<Array<string>> = [];
 
-  constructor(private actionSheetController: ActionSheetController) { }
+  constructor(private actionSheetController: ActionSheetController) {
+    super();
+  }
 
   ngOnInit() {
-    this.nbCorrect = 0;
-    this.correctionState = false;
-    this.solutionShown = false;
     this.answers = this.question.correctResponse.map((zone) => {
       return [];
     });
@@ -44,17 +38,6 @@ export class DropdownListComponent implements OnInit, OnChanges {
     this.question.responses.forEach(() => {
       this.selectValue.push('Cliquez pour sélectionner');
     })
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.correctionState && changes.correctionState.currentValue) {
-      this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
-    }
-    if (changes.solutionShown && changes.solutionShown.currentValue) {
-      this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-    } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
-      this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-    }
   }
 
   updateDisplay(correctionState: boolean, solutionShown: boolean) {

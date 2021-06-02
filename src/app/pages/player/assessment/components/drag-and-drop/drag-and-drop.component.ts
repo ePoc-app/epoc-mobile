@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {trigger, transition, animate, style} from '@angular/animations';
 import {DragAndDropquestion} from '../../../../../classes/contents/assessment';
+import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
 
 @Component({
     selector: 'drag-and-drop',
@@ -24,30 +25,23 @@ import {DragAndDropquestion} from '../../../../../classes/contents/assessment';
         ])
     ]
 })
-export class DragAndDropComponent implements OnInit, OnChanges {
+export class DragAndDropComponent extends AbstractActivityContainerComponent implements OnInit {
 
     @Input('question') question: DragAndDropquestion;
-    @Input('correctionState') correctionState: boolean;
-    @Input('solutionShown') solutionShown: boolean;
-
-    @Output() onSelectAnswer = new EventEmitter<any>();
 
     current;
     responses;
     answer;
 
     // Used in html to display values
-    nbCorrect: number;
     selectValue = [];
     selectClass: any;
-    selectHeader: string;
 
-    constructor() {}
+    constructor() {
+        super();
+    }
 
     ngOnInit(): void {
-        this.nbCorrect = 0;
-        this.correctionState = false;
-        this.solutionShown = false;
         const shuffleArray = arr => arr
             .map(a => [Math.random(), a])
             .sort((a, b) => a[0] - b[0])
@@ -61,17 +55,6 @@ export class DragAndDropComponent implements OnInit, OnChanges {
         this.selectClass = this.question.correctResponse.map((zone) => {
             return [];
         });
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.correctionState && changes.correctionState.currentValue) {
-            this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
-        }
-        if (changes.solutionShown && changes.solutionShown.currentValue) {
-            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-        } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
-            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-        }
     }
 
     updateDisplay(correctionState: boolean, solutionShown: boolean) {

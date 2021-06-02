@@ -1,28 +1,21 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Question} from '../../../../../classes/contents/assessment';
+import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
 
 @Component({
     selector: 'simple-choice',
     templateUrl: './simple-choice.component.html',
     styleUrls: ['./simple-choice.component.scss'],
 })
-export class SimpleChoiceComponent implements OnInit, OnChanges {
+export class SimpleChoiceComponent extends AbstractActivityContainerComponent implements OnChanges {
 
     @Input('question') question: Question;
-    @Input('correctionState') correctionState: boolean;
-    @Input('solutionShown') solutionShown: boolean;
-
-    @Output() onSelectAnswer = new EventEmitter<string>();
 
     selectedAnswer;
-    selectHeader: string;
     selectValue;
 
-    constructor() {}
-
-    ngOnInit() {
-        this.solutionShown = false;
-        this.correctionState = false;
+    constructor() {
+        super();
     }
 
     ngOnChanges(changes: SimpleChanges) {

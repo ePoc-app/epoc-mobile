@@ -1,8 +1,9 @@
-import {Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {Response, SwipeQuestion} from '../../../../../classes/contents/assessment';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {AnimationController, ModalController, Platform} from '@ionic/angular';
 import {ModalPage} from './swipe-modal/modal-page.component';
+import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
 
 @Component({
   selector: 'swipe',
@@ -21,13 +22,9 @@ import {ModalPage} from './swipe-modal/modal-page.component';
     ])
   ]
 })
-export class SwipeComponent implements OnInit, OnChanges {
+export class SwipeComponent extends AbstractActivityContainerComponent implements OnInit, OnChanges {
 
   @Input ('question') question: SwipeQuestion;
-  @Input('correctionState') correctionState: boolean;
-  @Input('solutionShown') solutionShown: boolean;
-
-  @Output() onSelectAnswer = new EventEmitter<Array<Array<string>>>();
 
   cardsSorted: Array<{response: Response, category: number, correct: boolean}> = [];
   // Arrays to loop on when in correction mode
@@ -36,10 +33,6 @@ export class SwipeComponent implements OnInit, OnChanges {
 
   // Array to loop on when in normal mode
   cardsRemaining: Array<Response> = [];
-
-  // Used in html to display values
-  nbCorrect: number;
-  selectHeader: string;
 
   // Sent to parent
   answersToTheLeft: Array<string> = [];
@@ -55,12 +48,13 @@ export class SwipeComponent implements OnInit, OnChanges {
   explanation: string;
   answer: string;
 
-  constructor(public modalController: ModalController, public animationController: AnimationController, private plt: Platform) {}
+  constructor(public modalController: ModalController, public animationController: AnimationController, private plt: Platform) {
+    super();
+  }
 
   ngOnInit() {
+    // NaN if not initialized here
     this.nbCorrect = 0;
-    this.correctionState = false;
-    this.solutionShown = false;
     const shuffleArray = arr => arr
         .map(a => [Math.random(), a])
         .sort((a, b) => a[0] - b[0])
@@ -69,14 +63,10 @@ export class SwipeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.correctionState && changes.correctionState.currentValue) {
-      this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
-    } else if (changes.correctionState && changes.correctionState.currentValue === false) {
+    if (changes.correctionState && (changes.correctionState.currentValue || changes.correctionState.currentValue === false)) {
       this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
     }
-    if (changes.solutionShown && changes.solutionShown.currentValue) {
-      this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-    } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
+    if (changes.solutionShown && (changes.solutionShown.currentValue || changes.solutionShown.currentValue === false)) {
       this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
     }
   }

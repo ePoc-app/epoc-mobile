@@ -24,7 +24,7 @@ import {SwipeCardComponent} from './assessment/components/swipe/swipe-card/swipe
 import {SwipeComponent} from './assessment/components/swipe/swipe.component';
 import {ModalPage} from './assessment/components/swipe/swipe-modal/modal-page.component';
 import {DropdownListComponent} from './assessment/components/dropdown-list/dropdown-list.component';
-import {AbstractActivityContainerComponent} from './assessment/activity-container.component';
+import {AbstractActivityContainerComponent} from './assessment/abstract-activity-container.component';
 
 @NgModule({
   imports: [

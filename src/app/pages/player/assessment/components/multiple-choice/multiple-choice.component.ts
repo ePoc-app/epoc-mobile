@@ -1,18 +1,15 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MultipleChoiceQuestion} from '../../../../../classes/contents/assessment';
+import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
 
 @Component({
     selector: 'multiple-choice',
     templateUrl: '../multiple-choice/multiple-choice.component.html',
     styleUrls: ['../multiple-choice/multiple-choice.component.scss'],
 })
-export class MultipleChoiceComponent implements OnInit, OnChanges {
+export class MultipleChoiceComponent extends AbstractActivityContainerComponent {
 
     @Input('question') question: MultipleChoiceQuestion;
-    @Input('correctionState') correctionState: boolean;
-    @Input('solutionShown') solutionShown: boolean;
-
-    @Output() onSelectAnswer = new EventEmitter<any>();
 
     // Array to loop on
     selectedAnswers = [];
@@ -20,24 +17,9 @@ export class MultipleChoiceComponent implements OnInit, OnChanges {
     // Used in html to display values
     selectValue = [];
     selectClass = [];
-    selectHeader: string;
 
-    constructor() {}
-
-    ngOnInit() {
-        this.solutionShown = false;
-        this.correctionState = false;
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.correctionState && changes.correctionState.currentValue) {
-            this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
-        }
-        if (changes.solutionShown && changes.solutionShown.currentValue) {
-            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-        } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
-            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-        }
+    constructor() {
+        super();
     }
 
     updateDisplay(correctionState: boolean, solutionShown: boolean) {
