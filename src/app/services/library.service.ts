@@ -53,6 +53,8 @@ export class LibraryService {
     initCourseContent(epoc: Epoc) {
         this.initialized = true;
         epoc.assessments = [];
+        // backward compatibility before epoc parameters existed
+        epoc.parameters = epoc.parameters ? epoc.parameters : {};
 
         for (const [chapterId, chapter] of Object.entries(epoc.chapters)) {
             chapter.time = 0;
