@@ -2,12 +2,12 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {Question} from '../../../classes/contents/assessment';
 
 @Component({ template: '' })
-export class AbstractActivityContainerComponent<T = any> implements OnInit, OnChanges{
+export class AbstractActivityContainerComponent implements OnInit, OnChanges{
     @Input('question') question: Question;
     @Input('correctionState') correctionState: boolean;
     @Input('solutionShown') solutionShown: boolean;
 
-    @Output() onSelectAnswer = new EventEmitter<string>();
+    @Output() onSelectAnswer = new EventEmitter<any>();
 
     // Used in html to display values
     nbCorrect: number;
@@ -25,9 +25,7 @@ export class AbstractActivityContainerComponent<T = any> implements OnInit, OnCh
         if (changes.correctionState && changes.correctionState.currentValue) {
             this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
         }
-        if (changes.solutionShown && changes.solutionShown.currentValue) {
-            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-        } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
+        if (changes.solutionShown && (changes.solutionShown.currentValue || changes.solutionShown.currentValue === false)) {
             this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
         }
     }

@@ -1,34 +1,28 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Question} from '../../../../../classes/contents/assessment';
+import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
 
 @Component({
     selector: 'reorder',
     templateUrl: '../reorder/reorder.component.html',
     styleUrls: ['../reorder/reorder.component.scss'],
 })
-export class ReorderComponent implements OnInit, OnChanges {
+export class ReorderComponent extends AbstractActivityContainerComponent implements OnInit {
 
     @Input('question') question: Question;
-    @Input('correctionState') correctionState: boolean;
-    @Input('solutionShown') solutionShown: boolean;
-
-    @Output() onSelectAnswer = new EventEmitter<any>();
 
     // Array to loop on
     responses;
     correction = [];
 
     // Used in html to display values
-    nbCorrect: number;
-    selectHeader: string;
     selectClass = [];
 
-    constructor() {}
+    constructor() {
+        super();
+    }
 
     ngOnInit(): void {
-        this.nbCorrect = 0;
-        this.correctionState = false;
-        this.solutionShown = false;
         this.responses = this.shuffleArray(this.question.responses);
         this.selectClass = this.question.responses.map((zone) => {
             return '';
@@ -36,17 +30,6 @@ export class ReorderComponent implements OnInit, OnChanges {
         for (let i = 0; i < this.question.correctResponse.length; i++) {
             this.correction[i] =
                 this.question.responses[this.question.responses.findIndex(rep => rep.value === this.question.correctResponse[i])];
-        }
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.correctionState && changes.correctionState.currentValue) {
-            this.updateDisplay(changes.correctionState.currentValue, this.solutionShown);
-        }
-        if (changes.solutionShown && changes.solutionShown.currentValue) {
-            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
-        } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
-            this.updateDisplay(this.correctionState, changes.solutionShown.currentValue);
         }
     }
 
