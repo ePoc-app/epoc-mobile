@@ -1,15 +1,11 @@
-<div class="header" [hidden]="this.correctionState">
-  <p>Glissez la carte à droite ou à gauche</p>
-  <h2>{{this.cartesTriees.length}} / {{this.cartesTriees.length + this.cartesRestantes.length}}</h2>
-  <ion-progress-bar [value]="this.cartesTriees.length/(this.cartesRestantes.length + this.cartesTriees.length)"></ion-progress-bar>
+<div class="header" >
+  <p>{{selectHeader}}</p>
+  <ion-progress-bar [hidden]="this.correctionState" [value]="this.cardsSorted.length/(this.cardsRemaining.length + this.cardsSorted.length)"></ion-progress-bar>
 </div>
 
-<div class="header-correction" [hidden]="!this.correctionState">
-  <p>{{this.nbCorrect}} / {{this.cartesTriees.length}} réponses justes.</p>
-</div>
 
-<div class="swipe-cards" *ngIf="cartesRestantes.length !==0">
-  <swipe-card *ngFor ="let card of cartesRestantes"
+<div class="swipe-cards" *ngIf="cardsRemaining.length !==0">
+  <swipe-card *ngFor ="let card of cardsRemaining"
               [@undoAnimations]="animationState"
               [possibilities] = "this.question.possibilities"
               [response] = "card"
@@ -21,27 +17,43 @@
   </swipe-card>
 </div>
 
-<div class ="correctedCards" *ngIf="this.correctionState">
-  <swipe-card *ngFor ="let card of cartesTriees"
-              [possibilities] = "this.question.possibilities"
-              [response] = "card.response"
-              [disabled] = "true"
-              [selectedSide]="this.question.possibilities[card.category]"
-              [correct]="card.correct"
-              (click)="this.openPopUp($event, card)"
-  >
-  </swipe-card>
+<div class = "correction" *ngIf="this.correctionState">
+  <div class="left">
+    <span class="leftTitle">{{this.question.possibilities[0]}}</span>
+    <swipe-card *ngFor ="let card of cardsSortedToLeft"
+                [possibilities] = "this.question.possibilities"
+                [response] = "card.response"
+                [disabled] = "true"
+                [selectedSide]="this.question.possibilities[0]"
+                [correct]="card.correct"
+                [solutionShown]="solutionShown"
+                (click)="this.openPopUp($event, card)"
+    >
+    </swipe-card>
+  </div>
+  <div class="right">
+    <span class="rightTitle">{{this.question.possibilities[1]}}</span>
+    <swipe-card *ngFor ="let card of cardsSortedToRight"
+                [possibilities] = "this.question.possibilities"
+                [response] = "card.response"
+                [disabled] = "true"
+                [selectedSide]="this.question.possibilities[1]"
+                [correct]="card.correct"
+                [solutionShown]="solutionShown"
+                (click)="this.openPopUp($event, card)"
+    >
+    </swipe-card>
+  </div>
 </div>
 
-<div class="informatif" [hidden]="this.correctionState || this.cartesRestantes.length !== 0">
+<div class="informatif" [hidden]="this.correctionState || this.cardsRemaining.length !== 0">
   <p>Cliquez sur valider pour confirmer vos réponses et accéder à la correction.</p>
 </div>
 
-<ion-button mode="ios" class="undo" color="#EAEAEA"
-            style="--background:#EAEAEA; --border-radius: 15px;"
-            [ngClass]="this.cartesTriees.length <= 0?'hidden':''"
+<ion-button mode="ios" class="undo"
+            [ngClass]="this.cardsSorted.length <= 0?'hidden':''"
             [hidden]="this.correctionState"
-            [disabled]="this.cartesTriees.length <= 0 || this.undoDisabled"
+            [disabled]="this.cardsSorted.length <= 0 || this.undoDisabled"
             (click)="this.undo()">
   <ion-icon name="arrow-undo-outline"></ion-icon>
   <p>Annuler</p>

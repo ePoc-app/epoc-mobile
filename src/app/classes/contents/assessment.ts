@@ -29,6 +29,10 @@ export class DragAndDropquestion extends Question{
     correctResponse: Array<{label: string, values: string[]}>;
 }
 
+export class MultipleChoiceQuestion extends Question {
+    correctResponse: Array<string>;
+}
+
 export class Response {
     label: string;
     value: string;

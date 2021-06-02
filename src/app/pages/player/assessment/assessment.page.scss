@@ -4,13 +4,11 @@
 
 ion-footer{
   display: flex;
+  flex-direction: column;
   padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
   border-top: 1px solid var(--ion-color-light);
-  .check-answer{
-    flex: 1;
-  }
   &.collapse {
-    visibility: collapse;
+    height: 0;
   }
 }
 .swiper-container{
@@ -45,10 +43,6 @@ ion-footer{
     animation: flashflip 0.05s;
     will-change: transform;
     width:0;
-
-    &.notransition{
-      transition: none!important;
-    }
 
     .front, .back {
       width:100%;
@@ -197,5 +191,46 @@ ion-footer{
   }
   100% {
     transform: rotate3d(0, 0, 0, 180deg);
+  }
+}
+
+
+.toggleSolution {
+  justify-content: space-around;
+}
+
+.answerState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.solutionState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.explication {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  ion-button {
+    min-width: 153px;
+  }
+
+  ion-icon {
+    margin-right: 0.2em;
   }
 }

@@ -40,10 +40,10 @@ describe('SwipeComponent', () => {
     component.question.possibilities = ['Faux','Vrai'];
     component.question.responses = [c1, c2, c3];
     component.question.correctResponse = [{label: 'Faux', values:['1', '2']}, {label:'Vrai', values:['3']}];
-    component.cartesRestantes = [c1, c2];
-    component.cartesTriees = [{response: c3, category:0, correct: true}];
-    component.cardsToTheLeft = [];
-    component.cardsToTheLeft = [];
+    component.cardsRemaining = [c1, c2];
+    component.cardsSorted = [{response: c3, category:0, correct: true}];
+    component.answersToTheLeft = [];
+    component.answersToTheLeft = [];
     fixture.detectChanges();
   }));
 
@@ -53,15 +53,15 @@ describe('SwipeComponent', () => {
 
   // Cas de tests pour la méthode undo()
   it('should undo', () => {
-    component.cartesRestantes = [c1, c2];
-    component.cartesTriees = [{response: c3, category:0, correct: true}];
+    component.cardsRemaining = [c1, c2];
+    component.cardsSorted = [{response: c3, category:0, correct: true}];
     component.undo();
-    expect(component.cartesTriees).toEqual([]);
-    expect(component.cartesRestantes).toEqual([c1, c2, c3]);
+    expect(component.cardsSorted).toEqual([]);
+    expect(component.cardsRemaining).toEqual([c1, c2, c3]);
   });
   it('should not undo', () => {
-    component.cartesRestantes = [c1, c2, c3];
-    component.cartesTriees = [];
+    component.cardsRemaining = [c1, c2, c3];
+    component.cardsSorted = [];
     expect( () => { component.undo(); }).toThrow(new Error('Array of cards swiped is empty'));
   });
 
@@ -69,7 +69,7 @@ describe('SwipeComponent', () => {
   // Cas classique
   it ('should push the value of the response to cardsToTheLeft', () => {
     component.onSelectSide({rep:c1, category:0});
-    expect(component.cardsToTheLeft).toEqual(['1']);
+    expect(component.answersToTheLeft).toEqual(['1']);
   });
 
   it ('should emit onSelectAnswer event', () => {
@@ -88,56 +88,56 @@ describe('SwipeComponent', () => {
   });
   // Cas : met à jour les deux tableaux cartesTriees, Cartesrestantes
   it ('should update all arrays', () => {
-    component.cartesRestantes = [c1,c2,c3];
-    component.cartesTriees = [];
-    component.cardsToTheLeft = [];
-    component.cardsToTheRight = [];
+    component.cardsRemaining = [c1,c2,c3];
+    component.cardsSorted = [];
+    component.answersToTheLeft = [];
+    component.answersToTheRight = [];
 
     // Swipe de la première carte qui s'affiche (donc la dernière de l'array) vers la gauche 'catégory : faux'
     component.onSelectSide({rep:c3, category:0});
-    expect(component.cartesRestantes).toEqual([c1,c2]);
-    expect(component.cartesTriees).toEqual([{response: c3, category: 0, correct: false}]);
-    expect(component.cardsToTheLeft).toEqual([c3.value]);
-    expect(component.cardsToTheRight).toEqual([]);
+    expect(component.cardsRemaining).toEqual([c1,c2]);
+    expect(component.cardsSorted).toEqual([{response: c3, category: 0, correct: false}]);
+    expect(component.answersToTheLeft).toEqual([c3.value]);
+    expect(component.answersToTheRight).toEqual([]);
 
     // Swipe de la deuxième carte qui s'affiche (donc la dernière -1 de l'array) vers la droite 'catégory : vrai'
     component.onSelectSide({rep: c2, category:1});
-    expect(component.cartesRestantes).toEqual([c1]);
-    expect(component.cartesTriees).toEqual([{response: c3, category: 0, correct: false}, {response: c2, category: 1, correct:false}]);
-    expect(component.cardsToTheLeft).toEqual([c3.value]);
-    expect(component.cardsToTheRight).toEqual([c2.value]);
+    expect(component.cardsRemaining).toEqual([c1]);
+    expect(component.cardsSorted).toEqual([{response: c3, category: 0, correct: false}, {response: c2, category: 1, correct:false}]);
+    expect(component.answersToTheLeft).toEqual([c3.value]);
+    expect(component.answersToTheRight).toEqual([c2.value]);
 
    // Swipe de la troisième carte qui s'affiche (donc la dernière -2 de l'array) vers la gauche 'catégory : faux'
    component.onSelectSide({rep: c1, category:0});
-   expect(component.cartesRestantes).toEqual([]);
-   expect(component.cartesTriees).toEqual([
+   expect(component.cardsRemaining).toEqual([]);
+   expect(component.cardsSorted).toEqual([
        {response: c3, category: 0, correct: false},
        {response: c2, category: 1, correct:false},
        {response: c1, category: 0, correct: true}
    ]);
-   expect(component.cardsToTheLeft).toEqual([c3.value, c1.value]);
-   expect(component.cardsToTheRight).toEqual([c2.value]);
+   expect(component.answersToTheLeft).toEqual([c3.value, c1.value]);
+   expect(component.answersToTheRight).toEqual([c2.value]);
 
    // Appel de la méthode undo
    component.undo();
-   expect(component.cartesRestantes).toEqual([c1]);
-      expect(component.cartesTriees).toEqual([{response: c3, category: 0, correct: false}, {response: c2, category: 1, correct:false}]);
-   expect(component.cardsToTheLeft).toEqual([c3.value]);
-   expect(component.cardsToTheRight).toEqual([c2.value]);
+   expect(component.cardsRemaining).toEqual([c1]);
+      expect(component.cardsSorted).toEqual([{response: c3, category: 0, correct: false}, {response: c2, category: 1, correct:false}]);
+   expect(component.answersToTheLeft).toEqual([c3.value]);
+   expect(component.answersToTheRight).toEqual([c2.value]);
 
    // Appel de la méthode undo
    component.undo();
-   expect(component.cartesRestantes).toEqual([c1,c2]);
-      expect(component.cartesTriees).toEqual([{response: c3, category: 0, correct: false}]);
-   expect(component.cardsToTheLeft).toEqual([c3.value]);
-   expect(component.cardsToTheRight).toEqual([]);
+   expect(component.cardsRemaining).toEqual([c1,c2]);
+      expect(component.cardsSorted).toEqual([{response: c3, category: 0, correct: false}]);
+   expect(component.answersToTheLeft).toEqual([c3.value]);
+   expect(component.answersToTheRight).toEqual([]);
 
    // Appel de la méthode undo
    component.undo();
-   expect(component.cartesRestantes).toEqual([c1,c2,c3]);
-   expect(component.cartesTriees).toEqual([]);
-   expect(component.cardsToTheLeft).toEqual([]);
-   expect(component.cardsToTheRight).toEqual([]);
+   expect(component.cardsRemaining).toEqual([c1,c2,c3]);
+   expect(component.cardsSorted).toEqual([]);
+   expect(component.answersToTheLeft).toEqual([]);
+   expect(component.answersToTheRight).toEqual([]);
 
   })
 

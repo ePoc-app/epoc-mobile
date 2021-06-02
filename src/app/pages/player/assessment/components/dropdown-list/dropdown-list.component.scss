@@ -42,6 +42,12 @@
   &.disabled {
     background-color: var(--ion-color-inria-grey);
   }
+  &.correct {
+    background: var(--ion-color-inria-correct-rgba60);
+  }
+  &.incorrect {
+    background: var(--ion-color-inria-incorrect-rgba60);
+  }
 }
 
 .select p {

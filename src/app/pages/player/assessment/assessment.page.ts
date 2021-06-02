@@ -42,7 +42,7 @@ export class AssessmentPage implements OnInit {
     notransition = false;
     flipped = false;
     certificateShown = false;
-    correctionState: boolean;
+    solutionShown = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -109,9 +109,6 @@ export class AssessmentPage implements OnInit {
         this.userResponses.push(this.currentAnswer);
         this.explanationShown = true;
         this.notransition = false;
-        if (this.questions[this.currentQuestion].type !== 'swipe' && this.questions[this.currentQuestion].type !== 'dropdown-list' ) {
-            this.flipped = true;
-        }
         document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
     }
 
@@ -125,7 +122,7 @@ export class AssessmentPage implements OnInit {
     }
 
     initQuestion() {
-        this.correctionState = false;
+        this.solutionShown = false;
         this.explanationShown = false;
         this.notransition = true;
         this.flipped = false;
@@ -223,5 +220,10 @@ export class AssessmentPage implements OnInit {
             document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
             this.flipped = !this.flipped;
         }
+    }
+
+    toggleSolution(event) {
+        event.stopPropagation();
+        this.solutionShown = !this.solutionShown;
     }
 }

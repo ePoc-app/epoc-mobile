@@ -218,6 +218,14 @@ video {
   word-break: break-word;
 }
 
+// Remove transition to not show answer
+.flipper.notransition{
+  transition: none!important;
+  ion-item{
+    --transition: none;
+  }
+}
+
 .transcript{
   padding: 1em;
 }
@@ -255,6 +263,12 @@ video {
       }
     }
   }
+}
+
+.swipe-modal {
+  margin: 15% 5% 15% 5%;
+  border: 1px solid black!important;
+  border-radius: 8px;
 }
 
 .dropdown-actionSheet {
