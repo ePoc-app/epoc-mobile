@@ -12,7 +12,7 @@ export class SrcConvertPipe implements PipeTransform {
     }
 
     transform(value: string): string {
-        const regex = /src=['"]([^'"]*)['"]/g;
+        const regex = /src=['"](?!http)([^'"]*)['"]/g;
         return value.replace(regex, `src='${this.libraryService.rootFolder}$1'`).replace(/assets\/demo/g, '');
     }
 
