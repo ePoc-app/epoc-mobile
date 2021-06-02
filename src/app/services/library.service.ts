@@ -15,7 +15,7 @@ const { Filesystem } = Plugins;
 export class LibraryService {
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
     private initialized = false;
-    public rootFolder = './assets/demo/';
+    public rootFolder = localStorage.getItem('rootFolder') ? Capacitor.convertFileSrc(localStorage.getItem('rootFolder')) : './assets/demo/';
 
     constructor(private http: HttpClient) {}
 
@@ -24,6 +24,11 @@ export class LibraryService {
     }
 
     setRootFolder(rootFolder: string) {
+        if(!rootFolder){
+            localStorage.removeItem('rootFolder');
+            return;
+        }
+        localStorage.setItem('rootFolder', rootFolder);
         this.rootFolder = Capacitor.convertFileSrc(rootFolder);
     }
 
