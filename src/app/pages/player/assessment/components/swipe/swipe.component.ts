@@ -60,6 +60,7 @@ export class SwipeComponent extends AbstractActivityContainerComponent implement
         .sort((a, b) => a[0] - b[0])
         .map(a => a[1]);
     this.cardsRemaining = shuffleArray(this.question.responses);
+    this.question.possibilities = this.question.correctResponse.map(response => response.label);
   }
 
   ngOnChanges(changes: SimpleChanges) {

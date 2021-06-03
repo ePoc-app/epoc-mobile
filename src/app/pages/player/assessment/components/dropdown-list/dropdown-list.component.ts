@@ -38,6 +38,7 @@ export class DropdownListComponent extends AbstractActivityContainerComponent im
     this.question.responses.forEach(() => {
       this.selectValue.push('Cliquez pour sélectionner');
     })
+    this.question.categories = this.question.correctResponse.map(response => response.label);
   }
 
   updateDisplay(correctionState: boolean, solutionShown: boolean) {
