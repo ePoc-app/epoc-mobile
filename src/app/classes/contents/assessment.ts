@@ -40,11 +40,13 @@ export class Response {
 }
 
 export class SwipeQuestion extends Question {
-    possibilities: Array<string>;
     correctResponse: Array<{label: string, values: string[]}>;
+    // initialized at runtime
+    possibilities?: Array<string>;
 }
 
 export class DropDownListQuestion extends Question {
-    categories: Array<string>;
     correctResponse: Array<{label: string, values: string[]}>;
+    // initialized at runtime
+    categories?: Array<string>;
 }
