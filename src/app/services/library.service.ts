@@ -26,6 +26,7 @@ export class LibraryService {
     setRootFolder(rootFolder: string) {
         if(!rootFolder){
             localStorage.removeItem('rootFolder');
+            this.rootFolder = './assets/demo/';
             return;
         }
         localStorage.setItem('rootFolder', rootFolder);
