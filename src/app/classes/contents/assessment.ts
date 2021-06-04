@@ -7,6 +7,7 @@ export class Assessment extends Content {
     // initialized at runtime
     scoreTotal?: number;
     chapterId?: uid;
+    easierScoring?: boolean;
 }
 
 export class SimpleQuestion extends Content {
@@ -23,6 +24,7 @@ export class Question {
     responses: Array<Response>;
     correctResponse: string|Array<string>|Array<{label: string, values: string[]}>;
     explanation: html;
+    easierScoring?: boolean;
 }
 
 export class DragAndDropquestion extends Question{
