@@ -176,7 +176,6 @@ export class AssessmentPage implements OnInit {
 
     questionEasierScoring() {
         const lengthCorrect = this.questions[this.currentQuestion].correctResponse.length;
-        const lengthTotal = this.questions[this.currentQuestion].responses.length;
         const nbIncorrect = this.currentAnswer.length - this.nbCorrect;
         const scorePerRep = +this.questions[this.currentQuestion].score / lengthCorrect;
         if (this.questions[this.currentQuestion].type === 'multiple-choice') {
