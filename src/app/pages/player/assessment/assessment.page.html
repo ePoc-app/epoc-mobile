@@ -112,12 +112,13 @@
 
   <div class="buttons">
 <!-- Ajouter le disabled de toggleSolution si l'utilisateur à tout juste -->
-    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown">
+    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown" [disabled]="this.questionsSuccessed[this.currentQuestion]">
       <div class="answerState" *ngIf="!solutionShown">
         <ion-icon name="bulb-outline"></ion-icon>
         SOLUTION
       </div>
-      <div class="solutionState" *ngIf="solutionShown">
+      <div class="solutionState" *ngIf="solutionShown;
+">
         VOS REPONSES
       </div>
     </ion-button>
