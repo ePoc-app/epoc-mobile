@@ -179,12 +179,12 @@ export class AssessmentPage implements OnInit {
         const lengthTotal = this.questions[this.currentQuestion].responses.length;
         const nbIncorrect = this.currentAnswer.length - this.nbCorrect;
         const scorePerRep = +this.questions[this.currentQuestion].score / lengthCorrect;
-        if (this.questions[this.currentQuestion].type === 'multiple-choice' || this.questions[this.currentQuestion].type === 'choice') {
+        if (this.questions[this.currentQuestion].type === 'multiple-choice') {
             this.userScore +=
                 Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) > 0 ?
                     Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep)  : 0;
         } else {
-            this.userScore += Math.round((+this.questions[this.currentQuestion].score / lengthTotal) * this.nbCorrect);
+            this.userScore += Math.round(scorePerRep * this.nbCorrect);
         }
         this.questionsSuccessed[this.currentQuestion] = this.userScore === this.questions[this.currentQuestion].score;
     }
