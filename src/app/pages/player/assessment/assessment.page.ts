@@ -176,16 +176,21 @@ export class AssessmentPage implements OnInit {
 
     questionEasierScoring() {
         const lengthCorrect = this.questions[this.currentQuestion].correctResponse.length;
+        const lengthTotal = this.questions[this.currentQuestion].responses.length
         const nbIncorrect = this.currentAnswer.length - this.nbCorrect;
         const scorePerRep = +this.questions[this.currentQuestion].score / lengthCorrect;
         if (this.questions[this.currentQuestion].type === 'multiple-choice') {
             this.userScore +=
                 Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) > 0 ?
                     Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep)  : 0;
+            this.questionsSuccessed[this.currentQuestion] =
+                Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) === this.questions[this.currentQuestion].score;
         } else {
-            this.userScore += Math.round(scorePerRep * this.nbCorrect);
+            this.userScore += Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect);
+            this.questionsSuccessed[this.currentQuestion] =
+                Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect)
+                === this.questions[this.currentQuestion].score;
         }
-        this.questionsSuccessed[this.currentQuestion] = this.userScore === this.questions[this.currentQuestion].score;
     }
 
     initQuestion() {
