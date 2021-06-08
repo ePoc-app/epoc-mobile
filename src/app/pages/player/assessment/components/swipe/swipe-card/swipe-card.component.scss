@@ -20,24 +20,23 @@ ion-card {
 }
 
 ion-card-header {
-  font-weight: bold;
-  text-align: center;
   height: 20%;
   transition: 0.3s ease-in-out;
+}
+
+ion-card-title {
+  font-size: large;
 }
 
 ion-card-content {
   overflow: hidden;
   padding: 1em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  color: black;
   &.content-correction {
     padding: 1em;
     font-size: x-small;
     overflow: hidden;
-    display: flex;
-    align-items: center;
     flex: 1;
+    color: black;
   }
 }
