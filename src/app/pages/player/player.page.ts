@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController, IonSlides} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
@@ -12,6 +12,7 @@ import {SettingsStoreService} from '../../services/settings-store.service';
 import {Location} from '@angular/common';
 import {Assessment} from '../../classes/contents/assessment';
 import {uid} from '../../classes/types';
+import {DenormalizePipe} from '../../pipes/denormalize.pipe';
 
 @Component({
     selector: 'app-player',
@@ -20,7 +21,7 @@ import {uid} from '../../classes/types';
 })
 export class PlayerPage implements OnInit {
 
-    @ViewChild('readerSlides', { static: false }) readerSlides: IonSlides;
+    @ViewChild('readerSlides', {static: false}) readerSlides: IonSlides;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -31,6 +32,7 @@ export class PlayerPage implements OnInit {
     nextChapterId: uid;
     pagesCount: number;
     reading: Reading;
+    chaptersFinished: Array<boolean> = [];
 
     // Reader
     dataInitialized = false;
@@ -70,7 +72,8 @@ export class PlayerPage implements OnInit {
         public libraryService: LibraryService,
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
@@ -88,6 +91,14 @@ export class PlayerPage implements OnInit {
             if (this.chapterIndex < Object.entries(epoc.chapters).length - 1) {
                 this.nextChapterId = Object.keys(epoc.chapters)[this.chapterIndex + 1]
                 this.nextChapter = epoc.chapters[this.nextChapterId];
+            }
+            // Initialize the array chaptersFinished
+            if (!this.chaptersFinished) {
+                this.chaptersFinished = [];
+                DenormalizePipe.prototype.transform(this.epoc.chapters).forEach(() => {
+                    this.chaptersFinished.push(false);
+                })
+                localStorage.setItem('chapterProgression', JSON.stringify(this.chaptersFinished));
             }
         });
 
@@ -125,7 +136,7 @@ export class PlayerPage implements OnInit {
 
     countPages() {
         this.pagesCount = this.chapter.initializedContents.filter(
-            content => !content.conditional || ( content.conditional && this.reading.flags.indexOf(content.id) !== -1 )
+            content => !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1)
         ).length + 1;
     }
 
@@ -143,6 +154,10 @@ export class PlayerPage implements OnInit {
             this.currentPage = index;
             this.countPages();
             this.progress = index / this.pagesCount;
+            // Quand on arrive sur la dernière page de chaque chapitre
+            if (index === this.pagesCount) {
+                this.updateToc(this.chapter);
+            }
         });
     }
 
@@ -281,5 +296,13 @@ export class PlayerPage implements OnInit {
 
     ionViewWillLeave() {
         this.stopAllMedia();
+    }
+
+    updateToc(chapter) {
+        if (JSON.parse(localStorage.getItem('chapterProgression'))) {
+            this.chaptersFinished = JSON.parse(localStorage.getItem('chapterProgression'));
+        }
+        this.chaptersFinished[DenormalizePipe.prototype.transform(this.epoc.chapters).indexOf(chapter)] = true;
+        localStorage.setItem('chapterProgression', JSON.stringify(this.chaptersFinished));
     }
 }

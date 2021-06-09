@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import {LibraryService} from '../../../services/library.service';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
-import {AlertController} from '@ionic/angular';
+import {AlertController, Platform} from '@ionic/angular';
 
 @Component({
     selector: 'app-toc-epoc',
@@ -16,6 +16,7 @@ export class TocEpocPage implements OnInit{
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     detailedToc = false;
+    chaptersFinished: Array<boolean> = [];
 
     sliderOptions = {
         slidesPerView: 1.2,
@@ -26,7 +27,8 @@ export class TocEpocPage implements OnInit{
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService,
-        public alertController: AlertController
+        public alertController: AlertController,
+        private platform: Platform
     ) {}
 
     ngOnInit() {
@@ -34,9 +36,16 @@ export class TocEpocPage implements OnInit{
             switchMap((params: ParamMap) =>
                 this.libraryService.getEpoc())
         );
-
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
+            this.updateToc();
+            // Listener déclenché à chaque modification du storage
+            if (window.addEventListener) {
+                window.addEventListener('storage', this.updateToc, false);
+            }
         });
+    }
+    private updateToc = () => {
+        this.chaptersFinished = JSON.parse(localStorage.getItem('chapterProgression'));
     }
 }
