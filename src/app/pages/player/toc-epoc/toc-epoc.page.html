@@ -48,13 +48,15 @@
                      [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id"
                      [style.height]="height + 'px'"
                 >
-                    <ion-progress-bar [buffer]="this.chaptersFinished && this.chaptersFinished[index] ? 1 : 0">
+                    <ion-progress-bar
+                        [buffer]="this.chaptersFinished && this.chaptersFinished[index] && this.assesmentDone && this.assesmentDone[index] ? 1 : 0">
                     </ion-progress-bar>
-                    <ion-icon name="ellipse" [ngClass]="this.chaptersFinished && this.chaptersFinished[index] ? 'success' : 'neutral'">
+                    <ion-icon name="ellipse" [ngClass]="this.chaptersFinished && this.chaptersFinished[index]&& this.assesmentDone && this.assesmentDone[index] ? 'chapter-completed' : 'chapter-uncompleted'">
                     </ion-icon>
                     <div class="rectangle">
                         <div [style.font-size]="fontSize + 'px'">
-                            <b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}} : </b>
+                            <b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}
+                                : </b>
                             {{chapter.title}}
                         </div>
 
