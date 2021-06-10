@@ -9,6 +9,7 @@ import {Epoc} from '../../../classes/epoc';
 import {AlertController, IonSlides} from '@ionic/angular';
 import {Reading} from '../../../classes/reading';
 import {Assessment, Question} from '../../../classes/contents/assessment';
+import {DenormalizePipe} from "../../../pipes/denormalize.pipe";
 
 @Component({
     selector: 'app-assessment',
@@ -25,6 +26,7 @@ export class AssessmentPage implements OnInit {
     epocId;
     assessmentId;
     reading: Reading;
+    assessmentDone: Array<boolean>;
 
     slidesOptions = {
         allowTouchMove: false
@@ -75,6 +77,9 @@ export class AssessmentPage implements OnInit {
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
             this.scoreMax = this.libraryService.calcScoreTotal(this.epoc, this.assessment.questions);
             this.questionsSuccessed = new Array(this.questions.length);
+            this.assessmentDone = new Array(DenormalizePipe.prototype.transform(this.epoc.chapters).map(() => {
+                return false;
+            }));
             this.initQuestion();
         });
     }
@@ -137,6 +142,7 @@ export class AssessmentPage implements OnInit {
         if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
+            this.assessmentIsDone();
         }
         this.questionSlides.slideNext();
     }
@@ -213,6 +219,26 @@ export class AssessmentPage implements OnInit {
 
     resume() {
         this.router.navigateByUrl(`/player/play/${this.epoc.id}/${this.assessment.chapterId}/content/${this.assessmentId}/next`);
+    }
+
+    assessmentIsDone() {
+        if (JSON.parse(localStorage.getItem('assessmentProgression'))) {
+            this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
+        }
+        let index = null;
+        DenormalizePipe.prototype.transform(this.epoc.chapters).forEach((chapter) => {
+            if (chapter.assessmentCount === 0) {
+                index = DenormalizePipe.prototype.transform(this.epoc.chapters).findIndex(chap => chap.id === chapter.id);
+            } else {
+                chapter.initializedContents.forEach((content) => {
+                    if (content.type === 'assessment' && content.id === this.assessmentId) {
+                        index = DenormalizePipe.prototype.transform(this.epoc.chapters).findIndex(chap => chap.id === chapter.id);
+                    }
+                })
+            }
+        })
+        this.assessmentDone[index] = true;
+        localStorage.setItem('assessmentProgression', JSON.stringify(this.assessmentDone));
     }
 
     flip() {
