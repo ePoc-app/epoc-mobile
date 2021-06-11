@@ -13,7 +13,8 @@
         <ion-list>
             <ng-container *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
                 <ion-item class="level-1" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id">
-                    <ion-label>{{chapter.title}}</ion-label>
+                    <ion-label><b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}} : </b>
+                        {{chapter.title}}</ion-label>
                 </ion-item>
                 <ng-container *ngFor="let content of chapter.contents | denormalize:epoc.contents;">
                     <ion-item class="level-2"
@@ -55,9 +56,8 @@
                     </ion-icon>
                     <div class="rectangle">
                         <div [style.font-size]="fontSize + 'px'">
-                            <b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}
-                                : </b>
-                            {{chapter.title}}
+                            <ion-label><b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}} : </b>
+                                {{chapter.title}}</ion-label>
                         </div>
 
                     </div>
