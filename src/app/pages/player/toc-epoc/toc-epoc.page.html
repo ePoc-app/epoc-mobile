@@ -49,9 +49,9 @@
                      [style.height]="height + 'px'"
                 >
                     <ion-progress-bar
-                        [buffer]="this.chaptersFinished && this.chaptersFinished[index] && this.assesmentDone && this.assesmentDone[index] ? 1 : 0">
+                        [buffer]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 1 : 0">
                     </ion-progress-bar>
-                    <ion-icon name="ellipse" [ngClass]="this.chaptersFinished && this.chaptersFinished[index]&& this.assesmentDone && this.assesmentDone[index] ? 'chapter-completed' : 'chapter-uncompleted'">
+                    <ion-icon name="ellipse" [ngClass]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 'chapter-completed' : 'chapter-uncompleted'">
                     </ion-icon>
                     <div class="rectangle">
                         <div [style.font-size]="fontSize + 'px'">

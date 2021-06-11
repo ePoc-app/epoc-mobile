@@ -33,6 +33,7 @@ export class PlayerPage implements OnInit {
     pagesCount: number;
     reading: Reading;
     chaptersFinished: Array<boolean> = [];
+    assessmentDone: Array<boolean> = [];
 
     // Reader
     dataInitialized = false;
@@ -99,6 +100,18 @@ export class PlayerPage implements OnInit {
                     this.chaptersFinished.push(false);
                 })
                 localStorage.setItem('chapterProgression', JSON.stringify(this.chaptersFinished));
+            }
+            // Initialize the array assessmentDone
+            if (!JSON.parse(localStorage.getItem('assessmentProgression'))) {
+                this.assessmentDone = [];
+                DenormalizePipe.prototype.transform(this.epoc.chapters).forEach((chapter) => {
+                    if (chapter.assessmentCount !== 0) {
+                        this.assessmentDone.push(false);
+                    } else {
+                        this.assessmentDone.push(true);
+                    }
+                })
+                localStorage.setItem('assessmentProgression', JSON.stringify(this.assessmentDone));
             }
         });
 

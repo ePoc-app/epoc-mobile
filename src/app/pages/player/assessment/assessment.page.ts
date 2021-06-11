@@ -77,10 +77,8 @@ export class AssessmentPage implements OnInit {
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
             this.scoreMax = this.libraryService.calcScoreTotal(this.epoc, this.assessment.questions);
             this.questionsSuccessed = new Array(this.questions.length);
-            this.assessmentDone = new Array(DenormalizePipe.prototype.transform(this.epoc.chapters).map(() => {
-                return false;
-            }));
             this.initQuestion();
+            this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
         });
     }
 
@@ -225,19 +223,19 @@ export class AssessmentPage implements OnInit {
         if (JSON.parse(localStorage.getItem('assessmentProgression'))) {
             this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
         }
-        let index = null;
+        let index;
         DenormalizePipe.prototype.transform(this.epoc.chapters).forEach((chapter) => {
             if (chapter.assessmentCount === 0) {
-                index = DenormalizePipe.prototype.transform(this.epoc.chapters).findIndex(chap => chap.id === chapter.id);
+                return;
             } else {
                 chapter.initializedContents.forEach((content) => {
                     if (content.type === 'assessment' && content.id === this.assessmentId) {
                         index = DenormalizePipe.prototype.transform(this.epoc.chapters).findIndex(chap => chap.id === chapter.id);
                     }
-                })
+                });
+                this.assessmentDone[index] = true;
             }
-        })
-        this.assessmentDone[index] = true;
+        });
         localStorage.setItem('assessmentProgression', JSON.stringify(this.assessmentDone));
     }
 
