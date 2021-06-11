@@ -22,19 +22,21 @@ ion-card {
 ion-card-header {
   height: 20%;
   transition: 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 ion-card-title {
-  font-size: large;
+  font-size: x-large;
 }
 
 ion-card-content {
+  height: 80%;
   overflow: hidden;
   padding: 1em;
   color: black;
   &.content-correction {
-    padding: 1em;
-    font-size: x-small;
     overflow: hidden;
     flex: 1;
     color: black;
