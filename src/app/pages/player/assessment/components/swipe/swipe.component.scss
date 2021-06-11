@@ -28,17 +28,20 @@
 .swipe-cards {
   flex: 1;
   position:relative;
-  height: 60%;
   margin-bottom: 5%;
   width: 90%;
   align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .swipe-cards swipe-card {
   position: absolute;
+  max-height: 400px;
   height: 100%;
   width: 100%;
-  top: 0px;
+  margin: auto;
   left: 0px;
   z-index: 3;
 }
@@ -119,7 +122,7 @@
     }
   }
   swipe-card {
-    min-height: 190px;
+    height: 200px;
     margin: 0.2em;
   }
 }
