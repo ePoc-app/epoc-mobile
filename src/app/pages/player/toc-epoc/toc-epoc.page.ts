@@ -18,7 +18,7 @@ export class TocEpocPage implements OnInit {
     epoc: Epoc;
     detailedToc = false;
     chaptersFinished: Array<boolean> = [];
-    assesmentDone: Array<boolean> = [];
+    assessmentDone: Array<boolean> = [];
 
     sliderOptions = {
         slidesPerView: 1.2,
@@ -61,6 +61,6 @@ export class TocEpocPage implements OnInit {
 
     private updateToc = () => {
         this.chaptersFinished = JSON.parse(localStorage.getItem('chapterProgression'));
-        this.assesmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
+        this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
     }
 }
