@@ -13,7 +13,9 @@
         <ion-list>
             <ng-container *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
                 <ion-item class="level-1" [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id">
-                    <ion-label><b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}} : </b>
+                    <ion-label>
+                        <b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}
+                            : </b>
                         {{chapter.title}}</ion-label>
                 </ion-item>
                 <ng-container *ngFor="let content of chapter.contents | denormalize:epoc.contents;">
@@ -34,32 +36,36 @@
         </ion-list>
     </ng-container>
     <ng-container *ngIf="!detailedToc">
-        <div class="head" [style.height]="platform.height() / (epoc.chapters | denormalize).length + 'px'">
-            <div class="titleEpoc" [style.font-size]="fontSize + 5 + 'px'">
-                <b>{{epoc.title}}</b>
-            </div>
-        </div>
-
         <div class="container">
-            <div class="bar"></div>
-            <div class="chapters">
-                <div class="part"
-                     *ngFor="let chapter of epoc.chapters | denormalize;
+            <div class="head">
+                <img src="/assets/img/ePoc.svg">
+                <div class="titleEpoc">
+                    <b>{{epoc.title}}</b>
+                </div>
+            </div>
+            <div class="tocContent">
+                <div class="bar"></div>
+                <div class="chapters">
+                    <div class="part"
+                         *ngFor="let chapter of epoc.chapters | denormalize;
                let index = index"
-                     [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id"
-                     [style.height]="height + 'px'"
-                >
-                    <ion-progress-bar
-                        [buffer]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 1 : 0">
-                    </ion-progress-bar>
-                    <ion-icon name="ellipse" [ngClass]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 'chapter-completed' : 'chapter-uncompleted'">
-                    </ion-icon>
-                    <div class="rectangle">
-                        <div [style.font-size]="fontSize + 'px'">
-                            <ion-label><b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}} : </b>
-                                {{chapter.title}}</ion-label>
-                        </div>
+                         [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id"
+                    >
+                        <ion-progress-bar
+                                [buffer]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 1 : 0">
+                        </ion-progress-bar>
+                        <ion-icon name="ellipse"
+                                  [ngClass]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 'chapter-completed' : 'chapter-uncompleted'">
+                        </ion-icon>
+                        <div class="rectangle">
+                            <div>
+                                <ion-label>
+                                    <b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}
+                                        : </b>
+                                    {{chapter.title}}</ion-label>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>

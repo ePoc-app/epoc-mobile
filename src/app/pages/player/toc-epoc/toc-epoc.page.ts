@@ -4,8 +4,7 @@ import {switchMap} from 'rxjs/operators';
 import {LibraryService} from '../../../services/library.service';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
-import {AlertController, Platform} from '@ionic/angular';
-import {DenormalizePipe} from "../../../pipes/denormalize.pipe";
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-toc-epoc',
@@ -24,15 +23,12 @@ export class TocEpocPage implements OnInit {
         slidesPerView: 1.2,
         spaceBetween: 25,
     };
-    fontSize: any;
-    height: number;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService,
         public alertController: AlertController,
-        private platform: Platform
     ) {
     }
 
@@ -47,14 +43,6 @@ export class TocEpocPage implements OnInit {
             // Listener déclenché à chaque modification du storage
             if (window.addEventListener) {
                 window.addEventListener('storage', this.updateToc, false);
-            }
-            const length = DenormalizePipe.prototype.transform(this.epoc.chapters).length;
-            this.height =
-                (this.platform.height() - 44 - (this.platform.height() / length) - 12 * (length + 1)) / (length);
-            if (length < 7) {
-                this.fontSize = this.height / 4.5;
-            } else {
-                this.fontSize = this.height / 3.5;
             }
         });
     }
