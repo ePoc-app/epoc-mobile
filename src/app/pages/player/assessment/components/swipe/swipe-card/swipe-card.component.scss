@@ -28,17 +28,32 @@ ion-card-header {
 }
 
 ion-card-title {
-  font-size: x-large;
+  font-size: 1.5em;
 }
 
 ion-card-content {
-  height: 80%;
-  overflow: hidden;
-  padding: 1em;
   color: black;
+  font-size: 1em;
+  padding: 1em 1em 0 1em;
+  // Crop the text
+  display: none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+
   &.content-correction {
-    overflow: hidden;
     flex: 1;
+    padding: 1em 0.5em 0 0.5em;
     color: black;
+    font-size: 0.75em;
+    // Crop the text
+    display: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 12;
+    -webkit-box-orient: vertical;
   }
 }
