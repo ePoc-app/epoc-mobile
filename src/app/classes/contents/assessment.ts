@@ -33,6 +33,10 @@ export class MultipleChoiceQuestion extends Question {
     correctResponse: Array<string>;
 }
 
+export class SimpleChoiceQuestion extends Question {
+    correctResponse: string;
+}
+
 export class Response {
     label: string;
     value: string;
