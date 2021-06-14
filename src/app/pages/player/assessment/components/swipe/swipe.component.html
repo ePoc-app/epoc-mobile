@@ -27,7 +27,7 @@
                 [selectedSide]="this.question.possibilities[0]"
                 [correct]="card.correct"
                 [solutionShown]="solutionShown"
-                (click)="card.response.explanation ? this.openPopUp($event, card): ''"
+                (click)="card.response.explanation && !this.solutionShown ? this.openPopUp($event, card): ''"
     >
     </swipe-card>
   </div>
@@ -40,7 +40,7 @@
                 [selectedSide]="this.question.possibilities[1]"
                 [correct]="card.correct"
                 [solutionShown]="solutionShown"
-                (click)="card.response.explanation ? this.openPopUp($event, card): ''"
+                (click)="card.response.explanation && !this.solutionShown ? this.openPopUp($event, card): ''"
     >
     </swipe-card>
   </div>
