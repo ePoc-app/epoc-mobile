@@ -95,6 +95,7 @@
     flex-direction: column;
     flex: 1;
     width: calc(50% - 0.4em);
+    align-items: center;
     .leftTitle {
       background: var(--ion-color-inria-card-left);
       border-radius: 10px;
@@ -103,6 +104,8 @@
       align-items: center;
       justify-content: center;
       margin: 0.2em;
+      width: 100%;
+      max-width: 150px;
     }
   }
   .right {
@@ -110,6 +113,7 @@
     flex-direction: column;
     flex: 1;
     width: calc(50% - 0.4em);
+    align-items: center;
 
     .rightTitle {
       background: var(--ion-color-inria-card-right);
@@ -119,6 +123,9 @@
       align-items: center;
       justify-content: center;
       margin: 0.2em;
+      width: 100%;
+      max-width: 150px;
+
     }
   }
   swipe-card {
