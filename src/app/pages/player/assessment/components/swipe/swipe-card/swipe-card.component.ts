@@ -4,7 +4,7 @@ import {
   Output,
   EventEmitter,
   ElementRef,
-  AfterViewInit, NgZone, ViewChild, OnInit
+  AfterViewInit, NgZone, ViewChild
 } from '@angular/core';
 import {GestureController, Platform} from '@ionic/angular';
 import {Response} from '../../../../../../classes/contents/assessment';
@@ -27,7 +27,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   ]
 })
 
-export class SwipeCardComponent implements OnInit, AfterViewInit {
+export class SwipeCardComponent implements AfterViewInit {
   @Input ('possibilities') possibilities: Array<string>;
   @Input ('response') response: Response;
   @Input('disabled') disabled: boolean;
@@ -40,23 +40,12 @@ export class SwipeCardComponent implements OnInit, AfterViewInit {
   @ViewChild('card', {read:ElementRef}) card: ElementRef
 
   animationState = 'initial';
-  fontSize: any;
-  fontSizeCorrection: any;
 
   constructor(
       private gestureCtrl: GestureController,
       private zone: NgZone,
       private platform: Platform
   ) { }
-
-  ngOnInit() {
-    this.fontSize = this.response.label.length > 100 ? 14 : 20;
-    if (this.platform.width() < 350) {
-      this.fontSizeCorrection = this.response.label.length > 120 ? 10 : 14;
-    } else {
-      this.fontSizeCorrection = this.response.label.length > 150 ? 10 : 15;
-    }
-  }
 
   ngAfterViewInit() {
     if (!this.disabled){

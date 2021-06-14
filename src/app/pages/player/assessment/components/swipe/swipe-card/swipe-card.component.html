@@ -12,8 +12,7 @@
         {{selectedSide}}
       </ion-card-title>
     </ion-card-header>
-    <ion-card-content mode="ios" [ngClass]="{'content-correction': this.correct !== undefined}"
-    [style.fontSize]="this.correct === undefined ? this.fontSize + 'px' : fontSizeCorrection + 'px'">
+    <ion-card-content mode="ios" [ngClass]="{'content-correction': this.correct !== undefined}">
         {{response.label}}
     </ion-card-content>
 
