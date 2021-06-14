@@ -44,16 +44,15 @@ ion-card-content {
   -webkit-box-orient: vertical;
 
   &.content-correction {
-    flex: 1;
-    padding: 1em 0.5em 0 0.5em;
+    padding: 1em 1em 0 1em;
     color: black;
-    font-size: 0.75em;
+    font-size: 0.85em;
     // Crop the text
     display: none;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 12;
+    -webkit-line-clamp: 10;
     -webkit-box-orient: vertical;
   }
 }
