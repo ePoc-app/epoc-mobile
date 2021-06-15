@@ -43,8 +43,7 @@
   width: 100%;
   margin: auto;
   z-index: 3;
-  min-height: 12em;
-  max-height: 16em;
+  height: 15em;
   max-width: 12em;
   // Iphone X
   @media only screen
@@ -142,7 +141,7 @@
     }
   }
   swipe-card {
-    height: 180px;
+    height: 10em;
     max-width: 150px;
     margin: 0.2em;
   }
