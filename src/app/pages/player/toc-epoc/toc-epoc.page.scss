@@ -93,6 +93,8 @@ ion-col {
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+    min-height: 4em;
+    max-height: 6em;
 
     ion-progress-bar {
       width: 10%;
@@ -113,9 +115,15 @@ ion-col {
       clip-path: polygon(0% 0%, 100% 5%, 100% 95%, 0% 100%);
       display: flex;
       align-items: center;
-      min-height: 60px;
-      max-height: 110px;
-      font-size: 1em;
+      ion-label {
+        max-height: 5em;
+        font-size: 1em;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
+        line-height: 1em;
+      }
     }
   }
 }
