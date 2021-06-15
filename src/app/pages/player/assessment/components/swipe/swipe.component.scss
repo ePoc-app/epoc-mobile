@@ -34,18 +34,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .swipe-cards swipe-card {
   position: absolute;
-  min-height: 260px;
-  min-width:  220px;
-  max-height: 400px;
-  max-width: 320px;
   height: 100%;
   width: 100%;
   margin: auto;
   z-index: 3;
+  min-height: 12em;
+  max-height: 16em;
+  max-width: 12em;
+  // Iphone X
+  @media only screen
+  and (device-width : 375px)
+  and (device-height : 812px)
+  and (-webkit-device-pixel-ratio : 3) {
+    transform: scale(1.3);
+  }
+  // Ipad
+  @media ( min-width : 720px ) {
+    transform: scale(2);
+  }
 }
 
 .swipe-cards swipe-card:nth-last-child(2):before {
