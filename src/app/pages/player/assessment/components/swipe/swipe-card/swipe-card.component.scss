@@ -38,28 +38,31 @@ ion-card-content {
   margin-bottom: 1em;
   height: 100%;
   line-height: 1em;
-  max-height: 14em;
+  max-height: 13em;
   // Crop text
   display: none;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 13;
+  -webkit-line-clamp: 12;
 
   -webkit-box-orient: vertical;
 
   &.content-correction {
-    padding: 1em 1em 0 1em;
     color: black;
     font-size: 0.85em;
+    padding: 1em 1em 0 1em;
+    margin-bottom: 1em;
+    height: 100%;
     line-height: 1em;
-    max-height: 10em;
-    // Crop the text
+    max-height: 14em;
+    // Crop text
     display: none;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 10;
+    -webkit-line-clamp: 14;
+
     -webkit-box-orient: vertical;
   }
 }
