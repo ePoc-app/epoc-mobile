@@ -38,13 +38,13 @@ ion-card-content {
   margin-bottom: 1em;
   height: 100%;
   line-height: 1em;
-  max-height: 13em;
+  max-height: 12em;
   // Crop text
   display: none;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 12;
+  -webkit-line-clamp: 11;
 
   -webkit-box-orient: vertical;
 
