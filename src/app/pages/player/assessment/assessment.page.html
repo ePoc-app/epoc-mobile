@@ -45,18 +45,8 @@
 
             <div class="back">
               <div class="question-card">
-                <ng-container *ngIf="question.responses.length">
-                  <div class="sucess" *ngIf="questionsSuccessed[questionIndex]">
-                    <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
-                    <h2>Bravo !</h2>
-                  </div>
-                  <div class="fail" *ngIf="!questionsSuccessed[questionIndex]">
-                    <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
-                    <h2>Faux</h2>
-                  </div>
-                </ng-container>
                 <div class="explanation">
-                  <h4 class="question-card-header">Explication :</h4>
+                  <h4 class="question-card-header">Explication</h4>
                   <div class="explanation-text">
                     <html-content [html]="question.explanation"></html-content>
                   </div>
