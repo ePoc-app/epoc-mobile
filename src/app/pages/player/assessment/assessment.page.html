@@ -17,8 +17,8 @@
               <div class="question-card">
                 <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
                 <div class="statement">
-                  <div *ngIf="question.statement">{{question.statement}}</div>
                   <b>{{question.label}}</b>
+                  <div *ngIf="question.statement">{{question.statement}}</div>
                 </div>
 
                 <ng-container *ngIf="question.type === 'choice'">
