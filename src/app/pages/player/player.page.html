@@ -211,7 +211,7 @@
                   <p>Ou retournez à la table des matières pour rejouer un <span>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}}</span>.</p>
                 </div>
                 <div class="custom-card-footer">
-                  <ion-button color="medium" expand="block" [routerLink]="'/player/toc/'+epoc.id" [state]="this.onChapterFinished">
+                  <ion-button color="medium" expand="block" [routerLink]="'/player/toc/'+epoc.id">
                     <ion-icon name="list" slot="start"></ion-icon>
                     Table des matières
                   </ion-button>
