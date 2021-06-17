@@ -43,6 +43,9 @@ export class AssessmentPage implements OnInit {
     flipped = false;
     certificateShown = false;
     solutionShown = false;
+    easierScoring: boolean;
+    nbCorrect: number;
+    nbIncorrect: number;
 
     constructor(
         private route: ActivatedRoute,
@@ -84,24 +87,74 @@ export class AssessmentPage implements OnInit {
     }
 
     checkAnswer() {
+        this.nbCorrect = 0;
+        this.nbIncorrect = 0;
         const correctResponse = this.questions[this.currentQuestion].correctResponse;
+        this.easierScoring =
+            this.epoc.parameters.easierScoring
+            || this.assessment.easierScoring
+            || this.questions[this.currentQuestion].easierScoring;
         if (typeof correctResponse === 'string') {
-            if (correctResponse === this.currentAnswer) {
-                this.questionSuccessed();
+            if (!this.easierScoring) {
+                // Vérification Array entier
+                if (correctResponse === this.currentAnswer) {
+                    this.questionSuccessed();
+                } else {
+                    this.questionFailed();
+                }
             } else {
-                this.questionFailed();
+                // Vérification réponse par réponse
+                for (let i = 0; i < this.currentAnswer.length; i++) {
+                    if (this.currentAnswer[i] === correctResponse[i]) {
+                        this.nbCorrect++;
+                    }
+                    // Si on à parcouru toutes les réponses > on calcule le score
+                    if (i === this.currentAnswer.length - 1) {
+                        this.questionEasierScoring();
+                    }
+                }
             }
         } else if (Array.isArray(correctResponse)) {
-            if (correctResponse.length === this.currentAnswer.length && correctResponse.every((answer, index) => {
-                if (typeof answer === 'object') {
-                    return this.arraysEqual(this.currentAnswer[index], answer.values);
+            if (!this.easierScoring) {
+                if (correctResponse.length === this.currentAnswer.length && correctResponse.every((answer, index) => {
+                    if (typeof answer === 'object') {
+                        return this.arraysEqual(this.currentAnswer[index], answer.values);
+                    } else {
+                        return this.currentAnswer ? this.currentAnswer.indexOf(answer) >= 0 : false;
+                    }
+                })) {
+                    this.questionSuccessed();
                 } else {
-                    return this.currentAnswer ? this.currentAnswer.indexOf(answer) >= 0 : false;
+                    this.questionFailed();
                 }
-            })) {
-                this.questionSuccessed();
             } else {
-                this.questionFailed();
+                    let length = 0;
+                    correctResponse.forEach(() => {
+                        length++;
+                    })
+                    correctResponse.forEach((answer, index) => {
+                        if (typeof answer === 'object') {
+                            // Vérification réponse par réponse
+                            this.currentAnswer[index].forEach((current) => {
+                                    if (answer.values.includes(current)) {
+                                        this.nbCorrect++;
+                                    }
+                                })
+                            // Si on à parcouru toutes les réponses > on calcule le score
+                            if (index + 1 === length) {
+                                    this.questionEasierScoring();
+                                }
+                        } else {
+                            // Vérification réponse par réponse
+                            if (this.currentAnswer.includes(answer)) {
+                                    this.nbCorrect++;
+                                }
+                                // Si on à parcouru toutes les réponses > on calcule le score
+                                if (index + 1 === length) {
+                                    this.questionEasierScoring();
+                                }
+                        }
+                    })
             }
         } else {
             this.questionFailed();
@@ -119,6 +172,25 @@ export class AssessmentPage implements OnInit {
 
     questionFailed() {
         this.questionsSuccessed[this.currentQuestion] = false;
+    }
+
+    questionEasierScoring() {
+        const lengthCorrect = this.questions[this.currentQuestion].correctResponse.length;
+        const lengthTotal = this.questions[this.currentQuestion].responses.length
+        const nbIncorrect = this.currentAnswer.length - this.nbCorrect;
+        const scorePerRep = +this.questions[this.currentQuestion].score / lengthCorrect;
+        if (this.questions[this.currentQuestion].type === 'multiple-choice') {
+            this.userScore +=
+                Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) > 0 ?
+                    Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep)  : 0;
+            this.questionsSuccessed[this.currentQuestion] =
+                Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) === this.questions[this.currentQuestion].score;
+        } else {
+            this.userScore += Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect);
+            this.questionsSuccessed[this.currentQuestion] =
+                Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect)
+                === this.questions[this.currentQuestion].score;
+        }
     }
 
     initQuestion() {
