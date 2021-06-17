@@ -28,19 +28,34 @@
 .swipe-cards {
   flex: 1;
   position:relative;
-  height: 60%;
   margin-bottom: 5%;
   width: 90%;
   align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .swipe-cards swipe-card {
   position: absolute;
   height: 100%;
   width: 100%;
-  top: 0px;
-  left: 0px;
+  margin: auto;
   z-index: 3;
+  height: 14em;
+  max-width: 12em;
+  // Iphone X
+  @media only screen
+  and (device-width : 375px)
+  and (device-height : 812px)
+  and (-webkit-device-pixel-ratio : 3) {
+    transform: scale(1.3);
+  }
+  // Ipad
+  @media ( min-width : 720px ) {
+    transform: scale(2);
+  }
 }
 
 .swipe-cards swipe-card:nth-last-child(2):before {
@@ -78,6 +93,8 @@
   height: 60%;
   flex: 1;
   margin: auto;
+  font-size: 0.8em;
+  font-style: italic;
 }
 
 .informatif p {
@@ -92,6 +109,7 @@
     flex-direction: column;
     flex: 1;
     width: calc(50% - 0.4em);
+    align-items: center;
     .leftTitle {
       background: var(--ion-color-inria-card-left);
       border-radius: 10px;
@@ -100,6 +118,8 @@
       align-items: center;
       justify-content: center;
       margin: 0.2em;
+      width: 100%;
+      max-width: 150px;
     }
   }
   .right {
@@ -107,6 +127,7 @@
     flex-direction: column;
     flex: 1;
     width: calc(50% - 0.4em);
+    align-items: center;
 
     .rightTitle {
       background: var(--ion-color-inria-card-right);
@@ -116,10 +137,14 @@
       align-items: center;
       justify-content: center;
       margin: 0.2em;
+      width: 100%;
+      max-width: 150px;
+
     }
   }
   swipe-card {
-    min-height: 190px;
+    height: 10em;
+    max-width: 150px;
     margin: 0.2em;
   }
 }
