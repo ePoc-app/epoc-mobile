@@ -101,7 +101,7 @@
 >
 
   <div class="buttons">
-    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown" [disabled]="this.flipped">
+    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown" [disabled]="this.flipped || this.questionsSuccessed[this.currentQuestion]">
       <div class="answerState" *ngIf="!solutionShown">
         <ion-icon name="bulb-outline"></ion-icon>
         SOLUTION
