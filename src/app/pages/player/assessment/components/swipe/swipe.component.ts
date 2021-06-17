@@ -177,9 +177,6 @@ export class SwipeComponent extends AbstractActivityContainerComponent implement
 
   openPopUp(event, card) {
     event.stopPropagation();
-    if (!card.response.explanation || this.solutionShown) {
-      return;
-    }
     this.correct = card.correct;
     this.category = this.question.possibilities[card.category];
     this.answer = card.correct?
