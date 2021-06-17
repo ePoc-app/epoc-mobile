@@ -52,6 +52,10 @@ $inria-bg : #eceef9;
 
   --ion-color-inria-card: #E6F4F4;
 
+  --ion-color-inria-chapter-completed: #82caca;
+
+  --ion-color-inria-chapter-uncompleted: #D0CECE;
+
   --ion-color-inria-card-left: #FFCE20;
 
   --ion-color-inria-card-right: #92BBAF;
@@ -117,4 +121,12 @@ $inria-bg : #eceef9;
 
 .ion-color-inria-card-right {
   --ion-color-base: var(--ion-color-inria-card-right);
+}
+
+.ion-color-inria-chapter-completed {
+  --ion-color-base: var(--ion-color-inria-chapter-completed);
+}
+
+.ion-color-inria-chapter-uncompleted {
+  --ion-color-base: var(--ion-color-inria-chapter-uncompleted);
 }
