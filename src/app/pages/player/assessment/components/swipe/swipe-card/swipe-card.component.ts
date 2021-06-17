@@ -6,7 +6,7 @@ import {
   ElementRef,
   AfterViewInit, NgZone, ViewChild
 } from '@angular/core';
-import {GestureController} from '@ionic/angular';
+import {GestureController, Platform} from '@ionic/angular';
 import {Response} from '../../../../../../classes/contents/assessment';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
@@ -44,6 +44,7 @@ export class SwipeCardComponent implements AfterViewInit {
   constructor(
       private gestureCtrl: GestureController,
       private zone: NgZone,
+      private platform: Platform
   ) { }
 
   ngAfterViewInit() {

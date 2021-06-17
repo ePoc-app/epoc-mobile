@@ -41,10 +41,10 @@ export class ReorderComponent extends AbstractActivityContainerComponent impleme
             if (!solutionShown) {
                 this.selectHeader = this.nbCorrect + ' / ' + this.question.responses.length + ' réponses justes';
                 const answer = this.responses.reduce( (accumulator, response) => accumulator + response.value, '');
-                this.question.responses.forEach((rep) => {
-                    this.selectClass[this.responses.indexOf(rep)] =
-                        this.question.correctResponse[this.question.responses.indexOf(rep)]
-                        === answer[this.question.responses.indexOf(rep)] ? 'correct' : 'incorrect';
+                this.question.responses.forEach((rep, index) => {
+                    this.selectClass[index] =
+                        this.question.correctResponse[index]
+                        === answer[index] ? 'correct' : 'incorrect';
                 })
             } else {
                 this.selectHeader = 'Solution';
