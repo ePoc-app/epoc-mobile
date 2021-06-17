@@ -35,4 +35,5 @@ export class Chapter {
 
 export class Parameters {
     chapterParameter?: string;
+    easierScoring?: boolean;
 }
