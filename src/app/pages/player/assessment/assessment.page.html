@@ -17,8 +17,8 @@
               <div class="question-card">
                 <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
                 <div class="statement">
-                  <div *ngIf="question.statement">{{question.statement}}</div>
                   <b>{{question.label}}</b>
+                  <div *ngIf="question.statement">{{question.statement}}</div>
                 </div>
 
                 <ng-container *ngIf="question.type === 'choice'">
@@ -45,18 +45,8 @@
 
             <div class="back">
               <div class="question-card">
-                <ng-container *ngIf="question.responses.length">
-                  <div class="sucess" *ngIf="questionsSuccessed[questionIndex]">
-                    <ion-icon name="checkmark-circle-outline" color="success" class="explanation-icon"></ion-icon>
-                    <h2>Bravo !</h2>
-                  </div>
-                  <div class="fail" *ngIf="!questionsSuccessed[questionIndex]">
-                    <ion-icon name="close-circle-outline" color="danger" class="explanation-icon"></ion-icon>
-                    <h2>Faux</h2>
-                  </div>
-                </ng-container>
                 <div class="explanation">
-                  <h4 class="question-card-header">Explication :</h4>
+                  <h4 class="question-card-header">Explication</h4>
                   <div class="explanation-text">
                     <html-content [html]="question.explanation"></html-content>
                   </div>
@@ -111,8 +101,7 @@
 >
 
   <div class="buttons">
-<!-- Ajouter le disabled de toggleSolution si l'utilisateur à tout juste -->
-    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown" [disabled]="this.questionsSuccessed[this.currentQuestion]">
+    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown" [disabled]="this.flipped">
       <div class="answerState" *ngIf="!solutionShown">
         <ion-icon name="bulb-outline"></ion-icon>
         SOLUTION
