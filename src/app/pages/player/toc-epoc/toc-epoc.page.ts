@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {LibraryService} from '../../../services/library.service';
 import {Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
@@ -11,11 +11,13 @@ import {AlertController} from '@ionic/angular';
     templateUrl: 'toc-epoc.page.html',
     styleUrls: ['toc-epoc.page.scss']
 })
-export class TocEpocPage implements OnInit{
+export class TocEpocPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     detailedToc = false;
+    chaptersFinished: Array<boolean> = [];
+    assessmentDone: Array<boolean> = [];
 
     sliderOptions = {
         slidesPerView: 1.2,
@@ -26,17 +28,27 @@ export class TocEpocPage implements OnInit{
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService,
-        public alertController: AlertController
-    ) {}
+        public alertController: AlertController,
+    ) {
+    }
 
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
                 this.libraryService.getEpoc())
         );
-
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
+            this.updateToc();
+            // Listener déclenché à chaque modification du storage
+            if (window.addEventListener) {
+                window.addEventListener('storage', this.updateToc, false);
+            }
         });
+    }
+
+    private updateToc = () => {
+        this.chaptersFinished = JSON.parse(localStorage.getItem('chapterProgression'));
+        this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
     }
 }
