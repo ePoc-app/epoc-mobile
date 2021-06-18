@@ -13,6 +13,11 @@ export class SimpleQuestionComponent implements OnInit {
     @Input() content: SimpleQuestion;
     @Input() question: Question;
     @Input() epocId: string;
+
+    correctionState: boolean;
+    solutionShown: boolean;
+    explanationShown = false;
+
     disabled = false;
     flipped = false;
     answer;
@@ -24,7 +29,12 @@ export class SimpleQuestionComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.readingStore.readings$.subscribe(readings => {
+        this.disabled = false;
+        this.correctionState = false;
+        this.solutionShown = false;
+
+        // TO DO : Faire en sorte de lire les données de l'utilisateur pour lui affiché ce qu'il avait répondu en incorporant la correction
+        /*this.readingStore.readings$.subscribe(readings => {
             if (readings) {
                 this.reading = readings.find(item => item.epocId === this.epocId);
 
@@ -39,6 +49,7 @@ export class SimpleQuestionComponent implements OnInit {
                 }
             }
         });
+        */
     }
 
     checkAnswer(e) {
@@ -46,7 +57,7 @@ export class SimpleQuestionComponent implements OnInit {
         e.stopPropagation();
         if (this.question.responses.length === 0) {
             this.disabled = true;
-            this.flip();
+            this.flip(e);
         } else {
             if (!this.disabled) {
                 this.disabled = true;
@@ -71,14 +82,23 @@ export class SimpleQuestionComponent implements OnInit {
 
                 this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
             }
-            this.flip();
         }
+        if (this.answer) {
+            this.correctionState = true;
+        }
+        this.explanationShown = true;
     }
 
-    flip() {
+    flip(event) {
+        event.stopPropagation();
         if (this.disabled) {
             this.flipped = !this.flipped;
         }
+    }
+
+    toggleSolution(event) {
+        event.stopPropagation();
+        this.solutionShown = !this.solutionShown;
     }
 
     selectAnswer(answer) {

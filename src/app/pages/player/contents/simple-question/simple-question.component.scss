@@ -135,3 +135,36 @@
     transform: rotate3d(0, 0, 0, 180deg);
   }
 }
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  user-select: none;
+  ion-button {
+    min-width: 153px;
+  }
+
+  ion-icon {
+    margin-right: 0.2em;
+  }
+}
+
+ion-footer{
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.correct {
+  --background: var(--ion-color-inria-correct-rgba60);
+  border-radius: 0.5em;
+}
+
+.incorrect {
+  --background: var(--ion-color-inria-incorrect-rgba60);
+  border-radius: 0.5em;
+}

@@ -1,49 +1,94 @@
 <div class="flip-container" [ngClass]="flipped ? 'flipped':''">
-  <div class="flipper" (click)="flip()">
-    <div class="front">
-      <div class="question-card">
-        <ng-container *ngIf="question.score !== 0">
-          <h4>Question ({{question.score}}pts)</h4>
-        </ng-container>
-        <ng-container *ngIf="question.score === 0">
-          <h4 class="banner">Selon vous ?</h4>
-        </ng-container>
-        <div class="statement">
-          <div *ngIf="question.statement">{{question.statement}}</div>
-          <b>{{question.label}}</b>
+    <div class="flipper" (click)="flip($event)">
+        <div class="front">
+            <div class="question-card">
+                <ng-container *ngIf="question.score !== 0">
+                    <h4>Question ({{question.score}}pts)</h4>
+                </ng-container>
+                <ng-container *ngIf="question.score === 0">
+                    <h4 class="banner">Selon vous ?</h4>
+                </ng-container>
+                <div class="statement">
+                    <div *ngIf="question.statement">{{question.statement}}</div>
+                    <b>{{question.label}}</b>
+                </div>
+
+                <ng-container *ngIf="question.responses.length === 0">
+                    <ion-radio-group [value]="answer">
+                        <ion-item [lines]="'none'" *ngFor="let response of question.responses"
+                                  (click)="selectAnswer(response.value)">
+                            <ion-radio mode="md" slot="start" [value]="response.value"
+                                       [disabled]="disabled"></ion-radio>
+                            <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <button (click)="checkAnswer($event)" [ngClass]="disabled ? 'disabled':''">J'ai une opinion</button>
+                </ng-container>
+
+                <ng-container *ngIf="question.type === 'choice' && question.responses.length !== 0">
+                    <ion-radio-group [value]="!solutionShown ? answer : question.correctResponse[0]">
+                        <ion-item [lines]="'none'" *ngFor="let response of question.responses"
+                                  (click)="selectAnswer(response.value)"
+                                  [ngClass]="{
+               'correct': (solutionShown && response.value === question.correctResponse[0])
+               || (answer === question.correctResponse[0] && answer === response.value && correctionState && !solutionShown),
+               'incorrect': correctionState
+               && !solutionShown
+               && (answer !== question.correctResponse[0] && answer === response.value)
+               }">
+                            <ion-radio mode="md" slot="start" [value]="response.value"
+                                       [disabled]="disabled"></ion-radio>
+                            <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                </ng-container>
+
+                <ng-container *ngIf="question.type === 'multiple-choice' && question.responses.length !== 0">
+                    <ion-list>
+                        <ion-item [lines]="'none'" *ngFor="let response of question.responses">
+                            <ion-checkbox mode="md" slot="start" [value]="response.value"
+                                          (ionChange)="selectAnswerMultiple($event)"
+                                          [disabled]="disabled"></ion-checkbox>
+                            <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+                        </ion-item>
+                    </ion-list>
+                </ng-container>
+
+
+            </div>
         </div>
-
-        <ng-container *ngIf="question.type === 'choice'">
-          <ion-radio-group [value]="answer">
-            <ion-item [lines]="'none'" *ngFor="let response of question.responses" (click)="selectAnswer(response.value)">
-              <ion-radio mode="md" slot="start" [value]="response.value" [disabled]="disabled"></ion-radio>
-              <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
-            </ion-item>
-          </ion-radio-group>
-        </ng-container>
-
-        <ng-container *ngIf="question.type === 'multiple-choice'">
-          <ion-list>
-            <ion-item [lines]="'none'" *ngFor="let response of question.responses">
-              <ion-checkbox mode="md" slot="start" [value]="response.value" (ionChange)="selectAnswerMultiple($event)" [disabled]="disabled"></ion-checkbox>
-              <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
-            </ion-item>
-          </ion-list>
-        </ng-container>
-
-        <button (click)="checkAnswer($event)" [ngClass]="disabled || (question.responses.length !== 0 && !answer) ? 'disabled':''">{{question.responses.length === 0 ? 'J\'ai une opinion' : 'Valider'}}</button>
-
-      </div>
-    </div>
-    <div class="back">
-      <div class="question-card">
-        <h4 *ngIf="question.responses.length !== 0">Explication</h4>
-        <div class="explanation">
-          <div class="explanation-text">
-            <html-content [html]="question.explanation"></html-content>
-          </div>
+        <div class="back">
+            <div class="question-card">
+                <h4 *ngIf="question.responses.length !== 0">Explication</h4>
+                <div class="explanation">
+                    <div class="explanation-text">
+                        <html-content [html]="question.explanation"></html-content>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
+
+<ion-footer *ngIf="question.responses.length !== 0">
+    <div class="buttons">
+        <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown"
+                    [disabled]="this.flipped || question.correctResponse === answer">
+            <div class="answerState" *ngIf="!solutionShown">
+                <ion-icon name="bulb-outline"></ion-icon>
+                SOLUTION
+            </div>
+            <div class="solutionState" *ngIf="solutionShown;
+">
+                VOS REPONSES
+            </div>
+        </ion-button>
+        <ion-button class="explication" *ngIf="this.explanationShown" (click)="flip($event)">
+            <ion-icon src="assets/icon/flipping-card.svg"></ion-icon>
+            EXPLICATION
+        </ion-button>
+    </div>
+    <ion-button class="check-answer" [disabled]="correctionState" (click)="checkAnswer($event); explanationShown = true"
+                *ngIf="!explanationShown">Valider
+    </ion-button>
+</ion-footer>
