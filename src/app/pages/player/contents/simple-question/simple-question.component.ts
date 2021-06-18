@@ -44,30 +44,35 @@ export class SimpleQuestionComponent implements OnInit {
     checkAnswer(e) {
         e.preventDefault();
         e.stopPropagation();
-        if (!this.disabled) {
+        if (this.question.responses.length === 0) {
             this.disabled = true;
-            if (typeof this.question.correctResponse === 'string') {
-                if (this.question.correctResponse === this.answer) {
-                    this.questionSuccessed = true;
+            this.flip();
+        } else {
+            if (!this.disabled) {
+                this.disabled = true;
+                if (typeof this.question.correctResponse === 'string') {
+                    if (this.question.correctResponse === this.answer) {
+                        this.questionSuccessed = true;
+                    } else {
+                        this.questionSuccessed = false;
+                    }
+                } else if (Array.isArray(this.question.correctResponse)) {
+                    if (this.question.correctResponse.length === this.answer.length &&
+                        this.question.correctResponse.every((answer, index) => {
+                            return this.answer ? this.answer.indexOf(answer) >= 0 : false;
+                        })) {
+                        this.questionSuccessed = true;
+                    } else {
+                        this.questionSuccessed = false;
+                    }
                 } else {
                     this.questionSuccessed = false;
                 }
-            } else if (Array.isArray(this.question.correctResponse)) {
-                if (this.question.correctResponse.length === this.answer.length &&
-                    this.question.correctResponse.every((answer, index) => {
-                    return this.answer ? this.answer.indexOf(answer) >= 0 : false;
-                })) {
-                    this.questionSuccessed = true;
-                } else {
-                    this.questionSuccessed = false;
-                }
-            } else {
-                this.questionSuccessed = false;
-            }
 
-            this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
+                this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
+            }
+            this.flip();
         }
-        this.flip();
     }
 
     flip() {
