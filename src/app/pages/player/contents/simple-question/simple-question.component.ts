@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Question, SimpleQuestion} from '../../../../classes/contents/assessment';
 import {ReadingStoreService} from '../../../../services/reading-store.service';
 import {Reading} from '../../../../classes/reading';
+import {Epoc} from '../../../../classes/epoc';
 
 @Component({
     selector: 'simple-question',
@@ -10,6 +11,8 @@ import {Reading} from '../../../../classes/reading';
 })
 export class SimpleQuestionComponent implements OnInit {
 
+    // besoin de la classe paramètre
+    @Input() epoc: Epoc;
     @Input() content: SimpleQuestion;
     @Input() question: Question;
     @Input() epocId: string;
@@ -26,7 +29,8 @@ export class SimpleQuestionComponent implements OnInit {
 
     constructor(
         private readingStore: ReadingStoreService
-    ) {}
+    ) {
+    }
 
     ngOnInit(): void {
         this.disabled = false;
@@ -34,7 +38,7 @@ export class SimpleQuestionComponent implements OnInit {
         this.solutionShown = false;
 
         // TO DO : Faire en sorte de lire les données de l'utilisateur pour lui affiché ce qu'il avait répondu en incorporant la correction
-        /*this.readingStore.readings$.subscribe(readings => {
+        this.readingStore.readings$.subscribe(readings => {
             if (readings) {
                 this.reading = readings.find(item => item.epocId === this.epocId);
 
@@ -49,7 +53,6 @@ export class SimpleQuestionComponent implements OnInit {
                 }
             }
         });
-        */
     }
 
     checkAnswer(e) {
