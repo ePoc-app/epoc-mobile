@@ -22,7 +22,7 @@
                             <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
                         </ion-item>
                     </ion-radio-group>
-                    <button (click)="checkAnswer($event)" [ngClass]="disabled ? 'disabled':''">J'ai une opinion</button>
+                    <button (click)="checkAnswer($event)" [ngClass]="disabled ? 'disabled':''">{{epoc.parameters.openQuestionButton ? epoc.parameters.openQuestionButton : 'Valider'}}</button>
                 </ng-container>
 
                 <ng-container *ngIf="question.type === 'choice' && question.responses.length !== 0">
