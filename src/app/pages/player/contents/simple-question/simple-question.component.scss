@@ -66,7 +66,7 @@
   }
 
   h4{
-    font-size: 1rem;
+    font-size: 1em;
     color:#666;
 
     &.banner{
@@ -163,6 +163,10 @@ ion-footer{
   flex-direction: column;
   padding: 0.5em 1em  var(--ion-safe-area-bottom) 1em;
   border-top: 1px solid var(--ion-color-light);
+}
+
+html-content {
+  font-size: 1.3em;
 }
 
 .correct {
