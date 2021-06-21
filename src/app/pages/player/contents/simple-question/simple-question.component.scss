@@ -174,3 +174,10 @@ ion-footer{
   --background: var(--ion-color-inria-incorrect-rgba60);
   border-radius: 0.5em;
 }
+
+.toggleSolution {
+  justify-content: space-around;
+  &.usrSelect {
+    user-select: none;
+  }
+}

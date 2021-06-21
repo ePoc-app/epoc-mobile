@@ -88,7 +88,20 @@ export class SimpleQuestionComponent implements OnInit {
                 }
 
                 this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
-                this.everythingIsCorrect = false;
+                if (this.question.type === 'choice') {
+                    this.everythingIsCorrect = (this.question.correctResponse[0] === this.answer);
+                } else if (this.question.type === 'multiple-choice') {
+                    this.everythingIsCorrect = true;
+                    if (this.answer.length !== this.question.correctResponse.length) {
+                        this.everythingIsCorrect = false;
+                    } else {
+                        this.answer.forEach((response) => {
+                            if (!this.question.correctResponse.includes(response)) {
+                                this.everythingIsCorrect = false;
+                            }
+                        })
+                    }
+                }
             }
         }
         if (this.answer) {
