@@ -138,14 +138,19 @@
                 <ion-icon name="bulb-outline"></ion-icon>
                 SOLUTION
             </div>
-            <div class="solutionState" *ngIf="solutionShown;
-">
+            <div class="solutionState" *ngIf="solutionShown">
                 VOS REPONSES
             </div>
         </ion-button>
         <ion-button class="explication" *ngIf="this.explanationShown" (click)="flip()">
-            <ion-icon src="assets/icon/flipping-card.svg"></ion-icon>
-            EXPLICATION
+            <div class="explanationFront" *ngIf="!this.flipped">
+                <ion-icon name="eye-outline"></ion-icon>
+                EXPLICATION
+            </div>
+            <div class="explanationBack" *ngIf="this.flipped">
+                <ion-icon name="eye-off-outline"></ion-icon>
+                EXPLICATION
+            </div>
         </ion-button>
     </div>
     <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer(); explanationShown = true"
