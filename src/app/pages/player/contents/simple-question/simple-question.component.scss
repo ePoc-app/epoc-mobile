@@ -152,6 +152,12 @@
   }
 }
 
+.nbCorrect {
+  margin-top: 0;
+  height: 20px;
+  color: var(--ion-color-inria-blue);
+}
+
 ion-footer{
   display: flex;
   flex-direction: column;

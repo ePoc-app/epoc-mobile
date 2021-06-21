@@ -12,6 +12,7 @@
                     <div *ngIf="question.statement">{{question.statement}}</div>
                     <b>{{question.label}}</b>
                 </div>
+                <p class="nbCorrect" [hidden]="!correctionState">{{solutionShown ? 'Solution' : ''}}</p>
 
                 <ng-container *ngIf="question.responses.length === 0">
                     <ion-radio-group [value]="answer">
@@ -22,7 +23,8 @@
                             <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
                         </ion-item>
                     </ion-radio-group>
-                    <button (click)="checkAnswer($event)" [ngClass]="disabled ? 'disabled':''">{{epoc.parameters.openQuestionButton ? epoc.parameters.openQuestionButton : 'Valider'}}</button>
+                    <button (click)="checkAnswer($event)"
+                            [ngClass]="disabled ? 'disabled':''">{{epoc.parameters.openQuestionButton ? epoc.parameters.openQuestionButton : 'Valider'}}</button>
                 </ng-container>
 
                 <ng-container *ngIf="question.type === 'choice' && question.responses.length !== 0">
@@ -45,10 +47,15 @@
 
                 <ng-container *ngIf="question.type === 'multiple-choice' && question.responses.length !== 0">
                     <ion-list>
-                        <ion-item [lines]="'none'" *ngFor="let response of question.responses">
-                            <ion-checkbox mode="md" slot="start" [value]="response.value"
+                        <ion-item [lines]="'none'" *ngFor="let response of question.responses"
+                                  [ngClass]="{
+            'correct': correctionState && !solutionShown && selectClass[question.responses.indexOf(response)] === 'correct' || (correctionState && question.correctResponse.includes(response.value) && solutionShown),
+            'incorrect': correctionState && !solutionShown && selectClass[question.responses.indexOf(response)] === 'incorrect'}">
+                            <ion-checkbox mode="md" slot="start" [value]="!correctionState && response.value"
                                           (ionChange)="selectAnswerMultiple($event)"
-                                          [disabled]="disabled"></ion-checkbox>
+                                          [disabled]="disabled"
+                                          [checked]="solutionShown ? question.correctResponse.includes(response.value) : answer.includes(response.value)"
+                            ></ion-checkbox>
                             <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
                         </ion-item>
                     </ion-list>
@@ -73,7 +80,7 @@
 <ion-footer *ngIf="question.responses.length !== 0">
     <div class="buttons">
         <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown"
-                    [disabled]="this.flipped || question.correctResponse === answer">
+                    [disabled]="this.flipped">
             <div class="answerState" *ngIf="!solutionShown">
                 <ion-icon name="bulb-outline"></ion-icon>
                 SOLUTION

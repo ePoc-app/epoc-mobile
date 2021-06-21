@@ -17,8 +17,8 @@ export class SimpleQuestionComponent implements OnInit {
     @Input() question: Question;
     @Input() epocId: string;
 
-    correctionState: boolean;
-    solutionShown: boolean;
+    correctionState = false;
+    solutionShown = false;
     explanationShown = false;
 
     disabled = false;
@@ -26,6 +26,8 @@ export class SimpleQuestionComponent implements OnInit {
     answer;
     questionSuccessed = false;
     reading: Reading;
+    selectClass = [];
+    everythingIsCorrect = false;
 
     constructor(
         private readingStore: ReadingStoreService
@@ -34,9 +36,11 @@ export class SimpleQuestionComponent implements OnInit {
 
     ngOnInit(): void {
         this.disabled = false;
-        this.correctionState = false;
-        this.solutionShown = false;
+        this.selectClass = [];
 
+        this.question.responses.forEach(() => {
+            this.selectClass.push('');
+        })
         // TO DO : Faire en sorte de lire les données de l'utilisateur pour lui affiché ce qu'il avait répondu en incorporant la correction
         this.readingStore.readings$.subscribe(readings => {
             if (readings) {
@@ -84,6 +88,7 @@ export class SimpleQuestionComponent implements OnInit {
                 }
 
                 this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
+                this.everythingIsCorrect = false;
             }
         }
         if (this.answer) {
@@ -110,11 +115,15 @@ export class SimpleQuestionComponent implements OnInit {
 
     selectAnswerMultiple(answer) {
         const index = this.answer.indexOf(answer.detail.value);
-        if (answer.detail.checked && index === -1) {
+        const indexClass = this.question.responses.findIndex(response => response.value === answer.detail.value);
+        if (answer.detail.checked && index === -1 && !this.correctionState) {
             this.answer.push(answer.detail.value);
+            this.selectClass[indexClass] = this.answer.includes(answer.detail.value) ?
+                (this.question.correctResponse.includes(answer.detail.value) ? 'correct' : 'incorrect') : '';
         } else {
             if (index >= 0) {
                 this.answer.splice(index, 1);
+                this.selectClass[indexClass] = '';
             }
         }
     }
