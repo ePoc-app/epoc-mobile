@@ -188,6 +188,11 @@ export class AssessmentPage implements OnInit {
                     Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep)  : 0;
             this.questionsSuccessed[this.currentQuestion] =
                 Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) === Number(this.questions[this.currentQuestion].score);
+        } else if (this.questions[this.currentQuestion].type === 'choice') {
+            this.userScore += Math.round(+this.questions[this.currentQuestion].score * this.nbCorrect);
+            this.questionsSuccessed[this.currentQuestion] =
+                Math.round(+this.questions[this.currentQuestion].score * this.nbCorrect)
+                === Number(this.questions[this.currentQuestion].score);
         } else {
             this.userScore += Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect);
             this.questionsSuccessed[this.currentQuestion] =
