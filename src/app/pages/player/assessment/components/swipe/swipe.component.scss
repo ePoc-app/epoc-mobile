@@ -45,6 +45,12 @@
   z-index: 3;
   height: 14em;
   max-width: 12em;
+
+  // Iphone 5
+  @media screen and (device-aspect-ratio: 40/71) {
+    transform: scale(0.7);
+  }
+
   // Iphone X
   @media only screen
   and (device-width : 375px)
