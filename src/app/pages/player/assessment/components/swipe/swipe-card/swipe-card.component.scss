@@ -1,12 +1,10 @@
 ion-card {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  padding-bottom: 100%;
   user-select: none;
   border: 1px solid black;
+  margin: 0 0 3vw 0;
   border-radius: 3em ;
-  height: 100%;
-  width: 100%;
-  margin: auto;
   background-color: var(--ion-color-inria-card);
   &.card-correction {
     border-radius: 1em;
@@ -20,49 +18,40 @@ ion-card {
 }
 
 ion-card-header {
-  height: 5em;
-  transition: 0.3s ease-in-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-ion-card-title {
-  font-size: 1.5em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 5vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ion-card-title {
+    font-size: 6vw;
+  }
 }
 
 ion-card-content {
   color: black;
-  font-size: 1em;
-  padding: 1em 1em 0 1em;
-  margin-bottom: 1em;
-  height: 100%;
-  line-height: 1em;
-  max-height: 12em;
-  // Crop text
-  display: none;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 11;
-
-  -webkit-box-orient: vertical;
+  position: absolute;
+  top: calc(50% + 7vw);
+  left:50%;
+  margin:0;
+  padding:1em;
+  width:calc(100% - 2em);
+  transform: translate(-50%,-50%);
+  font-size: 4vw;
+  max-height: 80%;
 
   &.content-correction {
     color: black;
-    font-size: 0.85em;
-    padding: 1em 1em 0 1em;
-    margin-bottom: 1em;
-    height: 100%;
-    line-height: 1em;
-    max-height: 14em;
-    // Crop text
-    display: none;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 14;
-
-    -webkit-box-orient: vertical;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    margin:0;
+    padding: 3vw;
+    width:calc(100% - 0.6em);
+    transform: translate(-50%,-50%);
+    font-size: 3vw;
   }
 }
