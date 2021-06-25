@@ -94,9 +94,9 @@ export class AssessmentPage implements OnInit {
         this.nbIncorrect = 0;
         const correctResponse = this.questions[this.currentQuestion].correctResponse;
         this.easierScoring =
-            this.epoc.parameters.easierScoring
+            (this.epoc.parameters.easierScoring
             || this.assessment.easierScoring
-            || this.questions[this.currentQuestion].easierScoring;
+            || this.questions[this.currentQuestion].easierScoring) && this.questions[this.currentQuestion].score !== 0;
         if (typeof correctResponse === 'string') {
             if (!this.easierScoring) {
                 // Vérification Array entier
