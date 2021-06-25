@@ -73,10 +73,23 @@ ion-col {
 }
 
 .bar {
+  display: flex;
+  flex-direction: column;
   margin-left: 10%;
   width: 0.5em;
-  height: 100%;
-  background-color: var(--ion-color-inria-chapter-uncompleted);
+  // Pas très propre mais ça réduit la barre verticale jusqu'au au millieu du dernier bloc
+  .grey {
+    margin-left: 10%;
+    width: 0.5em;
+    flex: 1;
+    background: var(--ion-color-inria-chapter-uncompleted);
+  }
+  .white {
+    margin-left: 10%;
+    width: 0.5em;
+    height: 29px;
+    background: white;
+  }
 }
 
 .chapters {
@@ -93,11 +106,11 @@ ion-col {
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    min-height: 4em;
-    max-height: 6em;
+    height: 4em;
 
     ion-progress-bar {
       width: 10%;
+      height: 5px;
     }
 
     ion-icon {
@@ -116,11 +129,11 @@ ion-col {
       display: flex;
       align-items: center;
       ion-label {
-        max-height: 5em;
+        max-height: 3em;
         font-size: 1em;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 5;
+        -webkit-line-clamp: 3;
         overflow: hidden;
         line-height: 1em;
       }
