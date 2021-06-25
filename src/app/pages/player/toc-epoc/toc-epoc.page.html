@@ -38,7 +38,7 @@
     <ng-container *ngIf="!detailedToc">
         <div class="container">
             <div class="head">
-                <img src="/assets/img/ePoc.svg">
+                <img [src]="(libraryService.rootFolder +  epoc.image) | safe: 'url'">
                 <div class="titleEpoc">
                     <b>{{epoc.title}}</b>
                 </div>
