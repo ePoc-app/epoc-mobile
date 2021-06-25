@@ -15,8 +15,7 @@
             <ion-slide>
                 <div class="flip-container" [ngClass]="{'flipped': flipped}">
                     <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
-                        <div class="front"
-                             [ngClass]="{'no-overflow': question.type === 'swipe' && !this.explanationShown}">
+                        <div class="front">
                             <div class="question-card">
                                 <h4 class="question-card-header">Question {{questionIndex + 1}}
                                     /{{assessment.questions.length}}</h4>

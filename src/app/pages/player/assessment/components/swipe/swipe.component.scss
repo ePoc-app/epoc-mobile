@@ -28,25 +28,22 @@
 .swipe-cards {
   flex: 1;
   position:relative;
-  width: 100%;
-  padding-bottom: 100%;
   align-self: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding-bottom: 100%;
 
 }
 
 .swipe-cards swipe-card {
   position: absolute;
   top: 50%;
-  left:50%;
-  margin:0;
-  width: 90%;
-  transform: translate(-50%,-50%);
+  transform: translateY(-50%);
+  width: 80%;
 }
 
-/*
 .swipe-cards swipe-card:nth-last-child(2):before {
   content:'';
   display: flex;
@@ -76,7 +73,7 @@
   position: absolute;
   transform: rotate(-5deg);
 }
-*/
+
 .informatif {
   display: flex;
   height: 60%;

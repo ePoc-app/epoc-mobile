@@ -1,13 +1,15 @@
 ion-card {
   position: relative;
-  padding-bottom: 100%;
+  width:100%;
+  padding-bottom:100%;
   user-select: none;
   border: 1px solid black;
-  margin: 0 0 3vw 0;
+  margin: 0;
   border-radius: 3em ;
   background-color: var(--ion-color-inria-card);
   &.card-correction {
     border-radius: 1em;
+    margin-bottom: 3vw;
   }
   &.correct {
     background: var(--ion-color-inria-correct-rgba60);
