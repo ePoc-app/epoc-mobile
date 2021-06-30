@@ -274,6 +274,13 @@ video {
 .dropdown-actionSheet {
   --button-background: #384157;
   --button-background-activated: white;
+  .action-sheet-button {
+    border-bottom: 1px solid #ADABC2;
+  }
+
+  .action-sheet-button:last-of-type {
+    border-bottom: 0px;
+  }
 }
 
 .dropdown-actionSheet span {

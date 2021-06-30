@@ -94,9 +94,9 @@ export class AssessmentPage implements OnInit {
         this.nbIncorrect = 0;
         const correctResponse = this.questions[this.currentQuestion].correctResponse;
         this.easierScoring =
-            this.epoc.parameters.easierScoring
+            (this.epoc.parameters.easierScoring
             || this.assessment.easierScoring
-            || this.questions[this.currentQuestion].easierScoring;
+            || this.questions[this.currentQuestion].easierScoring) && this.questions[this.currentQuestion].score !== 0;
         if (typeof correctResponse === 'string') {
             if (!this.easierScoring) {
                 // Vérification Array entier
@@ -187,12 +187,17 @@ export class AssessmentPage implements OnInit {
                 Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) > 0 ?
                     Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep)  : 0;
             this.questionsSuccessed[this.currentQuestion] =
-                Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) === this.questions[this.currentQuestion].score;
+                Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) === Number(this.questions[this.currentQuestion].score);
+        } else if (this.questions[this.currentQuestion].type === 'choice') {
+            this.userScore += Math.round(+this.questions[this.currentQuestion].score * this.nbCorrect);
+            this.questionsSuccessed[this.currentQuestion] =
+                Math.round(+this.questions[this.currentQuestion].score * this.nbCorrect)
+                === Number(this.questions[this.currentQuestion].score);
         } else {
             this.userScore += Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect);
             this.questionsSuccessed[this.currentQuestion] =
                 Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect)
-                === this.questions[this.currentQuestion].score;
+                === Number(this.questions[this.currentQuestion].score);
         }
     }
 
