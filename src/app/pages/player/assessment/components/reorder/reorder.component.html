@@ -1,4 +1,4 @@
-<p class="nbCorrect">{{selectHeader}}</p>
+<p class="nbCorrect">{{this.correctionState ? selectHeader : ''}}</p>
 <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="correctionState">
   <ion-item class="item" *ngFor="let response of this.solutionShown ? correction : responses"
             [ngClass]="{

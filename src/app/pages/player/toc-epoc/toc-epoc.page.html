@@ -38,13 +38,18 @@
     <ng-container *ngIf="!detailedToc">
         <div class="container">
             <div class="head">
-                <img src="/assets/img/ePoc.svg">
+                <img [src]="(libraryService.rootFolder +  epoc.image) | safe: 'url'">
                 <div class="titleEpoc">
                     <b>{{epoc.title}}</b>
                 </div>
             </div>
             <div class="tocContent">
-                <div class="bar"></div>
+                <div class="bar">
+                    <div class="grey">
+                    </div>
+                    <div class="white">
+                    </div>
+                </div>
                 <div class="chapters">
                     <div class="part"
                          *ngFor="let chapter of epoc.chapters | denormalize;

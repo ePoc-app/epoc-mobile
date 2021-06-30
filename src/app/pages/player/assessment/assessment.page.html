@@ -1,121 +1,159 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button text="Retour" color="inria-blue" *ngIf="assessment" (click)="back($event)" [defaultHref]="'/player/play/' + epoc.id + '/content/' + assessmentId"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Activité</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="Retour" color="inria-blue" *ngIf="assessment" (click)="back($event)"
+                             [defaultHref]="'/player/play/' + epoc.id + '/content/' + assessmentId"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Activité</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [scrollY]="false" *ngIf="assessment">
-  <ion-slides #questionSlides [options]="slidesOptions">
-    <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
-      <ion-slide>
-        <div class="flip-container" [ngClass]="{'flipped': flipped}">
-          <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
-            <div class="front" [ngClass]="{'no-overflow': question.type === 'swipe' && !this.explanationShown}">
-              <div class="question-card">
-                <h4 class="question-card-header">Question {{questionIndex + 1}}/{{assessment.questions.length}}</h4>
-                <div class="statement">
-                  <b>{{question.label}}</b>
-                  <div *ngIf="question.statement">{{question.statement}}</div>
+    <ion-slides #questionSlides [options]="slidesOptions">
+        <ng-container
+                *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
+            <ion-slide>
+                <div class="flip-container" [ngClass]="{'flipped': flipped}">
+                    <div class="flipper" [ngClass]="{'notransition': notransition}" (click)="flip()">
+                        <div class="front">
+                            <div class="question-card">
+                                <h4 class="question-card-header">Question {{questionIndex + 1}}
+                                    /{{assessment.questions.length}}</h4>
+                                <div class="statement">
+                                    <b>{{question.label}}</b>
+                                    <div *ngIf="question.statement">{{question.statement}}</div>
+                                </div>
+
+                                <ng-container *ngIf="question.type === 'choice'">
+                                    <simple-choice class="response" [question]="question"
+                                                   [correctionState]="explanationShown"
+                                                   [solutionShown]="this.solutionShown"
+                                                   (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
+                                </ng-container>
+                                <ng-container *ngIf="question.type === 'multiple-choice'">
+                                    <multiple-choice class="response" [question]="question"
+                                                     [correctionState]="this.explanationShown"
+                                                     [solutionShown]="this.solutionShown"
+                                                     (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
+                                </ng-container>
+                                <ng-container *ngIf="question.type === 'reorder'">
+                                    <reorder class="response" [question]="question" [correctionState]=explanationShown
+                                             [solutionShown]="this.solutionShown"
+                                             (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
+                                </ng-container>
+                                <ng-container *ngIf="question.type === 'drag-and-drop'">
+                                    <drag-and-drop class="response no-overflow" [question]="question"
+                                                   [correctionState]=explanationShown
+                                                   [solutionShown]="this.solutionShown"
+                                                   (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
+                                </ng-container>
+                                <ng-container *ngIf="question.type === 'swipe'">
+                                    <swipe class="response" [question]="question" [correctionState]=explanationShown
+                                           [solutionShown]="this.solutionShown"
+                                           (onSelectAnswer)="updateCurrentAnswer($event)"></swipe>
+                                </ng-container>
+                                <ng-container *ngIf="question.type === 'dropdown-list'">
+                                    <dropdown-list class="response" [question]="question"
+                                                   [correctionState]=explanationShown
+                                                   [solutionShown]="this.solutionShown"
+                                                   (onSelectAnswer)="updateCurrentAnswer($event)"></dropdown-list>
+                                </ng-container>
+
+                            </div>
+                        </div>
+
+                        <div class="back">
+                            <div class="question-card">
+                                <div class="explanation">
+                                    <h4 class="question-card-header">Explication</h4>
+                                    <div class="explanation-text">
+                                        <html-content [html]="question.explanation"></html-content>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </ion-slide>
+        </ng-container>
+        <ion-slide class="assessment-end">
+            <ion-card mode="ios" class="end-card">
+                <ion-card-header mode="ios" *ngIf="assessmentData">
+                    <ion-card-subtitle mode="ios">Fin de l'activité</ion-card-subtitle>
+                    <ion-card-title mode="ios" *ngIf="scoreMax > 0">Score</ion-card-title>
+                    <div class="score-chart" *ngIf="scoreMax > 0">
+                        <div><b>{{assessmentData.userScore}} / {{scoreMax}} pts</b></div>
+                        <div><b>Score total :</b> {{assessmentData.totalUserScore + assessmentData.userScore}}
+                            / {{assessmentData.totalScore}}</div>
+                        <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
+                                        [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
+                                        [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
+                                        [minLabel]="'0'"
+                                        [maxLabel]="assessmentData.totalScore + 'pts'"></score-progress>
+                    </div>
 
-                <ng-container *ngIf="question.type === 'choice'">
-                  <simple-choice class="response" [question]="question" [correctionState]="explanationShown" [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></simple-choice>
-                </ng-container>
-                <ng-container *ngIf="question.type === 'multiple-choice'">
-                  <multiple-choice class="response" [question]="question" [correctionState]="this.explanationShown" [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></multiple-choice>
-                </ng-container>
-                <ng-container *ngIf="question.type === 'reorder'">
-                  <reorder class="response" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></reorder>
-                </ng-container>
-                <ng-container *ngIf="question.type === 'drag-and-drop'">
-                  <drag-and-drop class="response no-overflow" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></drag-and-drop>
-                </ng-container>
-                <ng-container *ngIf="question.type === 'swipe'">
-                  <swipe class="response" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></swipe>
-                </ng-container>
-                <ng-container *ngIf="question.type === 'dropdown-list'">
-                  <dropdown-list class="response" [question]="question" [correctionState]=explanationShown [solutionShown]="this.solutionShown" (onSelectAnswer)="updateCurrentAnswer($event)"></dropdown-list>
-                </ng-container>
-
-              </div>
-            </div>
-
-            <div class="back">
-              <div class="question-card">
-                <div class="explanation">
-                  <h4 class="question-card-header">Explication</h4>
-                  <div class="explanation-text">
-                    <html-content [html]="question.explanation"></html-content>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ion-slide>
-    </ng-container>
-    <ion-slide class="assessment-end">
-      <ion-card mode="ios" class="end-card">
-        <ion-card-header mode="ios" *ngIf="assessmentData">
-          <ion-card-subtitle mode="ios">Fin de l'activité</ion-card-subtitle>
-          <ion-card-title mode="ios" *ngIf="scoreMax > 0">Score</ion-card-title>
-          <div class="score-chart" *ngIf="scoreMax > 0">
-            <div><b>{{assessmentData.userScore}} / {{scoreMax}} pts</b></div>
-            <div><b>Score total :</b> {{assessmentData.totalUserScore + assessmentData.userScore}} / {{assessmentData.totalScore}}</div>
-            <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
-                            [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
-                            [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
-                            [minLabel]="'0'" [maxLabel]="assessmentData.totalScore + 'pts'"></score-progress>
-          </div>
-
-          <ion-card-title mode="ios" *ngIf="scoreMax <= 0">Non noté</ion-card-title>
-        </ion-card-header>
-        <ion-card-content mode="ios">
-          <ion-button class="retry" color="medium" expand="block" (click)="retry()"><ion-icon name="refresh"></ion-icon> Recommencer</ion-button>
-          <ion-button class="resume-course" expand="block" (click)="resume()">Continuer le cours <ion-icon name="arrow-forward" slot="end"></ion-icon></ion-button>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
-  <div class="certificate-container" *ngIf="certificateShown">
-    <ion-card class="certificate-success-card">
-      <ion-card-header class="certificate-success-card-header">
-        <ion-icon name="checkmark-circle-outline"></ion-icon>
-      </ion-card-header>
-      <ion-card-content class="certificate-success-card-content">
-        <ion-card-title>Félicitations</ion-card-title>
-        <p>Vous avez atteint le score nécéssaire à l'obtention de l'attestation. Vous pouvez générer l'attestation maintenant ou continuer pour augmenter votre score.</p>
-        <ion-button (click)="goToCertificate()">Obtenir l'attestation</ion-button>
-        <ion-button (click)="dismissCertificateCard()" color="medium">Continuer</ion-button>
-        <p><small>(Vous trouverez l'attestation dans la page des scores)</small></p>
-      </ion-card-content>
-    </ion-card>
-  </div>
+                    <ion-card-title mode="ios" *ngIf="scoreMax <= 0">Non noté</ion-card-title>
+                </ion-card-header>
+                <ion-card-content mode="ios">
+                    <ion-button class="retry" color="medium" expand="block" (click)="retry()">
+                        <ion-icon name="refresh"></ion-icon>
+                        Recommencer
+                    </ion-button>
+                    <ion-button class="resume-course" expand="block" (click)="resume()">Continuer le cours
+                        <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                    </ion-button>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+    <div class="certificate-container" *ngIf="certificateShown">
+        <ion-card class="certificate-success-card">
+            <ion-card-header class="certificate-success-card-header">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="certificate-success-card-content">
+                <ion-card-title>Félicitations</ion-card-title>
+                <p>Vous avez atteint le score nécéssaire à l'obtention de l'attestation. Vous pouvez générer
+                    l'attestation maintenant ou continuer pour augmenter votre score.</p>
+                <ion-button (click)="goToCertificate()">Obtenir l'attestation</ion-button>
+                <ion-button (click)="dismissCertificateCard()" color="medium">Continuer</ion-button>
+                <p><small>(Vous trouverez l'attestation dans la page des scores)</small></p>
+            </ion-card-content>
+        </ion-card>
+    </div>
 </ion-content>
 
 <ion-footer *ngIf="questions && currentQuestion < questions.length"
             [ngClass]="{'collapse': questions[currentQuestion].type === 'swipe' && !currentAnswer}"
 >
 
-  <div class="buttons">
-    <ion-button class="toggleSolution" (click)="toggleSolution($event)" *ngIf="this.explanationShown" [disabled]="this.flipped || this.questionsSuccessed[this.currentQuestion]">
-      <div class="answerState" *ngIf="!solutionShown">
-        <ion-icon name="bulb-outline"></ion-icon>
-        SOLUTION
-      </div>
-      <div class="solutionState" *ngIf="solutionShown;
-">
-        VOS REPONSES
-      </div>
+    <div class="buttons">
+        <ion-button class="toggleSolution"
+                    (click)="toggleSolution($event)"
+                    *ngIf="this.explanationShown"
+                    [disabled]="this.flipped || this.questionsSuccessed[this.currentQuestion]"
+                    [ngClass]="this.flipped || this.questionsSuccessed[this.currentQuestion] ? 'usrSelect' : ''">
+            <div class="answerState" *ngIf="!solutionShown">
+                <ion-icon name="bulb-outline"></ion-icon>
+                SOLUTION
+            </div>
+            <div class="solutionState" *ngIf="solutionShown">
+                VOS REPONSES
+            </div>
+        </ion-button>
+        <ion-button class="explication" *ngIf="this.explanationShown" (click)="flip()">
+            <div class="explanationFront" *ngIf="!this.flipped">
+                <ion-icon name="eye-outline"></ion-icon>
+                EXPLICATION
+            </div>
+            <div class="explanationBack" *ngIf="this.flipped">
+                <ion-icon name="eye-off-outline"></ion-icon>
+                EXPLICATION
+            </div>
+        </ion-button>
+    </div>
+    <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer(); explanationShown = true"
+                *ngIf="!explanationShown">Valider
     </ion-button>
-    <ion-button class="explication" *ngIf="this.explanationShown" (click)="flip()">
-      <ion-icon src="assets/icon/flipping-card.svg"></ion-icon>
-      EXPLICATION
-    </ion-button>
-  </div>
-  <ion-button class="check-answer" [disabled]="!currentAnswer" (click)="checkAnswer(); explanationShown = true" *ngIf="!explanationShown">Valider</ion-button>
-  <ion-button class="check-answer" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
+    <ion-button class="check-answer" (click)="nextQuestion()" *ngIf="explanationShown">Compris, suivant !</ion-button>
 </ion-footer>
