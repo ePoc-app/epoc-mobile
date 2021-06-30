@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Question} from '../../../../../classes/contents/assessment';
+import {SimpleChoiceQuestion} from '../../../../../classes/contents/assessment';
 import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
 
 @Component({
@@ -9,7 +9,7 @@ import {AbstractActivityContainerComponent} from '../../abstract-activity-contai
 })
 export class SimpleChoiceComponent extends AbstractActivityContainerComponent implements OnChanges {
 
-    @Input('question') question: Question;
+    @Input('question') question: SimpleChoiceQuestion;
 
     selectedAnswer;
     selectValue;
