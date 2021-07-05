@@ -46,8 +46,7 @@ ion-col {
       height: 70px;
       width: 70px;
       border: 1px solid black;
-      margin-left: calc(10% - 35px + 0.5em);
-      margin-right: 3%;
+      margin: 0 3%;
     }
 
     .titleEpoc {
@@ -72,26 +71,6 @@ ion-col {
   width: 100%;
 }
 
-.bar {
-  display: flex;
-  flex-direction: column;
-  margin-left: 10%;
-  width: 0.5em;
-  // Pas très propre mais ça réduit la barre verticale jusqu'au au millieu du dernier bloc
-  .grey {
-    margin-left: 10%;
-    width: 0.5em;
-    flex: 1;
-    background: var(--ion-color-inria-chapter-uncompleted);
-  }
-  .white {
-    margin-left: 10%;
-    width: 0.5em;
-    height: 29px;
-    background: white;
-  }
-}
-
 .chapters {
   display: flex;
   flex-direction: column;
@@ -100,6 +79,7 @@ ion-col {
   flex: 1;
 
   .part {
+    position:relative;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -108,9 +88,24 @@ ion-col {
     margin-top: 10px;
     height: 4em;
 
+    &:before{
+      content: '';
+      position: absolute;
+      display: block;
+      top: -10px;
+      left: calc(3% + 35px);
+      width: 2px;
+      height: calc(100% + 10px);
+      background-color: #E6F4F4;
+    }
+    &:last-of-type:before{
+      height: calc(50% + 12px);
+    }
+
     ion-progress-bar {
       width: 10%;
       height: 5px;
+      margin-left: calc(3% + 35px);
     }
 
     ion-icon {
