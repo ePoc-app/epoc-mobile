@@ -61,7 +61,6 @@ export class SimpleQuestionComponent implements OnInit {
             this.flip(e);
         } else {
             this.disabled = true;
-            this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
             this.showCorrection();
         }
     }
@@ -90,6 +89,8 @@ export class SimpleQuestionComponent implements OnInit {
         }
         this.correctionState = true;
         this.explanationShown = true;
+        const score = this.everythingIsCorrect ? this.question.score : 0;
+        this.readingStore.saveResponses(this.epocId, this.content.id, score, this.answer);
     }
 
     toggleSolution(event) {
