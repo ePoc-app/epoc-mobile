@@ -12,7 +12,7 @@
                     <div *ngIf="question.statement">{{question.statement}}</div>
                     <b>{{question.label}}</b>
                 </div>
-                <p class="nbCorrect" *ngIf="correctionState">{{solutionShown ? 'Solution' : ''}}</p>
+                <p class="nbCorrect" *ngIf="correctionState">{{!solutionShown ? +question.score ? everythingIsCorrect ? question.score + 'pts' : '0pts' : 'Vos réponses' : 'Solution'}}</p>
 
                 <ng-container *ngIf="question.responses.length === 0">
                     <ion-radio-group [value]="answer">
