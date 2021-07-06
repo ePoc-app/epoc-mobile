@@ -12,7 +12,7 @@
                     <div *ngIf="question.statement">{{question.statement}}</div>
                     <b>{{question.label}}</b>
                 </div>
-                <p class="nbCorrect" [hidden]="!correctionState">{{solutionShown ? 'Solution' : ''}}</p>
+                <p class="nbCorrect">{{solutionShown ? 'Solution' : ''}}</p>
 
                 <ng-container *ngIf="question.responses.length === 0">
                     <ion-radio-group [value]="answer">
@@ -49,8 +49,8 @@
                     <ion-list>
                         <ion-item [lines]="'none'" *ngFor="let response of question.responses"
                                   [ngClass]="{
-            'correct': correctionState && !solutionShown && selectClass[question.responses.indexOf(response)] === 'correct' || (correctionState && question.correctResponse.includes(response.value) && solutionShown),
-            'incorrect': correctionState && !solutionShown && selectClass[question.responses.indexOf(response)] === 'incorrect'}">
+            'correct': correctionState && question.correctResponse.includes(response.value) && (solutionShown || answer.includes(response.value)),
+            'incorrect': correctionState && answer.includes(response.value) && !question.correctResponse.includes(response.value)}">
                             <ion-checkbox mode="md" slot="start" [value]="!correctionState && response.value"
                                           (ionChange)="selectAnswerMultiple($event)"
                                           [disabled]="disabled"
@@ -86,8 +86,7 @@
                 <ion-icon name="bulb-outline"></ion-icon>
                 SOLUTION
             </div>
-            <div class="solutionState" *ngIf="solutionShown;
-">
+            <div class="solutionState" *ngIf="solutionShown">
                 VOS REPONSES
             </div>
         </ion-button>
@@ -96,7 +95,7 @@
             EXPLICATION
         </ion-button>
     </div>
-    <ion-button class="check-answer" [disabled]="correctionState" (click)="checkAnswer($event); explanationShown = true"
+    <ion-button class="check-answer" [disabled]="correctionState || !answer" (click)="checkAnswer($event); explanationShown = true"
                 *ngIf="!explanationShown">Valider
     </ion-button>
 </ion-footer>
