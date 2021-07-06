@@ -24,9 +24,7 @@ export class SimpleQuestionComponent implements OnInit {
     disabled = false;
     flipped = false;
     answer;
-    questionSuccessed = false;
     reading: Reading;
-    selectClass = [];
     everythingIsCorrect = false;
 
     constructor(
@@ -36,21 +34,17 @@ export class SimpleQuestionComponent implements OnInit {
 
     ngOnInit(): void {
         this.disabled = false;
-        this.selectClass = [];
-
-        this.question.responses.forEach(() => {
-            this.selectClass.push('');
-        })
-        // TO DO : Faire en sorte de lire les données de l'utilisateur pour lui affiché ce qu'il avait répondu en incorporant la correction
         this.readingStore.readings$.subscribe(readings => {
             if (readings) {
                 this.reading = readings.find(item => item.epocId === this.epocId);
 
-                const assessment = this.reading.assessments.find(assessment => assessment.id === this.content.id);
+                const assessment = this.reading.assessments.find(a => a.id === this.content.id);
 
                 if (assessment) {
                     this.disabled = true;
                     this.answer = assessment.responses;
+                    this.showCorrection();
+                    this.correctionState = true;
                 } else {
                     this.disabled = false;
                     this.answer = this.question.type === 'choice' ? null : [];
@@ -66,48 +60,10 @@ export class SimpleQuestionComponent implements OnInit {
             this.disabled = true;
             this.flip(e);
         } else {
-            if (!this.disabled) {
-                this.disabled = true;
-                if (typeof this.question.correctResponse === 'string') {
-                    if (this.question.correctResponse === this.answer) {
-                        this.questionSuccessed = true;
-                    } else {
-                        this.questionSuccessed = false;
-                    }
-                } else if (Array.isArray(this.question.correctResponse)) {
-                    if (this.question.correctResponse.length === this.answer.length &&
-                        this.question.correctResponse.every((answer, index) => {
-                            return this.answer ? this.answer.indexOf(answer) >= 0 : false;
-                        })) {
-                        this.questionSuccessed = true;
-                    } else {
-                        this.questionSuccessed = false;
-                    }
-                } else {
-                    this.questionSuccessed = false;
-                }
-
-                this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
-                if (this.question.type === 'choice') {
-                    this.everythingIsCorrect = (this.question.correctResponse[0] === this.answer);
-                } else if (this.question.type === 'multiple-choice') {
-                    this.everythingIsCorrect = true;
-                    if (this.answer.length !== this.question.correctResponse.length) {
-                        this.everythingIsCorrect = false;
-                    } else {
-                        this.answer.forEach((response) => {
-                            if (!this.question.correctResponse.includes(response)) {
-                                this.everythingIsCorrect = false;
-                            }
-                        })
-                    }
-                }
-            }
+            this.disabled = true;
+            this.readingStore.saveResponses(this.epocId, this.content.id, 0, this.answer);
+            this.showCorrection();
         }
-        if (this.answer) {
-            this.correctionState = true;
-        }
-        this.explanationShown = true;
     }
 
     flip(event) {
@@ -115,6 +71,25 @@ export class SimpleQuestionComponent implements OnInit {
         if (this.disabled) {
             this.flipped = !this.flipped;
         }
+    }
+
+    showCorrection() {
+        if (this.question.type === 'choice') {
+            this.everythingIsCorrect = (this.question.correctResponse[0] === this.answer);
+        } else if (this.question.type === 'multiple-choice') {
+            this.everythingIsCorrect = true;
+            if (this.answer.length !== this.question.correctResponse.length) {
+                this.everythingIsCorrect = false;
+            } else {
+                this.answer.forEach((response) => {
+                    if (!this.question.correctResponse.includes(response)) {
+                        this.everythingIsCorrect = false;
+                    }
+                })
+            }
+        }
+        this.correctionState = true;
+        this.explanationShown = true;
     }
 
     toggleSolution(event) {
@@ -128,15 +103,11 @@ export class SimpleQuestionComponent implements OnInit {
 
     selectAnswerMultiple(answer) {
         const index = this.answer.indexOf(answer.detail.value);
-        const indexClass = this.question.responses.findIndex(response => response.value === answer.detail.value);
         if (answer.detail.checked && index === -1 && !this.correctionState) {
             this.answer.push(answer.detail.value);
-            this.selectClass[indexClass] = this.answer.includes(answer.detail.value) ?
-                (this.question.correctResponse.includes(answer.detail.value) ? 'correct' : 'incorrect') : '';
         } else {
             if (index >= 0) {
                 this.answer.splice(index, 1);
-                this.selectClass[indexClass] = '';
             }
         }
     }
