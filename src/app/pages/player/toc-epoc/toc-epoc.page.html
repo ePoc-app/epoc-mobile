@@ -24,9 +24,9 @@
                         <ion-icon *ngIf="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
                         <ion-icon *ngIf="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
                         <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
-                        <ion-icon *ngIf="content.type === 'simple-question' && !content.question.score"
+                        <ion-icon *ngIf="content.type === 'simple-question' && !+epoc.questions[content.question].score"
                                   name="bulb-outline" slot="start"></ion-icon>
-                        <ion-icon *ngIf="content.type === 'simple-question' && content.question.score"
+                        <ion-icon *ngIf="content.type === 'simple-question' && +epoc.questions[content.question].score"
                                   name="checkbox-outline" slot="start"></ion-icon>
                         <ion-icon *ngIf="content.type === 'choice'" name="git-branch-outline" slot="start"></ion-icon>
                         <ion-label>{{content.title}}</ion-label>

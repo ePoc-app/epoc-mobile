@@ -2,17 +2,17 @@
     <div class="flipper" (click)="flip($event)">
         <div class="front">
             <div class="question-card">
-                <ng-container *ngIf="question.score !== 0">
+                <ng-container *ngIf="+question.score">
                     <h4>Question ({{question.score}}pts)</h4>
                 </ng-container>
-                <ng-container *ngIf="question.score === 0">
+                <ng-container *ngIf="!+question.score">
                     <h4 class="banner">Selon vous ?</h4>
                 </ng-container>
                 <div class="statement">
                     <div *ngIf="question.statement">{{question.statement}}</div>
                     <b>{{question.label}}</b>
                 </div>
-                <p class="nbCorrect">{{solutionShown ? 'Solution' : ''}}</p>
+                <p class="nbCorrect" *ngIf="correctionState">{{solutionShown ? 'Solution' : ''}}</p>
 
                 <ng-container *ngIf="question.responses.length === 0">
                     <ion-radio-group [value]="answer">
