@@ -50,11 +50,9 @@
                let index = index"
                          [routerLink]="'/player/play/'+epoc.id+'/'+chapter.id"
                     >
-                        <ion-progress-bar
-                                [buffer]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 1 : 0">
+                        <ion-progress-bar [buffer]="chapter.assessmentDone ? 1 : 0">
                         </ion-progress-bar>
-                        <ion-icon name="ellipse"
-                                  [ngClass]="this.chaptersFinished && this.chaptersFinished[index] && this.assessmentDone && this.assessmentDone[index] ? 'chapter-completed' : 'chapter-uncompleted'">
+                        <ion-icon name="ellipse" [ngClass]="chapter.assessmentDone ? 'chapter-completed' : 'chapter-uncompleted'">
                         </ion-icon>
                         <div class="rectangle">
                             <div>

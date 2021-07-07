@@ -2,9 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {LibraryService} from '../../../services/library.service';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {Epoc} from '../../../classes/epoc';
 import {AlertController} from '@ionic/angular';
+import {ReadingStoreService} from '../../../services/reading-store.service';
+import {Reading} from '../../../classes/reading';
 
 @Component({
     selector: 'app-toc-epoc',
@@ -15,6 +17,7 @@ export class TocEpocPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
+    reading: Reading;
     detailedToc = false;
     chaptersFinished: Array<boolean> = [];
     assessmentDone: Array<boolean> = [];
@@ -28,6 +31,7 @@ export class TocEpocPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService,
+        private readingStore: ReadingStoreService,
         public alertController: AlertController,
     ) {
     }
@@ -39,16 +43,19 @@ export class TocEpocPage implements OnInit {
         );
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
-            this.updateToc();
-            // Listener déclenché à chaque modification du storage
-            if (window.addEventListener) {
-                window.addEventListener('storage', this.updateToc, false);
+        });
+
+        combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
+            if (pair.epoc && pair.reading) {
+                this.reading = pair.reading.find(item => item.epocId === this.epoc.id);
+                this.setProgress();
             }
         });
     }
 
-    private updateToc = () => {
-        this.chaptersFinished = JSON.parse(localStorage.getItem('chapterProgression'));
-        this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
+    setProgress () {
+        for (const [chapterId, chapter] of Object.entries(this.epoc.chapters)) {
+            chapter.assessmentDone = chapter.assessments.every(uid => this.reading.assessments.findIndex(assessment => assessment.id === uid) !== -1);
+        }
     }
 }
