@@ -28,7 +28,7 @@ export class SimpleChoiceComponent extends AbstractActivityContainerComponent im
 
     selectAnswer(answer) {
         this.selectedAnswer = answer;
-        this.onSelectAnswer.emit(this.selectedAnswer);
+        this.onSelectAnswer.emit([this.selectedAnswer]);
     }
 
     updateDisplay(solutionShown: boolean) {
