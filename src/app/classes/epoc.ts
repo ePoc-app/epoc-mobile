@@ -31,6 +31,8 @@ export class Chapter {
     videoCount?: number;
     assessmentCount?: number;
     initializedContents: Content[];
+    assessments?: uid[];
+    assessmentDone?: boolean;
 }
 
 export class Parameters {

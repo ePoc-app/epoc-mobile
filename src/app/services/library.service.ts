@@ -65,7 +65,7 @@ export class LibraryService {
         for (const [chapterId, chapter] of Object.entries(epoc.chapters)) {
             chapter.time = 0;
             chapter.videoCount = 0;
-            chapter.assessmentCount = 0;
+            chapter.assessments = [];
             chapter.initializedContents = chapter.contents.map((id) => {
                 const currentContent = epoc.contents[id];
                 currentContent.id = id;
@@ -73,13 +73,14 @@ export class LibraryService {
                     (currentContent as Assessment).scoreTotal = this.calcScoreTotal(epoc, (currentContent as Assessment).questions);
                     (currentContent as Assessment).chapterId = chapterId;
                     chapter.time = chapter.time + (currentContent as Assessment).questions.length;
-                    chapter.assessmentCount++;
+                    chapter.assessments.push(id);
                     epoc.assessments.push((currentContent as Assessment));
                 } else if (currentContent.type === 'simple-question' &&
                     Number(epoc.questions[(currentContent as SimpleQuestion).question].score) > 0) {
                     (currentContent as Assessment).scoreTotal = this.calcScoreTotal(epoc, [(currentContent as SimpleQuestion).question]);
                     (currentContent as Assessment).questions = [(currentContent as SimpleQuestion).question];
                     (currentContent as Assessment).chapterId = chapterId;
+                    chapter.assessments.push(id);
                     epoc.assessments.push((currentContent as Assessment));
                 } else if (currentContent.type === 'video') {
                     chapter.videoCount++;
@@ -87,6 +88,7 @@ export class LibraryService {
                 }
                 return currentContent;
             });
+            chapter.assessmentCount = chapter.assessments.length;
         }
 
         return epoc;
