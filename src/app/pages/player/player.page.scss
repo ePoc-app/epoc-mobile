@@ -19,7 +19,7 @@ ion-card{
 .reader{
   position: absolute;
   top: var(--ion-safe-area-top);
-  height:100%;
+  height: calc(100% - var(--ion-safe-area-top));
   width: 100%;
   opacity: 1;
   transition: opacity .3s ease;
@@ -90,7 +90,6 @@ ion-card{
 
     simple-question{
       margin-bottom: 10px;
-      height: 100%;
     }
 
     &-chapter{
