@@ -91,8 +91,14 @@
             </div>
         </ion-button>
         <ion-button class="explication" *ngIf="this.explanationShown" (click)="flip($event)">
-            <ion-icon src="assets/icon/flipping-card.svg"></ion-icon>
-            EXPLICATION
+            <div class="explanationFront" *ngIf="!this.flipped">
+                <ion-icon name="eye-outline"></ion-icon>
+                EXPLICATION
+            </div>
+            <div class="explanationBack" *ngIf="this.flipped">
+                <ion-icon name="eye-off-outline"></ion-icon>
+                EXPLICATION
+            </div>
         </ion-button>
     </div>
     <ion-button class="check-answer" [disabled]="correctionState || !answer" (click)="checkAnswer($event); explanationShown = true"
