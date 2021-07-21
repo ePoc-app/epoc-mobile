@@ -55,6 +55,7 @@ ion-footer{
     .front {
       transform: rotate3d(0, 0, 0, 0);
       z-index: 1;
+      overflow-x:hidden;
       &.no-overflow {
         overflow: hidden;
       }
