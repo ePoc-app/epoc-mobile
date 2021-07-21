@@ -47,6 +47,7 @@ ion-col {
       width: 70px;
       border: 1px solid black;
       margin: 0 3%;
+      object-fit: cover;
     }
 
     .titleEpoc {
@@ -60,7 +61,8 @@ ion-col {
       color: white;
       min-height: 80px;
       max-height: 130px;
-      font-size: 1.5em;
+      font-size: 1.1em;
+      padding: .5em;
     }
   }
 }
