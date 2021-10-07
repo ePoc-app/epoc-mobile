@@ -47,7 +47,9 @@ export class TocEpocPage implements OnInit {
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
             if (pair.epoc && pair.reading) {
                 this.reading = pair.reading.find(item => item.epocId === this.epoc.id);
-                this.setProgress();
+                if (this.reading) {
+                    this.setProgress();
+                }
             }
         });
     }
