@@ -76,17 +76,32 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
+    commonCapabilities: {
         project: "ePoc",
-        build: 'ePoc Android',
-        name: 'ePoc Android',
-        device: 'Google Pixel 3',
-        os_version: "9.0",
-        app: process.env.BROWSERSTACK_APP_ID || 'bs://3c3ac531b69ddb19d84dd9506e2ff9dd2ca14c98',
+        name: 'ePoc e2e tests suite',
         'browserstack.debug': true,
-    
-        // Set webview
         'autoWebview' : true
+    },
+    capabilities: [{
+        build: 'ePoc Android',
+        app: 'bs://3c3ac531b69ddb19d84dd9506e2ff9dd2ca14c98',
+        device: 'Google Pixel 3',
+        os_version: "9.0"
+    },{
+        build: 'ePoc Android',
+        app: 'bs://3c3ac531b69ddb19d84dd9506e2ff9dd2ca14c98',
+        device: 'Google Nexus 6',
+        os_version: "6.0"
+    },{
+        build: 'ePoc iOS',
+        app: 'bs://aa63b15f05bb1d0fa5c849fae62a8b4e12df6198',
+        device: 'iPhone 6',
+        os_version: "11"
+    },{
+        build: 'ePoc iOS',
+        app: 'bs://aa63b15f05bb1d0fa5c849fae62a8b4e12df6198',
+        device: 'iPhone XS',
+        os_version: "15"
     }],
     //
     // ===================
@@ -119,7 +134,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    baseUrl: '',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -306,4 +321,10 @@ exports.config = {
     */
     //onReload: function(oldSessionId, newSessionId) {
     //}
-}
+};
+
+exports.config.capabilities.forEach(function(caps) {
+    for(var i in exports.config.commonCapabilities) {
+        caps[i] = caps[i] || exports.config.commonCapabilities[i];
+    }
+});

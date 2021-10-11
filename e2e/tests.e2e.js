@@ -1,6 +1,9 @@
-describe('ePoc Android', () => {
+describe('ePoc e2e tests suite', () => {
     beforeAll(async () => {
-        await browser.url('/home/default');
+        if (browser.options.baseUrl) {
+            await browser.url(browser.options.baseUrl+'/home/default');
+        }
+        await browser.pause(2000);
     })
     it('should launch and have a logo', async () => {
         await expect($('.logo')).toBeExisting();
