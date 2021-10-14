@@ -21,7 +21,7 @@ export class HtmlComponent implements OnInit, OnDestroy {
         this.epocId = this.route.snapshot.paramMap.get('epocId');
         this.clickListener = this.renderer.listen(this.content.nativeElement, 'click', ({target}) => {
             if (target && target.nodeName === 'A' && target.hasAttribute('linkto')) {
-                this.router.navigateByUrl(`/player/play/${this.epocId}/${target.getAttribute('linkto')}`);
+                this.router.navigateByUrl(`/epoc/play/${this.epocId}/${target.getAttribute('linkto')}`);
             }
         });
     }

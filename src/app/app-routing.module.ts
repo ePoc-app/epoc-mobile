@@ -3,16 +3,12 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {LoginCallbackComponent} from './login/login-callback.component';
-import {mode} from '../environments/environment.mode';
+import {mode} from 'src/environments/environment.mode';
 
 const routesDefault: Routes = [
     {
-        path: 'home',
-        loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-    },
-    {
-        path: 'player',
-        loadChildren: () => import('./pages/player/player.module').then(m => m.PlayerPageModule)
+        path: 'epoc',
+        loadChildren: () => import('./pages/epoc/epoc.module').then(m => m.EpocModule)
     },
     {
         path: 'about',
@@ -22,19 +18,18 @@ const routesDefault: Routes = [
         path: 'open',
         loadChildren: () => import('./pages/open/open.module').then(m => m.OpenPageModule)
     },
-    {path: '**', redirectTo: '/home/default'}
+    {
+        path: 'settings',
+        loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
+    },
+    {path: '**', redirectTo: '/epoc'}
 ];
 
 const routesInria: Routes = [
     {
-        path: 'home',
+        path: 'epoc',
         canActivate: [AuthGuardService],
-        loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-    },
-    {
-        path: 'player',
-        canActivate: [AuthGuardService],
-        loadChildren: () => import('./pages/player/player.module').then(m => m.PlayerPageModule)
+        loadChildren: () => import('./pages/epoc/epoc.module').then(m => m.EpocModule)
     },
     {
         path: 'about',

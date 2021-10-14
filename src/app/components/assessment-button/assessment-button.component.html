@@ -1,5 +1,5 @@
 <div>
-  <ion-button expand="block" strong="true" [routerLink]="['/player/assessment', epoc.id, content.id]">
+  <ion-button expand="block" strong="true" [routerLink]="['/epoc/assessment', epoc.id, content.id]">
     <ng-container *ngIf="getScore(content) === null">
       Commencer l'activité
       <ion-icon name="create-outline" slot="end"></ion-icon>

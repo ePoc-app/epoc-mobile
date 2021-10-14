@@ -3,9 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, ReplaySubject} from 'rxjs';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
-import {Epoc} from '../classes/epoc';
-import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
-import {uid} from '../classes/types';
+import {Epoc} from 'src/app/classes/epoc';
+import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
+import {uid} from 'src/app/classes/types';
 
 const { Filesystem } = Plugins;
 

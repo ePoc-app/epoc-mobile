@@ -1,0 +1,58 @@
+import {IonicModule} from '@ionic/angular';
+import {RouterModule} from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {SharedModule} from 'src/app/components/shared.module';
+import {PipesModule} from 'src/app/pipes/pipes.module';
+import {EpocAssessmentPage} from './assessment/assessment.page';
+import {EpocHomePage} from './home/home.page';
+import {EpocTocPage} from './toc/toc.page';
+import {EpocPlayerPage} from './player/player.page';
+import {EpocOverviewPage} from './overview/overview.page';
+import {EpocScorePage} from './score/score.page';
+import {EpocBookmarksPage} from './bookmarks/bookmarks.page';
+import {TranscriptModalPage} from './player/contents/transcript-modal/transcript-modal.page';
+import {SimpleQuestionComponent} from './player/contents/simple-question/simple-question.component';
+import {CourseChoiceComponent} from './player/contents/course-choice/course-choice.component';
+
+@NgModule({
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        SharedModule,
+        RouterModule.forChild([
+            {path: '', component: EpocHomePage},
+            {path: ':id', component: EpocHomePage},
+            {path: 'overview/:id', component: EpocOverviewPage},
+            {path: 'play/:id', component: EpocTocPage},
+            {path: 'play/:id/:chapter', component: EpocPlayerPage},
+            {path: 'play/:id/:chapter/content/:contentId', component: EpocPlayerPage},
+            {path: 'play/:id/:chapter/content/:contentId/:next', component: EpocPlayerPage},
+            {path: 'assessment', loadChildren: () => import('./assessment/assessment.module').then(m => m.AssessmentModule)},
+            {path: 'score/:id', component: EpocScorePage},
+            {path: 'toc/:id', component: EpocTocPage},
+            {path: 'bookmarks/:id', component: EpocBookmarksPage},
+            {path: '**', redirectTo: '/'},
+        ]),
+        PipesModule
+    ],
+    declarations: [
+        EpocHomePage,
+        EpocPlayerPage,
+        EpocAssessmentPage,
+        EpocOverviewPage,
+        EpocScorePage,
+        EpocTocPage,
+        EpocBookmarksPage,
+        TranscriptModalPage,
+        SimpleQuestionComponent,
+        CourseChoiceComponent
+    ],
+    entryComponents: [TranscriptModalPage]
+})
+export class EpocModule {
+    constructor() {
+    }
+}

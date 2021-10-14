@@ -1,12 +1,12 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {HTTP} from '@ionic-native/http/ngx';
-import {environment as env} from '../../environments/environment';
+import {environment as env} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {Platform, ToastController} from '@ionic/angular';
 import {Browser} from '@capacitor/core';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {AuthService} from '../services/auth.service';
+import {AuthService} from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-login',

@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {LibraryService} from '../services/library.service';
+import {LibraryService} from 'src/app/services/library.service';
 
 @Pipe({
     name: 'srcConvert'
