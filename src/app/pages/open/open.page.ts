@@ -5,8 +5,8 @@ import {Zip} from 'capacitor-zip';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
-import {mode} from '../../../environments/environment.mode';
-import {LibraryService} from '../../services/library.service';
+import {mode} from 'src/environments/environment.mode';
+import {LibraryService} from 'src/app/services/library.service';
 
 const {Filesystem} = Plugins;
 

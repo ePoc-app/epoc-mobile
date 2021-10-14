@@ -4,7 +4,7 @@ import {IonicModule} from '@ionic/angular';
 import {ScoreProgressComponent} from './score-progress/score-progress.component';
 import {AssessmentButtonComponent} from './assessment-button/assessment-button.component';
 import {LibraryItemComponent} from './libraryItem/library-item.component';
-import {PipesModule} from '../pipes/pipes.module';
+import {PipesModule} from 'src/app/pipes/pipes.module';
 import {HtmlComponent} from './html/html.component';
 import {RouterModule} from '@angular/router';
 import {VideoPlayerComponent} from './video-player/video-player.component';

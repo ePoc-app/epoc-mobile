@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HTTP} from '@ionic-native/http/ngx';
-import {environment as env} from '../../environments/environment';
-import {AuthService} from '../services/auth.service';
+import {environment as env} from 'src/environments/environment';
+import {AuthService} from 'src/app/services/auth.service';
 
 @Component({
     selector: 'login-callback',

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ReadingStoreService} from '../../services/reading-store.service';
-import {Reading} from '../../classes/reading';
+import {ReadingStoreService} from 'src/app/services/reading-store.service';
+import {Reading} from 'src/app/classes/reading';
 
 @Component({
     selector: 'assessment-button',

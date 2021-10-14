@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
-import {LibraryService} from '../../services/library.service';
-import {ReadingStoreService} from '../../services/reading-store.service';
+import {LibraryService} from 'src/app/services/library.service';
+import {ReadingStoreService} from 'src/app/services/reading-store.service';
 
 @Component({
     selector: 'library-item',
@@ -31,13 +31,13 @@ export class LibraryItemComponent {
                 text: 'About this course',
                 icon: 'ios-arrow-forward',
                 handler: () => {
-                    this.router.navigateByUrl('/player/about/' + this.epoc.id);
+                    this.router.navigateByUrl('/epoc/overview/' + this.epoc.id);
                 }
             }, {
                 text: 'Score',
                 icon: 'checkbox-outline',
                 handler: () => {
-                    this.router.navigateByUrl('/player/score/' + this.epoc.id);
+                    this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
                 }
             }, {
                 text: 'Delete',
@@ -57,9 +57,9 @@ export class LibraryItemComponent {
 
     open() {
         if (this.readingStore.readings.findIndex(reading => reading.epocId === this.epoc.id) === -1) {
-            this.router.navigateByUrl('/player/about/' + this.epoc.id);
+            this.router.navigateByUrl('/epoc/overview/' + this.epoc.id);
         } else {
-            this.router.navigateByUrl('/player/play/' + this.epoc.id);
+            this.router.navigateByUrl('/epoc/play/' + this.epoc.id);
         }
     }
 

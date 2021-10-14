@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Settings} from '../classes/settings';
+import {Settings} from 'src/app/classes/settings';
 import {StorageService} from './storage.service';
 
 @Injectable({

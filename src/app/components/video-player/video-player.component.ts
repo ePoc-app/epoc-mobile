@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {IonSelect, ToastController, Gesture, GestureController} from '@ionic/angular';
-import {LibraryService} from '../../services/library.service';
+import {LibraryService} from 'src/app/services/library.service';
 
 @Component({
   selector: 'video-player',
