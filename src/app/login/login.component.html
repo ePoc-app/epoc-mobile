@@ -22,24 +22,7 @@
               <p>Pour accéder aux contenus des ePoc Inria, merci de vous connecter.</p>
             </ion-card-content>
             <ion-card-content>
-              <ion-segment color="inria-blue" mode="md" [value]="activeTab" (ionChange)="changeLoginTab($event)">
-                <ion-segment-button mode="md" value="inria">
-                  <ion-label>Inria</ion-label>
-                </ion-segment-button>
-                <ion-segment-button mode="md" value="externe">
-                  <ion-label>Externe</ion-label>
-                </ion-segment-button>
-              </ion-segment>
-              <div class="segment-content" *ngIf="activeTab === 'inria'">
                 <ion-button (click)="oauthLogin()" color="inria-blue" expand="block" strong>Connexion CAS Inria</ion-button>
-              </div>
-              <div class="segment-content" *ngIf="activeTab === 'externe'">
-                <form (submit)="firebaseLogin($event)">
-                  <input placeholder="Email" type="email" (input)="updateUserForm('login', $event)" required/>
-                  <input placeholder="Mot de passe" type="password" (input)="updateUserForm('password', $event)" required/>
-                  <ion-button type="submit" color="inria-blue" expand="block" [disabled]="!userForm.login || !userForm.password">Connexion externe</ion-button>
-                </form>
-              </div>
             </ion-card-content>
           </ion-card>
         </ion-col>

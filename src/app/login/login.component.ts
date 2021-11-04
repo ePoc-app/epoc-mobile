@@ -5,7 +5,6 @@ import {environment as env} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {Platform, ToastController} from '@ionic/angular';
 import {Browser} from '@capacitor/core';
-import {AngularFireAuth} from '@angular/fire/auth';
 import {AuthService} from 'src/app/services/auth.service';
 
 @Component({
@@ -14,18 +13,11 @@ import {AuthService} from 'src/app/services/auth.service';
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-    userForm = {
-        login: '',
-        password: ''
-    };
-    activeTab = 'inria';
-
     constructor(
         public platform: Platform,
         private iab: InAppBrowser,
         private router: Router,
         public toastController: ToastController,
-        public fireAuth: AngularFireAuth,
         private auth: AuthService,
         private http: HTTP,
         private ref: ChangeDetectorRef
@@ -93,31 +85,5 @@ export class LoginComponent implements OnInit {
                 }
             });
         }
-    }
-
-    firebaseLogin(event) {
-        event.preventDefault();
-        this.fireAuth.signInWithEmailAndPassword(this.userForm.login, this.userForm.password)
-        .then(result => {
-            this.auth.setUser({
-                username: 'admin',
-                firstname: 'Admin',
-                lastname: 'User',
-                email: this.userForm.login,
-            }).then(() => {
-                this.router.navigateByUrl('/home/default');
-            });
-        })
-        .catch(error => {
-            this.toast(error.message);
-        });
-    }
-
-    changeLoginTab(event) {
-        this.activeTab = event.detail.value;
-    }
-
-    updateUserForm(key: string, event) {
-        this.userForm[key] = event.target.value;
     }
 }

@@ -15,10 +15,7 @@ import {PipesModule} from './pipes/pipes.module';
 import {LoginComponent} from './login/login.component';
 import {LoginCallbackComponent} from './login/login-callback.component';
 import {AuthGuardService} from './services/auth-guard.service';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFireAuthModule} from '@angular/fire/auth';
 import {File} from '@ionic-native/file/ngx';
-import {environment} from 'src/environments/environment';
 import {HTTP} from '@ionic-native/http/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 
@@ -32,9 +29,7 @@ import {FileOpener} from '@ionic-native/file-opener/ngx';
         AppRoutingModule,
         HttpClientModule,
         IonicStorageModule.forRoot(),
-        PipesModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule
+        PipesModule
     ],
     providers: [
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
