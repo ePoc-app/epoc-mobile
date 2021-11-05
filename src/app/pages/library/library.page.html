@@ -15,7 +15,7 @@
 <ion-content *ngIf="library">
   <div class="library-items">
     <div class="library-item" *ngFor="let epoc of library">
-      <div class="library-item-image" [style]="'background-image:url('+epoc.image+')'"></div>
+      <div class="library-item-image" [routerLink]="'/library/'+epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>
       <h3 class="library-item-title">{{epoc.title}}</h3>
       <div class="library-item-toolbar">
         <ion-button class="expanded" color="inria">Download</ion-button>

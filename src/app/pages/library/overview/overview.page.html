@@ -1,0 +1,80 @@
+<ion-header mode="ios" #header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Présentation du cours</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="epoc">
+  <ion-grid>
+    <ion-row class="ion-text-center">
+      <ion-col>
+        <h3>{{epoc.title}}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row class="epoc-specs ion-text-center">
+      <ion-col size="4">
+        <div class="epoc-spec-icon"><ion-icon name="book" color="inria-blue"></ion-icon></div>
+        <div class="epoc-spec-value">
+          {{epoc.chaptersCount}} {{epoc.chaptersCount > 1 ?'modules' : 'module'}}
+        </div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="epoc-spec-icon"><ion-icon name="checkbox" color="inria-blue"></ion-icon></div>
+        <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{epoc.assessmentsCount > 1 ? 'activités':'activité'}}</div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="epoc-spec-icon"><ion-icon name="time" color="inria-blue"></ion-icon></div>
+        <div class="epoc-spec-value">10 min par module</div>
+      </ion-col>
+    </ion-row>
+
+    <div class="trailer-course">
+      <video-player [src]="epoc.teaser" [poster]="epoc.image" [controls]="{show:false, overlay: true}"></video-player>
+    </div>
+
+    <ion-row>
+      <ion-col size="12">
+        <div class="tabs-headers">
+          <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
+            <span>{{epoc.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</span>
+          </div>
+          <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
+            <span>Résumé</span>
+          </div>
+          <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
+            <span>{{epoc.authors.length > 1 ? 'Auteurs' : 'Auteur'}}</span>
+          </div>
+        </div>
+        <div class="tabs">
+          <div class="tab" *ngIf="selectedTab === 0">
+            <div class="course-objective" *ngFor="let objective of epoc.objectives">
+              <ion-icon name="locate" mode="md"></ion-icon>
+              <ion-text>{{objective}}</ion-text>
+            </div>
+          </div>
+          <div class="tab" *ngIf="selectedTab === 1">
+            <ion-text [innerHTML]="epoc.summary"></ion-text>
+          </div>
+          <div class="tab" *ngIf="selectedTab === 2">
+            <div class="epoc-author" *ngFor="let author of epoc.authors | values">
+              <ion-text class="semibold">{{author.name}} : </ion-text>
+              <img *ngIf="author.image" [src]="author.image | safe: 'url' : libraryService.rootFolder"/>
+              <ion-text [innerHTML]="author.description"></ion-text>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer mode="ios" *ngIf="epoc">
+  <ion-toolbar>
+    <ion-button class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" expand="block" color="inria-blue" strong>
+      C'est parti !
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
