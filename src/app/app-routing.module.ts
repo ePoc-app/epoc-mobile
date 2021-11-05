@@ -7,6 +7,10 @@ import {mode} from 'src/environments/environment.mode';
 
 const routesDefault: Routes = [
     {
+        path: 'library',
+        loadChildren: () => import('./pages/library/library.module').then(m => m.LibraryModule)
+    },
+    {
         path: 'epoc',
         loadChildren: () => import('./pages/epoc/epoc.module').then(m => m.EpocModule)
     },

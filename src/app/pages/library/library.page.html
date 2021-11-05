@@ -1,0 +1,26 @@
+<ion-header mode="ios" class="home">
+  <ion-toolbar>
+    <div class="logo" slot="start">
+      <ion-img src="assets/img/ePoc.svg"></ion-img>
+    </div>
+    <ion-button class="icon-btn" slot="end" routerLink="/settings" routerDirection="forward">
+      <ion-icon slot="icon-only" name="settings-outline" color="inria-blue"></ion-icon>
+    </ion-button>
+    <ion-button class="icon-btn" slot="end" routerLink="/about" routerDirection="forward">
+      <ion-icon slot="icon-only" name="information-circle-outline" color="inria-blue"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="library">
+  <div class="library-items">
+    <div class="library-item" *ngFor="let epoc of library">
+      <div class="library-item-image" [style]="'background-image:url('+epoc.image+')'"></div>
+      <h3 class="library-item-title">{{epoc.title}}</h3>
+      <div class="library-item-toolbar">
+        <ion-button class="expanded" color="inria">Download</ion-button>
+        <ion-button class="round" color="light">...</ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

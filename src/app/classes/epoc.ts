@@ -3,7 +3,7 @@ import {Content} from './contents/content';
 import {html, uid} from './types';
 import {Assessment, Question} from './contents/assessment';
 
-export class Epoc {
+export class EpocMetadata {
     id: string;
     title: string;
     image: string;
@@ -11,6 +11,12 @@ export class Epoc {
     authors: Record<uid, Author>;
     summary: html;
     objectives: string[];
+    chaptersCount: number;
+    assessmentsCount: number;
+    download: string;
+}
+
+export class Epoc extends EpocMetadata {
     certificateScore: number;
     parameters: Parameters;
     contents: Record<uid, Content>;
