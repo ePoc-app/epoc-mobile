@@ -1,15 +1,15 @@
 <div class="video-player">
   <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
     <video #video disablePictureInPicture playsinline preload="metadata"
-           [src]="(libraryService.rootFolder + src) | safe: 'url'">
+           [src]="src | safe: 'url': libraryService.rootFolder">
       <ng-container *ngFor="let sub of subtitles">
         <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang"
-               [src]="(libraryService.rootFolder +  sub.src) | safe: 'url'">
+               [src]="sub.src | safe: 'url': libraryService.rootFolder">
       </ng-container>
     </video>
     <div class="poster" *ngIf="!hasPlayed">
       <h4 class="title">{{title}}</h4>
-      <img [src]="(libraryService.rootFolder +  poster) | safe: 'url'" *ngIf="poster"/>
+      <img [src]="poster | safe: 'url': libraryService.rootFolder" *ngIf="poster"/>
     </div>
     <div class="video-timeline" (click)="seek($event)" [style.display]="controls.show && controls.timeline ? 'block':'none'">
       <div class="video-timeline-progress" [style.width]="progress +'%'" #timelineProgress></div>
