@@ -1,0 +1,134 @@
+*{
+ color: var(--ion-color-inria-blue)
+}
+.download-button{
+  --border-radius: 30px;
+  padding: 0 20px 0 20px;
+  animation: 1s ease-in-out 1s 1 pulse;
+
+  button{
+    animation: 1s ease-in-out 1s 1 pulse;
+  }
+}
+
+ion-grid{
+  padding: 1em;
+}
+
+.epoc-specs{
+  margin: 1em 0;
+  padding: .5em;
+  font-size: 12px;
+
+  ion-col{
+    padding: 0;
+  }
+
+  ion-col:nth-child(2){
+    border-left: 2px solid var(--ion-color-inria-blue);
+    border-right: 2px solid var(--ion-color-inria-blue);
+  }
+}
+
+.epoc-spec-icon{
+  font-size: 3em;
+  line-height: 1;
+}
+
+.epoc-spec-value{
+  text-transform: lowercase;
+}
+
+.tabs-headers{
+  display: flex;
+  margin-top: 1em;
+  .tabs-header {
+    flex-grow: 1;
+    text-align: center;
+
+    span{
+      display: inline-block;
+      font-weight: 700;
+      margin-bottom: -3px;
+      border-bottom: 3px solid lighten(#ee2d20, 30%);
+    }
+
+    &.selected{
+      span{
+        border-bottom: 3px solid var(--ion-color-inria);
+      }
+    }
+  }
+}
+
+.tabs{
+  .tab{
+  }
+}
+
+.course-objective{
+  margin: 1em 0;
+  ion-icon{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 2em;
+    width: 1em;
+    margin-right: .5em;
+    color: var(--ion-color-inria);
+  }
+
+  ion-text{
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 3em);
+  }
+}
+
+.epoc-author{
+  margin: 1em 0;
+
+  img {
+    float: left;
+    width: 80px;
+    margin-right: 1em;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &:after{
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+ion-text{
+  line-height: 1.4;
+}
+
+.trailer-course {
+  position: relative;
+  width: 80%;
+  min-width: 250px;
+  margin: 2vh auto;
+  border: 2px solid var(--ion-color-inria-blue);
+  border-radius: 10px;
+  overflow: hidden;
+  // hack to fix overflow hidden safari
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}

@@ -7,14 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { LibraryPageRoutingModule } from './library-routing.module';
 
 import { LibraryPage } from './library.page';
+import {EpocOverviewPage} from './overview/overview.page';
+import {PipesModule} from '../../pipes/pipes.module';
+import {SharedModule} from '../../components/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LibraryPageRoutingModule
+    LibraryPageRoutingModule,
+    PipesModule,
+    SharedModule
   ],
-  declarations: [LibraryPage]
+  declarations: [LibraryPage, EpocOverviewPage]
 })
 export class LibraryModule {}

@@ -26,7 +26,7 @@ const routesDefault: Routes = [
         path: 'settings',
         loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
     },
-    {path: '**', redirectTo: '/epoc'}
+    {path: '**', redirectTo: '/library'}
 ];
 
 const routesInria: Routes = [
@@ -55,7 +55,7 @@ const routesInria: Routes = [
         path: 'open',
         loadChildren: () => import('./pages/open/open.module').then(m => m.OpenPageModule)
     },
-    {path: '**', redirectTo: '/home/default'}
+    {path: '**', redirectTo: '/epoc'}
 ];
 
 @NgModule({
