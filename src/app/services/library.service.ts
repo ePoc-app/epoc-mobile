@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, ReplaySubject} from 'rxjs';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
-import {Epoc} from 'src/app/classes/epoc';
+import {Epoc, EpocMetadata} from 'src/app/classes/epoc';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {uid} from 'src/app/classes/types';
 
@@ -15,12 +15,14 @@ const { Filesystem } = Plugins;
 export class LibraryService {
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
     private initialized = false;
-    public rootFolder = localStorage.getItem('rootFolder') ? Capacitor.convertFileSrc(localStorage.getItem('rootFolder')) : './assets/demo/';
+    private libraryUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json'
+    private storedRootFolder = localStorage.getItem('rootFolder');
+    public rootFolder =  this.storedRootFolder ? Capacitor.convertFileSrc(this.storedRootFolder) : './assets/demo/';
 
     constructor(private http: HttpClient) {}
 
-    getLibrary(): Observable<Epoc[]> {
-        return null;
+    getLibrary(): Observable<EpocMetadata[]> {
+        return this.http.get<EpocMetadata[]>(this.libraryUrl);
     }
 
     setRootFolder(rootFolder: string) {
