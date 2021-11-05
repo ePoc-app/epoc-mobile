@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, ReplaySubject} from 'rxjs';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {of, Observable, ReplaySubject} from 'rxjs';
+import {distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {Epoc, EpocMetadata} from 'src/app/classes/epoc';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
@@ -15,14 +15,22 @@ const { Filesystem } = Plugins;
 export class LibraryService {
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
     private initialized = false;
-    private libraryUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json'
+    private libraryUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json';
     private storedRootFolder = localStorage.getItem('rootFolder');
     public rootFolder =  this.storedRootFolder ? Capacitor.convertFileSrc(this.storedRootFolder) : './assets/demo/';
 
     constructor(private http: HttpClient) {}
 
     getLibrary(): Observable<EpocMetadata[]> {
-        return this.http.get<EpocMetadata[]>(this.libraryUrl);
+        return of(localStorage.getItem('library')).pipe(switchMap(library => {
+            if (library === null) {
+                const request = this.http.get<EpocMetadata[]>(this.libraryUrl);
+                request.subscribe(data => localStorage.setItem('library', JSON.stringify(data)))
+                return request;
+            } else {
+                return of(JSON.parse(library));
+            }
+        }))
     }
 
     setRootFolder(rootFolder: string) {
