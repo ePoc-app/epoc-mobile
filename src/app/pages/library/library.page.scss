@@ -9,7 +9,7 @@
   flex: 0 0 calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - var(--column-gap)/2);
   width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - var(--column-gap)/2);
   max-width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - var(--column-gap)/2);
-  margin-bottom: var(--column-gap);
+  margin-bottom: calc(1.5 * var(--column-gap));
 
   &-image{
     position: relative;
@@ -37,26 +37,5 @@
 
   &-toolbar{
     display: flex;
-
-    ion-button{
-      height:27px;
-      margin:0;
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 0;
-      --box-shadow:none;
-      --border-radius: 1rem;
-
-      &.expanded{
-        flex-grow: 1;
-      }
-
-      &.round{
-        --padding-start: 0;
-        --padding-end: 0;
-        width:27px;
-        font-size: 15px;
-      }
-    }
   }
 }

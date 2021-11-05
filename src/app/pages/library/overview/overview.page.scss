@@ -1,14 +1,5 @@
-*{
- color: var(--ion-color-inria-blue)
-}
-.download-button{
-  --border-radius: 30px;
-  padding: 0 20px 0 20px;
-  animation: 1s ease-in-out 1s 1 pulse;
-
-  button{
-    animation: 1s ease-in-out 1s 1 pulse;
-  }
+ion-footer ion-toolbar{
+  padding: 1rem;
 }
 
 ion-grid{
