@@ -27,7 +27,7 @@ export class EpocOverviewPage implements OnInit {
 
     ngOnInit() {
         this.libraryService.getLibrary().subscribe((data: EpocMetadata[]) => {
-            this.library = [...data];
+            this.library = data;
             this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
         });
     }

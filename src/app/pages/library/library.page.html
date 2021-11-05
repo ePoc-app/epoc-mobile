@@ -17,9 +17,12 @@
     <div class="library-item" *ngFor="let epoc of library">
       <div class="library-item-image" [routerLink]="'/library/'+epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>
       <h3 class="library-item-title">{{epoc.title}}</h3>
-      <div class="library-item-toolbar">
-        <ion-button class="expanded" color="inria">Download</ion-button>
-        <ion-button class="round" color="light">...</ion-button>
+      <div class="library-item-toolbar" *ngIf="downloadedEpocs.indexOf(epoc.id) !== -1">
+        <ion-button class="expanded" color="inria">Découvrir</ion-button>
+        <ion-button class="round" color="light" (click)="deleteEpoc(epoc)">...</ion-button>
+      </div>
+      <div class="library-item-toolbar" *ngIf="downloadedEpocs.indexOf(epoc.id) === -1">
+        <ion-button class="expanded" color="light" (click)="downloadEpoc(epoc)">Télécharger</ion-button>
       </div>
     </div>
   </div>

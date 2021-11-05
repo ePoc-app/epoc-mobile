@@ -18,6 +18,7 @@ import {AuthGuardService} from './services/auth-guard.service';
 import {File} from '@ionic-native/file/ngx';
 import {HTTP} from '@ionic-native/http/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
+import {FileTransfer} from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
@@ -34,6 +35,7 @@ import {FileOpener} from '@ionic-native/file-opener/ngx';
     providers: [
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         File,
+        FileTransfer,
         InAppBrowser,
         AuthGuardService,
         HTTP,
