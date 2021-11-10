@@ -73,8 +73,14 @@
 
 <ion-footer mode="ios" *ngIf="epoc">
   <ion-toolbar>
-    <ion-button class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" size="large" expand="block" color="inria" strong>
+    <ion-button class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" size="large" expand="block" color="inria" strong *ngIf="epoc.downloaded">
       C'est parti !
+    </ion-button>
+    <ion-button class="expanded" color="light" size="large" expand="block" (click)="downloadEpoc(epoc)" *ngIf="!epoc.downloading && !epoc.downloaded">
+      Télécharger
+    </ion-button>
+    <ion-button class="expanded" size="large" expand="block" disabled="true" color="light" *ngIf="epoc.downloading">
+      Téléchargement ({{downloads[epoc.id]}}%)
     </ion-button>
   </ion-toolbar>
 </ion-footer>

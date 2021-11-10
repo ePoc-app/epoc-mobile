@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
-import {Epoc, EpocMetadata} from 'src/app/classes/epoc';
-import {FileService} from 'src/app/services/file.service';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {EpocLibrary} from 'src/app/classes/epoc';
+import {ActionSheetController} from '@ionic/angular';
 
 @Component({
   selector: 'app-library',
@@ -11,23 +10,50 @@ import {distinctUntilChanged} from 'rxjs/operators';
 })
 export class LibraryPage implements OnInit {
 
-  library: EpocMetadata[] | undefined;
-  downloadedEpocs: string[] = [];
+  library: EpocLibrary[] | undefined;
+  downloads : {[EpocId: string] : number} = {};
 
-  constructor(public libraryService: LibraryService, private fileService: FileService) { }
+  constructor(
+      private ref: ChangeDetectorRef,
+      public libraryService: LibraryService,
+      public actionSheetController: ActionSheetController,
+  ) {}
 
   ngOnInit() {
-    this.libraryService.getLibrary().subscribe((data: EpocMetadata[]) => this.library = data);
-    this.fileService.readdir().subscribe((data: string[]) => this.downloadedEpocs = data)
+    this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
+    this.libraryService.downloads$.subscribe((downloads) => {
+      this.downloads = downloads;
+      this.ref.detectChanges();
+    });
   }
 
-  downloadEpoc(epoc: EpocMetadata) {
-    this.fileService.download(epoc.download, epoc.id+'.zip').pipe(
-        distinctUntilChanged()
-    ).subscribe((progress) => console.log(progress + '%'))
+  downloadEpoc(epoc: EpocLibrary) {
+    this.libraryService.downloadEpoc(epoc);
   }
 
-  deleteEpoc(epoc: EpocMetadata) {
-    this.fileService.delete(epoc.id+'.zip');
+  deleteEpoc(epoc: EpocLibrary) {
+    this.libraryService.deleteEpoc(epoc);
+  }
+
+  async presentActionSheet(epoc) {
+    const buttons = [
+      {
+        text: 'Supprimer',
+        icon: 'trash',
+        handler: () => {
+          this.deleteEpoc(epoc);
+        }
+      },
+      {
+        text: 'Fermer',
+        role: 'cancel'
+      }
+    ];
+    const actionSheet = await this.actionSheetController.create({
+      cssClass: 'custom-action-sheet',
+      mode: 'ios',
+      buttons
+    });
+    await actionSheet.present();
   }
 }

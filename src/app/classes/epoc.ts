@@ -16,6 +16,11 @@ export class EpocMetadata {
     download: string;
 }
 
+export class EpocLibrary extends EpocMetadata {
+    downloading: boolean;
+    downloaded: boolean;
+}
+
 export class Epoc extends EpocMetadata {
     certificateScore: number;
     parameters: Parameters;
