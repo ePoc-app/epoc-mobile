@@ -1,12 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import {ReadingStoreService} from 'src/app/services/reading-store.service';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 import {LibraryService} from 'src/app/services/library.service';
-import {Observable} from 'rxjs';
-import {Epoc, EpocMetadata} from 'src/app/classes/epoc';
-import {ActionSheetController, AlertController} from '@ionic/angular';
-import {Content} from 'src/app/classes/contents/content';
+import {Epoc, EpocLibrary} from 'src/app/classes/epoc';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -15,20 +10,26 @@ import {Content} from 'src/app/classes/contents/content';
 })
 export class EpocOverviewPage implements OnInit {
 
-    library: EpocMetadata[] | undefined;
-    epoc: EpocMetadata;
+    library: EpocLibrary[] | undefined;
+    downloads : {[EpocId: string] : number} = {};
+    epoc: EpocLibrary;
     selectedTab = 0;
 
     constructor(
+        private ref: ChangeDetectorRef,
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService
     ) {}
 
     ngOnInit() {
-        this.libraryService.getLibrary().subscribe((data: EpocMetadata[]) => {
+        this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
             this.library = data;
             this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
+        });
+        this.libraryService.downloads$.subscribe((downloads) => {
+            this.downloads = downloads;
+            this.ref.detectChanges();
         });
     }
 
@@ -40,8 +41,8 @@ export class EpocOverviewPage implements OnInit {
         this.selectedTab = index;
     }
 
-    async downloadEpoc(id) {
-        // todo
+    downloadEpoc(epoc: EpocLibrary) {
+        this.libraryService.downloadEpoc(epoc);
     }
 
     ionViewWillLeave() {
