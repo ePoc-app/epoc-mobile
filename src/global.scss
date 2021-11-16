@@ -79,21 +79,44 @@ ion-button{
   margin:0;
   font-size: 13px;
   font-weight: bold;
+  text-transform: uppercase;
   letter-spacing: 0;
   --box-shadow:none;
   --border-radius: 1.2em;
 
   &.expanded{
     flex-grow: 1;
-    margin-right: .5rem;
   }
 
   &.round{
     --padding-start: 0;
     --padding-end: 0;
     width:27px;
-    font-size: 15px;
+    font-size: 17px;
+
+    span.ellipsis{
+      padding-top: 0;
+      padding-bottom: .4em;
+      line-height: 0;
+    }
   }
+
+  & + ion-button {
+    margin-left: .5rem;
+  }
+
+  span {
+    padding-top: .2em;
+  }
+}
+
+.spin{
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
 }
 
 // hide back button text on android
@@ -104,13 +127,13 @@ ion-button{
 .custom-action-sheet{
   .action-sheet-title{
     font-size: 14px;
-    color: $inria-blue;
+    color: var(--ion-color-inria-blue);
   }
   .action-sheet-sub-title{
     padding: 5px;
     font-size: 12px;
     font-weight: bold;
-    color: $inria-red;
+    color: var(--ion-color-inria-red);
   }
   .action-sheet-button.splitter{
     padding:0;
@@ -159,7 +182,7 @@ video {
 
 // Reader
 .reader .page-content, .about-content-wrapper, .preview-settings, .transcript, .explanation-text{
-  color: $inria-blue;
+  color: var(--ion-color-inria-blue);
 
   video{
     height: 101%;
@@ -174,7 +197,7 @@ video {
       font-size: pow(1.1, $i) * 1em;
       font-weight: 700;
       line-height: 1;
-      color:$inria-blue;
+      color:var(--ion-color-inria-blue);
       margin: 1em 0 .5em 0;
       padding: 0;
       text-transform: unset;
@@ -201,7 +224,7 @@ video {
   figure {
     margin: 1em 0 1.5em 0;
     line-height: 1.4;
-    color: $inria-blue;
+    color: var(--ion-color-inria-blue);
 
     img{
       display: block;
@@ -238,7 +261,7 @@ video {
          position:absolute;
          top: -0.2em;
          left: -0.2em;
-         background: $inria-red;
+         background: var(--ion-color-inria-red);
        }
      }
 
@@ -247,19 +270,19 @@ video {
        padding: .4em .4em .4em .4em;
        font-weight: 500;
        color:white;
-       background: $inria-blue;
+       background: var(--ion-color-inria-blue);
        border:none;
        z-index: 1;
      }
 
      td{
        padding: .4em .4em .4em .4em;
-       border: 1px solid $inria-blue-border;
+       border: 1px solid var(--ion-color-inria-blue);
      }
 
      &.striped{
        tr:nth-of-type(2n+1){
-         background: $inria-blue-bg;
+         background: var(--ion-color-inria-light);
        }
      }
    }
