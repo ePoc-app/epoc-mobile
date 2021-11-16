@@ -79,7 +79,7 @@
         line-height: 1;
         color:white;
         cursor: pointer;
-        filter: drop-shadow(0 0 2px $inria-blue);
+        filter: drop-shadow(0 0 2px var(--ion-color-inria-blue));
       }
     }
 
@@ -139,11 +139,11 @@
       display: inline-block;
       padding: 2px 5px;
       border-radius: 5px;
-      background: $inria-bg;
+      background: var(--ion-color-inria-light);
 
       &:active, &:focus{
         color:white;
-        background: $inria-blue;
+        background: var(--ion-color-inria-blue);
       }
     }
   }
