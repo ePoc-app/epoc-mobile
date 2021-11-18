@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+import {LibraryService} from './services/library.service';
 const { SplashScreen } = Plugins;
 
 @Component({
@@ -11,14 +12,17 @@ const { SplashScreen } = Plugins;
 })
 export class AppComponent {
   constructor(
-    private platform: Platform
+    private platform: Platform,
+    public libraryService: LibraryService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      SplashScreen.hide();
+      this.libraryService.library$.subscribe(data => {
+        if (data && data.length) SplashScreen.hide();
+      })
     });
   }
 }
