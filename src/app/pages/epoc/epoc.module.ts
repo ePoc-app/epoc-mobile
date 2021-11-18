@@ -5,7 +5,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from 'src/app/components/shared.module';
 import {PipesModule} from 'src/app/pipes/pipes.module';
-import {EpocAssessmentPage} from './assessment/assessment.page';
 import {EpocHomePage} from './home/home.page';
 import {EpocTocPage} from './toc/toc.page';
 import {EpocPlayerPage} from './player/player.page';
@@ -41,7 +40,6 @@ import {CourseChoiceComponent} from './player/contents/course-choice/course-choi
     declarations: [
         EpocHomePage,
         EpocPlayerPage,
-        EpocAssessmentPage,
         EpocOverviewPage,
         EpocScorePage,
         EpocTocPage,

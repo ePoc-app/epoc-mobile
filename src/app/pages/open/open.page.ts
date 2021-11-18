@@ -5,8 +5,7 @@ import {Zip} from 'capacitor-zip';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
-import {mode} from 'src/environments/environment.mode';
-import {LibraryService} from 'src/app/services/library.service';
+import {EpocService} from '../../services/epoc.service';
 
 const {Filesystem} = Plugins;
 
@@ -31,7 +30,7 @@ export class OpenPage {
         private elRef: ElementRef,
         private router: Router,
         private file: File,
-        public libraryService: LibraryService
+        public epocService: EpocService
     ) {
         this.zip = new Zip();
     }
@@ -89,7 +88,7 @@ export class OpenPage {
     }
 
     openDefault(){
-        this.libraryService.setRootFolder(null);
+        this.epocService.setRootFolder(null);
         this.router.navigateByUrl('/home/default');
     }
 
@@ -100,7 +99,7 @@ export class OpenPage {
         this.working = true;
         this.progress = 0;
         this.loadingLog(`Ouverture de ${filename}`);
-        this.libraryService.setRootFolder(this.file.dataDirectory + 'epoc/');
+        this.epocService.setRootFolder(this.file.dataDirectory + 'epoc/');
         this.unzip(filename).then((epocId) => {
             this.toast('Démarrage', 'success');
             this.ngZone.run(() => {

@@ -1,10 +1,10 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Epoc} from 'src/app/classes/epoc';
-import {LibraryService} from 'src/app/services/library.service';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {mode} from 'src/environments/environment.mode';
+import {EpocService} from '../../../services/epoc.service';
 
 @Component({
     selector: 'app-epoc-home',
@@ -20,7 +20,7 @@ export class EpocHomePage implements OnInit {
     constructor(
         private ngZone: NgZone,
         private route: ActivatedRoute,
-        public libraryService: LibraryService
+        public epocService: EpocService
     ) {
         this.mode = mode;
     }
@@ -28,7 +28,7 @@ export class EpocHomePage implements OnInit {
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc(params.get('id')))
+                this.epocService.getEpoc(params.get('id')))
         );
         this.epocId = this.route.snapshot.paramMap.get('id');
         this.epoc$.subscribe(epoc => {

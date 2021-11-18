@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ActionSheetController, AlertController, IonSlides} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
@@ -6,13 +6,13 @@ import {combineLatest, Observable} from 'rxjs';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
-import {LibraryService} from 'src/app/services/library.service';
 import {Settings} from 'src/app/classes/settings';
 import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Location} from '@angular/common';
 import {Assessment} from 'src/app/classes/contents/assessment';
 import {uid} from 'src/app/classes/types';
 import {DenormalizePipe} from 'src/app/pipes/denormalize.pipe';
+import {EpocService} from '../../../services/epoc.service';
 
 @Component({
     selector: 'app-epoc-player',
@@ -70,7 +70,7 @@ export class EpocPlayerPage implements OnInit {
         private location: Location,
         public alertController: AlertController,
         public actionSheetController: ActionSheetController,
-        public libraryService: LibraryService,
+        public epocService: EpocService,
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService
     ) {
@@ -79,7 +79,7 @@ export class EpocPlayerPage implements OnInit {
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc())
+                this.epocService.getEpoc())
         );
 
         this.epoc$.subscribe(epoc => {
@@ -215,7 +215,7 @@ export class EpocPlayerPage implements OnInit {
 
         this.assessments.forEach((assessment) => {
             const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-            const scoreTotal = this.libraryService.calcScoreTotal(this.epoc, assessment.questions);
+            const scoreTotal = this.epocService.calcScoreTotal(this.epoc, assessment.questions);
 
             if (userAssessment && userAssessment.score > 0) {
                 this.assessmentData.totalUserScore += userAssessment.score;
