@@ -35,12 +35,13 @@ export class LibraryService {
             item.downloaded = false;
             item.unzipping = false;
             return item;
-        }));
-        this.fileService.readdir('epocs').subscribe((data) => {
-            data.forEach(file => {
-                const epocId = file.name;
-                this.updateEpocState(epocId, false, false, true);
-            })
+        }), (e) => console.warn('Error fetching library', e), () => {
+            this.fileService.readdir('epocs').subscribe((data) => {
+                data.forEach(file => {
+                    const epocId = file.name;
+                    this.updateEpocState(epocId, false, false, true);
+                })
+            });
         });
     }
 
