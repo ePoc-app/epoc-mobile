@@ -11,7 +11,7 @@ import {ActionSheetController} from '@ionic/angular';
 export class LibraryPage implements OnInit {
 
   library: EpocLibrary[] | undefined;
-  downloads : {[EpocId: string] : number} = {};
+  epocProgresses : {[EpocId: string] : number} = {};
 
   constructor(
       private ref: ChangeDetectorRef,
@@ -21,8 +21,8 @@ export class LibraryPage implements OnInit {
 
   ngOnInit() {
     this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
-    this.libraryService.downloads$.subscribe((downloads) => {
-      this.downloads = downloads;
+    this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
+      this.epocProgresses = epocProgresses;
       this.ref.detectChanges();
     });
   }

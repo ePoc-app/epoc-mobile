@@ -14,7 +14,9 @@ export class FileService{
     constructor(
         private file: File,
         private transfer: FileTransfer
-    ) {}
+    ) {
+        this.zip = new Zip();
+    }
 
     readdir(dir): Observable<Entry[]> {
         return from(new Promise<Entry[]>((resolve, reject) => {
@@ -36,7 +38,7 @@ export class FileService{
             fileTransfer.download(url, this.file.dataDirectory + filename).then((entry) => {
                 observer.complete();
             }, (error) => {
-                console.log(error);
+                console.warn(error);
             });
             fileTransfer.onProgress((e) => {
                 observer.next(Math.round(e.loaded/e.total * 100))
@@ -44,14 +46,18 @@ export class FileService{
         }).pipe(distinctUntilChanged());
     }
 
-    delete(filename): Observable<RemoveResult> {
+    deleteZip(filename): Observable<RemoveResult> {
         return from(this.file.removeFile(this.file.dataDirectory, filename));
+    }
+
+    deleteFolder(dir): Observable<RemoveResult> {
+        return from(this.file.removeRecursively(this.file.dataDirectory, dir));
     }
 
     unzip(filename, dir): Observable<number> {
         return new Observable((observer: Observer<number>) => {
             this.file.checkDir(this.file.dataDirectory, dir).then(() =>
-                this.file.removeRecursively(this.file.dataDirectory, dir)
+                this.deleteFolder(dir)
             ).catch((e) =>
                 console.warn('Nothing to delete')
             ).finally(() => {

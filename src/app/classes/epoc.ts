@@ -19,6 +19,7 @@ export class EpocMetadata {
 export class EpocLibrary extends EpocMetadata {
     downloading: boolean;
     downloaded: boolean;
+    unzipping: boolean;
 }
 
 export class Epoc extends EpocMetadata {
