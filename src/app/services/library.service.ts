@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, Subject} from 'rxjs';
 import {distinctUntilChanged, filter, startWith} from 'rxjs/operators';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {Epoc, EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
@@ -18,14 +18,14 @@ export class LibraryService {
     private librarySubject$ = new ReplaySubject<EpocLibrary[]>(1);
     library$ = this.librarySubject$.asObservable()
 
-    private _downloads : {[EpocId: string] : number} = {};
-    private downloadsSubject$ = new ReplaySubject<{[EpocId: string] : number}>(1);
-    downloads$ = this.downloadsSubject$.asObservable();
+    private _epocProgresses : {[EpocId: string] : number} = {};
+    private epocProgressesSubject$ = new ReplaySubject<{[EpocId: string] : number}>(1);
+    epocProgresses$ = this.epocProgressesSubject$.asObservable();
 
     protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
     private initialized = false;
     private libraryUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json';
-    private cachedLibrary: EpocLibrary[] = JSON.parse(localStorage.getItem('library'));
+    private cachedLibrary: EpocLibrary[] = JSON.parse(localStorage.getItem('library')) || [];
     private storedRootFolder = localStorage.getItem('rootFolder');
     public rootFolder =  this.storedRootFolder ? Capacitor.convertFileSrc(this.storedRootFolder) : './assets/demo/';
 
@@ -33,14 +33,13 @@ export class LibraryService {
         this.fetchLibrary().subscribe((data: EpocLibrary[]) => this.library = data.map(item => {
             item.downloading = false;
             item.downloaded = false;
+            item.unzipping = false;
             return item;
         }));
         this.fileService.readdir('epocs').subscribe((data) => {
-            // this.downloadedEpocs = data.map(item => item.name.split('.zip')[0])
             data.forEach(file => {
-                if (file.name.indexOf('.zip') === -1) return;
-                const epocId = file.name.split('.zip')[0];
-                this.updateDownloadedEpoc(epocId, true);
+                const epocId = file.name;
+                this.updateEpocState(epocId, false, false, true);
             })
         });
     }
@@ -54,30 +53,24 @@ export class LibraryService {
         this.librarySubject$.next(value);
     }
 
-    updateDownloadingEpoc(epocId, value) {
+    updateEpocState(epocId, downloading:boolean = false, unzipping:boolean = false, downloaded:boolean = false) {
         const epocIndex = this._library.findIndex(item => item.id === epocId);
+        if (epocIndex === -1) return;
         const epoc = this._library[epocIndex];
-        epoc.downloading = value;
+        epoc.downloading = downloading;
+        epoc.downloaded = downloaded;
+        epoc.unzipping = unzipping;
         this._library[epocIndex] = epoc;
         this.librarySubject$.next(this._library);
     }
 
-    updateDownloadedEpoc(epocId, value) {
-        const epocIndex = this._library.findIndex(item => item.id === epocId);
-        const epoc = this._library[epocIndex];
-        epoc.downloading = false;
-        epoc.downloaded = value;
-        this._library[epocIndex] = epoc;
-        this.librarySubject$.next(this._library);
+    addEpocProgress(epocId) {
+        this.updateEpocProgress(epocId, 0);
     }
 
-    addDownload(epocId) {
-        this.updateDownload(epocId, 0);
-    }
-
-    updateDownload(epocId, progress) {
-        this._downloads[epocId] = progress;
-        this.downloadsSubject$.next(this._downloads);
+    updateEpocProgress(epocId, progress) {
+        this._epocProgresses[epocId] = progress;
+        this.epocProgressesSubject$.next(this._epocProgresses);
     }
 
     fetchLibrary(): Observable<EpocLibrary[]> {
@@ -101,21 +94,36 @@ export class LibraryService {
 
     downloadEpoc(epoc: EpocMetadata): Observable<number> {
         const download = this.fileService.download(epoc.download, `epocs/${epoc.id}.zip`);
-        this.updateDownloadingEpoc(epoc.id, true);
-        this.addDownload(epoc.id);
+        this.updateEpocState(epoc.id, true);
+        this.addEpocProgress(epoc.id);
         download.subscribe((progress) => {
-            this.updateDownload(epoc.id, progress);
+            this.updateEpocProgress(epoc.id, progress);
         }, () => {
-            this.updateDownloadingEpoc(epoc.id, false);
+            this.updateEpocState(epoc.id);
         }, () => {
-            this.updateDownloadedEpoc(epoc.id, true);
+            this.unzipEpoc(epoc);
         });
         return download;
     }
 
+    unzipEpoc(epoc: EpocMetadata): Observable<number> {
+        const unzip = this.fileService.unzip(`epocs/${epoc.id}.zip`, `epocs/${epoc.id}`);
+        this.updateEpocState(epoc.id, false, true);
+        this.addEpocProgress(epoc.id);
+        unzip.subscribe((progress) => {
+            this.updateEpocProgress(epoc.id, progress);
+        }, () => {
+            this.updateEpocState(epoc.id);
+        }, () => {
+            this.updateEpocState(epoc.id, false, false, true);
+            this.fileService.deleteZip(`epocs/${epoc.id}.zip`);
+        });
+        return unzip;
+    }
+
     deleteEpoc(epoc: EpocMetadata): Observable<any> {
-        const rm = this.fileService.delete(`epocs/${epoc.id}.zip`)
-        rm.subscribe(() => {}, () => {}, () => { this.updateDownloadedEpoc(epoc.id, false); });
+        const rm = this.fileService.deleteFolder(`epocs/${epoc.id}`);
+        rm.subscribe(() => {}, () => {}, () => { this.updateEpocState(epoc.id); });
         return rm;
     }
 

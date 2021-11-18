@@ -23,7 +23,7 @@
           <span class="ellipsis">...</span>
         </ion-button>
       </div>
-      <div class="library-item-toolbar" *ngIf="!epoc.downloading && !epoc.downloaded">
+      <div class="library-item-toolbar" *ngIf="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">
         <ion-button class="expanded" color="inria-light" (click)="downloadEpoc(epoc)">
           <ion-icon name="cloud-download-outline" slot="start"></ion-icon>
           <span>Télécharger</span>
@@ -32,7 +32,13 @@
       <div class="library-item-toolbar" *ngIf="epoc.downloading">
         <ion-button class="expanded" disabled="true" color="inria-light">
           <ion-icon name="sync-outline" class="spin" slot="start"></ion-icon>
-          <span>Téléchargement <ng-container *ngIf="downloads[epoc.id]">({{downloads[epoc.id]}}%)</ng-container></span>
+          <span>Téléchargement <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
+        </ion-button>
+      </div>
+      <div class="library-item-toolbar" *ngIf="epoc.unzipping">
+        <ion-button class="expanded" disabled="true" color="inria-light">
+          <ion-icon name="cog-outline" class="spin" slot="start"></ion-icon>
+          <span>Ouverture <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
         </ion-button>
       </div>
     </div>

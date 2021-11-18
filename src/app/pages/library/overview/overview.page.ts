@@ -11,7 +11,7 @@ import {Epoc, EpocLibrary} from 'src/app/classes/epoc';
 export class EpocOverviewPage implements OnInit {
 
     library: EpocLibrary[] | undefined;
-    downloads : {[EpocId: string] : number} = {};
+    epocProgresses : {[EpocId: string] : number} = {};
     epoc: EpocLibrary;
     selectedTab = 0;
 
@@ -27,8 +27,8 @@ export class EpocOverviewPage implements OnInit {
             this.library = data;
             this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
         });
-        this.libraryService.downloads$.subscribe((downloads) => {
-            this.downloads = downloads;
+        this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
+            this.epocProgresses = epocProgresses;
             this.ref.detectChanges();
         });
     }

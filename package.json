@@ -29,7 +29,7 @@
     "@capacitor/ios": "^2.4.6",
     "@ionic-native/core": "^5.33.0",
     "@ionic-native/file": "^5.33.0",
-    "@ionic-native/file-opener": "^5.33.0",
+    "@ionic-native/file-opener": "^5.36.0",
     "@ionic-native/file-transfer": "^5.33.0",
     "@ionic-native/http": "^5.33.0",
     "@ionic-native/in-app-browser": "^5.33.0",
