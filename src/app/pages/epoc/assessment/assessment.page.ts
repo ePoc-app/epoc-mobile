@@ -5,11 +5,11 @@ import {AlertController, IonSlides} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
-import {LibraryService} from 'src/app/services/library.service';
 import {Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
 import {Assessment, Question} from 'src/app/classes/contents/assessment';
 import {DenormalizePipe} from 'src/app/pipes/denormalize.pipe';
+import {EpocService} from '../../../services/epoc.service';
 
 @Component({
     selector: 'app-epoc-assessment',
@@ -53,7 +53,7 @@ export class EpocAssessmentPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
-        public libraryService: LibraryService,
+        public epocService: EpocService,
         private readingStore: ReadingStoreService,
         public alertController: AlertController
     ) {}
@@ -61,7 +61,7 @@ export class EpocAssessmentPage implements OnInit {
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc(params.get('epocId')))
+                this.epocService.getEpoc(params.get('epocId')))
         );
 
         this.epocId = this.route.snapshot.paramMap.get('epocId');
@@ -78,7 +78,7 @@ export class EpocAssessmentPage implements OnInit {
             this.assessments = epoc.assessments;
             this.assessment = epoc.contents[this.assessmentId];
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
-            this.scoreMax = this.libraryService.calcScoreTotal(this.epoc, this.assessment.questions);
+            this.scoreMax = this.epocService.calcScoreTotal(this.epoc, this.assessment.questions);
             this.questionsSuccessed = new Array(this.questions.length);
             this.initQuestion();
             this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));

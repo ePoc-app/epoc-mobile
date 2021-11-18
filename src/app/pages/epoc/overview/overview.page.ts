@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
-import {LibraryService} from 'src/app/services/library.service';
 import {Observable} from 'rxjs';
 import {Epoc} from 'src/app/classes/epoc';
-import {ActionSheetController, AlertController} from '@ionic/angular';
+import {AlertController} from '@ionic/angular';
 import {Content} from 'src/app/classes/contents/content';
+import {EpocService} from '../../../services/epoc.service';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -23,7 +23,7 @@ export class EpocOverviewPage implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        public libraryService: LibraryService,
+        public epocService: EpocService,
         private readingStore: ReadingStoreService,
         public alertController: AlertController
     ) {}
@@ -31,7 +31,7 @@ export class EpocOverviewPage implements OnInit {
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc())
+                this.epocService.getEpoc())
         );
 
         this.epoc$.subscribe(epoc => {

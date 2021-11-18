@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {LibraryService} from 'src/app/services/library.service';
+import {EpocService} from '../services/epoc.service';
 
 @Pipe({
     name: 'srcConvert'
@@ -7,13 +7,13 @@ import {LibraryService} from 'src/app/services/library.service';
 export class SrcConvertPipe implements PipeTransform {
 
     constructor(
-        public libraryService: LibraryService
+        public epocService: EpocService
     ) {
     }
 
     transform(value: string): string {
         const regex = /src=['"](?!http)([^'"]*)['"]/g;
-        return value.replace(/assets\/demo\//g, '').replace(regex, `src='${this.libraryService.rootFolder}$1'`);
+        return value.replace(/assets\/demo\//g, '').replace(regex, `src='${this.epocService.rootFolder}$1'`);
     }
 
 }

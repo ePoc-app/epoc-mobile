@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
-import {LibraryService} from 'src/app/services/library.service';
 import {combineLatest, Observable} from 'rxjs';
 import {Epoc} from 'src/app/classes/epoc';
 import {AlertController} from '@ionic/angular';
@@ -14,6 +13,7 @@ import {AuthService} from 'src/app/services/auth.service';
 import {Capacitor, FilesystemDirectory, Plugins} from '@capacitor/core';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {LoadingController} from '@ionic/angular';
+import {EpocService} from '../../../services/epoc.service';
 
 @Component({
     selector: 'app-epoc-score',
@@ -35,7 +35,7 @@ export class EpocScorePage implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        public libraryService: LibraryService,
+        public epocService: EpocService,
         private readingStore: ReadingStoreService,
         private auth: AuthService,
         private fileOpener: FileOpener,
@@ -51,7 +51,7 @@ export class EpocScorePage implements OnInit {
         });
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc())
+                this.epocService.getEpoc())
         );
 
         this.epoc$.subscribe(epoc => {
@@ -83,7 +83,7 @@ export class EpocScorePage implements OnInit {
 
         this.assessments.forEach((assessment) => {
             const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
-            const scoreTotal = this.libraryService.calcScoreTotal(this.epoc, assessment.questions);
+            const scoreTotal = this.epocService.calcScoreTotal(this.epoc, assessment.questions);
 
             if (userAssessment && userAssessment.score > 0) {
                 this.assessmentData.totalUserScore += userAssessment.score;
@@ -111,7 +111,7 @@ export class EpocScorePage implements OnInit {
     }
 
     getScoreTotal(content) {
-        return this.libraryService.calcScoreTotal(this.epoc, content.questions);
+        return this.epocService.calcScoreTotal(this.epoc, content.questions);
     }
 
     getCertificate() {

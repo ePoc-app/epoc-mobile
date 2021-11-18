@@ -5,7 +5,7 @@ import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Reading} from 'src/app/classes/reading';
 import {Observable} from 'rxjs';
 import {Epoc} from 'src/app/classes/epoc';
-import {LibraryService} from 'src/app/services/library.service';
+import {EpocService} from '../../../services/epoc.service';
 
 @Component({
     selector: 'app-epoc-bookmarks',
@@ -20,7 +20,7 @@ export class EpocBookmarksPage implements OnInit{
 
     constructor(
         private route: ActivatedRoute,
-        public libraryService: LibraryService,
+        public epocService: EpocService,
         private readingStore: ReadingStoreService
     ) {}
 
@@ -33,7 +33,7 @@ export class EpocBookmarksPage implements OnInit{
 
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.libraryService.getEpoc())
+                this.epocService.getEpoc())
         );
 
         this.epoc$.subscribe(epoc => {
