@@ -23,7 +23,7 @@ ion-card{
   width: 100%;
   opacity: 1;
   transition: opacity .3s ease;
-  background: var(--ion-color-inria-grey);
+  background: var(--ion-color-inria-light);
 
   &.loading{
     opacity: 0;

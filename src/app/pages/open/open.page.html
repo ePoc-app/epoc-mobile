@@ -31,9 +31,6 @@
             <ion-card-content *ngIf="zipList?.length > 0">
               <ion-card-subtitle>Ou choisir dans la liste :</ion-card-subtitle>
               <ion-list>
-                <ion-item>
-                  <ion-label (click)="openDefault()">ePoc par defaut</ion-label>
-                </ion-item>
                 <ion-item *ngFor="let zip of zipList">
                   <ion-label (click)="openEpoc(zip)">{{zip}}</ion-label>
                   <ion-icon name="trash" slot="end" (click)="fileDelete(zip)"></ion-icon>

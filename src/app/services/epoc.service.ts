@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
-import {Epoc} from '../classes/epoc';
+import {Observable, Observer, ReplaySubject} from 'rxjs';
+import {Epoc, EpocLibrary} from '../classes/epoc';
 import {Capacitor, Filesystem, FilesystemDirectory, FilesystemEncoding} from '@capacitor/core';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
 import {uid} from '../classes/types';
 import {HttpClient} from '@angular/common/http';
+import {File} from '@ionic-native/file/ngx';
 
 @Injectable({
     providedIn: 'root'
@@ -13,40 +14,48 @@ import {HttpClient} from '@angular/common/http';
 export class EpocService {
   private initialized = false;
   private storedRootFolder = localStorage.getItem('rootFolder');
-  public rootFolder =  this.storedRootFolder ? Capacitor.convertFileSrc(this.storedRootFolder) : './assets/demo/';
-  protected epoc$: ReplaySubject<Epoc> = new ReplaySubject(1);
+  public rootFolder =  Capacitor.convertFileSrc(this.storedRootFolder);
 
-  constructor(private http: HttpClient) {
+  private _epoc : Epoc;
+  private epocSubject$ = new ReplaySubject<Epoc>(1);
+  epoc$ = this.epocSubject$.asObservable();
+
+  constructor(
+      private http: HttpClient,
+      private file: File
+  ) {}
+
+  get epoc(): Epoc {
+    return this._epoc;
+  }
+
+  set epoc(value: Epoc) {
+    this._epoc = value;
+    this.epocSubject$.next(value);
   }
 
   setRootFolder(rootFolder: string) {
-    if(!rootFolder){
-      localStorage.removeItem('rootFolder');
-      this.rootFolder = './assets/demo/';
-      return;
-    }
     localStorage.setItem('rootFolder', rootFolder);
     this.rootFolder = Capacitor.convertFileSrc(rootFolder);
   }
 
-  getEpoc(id?: string): Observable<Epoc> {
-    if (id || !this.initialized) {
-      const url = this.rootFolder + 'content.json';
-      this.http.get(url).subscribe((epoc) => {
-        this.epoc$.next(this.initCourseContent(epoc as Epoc));
-      }, () => {
-        // Backup support for iOS livereload (dev environment)
-        Filesystem.readFile({
-          path: '../Library/NoCloud/epoc/content.json',
-          directory: FilesystemDirectory.Data,
-          encoding: FilesystemEncoding.UTF8
-        }).then((result) => {
-          const epoc = JSON.parse(result.data);
-          this.epoc$.next(this.initCourseContent(epoc as Epoc));
-        });
+  getEpoc(id: string): Observable<Epoc> {
+    if (this._epoc && this._epoc.id === id) return this.epoc$;
+    this.setRootFolder(`${this.file.dataDirectory}epocs/${id}/`);
+    this.http.get<Epoc>(`${this.rootFolder}content.json`).subscribe((epoc) => {
+      this.epoc = this.initCourseContent(epoc);
+    }, () => {
+      // Backup support for iOS livereload (dev environment)
+      Filesystem.readFile({
+        path: `../Library/NoCloud/epocs/${id}/content.json`,
+        directory: FilesystemDirectory.Data,
+        encoding: FilesystemEncoding.UTF8
+      }).then((result) => {
+        const epoc = JSON.parse(result.data);
+        this.epoc = this.initCourseContent(epoc as Epoc);
       });
-    }
-    return this.epoc$.asObservable().pipe(distinctUntilChanged());
+    });
+    return this.epoc$;
   }
 
   /**

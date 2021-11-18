@@ -187,7 +187,7 @@
                   <h2 class="follow-up">À suivre :</h2>
                   <div class="next-chapter-image"
                        [routerLink]="'/epoc/play/'+epoc.id+'/'+nextChapterId"
-                       [ngStyle]="{'background-image': 'url(' + libraryService.rootFolder +  nextChapter.image + ')'}">
+                       [ngStyle]="{'background-image': 'url(' + epocService.rootFolder +  nextChapter.image + ')'}">
                   </div>
                   <p><b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter: 'Chapitre'}} {{chapterIndex + 2}} :</b> {{nextChapter.title}} </p>
                 </div>

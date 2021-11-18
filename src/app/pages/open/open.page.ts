@@ -87,11 +87,6 @@ export class OpenPage {
         });
     }
 
-    openDefault(){
-        this.epocService.setRootFolder(null);
-        this.router.navigateByUrl('/home/default');
-    }
-
     openEpoc(filename) {
         if (this.working) {
             return;

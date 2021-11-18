@@ -61,7 +61,7 @@
           <div class="tab" *ngIf="selectedTab === 2">
             <div class="epoc-author" *ngFor="let author of epoc.authors | values">
               <ion-text class="semibold">{{author.name}} : </ion-text>
-              <img *ngIf="author.image" [src]="author.image | safe: 'url' : libraryService.rootFolder"/>
+              <img *ngIf="author.image" [src]="author.image | safe: 'url'"/>
               <ion-text [innerHTML]="author.description"></ion-text>
             </div>
           </div>

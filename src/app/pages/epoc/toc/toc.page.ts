@@ -39,7 +39,7 @@ export class EpocTocPage implements OnInit {
     ngOnInit() {
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
-                this.epocService.getEpoc())
+                this.epocService.getEpoc(params.get('id')))
         );
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;

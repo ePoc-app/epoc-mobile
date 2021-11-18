@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {IonSelect, ToastController, Gesture, GestureController} from '@ionic/angular';
-import {LibraryService} from 'src/app/services/library.service';
+import {EpocService} from '../../services/epoc.service';
 
 @Component({
   selector: 'video-player',
@@ -45,7 +45,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     progress = 0;
 
     constructor(
-        public libraryService: LibraryService,
+        public epocService: EpocService,
         public toastController: ToastController,
         private gestureCtrl: GestureController
     ) {}
