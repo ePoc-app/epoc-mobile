@@ -2,6 +2,8 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
 import {ActionSheetController} from '@ionic/angular';
+import {OnboardingService} from '../../services/onboarding.service';
+import {OnboardingItem} from '../../classes/onboarding';
 
 @Component({
   selector: 'app-library',
@@ -11,11 +13,18 @@ import {ActionSheetController} from '@ionic/angular';
 export class LibraryPage implements OnInit {
 
   library: EpocLibrary[] | undefined;
+  onboarding: OnboardingItem[];
   epocProgresses : {[EpocId: string] : number} = {};
+
+  onboardingOptions = {
+    slidesPerView: 1,
+    spaceBetween: 16
+  }
 
   constructor(
       private ref: ChangeDetectorRef,
       public libraryService: LibraryService,
+      public onboardingService: OnboardingService,
       public actionSheetController: ActionSheetController,
   ) {}
 
@@ -25,6 +34,10 @@ export class LibraryPage implements OnInit {
       this.epocProgresses = epocProgresses;
       this.ref.detectChanges();
     });
+    this.onboardingService.onboarding$.subscribe((data => {
+      this.onboarding = data;
+      console.log(data)
+    }))
   }
 
   downloadEpoc(epoc: EpocLibrary) {
@@ -33,6 +46,10 @@ export class LibraryPage implements OnInit {
 
   deleteEpoc(epoc: EpocLibrary) {
     this.libraryService.deleteEpoc(epoc);
+  }
+
+  removeMessage(id) {
+    this.onboardingService.remove(id);
   }
 
   async presentActionSheet(epoc) {
