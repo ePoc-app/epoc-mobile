@@ -13,6 +13,17 @@
 </ion-header>
 
 <ion-content *ngIf="library">
+  <ion-slides class="onboarding" *ngIf="onboarding && onboarding.length" [options]="onboardingOptions" [pager]="onboarding.length > 1 ? 'true' : ''">
+    <ion-slide class="onboarding-item" [ngClass]="item.image ? 'with-image':''" *ngFor="let item of onboarding">
+      <div class="onboarding-item-image" *ngIf="item.image" [style]="'background-image:url('+item.image+')'"></div>
+      <div class="onboarding-item-title">{{item.title}}</div>
+      <div class="onboarding-item-text">{{item.text}}</div>
+      <a [routerLink]="item.link.url" *ngIf="item.link">{{item.link.text}}</a>
+      <div class="onboarding-item-close" (click)="removeMessage(item.id)">
+        <ion-icon name="close-outline" color="inria-lightgrey"></ion-icon>
+      </div>
+    </ion-slide>
+  </ion-slides>
   <div class="library-items">
     <div class="library-item" *ngFor="let epoc of library">
       <div class="library-item-image" [routerLink]="'/library/'+epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>

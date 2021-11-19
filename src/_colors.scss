@@ -8,6 +8,7 @@ $inria-correct-shade: #5EA51F;
 $inria-correct-tint: #EBF4E8;
 $inria-incorrect: #EB7575;
 $inria-certificate: #FFA029;
+$inria-lightgrey: #D3D7E0;
 
 :root {
   --ion-color-inria: #{$inria-red};
@@ -58,6 +59,13 @@ $inria-certificate: #FFA029;
   --ion-color-inria-incorrect-contrast-rgb: 255, 255, 255;
   --ion-color-inria-incorrect-shade: darken(#{$inria-incorrect}, 10%);
   --ion-color-inria-incorrect-tint: lighten(#{$inria-incorrect}, 10%);
+
+  --ion-color-inria-lightgrey: #{$inria-lightgrey};
+  --ion-color-inria-lightgrey-rgb : red(#{$inria-lightgrey}), green(#{$inria-lightgrey}), blue(#{$inria-lightgrey});
+  --ion-color-inria-lightgrey-contrast: #FFF;
+  --ion-color-inria-lightgrey-contrast-rgb: 255, 255, 255;
+  --ion-color-inria-lightgrey-shade: darken(#{$inria-lightgrey}, 10%);
+  --ion-color-inria-lightgrey-tint: lighten(#{$inria-lightgrey}, 10%);
 
   --vjs-theme-forest--primary: #364357 !important;
   --vjs-theme-forest--secondary: #81cbcb!important;
@@ -132,6 +140,15 @@ $inria-certificate: #FFA029;
   --ion-color-contrast-rgb: var(--ion-color-inria-incorrect-contrast-rgb);
   --ion-color-shade: var(--ion-color-inria-incorrect-shade);
   --ion-color-tint: var(--ion-color-inria-incorrect-tint);
+}
+
+.ion-color-inria-lightgrey {
+  --ion-color-base: var(--ion-color-inria-lightgrey);
+  --ion-color-base-rgb: var(--ion-color-inria-lightgrey-rgb);
+  --ion-color-contrast: var(--ion-color-inria-lightgrey-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-lightgrey-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-lightgrey-shade);
+  --ion-color-tint: var(--ion-color-inria-lightgrey-tint);
 }
 
 .ion-color-inria-certificate {
