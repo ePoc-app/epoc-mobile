@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable, Observer, ReplaySubject} from 'rxjs';
-import {Epoc, EpocLibrary} from '../classes/epoc';
-import {Capacitor, Filesystem, FilesystemDirectory, FilesystemEncoding} from '@capacitor/core';
-import {distinctUntilChanged} from 'rxjs/operators';
-import {Assessment, SimpleQuestion} from '../classes/contents/assessment';
-import {uid} from '../classes/types';
+import {Observable, ReplaySubject} from 'rxjs';
+import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
+import {Epoc} from 'src/app/classes/epoc';
+import {uid} from 'src/app/classes/types';
+import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {HttpClient} from '@angular/common/http';
 import {File} from '@ionic-native/file/ngx';
+const {Filesystem} = Plugins;
 
 @Injectable({
     providedIn: 'root'
