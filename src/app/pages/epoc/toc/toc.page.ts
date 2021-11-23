@@ -18,7 +18,6 @@ export class EpocTocPage implements OnInit {
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     reading: Reading;
-    detailedToc = false;
     chaptersFinished: Array<boolean> = [];
     assessmentDone: Array<boolean> = [];
 
