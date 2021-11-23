@@ -37,26 +37,25 @@ body{
   --epoc-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.334316), 0px 9px 11px rgba(0, 0, 0, 0.160737);
 }
 
-.home{
-  ion-toolbar {
-    padding: 0 1rem;
-    --padding-top:0;
-    --padding-bottom:0;
+
+ion-toolbar {
+  padding: 0 1rem;
+  --padding-top:0;
+  --padding-bottom:0;
+  --padding-start:0;
+  --padding-end:0;
+  --min-height:55px;
+  --border-color: white;
+  box-shadow: 0 6px 14px 0 rgba(218,222,234,0.51);
+  .icon-btn {
+    margin-left: 1rem;
     --padding-start:0;
     --padding-end:0;
-    --min-height:55px;
-    --border-color: white;
-    box-shadow: 0 6px 14px 0 rgba(218,222,234,0.51);
-    .icon-btn {
-      margin-left: 1rem;
-      --padding-start:0;
-      --padding-end:0;
-      --background: white;
-      --background-activated: white;
-      --box-shadow: none;
-      --color: var(--ion-color-inria);
-      --color-activated: var(--ion-color-inria-shade);
-    }
+    --background: white;
+    --background-activated: white;
+    --box-shadow: none;
+    --color: var(--ion-color-inria);
+    --color-activated: var(--ion-color-inria-shade);
   }
 
   .logo {
@@ -74,6 +73,19 @@ body{
       margin-left:20px;
       font-size: .8em;
     }
+  }
+
+  ion-back-button.back-button-has-icon-only{
+    font-size: 1rem;
+    width: 32px;
+  }
+
+  .title-default{
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding-inline-start: 35px;
+    padding-inline-end: 35px;
+    padding-top: .2em;
   }
 }
 
@@ -205,7 +217,7 @@ video {
 
 
 // Reader
-.reader .page-content, .about-content-wrapper, .preview-settings, .transcript, .explanation-text{
+.reader .page-content, .about-content-wrapper, .preview-settings, .transcript, .explanation-text, .html-text{
   color: var(--ion-color-inria-blue);
 
   video{
@@ -233,8 +245,7 @@ video {
   }
 
   p, ul, ol, table, pre, blockquote, video {
-    margin: 1em 0 1em 0;
-    line-height: 1.5;
+    margin: 0 0 1em 0;
   }
 
   ul, ol{
@@ -247,7 +258,6 @@ video {
 
   figure {
     margin: 1em 0 1.5em 0;
-    line-height: 1.4;
     color: var(--ion-color-inria-blue);
 
     img{

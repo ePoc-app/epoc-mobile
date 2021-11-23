@@ -13,7 +13,7 @@ export class EpocOverviewPage implements OnInit {
     library: EpocLibrary[] | undefined;
     epocProgresses : {[EpocId: string] : number} = {};
     epoc: EpocLibrary;
-    selectedTab = 0;
+    selectedTab = 2;
 
     constructor(
         private ref: ChangeDetectorRef,
