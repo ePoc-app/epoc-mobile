@@ -29,42 +29,28 @@
       }
     }
 
-    &:before {
-      content: '';
+    .video-play-overlay{
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: calc(100% - 40px);
+      height: 100%;
       cursor: pointer;
-      background: transparent;
+      background: rgba(var(--ion-color-inria-blue-rgb), 0.2);
       z-index: 1;
-    }
+      font-size: 4rem;
 
-    &:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 74px;
-      cursor: pointer;
-      background: transparent;
-      box-sizing: border-box;
-      border: 0 solid transparent;
-      border-color: transparent transparent transparent rgba(32, 32, 32, 0.7);
-      border-style: solid;
-      border-width: 37px 0 37px 60px;
-      transform: translate(-50%, -50%);
-      transition: 100ms all ease;
+      ion-icon{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%, -50%);
+      }
     }
 
     &.playing {
-      &:after {
-        border-style: double;
-        border-width: 0px 0 0px 60px;
-        animation: fadeOut .5s forwards;
-        animation-delay: .5s;
+      .video-play-overlay{
+        opacity: 0;
       }
     }
 
@@ -73,6 +59,7 @@
       bottom: 0;
       right:0;
       padding: 5px;
+      z-index: 2;
 
       ion-icon{
         font-size: 20px;
@@ -154,6 +141,7 @@
     left:0;
     width:100%;
     height: 10px;
+    z-index: 2;
 
 
     &:before{
@@ -164,7 +152,7 @@
       left:0;
       width:100%;
       height: 3px;
-      background: var(--ion-color-light-shade);
+      background: rgba(var(--ion-color-inria-light-rgb), 0.5);
     }
 
     &-progress{
@@ -172,7 +160,7 @@
       bottom: 0;
       left:0;
       height: 3px;
-      background: var(--ion-color-primary);
+      background: var(--ion-color-inria);
     }
 
     &-cursor{
@@ -182,6 +170,7 @@
       z-index: 10;
       transform: translate(-50%, -50%);
       transform-origin: center center;
+      opacity: 0;
 
       &:before{
         content:'';
