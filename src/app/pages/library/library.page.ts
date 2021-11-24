@@ -36,7 +36,6 @@ export class LibraryPage implements OnInit {
     });
     this.onboardingService.onboarding$.subscribe((data => {
       this.onboarding = data;
-      console.log(data)
     }))
   }
 
