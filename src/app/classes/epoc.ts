@@ -45,6 +45,7 @@ export class Chapter {
     assessmentCount?: number;
     initializedContents: Content[];
     assessments?: uid[];
+    chapterOpened?: boolean;
     assessmentDone?: boolean;
 }
 

@@ -1,7 +1,7 @@
-<ion-header #header>
+<ion-header mode="ios" #header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button text="Retour" color="inria-blue"></ion-back-button>
+            <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
         </ion-buttons>
         <ion-title>Tables des matières</ion-title>
     </ion-toolbar>
@@ -11,17 +11,47 @@
     <div class="wrapper">
         <div class="toc-header">
             <img [src]="(epocService.rootFolder +  epoc.image) | safe: 'url'">
-            <div class="toc-header-title">{{epoc.title}}</div>
+            <div class="toc-header-title">{{epoc.title}} {{epoc.id}}</div>
         </div>
         <div class="toc-content">
-            <div class="toc-chapter" *ngFor="let chapter of epoc.chapters | denormalize;let index = index" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id">
-                <div class="toc-chapter-progress">
-
+            <div class="toc-chapter" *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
+                <div class="toc-chapter-summary">
+                    <div class="toc-chapter-progress" [ngClass]="{'done':chapter.assessmentDone && chapter.chapterOpened}">
+                        <ion-icon name="checkmark-outline" *ngIf="chapter.assessmentDone && chapter.chapterOpened"></ion-icon>
+                        <ion-icon name="time-outline" *ngIf="!chapter.assessmentDone || !chapter.chapterOpened"></ion-icon>
+                    </div>
+                    <div class="toc-chapter-info">
+                        <div class="toc-chapter-info-title" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id">
+                            <div class="toc-chapter-info-label">
+                                {{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}
+                            </div>
+                            {{chapter.title}}
+                        </div>
+                        <div class="toc-chapter-info-details" (click)="toggleDetails(chapter)">
+                            <ng-container *ngIf="chapter.opened">Voir moins...</ng-container>
+                            <ng-container *ngIf="!chapter.opened">Voir plus...</ng-container>
+                        </div>
+                    </div>
+                    <div class="toc-chapter-open" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id">
+                        <ion-icon name="chevron-forward-outline" color="inria"></ion-icon>
+                    </div>
                 </div>
-                <div class="toc-chapter-info">
-                    <div class="toc-chapter-info-label">{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}</div>
-                    <div class="toc-chapter-info-title">{{chapter.title}}</div>
-                    <div class="toc-chapter-info-details"></div>
+                <div class="toc-chapter-details" [ngClass]="{'opened': chapter.opened}">
+                    <ng-container *ngFor="let content of chapter.contents | denormalize:epoc.contents;">
+                        <div class="toc-chapter-details-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
+                            <div class="toc-chapter-details-item-icon">
+                                <ion-icon *ngIf="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
+                                <ion-icon *ngIf="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
+                                <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
+                                <ion-icon *ngIf="content.type === 'simple-question' && !+epoc.questions[content.question].score"
+                                          name="bulb-outline" slot="start"></ion-icon>
+                                <ion-icon *ngIf="content.type === 'simple-question' && +epoc.questions[content.question].score"
+                                          name="checkbox-outline" slot="start"></ion-icon>
+                                <ion-icon *ngIf="content.type === 'choice'" name="git-branch-outline" slot="start"></ion-icon>
+                            </div>
+                            <div>{{content.title}}</div>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
         </div>

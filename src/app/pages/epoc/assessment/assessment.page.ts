@@ -81,7 +81,6 @@ export class EpocAssessmentPage implements OnInit {
             this.scoreMax = this.epocService.calcScoreTotal(this.epoc, this.assessment.questions);
             this.questionsSuccessed = new Array(this.questions.length);
             this.initQuestion();
-            this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
         });
     }
 
@@ -217,7 +216,6 @@ export class EpocAssessmentPage implements OnInit {
         if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
-            this.assessmentIsDone();
         }
         this.questionSlides.slideNext();
     }
@@ -294,26 +292,6 @@ export class EpocAssessmentPage implements OnInit {
 
     resume() {
         this.router.navigateByUrl(`/epoc/play/${this.epoc.id}/${this.assessment.chapterId}/content/${this.assessmentId}/next`);
-    }
-
-    assessmentIsDone() {
-        if (JSON.parse(localStorage.getItem('assessmentProgression'))) {
-            this.assessmentDone = JSON.parse(localStorage.getItem('assessmentProgression'));
-        }
-        let index;
-        DenormalizePipe.prototype.transform(this.epoc.chapters).forEach((chapter) => {
-            if (chapter.assessmentCount === 0) {
-                return;
-            } else {
-                chapter.initializedContents.forEach((content) => {
-                    if (content.type === 'assessment' && content.id === this.assessmentId) {
-                        index = DenormalizePipe.prototype.transform(this.epoc.chapters).findIndex(chap => chap.id === chapter.id);
-                    }
-                });
-                this.assessmentDone[index] = true;
-            }
-        });
-        localStorage.setItem('assessmentProgression', JSON.stringify(this.assessmentDone));
     }
 
     flip() {

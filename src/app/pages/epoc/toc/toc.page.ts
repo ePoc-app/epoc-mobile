@@ -18,8 +18,6 @@ export class EpocTocPage implements OnInit {
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     reading: Reading;
-    chaptersFinished: Array<boolean> = [];
-    assessmentDone: Array<boolean> = [];
 
     sliderOptions = {
         slidesPerView: 1.2,
@@ -61,7 +59,15 @@ export class EpocTocPage implements OnInit {
 
     setProgress () {
         for (const [chapterId, chapter] of Object.entries(this.epoc.chapters)) {
-            chapter.assessmentDone = chapter.assessments.every(uid => this.reading.assessments.findIndex(assessment => assessment.id === uid) !== -1);
+            chapter.assessmentDone = chapter.assessments.every(uid => {
+                return this.reading.assessments.findIndex(assessment => assessment.id === uid) !== -1
+            });
+            console.log(this.reading);
+            chapter.chapterOpened = this.reading.chaptersProgress.findIndex(chapterProgress => chapterProgress.id === chapterId) !== -1
         }
+    }
+
+    toggleDetails (chapter) {
+        chapter.opened = !chapter.opened;
     }
 }
