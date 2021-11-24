@@ -32,8 +32,6 @@ export class EpocPlayerPage implements OnInit {
     nextChapterId: uid;
     pagesCount: number;
     reading: Reading;
-    chaptersFinished: Array<boolean> = [];
-    assessmentDone: Array<boolean> = [];
 
     // Reader
     dataInitialized = false;
@@ -93,26 +91,6 @@ export class EpocPlayerPage implements OnInit {
                 this.nextChapterId = Object.keys(epoc.chapters)[this.chapterIndex + 1]
                 this.nextChapter = epoc.chapters[this.nextChapterId];
             }
-            // Initialize the array chaptersFinished
-            if (!this.chaptersFinished) {
-                this.chaptersFinished = [];
-                DenormalizePipe.prototype.transform(this.epoc.chapters).forEach(() => {
-                    this.chaptersFinished.push(false);
-                })
-                localStorage.setItem('chapterProgression', JSON.stringify(this.chaptersFinished));
-            }
-            // Initialize the array assessmentDone
-            if (!JSON.parse(localStorage.getItem('assessmentProgression'))) {
-                this.assessmentDone = [];
-                DenormalizePipe.prototype.transform(this.epoc.chapters).forEach((chapter) => {
-                    if (chapter.assessmentCount !== 0) {
-                        this.assessmentDone.push(false);
-                    } else {
-                        this.assessmentDone.push(true);
-                    }
-                })
-                localStorage.setItem('assessmentProgression', JSON.stringify(this.assessmentDone));
-            }
         });
 
         combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
@@ -167,10 +145,7 @@ export class EpocPlayerPage implements OnInit {
             this.currentPage = index;
             this.countPages();
             this.progress = index / this.pagesCount;
-            // Quand on arrive sur la dernière page de chaque chapitre
-            if (index === this.pagesCount) {
-                this.updateToc(this.chapter);
-            }
+            this.readingStore.saveChapterProgress(this.epoc.id, this.chapterId, 'todo');
         });
     }
 
@@ -309,13 +284,5 @@ export class EpocPlayerPage implements OnInit {
 
     ionViewWillLeave() {
         this.stopAllMedia();
-    }
-
-    updateToc(chapter) {
-        if (JSON.parse(localStorage.getItem('chapterProgression'))) {
-            this.chaptersFinished = JSON.parse(localStorage.getItem('chapterProgression'));
-        }
-        this.chaptersFinished[DenormalizePipe.prototype.transform(this.epoc.chapters).indexOf(chapter)] = true;
-        localStorage.setItem('chapterProgression', JSON.stringify(this.chaptersFinished));
     }
 }

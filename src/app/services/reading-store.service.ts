@@ -40,6 +40,7 @@ export class ReadingStoreService {
                 {
                     epocId,
                     progress: 0,
+                    chaptersProgress: [],
                     assessments: [],
                     bookmarks: [],
                     choices: [],
@@ -76,6 +77,23 @@ export class ReadingStoreService {
                 id: assessmentId,
                 score,
                 responses
+            });
+        }
+
+        this.saveReadings();
+    }
+
+    saveChapterProgress(epocId: string, chapterId: string, contentId: string) {
+        const index = this.readings.findIndex(reading => reading.epocId === epocId);
+
+        const chapterIndex = this.readings[index].chaptersProgress.findIndex(chapter => chapter.id === chapterId);
+
+        if (chapterIndex !== -1 && this.readings[index].chaptersProgress[chapterIndex].contents.indexOf(contentId) === -1) {
+            this.readings[index].chaptersProgress[chapterIndex].contents.push(contentId)
+        } else {
+            this.readings[index].chaptersProgress.push({
+                id: chapterId,
+                contents: [contentId]
             });
         }
 
@@ -121,6 +139,7 @@ export class ReadingStoreService {
     resetAll() {
         this.readings = this.readings.map((reading) => {
             reading.progress = 0;
+            reading.chaptersProgress = [];
             reading.assessments = [];
             reading.bookmarks = [];
             reading.choices = [];

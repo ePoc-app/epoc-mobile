@@ -54,8 +54,8 @@ $inria-lightgrey: #D3D7E0;
   --ion-color-inria-correct-rgb: #{red($inria-correct)}, #{green($inria-correct)}, #{blue($inria-correct)};
   --ion-color-inria-correct-contrast: #FFF;
   --ion-color-inria-correct-contrast-rgb: 255, 255, 255;
-  --ion-color-inria-correct-shade: #{$inria-correct}-shade;
-  --ion-color-inria-correct-tint: #{$inria-correct}-tint;
+  --ion-color-inria-correct-shade: #{$inria-correct-shade};
+  --ion-color-inria-correct-tint: #{$inria-correct-tint};
 
   --ion-color-inria-incorrect: #{$inria-incorrect};
   --ion-color-inria-incorrect-rgb : #{red($inria-incorrect)}, #{green($inria-incorrect)}, #{blue($inria-incorrect)};
