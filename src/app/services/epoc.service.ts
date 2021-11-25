@@ -41,7 +41,7 @@ export class EpocService {
 
   getEpoc(id: string): Observable<Epoc> {
     if (this._epoc && this._epoc.id === id) return this.epoc$;
-    this.setRootFolder(`${this.file.dataDirectory}epocs/${id}/`);
+    this.setRootFolder(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}epocs/${id}/`);
     this.http.get<Epoc>(`${this.rootFolder}content.json`).subscribe((epoc) => {
       this.epoc = this.initCourseContent(epoc);
     }, () => {
