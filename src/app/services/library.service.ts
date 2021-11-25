@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, ReplaySubject} from 'rxjs';
+import {forkJoin, Observable, ReplaySubject, timer} from 'rxjs';
 import {filter, startWith} from 'rxjs/operators';
 import {EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
@@ -107,5 +107,14 @@ export class LibraryService {
         const rm = this.fileService.deleteFolder(`epocs/${epoc.id}`);
         rm.subscribe(() => {}, () => {}, () => { this.updateEpocState(epoc.id); });
         return rm;
+    }
+
+    deleteAll(): Observable<any> {
+        const deletions$ = [];
+        this.library.forEach(item => {
+            if(!item.downloaded) return;
+            deletions$.push(this.deleteEpoc(item));
+        })
+        return forkJoin([timer(100), ...deletions$]);
     }
 }

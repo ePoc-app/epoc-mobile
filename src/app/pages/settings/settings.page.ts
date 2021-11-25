@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Settings} from 'src/app/classes/settings';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ToastController} from '@ionic/angular';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {AuthService} from 'src/app/services/auth.service';
 import {Router} from '@angular/router';
@@ -9,6 +9,7 @@ import {User} from 'src/app/classes/user';
 import {mode} from 'src/environments/environment.mode';
 import {Plugins} from '@capacitor/core';
 import {DeviceInfo} from '@capacitor/core/dist/esm/core-plugin-definitions';
+import {LibraryService} from '../../services/library.service';
 
 const {Device} = Plugins;
 
@@ -22,7 +23,7 @@ export class SettingsPage implements OnInit {
     settings: Settings = {
         font: 'Inria Sans',
         fontSize: 16,
-        lineHeight: 1.4,
+        lineHeight: 1.5,
         darkMode: false
     };
 
@@ -33,7 +34,9 @@ export class SettingsPage implements OnInit {
     constructor(
         private settingsStore: SettingsStoreService,
         private readingStore: ReadingStoreService,
+        private libraryService: LibraryService,
         public alertController: AlertController,
+        public toastController: ToastController,
         private router: Router,
         private auth: AuthService
     ) {
@@ -69,8 +72,8 @@ export class SettingsPage implements OnInit {
 
     async deleteData() {
         const alert = await this.alertController.create({
-            header: 'Confirmation',
-            message: 'Cette action effacera <strong>toutes vos données</strong> de l\'application (progression, score, exercices)',
+            header: 'Êtes vous sûr ?',
+            message: 'Cette action effacera <strong>toutes vos données</strong> de l\'application <br/><small>(ePocs, progression, exercices, préférences, etc.)</small>',
             buttons: [
                 {
                     text: 'Annuler',
@@ -80,12 +83,21 @@ export class SettingsPage implements OnInit {
                     text: 'Confirmer',
                     handler: () => {
                         this.readingStore.resetAll();
+                        this.libraryService.deleteAll().subscribe(() => this.presentToast());
                     }
                 }
             ]
         });
 
         await alert.present();
+    }
+
+    async presentToast() {
+        const toast = await this.toastController.create({
+            message: 'Les données ont bien été supprimées',
+            duration: 2000
+        });
+        toast.present();
     }
 
     logout() {
