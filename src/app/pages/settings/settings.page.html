@@ -1,101 +1,101 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Retour" color="inria-blue"></ion-back-button>
+      <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
     </ion-buttons>
     <ion-title>Paramètres</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!--<ion-list>
-    <ion-list-header>
-      Affichage
-    </ion-list-header>
-    <ion-item>
-      <ion-label>Police</ion-label>
-      <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
-        <ion-select-option value="Inria Sans">Sans serif</ion-select-option>
-        <ion-select-option value="Inria Serif">Serif</ion-select-option>
-        <ion-select-option value="open-dyslexic">Open Dyslexic</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-range min="8" max="25" step="1" [(ngModel)]="settings.fontSize" (ngModelChange)="settingsChanged()" snaps>
-        <ion-icon slot="start" size="small" src="assets/icon/text-size.svg"></ion-icon>
-        <ion-icon slot="end" src="assets/icon/text-size.svg"></ion-icon>
-      </ion-range>
-    </ion-item>
-    <ion-item>
-      <ion-range min="1" max="2" step="0.1" [(ngModel)]="settings.lineHeight" (ngModelChange)="settingsChanged()" snaps>
-        <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
-        <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
-      </ion-range>
-    </ion-item>
-    <ion-item>
-      <ion-label>Mode sombre</ion-label>
-      <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>
-      Prévisualisation
-    </ion-list-header>
-    <ion-item>
-      <ion-text class="preview-settings" [ngStyle]="getStyle()">
-        <h4>Titre</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias consequatur,
-          cumque iusto modi molestiae nihil quibusdam temporibus voluptatem?
-        </p>
-      </ion-text>
-    </ion-item>
-  </ion-list>-->
-  <ion-list *ngIf="user">
-    <ion-list-header>
-      Compte
-    </ion-list-header>
-    <ion-item>
-      <ion-label>Email : {{user.email}}</ion-label>
-      <ion-button size="default" color="inria-blue" (click)="logout()">
-        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
-    <ion-item>
-      <ion-label>Name : {{user.firstname}} {{user.lastname}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Username : {{user.username}}</ion-label>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>
-      Données ePocs
-    </ion-list-header>
-    <ion-item *ngIf="mode.ill">
-      <ion-label>Ouvrir un autre ePoc</ion-label>
-      <ion-button size="default" color="inria-blue" routerLink="/open">
-        <ion-icon slot="icon-only" name="folder-open"></ion-icon>
-      </ion-button>
-    </ion-item>
-    <ion-item>
-      <ion-label>Supprimer les données (quiz, activités, progression, etc)</ion-label>
-      <ion-button size="default" color="danger" (click)="deleteData()">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
-  <ion-list *ngIf="info && info.appVersion">
-    <ion-list-header>
-      Informations Applications
-    </ion-list-header>
-    <ion-item>
-      <ion-label>Version</ion-label>
-      <ion-note slot="end">v{{info.appVersion}}</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label>Build version</ion-label>
-      <ion-note slot="end">{{info.appBuild}}</ion-note>
-    </ion-item>
-  </ion-list>
+  <div class="wrapper">
+    <ion-list>
+      <ion-list-header>
+        Affichage
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Police</ion-label>
+        <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
+          <ion-select-option value="Inria Sans">Sans serif</ion-select-option>
+          <ion-select-option value="Inria Serif">Serif</ion-select-option>
+          <ion-select-option value="open-dyslexic">Open Dyslexic</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Taille</ion-label>
+        <ion-range min="12" max="20" step="4" [(ngModel)]="settings.fontSize" (ngModelChange)="settingsChanged()" snaps>
+          <ion-icon slot="start" size="small" src="assets/icon/text-size.svg"></ion-icon>
+          <ion-icon slot="end" src="assets/icon/text-size.svg"></ion-icon>
+        </ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label>Interligne</ion-label>
+        <ion-range min="1" max="2" step="0.5" [(ngModel)]="settings.lineHeight" (ngModelChange)="settingsChanged()" snaps>
+          <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
+          <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
+        </ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mode sombre</ion-label>
+        <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
+      </ion-item>
+      <ion-list-header class="preview">
+        Prévisualisation
+      </ion-list-header>
+      <ion-item>
+        <ion-text class="preview-settings" [ngStyle]="getStyle()">
+          <h4>Titre</h4>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias consequatur,
+            cumque iusto modi molestiae nihil quibusdam temporibus voluptatem?
+          </p>
+        </ion-text>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="user">
+      <ion-list-header>
+        Compte
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Email : {{user.email}}</ion-label>
+        <ion-button size="default" color="inria-blue" (click)="logout()">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-label>Name : {{user.firstname}} {{user.lastname}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Username : {{user.username}}</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="info && info.appVersion">
+      <ion-list-header>
+        Informations Applications
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Version</ion-label>
+        <ion-note slot="end">v{{info.appVersion}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Build version</ion-label>
+        <ion-note slot="end">{{info.appBuild}}</ion-note>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>
+        Données ePocs
+      </ion-list-header>
+      <ion-item *ngIf="mode.ill">
+        <ion-label>Ouvrir un autre ePoc</ion-label>
+        <ion-button size="default" color="inria-blue" routerLink="/open">
+          <ion-icon slot="icon-only" name="folder-open"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <div class="big-button" (click)="deleteData()">
+          <div class="big-button-label"><ion-icon name="trash"></ion-icon> Supprimer les données</div>
+          <div class="big-button-sublabel">ePocs téléchargés, quiz, progression, etc</div>
+      </div>
+    </ion-list>
+  </div>
 </ion-content>

@@ -1,0 +1,119 @@
+.wrapper{
+  padding: 1rem;
+}
+
+ion-list{
+  margin-bottom: 1rem;
+}
+
+ion-list-header{
+  min-height: 0;
+  margin: 0 0 1rem 0;
+  padding: 0 0 .5rem 0;
+  font-size: 1rem;
+  color: var(--ion-color-inria);
+  border-bottom: 1px solid var(--ion-color-inria-light);
+
+  &.preview{
+    padding: 0;
+    margin-top: 1.5rem;
+    color: var(--ion-color-inria-grey);
+    border: none;
+  }
+}
+
+ion-item{
+  margin-bottom: .5rem;
+  padding: 1rem;
+  background: var(--ion-color-inria-light);
+  border-radius: .5rem;
+  --min-height:0;
+  --background: none;
+  --border-style: none;
+  --padding-top: .2em;
+  --padding-start:0;
+  --padding-end:0;
+  --inner-padding-end:0;
+
+  ion-label{
+    margin:0;
+  }
+
+  ion-select{
+    padding: 0 5px 0 0;
+  }
+
+  ion-range{
+    padding: 0;
+    overflow: auto;
+    --height: 1.75rem;
+    --knob-size: 1.5rem;
+    --knob-box-shadow: none;
+    --bar-background: var(--ion-color-inria-lightgrey);
+    --ion-color-primary: var(--ion-color-inria-lightgrey);
+
+    &::part(tick), &::part(tick-active){
+      top:50%;
+      transform: translateY(-50%);
+      background: var(--ion-color-inria-lightgrey);
+    }
+
+    &::part(knob){
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    }
+
+    ion-icon{
+      margin-inline: .5rem;
+      color: var(--ion-color-inria-grey);
+
+      & + ion-icon{
+        margin-inline: .5rem 0;
+      }
+    }
+  }
+
+  ion-toggle{
+    --background-checked: var(--ion-color-inria-grey);
+  }
+}
+
+.preview-settings{
+  *:first-child{
+    margin-top: 0;
+  }
+
+  *:last-child{
+    margin-bottom: 0;
+  }
+}
+
+.big-button{
+
+}
+
+.big-button{
+  margin-bottom: .5rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  color: var(--ion-color-inria);
+  border: 1px solid var(--ion-color-inria);
+  background: none;
+  text-align: center;
+
+  &-label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    ion-icon{
+      margin-right: .5rem;
+      padding-bottom: .3em;
+    }
+  }
+
+  &-sublabel{
+    font-size: 0.875rem;
+  }
+}
