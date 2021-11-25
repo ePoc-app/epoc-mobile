@@ -1,74 +1,60 @@
 <ion-header mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Retour" color="inria-blue"></ion-back-button>
+      <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
     </ion-buttons>
+    <ion-title>A propos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-toolbar>
-    <div class="logo" slot="start">
-      <ion-img src="assets/img/ePoc.svg"></ion-img>
-    </div>
-    <div class="logo" slot="end">
-      <ion-img src="assets/img/logo-ill.png"></ion-img>
-    </div>
-  </ion-toolbar>
   <div class="about-content-wrapper">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <h4>L'application ePoc</h4>
-          <p>
-            ePoc (Electronic Pocket Open Cours) est une application de formation numérique pour mobile.
-            Elle a été développée au sein du <a href="https://learninglab.inria.fr" target="_blank" title="Site du Learning Lab Inria">Learning Lab Inria</a>.
-          </p>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><h4>Auteurs</h4></ion-col>
-      </ion-row>
-      <ion-row class="authors">
-        <ion-col size="6">
+    <div class="about-header">
+      <div class="logo" slot="start">
+        <ion-img src="assets/img/ePoc.svg"></ion-img>
+      </div>
+      <div class="logo" slot="end">
+        <ion-img src="assets/img/logo-ill.png"></ion-img>
+      </div>
+    </div>
+    <div class="about-text">
+      <h4>L'application ePoc</h4>
+      <p>
+        ePoc (Electronic Pocket Open Cours) est une application de formation numérique pour mobile.
+        Elle a été développée au sein du <a href="https://learninglab.inria.fr" target="_blank" title="Site du Learning Lab Inria">Learning Lab Inria</a>.
+      </p>
+    </div>
+    <div class="about-data">
+      <h4>Les données personnelles</h4>
+      <p>Aucune donnée personnelle n'est collectée.</p>
+    </div>
+    <div class="about-authors">
+      <h4>Les auteurs</h4>
+      <div class="about-author">
           <img src="/assets/team/benoit.jpg" />
           <p>
-            <b>Benoit Rospars</b><br/>
-            Développeur<br/>
-            Inria Learning Lab
+            <b>Benoit Rospars</b>
+            Développeur Inria Learning Lab
           </p>
-        </ion-col>
-        <ion-col size="6">
+      </div>
+      <div class="about-author">
           <img src="/assets/team/jean-marc.jpg" />
           <p>
-            <b>Jean-Marc Hasenfratz</b><br/>
-            Responsable<br/>
-            Inria Learning Lab
+            <b>Jean-Marc Hasenfratz</b>
+            Responsable Inria Learning Lab
           </p>
-        </ion-col>
-        <ion-col size="6" offset="3">
+      </div>
+      <div class="about-author">
           <img src="/assets/team/tatiana.jpg" />
           <p>
-            <b>Tatiana Khomenko</b><br/>
-            Ingénieure pédagogique<br/>
-            Inria Learning Lab
+            <b>Tatiana Khomenko</b>
+            Ingénieure pédagogique Inria Learning Lab
           </p>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col><h4>Contact</h4></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <a href="mailto:ill-epoc-contact@inria.fr" title="Contact Inria Learning Lab">ill-ePoc-contact@inria.fr</a>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <h4>Données personnelles</h4>
-          <p>Aucune donnée personnelle n'est collectée.</p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+      </div>
+    </div>
+    <div class="about-contact">
+      <h4>Contact</h4>
+      <a href="mailto:ill-epoc-contact@inria.fr" title="Contact Inria Learning Lab">ill-ePoc-contact@inria.fr</a>
+    </div>
   </div>
 </ion-content>
