@@ -1,0 +1,34 @@
+<app-card class="chapter-info">
+  <div class="title-container">
+    <div class="title-icon">
+      <ion-icon name="school-outline"></ion-icon>
+    </div>
+    <h5 class="title">
+      {{chapter.title}}
+    </h5>
+  </div>
+  <div class="chapter-specs">
+    <div class="chapter-spec">
+      <div class="chapter-spec-icon"><ion-icon name="time-outline"></ion-icon></div>
+      <div class="chapter-spec-value">{{chapter.time}} min</div>
+    </div>
+    <div class="chapter-spec">
+      <div class="chapter-spec-icon"><ion-icon name="play-circle-outline"></ion-icon></div>
+      <div class="chapter-spec-value">{{chapter.videoCount}} {{chapter.videoCount > 1 ? 'videos':'video'}}</div>
+    </div>
+    <div class="chapter-spec">
+      <div class="chapter-spec-icon"><ion-icon name="cube-outline"></ion-icon></div>
+      <div class="chapter-spec-value">{{chapter.assessmentCount}} {{chapter.assessmentCount > 1 ? 'activités':'activité'}}</div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="chapter.objectives">
+    <h4 class="chapter-objectives-label">{{chapter.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</h4>
+    <div class="chapter-objectives">
+      <div class="chapter-objective" *ngFor="let objective of chapter.objectives">
+        <div class="chapter-objective-icon"><ion-icon name="checkmark-outline"></ion-icon></div>
+        <ion-text>{{objective}}</ion-text>
+      </div>
+    </div>
+  </ng-container>
+</app-card>
