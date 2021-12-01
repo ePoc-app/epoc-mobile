@@ -12,6 +12,8 @@
 }
 
 .reader{
+  position: absolute;
+  top: var(--ion-safe-area-top);
   height: calc(100% - var(--ion-safe-area-top));
   width: 100%;
   opacity: 1;
@@ -25,6 +27,7 @@
     position: absolute;
     height:100%;
     width: 100%;
+    overflow: hidden;
   }
 
   ion-slide{

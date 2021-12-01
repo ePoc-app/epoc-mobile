@@ -25,6 +25,7 @@ export class EpocPlayerPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
+    chapterLabel: string;
     chapterId: uid;
     chapterIndex: number;
     chapter: Chapter;
@@ -86,10 +87,12 @@ export class EpocPlayerPage implements OnInit {
             this.chapterIndex = Object.keys(epoc.chapters).indexOf(this.chapterId);
             this.chapter = epoc.chapters[this.chapterId];
             this.assessments = epoc.assessments;
+            this.chapterLabel = epoc.parameters.chapterParameter.toLowerCase() || 'chapitre';
 
             if (this.chapterIndex < Object.entries(epoc.chapters).length - 1) {
                 this.nextChapterId = Object.keys(epoc.chapters)[this.chapterIndex + 1]
                 this.nextChapter = epoc.chapters[this.nextChapterId];
+                this.nextChapter.id = this.nextChapterId;
             }
         });
 
