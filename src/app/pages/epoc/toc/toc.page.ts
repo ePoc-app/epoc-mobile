@@ -62,7 +62,6 @@ export class EpocTocPage implements OnInit {
             chapter.assessmentDone = chapter.assessments.every(uid => {
                 return this.reading.assessments.findIndex(assessment => assessment.id === uid) !== -1
             });
-            console.log(this.reading);
             chapter.chapterOpened = this.reading.chaptersProgress.findIndex(chapterProgress => chapterProgress.id === chapterId) !== -1
         }
     }
