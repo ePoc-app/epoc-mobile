@@ -8,21 +8,15 @@
   </ion-button>
 </ng-container>
 <ng-container *ngIf="!nextChapter">
-  <div class="custom-card-content">
-    <ion-icon name="checkmark-done-circle-outline" color="success" class="end-icon"></ion-icon>
-    <h2 class="follow-up">C'est terminé !</h2>
-    <p>Bravo, vous avez atteint la fin de la formation.</p>
-    <p>Pour obtenir l'attestation, consultez la page des scores.</p>
-    <p>Ou retournez à la table des matières pour rejouer un <span>{{chapterLabel}}</span>.</p>
-  </div>
-  <div class="custom-card-footer">
-    <ion-button color="medium" expand="block" [routerLink]="'/epoc/toc/'+epoc.id">
-      <ion-icon name="list" slot="start"></ion-icon>
-      Table des matières
-    </ion-button>
-    <ion-button expand="block" [routerLink]="'/epoc/score/'+epoc.id">
-      <ion-icon name="podium" slot="start"></ion-icon>
-      Page des scores
-    </ion-button>
-  </div>
+  <p>
+    Bravo, vous avez atteint la fin de la formation.<br/>
+    Pour obtenir l'attestation, consultez la page des scores.<br/>
+    Ou retournez à la table des matières pour rejouer un <span>{{chapterLabel}}</span>.
+  </p>
+  <ion-button expand="block" size="large" color="inria" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
+    Table des matières
+  </ion-button>
+  <ion-button expand="block" size="large" color="inria" [routerLink]="'/epoc/score/'+epoc.id">
+    Page des scores
+  </ion-button>
 </ng-container>
