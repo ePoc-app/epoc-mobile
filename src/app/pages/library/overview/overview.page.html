@@ -48,7 +48,7 @@
         <span>Résumé</span>
       </div>
       <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
-        <span>{{epoc.authors.length > 1 ? 'Auteurs' : 'Auteur'}}</span>
+        <span>{{(epoc.authors|values).length > 1 ? 'Auteurs' : 'Auteur'}}</span>
       </div>
     </div>
     <div class="tabs">
