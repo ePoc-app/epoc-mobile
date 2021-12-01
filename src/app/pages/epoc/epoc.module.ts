@@ -14,6 +14,7 @@ import {EpocBookmarksPage} from './bookmarks/bookmarks.page';
 import {TranscriptModalPage} from './player/contents/transcript-modal/transcript-modal.page';
 import {SimpleQuestionComponent} from './player/contents/simple-question/simple-question.component';
 import {CourseChoiceComponent} from './player/contents/course-choice/course-choice.component';
+import {ChapterInfoComponent} from './player/contents/chapter-info/chapter-info.component';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import {CourseChoiceComponent} from './player/contents/course-choice/course-choi
         EpocBookmarksPage,
         TranscriptModalPage,
         SimpleQuestionComponent,
-        CourseChoiceComponent
+        CourseChoiceComponent,
+        ChapterInfoComponent
     ],
     entryComponents: [TranscriptModalPage]
 })

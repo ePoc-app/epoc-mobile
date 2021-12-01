@@ -23,49 +23,7 @@
     <ng-container *ngIf="dataInitialized">
       <ion-slides #readerSlides [options]="slidesOptions" (ionSlideWillChange)="onSlideChange()" class="reader-slider">
         <ion-slide>
-          <div class="page-wrapper">
-            <div class="page-content page-content-chapter">
-              <ion-card class="chapter-container">
-                <ion-card-content>
-                  <div class="title-wrapper">
-                    <div class="title-container">
-                      <h3 class="number">{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{chapterIndex + 1}} :</h3>
-                      <h5 class="title">
-                        {{chapter.title}}
-                      </h5>
-                    </div>
-                  </div>
-
-                  <ion-grid>
-                    <ion-row class="chapter-specs ion-text-center">
-                      <ion-col size="4">
-                        <div class="chapter-spec-icon"><ion-icon name="time" color="inria-blue"></ion-icon></div>
-                        <div class="chapter-spec-value">{{chapter.time}} min</div>
-                      </ion-col>
-                      <ion-col size="4">
-                        <div class="chapter-spec-icon"><ion-icon name="videocam" color="inria-blue"></ion-icon></div>
-                        <div class="chapter-spec-value">{{chapter.videoCount}} {{chapter.videoCount > 1 ? 'videos':'video'}}</div>
-                      </ion-col>
-                      <ion-col size="4">
-                        <div class="chapter-spec-icon"><ion-icon name="checkbox" color="inria-blue"></ion-icon></div>
-                        <div class="chapter-spec-value">{{chapter.assessmentCount}} {{chapter.assessmentCount > 1 ? 'activités':'activité'}}</div>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-
-                  <ng-container *ngIf="chapter.objectives">
-                    <h4 class="chapter-objectives-label">{{chapter.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</h4>
-                    <div class="chapter-objectives">
-                      <div class="chapter-objective" *ngFor="let objective of chapter.objectives">
-                        <ion-icon name="locate" mode="md"></ion-icon>
-                        <ion-text>{{objective}}</ion-text>
-                      </div>
-                    </div>
-                  </ng-container>
-                </ion-card-content>
-              </ion-card>
-            </div>
-          </div>
+          <chapter-info [chapter]="chapter"></chapter-info>
         </ion-slide>
         <ng-container *ngFor="let content of chapter.initializedContents; let index = index">
           <ng-container *ngIf="!content.conditional || ( content.conditional && reading.flags.indexOf(content.id) !== -1 )">
