@@ -138,8 +138,12 @@ ion-button{
     }
   }
 
-  & + ion-button {
+  & + ion-button:not(.button-block) {
     margin-left: .5rem;
+  }
+
+  & + ion-button.button-block {
+    margin-top: 1rem;
   }
 
   span {

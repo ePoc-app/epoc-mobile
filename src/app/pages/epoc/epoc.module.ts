@@ -15,6 +15,8 @@ import {TranscriptModalPage} from './player/contents/transcript-modal/transcript
 import {SimpleQuestionComponent} from './player/contents/simple-question/simple-question.component';
 import {CourseChoiceComponent} from './player/contents/course-choice/course-choice.component';
 import {ChapterInfoComponent} from './player/contents/chapter-info/chapter-info.component';
+import {ChapterEndComponent} from './player/contents/chapter-end/chapter-end.component';
+import {CommonContentComponent} from './player/contents/common-content/common-content.component';
 
 @NgModule({
     imports: [
@@ -48,7 +50,9 @@ import {ChapterInfoComponent} from './player/contents/chapter-info/chapter-info.
         TranscriptModalPage,
         SimpleQuestionComponent,
         CourseChoiceComponent,
-        ChapterInfoComponent
+        ChapterInfoComponent,
+        ChapterEndComponent,
+        CommonContentComponent
     ],
     entryComponents: [TranscriptModalPage]
 })

@@ -132,55 +132,9 @@
           </ng-container>
         </ng-container>
         <ion-slide>
-          <div class="page-wrapper">
-            <div class="page-header">
-              <ion-icon name="ribbon" size="large"></ion-icon>
-              <div class="title">
-                <h1>Fin du <span>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'chapitre'}}</span></h1>
-              </div>
-            </div>
-            <div class="page-content page-content-next">
-              <div class="custom-card next-chapter-card" *ngIf="nextChapter">
-                <div class="custom-card-content">
-                  <h2 class="follow-up">À suivre :</h2>
-                  <div class="next-chapter-image"
-                       [routerLink]="'/epoc/play/'+epoc.id+'/'+nextChapterId"
-                       [ngStyle]="{'background-image': 'url(' + epocService.rootFolder +  nextChapter.image + ')'}">
-                  </div>
-                  <p><b>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter: 'Chapitre'}} {{chapterIndex + 2}} :</b> {{nextChapter.title}} </p>
-                </div>
-                <div class="custom-card-footer">
-                  <ion-button color="medium" expand="block" [routerLink]="'/epoc/toc/'+epoc.id">
-                    <ion-icon name="list" slot="start" mode="ios"></ion-icon>
-                    Table des matières
-                  </ion-button>
-                  <ion-button expand="block" [routerLink]="'/epoc/play/'+epoc.id+'/'+nextChapterId">
-                    <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-                    {{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter: 'Chapitre'}} suivant
-                  </ion-button>
-                </div>
-              </div>
-              <div class="custom-card next-chapter-card end-chapter-card" *ngIf="!nextChapter">
-                <div class="custom-card-content">
-                  <ion-icon name="checkmark-done-circle-outline" color="success" class="end-icon"></ion-icon>
-                  <h2 class="follow-up">C'est terminé !</h2>
-                  <p>Bravo, vous avez atteint la fin de la formation.</p>
-                  <p>Pour obtenir l'attestation, consultez la page des scores.</p>
-                  <p>Ou retournez à la table des matières pour rejouer un <span>{{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}}</span>.</p>
-                </div>
-                <div class="custom-card-footer">
-                  <ion-button color="medium" expand="block" [routerLink]="'/epoc/toc/'+epoc.id">
-                    <ion-icon name="list" slot="start"></ion-icon>
-                    Table des matières
-                  </ion-button>
-                  <ion-button expand="block" [routerLink]="'/epoc/score/'+epoc.id">
-                    <ion-icon name="podium" slot="start"></ion-icon>
-                    Page des scores
-                  </ion-button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <common-content [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
+            <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="nextChapter" [chapterLabel]="chapterLabel"></chapter-end>
+          </common-content>
         </ion-slide>
       </ion-slides>
     </ng-container>
