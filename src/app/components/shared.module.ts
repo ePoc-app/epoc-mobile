@@ -7,6 +7,8 @@ import {PipesModule} from 'src/app/pipes/pipes.module';
 import {HtmlComponent} from './html/html.component';
 import {RouterModule} from '@angular/router';
 import {VideoPlayerComponent} from './video-player/video-player.component';
+import {CardComponent} from './card/card.component';
+import {FlipCardComponent} from './flip-card/flip-card.component';
 
 
 @NgModule({
@@ -20,13 +22,17 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
         ScoreProgressComponent,
         AssessmentButtonComponent,
         HtmlComponent,
-        VideoPlayerComponent
+        VideoPlayerComponent,
+        CardComponent,
+        FlipCardComponent
     ],
     exports: [
         ScoreProgressComponent,
         AssessmentButtonComponent,
         HtmlComponent,
-        VideoPlayerComponent
+        VideoPlayerComponent,
+        CardComponent,
+        FlipCardComponent
     ]
 })
 export class SharedModule { }

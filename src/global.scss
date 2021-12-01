@@ -30,6 +30,7 @@
 @import '_fonts';
 
 body{
+  color: var(--ion-color-inria-blue);
   line-height: 1.6;
   --ion-font-family: 'Inria Sans', sans-serif;
   --ion-text-color: var(--ion-color-inria-blue);
@@ -320,21 +321,6 @@ video {
        }
      }
    }
-}
-
-.custom-card{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-bottom: 10px;
-  background: #fff;
-  border-radius: 8px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
-
-  .custom-card-content, .custom-card-footer {
-    padding: 0 1em;
-  }
 }
 
 // Fix question card overflow
