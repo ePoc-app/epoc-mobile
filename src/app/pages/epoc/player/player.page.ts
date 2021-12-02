@@ -34,6 +34,14 @@ export class EpocPlayerPage implements OnInit {
     pagesCount: number;
     reading: Reading;
 
+    iconFromType = {
+        html: 'document-text-outline',
+        assessment: 'cube-outline',
+        video: 'play-circle-outline',
+        'simple-question': 'help-outline',
+        choice: 'git-branch-outline'
+    };
+
     // Reader
     dataInitialized = false;
     loading = true;

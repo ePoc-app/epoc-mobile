@@ -16,7 +16,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
 
     @Input() src: string;
     @Input() poster: string;
-    @Input() subtitles: string;
+    @Input() subtitles: {label: string, lang: string, src: string}[];
     @Input() title: string;
     @Input() controls: {
         show?: boolean,

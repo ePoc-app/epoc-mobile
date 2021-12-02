@@ -4,6 +4,7 @@ export abstract class Content {
     id: uid;
     type: 'html' | 'assessment' | 'video' | 'simple-question' | 'choice';
     title: string;
+    subtitle?: string;
     conditional?: boolean;
     conditionResolver?: ScoreResolver | ChoiceResolver;
 }
