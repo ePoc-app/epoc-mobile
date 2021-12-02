@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="chapter.objectives">
+  <ng-container *ngIf="chapter.objectives && chapter.objectives.length > 1">
     <h4 class="chapter-objectives-label">{{chapter.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</h4>
     <div class="chapter-objectives">
       <div class="chapter-objective" *ngFor="let objective of chapter.objectives">
