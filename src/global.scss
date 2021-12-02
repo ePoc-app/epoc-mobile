@@ -166,34 +166,65 @@ ion-button{
 }
 
 .custom-action-sheet{
+  .action-sheet-container{
+    padding: 0;
+  }
+  .action-sheet-group{
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: white;
+
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
   .action-sheet-title{
-    font-size: 14px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
     color: var(--ion-color-inria-blue);
+    background: none;
+    text-align: left;
   }
   .action-sheet-sub-title{
-    padding: 5px;
-    font-size: 12px;
+    padding: 0;
+    font-size: 0.875rem;
     font-weight: bold;
     color: var(--ion-color-inria-red);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .action-sheet-button.splitter{
-    padding:0;
-    height:1px;
-  }
-  .action-sheet-button:not(.splitter){
-    background-image: none;
+  .action-sheet-button{
+    margin: 0 1rem .5rem 1rem;
+    width: calc(100% - 2rem);
+    background: var(--ion-color-inria-light);
+    border-radius: .5rem;
+    color: var(--ion-color-inria-blue);
   }
   .action-sheet-button-inner{
     justify-content: left;
-    color: #111;
+    color: var(--ion-color-inria-blue);
   }
 
   .action-sheet-icon{
-    margin-right: 18px !important;
+    font-size: 1.4rem!important;
+    margin-right: 1rem !important;
+    color: var(--ion-color-inria)
   }
 
   .action-sheet-group-cancel{
+    border-radius: 0;
+    .action-sheet-button{
+      padding: 0;
+      margin-top: 1rem;
+      height: 3rem;
+      border-radius: 2rem;
+      border: 1px solid var(--ion-color-inria);
+    }
     .action-sheet-button-inner{
+      padding-top: .2em;
       justify-content: center;
       color: var(--ion-color-inria);
     }
