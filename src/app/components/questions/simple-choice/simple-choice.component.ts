@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SimpleChoiceQuestion} from 'src/app/classes/contents/assessment';
-import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
+import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
 
 @Component({
     selector: 'simple-choice',

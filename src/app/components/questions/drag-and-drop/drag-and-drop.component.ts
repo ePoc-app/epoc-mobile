@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {trigger, transition, animate, style} from '@angular/animations';
 import {DragAndDropquestion} from 'src/app/classes/contents/assessment';
-import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
+import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
 
 @Component({
     selector: 'drag-and-drop',

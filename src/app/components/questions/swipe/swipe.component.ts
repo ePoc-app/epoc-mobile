@@ -3,7 +3,7 @@ import {Response, SwipeQuestion} from 'src/app/classes/contents/assessment';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {AnimationController, ModalController, Platform} from '@ionic/angular';
 import {ModalPage} from './swipe-modal/modal-page.component';
-import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
+import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
 
 @Component({
   selector: 'swipe',

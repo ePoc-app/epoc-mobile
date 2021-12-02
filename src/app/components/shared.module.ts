@@ -9,6 +9,15 @@ import {RouterModule} from '@angular/router';
 import {VideoPlayerComponent} from './video-player/video-player.component';
 import {CardComponent} from './card/card.component';
 import {FlipCardComponent} from './flip-card/flip-card.component';
+import {SimpleChoiceComponent} from './questions/simple-choice/simple-choice.component';
+import {MultipleChoiceComponent} from './questions/multiple-choice/multiple-choice.component';
+import {ReorderComponent} from './questions/reorder/reorder.component';
+import {DragAndDropComponent} from './questions/drag-and-drop/drag-and-drop.component';
+import {SwipeCardComponent} from './questions/swipe/swipe-card/swipe-card.component';
+import {SwipeComponent} from './questions/swipe/swipe.component';
+import {ModalPage} from './questions/swipe/swipe-modal/modal-page.component';
+import {DropdownListComponent} from './questions/dropdown-list/dropdown-list.component';
+import {AbstractActivityContainerComponent} from './questions/abstract-activity-container.component';
 
 
 @NgModule({
@@ -24,7 +33,16 @@ import {FlipCardComponent} from './flip-card/flip-card.component';
         HtmlComponent,
         VideoPlayerComponent,
         CardComponent,
-        FlipCardComponent
+        FlipCardComponent,
+        SimpleChoiceComponent,
+        MultipleChoiceComponent,
+        ReorderComponent,
+        DragAndDropComponent,
+        SwipeCardComponent,
+        SwipeComponent,
+        ModalPage,
+        DropdownListComponent,
+        AbstractActivityContainerComponent
     ],
     exports: [
         ScoreProgressComponent,
@@ -32,7 +50,16 @@ import {FlipCardComponent} from './flip-card/flip-card.component';
         HtmlComponent,
         VideoPlayerComponent,
         CardComponent,
-        FlipCardComponent
+        FlipCardComponent,
+        SimpleChoiceComponent,
+        MultipleChoiceComponent,
+        ReorderComponent,
+        DragAndDropComponent,
+        SwipeCardComponent,
+        SwipeComponent,
+        ModalPage,
+        DropdownListComponent,
+        AbstractActivityContainerComponent
     ]
 })
 export class SharedModule { }
