@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Question, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Reading} from 'src/app/classes/reading';
 import {Epoc} from 'src/app/classes/epoc';
+import {FlipCardComponent} from 'src/app/components/flip-card/flip-card.component';
 
 @Component({
     selector: 'simple-question',
@@ -16,6 +17,9 @@ export class SimpleQuestionComponent implements OnInit {
     @Input() content: SimpleQuestion;
     @Input() question: Question;
     @Input() epocId: string;
+
+    @ViewChild(FlipCardComponent, { static: false })
+    private flipCardComponent!: FlipCardComponent;
 
     correctionState = false;
     solutionShown = false;
@@ -58,17 +62,16 @@ export class SimpleQuestionComponent implements OnInit {
         e.stopPropagation();
         if (this.question.responses.length === 0) {
             this.disabled = true;
-            this.flip(e);
+            this.flip();
         } else {
             this.disabled = true;
             this.showCorrection();
         }
     }
 
-    flip(event) {
-        event.stopPropagation();
+    flip() {
         if (this.disabled) {
-            this.flipped = !this.flipped;
+            this.flipCardComponent.flip();
         }
     }
 
