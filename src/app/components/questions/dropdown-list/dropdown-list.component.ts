@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DropDownListQuestion, Response} from 'src/app/classes/contents/assessment';
 import {ActionSheetController} from '@ionic/angular';
-import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
+import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
 
 @Component({
     selector: 'dropdown-list',

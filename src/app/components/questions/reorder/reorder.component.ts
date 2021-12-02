@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Question} from 'src/app/classes/contents/assessment';
-import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
+import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
 
 @Component({
     selector: 'reorder',

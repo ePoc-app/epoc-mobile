@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {MultipleChoiceQuestion} from 'src/app/classes/contents/assessment';
-import {AbstractActivityContainerComponent} from '../../abstract-activity-container.component';
+import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
 
 @Component({
     selector: 'multiple-choice',
