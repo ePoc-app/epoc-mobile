@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-flip-card',
+  selector: 'flip-card',
   templateUrl: './flip-card.component.html',
   styleUrls: ['./flip-card.component.scss'],
 })
@@ -12,8 +12,7 @@ export class FlipCardComponent implements OnInit {
 
   ngOnInit() {}
 
-  flip(event) {
-    event.stopPropagation();
+  flip() {
     this.flipped = !this.flipped;
   }
 }
