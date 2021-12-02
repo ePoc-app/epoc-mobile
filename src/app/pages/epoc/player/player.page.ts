@@ -121,8 +121,6 @@ export class EpocPlayerPage implements OnInit {
                     this.countPages();
                     this.progress = pageIndex / this.pagesCount
                 }
-
-                this.presentActionSheet();
             }
         });
 
