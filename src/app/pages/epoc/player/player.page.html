@@ -31,6 +31,8 @@
               <common-content [title]="content.title" [subtitle]="content.subtitle" [icon]="iconFromType[content.type]" *ngIf="content.type !== 'simple-question'">
                 <html-content *ngIf="content.type === 'html'" [html]="content.html | srcConvert"></html-content>
                 <video-content *ngIf="content.type === 'video'" [inputContent]="content" (timelineDragging)="timelineDragging($event)"></video-content>
+                <course-choice *ngIf="content.type === 'choice'" [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
+                <assessment-content *ngIf="content.type === 'assessment'" [inputContent]="content"></assessment-content>
               </common-content>
               <simple-question *ngIf="content.type === 'simple-question'" [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]" [epoc]="epoc"></simple-question>
             </ion-slide>

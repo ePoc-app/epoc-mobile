@@ -11,7 +11,7 @@ export class Reading {
     certificateShown: boolean;
 }
 
-class UserAssessment {
+export class UserAssessment {
     id: string;
     score: number;
     responses: string[];
