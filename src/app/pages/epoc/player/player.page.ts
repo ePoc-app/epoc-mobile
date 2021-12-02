@@ -121,6 +121,8 @@ export class EpocPlayerPage implements OnInit {
                     this.countPages();
                     this.progress = pageIndex / this.pagesCount
                 }
+
+                this.presentActionSheet();
             }
         });
 
@@ -229,51 +231,35 @@ export class EpocPlayerPage implements OnInit {
         const buttons = [
             {
                 text: 'Accueil',
-                icon: 'home',
+                icon: 'home-outline',
                 handler: () => {
                     this.router.navigateByUrl('/home/' + this.epoc.id);
                 }
             },
             {
-                cssClass: 'splitter'
-            },
-            {
                 text: 'À propos du cours',
-                icon: 'reader-outline',
+                icon: 'information-circle-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/overview/' + this.epoc.id);
                 }
             },
             {
-                cssClass: 'splitter'
-            },
-            {
                 text: 'Tables des matières',
-                icon: 'list',
+                icon: 'list-circle-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/toc/' + this.epoc.id);
                 }
-            }, /*
-                {
-                    text: 'Pages',
-                    icon: 'book'
-                }, */
-            {
-                cssClass: 'splitter'
             },
             {
                 text: 'Détails des scores',
-                icon: 'podium',
+                icon: 'star-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
                 }
             },
             {
-                cssClass: 'splitter'
-            },
-            {
                 text: 'Paramètres',
-                icon: 'cog',
+                icon: 'settings-outline',
                 handler: () => {
                     this.router.navigateByUrl('/settings');
                 }
