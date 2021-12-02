@@ -1,10 +1,10 @@
 <ng-container *ngIf="nextChapter">
   <p><b class="ion-text-capitalize">{{chapterLabel}} suivant :</b> {{nextChapter.title}} </p>
   <ion-button expand="block" size="large" color="inria" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
-    Table des matières
+    <span>Table des matières</span>
   </ion-button>
   <ion-button expand="block" size="large" color="inria" [routerLink]="'/epoc/play/'+epoc.id+'/'+nextChapter.id">
-    {{chapterLabel}} suivant
+    <span>{{chapterLabel}} suivant</span>
   </ion-button>
 </ng-container>
 <ng-container *ngIf="!nextChapter">
