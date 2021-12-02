@@ -17,6 +17,7 @@ import {CourseChoiceComponent} from './player/contents/course-choice/course-choi
 import {ChapterInfoComponent} from './player/contents/chapter-info/chapter-info.component';
 import {ChapterEndComponent} from './player/contents/chapter-end/chapter-end.component';
 import {CommonContentComponent} from './player/contents/common-content/common-content.component';
+import {VideoContentComponent} from './player/contents/video/video.component';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import {CommonContentComponent} from './player/contents/common-content/common-co
         CourseChoiceComponent,
         ChapterInfoComponent,
         ChapterEndComponent,
-        CommonContentComponent
+        CommonContentComponent,
+        VideoContentComponent
     ],
     entryComponents: [TranscriptModalPage]
 })

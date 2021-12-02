@@ -1,0 +1,13 @@
+<ng-container *ngIf="content">
+  <video-player [src]="content.source" [poster]="content.poster"
+                [subtitles]="content.subtitles" [title]="content.title"
+                (timelineDragging)="forwardEvent($event)"></video-player>
+  <ng-container *ngIf="content.summary">
+    <h4>Résumé</h4>
+
+    <div class="video-summary">
+      <html-content [html]="content.summary" *ngIf="content.summary && content.summary.length > 0"></html-content>
+      <p *ngIf="!content.summary || content.summary.length <= 0">No summary.</p>
+    </div>
+  </ng-container>
+</ng-container>
