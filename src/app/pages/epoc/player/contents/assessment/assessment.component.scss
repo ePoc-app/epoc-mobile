@@ -1,0 +1,21 @@
+.assessment-specs{
+  display: flex;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--ion-color-inria-grey);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  .assessment-spec{
+    padding: 0 1.5rem;
+  }
+
+  .assessment-spec:nth-child(2){
+    border-left: 1px solid var(--ion-color-inria-lightgrey);
+  }
+
+  ion-icon{
+    font-size: 1.5rem;
+  }
+}

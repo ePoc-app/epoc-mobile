@@ -18,6 +18,7 @@ import {ChapterInfoComponent} from './player/contents/chapter-info/chapter-info.
 import {ChapterEndComponent} from './player/contents/chapter-end/chapter-end.component';
 import {CommonContentComponent} from './player/contents/common-content/common-content.component';
 import {VideoContentComponent} from './player/contents/video/video.component';
+import {AssessmentContentComponent} from './player/contents/assessment/assessment.component';
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import {VideoContentComponent} from './player/contents/video/video.component';
         ChapterInfoComponent,
         ChapterEndComponent,
         CommonContentComponent,
-        VideoContentComponent
+        VideoContentComponent,
+        AssessmentContentComponent
     ],
     entryComponents: [TranscriptModalPage]
 })

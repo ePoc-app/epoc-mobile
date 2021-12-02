@@ -1,0 +1,22 @@
+<div class="assessment-specs">
+  <div class="assessment-spec">
+    <div class="assessment-spec-icon"><ion-icon name="school"></ion-icon></div>
+    <div class="assessment-spec-value" *ngIf="content.scoreTotal > 0">Noté</div>
+    <div class="assessment-spec-value" *ngIf="content.scoreTotal <= 0">Non Noté</div>
+  </div>
+  <div class="assessment-spec">
+    <div class="assessment-spec-icon"><ion-icon name="help"></ion-icon></div>
+    <div class="assessment-spec-value">{{content.questions.length}} question<ng-container *ngIf="content.questions.length > 1">s</ng-container></div>
+  </div>
+</div>
+<p>{{content.summary}}</p>
+<div>
+  <ion-button expand="block" size="large" fill="outline" color="inria" [routerLink]="['/epoc/assessment', epocId, content.id]">
+    <span *ngIf="userAssessment">
+      Commencer l'activité
+    </span>
+    <span *ngIf="!userAssessment">
+      Refaire l'activité
+    </span>
+  </ion-button>
+</div>

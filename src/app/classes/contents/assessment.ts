@@ -2,6 +2,7 @@ import {Content} from './content';
 import {html, uid} from '../types';
 
 export class Assessment extends Content {
+    summary?: string;
     questions?: uid[];
     time?: number;
     // initialized at runtime
