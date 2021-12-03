@@ -9,7 +9,7 @@ import {AbstractActivityContainerComponent} from '../abstract-activity-container
 })
 export class MultipleChoiceComponent extends AbstractActivityContainerComponent {
 
-    @Input('question') question: MultipleChoiceQuestion;
+    @Input() question: MultipleChoiceQuestion;
 
     // Array to loop on
     selectedAnswers = [];
@@ -58,7 +58,7 @@ export class MultipleChoiceComponent extends AbstractActivityContainerComponent 
                     this.selectedAnswers.splice(index, 1);
                 }
             }
-            this.onSelectAnswer.emit(this.selectedAnswers);
+            this.onUserResponse.emit(this.selectedAnswers);
         }
         this.updateDisplay(this.correctionState, this.solutionShown);
     }

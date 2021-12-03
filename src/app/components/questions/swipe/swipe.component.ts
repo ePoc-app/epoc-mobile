@@ -139,7 +139,7 @@ export class SwipeComponent extends AbstractActivityContainerComponent implement
     }
     this.cardsSorted.pop();
     if (this.cardsRemaining.length === 1) {
-      this.onSelectAnswer.emit();
+      this.onUserResponse.emit();
     }
   }
 
@@ -170,7 +170,7 @@ export class SwipeComponent extends AbstractActivityContainerComponent implement
       this.cardsSorted.push(correctedCard);
       if (this.cardsRemaining.length <= 0) {
         this.fillCorrectionArray(false);
-        this.onSelectAnswer.emit([this.answersToTheLeft, this.answersToTheRight]);
+        this.onUserResponse.emit([this.answersToTheLeft, this.answersToTheRight]);
       }
     }
   }

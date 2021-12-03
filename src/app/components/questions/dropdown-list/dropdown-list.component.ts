@@ -9,7 +9,7 @@ import {AbstractActivityContainerComponent} from '../abstract-activity-container
     styleUrls: ['./dropdown-list.component.scss'],
 })
 export class DropdownListComponent extends AbstractActivityContainerComponent implements OnInit {
-    @Input('question') question: DropDownListQuestion;
+    @Input() question: DropDownListQuestion;
 
     // Array to loop on when in correction mode
     correctedAnswers: Array<{ category: string, answer: Response, correct: boolean }> = [];
@@ -109,7 +109,7 @@ export class DropdownListComponent extends AbstractActivityContainerComponent im
                 this.nbCorrect += 1;
             }
         })
-        this.onSelectAnswer.emit(this.answers);
+        this.onUserResponse.emit(this.answers);
     }
 
     async openActionSheet(event) {

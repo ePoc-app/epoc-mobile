@@ -44,15 +44,15 @@ describe('DropdownListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('should emit onSelectAnswer event', () => {
+  it ('should emit onUserResponse event', () => {
     component.onSelectProp({category: c1, label: r1.label});
     component.onSelectProp({category: c2, label: r2.label});
     component.onSelectProp({category: c1, label: r3.label});
     // Vérifier que l'évènement est bien émis
-    spyOn(component.onSelectAnswer, 'emit');
+    spyOn(component.onUserResponse, 'emit');
     // trigger l'évènement en appelant la méthode
     component.onSelectProp({category: c2, label: r4.label});
-    expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([[r1.value, r3.value], [r2.value, r4.value], []]);
+    expect(component.onUserResponse.emit).toHaveBeenCalledWith([[r1.value, r3.value], [r2.value, r4.value], []]);
   });
 
 

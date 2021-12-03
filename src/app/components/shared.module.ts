@@ -18,6 +18,12 @@ import {SwipeComponent} from './questions/swipe/swipe.component';
 import {ModalPage} from './questions/swipe/swipe-modal/modal-page.component';
 import {DropdownListComponent} from './questions/dropdown-list/dropdown-list.component';
 import {AbstractActivityContainerComponent} from './questions/abstract-activity-container.component';
+import {CommonQuestionComponent} from './questions/common-question/common-question.component';
+import {ThoughtsComponent} from './questions/thoughts/thoughts.component';
+import {CorrectionMultipleChoiceComponent} from './corrections/correction-multiple-choice/correction-multiple-choice.component';
+import {CorrectionSortComponent} from './corrections/correction-sort/correction-sort.component';
+import {CorrectionGenericComponent} from './corrections/correction-generic/correction-generic.component';
+import {CorrectionReorderComponent} from './corrections/correction-reorder/correction-reorder.component';
 
 
 @NgModule({
@@ -42,7 +48,13 @@ import {AbstractActivityContainerComponent} from './questions/abstract-activity-
         SwipeComponent,
         ModalPage,
         DropdownListComponent,
-        AbstractActivityContainerComponent
+        AbstractActivityContainerComponent,
+        CommonQuestionComponent,
+        ThoughtsComponent,
+        CorrectionMultipleChoiceComponent,
+        CorrectionSortComponent,
+        CorrectionGenericComponent,
+        CorrectionReorderComponent
     ],
     exports: [
         ScoreProgressComponent,
@@ -59,7 +71,13 @@ import {AbstractActivityContainerComponent} from './questions/abstract-activity-
         SwipeComponent,
         ModalPage,
         DropdownListComponent,
-        AbstractActivityContainerComponent
+        AbstractActivityContainerComponent,
+        CommonQuestionComponent,
+        ThoughtsComponent,
+        CorrectionMultipleChoiceComponent,
+        CorrectionSortComponent,
+        CorrectionGenericComponent,
+        CorrectionReorderComponent
     ]
 })
 export class SharedModule { }

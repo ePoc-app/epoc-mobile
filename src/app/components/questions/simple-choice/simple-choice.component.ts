@@ -9,7 +9,7 @@ import {AbstractActivityContainerComponent} from '../abstract-activity-container
 })
 export class SimpleChoiceComponent extends AbstractActivityContainerComponent implements OnChanges {
 
-    @Input('question') question: SimpleChoiceQuestion;
+    @Input() question: SimpleChoiceQuestion;
 
     selectedAnswer;
     selectValue;
@@ -28,7 +28,7 @@ export class SimpleChoiceComponent extends AbstractActivityContainerComponent im
 
     selectAnswer(answer) {
         this.selectedAnswer = answer;
-        this.onSelectAnswer.emit([this.selectedAnswer]);
+        this.onUserResponse.emit([this.selectedAnswer]);
     }
 
     updateDisplay(solutionShown: boolean) {
