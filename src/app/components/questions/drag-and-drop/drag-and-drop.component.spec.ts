@@ -42,7 +42,7 @@ describe('DragAndDropComponent', () => {
     });
 
     // addResponse(index)
-    it('should emit event onSelectAnswer', () => {
+    it('should emit event onUserResponse', () => {
         component.responses = [r1, r2, r3, r4];
         // On ajoute A dans catégorie 0
         component.addResponse(0);
@@ -52,11 +52,11 @@ describe('DragAndDropComponent', () => {
         component.addResponse(2);
 
         // Vérifier que l'évènement est bien émis
-        spyOn(component.onSelectAnswer, 'emit');
+        spyOn(component.onUserResponse, 'emit');
 
         // On ajoute D dans catégorie 1 (derniere réponse à ajouter)
         component.addResponse(1);
-        expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([['A', 'B'], ['D'], ['C']]);
+        expect(component.onUserResponse.emit).toHaveBeenCalledWith([['A', 'B'], ['D'], ['C']]);
     })
 
     // updateDisplay

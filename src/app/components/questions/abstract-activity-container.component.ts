@@ -3,11 +3,11 @@ import {Question} from 'src/app/classes/contents/assessment';
 
 @Component({ template: '' })
 export class AbstractActivityContainerComponent implements OnInit, OnChanges{
-    @Input('question') question: Question;
-    @Input('correctionState') correctionState: boolean;
-    @Input('solutionShown') solutionShown: boolean;
+    @Input() question: Question;
+    @Input() correctionState: boolean;
+    @Input() solutionShown: boolean;
 
-    @Output() onSelectAnswer = new EventEmitter<any>();
+    @Output() onUserResponse = new EventEmitter<any>();
 
     // Used in html to display values
     nbCorrect: number;

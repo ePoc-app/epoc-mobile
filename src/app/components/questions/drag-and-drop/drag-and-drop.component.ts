@@ -27,7 +27,7 @@ import {AbstractActivityContainerComponent} from '../abstract-activity-container
 })
 export class DragAndDropComponent extends AbstractActivityContainerComponent implements OnInit {
 
-    @Input('question') question: DragAndDropquestion;
+    @Input() question: DragAndDropquestion;
 
     current;
     responses;
@@ -128,6 +128,6 @@ export class DragAndDropComponent extends AbstractActivityContainerComponent imp
                 }
             })
         });
-        this.onSelectAnswer.emit(answer);
+        this.onUserResponse.emit(answer);
     }
 }

@@ -72,15 +72,15 @@ describe('SwipeComponent', () => {
     expect(component.answersToTheLeft).toEqual(['1']);
   });
 
-  it ('should emit onSelectAnswer event', () => {
+  it ('should emit onUserResponse event', () => {
     component.onSelectSide({rep:c1, category:0});
     component.onSelectSide({rep:c2, category:0});
     // Vérifier que l'évènement est bien émis
-    spyOn(component.onSelectAnswer, 'emit');
+    spyOn(component.onUserResponse, 'emit');
 
     // trigger l'évènement en appelant la méthode
     component.onSelectSide({rep:c3, category:1});
-    expect(component.onSelectAnswer.emit).toHaveBeenCalledWith([['1','2'], ['3']]);
+    expect(component.onUserResponse.emit).toHaveBeenCalledWith([['1','2'], ['3']]);
   });
   // Cas d'erreur : answer n'est pas une réponse valable
   it ('should raise an error', () => {

@@ -1,0 +1,49 @@
+<div class="header" [ngClass]="{'shown':flipped && question.responses.length > 0}">
+  <div class="correction-tabs">
+    <div class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':!explanationShown}">
+      <span>Réponses</span>
+    </div>
+    <div class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':explanationShown}">
+      <span>Explications</span>
+    </div>
+  </div>
+</div>
+<flip-card (click)="flip()">
+  <ng-container front>
+    <div class="title-container">
+      <div class="title-icon">
+        <ion-icon name="help-circle-outline"></ion-icon>
+      </div>
+      <h5 class="subtitle" *ngIf="subtitle">{{subtitle}}</h5>
+      <h4 class="title" *ngIf="title">{{title}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
+    </div>
+
+    <div class="statement ion-text-center">
+      <b>{{question.label}}</b>
+      <div *ngIf="question.statement">{{question.statement}}</div>
+    </div>
+    <div class="question" [ngSwitch]="question.type">
+      <thoughts *ngSwitchCase="question.responses.length === 0 ? question.type : !question.type" [question]="question"></thoughts>
+      <simple-choice *ngSwitchCase="question.responses.length > 0 ? question.type : !question.type" [question]="question" (onUserResponse)="updateUserResponse($event)"></simple-choice>
+      <multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" (onUserResponse)="updateUserResponse($event)"></multiple-choice>
+      <reorder *ngSwitchCase="'reorder'" [question]="question" (onUserResponse)="updateUserResponse($event)"></reorder>
+      <drag-and-drop *ngSwitchCase="'drag-and-drop'" [question]="question" (onUserResponse)="updateUserResponse($event)"></drag-and-drop>
+      <swipe *ngSwitchCase="'swipe'" [question]="question" (onUserResponse)="updateUserResponse($event)"></swipe>
+      <dropdown-list *ngSwitchCase="'dropdown-list'" [question]="question" (onUserResponse)="updateUserResponse($event)"></dropdown-list>
+    </div>
+    <ng-content></ng-content>
+  </ng-container>
+  <ng-container back>
+    <ng-container *ngIf="explanationShown && question.responses.length > 0">
+      <ng-container [ngSwitch]="question.type">
+        <correction-multiple-choice *ngSwitchCase="'multiple-choice'"></correction-multiple-choice>
+        <correction-reorder *ngSwitchCase="'reorder'"></correction-reorder>
+        <correction-sort *ngSwitchCase="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type) ? question.type : !question.type"></correction-sort>
+        <correction-generic *ngSwitchDefault></correction-generic>
+      </ng-container>
+    </ng-container>
+    <div class="explanation" *ngIf="explanationShown || question.responses.length === 0">
+      <html-content [html]="question.explanation"></html-content>
+    </div>
+  </ng-container>
+</flip-card>

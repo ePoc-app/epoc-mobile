@@ -9,7 +9,7 @@ import {AbstractActivityContainerComponent} from '../abstract-activity-container
 })
 export class ReorderComponent extends AbstractActivityContainerComponent implements OnInit {
 
-    @Input('question') question: Question;
+    @Input() question: Question;
 
     // Array to loop on
     responses;
@@ -64,7 +64,7 @@ export class ReorderComponent extends AbstractActivityContainerComponent impleme
                 this.nbCorrect++;
             }
         }
-        this.onSelectAnswer.emit(answer);
+        this.onUserResponse.emit(answer);
     }
 
     shuffleArray(array) {
