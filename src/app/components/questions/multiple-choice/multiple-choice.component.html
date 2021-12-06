@@ -1,7 +1,7 @@
 <ion-list>
-  <ion-item *ngFor="let response of question.responses">
+  <ion-item *ngFor="let response of question.responses" lines="none" color="inria-light">
     <ion-checkbox mode="md" slot="start" [value]="response.value" (ionChange)="selectAnswer($event)"
-                  [checked]="this.selectedAnswers.indexOf(response.value) !== -1">
+                  [checked]="this.selectedAnswers.indexOf(response.value) !== -1" [disabled]="disabled">
     </ion-checkbox>
     <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
   </ion-item>
