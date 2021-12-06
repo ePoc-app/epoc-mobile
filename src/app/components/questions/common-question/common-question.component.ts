@@ -57,7 +57,7 @@ export class CommonQuestionComponent implements OnInit {
     }
     this.questionAnswered.emit(true);
     this.flip();
-    // this.readingStore.saveResponses(this.epocId, this.contentId, score, this.userResponses);
+    this.readingStore.saveResponses(this.epocId, this.contentId, score, this.userResponses);
   }
 
   flip() {
