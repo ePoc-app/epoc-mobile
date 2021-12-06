@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {trigger, transition, animate, style} from '@angular/animations';
 import {DragAndDropquestion} from 'src/app/classes/contents/assessment';
-import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
+import {AbstractQuestionComponent} from '../abstract-question.component';
 
 @Component({
     selector: 'drag-and-drop',
@@ -25,7 +25,7 @@ import {AbstractActivityContainerComponent} from '../abstract-activity-container
         ])
     ]
 })
-export class DragAndDropComponent extends AbstractActivityContainerComponent implements OnInit {
+export class DragAndDropComponent extends AbstractQuestionComponent implements OnInit {
 
     @Input() question: DragAndDropquestion;
 
@@ -57,40 +57,6 @@ export class DragAndDropComponent extends AbstractActivityContainerComponent imp
         });
     }
 
-    updateDisplay(correctionState: boolean, solutionShown: boolean) {
-        if (!correctionState) {
-            this.selectHeader = '';
-            this.selectValue = [];
-        } else {
-            if (!solutionShown) {
-                this.selectHeader = this.nbCorrect + ' / ' + this.question.responses.length + ' réponses justes';
-            } else {
-                this.selectHeader = 'Solution';
-                // Mettre les bonnes valeurs au bon endroit lors de l'affichage de la solution
-                this.question.responses.forEach((response) => {
-                    this.selectValue[response.value] = response.label;
-                })
-            }
-            // Mettre les bonnes couleurs au bon endroit
-            this.question.correctResponse.forEach((zone) => {
-                this.answer[this.question.correctResponse.indexOf(zone)].forEach((response) => {
-                    if (!solutionShown) {
-                        this.selectClass
-                            [this.question.correctResponse.indexOf(zone)]
-                            [this.answer[this.question.correctResponse.indexOf(zone)].indexOf(response)]
-                            = this.question.correctResponse[this.question.correctResponse.indexOf(zone)].values.includes(response.value)
-                            ? 'correct' : 'incorrect';
-                    } else {
-                        this.selectClass
-                            [this.question.correctResponse.indexOf(zone)]
-                            [this.answer[this.question.correctResponse.indexOf(zone)].indexOf(response)]
-                            = 'correct';
-                    }
-                })
-            })
-        }
-    }
-
     // trick to trigger angular aniamtion
     getCurrentResponse() {
         return [this.responses[0]];
@@ -100,7 +66,6 @@ export class DragAndDropComponent extends AbstractActivityContainerComponent imp
         if (this.responses.length > 0) {
             this.answer[index].push(this.responses.shift());
             if (this.responses.length === 0) {
-                this.updateAnswer();
             }
         }
 
@@ -115,19 +80,5 @@ export class DragAndDropComponent extends AbstractActivityContainerComponent imp
         $event.stopPropagation();
         const response = this.answer[zoneIndex].splice(responseIndex, 1);
         this.responses.unshift(...response);
-    }
-
-    updateAnswer() {
-        const answer = [];
-        this.nbCorrect = 0;
-        this.answer.forEach((zone) => {
-            answer.push(zone.map(response => response.value));
-            zone.forEach((rep) => {
-                if (this.question.correctResponse[this.answer.indexOf(zone)].values.includes(rep.value)) {
-                    this.nbCorrect++;
-                }
-            })
-        });
-        this.onUserResponse.emit(answer);
     }
 }

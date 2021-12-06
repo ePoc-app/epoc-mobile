@@ -43,15 +43,4 @@ describe('SimpleChoiceComponent', () => {
         expect(component.userResponse.emit).toHaveBeenCalledWith(r1);
     });
 
-    // Tests méthode updateDisplay
-    it('should update values depending on solutionShown', () => {
-        component.selectAnswer(r1);
-        component.updateDisplay(false);
-        expect(component.selectValue).toEqual(component.selectedAnswer);
-        expect(component.selectHeader).toEqual('');
-        component.updateDisplay(true);
-        expect(component.selectValue).toEqual(component.question.correctResponse);
-        expect(component.selectHeader).toEqual('Solution');
-    });
-
 });

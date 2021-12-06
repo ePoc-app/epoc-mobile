@@ -1,17 +1,7 @@
-<p class="nbCorrect">{{selectHeader}}</p>
 <ion-list>
-  <ion-item *ngFor="let response of question.responses"
-            [lines]="'none'"
-            [ngClass]="{
-            'disabled': correctionState,
-            'correct': correctionState && selectClass[question.responses.indexOf(response)] === 'correct',
-            'incorrect': correctionState && selectClass[question.responses.indexOf(response)] === 'incorrect'}">
-    <ion-checkbox mode="md" slot="start"
-                  [value]="response.value"
-                  (ionChange)="selectAnswer($event)"
-                  [checked]="this.correctionState && this.selectValue[this.question.responses.indexOf(response)]"
-                  [disabled]="correctionState">
-
+  <ion-item *ngFor="let response of question.responses">
+    <ion-checkbox mode="md" slot="start" [value]="response.value" (ionChange)="selectAnswer($event)"
+                  [checked]="this.selectedAnswers.indexOf(response.value) !== -1">
     </ion-checkbox>
     <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
   </ion-item>

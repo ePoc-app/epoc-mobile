@@ -38,24 +38,4 @@ describe('ReorderComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-
-    it('should update values depending on correctionState & solutionShown ', () => {
-        component.correctionState = false;
-        component.solutionShown = false;
-        component.updateDisplay(component.correctionState, component.solutionShown);
-        expect(component.selectHeader).toEqual('');
-        component.correctionState = true;
-        // TO DO
-/*        const ev = {};
-        component.doReorder(ev);
-        component.updateDisplay(component.correctionState, component.solutionShown);
-        expect(component.selectHeader).toEqual(1 + ' / ' + 4 + ' réponses justes');
-        component.solutionShown = true;
-        component.updateDisplay(component.correctionState, component.solutionShown);
-        expect(component.selectHeader).toEqual('Solution');*/
-    });
-
-    it('should give a different array', () => {
-
-    })
 });
