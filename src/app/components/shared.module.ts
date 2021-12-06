@@ -17,7 +17,7 @@ import {SwipeCardComponent} from './questions/swipe/swipe-card/swipe-card.compon
 import {SwipeComponent} from './questions/swipe/swipe.component';
 import {ModalPage} from './questions/swipe/swipe-modal/modal-page.component';
 import {DropdownListComponent} from './questions/dropdown-list/dropdown-list.component';
-import {AbstractActivityContainerComponent} from './questions/abstract-activity-container.component';
+import {AbstractQuestionComponent} from './questions/abstract-question.component';
 import {CommonQuestionComponent} from './questions/common-question/common-question.component';
 import {ThoughtsComponent} from './questions/thoughts/thoughts.component';
 import {CorrectionMultipleChoiceComponent} from './corrections/correction-multiple-choice/correction-multiple-choice.component';
@@ -41,14 +41,14 @@ import {CorrectionReorderComponent} from './corrections/correction-reorder/corre
         CardComponent,
         FlipCardComponent,
         SimpleChoiceComponent,
-        MultipleChoiceComponent,
-        ReorderComponent,
-        DragAndDropComponent,
-        SwipeCardComponent,
-        SwipeComponent,
+        // MultipleChoiceComponent,
+        // ReorderComponent,
+        // DragAndDropComponent,
+        // SwipeCardComponent,
+        // SwipeComponent,
+        // DropdownListComponent,
         ModalPage,
-        DropdownListComponent,
-        AbstractActivityContainerComponent,
+        AbstractQuestionComponent,
         CommonQuestionComponent,
         ThoughtsComponent,
         CorrectionMultipleChoiceComponent,
@@ -64,14 +64,14 @@ import {CorrectionReorderComponent} from './corrections/correction-reorder/corre
         CardComponent,
         FlipCardComponent,
         SimpleChoiceComponent,
-        MultipleChoiceComponent,
-        ReorderComponent,
-        DragAndDropComponent,
-        SwipeCardComponent,
-        SwipeComponent,
+        // MultipleChoiceComponent,
+        // ReorderComponent,
+        // DragAndDropComponent,
+        // SwipeCardComponent,
+        // SwipeComponent,
+        // DropdownListComponent,
         ModalPage,
-        DropdownListComponent,
-        AbstractActivityContainerComponent,
+        AbstractQuestionComponent,
         CommonQuestionComponent,
         ThoughtsComponent,
         CorrectionMultipleChoiceComponent,

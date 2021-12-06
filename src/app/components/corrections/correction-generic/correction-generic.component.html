@@ -1,3 +1,17 @@
-<p>
-  correction-generic works!
-</p>
+<ng-container  *ngIf="correction">
+  <h4>Vous avez répondu</h4>
+  <ion-item lines="none" color="inria-light" *ngFor="let response of correction">
+    <div class="correction-icon">
+      <ion-icon name="checkmark-outline" *ngIf="response.correct"></ion-icon>
+      <ion-icon name="close-outline" *ngIf="!response.correct"></ion-icon>
+    </div>
+    <ion-label class="ion-text-wrap" color="inria-blue">
+      {{response.userResponseLabel}}
+      <div class="correction-right" *ngIf="response.correct">C'est une bonne réponse !</div>
+      <div class="correction-wrong" *ngIf="!response.correct">C'est faux !</div>
+      <div class="correction-right-answer" *ngIf="!response.correct">
+        <b>Bonne réponse : </b><span>{{response.correctResponse}}</span>
+      </div>
+    </ion-label>
+  </ion-item>
+</ng-container>
