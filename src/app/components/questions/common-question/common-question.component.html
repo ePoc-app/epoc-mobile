@@ -34,7 +34,7 @@
     <ng-content></ng-content>
   </ng-container>
   <ng-container back>
-    <div class="correction" *ngIf="userResponses && !explanationShown && question.responses.length > 0">
+    <div class="correction" *ngIf="flipped && !explanationShown && question.responses.length > 0">
       <div class="title-container">
         <div class="title-icon">
           <ion-icon name="checkmark-circle-outline"></ion-icon>
@@ -45,7 +45,7 @@
         <b>{{question.label}}</b>
       </div>
       <ng-container [ngSwitch]="question.type">
-        <correction-multiple-choice *ngSwitchCase="'multiple-choice'"></correction-multiple-choice>
+        <correction-multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" [userResponses]="userResponses"></correction-multiple-choice>
         <correction-reorder *ngSwitchCase="'reorder'"></correction-reorder>
         <correction-sort *ngSwitchCase="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type) ? question.type : !question.type"></correction-sort>
         <correction-generic *ngSwitchDefault [question]="question" [userResponses]="userResponses"></correction-generic>
