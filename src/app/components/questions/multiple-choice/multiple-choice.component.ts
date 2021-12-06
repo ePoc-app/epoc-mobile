@@ -27,6 +27,7 @@ export class MultipleChoiceComponent extends AbstractQuestionComponent {
                 this.selectedAnswers.splice(index, 1);
             }
         }
+        console.log(this.selectedAnswers);
         this.userResponse.emit(this.selectedAnswers);
     }
 }
