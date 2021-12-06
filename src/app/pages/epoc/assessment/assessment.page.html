@@ -25,38 +25,22 @@
                                 </div>
 
                                 <ng-container *ngIf="question.type === 'choice'">
-                                    <simple-choice class="response" [question]="question"
-                                                   [correctionState]="explanationShown"
-                                                   [solutionShown]="this.solutionShown"
-                                                   (onUserResponse)="updateCurrentAnswer($event)"></simple-choice>
+                                    <simple-choice class="response" [question]="question" (userResponse)="updateCurrentAnswer($event)"></simple-choice>
                                 </ng-container>
                                 <ng-container *ngIf="question.type === 'multiple-choice'">
-                                    <multiple-choice class="response" [question]="question"
-                                                     [correctionState]="this.explanationShown"
-                                                     [solutionShown]="this.solutionShown"
-                                                     (onUserResponse)="updateCurrentAnswer($event)"></multiple-choice>
+                                    <multiple-choice class="response" [question]="question" (userResponse)="updateCurrentAnswer($event)"></multiple-choice>
                                 </ng-container>
                                 <ng-container *ngIf="question.type === 'reorder'">
-                                    <reorder class="response" [question]="question" [correctionState]=explanationShown
-                                             [solutionShown]="this.solutionShown"
-                                             (onUserResponse)="updateCurrentAnswer($event)"></reorder>
+                                    <reorder class="response" [question]="question" (userResponse)="updateCurrentAnswer($event)"></reorder>
                                 </ng-container>
                                 <ng-container *ngIf="question.type === 'drag-and-drop'">
-                                    <drag-and-drop class="response no-overflow" [question]="question"
-                                                   [correctionState]=explanationShown
-                                                   [solutionShown]="this.solutionShown"
-                                                   (onUserResponse)="updateCurrentAnswer($event)"></drag-and-drop>
+                                    <drag-and-drop class="response no-overflow" [question]="question" (userResponse)="updateCurrentAnswer($event)"></drag-and-drop>
                                 </ng-container>
                                 <ng-container *ngIf="question.type === 'swipe'">
-                                    <swipe class="response" [question]="question" [correctionState]=explanationShown
-                                           [solutionShown]="this.solutionShown"
-                                           (onUserResponse)="updateCurrentAnswer($event)"></swipe>
+                                    <swipe class="response" [question]="question" (userResponse)="updateCurrentAnswer($event)"></swipe>
                                 </ng-container>
                                 <ng-container *ngIf="question.type === 'dropdown-list'">
-                                    <dropdown-list class="response" [question]="question"
-                                                   [correctionState]=explanationShown
-                                                   [solutionShown]="this.solutionShown"
-                                                   (onUserResponse)="updateCurrentAnswer($event)"></dropdown-list>
+                                    <dropdown-list class="response" [question]="question" (userResponse)="updateCurrentAnswer($event)"></dropdown-list>
                                 </ng-container>
 
                             </div>

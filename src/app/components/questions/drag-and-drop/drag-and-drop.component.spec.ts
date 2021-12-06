@@ -42,7 +42,7 @@ describe('DragAndDropComponent', () => {
     });
 
     // addResponse(index)
-    it('should emit event onUserResponse', () => {
+    it('should emit event userResponse', () => {
         component.responses = [r1, r2, r3, r4];
         // On ajoute A dans catégorie 0
         component.addResponse(0);
@@ -52,40 +52,10 @@ describe('DragAndDropComponent', () => {
         component.addResponse(2);
 
         // Vérifier que l'évènement est bien émis
-        spyOn(component.onUserResponse, 'emit');
+        spyOn(component.userResponse, 'emit');
 
         // On ajoute D dans catégorie 1 (derniere réponse à ajouter)
         component.addResponse(1);
-        expect(component.onUserResponse.emit).toHaveBeenCalledWith([['A', 'B'], ['D'], ['C']]);
-    })
-
-    // updateDisplay
-    it('should update values depending on correctionState & solutionShown', () => {
-        component.correctionState = false;
-        component.solutionShown = false;
-        component.updateDisplay(component.correctionState, component.solutionShown);
-        expect(component.selectHeader).toEqual('');
-        expect(component.selectValue).toEqual([]);
-        component.responses = [r1, r2, r3, r4];
-        // On ajoute A dans catégorie 0
-        component.addResponse(0);
-        // On ajoute B dans catégorie 0
-        component.addResponse(0);
-        // On ajoute C dans catégorie 2
-        component.addResponse(2);
-        // On ajoute D dans catégorie 1 (derniere réponse à ajouter)
-        component.addResponse(1);
-        component.correctionState = true;
-        component.updateDisplay(component.correctionState, component.solutionShown);
-        expect(component.selectHeader).toEqual(1 + ' / ' + 4 + ' réponses justes');
-        expect(component.selectValue).toEqual([]);
-        component.solutionShown = true;
-        component.updateDisplay(component.correctionState, component.solutionShown);
-        expect(component.selectHeader).toEqual('Solution');
-        expect(component.selectValue[r1.value]).toEqual(r1.label);
-        expect(component.selectValue[r2.value]).toEqual(r2.label);
-        expect(component.selectValue[r3.value]).toEqual(r3.label);
-        expect(component.selectValue[r4.value]).toEqual(r4.label);
-
+        expect(component.userResponse.emit).toHaveBeenCalledWith([['A', 'B'], ['D'], ['C']]);
     })
 });

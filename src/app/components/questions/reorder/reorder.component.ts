@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Question} from 'src/app/classes/contents/assessment';
-import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
+import {AbstractQuestionComponent} from '../abstract-question.component';
 
 @Component({
     selector: 'reorder',
     templateUrl: '../reorder/reorder.component.html',
     styleUrls: ['../reorder/reorder.component.scss'],
 })
-export class ReorderComponent extends AbstractActivityContainerComponent implements OnInit {
+export class ReorderComponent extends AbstractQuestionComponent implements OnInit {
 
     @Input() question: Question;
 
@@ -33,38 +33,10 @@ export class ReorderComponent extends AbstractActivityContainerComponent impleme
         }
     }
 
-    updateDisplay(correctionState: boolean, solutionShown: boolean) {
-        if (!correctionState) {
-            this.selectHeader = '';
-            this.selectClass = [];
-        } else {
-            if (!solutionShown) {
-                this.selectHeader = this.nbCorrect + ' / ' + this.question.responses.length + ' réponses justes';
-                const answer = this.responses.reduce( (accumulator, response) => accumulator + response.value, '');
-                this.question.responses.forEach((rep, index) => {
-                    this.selectClass[index] =
-                        this.question.correctResponse[index]
-                        === answer[index] ? 'correct' : 'incorrect';
-                })
-            } else {
-                this.selectHeader = 'Solution';
-                this.responses.forEach((rep) => {
-                    this.selectClass[this.question.responses.indexOf(rep)] = 'correct';
-                })
-            }
-        }
-    }
-
     doReorder(ev: any) {
         this.responses = ev.detail.complete(this.responses);
         const answer = this.responses.reduce( (accumulator, response) => accumulator + response.value, '');
-        this.nbCorrect = 0;
-        for (let i = 0; i < this.question.correctResponse.length; i++) {
-            if (answer[i] === this.question.correctResponse[i]) {
-                this.nbCorrect++;
-            }
-        }
-        this.onUserResponse.emit(answer);
+        this.userResponse.emit(answer);
     }
 
     shuffleArray(array) {
