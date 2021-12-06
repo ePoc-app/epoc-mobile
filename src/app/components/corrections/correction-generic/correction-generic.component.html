@@ -1,10 +1,8 @@
 <ng-container  *ngIf="correction">
   <h4>Vous avez répondu</h4>
   <ion-item lines="none" color="inria-light" *ngFor="let response of correction">
-    <div class="correction-icon">
-      <ion-icon name="checkmark-outline" *ngIf="response.correct"></ion-icon>
-      <ion-icon name="close-outline" *ngIf="!response.correct"></ion-icon>
-    </div>
+    <div class="correction-icon correct" *ngIf="response.correct"><ion-icon name="checkmark-outline"></ion-icon></div>
+    <div class="correction-icon incorrect" *ngIf="!response.correct"><ion-icon name="close-outline"></ion-icon></div>
     <ion-label class="ion-text-wrap" color="inria-blue">
       {{response.userResponseLabel}}
       <div class="correction-right" *ngIf="response.correct">C'est une bonne réponse !</div>

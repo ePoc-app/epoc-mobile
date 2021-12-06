@@ -31,9 +31,17 @@ ion-label{
   width: 2rem;
   height: 2rem;
   border-radius: 2rem;
-  background: var(--ion-color-inria-correct);
+  background: var(--ion-color-inria-grey);
   color:white;
   --ionicon-stroke-width: 64px;
+
+  &.correct{
+    background: var(--ion-color-inria-correct);
+  }
+
+  &.incorrect{
+    background: var(--ion-color-inria-incorrect);
+  }
 }
 
 .correction-right{
