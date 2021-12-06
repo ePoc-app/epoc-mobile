@@ -6,13 +6,24 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./flip-card.component.scss'],
 })
 export class FlipCardComponent implements OnInit {
+  @Input() initFlipped: boolean;
   flipped = false;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.flipped = this.initFlipped;
+  }
 
   flip() {
     this.flipped = !this.flipped;
+  }
+
+  showFront() {
+    this.flipped = false;
+  }
+
+  showBack() {
+    this.flipped = true;
   }
 }

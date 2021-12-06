@@ -37,10 +37,10 @@ describe('SimpleChoiceComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should emit onUserResponse event', () => {
-        spyOn(component.onUserResponse, 'emit');
+    it('should emit userResponse event', () => {
+        spyOn(component.userResponse, 'emit');
         component.selectAnswer(r1);
-        expect(component.onUserResponse.emit).toHaveBeenCalledWith(r1);
+        expect(component.userResponse.emit).toHaveBeenCalledWith(r1);
     });
 
     // Tests méthode updateDisplay

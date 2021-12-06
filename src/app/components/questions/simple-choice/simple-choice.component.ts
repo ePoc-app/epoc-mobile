@@ -1,43 +1,30 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SimpleChoiceQuestion} from 'src/app/classes/contents/assessment';
-import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
+import {AbstractQuestionComponent} from '../abstract-question.component';
 
 @Component({
     selector: 'simple-choice',
     templateUrl: './simple-choice.component.html',
     styleUrls: ['./simple-choice.component.scss'],
 })
-export class SimpleChoiceComponent extends AbstractActivityContainerComponent implements OnChanges {
+export class SimpleChoiceComponent extends AbstractQuestionComponent implements OnInit{
 
     @Input() question: SimpleChoiceQuestion;
 
     selectedAnswer;
-    selectValue;
 
     constructor() {
         super();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.solutionShown && changes.solutionShown.currentValue) {
-            this.updateDisplay(changes.solutionShown.currentValue);
-        } else if (changes.solutionShown && changes.solutionShown.currentValue === false) {
-            this.updateDisplay(changes.solutionShown.currentValue);
+    ngOnInit() {
+        if (this.userPreviousResponse && this.userPreviousResponse.length > 0) {
+            this.selectedAnswer = this.userPreviousResponse[0];
         }
     }
 
     selectAnswer(answer) {
         this.selectedAnswer = answer;
-        this.onUserResponse.emit([this.selectedAnswer]);
-    }
-
-    updateDisplay(solutionShown: boolean) {
-        if (solutionShown) {
-            this.selectValue = this.question.correctResponse;
-            this.selectHeader = 'Solution';
-        } else {
-            this.selectValue = this.selectedAnswer;
-            this.selectHeader = '';
-        }
+        this.userResponse.emit([this.selectedAnswer]);
     }
 }

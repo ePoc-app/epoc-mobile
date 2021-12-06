@@ -1,15 +1,27 @@
-.nbCorrect {
-  margin-top: 0;
-  height: 20px;
-  color: var(--ion-color-inria-blue);
+ion-radio-group{
+  display: block;
+  margin-top: 2rem;
 }
 
-.correct {
-  --background: var(--ion-color-inria-correct-rgba60);
-  border-radius: 0.5em;
+ion-item{
+  margin-bottom: .5rem;
+  border-radius: .5rem;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
 }
 
-.incorrect {
-  --background: var(--ion-color-inria-incorrect-rgba60);
-  border-radius: 0.5em;
+ion-radio{
+  --color: var(--ion-color-inria-lightgrey);
+  --color-checked: var(--ion-color-inria-spe);
+  background: white;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 1.5rem;
+
+  & + ion-label{
+    padding-top: .2em;
+    color: var(--ion-color-inria-blue);
+  }
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractActivityContainerComponent} from '../abstract-activity-container.component';
+import {AbstractQuestionComponent} from '../abstract-question.component';
 
 @Component({
   selector: 'thoughts',
   templateUrl: './thoughts.component.html',
   styleUrls: ['./thoughts.component.scss'],
 })
-export class ThoughtsComponent extends AbstractActivityContainerComponent {
+export class ThoughtsComponent extends AbstractQuestionComponent {
 
   constructor() {
     super();

@@ -18,14 +18,17 @@ export class SimpleQuestionComponent {
     private questionComponent!: CommonQuestionComponent;
 
     reading: Reading;
-    answerChecked = false;
+    questionAnswered = false;
 
     constructor() {}
 
     checkAnswer(event) {
         event.preventDefault();
         event.stopPropagation();
-        this.questionComponent.checkAnswer();
-        this.answerChecked = true;
+        this.questionComponent.calcScore();
+    }
+
+    onQuestionAnswered (event) {
+        this.questionAnswered = event;
     }
 }
