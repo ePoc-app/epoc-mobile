@@ -29,14 +29,10 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
     @Output() dragging = new EventEmitter<string>();
 
     current;
-    responses;
+    responses = [];
     answer;
     dropZones: {label:string, isOpen:boolean}[];
     isDragging = false;
-
-    // Used in html to display values
-    selectValue = [];
-    selectClass: any;
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -46,26 +42,29 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
     }
 
     ngOnInit(): void {
-        const shuffleArray = arr => arr
-            .map(a => [Math.random(), a])
-            .sort((a, b) => a[0] - b[0])
-            .map(a => a[1]);
-
-        this.responses = shuffleArray(this.question.responses);
-
         this.dropZones = this.question.correctResponse.map((zone) => {
             return {label: zone.label, isOpen: false};
         });
 
-        this.answer = this.question.correctResponse.map((zone) => {
-            return [];
-        });
-        this.selectClass = this.question.correctResponse.map((zone) => {
-            return [];
-        });
+        if (this.userPreviousResponse) {
+            this.answer = this.userPreviousResponse;
+        } else {
+            this.answer = this.question.correctResponse.map((zone) => {
+                return [];
+            });
+        }
+        if (!this.disabled) {
+            const shuffleArray = arr => arr
+                .map(a => [Math.random(), a])
+                .sort((a, b) => a[0] - b[0])
+                .map(a => a[1]);
+
+            this.responses = shuffleArray(this.question.responses);
+        }
     }
 
     ngAfterViewInit() {
+        if (!this.dropItem) return;
         const elem = this.dropItem.nativeElement.parentElement;
         const drag = this.gestureCtrl.create({
             el: elem,
