@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MultipleChoiceQuestion} from 'src/app/classes/contents/assessment';
 import {AbstractQuestionComponent} from '../abstract-question.component';
 
@@ -7,7 +7,7 @@ import {AbstractQuestionComponent} from '../abstract-question.component';
     templateUrl: '../multiple-choice/multiple-choice.component.html',
     styleUrls: ['../multiple-choice/multiple-choice.component.scss'],
 })
-export class MultipleChoiceComponent extends AbstractQuestionComponent {
+export class MultipleChoiceComponent extends AbstractQuestionComponent implements OnInit {
 
     @Input() question: MultipleChoiceQuestion;
 
@@ -16,6 +16,12 @@ export class MultipleChoiceComponent extends AbstractQuestionComponent {
 
     constructor() {
         super();
+    }
+
+    ngOnInit() {
+        if (this.userPreviousResponse && this.userPreviousResponse.length > 0) {
+            this.selectedAnswers = this.userPreviousResponse;
+        }
     }
 
     selectAnswer(answer) {
@@ -27,7 +33,6 @@ export class MultipleChoiceComponent extends AbstractQuestionComponent {
                 this.selectedAnswers.splice(index, 1);
             }
         }
-        console.log(this.selectedAnswers);
         this.userResponse.emit(this.selectedAnswers);
     }
 }
