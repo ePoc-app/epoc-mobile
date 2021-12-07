@@ -1,16 +1,31 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from 'src/app/classes/contents/assessment';
+import {DragAndDropquestion, Question} from 'src/app/classes/contents/assessment';
 
 @Component({
   selector: 'correction-reorder',
   templateUrl: './correction-reorder.component.html',
-  styleUrls: ['./correction-reorder.component.scss'],
+  styleUrls: ['../correction-common.scss', './correction-reorder.component.scss'],
 })
 export class CorrectionReorderComponent implements OnInit {
-  @Input() question: Question;
+  @Input() question: DragAndDropquestion;
+  @Input() userResponses: any[];
+
+  correction: {correct: boolean, label: string, correctResponse: string}[] = [];
+  rightResponses = 0;
+  wrongResponses = 0;
 
   constructor() { }
 
-  ngOnInit() {}
-
+  ngOnInit () {
+    this.correction = this.userResponses.map((response, index) => {
+      const rightIndex = this.question.responses.findIndex(r => r.value === response);
+      const correct =  rightIndex === index;
+      correct ? this.rightResponses++ : this.wrongResponses++;
+      return {
+        correct,
+        label: response.label,
+        correctResponse: 'Position ' + (rightIndex+1)
+      }
+    });
+  }
 }

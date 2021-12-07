@@ -1,6 +1,11 @@
-<ion-reorder-group (ionItemReorder)="doReorder($event)">
-  <ion-item class="item" *ngFor="let response of responses">
-    <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
-    <ion-reorder slot="end"></ion-reorder>
-  </ion-item>
+<ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="disabled">
+  <div class="item" *ngFor="let response of responses; let index = index;">
+    <span class="item-index">{{index+1}}</span>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
+      <ion-reorder slot="end">
+        <ion-icon src="/assets/icon/slider.svg"></ion-icon>
+      </ion-reorder>
+    </ion-item>
+  </div>
 </ion-reorder-group>
