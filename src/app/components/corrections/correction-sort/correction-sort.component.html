@@ -1,3 +1,28 @@
-<p>
-  correction-sort works!
-</p>
+<ng-container  *ngIf="correction">
+  <div class="correction-specs">
+    <div class="correction-spec">
+      <div class="correction-spec-icon"><ion-icon name="checkmark-outline"></ion-icon></div>
+      <div class="correction-spec-value">{{rightResponses}} {{rightResponses > 1 ? 'bonnes réponses' : 'bonne réponse'}}</div>
+    </div>
+    <div class="correction-spec">
+      <div class="correction-spec-icon"><ion-icon name="close-outline"></ion-icon></div>
+      <div class="correction-spec-value">{{wrongResponses}} {{wrongResponses > 1 ? 'mauvaises réponses' : 'mauvaise réponse'}}</div>
+    </div>
+  </div>
+  <h4>Vous avez répondu</h4>
+  <div class="sort-group" *ngFor="let sortGroup of sortGroups; let index = index;">
+    <div class="sort-group-label">{{sortGroup}}</div>
+    <ion-item lines="none" color="inria-light" *ngFor="let response of correction[index]">
+      <div class="correction-icon correct" *ngIf="response.correct"><ion-icon name="checkmark-outline"></ion-icon></div>
+      <div class="correction-icon incorrect" *ngIf="!response.correct"><ion-icon name="close-outline"></ion-icon></div>
+      <ion-label class="ion-text-wrap" color="inria-blue">
+        {{response.label}}
+        <div class="correction-right" *ngIf="response.correct">C'est une bonne réponse !</div>
+        <div class="correction-wrong" *ngIf="!response.correct">C'est faux !</div>
+        <div class="correction-right-answer" *ngIf="!response.correct">
+          <b>Bonne réponse : </b><span>{{response.correctResponse}}</span>
+        </div>
+      </ion-label>
+    </ion-item>
+  </div>
+</ng-container>

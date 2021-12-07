@@ -118,6 +118,7 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
         if (this.responses.length > 0) {
             this.answer[index].push(this.responses.shift());
             if (this.responses.length === 0) {
+                this.userResponse.emit(this.answer);
             }
         }
     }
