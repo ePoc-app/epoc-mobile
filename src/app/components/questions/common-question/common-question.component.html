@@ -46,7 +46,7 @@
       </div>
       <ng-container [ngSwitch]="question.type">
         <correction-multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" [userResponses]="userResponses"></correction-multiple-choice>
-        <correction-reorder *ngSwitchCase="'reorder'"></correction-reorder>
+        <correction-reorder *ngSwitchCase="'reorder'" [question]="question" [userResponses]="userResponses"></correction-reorder>
         <correction-sort *ngSwitchCase="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type) ? question.type : !question.type" [question]="question" [userResponses]="userResponses"></correction-sort>
         <correction-generic *ngSwitchDefault [question]="question" [userResponses]="userResponses"></correction-generic>
       </ng-container>

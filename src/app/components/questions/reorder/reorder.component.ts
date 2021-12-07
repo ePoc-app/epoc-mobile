@@ -35,7 +35,7 @@ export class ReorderComponent extends AbstractQuestionComponent implements OnIni
 
     doReorder(ev: any) {
         this.responses = ev.detail.complete(this.responses);
-        const answer = this.responses.reduce( (accumulator, response) => accumulator + response.value, '');
+        const answer = this.responses.map((response) => response.value);
         this.userResponse.emit(answer);
     }
 
