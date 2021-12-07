@@ -170,7 +170,6 @@ export class EpocPlayerPage implements OnInit {
 
     // /!\ this event is binded from videplayer and dragable element
     onDrag(event) {
-        console.log(event);
         if (event === 'dragstart') {
             this.readerSlides.lockSwipes(true);
         } else {

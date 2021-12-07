@@ -30,7 +30,6 @@ export class CorrectionSortComponent implements OnInit {
         }
       })
     });
-    console.log(this.correction);
   }
 
 }

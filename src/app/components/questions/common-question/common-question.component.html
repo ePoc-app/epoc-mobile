@@ -27,7 +27,7 @@
       <simple-choice *ngSwitchCase="question.type === 'choice' && question.responses.length > 0 ? question.type : !question.type" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></simple-choice>
       <multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></multiple-choice>
       <reorder *ngSwitchCase="'reorder'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></reorder>
-      <drag-and-drop *ngSwitchCase="'drag-and-drop'" [question]="question" [disabled]="questionDisabled" (dragging)="onDrag($event)" (userResponse)="updateUserResponse($event)"></drag-and-drop>
+      <drag-and-drop *ngSwitchCase="'drag-and-drop'" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (dragging)="onDrag($event)" (userResponse)="updateUserResponse($event)"></drag-and-drop>
       <swipe *ngSwitchCase="'swipe'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></swipe>
       <dropdown-list *ngSwitchCase="'dropdown-list'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></dropdown-list>
     </div>

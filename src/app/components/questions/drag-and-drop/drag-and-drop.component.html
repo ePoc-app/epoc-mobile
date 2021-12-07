@@ -6,13 +6,13 @@
   </div>
 </div>
 <div class="drop-zones">
-  <ion-range class="drop-zones-progress" disabled="true" mode="md" step="1" min="0"
+  <ion-range class="drop-zones-progress" disabled="true" mode="md" step="1" min="0" *ngIf="!disabled"
              [max]="question.responses.length" [value]="question.responses.length - responses.length" snaps="true"></ion-range>
-  <p class="drop-zones-instruction">
+  <p class="drop-zones-instruction" *ngIf="!disabled">
     <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
     <span>Cliquez ou glissez l’étiquette dans la bonne catégorie ci-dessous :</span>
   </p>
-  <div class="drop-zone" [ngClass]="{'open': zone.isOpen}" (click)="addResponse(zoneIndex)" *ngFor="let zone of dropZones; let zoneIndex = index;" #dropZonesElems>
+  <div class="drop-zone" [ngClass]="{'open': zone.isOpen && answer[zoneIndex].length > 0}" (click)="addResponse(zoneIndex)" *ngFor="let zone of dropZones; let zoneIndex = index;" #dropZonesElems>
     <div class="zone-header">
       <div class="zone-label">{{zone.label}}</div>
       <div class="zone-count" [ngClass]="{'active':answer[zoneIndex].length > 0}">{{answer[zoneIndex].length}}</div>
@@ -20,7 +20,7 @@
     </div>
     <div class="zone">
       <div class="response-item sorted" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;">
-          {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
+          {{response.label}} <ion-icon name="close" *ngIf="!disabled" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
       </div>
     </div>
   </div>
