@@ -20,6 +20,7 @@ export class SimpleQuestionComponent {
 
     reading: Reading;
     questionAnswered = false;
+    disableCheck = true;
 
     constructor() {}
 
@@ -35,5 +36,9 @@ export class SimpleQuestionComponent {
 
     onDrag(value){
         this.dragging.emit(value);
+    }
+
+    onUserHasResponded (event) {
+        this.disableCheck = !event;
     }
 }

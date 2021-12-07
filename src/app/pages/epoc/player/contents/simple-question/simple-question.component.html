@@ -1,6 +1,7 @@
 <common-question icon="help-circle-icon" [title]="content.title" [subtitle]="content.subtitle" [contentId]="content.id"
-                 [epocId]="epocId" [question]="question" (questionAnswered)="onQuestionAnswered($event)" (dragging)="onDrag($event)">
-  <ion-button *ngIf="!questionAnswered && question.responses.length > 0" expand="block" size="large" color="inria" (click)="checkAnswer($event)">
+                 [epocId]="epocId" [question]="question" (questionAnswered)="onQuestionAnswered($event)"
+                 (dragging)="onDrag($event)" (userHasResponded)="onUserHasResponded($event)">
+  <ion-button *ngIf="!questionAnswered && question.responses.length > 0" [disabled]="disableCheck" expand="block" size="large" color="inria" (click)="checkAnswer($event)">
     <span>Valider mes réponses</span>
   </ion-button>
   <ion-button *ngIf="question.responses.length <= 0" expand="block" size="large" color="inria" fill="outline" (click)="checkAnswer($event)">

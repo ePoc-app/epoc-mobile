@@ -17,6 +17,7 @@ export class CommonQuestionComponent implements OnInit {
   @Input() subtitle: string;
   @Input() icon: string;
 
+  @Output() userHasResponded = new EventEmitter<boolean>();
   @Output() questionAnswered = new EventEmitter<boolean>();
   @Output() dragging = new EventEmitter<string>();
 
@@ -74,6 +75,7 @@ export class CommonQuestionComponent implements OnInit {
 
   updateUserResponse(userResponse) {
     this.userResponses = userResponse;
+    this.userHasResponded.emit(true);
   }
 
   onDrag(value){
