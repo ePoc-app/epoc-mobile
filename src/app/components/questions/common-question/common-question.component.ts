@@ -73,7 +73,6 @@ export class CommonQuestionComponent implements OnInit {
   }
 
   updateUserResponse(userResponse) {
-    console.log(userResponse);
     this.userResponses = userResponse;
   }
 
