@@ -18,6 +18,7 @@ export class CommonQuestionComponent implements OnInit {
   @Input() icon: string;
 
   @Output() questionAnswered = new EventEmitter<boolean>();
+  @Output() dragging = new EventEmitter<string>();
 
   @ViewChild(FlipCardComponent, { static: false })
   private flipCardComponent!: FlipCardComponent;
@@ -73,5 +74,9 @@ export class CommonQuestionComponent implements OnInit {
 
   updateUserResponse(userResponse) {
     this.userResponses = userResponse;
+  }
+
+  onDrag(value){
+    this.dragging.emit(value);
   }
 }

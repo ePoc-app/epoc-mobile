@@ -168,8 +168,9 @@ export class EpocPlayerPage implements OnInit {
         this.readerSlides.slideNext();
     }
 
-    // /!\ this event is binded from videplayer
-    timelineDragging(event) {
+    // /!\ this event is binded from videplayer and dragable element
+    onDrag(event) {
+        console.log(event);
         if (event === 'dragstart') {
             this.readerSlides.lockSwipes(true);
         } else {

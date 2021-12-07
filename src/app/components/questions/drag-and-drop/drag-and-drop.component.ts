@@ -1,43 +1,47 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {trigger, transition, animate, style} from '@angular/animations';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    QueryList,
+    ViewChild,
+    ViewChildren
+} from '@angular/core';
 import {DragAndDropquestion} from 'src/app/classes/contents/assessment';
 import {AbstractQuestionComponent} from '../abstract-question.component';
+import {GestureController} from '@ionic/angular';
 
 @Component({
     selector: 'drag-and-drop',
     templateUrl: '../drag-and-drop/drag-and-drop.component.html',
-    styleUrls: ['../drag-and-drop/drag-and-drop.component.scss'],
-    animations: [
-        trigger('fadeOut', [
-            transition(':leave', [
-                style({position: 'absolute', width: '100%', top: 0, opacity: 1}),
-                animate('200ms ease-in', style({opacity: 1}))
-            ])
-        ]),
-        trigger('slideInOut', [
-            transition(':enter', [
-                style({opacity: 0, transform: 'translateY(100%)'}),
-                animate('200ms 100ms ease-in', style({opacity: 1, transform: 'translateY(0%)'}))
-            ]),
-            transition(':leave', [
-                animate('200ms ease-in', style({transform: 'translateY(100%)'}))
-            ])
-        ])
-    ]
+    styleUrls: ['../drag-and-drop/drag-and-drop.component.scss']
 })
-export class DragAndDropComponent extends AbstractQuestionComponent implements OnInit {
+export class DragAndDropComponent extends AbstractQuestionComponent implements OnInit, AfterViewInit {
 
     @Input() question: DragAndDropquestion;
+    @ViewChildren('dropZonesElems') dropZonesElems:QueryList<ElementRef>;
+    @ViewChild('dropItem') dropItem: ElementRef;
+
+    @Output() dragging = new EventEmitter<string>();
 
     current;
     responses;
     answer;
+    dropZones: {label:string, isOpen:boolean}[];
+    isDragging = false;
 
     // Used in html to display values
     selectValue = [];
     selectClass: any;
 
-    constructor() {
+    constructor(
+        private ref: ChangeDetectorRef,
+        private gestureCtrl: GestureController
+    ) {
         super();
     }
 
@@ -49,6 +53,10 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
 
         this.responses = shuffleArray(this.question.responses);
 
+        this.dropZones = this.question.correctResponse.map((zone) => {
+            return {label: zone.label, isOpen: false};
+        });
+
         this.answer = this.question.correctResponse.map((zone) => {
             return [];
         });
@@ -57,9 +65,53 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
         });
     }
 
-    // trick to trigger angular aniamtion
-    getCurrentResponse() {
-        return [this.responses[0]];
+    ngAfterViewInit() {
+        const elem = this.dropItem.nativeElement.parentElement;
+        const drag = this.gestureCtrl.create({
+            el: elem,
+            threshold: 0,
+            gestureName: 'drag',
+            onStart: ev => {
+                this.isDragging = true;
+                this.dragging.emit('dragstart');
+                this.ref.detectChanges();
+            },
+            onMove: ev => {
+                elem.style.transform = `translate(${ev.deltaX}px, ${ev.deltaY}px)`;
+                elem.style.zIndex = 10;
+                const zoneIndex = this.hoveringZone(ev.currentX, ev.currentY);
+                if (zoneIndex !== -1) {
+                    this.dropZonesElems.toArray()[zoneIndex].nativeElement.style.borderColor = 'var(--ion-color-inria-spe)';
+                }
+                this.ref.detectChanges();
+            },
+            onEnd: ev => {
+                elem.style.transform = `translate(0,0)`;
+                this.isDragging = false;
+                this.dragging.emit('dragend');
+                const zoneIndex = this.hoveringZone(ev.currentX, ev.currentY);
+                if (zoneIndex !== -1) {
+                    this.dropZonesElems.toArray()[zoneIndex].nativeElement.style.borderColor = '';
+                    this.addResponse(zoneIndex);
+                }
+                this.ref.detectChanges();
+            },
+        });
+
+        drag.enable();
+    }
+
+    hoveringZone (x, y) : number {
+        let hoveringZoneIndex = -1;
+        this.dropZonesElems.forEach((zone, index) => {
+            const rect = zone.nativeElement.getBoundingClientRect();
+            if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+                zone.nativeElement.style.borderColor = '';
+                return;
+            }
+            hoveringZoneIndex = index;
+        })
+        return hoveringZoneIndex;
     }
 
     addResponse(index) {
@@ -68,17 +120,17 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
             if (this.responses.length === 0) {
             }
         }
-
-        const dropZones = document.querySelectorAll('.drop-zone');
-
-        dropZones.forEach(dropZone => {
-            dropZone.scrollTop = dropZone.scrollHeight - dropZone.clientHeight;
-        });
     }
 
     removeResponse($event, zoneIndex, responseIndex) {
         $event.stopPropagation();
         const response = this.answer[zoneIndex].splice(responseIndex, 1);
         this.responses.unshift(...response);
+        this.ref.detectChanges();
+    }
+
+    openZone($event, zone) {
+        $event.stopPropagation();
+        zone.isOpen = !zone.isOpen;
     }
 }
