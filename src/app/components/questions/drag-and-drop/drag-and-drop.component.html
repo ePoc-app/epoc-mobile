@@ -1,17 +1,26 @@
-<div class="current-response" *ngIf="responses.length > 0">
-  <div class="response-item" *ngFor="let currentResponse of getCurrentResponse()" [@fadeOut]>
-    {{currentResponse.label}}
+<div class="responses" [ngClass]="{'dragging': isDragging}" *ngIf="responses.length > 0">
+  <div class="response-item">
+    <span>{{this.responses[0].label}}</span>
+    <ion-icon src="/assets/icon/slider.svg"></ion-icon>
+    <div class="response-item-overlay" #dropItem></div>
   </div>
 </div>
 <div class="drop-zones">
-  <div class="drop-zone" (click)="addResponse(zoneIndex)" *ngFor="let zone of question.correctResponse; let zoneIndex = index;">
-    <span class="zone-label">{{zone.label}}</span>
+  <ion-range class="drop-zones-progress" disabled="true" mode="md" step="1" min="0"
+             [max]="question.responses.length" [value]="question.responses.length - responses.length" snaps="true"></ion-range>
+  <p class="drop-zones-instruction">
+    <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
+    <span>Cliquez ou glissez l’étiquette dans la bonne catégorie ci-dessous :</span>
+  </p>
+  <div class="drop-zone" [ngClass]="{'open': zone.isOpen}" (click)="addResponse(zoneIndex)" *ngFor="let zone of dropZones; let zoneIndex = index;" #dropZonesElems>
+    <div class="zone-header">
+      <div class="zone-label">{{zone.label}}</div>
+      <div class="zone-count" [ngClass]="{'active':answer[zoneIndex].length > 0}">{{answer[zoneIndex].length}}</div>
+      <ion-icon name="chevron-forward-outline" (click)="openZone($event, zone)">></ion-icon>
+    </div>
     <div class="zone">
-      <span class="zone-info" *ngIf="answer[zoneIndex].length < 1">Cliquer pour déposer</span>
-      <div class="solutionNotShown">
-        <div class="response-item" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;" [@slideInOut]>
-            {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
-        </div>
+      <div class="response-item sorted" *ngFor="let response of answer[zoneIndex]; let responseIndex = index;">
+          {{response.label}} <ion-icon name="close" (click)="removeResponse($event, zoneIndex, responseIndex)"></ion-icon>
       </div>
     </div>
   </div>
