@@ -16,8 +16,9 @@ export class CommonQuestionComponent implements OnInit {
   @Input() title: string;
   @Input() subtitle: string;
   @Input() icon: string;
+  @Input() userAssessment;
 
-  @Output() userHasResponded = new EventEmitter<boolean>();
+  @Output() userHasResponded = new EventEmitter<any>();
   @Output() questionAnswered = new EventEmitter<boolean>();
   @Output() dragging = new EventEmitter<string>();
 
@@ -30,36 +31,21 @@ export class CommonQuestionComponent implements OnInit {
   explanationShown = false;
   userResponses;
 
-  constructor(
-      private readingStore: ReadingStoreService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.readingStore.readings$.subscribe(readings => {
-      if (readings) {
-        this.reading = readings.find(item => item.epocId === this.epocId);
-
-        const assessment = this.reading.assessments.find(a => a.id === this.contentId);
-
-        if (assessment) {
-          this.questionDisabled = true;
-          this.userResponses = assessment.responses;
-          this.flipped = true;
-          this.questionAnswered.emit(true);
-        }
-      }
-    });
+    if (this.userAssessment) {
+      this.questionDisabled = true;
+      this.userResponses = this.userAssessment.responses;
+      this.flipped = true;
+      this.questionAnswered.emit(true);
+    }
   }
 
-  calcScore() {
+  showCorrection() {
     this.questionDisabled = true;
-    let score = 0;
-    if (this.userResponses.length === this.question.correctResponse.length) {
-      score = this.userResponses.every((response) => this.question.correctResponse.includes(response)) ? +this.question.score : 0;
-    }
     this.questionAnswered.emit(true);
     this.flip();
-    this.readingStore.saveResponses(this.epocId, this.contentId, score, this.userResponses);
   }
 
   flip() {
@@ -75,7 +61,7 @@ export class CommonQuestionComponent implements OnInit {
 
   updateUserResponse(userResponse) {
     this.userResponses = userResponse;
-    this.userHasResponded.emit(true);
+    this.userHasResponded.emit(this.userResponses);
   }
 
   onDrag(value){

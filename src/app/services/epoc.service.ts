@@ -105,4 +105,24 @@ export class EpocService {
   public calcScoreTotal(epoc: Epoc, questions: Array<uid>) {
     return questions.reduce((total, questionId) => total + Number(epoc.questions[questionId].score), 0);
   }
+
+  /**
+   * Calcule le score d'une question en fonction des réponses d'un apprenant
+   */
+  public calcScore(scoreMax, correction, userResponses) {
+    let score = 0;
+    if (typeof correction === 'string') {
+      score = userResponses.join('') === correction ? +scoreMax : 0;
+    } else {
+      correction = correction as Array<any>;
+      if (correction.length > 0 && correction[0].values){
+        score = correction.every((group, index) => {
+          return JSON.stringify(group.values.sort()) === JSON.stringify(userResponses[index].map(r => r.value).sort())
+        }) ? +scoreMax : 0;
+      } else {
+        score = JSON.stringify(correction.sort()) === JSON.stringify(userResponses.sort())? +scoreMax : 0;
+      }
+    }
+    return score;
+  }
 }
