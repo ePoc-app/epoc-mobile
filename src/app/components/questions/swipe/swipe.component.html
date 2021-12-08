@@ -1,24 +1,32 @@
-<div class="swipe-cards" *ngIf="cardsRemaining.length !==0">
-  <swipe-card *ngFor ="let card of cardsRemaining"
-              [@undoAnimations]="animationState"
-              [possibilities] = "this.question.possibilities"
-              [response] = "card"
-              [disabled] = "false"
-              [selectedSide]="'?'"
-              (onSelectSide)="onSelectSide($event)"
-              (onAnimationRunning)="onAnimation($event)"
-  >
-  </swipe-card>
+<p class="swipe-instruction" *ngIf="!disabled">
+  <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
+  <span>Glissez la carte bleu à gauche ou à droite dans la catégorie convenable ou utilisez les boutons</span>
+</p>
+<div class="swipe-cards">
+  <div class="swipe-card" *ngFor ="let card of cardsRemaining" [ngStyle]="{transform: card.transform}"
+       [@swipeAnimations]="{value: card.animationState, params: {transform: card.transform}}"
+       (@swipeAnimations.done)="animationDone($event)" #swipeCards>
+    <div class="swipe-card-choice" *ngIf="card.selectedSide">
+      {{card.selectedSide}}
+    </div>
+    <div class="swipe-card-content">
+      <ion-icon src=""></ion-icon>
+      <div>« {{card.label}} »</div>
+    </div>
+  </div>
+  <div *ngIf="cardsRemaining.length <= 0">C'est terminé !</div>
 </div>
+<ion-range class="swipe-cards-progress" disabled="true" mode="md" step="1" min="0"
+           [max]="question.responses.length" [value]="question.responses.length - cardsRemaining.length" snaps="true"></ion-range>
 
-<div class="informatif" [hidden]="this.cardsRemaining.length !== 0">
-  <p>Cliquez sur valider pour confirmer vos réponses et accéder à la correction.</p>
+<div class="swipe-actions">
+  <div class="swipe-action" (click)="swipe('swipeLeft')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
+    <ion-icon src="/assets/icon/gauche.svg"></ion-icon>
+  </div>
+  <div class="swipe-action small" [ngClass]="{'hidden' : this.cardsSorted.length <= 0 || this.undoDisabled}" (click)="this.undo()">
+    <ion-icon src="/assets/icon/annuler.svg"></ion-icon>
+  </div>
+  <div class="swipe-action" (click)="swipe('swipeRight')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
+    <ion-icon src="/assets/icon/droite.svg"></ion-icon>
+  </div>
 </div>
-
-<ion-button mode="ios" class="undo"
-            [ngClass]="this.cardsSorted.length <= 0?'hidden':''"
-            [disabled]="this.cardsSorted.length <= 0 || this.undoDisabled"
-            (click)="this.undo()">
-  <ion-icon name="arrow-undo-outline"></ion-icon>
-  <p>Annuler</p>
-</ion-button>

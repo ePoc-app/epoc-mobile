@@ -13,9 +13,7 @@ import {SimpleChoiceComponent} from './questions/simple-choice/simple-choice.com
 import {MultipleChoiceComponent} from './questions/multiple-choice/multiple-choice.component';
 import {ReorderComponent} from './questions/reorder/reorder.component';
 import {DragAndDropComponent} from './questions/drag-and-drop/drag-and-drop.component';
-import {SwipeCardComponent} from './questions/swipe/swipe-card/swipe-card.component';
 import {SwipeComponent} from './questions/swipe/swipe.component';
-import {ModalPage} from './questions/swipe/swipe-modal/modal-page.component';
 import {DropdownListComponent} from './questions/dropdown-list/dropdown-list.component';
 import {AbstractQuestionComponent} from './questions/abstract-question.component';
 import {CommonQuestionComponent} from './questions/common-question/common-question.component';
@@ -44,10 +42,8 @@ import {CorrectionReorderComponent} from './corrections/correction-reorder/corre
         MultipleChoiceComponent,
         ReorderComponent,
         DragAndDropComponent,
-        SwipeCardComponent,
         SwipeComponent,
         DropdownListComponent,
-        ModalPage,
         AbstractQuestionComponent,
         CommonQuestionComponent,
         ThoughtsComponent,
@@ -67,10 +63,8 @@ import {CorrectionReorderComponent} from './corrections/correction-reorder/corre
         MultipleChoiceComponent,
         ReorderComponent,
         DragAndDropComponent,
-        SwipeCardComponent,
         SwipeComponent,
         DropdownListComponent,
-        ModalPage,
         AbstractQuestionComponent,
         CommonQuestionComponent,
         ThoughtsComponent,

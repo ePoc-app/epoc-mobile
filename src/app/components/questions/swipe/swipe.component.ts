@@ -1,147 +1,172 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    QueryList,
+    ViewChildren
+} from '@angular/core';
 import {Response, SwipeQuestion} from 'src/app/classes/contents/assessment';
-import {animate, style, transition, trigger} from '@angular/animations';
-import {AnimationController, ModalController, Platform} from '@ionic/angular';
-import {ModalPage} from './swipe-modal/modal-page.component';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AnimationController, GestureController, ModalController, Platform} from '@ionic/angular';
 import {AbstractQuestionComponent} from '../abstract-question.component';
 
 @Component({
-  selector: 'swipe',
-  templateUrl: './swipe.component.html',
-  styleUrls: ['./swipe.component.scss'],
-  animations: [
-    trigger('undoAnimations', [
-      transition('void => rightToLeft', [
-        style({transform:`translateX(${500}px) rotate(${50}deg)`}),
-        animate('300ms ease-out', style({transform:`none`}))
-      ]),
-      transition('void => leftToRight', [
-        style({transform:`translateX(${-500}px) rotate(${-50}deg)`}),
-        animate('300ms ease-out', style({transform:`none`}))
-      ]),
-    ])
-  ]
+    selector: 'swipe',
+    templateUrl: './swipe.component.html',
+    styleUrls: ['./swipe.component.scss'],
+    animations: [
+        trigger('undoAnimations', [
+            transition('void => rightToLeft', [
+                style({transform: `translateX(${500}px) rotate(${50}deg)`}),
+                animate('300ms ease-out', style({transform: `none`}))
+            ]),
+            transition('void => leftToRight', [
+                style({transform: `translateX(${-500}px) rotate(${-50}deg)`}),
+                animate('300ms ease-out', style({transform: `none`}))
+            ]),
+        ]),
+        trigger('swipeAnimations', [
+            state('initial', style({transform: '{{transform}}'}),  {params: {transform: 'none'}}),
+            state('swipeLeft', style({transform: `translateX(-100vh) rotate(-50deg)`})),
+            state('swipeRight', style({transform: `translateX(100vh) rotate(50deg)`})),
+            transition('initial => swipeLeft', animate('300ms ease-in')),
+            transition('initial => swipeRight', animate('300ms ease-in')),
+            transition('* => initial', animate('300ms ease-out'))
+        ])
+    ]
 })
-export class SwipeComponent extends AbstractQuestionComponent implements OnInit{
+export class SwipeComponent extends AbstractQuestionComponent implements OnInit, AfterViewInit {
 
-  @Input () question: SwipeQuestion;
+    @Input() question: SwipeQuestion;
+    @Output() dragging = new EventEmitter<string>();
+    @ViewChildren('swipeCards') swipeCards:QueryList<ElementRef>;
 
-  cardsSorted: Array<{response: Response, category: number, correct: boolean}> = [];
-  // Arrays to loop on when in correction mode
-  cardsSortedToLeft: Array<{response: Response, correct: boolean}> = [];
-  cardsSortedToRight: Array<{response: Response, correct: boolean}> = [];
+    sides: Array<string>;
 
-  // Array to loop on when in normal mode
-  cardsRemaining: Array<Response> = [];
+    cardsRemaining: Array<{label:string, value:string, selectedSide:string, animationState: string, transform: string}> = [];
+    cardsSorted: Array<{label:string, value:string, selectedSide:string, animationState: string, transform: string}> = [];
 
-  // Sent to parent
-  answersToTheLeft: Array<string> = [];
-  answersToTheRight: Array<string> = [];
+    // Sent to parent
+    answersToTheLeft: Array<{label:string,value:string}> = [];
+    answersToTheRight: Array<{label:string,value:string}> = [];
 
-  // Related to animation
-  animationState: string;
-  undoDisabled: boolean;
+    // Related to animation
+    animationState: string;
+    undoDisabled: boolean;
+    isDragging = false;
 
-  // Modal
-  correct: boolean;
-  category: string;
-  explanation: string;
-  answer: string;
+    constructor(
+        public animationController: AnimationController,
+        private ref: ChangeDetectorRef,
+        private gestureCtrl: GestureController
+    ) {
+        super();
+    }
 
-  constructor(public modalController: ModalController, public animationController: AnimationController, private plt: Platform) {
-    super();
-  }
-
-  ngOnInit() {
-    const shuffleArray = arr => arr
-        .map(a => [Math.random(), a])
-        .sort((a, b) => a[0] - b[0])
-        .map(a => a[1]);
-    this.cardsRemaining = shuffleArray(this.question.responses);
-    this.question.possibilities = this.question.correctResponse.map(response => response.label);
-  }
-
-  fillCorrectionArray(solutionShown: boolean) {
-    if (solutionShown) {
-      this.cardsSortedToLeft = [];
-      this.cardsSortedToRight = [];
-      this.question.correctResponse[0].values.forEach((value) => {
-        this.cardsSortedToLeft.push({
-          response: this.question.responses.find(response => response.value === value),
-          correct: true
-        });
-      })
-      this.question.correctResponse[1].values.forEach((value) => {
-        this.cardsSortedToRight.push({
-          response: this.question.responses.find(response => response.value === value),
-          correct: true
-        });
-      })
-    } else {
-      this.cardsSortedToLeft = [];
-      this.cardsSortedToRight = [];
-      this.cardsSorted.forEach((card) => {
-        if (card.category === 0) {
-          this.cardsSortedToLeft.push(card);
-        } else if (card.category === 1) {
-          this.cardsSortedToRight.push(card);
+    ngOnInit() {
+        const shuffleArray = arr => arr
+            .map(a => [Math.random(), a])
+            .sort((a, b) => a[0] - b[0])
+            .map(a => a[1]);
+        if (!this.userPreviousResponse) {
+            this.cardsRemaining = shuffleArray(this.question.responses).map(response => {
+                return {...response, animationState: 'initial'}
+            });
         }
-      })
+        this.sides = this.question.correctResponse.map(response => response.label);
     }
-  }
 
-  startAnimation(state) {
-    this.animationState = state;
-  }
+    ngAfterViewInit() {
+        if (!this.swipeCards) return;
+        this.initSwipe();
+    }
 
-  undo() {
-    if (this.cardsSorted.length === 0){
-      throw new Error('Array of cards swiped is empty');
-    }
-    const response = this.cardsSorted[this.cardsSorted.length - 1].response;
-    this.cardsRemaining.push(response);
-    if (this.answersToTheLeft.includes(response.value)) {
-      this.answersToTheLeft.splice(this.answersToTheLeft.indexOf(response.value), 1);
-    } else {
-      this.answersToTheRight.splice(this.answersToTheRight.indexOf(response.value), 1);
-    }
-    if (this.cardsSorted[this.cardsSorted.length -1].category === 0) {
-      this.startAnimation('leftToRight');
-    } else if (this.cardsSorted[this.cardsSorted.length - 1].category === 1) {
-      this.startAnimation('rightToLeft');
-    }
-    this.cardsSorted.pop();
-    if (this.cardsRemaining.length === 1) {
-      this.userResponse.emit();
-    }
-  }
+    initSwipe(){
+        const threshold = window.innerWidth / 3;
+        const thresholdVelocity = 0.4;
+        this.swipeCards.forEach((card, index) => {
+            const elem = card.nativeElement;
+            const swipeCard = this.cardsRemaining[index];
+            const gesture = this.gestureCtrl.create({
+                el: elem,
+                threshold: 0,
+                gestureName: 'swipe',
+                onStart: ev => {
+                    this.isDragging = true;
+                    this.dragging.emit('dragstart');
+                    elem.style.transition = 'none';
+                    this.ref.detectChanges();
+                },
+                onMove: ev => {
+                    swipeCard.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
+                    this.ref.detectChanges();
+                },
+                onEnd: ev => {
+                    this.isDragging = false;
+                    this.dragging.emit('dragend');
+                    if (ev.deltaX > threshold || ev.velocityX > thresholdVelocity) {
+                        this.startAnimation(swipeCard, 'swipeRight');
+                    } else if (ev.deltaX < -threshold || ev.velocityX < -thresholdVelocity) {
+                        this.startAnimation(swipeCard, 'swipeLeft');
+                    } else {
+                        elem.style.transition = 'transform .3s ease-in-out';
+                        swipeCard.transform = 'none';
+                    }
+                    this.ref.detectChanges();
+                },
+            });
 
-  onAnimation(event) {
-    this.undoDisabled = event.disabled;
-    this.startAnimation(event.anim);
-  }
-
-  onSelectSide(answer) {
-    if (!this.question.possibilities.includes(this.question.possibilities[answer.category])) {
-      throw new Error('Answer is not a possibility');
-    } else {
-      if (answer.category === 0) {
-        this.answersToTheLeft.push(answer.rep.value);
-        this.cardsRemaining.pop();
-      } else if (answer.category === 1) {
-        this.answersToTheRight.push(answer.rep.value);
-        this.cardsRemaining.pop();
-      }
-      const correctedCard = {
-        response: answer.rep,
-        category: answer.category,
-        correct: this.question.correctResponse[answer.category].values.includes(answer.rep.value)
-      };
-      this.cardsSorted.push(correctedCard);
-      if (this.cardsRemaining.length <= 0) {
-        this.fillCorrectionArray(false);
-        this.userResponse.emit([this.answersToTheLeft, this.answersToTheRight]);
-      }
+            gesture.enable();
+        })
     }
-  }
+
+    startAnimation(swipeCard, animationState) {
+        swipeCard.animationState = animationState;
+    }
+
+    animationDone(event) {
+        if (['swipeRight','swipeLeft'].indexOf(event.toState) !== -1 && event.fromState === 'initial') {
+            this.selectSide(event.toState);
+        }
+    }
+
+    undo() {
+        if (!this.cardsSorted.length) return;
+        const lastCardSorted = this.cardsSorted.pop();
+        if(lastCardSorted.animationState === 'swipeRight') {
+            this.answersToTheLeft.pop();
+        } else if (lastCardSorted.animationState === 'swipeLeft') {
+            this.answersToTheRight.pop();
+        }
+        this.cardsRemaining.push(lastCardSorted);
+        this.ref.detectChanges();
+        lastCardSorted.animationState = 'initial';
+        lastCardSorted.transform = 'none';
+        this.initSwipe();
+        this.userResponse.emit(null);
+    }
+
+    swipe(dir){
+        if(this.cardsRemaining.length > 0) this.startAnimation(this.cardsRemaining[this.cardsRemaining.length-1], dir);
+    }
+
+    selectSide(side) {
+        if (!this.cardsRemaining.length) return;
+        const sortedCard = this.cardsRemaining.pop();
+        this.cardsSorted.push(sortedCard);
+        if(side === 'swipeRight') {
+            this.answersToTheLeft.push({label:sortedCard.label,value:sortedCard.value});
+        } else if (side === 'swipeLeft') {
+            this.answersToTheRight.push({label:sortedCard.label,value:sortedCard.value});
+        }
+
+        if (this.cardsRemaining.length === 0) {
+            this.userResponse.emit([this.answersToTheLeft, this.answersToTheRight]);
+        }
+    }
 }
