@@ -11,8 +11,8 @@
 <flip-card [initFlipped]="flipped" (click)="flip()">
   <ng-container front>
     <div class="title-container">
-      <div class="title-icon">
-        <ion-icon name="help-circle-outline"></ion-icon>
+      <div class="title-icon" *ngIf="icon">
+        <ion-icon [name]="icon"></ion-icon>
       </div>
       <h5 class="subtitle" *ngIf="subtitle">{{subtitle}}</h5>
       <h4 class="title" *ngIf="title">{{title}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
