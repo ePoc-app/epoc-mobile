@@ -10,8 +10,8 @@ export class ScoreProgressComponent implements OnInit {
     @Input() progress: number;
     @Input() delta: number;
     @Input() threshold: number;
-    @Input() minLabel: string;
-    @Input() maxLabel: string;
+    @Input() minLabel: number;
+    @Input() maxLabel: number;
 
     currentDelta = 0;
 

@@ -71,6 +71,13 @@ $inria-lightgrey: #D3D7E0;
   --ion-color-inria-lightgrey-shade: #{darken($inria-lightgrey, 10%)};
   --ion-color-inria-lightgrey-tint: #{lighten($inria-lightgrey, 10%)};
 
+  --ion-color-inria-certificate: #{$inria-certificate};
+  --ion-color-inria-certificate-rgb : #{red($inria-certificate)}, #{green($inria-certificate)}, #{blue($inria-certificate)};
+  --ion-color-inria-certificate-contrast: #FFF;
+  --ion-color-inria-certificate-contrast-rgb: 255, 255, 255;
+  --ion-color-inria-certificate-shade: #{darken($inria-certificate, 10%)};
+  --ion-color-inria-certificate-tint: #{lighten($inria-certificate, 10%)};
+
   --vjs-theme-forest--primary: #364357 !important;
   --vjs-theme-forest--secondary: #81cbcb!important;
 
