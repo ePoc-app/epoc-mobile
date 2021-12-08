@@ -15,7 +15,7 @@
         <b>{{assessmentData.totalUserScore}} pts</b>
         <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
                         [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
-                        [minLabel]="'0'" [maxLabel]="assessmentData.totalScore + 'pts'"></score-progress>
+                        [minLabel]="'0'" [maxLabel]="assessmentData.totalScore"></score-progress>
       </ion-col>
     </ion-row>
     <ion-row>

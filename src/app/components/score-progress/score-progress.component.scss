@@ -1,14 +1,13 @@
 .progress-container{
-  padding: 20px 10px;
+  padding: 1rem 1rem 2rem 1rem;
 }
 
 .progress-track{
   position: relative;
   width:100%;
   height: 50px;
-  background: var(--ion-color-inria-grey);
-  border: 2px solid #333;
-  border-radius: 2px;
+  background: #E6E9EE;
+  border-radius: 10px;
 }
 
 .progress{
@@ -16,7 +15,8 @@
   top:0;
   bottom: 0;
   left: 0;
-  background: var(--ion-color-primary);
+  border-radius: 10px;
+  background: var(--ion-color-inria-correct-shade);
 }
 
 .progress-delta{
@@ -25,7 +25,8 @@
   bottom: 0;
   left: 60%;
   width:0;
-  background: var(--ion-color-success);
+  border-radius: 10px;
+  background: var(--ion-color-inria-correct);
   transition: width 2s ease-in-out;
 }
 
@@ -33,15 +34,28 @@
   position: absolute;
   top:-10px;
   bottom: -15px;
-  border-left: 2px dashed var(--ion-color-warning);
+  border-left: 4px solid var(--ion-color-inria-certificate);
+  border-radius: 4px;
 
   &-label {
     position: absolute;
-    top:-2px;
-    right: calc(100% + 5px);
+    top:calc(100% + 5px);
+    right: 50%;
+    color: var(--ion-color-inria-certificate);
+    transform: translateX(50%);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: bold;
     line-height: 1;
-    font-size: 10px;
-    color: var(--ion-color-warning)
+  }
+
+  ion-icon{
+    display: block;
+    position: absolute;
+    top:calc(50% - 1.1rem);
+    left: calc(50% - 1.1rem);
+    font-size: 2rem;
   }
 }
 
