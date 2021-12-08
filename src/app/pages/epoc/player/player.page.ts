@@ -238,7 +238,7 @@ export class EpocPlayerPage implements OnInit {
                 text: 'À propos du cours',
                 icon: 'information-circle-outline',
                 handler: () => {
-                    this.router.navigateByUrl('/epoc/overview/' + this.epoc.id);
+                    this.router.navigateByUrl('/library/' + this.epoc.id);
                 }
             },
             {
