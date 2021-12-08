@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
 import {AlertController, IonSlides} from '@ionic/angular';
@@ -8,8 +8,8 @@ import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
 import {Assessment, Question} from 'src/app/classes/contents/assessment';
-import {DenormalizePipe} from 'src/app/pipes/denormalize.pipe';
-import {EpocService} from '../../../services/epoc.service';
+import {EpocService} from 'src/app/services/epoc.service';
+import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
 
 @Component({
     selector: 'app-epoc-assessment',
@@ -18,6 +18,7 @@ import {EpocService} from '../../../services/epoc.service';
 })
 export class EpocAssessmentPage implements OnInit {
     @ViewChild('questionSlides', { static: false }) questionSlides: IonSlides;
+    @ViewChildren(CommonQuestionComponent) questionsElement:QueryList<CommonQuestionComponent>;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -27,6 +28,7 @@ export class EpocAssessmentPage implements OnInit {
     assessmentId;
     reading: Reading;
     assessmentDone: Array<boolean>;
+    isEnd = false;
 
     slidesOptions = {
         allowTouchMove: false
@@ -34,20 +36,13 @@ export class EpocAssessmentPage implements OnInit {
 
     scoreMax = 0;
     userScore = 0;
-    userResponses: string[] = [];
+    userResponses: Array<any> = [];
     questions: Question[];
-    questionsSuccessed: boolean[];
     currentQuestion = 0;
-    currentAnswer;
+    currentQuestionUserResponse;
     explanationShown = false;
     assessmentData = null;
-    notransition = false;
-    flipped = false;
     certificateShown = false;
-    solutionShown = false;
-    easierScoring: boolean;
-    nbCorrect: number;
-    nbIncorrect: number;
 
     constructor(
         private route: ActivatedRoute,
@@ -70,6 +65,7 @@ export class EpocAssessmentPage implements OnInit {
         this.readingStore.readings$.subscribe(readings => {
             if (readings) {
                 this.reading = readings.find(item => item.epocId === this.epocId);
+                if (!this.reading) this.readingStore.addReading(this.epocId);
             }
         });
 
@@ -79,166 +75,31 @@ export class EpocAssessmentPage implements OnInit {
             this.assessment = epoc.contents[this.assessmentId];
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
             this.scoreMax = this.epocService.calcScoreTotal(this.epoc, this.assessment.questions);
-            this.questionsSuccessed = new Array(this.questions.length);
-            this.initQuestion();
         });
     }
 
-    updateCurrentAnswer(newValue) {
-        this.currentAnswer = newValue;
+    onUserHasResponded(userResponses) {
+        this.currentQuestionUserResponse = userResponses;
     }
 
     checkAnswer() {
-        this.nbCorrect = 0;
-        this.nbIncorrect = 0;
-        const correctResponse = this.questions[this.currentQuestion].correctResponse;
-        this.easierScoring =
-            (this.epoc.parameters.easierScoring
-            || this.assessment.easierScoring
-            || this.questions[this.currentQuestion].easierScoring) && this.questions[this.currentQuestion].score !== 0;
-        if (typeof correctResponse === 'string') {
-            if (!this.easierScoring) {
-                // Vérification Array entier
-                if (correctResponse === this.currentAnswer) {
-                    this.questionSuccessed();
-                } else {
-                    this.questionFailed();
-                }
-            } else {
-                // Vérification réponse par réponse
-                for (let i = 0; i < this.currentAnswer.length; i++) {
-                    if (this.currentAnswer[i] === correctResponse[i]) {
-                        this.nbCorrect++;
-                    }
-                    // Si on à parcouru toutes les réponses > on calcule le score
-                    if (i === this.currentAnswer.length - 1) {
-                        this.questionEasierScoring();
-                    }
-                }
-            }
-        } else if (Array.isArray(correctResponse)) {
-            if (!this.easierScoring) {
-                if (correctResponse.length === this.currentAnswer.length && correctResponse.every((answer, index) => {
-                    if (typeof answer === 'object') {
-                        return this.arraysEqual(this.currentAnswer[index], answer.values);
-                    } else {
-                        return this.currentAnswer ? this.currentAnswer.indexOf(answer) >= 0 : false;
-                    }
-                })) {
-                    this.questionSuccessed();
-                } else {
-                    this.questionFailed();
-                }
-            } else {
-                    let length = 0;
-                    correctResponse.forEach(() => {
-                        length++;
-                    })
-                    correctResponse.forEach((answer, index) => {
-                        if (typeof answer === 'object') {
-                            // Vérification réponse par réponse
-                            this.currentAnswer[index].forEach((current) => {
-                                    if (answer.values.includes(current)) {
-                                        this.nbCorrect++;
-                                    }
-                                })
-                            // Si on à parcouru toutes les réponses > on calcule le score
-                            if (index + 1 === length) {
-                                    this.questionEasierScoring();
-                                }
-                        } else {
-                            // Vérification réponse par réponse
-                            if (this.currentAnswer.includes(answer)) {
-                                    this.nbCorrect++;
-                                }
-                                // Si on à parcouru toutes les réponses > on calcule le score
-                                if (index + 1 === length) {
-                                    this.questionEasierScoring();
-                                }
-                        }
-                    })
-            }
-        } else {
-            this.questionFailed();
-        }
-        this.userResponses.push(this.currentAnswer);
+        const question = this.questions[this.currentQuestion];
         this.explanationShown = true;
-        this.notransition = false;
-        document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
-    }
-
-    questionSuccessed() {
-        this.userScore += +this.questions[this.currentQuestion].score;
-        this.questionsSuccessed[this.currentQuestion] = true;
-    }
-
-    questionFailed() {
-        this.questionsSuccessed[this.currentQuestion] = false;
-    }
-
-    questionEasierScoring() {
-        const lengthCorrect = this.questions[this.currentQuestion].correctResponse.length;
-        const lengthTotal = this.questions[this.currentQuestion].responses.length
-        const nbIncorrect = this.currentAnswer.length - this.nbCorrect;
-        const scorePerRep = +this.questions[this.currentQuestion].score / lengthCorrect;
-        if (this.questions[this.currentQuestion].type === 'multiple-choice') {
-            this.userScore +=
-                Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) > 0 ?
-                    Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep)  : 0;
-            this.questionsSuccessed[this.currentQuestion] =
-                Math.round(scorePerRep * this.nbCorrect - nbIncorrect * scorePerRep) === Number(this.questions[this.currentQuestion].score);
-        } else if (this.questions[this.currentQuestion].type === 'choice') {
-            this.userScore += Math.round(+this.questions[this.currentQuestion].score * this.nbCorrect);
-            this.questionsSuccessed[this.currentQuestion] =
-                Math.round(+this.questions[this.currentQuestion].score * this.nbCorrect)
-                === Number(this.questions[this.currentQuestion].score);
-        } else {
-            this.userScore += Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect);
-            this.questionsSuccessed[this.currentQuestion] =
-                Math.round(+this.questions[this.currentQuestion].score / lengthTotal * this.nbCorrect)
-                === Number(this.questions[this.currentQuestion].score);
-        }
-    }
-
-    initQuestion() {
-        this.solutionShown = false;
-        this.explanationShown = false;
-        this.notransition = true;
-        this.flipped = false;
-        if (this.questions[this.currentQuestion]) {
-            this.currentAnswer = this.questions[this.currentQuestion].responses.length ? '' : true;
-        }
+        this.questionsElement.toArray()[this.currentQuestion].showCorrection();
+        this.userScore += this.epocService.calcScore(question.score, question.correctResponse, this.currentQuestionUserResponse);
+        this.userResponses.push(this.currentQuestionUserResponse)
     }
 
     nextQuestion() {
+        this.currentQuestionUserResponse = null;
+        this.explanationShown = false;
         this.currentQuestion++;
-        this.initQuestion();
         if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
+            this.isEnd = true;
         }
         this.questionSlides.slideNext();
-    }
-
-    arraysEqual(arr1Orig, arr2Orig) {
-
-        if (!Array.isArray(arr1Orig) || ! Array.isArray(arr2Orig) || arr1Orig.length !== arr2Orig.length) {
-            return false;
-        }
-
-        const arr1 = arr1Orig.concat().sort();
-        const arr2 = arr2Orig.concat().sort();
-
-        for (let i = 0; i < arr1.length; i++) {
-
-            if (arr1[i] !== arr2[i]) {
-                return false;
-            }
-
-        }
-
-        return true;
-
     }
 
     setAssessmentsData() {
@@ -287,22 +148,17 @@ export class EpocAssessmentPage implements OnInit {
     }
 
     retry() {
-        location.reload();
+        this.userScore = 0;
+        this.userResponses = [];
+        this.assessmentData = null;
+        this.currentQuestionUserResponse = null;
+        this.explanationShown = false;
+        this.currentQuestion = 0;
+        this.questionSlides.slideTo(0);
+        this.isEnd = false;
     }
 
     resume() {
         this.router.navigateByUrl(`/epoc/play/${this.epoc.id}/${this.assessment.chapterId}/content/${this.assessmentId}/next`);
-    }
-
-    flip() {
-        if (this.explanationShown) {
-            document.querySelectorAll('.flip-container').forEach((elem) => elem.scrollTo(0, 0));
-            this.flipped = !this.flipped;
-        }
-    }
-
-    toggleSolution(event) {
-        event.stopPropagation();
-        this.solutionShown = !this.solutionShown;
     }
 }
