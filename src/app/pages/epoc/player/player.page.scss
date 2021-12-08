@@ -35,25 +35,36 @@
   }
 }
 
-.reader-action{
-  display:flex;
+.reader-actions{
+  position: absolute;
+  bottom: calc(.25rem + var(--ion-safe-area-bottom));
+  left:50%;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-evenly;
-  line-height: 40px;
-  font-size: 40px;
-  cursor: pointer;
-  text-align: center;
-  color:var(--ion-color-inria);
+  transform: translateX(-50%);
+  z-index: 50;
 
-  .page-action{
-    display: block;
-    height: 1em;
-    &.disable{
-      opacity: .3;
+  .reader-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:3.5rem;
+    height:3.5rem;
+    margin: .2rem;
+    background: white;
+    box-shadow: -4px -4px 8px 0 #FAFBFF, 4px 4px 8px 0 #A6ABBD;
+    border-radius: 4rem;
+    font-size: 1.5rem;
+
+    &.small{
+      width:2.5rem;
+      height:2.5rem;
+      font-size: 1.25rem;
     }
 
-    &.menu{
-      color:var(--ion-color-inria-blue);
+    &.hidden{
+      opacity: 0;
     }
   }
 }

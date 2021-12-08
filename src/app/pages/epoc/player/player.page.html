@@ -63,19 +63,15 @@
       </ion-card-content>
     </ion-card>
   </div>
-</ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <div class="reader-action">
-      <div class="page-action page-prev" [ngClass]="currentPage === 0 ? 'disable':''" (click)="prevPage()" *ngIf="dataInitialized">
-        <ion-icon name="caret-back"></ion-icon>
-      </div>
-      <div class="page-action menu" (click)="displayMenu()">
-        <ion-icon name="menu"></ion-icon>
-      </div>
-      <div class="page-action page-next" [ngClass]="currentPage >= chapter.contents.length + 1 ? 'disable':''" (click)="nextPage()" *ngIf="dataInitialized">
-        <ion-icon name="caret-forward"></ion-icon>
-      </div>
+  <div class="reader-actions" slot="fixed">
+    <div class="reader-action" [ngClass]="currentPage === 0 ? 'disable':''" (click)="prevPage()" *ngIf="dataInitialized">
+      <ion-icon src="/assets/icon/double-gauche.svg"></ion-icon>
     </div>
-  </ion-toolbar>
-</ion-footer>
+    <div class="reader-action small" (click)="displayMenu()">
+      <ion-icon name="menu"></ion-icon>
+    </div>
+    <div class="reader-action" [ngClass]="currentPage >= chapter.contents.length + 1 ? 'disable':''" (click)="nextPage()" *ngIf="dataInitialized">
+      <ion-icon src="/assets/icon/double-droite.svg"></ion-icon>
+    </div>
+  </div>
+</ion-content>
