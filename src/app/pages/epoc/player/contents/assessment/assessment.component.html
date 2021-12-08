@@ -12,10 +12,10 @@
 <p>{{content.summary}}</p>
 <div>
   <ion-button expand="block" size="large" fill="outline" color="inria" [routerLink]="['/epoc/assessment', epocId, content.id]">
-    <span *ngIf="userAssessment">
+    <span *ngIf="!userAssessment">
       Commencer l'activité
     </span>
-    <span *ngIf="!userAssessment">
+    <span *ngIf="userAssessment">
       Refaire l'activité
     </span>
   </ion-button>
