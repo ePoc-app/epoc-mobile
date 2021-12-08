@@ -104,6 +104,11 @@ export class SwipeComponent extends AbstractQuestionComponent implements OnInit,
                 },
                 onMove: ev => {
                     swipeCard.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
+                    if (ev.deltaX > 0) {
+                        swipeCard.selectedSide = this.sides[0];
+                    } else if (ev.deltaX < 0) {
+                        swipeCard.selectedSide = this.sides[1];
+                    }
                     this.ref.detectChanges();
                 },
                 onEnd: ev => {
@@ -116,6 +121,7 @@ export class SwipeComponent extends AbstractQuestionComponent implements OnInit,
                     } else {
                         elem.style.transition = 'transform .3s ease-in-out';
                         swipeCard.transform = 'none';
+                        swipeCard.selectedSide = null;
                     }
                     this.ref.detectChanges();
                 },
@@ -147,6 +153,7 @@ export class SwipeComponent extends AbstractQuestionComponent implements OnInit,
         this.ref.detectChanges();
         lastCardSorted.animationState = 'initial';
         lastCardSorted.transform = 'none';
+        lastCardSorted.selectedSide = null;
         this.initSwipe();
         this.userResponse.emit(null);
     }
