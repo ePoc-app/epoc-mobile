@@ -1,42 +1,54 @@
 <ion-header #header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Retour" color="inria-blue"></ion-back-button>
+      <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
     </ion-buttons>
     <ion-title>Score total</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid *ngIf="assessmentData">
-    <ion-row>
-      <ion-col class="total-score">
-        <h2>Votre score</h2>
-        <b>{{assessmentData.totalUserScore}} pts</b>
+  <div class="wrapper" *ngIf="assessmentData">
+    <div class="title-container">
+      <div class="title-icon">
+        <ion-icon name="star-outline"></ion-icon>
+      </div>
+      <h5 class="title">
+        Votre score total
+      </h5>
+    </div>
+    <div class="score">
+      <div class="score-points">
+          {{assessmentData.totalUserScore}} points
+      </div>
+      <div class="score-chart">
         <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
+                        [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
                         [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
-                        [minLabel]="'0'" [maxLabel]="assessmentData.totalScore"></score-progress>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button [color]="assessmentData.totalUserScore >= epoc.certificateScore ? 'success':'medium'" expand="block" (click)="getCertificate()">Télécharger l'attestation <ion-icon name="download" slot="end"></ion-icon></ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col *ngIf="epoc$ | async as epoc">
-        <ion-list>
-          <ion-list-header mode="ios">Accès rapide :</ion-list-header>
-          <ng-container *ngFor="let assessment of assessments">
-            <ion-item mode="ios" [routerLink]="'/epoc/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">
-              <ion-label>{{assessment.title}}</ion-label>
-              <ion-note [color]="getScore(assessment) < getScoreTotal(assessment) ? 'warning':'success'" *ngIf="getScoreTotal(assessment) > 0">
-                {{getScore(assessment) ? getScore(assessment) : 0}}/{{getScoreTotal(assessment)}}
-              </ion-note>
-            </ion-item>
-          </ng-container>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+                        [minLabel]="'0'"
+                        [maxLabel]="assessmentData.totalScore"></score-progress>
+      </div>
+    </div>
+    <div class="certificate" [ngClass]="{'success':certificateEnabled}">
+      <h5>Continuez !</h5>
+      <p>Gagnez 70 points et obtenez votre attestation</p>
+      <ion-button size="medium" expand="block" [color]="certificateEnabled ? 'white':'medium'"
+          [disabled]="!certificateEnabled" [fill]="certificateEnabled ? '':'outline'" (click)="getCertificate()">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        <span>Télécharger l'attestation</span>
+      </ion-button>
+    </div>
+    <div class="short-access">
+      <h4 class="short-access-label">Récapitulatif des points</h4>
+      <ng-container *ngFor="let assessment of assessments">
+        <div class="short-access-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">
+          <ion-label>{{assessment.title}}</ion-label>
+          <ion-note [color]="getScore(assessment) < getScoreTotal(assessment) ? 'inria-blue':'inria-correct'" *ngIf="getScoreTotal(assessment) > 0">
+            {{getScore(assessment) ? getScore(assessment) : 0}}/{{getScoreTotal(assessment)}}
+          </ion-note>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </ion-content>

@@ -31,6 +31,7 @@ export class EpocScorePage implements OnInit {
 
     user: User;
     loading: boolean;
+    certificateEnabled = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -97,6 +98,8 @@ export class EpocScorePage implements OnInit {
             }
             this.assessmentData.totalScore += scoreTotal;
         });
+
+        this.certificateEnabled = this.assessmentData.totalUserScore >= this.epoc.certificateScore;
     }
 
     getScore(content) {
