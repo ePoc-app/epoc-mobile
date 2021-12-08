@@ -73,7 +73,7 @@ export class SettingsPage implements OnInit {
     async deleteData() {
         const alert = await this.alertController.create({
             header: 'Êtes vous sûr ?',
-            message: 'Cette action effacera <strong>toutes vos données</strong> de l\'application <br/><small>(ePocs, progression, exercices, préférences, etc.)</small>',
+            message: 'Cette action effacera les données des exercices de l\'application <br/><small>(attestation, exercices, préférences, etc.)</small>',
             buttons: [
                 {
                     text: 'Annuler',
@@ -83,7 +83,6 @@ export class SettingsPage implements OnInit {
                     text: 'Confirmer',
                     handler: () => {
                         this.readingStore.resetAll();
-                        this.libraryService.deleteAll().subscribe(() => this.presentToast());
                     }
                 }
             ]
