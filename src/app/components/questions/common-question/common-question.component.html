@@ -23,7 +23,7 @@
 
     <div class="statement ion-text-center">
       <b>{{question.label}}</b>
-      <div *ngIf="question.statement">{{question.statement}}</div>
+      <div *ngIf="question.statement && !['swipe', 'drag-and-drop'].includes(question.type)">{{question.statement}}</div>
     </div>
     <div class="question" [ngSwitch]="question.type">
       <thoughts *ngSwitchCase="question.responses.length === 0 ? question.type : !question.type" [question]="question"></thoughts>

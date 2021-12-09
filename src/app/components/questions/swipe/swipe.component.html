@@ -1,6 +1,6 @@
 <p class="swipe-instruction" *ngIf="!disabled">
   <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
-  <span>Glissez la carte bleu à gauche ou à droite dans la catégorie convenable ou utilisez les boutons</span>
+  <span>Glissez la carte à gauche ou à droite dans la catégorie convenable</span>
 </p>
 <div class="swipe-cards">
   <div class="swipe-card" *ngFor ="let card of cardsRemaining" [ngStyle]="{transform: card.transform}"
