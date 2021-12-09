@@ -29,11 +29,19 @@
                         [maxLabel]="assessmentData.totalScore"></score-progress>
       </div>
     </div>
-    <div class="certificate" [ngClass]="{'success':certificateEnabled}">
+    <div class="certificate" *ngIf="!certificateEnabled">
       <h5>Continuez !</h5>
-      <p>Gagnez 70 points et obtenez votre attestation</p>
-      <ion-button size="medium" expand="block" [color]="certificateEnabled ? 'white':'medium'"
-          [disabled]="!certificateEnabled" [fill]="certificateEnabled ? '':'outline'" (click)="getCertificate()">
+      <p>Gagnez {{epoc.certificateScore - assessmentData.totalUserScore}} points et obtenez votre attestation</p>
+      <ion-button size="medium" expand="block" color="medium" fill="outline" (click)="getCertificate()">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        <span>Télécharger l'attestation</span>
+      </ion-button>
+    </div>
+    <div class="certificate success" *ngIf="certificateEnabled">
+      <ion-icon class="badge" src="/assets/icon/badge.svg"></ion-icon>
+      <h5>Félicitation !</h5>
+      <p>Vous avez atteint le score pour obtenir l’attestation</p>
+      <ion-button size="medium" expand="block" (click)="getCertificate()">
         <ion-icon name="download-outline" slot="start"></ion-icon>
         <span>Télécharger l'attestation</span>
       </ion-button>
