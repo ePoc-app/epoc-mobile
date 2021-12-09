@@ -75,7 +75,7 @@ export class SettingsPage implements OnInit {
     async deleteData() {
         const alert = await this.alertController.create({
             header: 'Êtes vous sûr ?',
-            message: 'Cette action effacera les données des exercices de l\'application <br/><small>(attestation, exercices, préférences, etc.)</small>',
+            message: 'Cette action effacera les données des exercices de l\'application <br/><small>(attestations, quiz, préférences, etc.)</small>',
             buttons: [
                 {
                     text: 'Annuler',
