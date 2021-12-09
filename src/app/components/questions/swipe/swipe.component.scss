@@ -25,10 +25,15 @@
   text-align: center;
 
   &-progress{
-    padding: 0 1rem;
+    padding: 0;
+    margin: 1rem;
     --knob-size:0;
+    --knob-background:transparent;
+    --knob-box-shadow: none;
     --bar-height:10px;
     --bar-border-radius:5px;
+    overflow: hidden;
+    border-radius: 1rem;
 
     &::part(bar){
       background: var(--ion-color-inria-light);
@@ -49,6 +54,10 @@
 
     &::part(tick-active){
       background: white;
+    }
+
+    &::part(knob){
+      display: none;
     }
   }
 }
