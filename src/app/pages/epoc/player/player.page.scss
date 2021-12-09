@@ -42,8 +42,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translateX(-50%);
+  transform: translateY(150px) translateX(-50%);
+  transition: transform .3s;
+  transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   z-index: 50;
+
+  &.showing{
+    transform: translateY(0) translateX(-50%);;
+  }
 
   .reader-action{
     display: flex;

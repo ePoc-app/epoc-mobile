@@ -55,6 +55,7 @@ export class EpocPlayerPage implements OnInit {
     assessments: Assessment[];
     assessmentData;
     certificateShown = false;
+    showControls = true;
 
     // Reading default settings
     settings: Settings = {
@@ -149,6 +150,16 @@ export class EpocPlayerPage implements OnInit {
                 this.setAssessmentsData();
             }
         });
+    }
+
+    hideControls(){
+        console.log('hide');
+        this.showControls = false;
+    }
+
+    toggleControls(){
+        console.log('tap');
+        this.showControls = !this.showControls;
     }
 
     onSlideChange() {
