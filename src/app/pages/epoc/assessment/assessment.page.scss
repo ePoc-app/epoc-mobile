@@ -23,7 +23,7 @@
 }
 
 ion-footer{
-  padding: 1rem;
+  padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom)) 1rem;
 }
 
 .title-container{
