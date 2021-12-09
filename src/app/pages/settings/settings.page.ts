@@ -51,6 +51,7 @@ export class SettingsPage implements OnInit {
 
     ngOnInit() {
         this.auth.getUser().subscribe(user => {
+            console.log(user);
             this.user = user;
         });
 
@@ -84,6 +85,9 @@ export class SettingsPage implements OnInit {
                     text: 'Confirmer',
                     handler: () => {
                         this.readingStore.resetAll();
+                        this.settingsStore.resetSettings();
+                        this.auth.setUser(null);
+                        this.user = null;
                     }
                 }
             ]
@@ -98,6 +102,40 @@ export class SettingsPage implements OnInit {
             duration: 2000
         });
         toast.present();
+    }
+
+    async setUser(){
+        const alert = await this.alertController.create({
+            header: 'Renseigner vos informations',
+            message: 'Ces informations serviront à l\'édition des attestations',
+            inputs: [
+                {
+                    name: 'lastname',
+                    type: 'text',
+                    placeholder: 'Nom',
+                },
+                {
+                    name: 'firstname',
+                    type: 'text',
+                    placeholder: 'Prenom',
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Confirmer',
+                    handler: (data) => {
+                        this.user = {firstname:data.firstname, lastname: data.lastname , username: null, email: null};
+                        this.auth.setUser(this.user);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     logout() {
