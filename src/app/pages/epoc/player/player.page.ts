@@ -95,7 +95,7 @@ export class EpocPlayerPage implements OnInit {
             this.chapterIndex = Object.keys(epoc.chapters).indexOf(this.chapterId);
             this.chapter = epoc.chapters[this.chapterId];
             this.assessments = epoc.assessments;
-            this.chapterLabel = epoc.parameters.chapterParameter.toLowerCase() || 'chapitre';
+            this.chapterLabel = epoc.parameters?.chapterParameter?.toLowerCase() || 'chapitre';
 
             if (this.chapterIndex < Object.entries(epoc.chapters).length - 1) {
                 this.nextChapterId = Object.keys(epoc.chapters)[this.chapterIndex + 1]
