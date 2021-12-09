@@ -86,6 +86,9 @@ export class EpocScorePage implements OnInit {
             const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
             const scoreTotal = this.epocService.calcScoreTotal(this.epoc, assessment.questions);
 
+            assessment.score = this.getScore(assessment);
+            assessment.scoreTotal = this.getScoreTotal(assessment);
+
             if (userAssessment && userAssessment.score > 0) {
                 this.assessmentData.totalUserScore += userAssessment.score;
                 this.assessmentData.successScore += userAssessment.score;

@@ -51,8 +51,8 @@
       <ng-container *ngFor="let assessment of assessments">
         <div class="short-access-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">
           <ion-label>{{assessment.title}}</ion-label>
-          <ion-note [color]="getScore(assessment) < getScoreTotal(assessment) ? 'inria-blue':'inria-correct'" *ngIf="getScoreTotal(assessment) > 0">
-            {{getScore(assessment) ? getScore(assessment) : 0}}/{{getScoreTotal(assessment)}}
+          <ion-note [color]="assessment.score !== null ? assessment.score < assessment.scoreTotal ? 'inria-certificate':'inria-correct':'inria-blue'" *ngIf="assessment.scoreTotal > 0">
+            {{assessment.score ? assessment.score : 0}}/{{assessment.scoreTotal}}
           </ion-note>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
