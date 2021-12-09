@@ -21,7 +21,7 @@
   <div class="reader" slot="fixed" [ngClass]="loading ? 'loading':''" [ngStyle]="readerStyles">
 
     <ng-container *ngIf="dataInitialized">
-      <ion-slides #readerSlides [options]="slidesOptions" (ionSlideWillChange)="onSlideChange()" class="reader-slider">
+      <ion-slides #readerSlides [options]="slidesOptions" (ionSlideTap)="toggleControls()" (ionSlideDrag)="hideControls()" (ionSlideWillChange)="onSlideChange()" class="reader-slider">
         <ion-slide>
           <app-debug [epocId]="epoc.id" [chapterId]="chapterId" contentId="debut"></app-debug>
           <chapter-info [chapter]="chapter"></chapter-info>
@@ -66,7 +66,7 @@
       </ion-card-content>
     </ion-card>
   </div>
-  <div class="reader-actions" slot="fixed">
+  <div class="reader-actions" [ngClass]="{'showing': showControls}" slot="fixed">
     <div class="reader-action" [ngClass]="currentPage === 0 ? 'disable':''" (click)="prevPage()" *ngIf="dataInitialized">
       <ion-icon src="/assets/icon/double-gauche.svg"></ion-icon>
     </div>
