@@ -13,7 +13,7 @@ export class DebugComponent implements OnInit {
 
   settings;
 
-  mail = 'mailto:benoit.rospars@inria.fr';
+  mail = 'ill-epoc-contact@inria.fr';
   subject = '?subject=Commentaire ePoc';
   body = `&body=Ce contenu bug : epoc/${this.epocId}/${this.chapterId}/content/${this.contentId}\nDécrivez le problème en donnant le plus de détails pour le reproduire:`
   mailto = `mailto:${this.mail}${this.subject}${this.body}`
