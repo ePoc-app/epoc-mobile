@@ -58,6 +58,7 @@ export class EpocPlayerPage implements OnInit {
 
     // Reading default settings
     settings: Settings = {
+        debug:false,
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.4,
