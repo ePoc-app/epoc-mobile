@@ -66,6 +66,7 @@ export class LibraryPage implements OnInit {
       }
     ];
     const actionSheet = await this.actionSheetController.create({
+      header: epoc.title,
       cssClass: 'custom-action-sheet',
       mode: 'ios',
       buttons
