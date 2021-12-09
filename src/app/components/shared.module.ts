@@ -22,6 +22,7 @@ import {CorrectionMultipleChoiceComponent} from './corrections/correction-multip
 import {CorrectionSortComponent} from './corrections/correction-sort/correction-sort.component';
 import {CorrectionGenericComponent} from './corrections/correction-generic/correction-generic.component';
 import {CorrectionReorderComponent} from './corrections/correction-reorder/correction-reorder.component';
+import {DebugComponent} from './debug/debug.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {CorrectionReorderComponent} from './corrections/correction-reorder/corre
         CorrectionMultipleChoiceComponent,
         CorrectionSortComponent,
         CorrectionGenericComponent,
-        CorrectionReorderComponent
+        CorrectionReorderComponent,
+        DebugComponent
     ],
     exports: [
         ScoreProgressComponent,
@@ -71,7 +73,8 @@ import {CorrectionReorderComponent} from './corrections/correction-reorder/corre
         CorrectionMultipleChoiceComponent,
         CorrectionSortComponent,
         CorrectionGenericComponent,
-        CorrectionReorderComponent
+        CorrectionReorderComponent,
+        DebugComponent
     ]
 })
 export class SharedModule { }

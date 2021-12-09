@@ -14,45 +14,51 @@
         Affichage
       </ion-list-header>
       <ion-item>
-        <ion-label>Police</ion-label>
-        <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
-          <ion-select-option value="Inria Sans">Sans serif</ion-select-option>
-          <ion-select-option value="Inria Serif">Serif</ion-select-option>
-          <ion-select-option value="open-dyslexic">Open Dyslexic</ion-select-option>
-        </ion-select>
+        <ion-label>Debug</ion-label>
+        <ion-toggle [(ngModel)]="settings.debug" (ngModelChange)="settingsChanged()"></ion-toggle>
       </ion-item>
-      <ion-item>
-        <ion-label>Taille</ion-label>
-        <ion-range min="12" max="20" step="4" [(ngModel)]="settings.fontSize" (ngModelChange)="settingsChanged()" snaps>
-          <ion-icon slot="start" size="small" src="assets/icon/text-size.svg"></ion-icon>
-          <ion-icon slot="end" src="assets/icon/text-size.svg"></ion-icon>
-        </ion-range>
-      </ion-item>
-      <ion-item>
-        <ion-label>Interligne</ion-label>
-        <ion-range min="1" max="2" step="0.5" [(ngModel)]="settings.lineHeight" (ngModelChange)="settingsChanged()" snaps>
-          <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
-          <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
-        </ion-range>
-      </ion-item>
-      <ion-item>
-        <ion-label>Mode sombre</ion-label>
-        <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
-      </ion-item>
-      <ion-list-header class="preview">
-        Prévisualisation
-      </ion-list-header>
-      <ion-item>
-        <ion-text class="preview-settings" [ngStyle]="getStyle()">
-          <h4>Titre</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias consequatur,
-            cumque iusto modi molestiae nihil quibusdam temporibus voluptatem?
-          </p>
-        </ion-text>
-      </ion-item>
+      <ng-container *ngIf="false">
+        <ion-item>
+          <ion-label>Police</ion-label>
+          <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
+            <ion-select-option value="Inria Sans">Sans serif</ion-select-option>
+            <ion-select-option value="Inria Serif">Serif</ion-select-option>
+            <ion-select-option value="open-dyslexic">Open Dyslexic</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Taille</ion-label>
+          <ion-range min="12" max="20" step="4" [(ngModel)]="settings.fontSize" (ngModelChange)="settingsChanged()" snaps>
+            <ion-icon slot="start" size="small" src="assets/icon/text-size.svg"></ion-icon>
+            <ion-icon slot="end" src="assets/icon/text-size.svg"></ion-icon>
+          </ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-label>Interligne</ion-label>
+          <ion-range min="1" max="2" step="0.5" [(ngModel)]="settings.lineHeight" (ngModelChange)="settingsChanged()" snaps>
+            <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
+            <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
+          </ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mode sombre</ion-label>
+          <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
+        </ion-item>
+        <ion-list-header class="preview">
+          Prévisualisation
+        </ion-list-header>
+        <ion-item>
+          <ion-text class="preview-settings" [ngStyle]="getStyle()">
+            <h4>Titre</h4>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias consequatur,
+              cumque iusto modi molestiae nihil quibusdam temporibus voluptatem?
+            </p>
+          </ion-text>
+        </ion-item>
+      </ng-container>
     </ion-list>
-    <ion-list *ngIf="user">
+    <ion-list>
       <ion-list-header>
         Compte
       </ion-list-header>

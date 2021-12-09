@@ -21,6 +21,7 @@ const {Device} = Plugins;
 export class SettingsPage implements OnInit {
 
     settings: Settings = {
+        debug:false,
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.5,
