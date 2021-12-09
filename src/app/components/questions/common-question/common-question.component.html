@@ -10,6 +10,9 @@
 </div>
 <flip-card [initFlipped]="flipped" (click)="flip()">
   <ng-container front>
+    <div class="close" (click)="back($event)">
+      <ion-icon name="close-outline"></ion-icon>
+    </div>
     <div class="title-container">
       <div class="title-icon" *ngIf="icon">
         <ion-icon [name]="icon"></ion-icon>
@@ -34,6 +37,9 @@
     <ng-content></ng-content>
   </ng-container>
   <ng-container back>
+    <div class="close" (click)="back($event)">
+      <ion-icon name="close-outline"></ion-icon>
+    </div>
     <div class="correction" *ngIf="flipped && !explanationShown && question.responses.length > 0">
       <div class="title-container">
         <div class="title-icon">

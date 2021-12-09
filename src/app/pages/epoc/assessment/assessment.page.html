@@ -1,13 +1,10 @@
 <ion-content [scrollY]="false" *ngIf="assessment">
     <div class="slider-wrapper" slot="fixed">
         <ion-slides class="slider" #questionSlides [options]="slidesOptions">
-            <div class="close" *ngIf="!explanationShown" (click)="back($event)">
-                <ion-icon name="close-outline"></ion-icon>
-            </div>
             <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
                 <ion-slide>
-                    <common-question [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
-                         [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" *ngIf="!isEnd">
+                    <common-question closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
+                         [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" *ngIf="!isEnd">
                     </common-question>
                 </ion-slide>
             </ng-container>
