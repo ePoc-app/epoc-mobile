@@ -6,6 +6,7 @@ export class Assessment extends Content {
     questions?: uid[];
     time?: number;
     // initialized at runtime
+    score?: number;
     scoreTotal?: number;
     chapterId?: uid;
     easierScoring?: boolean;

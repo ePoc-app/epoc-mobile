@@ -79,7 +79,9 @@ export class EpocService {
           (currentContent as Assessment).chapterId = chapterId;
           chapter.time = chapter.time + (currentContent as Assessment).questions.length;
           chapter.assessments.push(id);
-          epoc.assessments.push((currentContent as Assessment));
+          if ((currentContent as Assessment).scoreTotal > 0) {
+            epoc.assessments.push((currentContent as Assessment));
+          }
         } else if (currentContent.type === 'simple-question' &&
             Number(epoc.questions[(currentContent as SimpleQuestion).question].score) > 0) {
           (currentContent as Assessment).scoreTotal = this.calcScoreTotal(epoc, [(currentContent as SimpleQuestion).question]);
