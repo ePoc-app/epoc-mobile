@@ -10,6 +10,7 @@ import {FlipCardComponent} from 'src/app/components/flip-card/flip-card.componen
   styleUrls: ['./common-question.component.scss'],
 })
 export class CommonQuestionComponent implements OnInit {
+  @Input() closable: boolean;
   @Input() question: Question;
   @Input() contentId: string;
   @Input() epocId: string;
@@ -21,6 +22,7 @@ export class CommonQuestionComponent implements OnInit {
   @Output() userHasResponded = new EventEmitter<any>();
   @Output() questionAnswered = new EventEmitter<boolean>();
   @Output() dragging = new EventEmitter<string>();
+  @Output() close = new EventEmitter<boolean>();
 
   @ViewChild(FlipCardComponent, { static: false })
   private flipCardComponent!: FlipCardComponent;
@@ -66,5 +68,11 @@ export class CommonQuestionComponent implements OnInit {
 
   onDrag(value){
     this.dragging.emit(value);
+  }
+
+  back(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.close.emit(true)
   }
 }

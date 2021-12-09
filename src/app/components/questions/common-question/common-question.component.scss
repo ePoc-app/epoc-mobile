@@ -44,6 +44,22 @@
   }
 }
 
+.close{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top:2rem;
+  right:2rem;
+  width:1.8rem;
+  height:1.8rem;
+  z-index: 10;
+  background: var(--ion-color-inria-light);
+  border-radius: 2rem;
+  --ionicon-stroke-width: 64px;
+  color: var(--ion-color-inria-blue);
+}
+
 .title-container{
    margin-bottom: 1rem;
    text-align: center;

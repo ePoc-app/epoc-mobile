@@ -1,7 +1,7 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
-import {AlertController, IonSlides} from '@ionic/angular';
+import {AlertController, IonSlides, NavController} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
@@ -50,7 +50,8 @@ export class EpocAssessmentPage implements OnInit {
         private location: Location,
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
-        public alertController: AlertController
+        public alertController: AlertController,
+        public navCtrl: NavController
     ) {}
 
     ngOnInit() {
@@ -141,10 +142,31 @@ export class EpocAssessmentPage implements OnInit {
         this.certificateShown = false;
     }
 
-    back(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        this.router.navigateByUrl('/epoc/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId);
+    back() {
+        this.presentAlertConfirm()
+    }
+
+    async presentAlertConfirm() {
+        const alert = await this.alertController.create({
+            header: 'Souhaitez-vous vraiment quitter cette activité ?',
+            message: 'Vous perdrez votre progression et devrez recommencer cette activité complètement.',
+            buttons: [
+                {
+                    text: 'Non, continuer l\'activité',
+                    role: 'cancel'
+                },
+                {
+                    text: 'Oui, quitter',
+                    handler: () => {
+                        this.navCtrl.navigateBack(
+                            '/epoc/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId
+                        );
+                    },
+                }
+            ],
+        });
+
+        await alert.present();
     }
 
     retry() {
