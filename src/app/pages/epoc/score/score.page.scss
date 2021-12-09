@@ -47,6 +47,7 @@
 }
 
 .certificate{
+  position: relative;
   margin: 1rem 0;
   padding: 1rem;
   background: var(--ion-color-inria-light);
@@ -57,10 +58,20 @@
     background: var(--ion-color-inria-certificate);
 
     ion-button{
+      --background: white;
+      --background-activated: var(--ion-color-light);
+      --background-focused: var(--ion-color-light);
       ion-icon, span{
         color: var(--ion-color-inria-certificate);
       }
     }
+  }
+
+  .badge{
+    position: absolute;
+    top:1rem;
+    right:.5rem;
+    font-size: 4rem;
   }
 
   h5{
