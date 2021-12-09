@@ -8,6 +8,14 @@ import {StorageService} from './storage.service';
 })
 export class SettingsStoreService {
 
+    defaultSettings: Settings = {
+        debug:false,
+        font: 'Inria Sans',
+        fontSize: 16,
+        lineHeight: 1.5,
+        darkMode: false
+    };
+
     private readonly settingsSubject = new BehaviorSubject<Settings>(undefined);
     readonly settings$ = this.settingsSubject.asObservable();
 
@@ -33,9 +41,13 @@ export class SettingsStoreService {
         this.storageService.setValue('settings', JSON.stringify(this.settings));
     }
 
+    resetSettings(){
+        this.settings = this.defaultSettings;
+        this.saveSettingss();
+    }
+
     updateSettings(settings: Settings) {
         this.settings = settings;
-
         this.saveSettingss();
     }
 }
