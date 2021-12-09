@@ -155,6 +155,43 @@ ion-button{
   }
 }
 
+ion-range.progress-indicator{
+  padding: 0;
+  margin: 1rem;
+  --knob-size:0;
+  --knob-background:transparent;
+  --knob-box-shadow: none;
+  --bar-height:10px;
+  --bar-border-radius:5px;
+  overflow: hidden;
+  border-radius: 1rem;
+
+  &::part(bar){
+    background: var(--ion-color-inria-light);
+  }
+
+  &::part(bar-active){
+    background: var(--ion-color-inria-spe);
+  }
+
+  &::part(tick), &::part(tick-active){
+    top: calc((var(--height) - var(--bar-height) + 4px) / 2);
+    width: calc(var(--bar-height) - 4px);
+    height: calc(var(--bar-height) - 4px);
+    border-radius: 50%;
+    background: #D0D7E1;
+    transform: translateX(calc(-100% - 4px));
+  }
+
+  &::part(tick-active){
+    background: white;
+  }
+
+  &::part(knob){
+    display: none;
+  }
+}
+
 .spin{
   animation: spin 2s infinite linear;
 }

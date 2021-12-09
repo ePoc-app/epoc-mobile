@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="drop-zones">
-  <ion-range class="drop-zones-progress" disabled="true" mode="md" step="1" min="0" *ngIf="!disabled"
+  <ion-range class="progress-indicator" disabled="true" mode="md" step="1" min="0" *ngIf="!disabled"
              [max]="question.responses.length" [value]="question.responses.length - responses.length" snaps="true"></ion-range>
   <p class="drop-zones-instruction" *ngIf="!disabled">
     <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>

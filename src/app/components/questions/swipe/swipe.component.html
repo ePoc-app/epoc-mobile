@@ -16,7 +16,7 @@
   </div>
   <div *ngIf="cardsRemaining.length <= 0">C'est terminé !</div>
 </div>
-<ion-range class="swipe-cards-progress" disabled="true" mode="md" step="1" min="0"
+<ion-range class="progress-indicator" disabled="true" mode="md" step="1" min="0"
            [max]="question.responses.length" [value]="question.responses.length - cardsRemaining.length" snaps="true"></ion-range>
 
 <div class="swipe-actions">
