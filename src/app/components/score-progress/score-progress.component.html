@@ -2,13 +2,13 @@
   <div class="progress-track">
     <div class="progress" [ngStyle]="{'width': progress + '%'}"></div>
     <div class="progress-delta" [ngStyle]="{'left': progress + '%', 'width': currentDelta + '%'}"></div>
-    <div class="progress-threshold" [ngStyle]="{'left': threshold + '%'}" *ngIf="threshold < 100">
-      <div class="progress-threshold-label">
-        Attestation<br/>
-        {{threshold/100*maxLabel}} points
-      </div>
-      <ion-icon src="/assets/icon/badge.svg"></ion-icon>
+  </div>
+  <div class="progress-threshold" [ngStyle]="{'left': threshold + '%'}" *ngIf="threshold < 100">
+    <div class="progress-threshold-label">
+      Attestation<br/>
+      {{threshold/100*maxLabel}} points
     </div>
+    <ion-icon src="/assets/icon/badge.svg"></ion-icon>
   </div>
   <div class="progress-labels">
     <div class="progress-min">{{minLabel}}</div>

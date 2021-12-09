@@ -1,4 +1,5 @@
 .progress-container{
+  position: relative;
   padding: 1rem 1rem 2rem 1rem;
 }
 
@@ -8,6 +9,7 @@
   height: 50px;
   background: #E6E9EE;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .progress{
@@ -15,7 +17,6 @@
   top:0;
   bottom: 0;
   left: 0;
-  border-radius: 10px;
   background: var(--ion-color-inria-correct-shade);
 }
 
@@ -25,15 +26,14 @@
   bottom: 0;
   left: 60%;
   width:0;
-  border-radius: 10px;
   background: var(--ion-color-inria-correct);
   transition: width 2s ease-in-out;
 }
 
 .progress-threshold{
   position: absolute;
-  top:-10px;
-  bottom: -15px;
+  top:.5rem;
+  height:calc(50px + 1rem);
   border-left: 4px solid var(--ion-color-inria-certificate);
   border-radius: 4px;
 
