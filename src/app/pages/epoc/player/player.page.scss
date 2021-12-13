@@ -62,11 +62,17 @@
     box-shadow: -4px -4px 8px 0 #FAFBFF, 4px 4px 8px 0 #A6ABBD;
     border-radius: 4rem;
     font-size: 1.5rem;
+    color:var(--ion-color-inria);
+
+    &.disabled{
+      color: var(--ion-color-inria-lightgrey);
+    }
 
     &.small{
       width:2.5rem;
       height:2.5rem;
       font-size: 1.25rem;
+      color:var(--ion-color-inria-blue);
     }
 
     &.hidden{

@@ -13,6 +13,7 @@ import {Assessment} from 'src/app/classes/contents/assessment';
 import {uid} from 'src/app/classes/types';
 import {DenormalizePipe} from 'src/app/pipes/denormalize.pipe';
 import {EpocService} from '../../../services/epoc.service';
+import {Content} from '../../../classes/contents/content';
 
 @Component({
     selector: 'app-epoc-player',
@@ -33,6 +34,7 @@ export class EpocPlayerPage implements OnInit {
     nextChapterId: uid;
     pagesCount: number;
     reading: Reading;
+    contentsFilteredConditional: Content[];
 
     iconFromType = {
         html: 'document-text-outline',
@@ -117,10 +119,12 @@ export class EpocPlayerPage implements OnInit {
                 // Go to the next content after contentId
                 const next = !!this.route.snapshot.paramMap.get('next');
 
+                this.contentsFilteredConditional = this.chapter.initializedContents.filter((content) => { // filter out conditional content
+                    return !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1);
+                });
+
                 if (contentId) {
-                    const pageIndex = this.chapter.initializedContents.filter((content) => { // filter out conditional content
-                        return !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1);
-                    }).findIndex(content => content.id === contentId);
+                    const pageIndex = this.contentsFilteredConditional.findIndex(content => content.id === contentId);
                     this.slidesOptions.initialSlide = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
                     this.countPages();
                     this.progress = pageIndex / this.pagesCount
@@ -141,9 +145,7 @@ export class EpocPlayerPage implements OnInit {
     }
 
     countPages() {
-        this.pagesCount = this.chapter.initializedContents.filter(
-            content => !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1)
-        ).length + 1;
+        this.pagesCount = this.contentsFilteredConditional.length + 1;
     }
 
     ionViewDidEnter() {
