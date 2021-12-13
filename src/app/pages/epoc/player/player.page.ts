@@ -153,12 +153,10 @@ export class EpocPlayerPage implements OnInit {
     }
 
     hideControls(){
-        console.log('hide');
         this.showControls = false;
     }
 
     toggleControls(){
-        console.log('tap');
         this.showControls = !this.showControls;
     }
 
