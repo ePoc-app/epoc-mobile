@@ -118,7 +118,9 @@ export class EpocPlayerPage implements OnInit {
                 const next = !!this.route.snapshot.paramMap.get('next');
 
                 if (contentId) {
-                    const pageIndex = this.chapter.contents.findIndex(id => id === contentId);
+                    const pageIndex = this.chapter.initializedContents.filter((content) => { // filter out conditional content
+                        return !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1);
+                    }).findIndex(content => content.id === contentId);
                     this.slidesOptions.initialSlide = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
                     this.countPages();
                     this.progress = pageIndex / this.pagesCount
