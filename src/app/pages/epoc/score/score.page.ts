@@ -120,38 +120,126 @@ export class EpocScorePage implements OnInit {
         return this.epocService.calcScoreTotal(this.epoc, content.questions);
     }
 
-    getCertificate() {
+    async getCertificate() {
         if (!this.loading) {
-            if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
-                this.presentLoading().then(() => {
-                    this.downloadPdf(this.generatePdf());
-                });
+            if (true || this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
+                if (!this.user) {
+                    this.setUser().then();
+                } else {
+                    this.presentLoading().then(() => {
+                        this.downloadPdf(this.generatePdf());
+                    });
+                }
             } else {
-                this.presentFail();
+                this.presentFail(
+                    'Non disponible',
+                    `Vous n'avez pas encore atteint le score nécessaire (${this.epoc.certificateScore} pts) pour obtenir l'attestation.`
+                );
             }
         }
     }
 
+    async setUser(){
+        const alert = await this.alertController.create({
+            header: 'Renseigner vos informations',
+            message: 'Ces informations serviront à l\'édition des attestations',
+            inputs: [
+                {
+                    name: 'lastname',
+                    type: 'text',
+                    placeholder: 'Nom',
+                },
+                {
+                    name: 'firstname',
+                    type: 'text',
+                    placeholder: 'Prenom',
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Confirmer',
+                    handler: (data) => {
+                        this.user = {firstname:data.firstname, lastname: data.lastname , username: null, email: null};
+                        this.auth.setUser(this.user);
+                        this.presentLoading().then(() => {
+                            this.downloadPdf(this.generatePdf());
+                        });
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
     generatePdf(): jsPDF {
-        const doc = new jsPDF({orientation: 'landscape', compress: true});
+        const colors = {
+            darkblue: '#384257',
+            blue: '#6477A0',
+            orange: '#FFA029',
+            lightblue: '#edf3f8'
+        };
+        const doc = new jsPDF({orientation: 'portrait', compress: true});
         const img = new Image();
+        const centeredText = (text, y) => {
+            const textWidth = doc.getStringUnitWidth(text) * doc.getFontSize() / doc.internal.scaleFactor;
+            const textOffset = (doc.internal.pageSize.width - textWidth) / 2;
+            doc.text(text, textOffset, y);
+        };
+
         img.src = 'assets/img/fond-attestation.png';
-        doc.addImage(img, 'PNG', 0, 0, 297, 210);
-        doc.setFont('Helvetica', 'normal');
-        doc.setFontSize(12);
-        doc.setTextColor('#ffffff');
-        doc.text('Ce document atteste de la participation et de la réussite au cours :', 25, 90);
-        doc.setFontSize(15);
+        doc.addImage(img, 'PNG', 0, 0, 210, 297);
         doc.setFont('Helvetica', 'bold');
-        doc.text(this.epoc.title, 25, 100);
+        doc.setFontSize(15);
+        doc.setTextColor(colors.orange);
+        centeredText('ATTESTATION DE SUIVI', 90);
+        doc.setFontSize(18);
+        doc.setTextColor(colors.darkblue);
+        centeredText(this.epoc.title, 110);
+        doc.setFillColor(colors.orange);
+        doc.roundedRect(90, 120, 30, 1, 1, 1, 'F');
         doc.setFontSize(12);
         doc.setFont('Helvetica', 'normal');
-        if (this.user) {
-            doc.text('Pour le participant :', 25, 120);
-            doc.setFontSize(18);
-            doc.setFont('Helvetica', 'bold');
-            doc.text(this.user.firstname + ' ' + this.user.lastname, 25, 130);
-        }
+        centeredText('Auteur(s)', 130);
+        doc.setFontSize(10);
+        doc.setTextColor(colors.blue);
+        let posY = 140;
+        const margin = 2;
+        const date = new Date();
+        Object.values(this.epoc.authors).forEach((author, index, array) => {
+            if (index % 2 === 0) {
+                if (index === array.length - 1) {
+                    centeredText(author.name, posY);
+                    posY += 6;
+                } else {
+                    const textWidth = doc.getStringUnitWidth(author.name) * doc.getFontSize() / doc.internal.scaleFactor;
+                    doc.text(author.name, 104 - margin - textWidth, posY);
+                }
+            } else {
+                doc.text(author.name, 104 + margin, posY);
+                posY += 6;
+            }
+        });
+        doc.setTextColor(colors.darkblue);
+        centeredText(`Edition de l'ePoc du ${this.epoc.edition ? this.epoc.edition : date.getFullYear()}`, posY);
+        posY += 6;
+        doc.setFillColor(colors.lightblue);
+        doc.roundedRect(50, posY, 110, 1, 1, 1, 'F');
+        posY += 10;
+        doc.setFontSize(12);
+        centeredText(`Attestation délivrée à :`, posY);
+        posY += 10;
+        doc.setFontSize(18);
+        doc.setFont('Helvetica', 'bold');
+        centeredText(this.user.firstname + ' ' + this.user.lastname, posY);
+        posY += 7;
+        doc.setFontSize(10);
+        doc.setFont('Helvetica', 'normal');
+        centeredText(`Délivrée le ${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`, posY);
         return doc;
     }
 
@@ -162,31 +250,44 @@ export class EpocScorePage implements OnInit {
         if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === 'android') {
             // Save the PDF to the device
             const output = doc.output('datauristring');
-            try {
-                Filesystem.writeFile({
-                    path: fileName,
-                    data: output,
-                    directory: FilesystemDirectory.Documents
-                }).then((writeFileResult) => {
-                    Filesystem.getUri({
-                        directory: FilesystemDirectory.Documents,
-                        path: fileName
-                    }).then((getUriResult) => {
-                        const path = getUriResult.uri;
-                        this.fileOpener.open(path, 'application/pdf')
-                            .then(() => {
-                                this.dismissLoading().then(() => {
-                                    this.presentSuccess();
-                                });
-                            })
-                            .catch(error => console.warn('Error openening file', error));
-                    }, (error) => {
-                        console.warn(error);
+            Filesystem.writeFile({
+                path: fileName,
+                data: output,
+                directory: FilesystemDirectory.Data
+            }).then((writeFileResult) => {
+                Filesystem.getUri({
+                    directory: FilesystemDirectory.Data,
+                    path: fileName
+                }).then((getUriResult) => {
+                    const path = getUriResult.uri;
+                    this.fileOpener.open(path, 'application/pdf').then(() => {
+                        this.dismissLoading().then(() => {
+                            this.presentSuccess();
+                        });
+                    }).catch(() => {
+                        this.dismissLoading().then(() => {
+                            this.presentFail(
+                                'Erreur',
+                                'Une erreur s\'est produite lors de l\'ouverture de l\'attestation',
+                            );
+                        });
+                    });
+                }).catch(() => {
+                    this.dismissLoading().then(() => {
+                        this.presentFail(
+                            'Erreur',
+                            'Une erreur s\'est produite lors de la récupération de l\'attestation',
+                        );
                     });
                 });
-            } catch (error) {
-                console.warn('Unable to write file', error);
-            }
+            }).catch(() => {
+                this.dismissLoading().then(() => {
+                    this.presentFail(
+                        'Erreur',
+                        'Un erreur s\'est produite lors de la sauvegarde de l\'attestation',
+                    );
+                });
+            });
         } else {
             doc.save(fileName);
             this.dismissLoading();
@@ -207,10 +308,10 @@ export class EpocScorePage implements OnInit {
         this.loadingController.dismiss();
     }
 
-    async presentFail() {
+    async presentFail(header, message) {
         const alert = await this.alertController.create({
-            header: 'Non disponible',
-            message: 'Vous n\'avez pas encore atteint le score nécessaire (' + this.epoc.certificateScore + ' pts) pour obtenir l\'attestation.',
+            header,
+            message,
             buttons: ['OK']
         });
 
