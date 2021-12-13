@@ -79,6 +79,10 @@ export class EpocAssessmentPage implements OnInit {
         });
     }
 
+    ionViewWillEnter() {
+        this.retry();
+    }
+
     onUserHasResponded(userResponses) {
         this.currentQuestionUserResponse = userResponses;
     }
