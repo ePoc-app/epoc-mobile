@@ -1,13 +1,11 @@
-<div class="question-card">
-  <div class="statement">
-    <b>{{resolver.label}}</b>
-  </div>
+<div class="statement">
+  <b>{{resolver.label}}</b>
+</div>
 
-  <div class="choices">
-    <ng-container *ngFor="let choice of resolver.choices">
-      <button [ngClass]="choice.value === answer ? 'selected':''" (click)="selectAnswer(choice.value)">
-        {{choice.label}}
-      </button>
-    </ng-container>
-  </div>
+<div class="choices">
+  <ng-container *ngFor="let choice of resolver.choices">
+    <button [ngClass]="choice.value === answer ? 'selected':''" (click)="selectAnswer(choice.value)">
+      {{choice.label}}
+    </button>
+  </ng-container>
 </div>
