@@ -4,7 +4,7 @@ import {html, uid} from './types';
 import {Assessment, Question} from './contents/assessment';
 
 export class EpocMetadata {
-    date: string;
+    edition: string;
     id: string;
     title: string;
     image: string;
