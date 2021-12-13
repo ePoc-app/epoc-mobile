@@ -1,18 +1,12 @@
-.question-card{
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
+.statement{
+  margin: 2rem 0;
   text-align: center;
-  padding: 1em;
-  flex-grow: 1;
-  background: #fff;
-  border-radius: 8px;
-  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
-
   b{
     line-height: 1;
   }
+}
 
+.choices{
   button{
     display: block;
     width:100%;
