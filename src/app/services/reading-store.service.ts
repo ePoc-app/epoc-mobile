@@ -101,23 +101,25 @@ export class ReadingStoreService {
     }
 
     saveChoices(epocId: string, choiceId: string, responses, flags, flagsToRemove) {
-        const index = this.readings.findIndex(reading => reading.epocId === epocId);
-
-        const choiceIndex = this.readings[index].choices.findIndex(assessment => assessment.id === choiceId);
+        const readings = [...this.readings];
+        const index = readings.findIndex(reading => reading.epocId === epocId);
+        const choiceIndex = readings[index].choices.findIndex(assessment => assessment.id === choiceId);
 
         if (choiceIndex !== -1) {
-            this.readings[index].choices[choiceIndex] = {
+            readings[index].choices[choiceIndex] = {
                 id: choiceId,
                 responses
             };
         } else {
-            this.readings[index].choices.push({
+            readings[index].choices.push({
                 id: choiceId,
                 responses
             });
         }
-        this.readings[index].flags = this.readings[index].flags.filter(flag => flagsToRemove.indexOf(flag) === -1);
-        this.readings[index].flags = this.readings[index].flags.concat(flags);
+        readings[index].flags = readings[index].flags.filter(flag => flagsToRemove.indexOf(flag) === -1);
+        readings[index].flags = readings[index].flags.concat(flags);
+
+        this.readings = readings;
 
         this.saveReadings();
     }
