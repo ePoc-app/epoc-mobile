@@ -160,7 +160,10 @@ export class EpocPlayerPage implements OnInit {
         this.showControls = false;
     }
 
-    toggleControls(){
+    toggleControls($event){
+        if (['ion-icon', 'button', 'ion-button', 'ion-icon', 'ion-checkbox', 'ion-radio', 'span'].includes(
+            $event.detail.target.tagName.toLowerCase()
+        )) return;
         this.showControls = !this.showControls;
     }
 
