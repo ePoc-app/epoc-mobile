@@ -96,9 +96,9 @@ export class SettingsPage implements OnInit {
         await alert.present();
     }
 
-    async presentToast() {
+    async presentToast(message) {
         const toast = await this.toastController.create({
-            message: 'Les données ont bien été supprimées',
+            message,
             duration: 2000
         });
         toast.present();
@@ -145,10 +145,14 @@ export class SettingsPage implements OnInit {
     }
 
     throwError() {
+        this.presentToast('Une erreur a été émise');
         throw new Error(`Test Thrown Error`);
     }
 
     throwErrorNative() {
-        Sentry.nativeCrash();
+        this.presentToast('L\'application va se fermer');
+        setTimeout(() => {
+            Sentry.nativeCrash();
+        }, 2000)
     }
 }
