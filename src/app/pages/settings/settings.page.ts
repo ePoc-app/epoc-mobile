@@ -10,6 +10,7 @@ import {mode} from 'src/environments/environment.mode';
 import {Plugins} from '@capacitor/core';
 import {DeviceInfo} from '@capacitor/core/dist/esm/core-plugin-definitions';
 import {LibraryService} from '../../services/library.service';
+import * as Sentry from '@sentry/capacitor';
 
 const {Device} = Plugins;
 
@@ -141,5 +142,13 @@ export class SettingsPage implements OnInit {
         this.auth.setUser(null).then(() => {
             this.router.navigateByUrl('/login');
         });
+    }
+
+    throwError() {
+        throw new Error(`Test Thrown Error`);
+    }
+
+    throwErrorNative() {
+        Sentry.nativeCrash();
     }
 }

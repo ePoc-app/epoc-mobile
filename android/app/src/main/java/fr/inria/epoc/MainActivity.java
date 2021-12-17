@@ -18,6 +18,7 @@ public class MainActivity extends BridgeActivity {
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
       add(ZipPlugin.class);
+      add(SentryCapacitor.class);
     }});
   }
 }

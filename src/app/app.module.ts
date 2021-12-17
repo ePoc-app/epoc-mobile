@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouteReuseStrategy} from '@angular/router';
@@ -20,6 +20,34 @@ import {HTTP} from '@ionic-native/http/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {FileTransfer} from '@ionic-native/file-transfer/ngx';
 
+import * as Sentry from '@sentry/capacitor';
+import * as SentryAngular from '@sentry/angular';
+import {Integrations as TracingIntegrations} from '@sentry/tracing';
+import {Capacitor, Plugins} from '@capacitor/core';
+
+const {Device} = Plugins;
+
+Device.getInfo().then((info) => {
+    Sentry.init(
+        {
+            dsn: 'https://2992d74734b44e5cbc12b4926bdcd7be@o1092720.ingest.sentry.io/6111359',
+            // To set your release and dist versions
+            release: info.appId ? info.appId : 'fr.inria.epoc' + '@' + info.appBuild ? info.appBuild : 'dev',
+            dist: '1',
+            // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+            // We recommend adjusting this value in production.
+            tracesSampleRate: 1.0,
+            integrations: [
+                new TracingIntegrations.BrowserTracing({
+                    tracingOrigins: ['localhost'],
+                }),
+            ]
+        },
+        // Forward the init method from @sentry/angular
+        SentryAngular.init
+    );
+});
+
 @NgModule({
     declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
     entryComponents: [],
@@ -33,6 +61,7 @@ import {FileTransfer} from '@ionic-native/file-transfer/ngx';
         PipesModule
     ],
     providers: [
+        {provide: ErrorHandler, useValue: SentryAngular.createErrorHandler()},
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         File,
         FileTransfer,
