@@ -18,12 +18,16 @@
         <ion-toggle [(ngModel)]="settings.debug" (ngModelChange)="settingsChanged()"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="settings.debug">
-        <ion-label>Provoquer une erreur de test</ion-label>
-        <ion-icon slot="end" name="bug-outline" (click)="throwError()"></ion-icon>
+        <ion-label>Émettre une erreur de test</ion-label>
+        <ion-button slot="end" color="inria-grey" (click)="throwError()">
+          <ion-icon slot="icon-only" name="bug-outline"></ion-icon>
+        </ion-button>
       </ion-item>
       <ion-item *ngIf="settings.debug">
-        <ion-label>Provoquer une erreur native de test</ion-label>
-        <ion-icon slot="end" name="bug-outline" (click)="throwErrorNative()"></ion-icon>
+        <ion-label>Provoquer un crash de test</ion-label>
+        <ion-button slot="end" color="inria-grey" (click)="throwErrorNative()">
+          <ion-icon slot="icon-only" name="bug-outline"></ion-icon>
+        </ion-button>
       </ion-item>
       <ng-container *ngIf="false">
         <ion-item>
