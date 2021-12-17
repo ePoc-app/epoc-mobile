@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
 import co.fitcom.capacitor.ZipPlugin;
+import io.sentry.capacitor.SentryCapacitor;
 
 import java.util.ArrayList;
 
