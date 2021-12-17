@@ -23,12 +23,6 @@
           <ion-icon slot="icon-only" name="bug-outline"></ion-icon>
         </ion-button>
       </ion-item>
-      <ion-item *ngIf="settings.debug">
-        <ion-label>Provoquer un crash de test</ion-label>
-        <ion-button slot="end" color="inria-grey" (click)="throwErrorNative()">
-          <ion-icon slot="icon-only" name="bug-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
       <ng-container *ngIf="false">
         <ion-item>
           <ion-label>Police</ion-label>

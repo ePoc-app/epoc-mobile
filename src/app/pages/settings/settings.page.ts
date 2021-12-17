@@ -10,7 +10,6 @@ import {mode} from 'src/environments/environment.mode';
 import {Plugins} from '@capacitor/core';
 import {DeviceInfo} from '@capacitor/core/dist/esm/core-plugin-definitions';
 import {LibraryService} from '../../services/library.service';
-import * as Sentry from '@sentry/capacitor';
 
 const {Device} = Plugins;
 
@@ -147,12 +146,5 @@ export class SettingsPage implements OnInit {
     throwError() {
         this.presentToast('Une erreur a été émise');
         throw new Error(`Test Thrown Error`);
-    }
-
-    throwErrorNative() {
-        this.presentToast('L\'application va se fermer');
-        setTimeout(() => {
-            Sentry.nativeCrash();
-        }, 2000)
     }
 }

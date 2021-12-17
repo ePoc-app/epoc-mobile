@@ -38,7 +38,7 @@
     "@ionic/angular": "^5.6.7",
     "@ionic/storage": "^2.3.1",
     "@sentry/angular": "^6.16.1",
-    "@sentry/capacitor": "^0.4.1",
+    "@sentry/tracing": "^6.16.1",
     "@wdio/cli": "^7.14.1",
     "capacitor-zip": "git+https://github.com/brospars/capacitor-zip.git",
     "cordova-plugin-advanced-http": "^3.1.0",
