@@ -66,8 +66,8 @@ export class EpocScorePage implements OnInit {
     }
 
     ionViewDidEnter() {
-        combineLatest(this.epoc$, this.readingStore.readings$, (epoc, reading) => ({epoc, reading})).subscribe(pair => {
-            if (pair.epoc && pair.reading) {
+        combineLatest([this.epoc$, this.readingStore.readings$]).subscribe(([epoc, readings]) => {
+            if (epoc && readings) {
                 this.setAssessmentsData();
             }
         });
