@@ -45,11 +45,6 @@ export class EpocScorePage implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.readingStore.readings$.subscribe(readings => {
-            if (readings) {
-                this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
-            }
-        });
         this.epoc$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) =>
                 this.epocService.getEpoc(params.get('id')))
@@ -68,6 +63,8 @@ export class EpocScorePage implements OnInit {
     ionViewDidEnter() {
         combineLatest([this.epoc$, this.readingStore.readings$]).subscribe(([epoc, readings]) => {
             if (epoc && readings) {
+                this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
+                if (!this.reading) this.readingStore.addReading(this.epoc.id);
                 this.setAssessmentsData();
             }
         });
@@ -83,7 +80,7 @@ export class EpocScorePage implements OnInit {
         };
 
         this.assessments.forEach((assessment) => {
-            const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
+            const userAssessment = this.reading?.assessments.find(a => assessment.id === a.id);
             const scoreTotal = this.epocService.calcScoreTotal(this.epoc, assessment.questions);
 
             assessment.score = this.getScore(assessment);
