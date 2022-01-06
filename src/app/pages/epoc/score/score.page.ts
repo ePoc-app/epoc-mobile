@@ -119,7 +119,7 @@ export class EpocScorePage implements OnInit {
 
     async getCertificate() {
         if (!this.loading) {
-            if (true || this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
+            if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
                 if (!this.user) {
                     this.setUser().then();
                 } else {
