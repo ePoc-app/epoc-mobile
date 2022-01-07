@@ -1,25 +1,34 @@
 import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage';
+import {Storage} from '@ionic/storage-angular';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 @Injectable({
     providedIn: 'root'
 })
 export class StorageService {
-    constructor(private storage: Storage) {}
+    private _storage: Storage | null = null;
 
-    public setValue(key: string, value: string): Promise<boolean> {
-        return this.storage.ready().then(() => {
-            return this.storage.set(key, value).catch(() => {
-                return null;
-            });
+    constructor(private storage: Storage) {
+        this.init();
+    }
+
+    async init() {
+        if(this._storage != null) {
+            return;
+        }
+        await this.storage.defineDriver(CordovaSQLiteDriver);
+        this._storage = await this.storage.create();
+    }
+
+    public setValue(key: string, value: any): Promise<any> {
+        return this.init().then(() => {
+            return this._storage?.set(key, value);
         });
     }
 
     public getValue(key: string): Promise<string> {
-        return this.storage.ready().then(() => {
-            return this.storage.get(key).catch(() => {
-                return null;
-            });
-        });
+        return this.init().then(() => {
+            return this._storage?.get(key)
+        })
     }
 }

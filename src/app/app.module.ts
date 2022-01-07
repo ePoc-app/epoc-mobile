@@ -10,7 +10,9 @@ import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
-import {IonicStorageModule} from '@ionic/storage';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
+import {Drivers} from '@ionic/storage';
+import {IonicStorageModule} from '@ionic/storage-angular';
 import {PipesModule} from './pipes/pipes.module';
 import {LoginComponent} from './login/login.component';
 import {LoginCallbackComponent} from './login/login-callback.component';
@@ -49,7 +51,10 @@ Sentry.init(
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
-        IonicStorageModule.forRoot(),
+        IonicStorageModule.forRoot({
+            name: '__epocdb',
+            driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage]
+        }),
         PipesModule
     ],
     providers: [
