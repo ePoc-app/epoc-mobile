@@ -6,7 +6,7 @@
   <div class="progress-threshold" [ngStyle]="{'left': threshold + '%'}" *ngIf="threshold < 100">
     <div class="progress-threshold-label">
       Attestation<br/>
-      {{threshold/100*maxLabel}} points
+      {{thresholdPoints}} points
     </div>
     <ion-icon src="/assets/icon/badge.svg"></ion-icon>
   </div>

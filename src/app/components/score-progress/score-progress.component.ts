@@ -14,11 +14,13 @@ export class ScoreProgressComponent implements OnInit {
     @Input() maxLabel: number;
 
     currentDelta = 0;
+    thresholdPoints;
 
     constructor() {
     }
 
     ngOnInit() {
+        this.thresholdPoints = Math.round(this.threshold/100*this.maxLabel);
         setTimeout(() => {
             this.currentDelta = this.delta;
         }, 200);
