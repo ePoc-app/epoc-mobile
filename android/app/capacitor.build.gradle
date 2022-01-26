@@ -9,7 +9,6 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-    implementation project(':sentry-capacitor')
     implementation project(':capacitor-zip')
     implementation "com.android.support:support-v4:27.+"
 }
