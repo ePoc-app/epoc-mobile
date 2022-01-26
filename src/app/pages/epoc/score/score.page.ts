@@ -222,7 +222,7 @@ export class EpocScorePage implements OnInit {
             }
         });
         doc.setTextColor(colors.darkblue);
-        centeredText(`Edition de l'ePoc du ${this.epoc.edition ? this.epoc.edition : date.getFullYear()}`, posY);
+        centeredText(`Edition de l'ePoc : ${this.epoc.edition ? this.epoc.edition : date.getFullYear()}`, posY);
         posY += 6;
         doc.setFillColor(colors.lightblue);
         doc.roundedRect(50, posY, 110, 1, 1, 1, 'F');
@@ -236,7 +236,7 @@ export class EpocScorePage implements OnInit {
         posY += 7;
         doc.setFontSize(10);
         doc.setFont('Helvetica', 'normal');
-        centeredText(`Délivrée le ${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`, posY);
+        centeredText(`Délivrée le ${date.getDate()}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`, posY);
         return doc;
     }
 
@@ -258,9 +258,7 @@ export class EpocScorePage implements OnInit {
                 }).then((getUriResult) => {
                     const path = getUriResult.uri;
                     this.fileOpener.open(path, 'application/pdf').then(() => {
-                        this.dismissLoading().then(() => {
-                            this.presentSuccess();
-                        });
+                        this.dismissLoading();
                     }).catch(() => {
                         this.dismissLoading().then(() => {
                             this.presentFail(
@@ -288,7 +286,6 @@ export class EpocScorePage implements OnInit {
         } else {
             doc.save(fileName);
             this.dismissLoading();
-            this.presentSuccess();
         }
     }
 
