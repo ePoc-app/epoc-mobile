@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Observable} from 'rxjs';
-import {Epoc} from 'src/app/classes/epoc';
+import {Epoc, EpocLibrary} from 'src/app/classes/epoc';
 import {AlertController} from '@ionic/angular';
 import {Content} from 'src/app/classes/contents/content';
 import {EpocService} from '../../../services/epoc.service';
+import {LibraryService} from '../../../services/library.service';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -15,32 +16,27 @@ import {EpocService} from '../../../services/epoc.service';
 })
 export class EpocOverviewPage implements OnInit {
 
-    epoc$: Observable<Epoc>;
-    epoc: Epoc;
-    contents: Content[] = [];
+    library: EpocLibrary[] | undefined;
+    epocProgresses : {[EpocId: string] : number} = {};
+    epoc: EpocLibrary;
     selectedTab = 0;
 
     constructor(
+        private ref: ChangeDetectorRef,
         private route: ActivatedRoute,
         private router: Router,
-        public epocService: EpocService,
-        private readingStore: ReadingStoreService,
-        public alertController: AlertController
+        public libraryService: LibraryService
     ) {}
 
     ngOnInit() {
-        this.epoc$ = this.route.paramMap.pipe(
-            switchMap((params: ParamMap) =>
-                this.epocService.getEpoc(params.get('id')))
-        );
-
-        this.epoc$.subscribe(epoc => {
-            this.epoc = epoc;
+        this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
+            this.library = data;
+            this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
         });
-    }
-
-    isReading(id) {
-        return this.readingStore.readings.findIndex(reading => reading.epocId === id) !== -1;
+        this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
+            this.epocProgresses = epocProgresses;
+            this.ref.detectChanges();
+        });
     }
 
     openEpoc(id) {
@@ -51,25 +47,8 @@ export class EpocOverviewPage implements OnInit {
         this.selectedTab = index;
     }
 
-    async downloadEpoc(id) {
-        const alert = await this.alertController.create({
-            header: 'Confirm download',
-            message: 'This ePoc will take 500 Mo ',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary'
-                }, {
-                    text: 'Yes',
-                    handler: () => {
-                        this.router.navigateByUrl('/epoc/download/' + id);
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
+    downloadEpoc(epoc: EpocLibrary) {
+        this.libraryService.downloadEpoc(epoc);
     }
 
     ionViewWillLeave() {

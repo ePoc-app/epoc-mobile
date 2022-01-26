@@ -1,80 +1,133 @@
-*{
- color: var(--ion-color-inria-blue)
+.wrapper{
+  max-width: 600px;
+  margin: auto;
 }
-.download-button{
-  --border-radius: 30px;
-  padding: 0 20px 0 20px;
-  animation: 1s ease-in-out 1s 1 pulse;
 
-  button{
-    animation: 1s ease-in-out 1s 1 pulse;
+.epoc-title{
+  padding: 1rem;
+  text-align: center;
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 2rem;
+
+    &:after{
+      content:'';
+      display: block;
+      width: 80px;
+      height:4px;
+      margin: 10px auto;
+      border-radius: 2px;
+      background: var(--ion-color-inria);
+    }
   }
 }
 
-ion-grid{
-  padding: 1em;
+span.epoc-author{
+  display: inline-block;
+  width: calc(50% - 10px);
+  font-size: 0.75rem;
+  color: var(--ion-color-inria-grey);
+  text-align: right;
+
+  &.align-left {
+    text-align: left;
+  }
+
+  &.align-center {
+    text-align: center;
+  }
+
+  &-splitter{
+    display: inline-block;
+    width:20px;
+    color: var(--ion-color-inria-lightgrey)
+  }
+}
+
+.epoc-trailer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid var(--ion-color-inria-light);
+  border-bottom: 1px solid var(--ion-color-inria-light);
+  // hack to fix overflow hidden safari
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 .epoc-specs{
-  margin: 1em 0;
-  padding: .5em;
-  font-size: 12px;
+  display: flex;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--ion-color-inria-grey);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 
-  ion-col{
-    padding: 0;
+  .epoc-spec{
+    padding: 0 1rem;
   }
 
-  ion-col:nth-child(2){
-    border-left: 2px solid var(--ion-color-inria-blue);
-    border-right: 2px solid var(--ion-color-inria-blue);
+  .epoc-spec:nth-child(2){
+    border-left: 1px solid var(--ion-color-inria-lightgrey);
+    border-right: 1px solid var(--ion-color-inria-lightgrey);
   }
-}
 
-.epoc-spec-icon{
-  font-size: 3em;
-  line-height: 1;
-}
-
-.epoc-spec-value{
-  text-transform: lowercase;
+  ion-icon{
+    font-size: 1.5rem;
+  }
 }
 
 .tabs-headers{
   display: flex;
-  margin-top: 1em;
+  padding: 1rem;
+  border-bottom: 1px solid var(--ion-color-inria-light);
+
   .tabs-header {
-    flex-grow: 1;
+    flex: 1 1 0;
     text-align: center;
+    background: var(--ion-color-inria-light);
+    border-radius: 1em;
+    font-size: .875rem;
+    text-transform: uppercase;
 
     span{
       display: inline-block;
-      font-weight: 700;
-      margin-bottom: -3px;
-      border-bottom: 3px solid lighten(#ee2d20, 30%);
+      font-weight: bold;
+      padding-top: .1em;
+    }
+
+    &:nth-child(2){
+      margin: 0 1rem;
     }
 
     &.selected{
-      span{
-        border-bottom: 3px solid var(--ion-color-inria);
-      }
+      color:white;
+      background: var(--ion-color-inria);
     }
   }
 }
 
 .tabs{
-  .tab{
-  }
+  padding: 1rem;
 }
 
 .course-objective{
-  margin: 1em 0;
-  ion-icon{
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 2em;
-    width: 1em;
-    margin-right: .5em;
+  display: flex;
+  margin-bottom: 10px;
+
+  &-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    width: 2rem;
+    height:2rem;
+    margin-right: 1rem;
+    border-radius: .8rem;
     color: var(--ion-color-inria);
+    background: var(--ion-color-inria-light)
   }
 
   ion-text{
@@ -84,51 +137,41 @@ ion-grid{
   }
 }
 
-.epoc-author{
-  margin: 1em 0;
+div.epoc-author{
+  margin-bottom: 1rem;
+  padding: 0 0 1rem 0;
+  border-bottom: 1px solid var(--ion-color-inria-light);
 
-  img {
-    float: left;
-    width: 80px;
-    margin-right: 1em;
-    margin-bottom: 5px;
-    border-radius: 50%;
-    overflow: hidden;
+  &:last-child{
+    border-bottom: none;
   }
 
-  &:after{
-    content: '';
-    display: block;
-    clear: both;
+  &-name{
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 3rem;
+      height: 3rem;
+      margin-right: 1em;
+      margin-bottom: 5px;
+      border-radius: 50%;
+      overflow: hidden;
+      object-fit: cover;
+    }
+  }
+
+  &-description{
+    font-size: .875rem;
   }
 }
 
-ion-text{
-  line-height: 1.4;
-}
+ion-footer ion-toolbar{
+  padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom, 0)) 1rem;
+  box-shadow: 0 -6px 14px 0 rgba(218,222,234,0.51);
 
-.trailer-course {
-  position: relative;
-  width: 80%;
-  min-width: 250px;
-  margin: 2vh auto;
-  border: 2px solid var(--ion-color-inria-blue);
-  border-radius: 10px;
-  overflow: hidden;
-  // hack to fix overflow hidden safari
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-}
-
-@keyframes pulse {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
-
-  50% {
-    transform: scale3d(1.05, 1.05, 1.05);
-  }
-
-  to {
-    transform: scale3d(1, 1, 1);
+  ion-button{
+    max-width: 25rem;
+    margin:auto;
   }
 }

@@ -32,7 +32,7 @@ const routesDefault: Routes = [
 const routesInria: Routes = [
     {
         path: 'epoc',
-        canActivate: [AuthGuardService],
+        // canActivate: [AuthGuardService],
         loadChildren: () => import('./pages/epoc/epoc.module').then(m => m.EpocModule)
     },
     {
@@ -55,7 +55,11 @@ const routesInria: Routes = [
         path: 'open',
         loadChildren: () => import('./pages/open/open.module').then(m => m.OpenPageModule)
     },
-    {path: '**', redirectTo: '/epoc'}
+    {
+        path: 'settings',
+        loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
+    },
+    {path: '**', redirectTo: '/epoc/E001DB'}
 ];
 
 @NgModule({
