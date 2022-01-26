@@ -5,7 +5,6 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from 'src/app/components/shared.module';
 import {PipesModule} from 'src/app/pipes/pipes.module';
-import {EpocHomePage} from './home/home.page';
 import {EpocTocPage} from './toc/toc.page';
 import {EpocPlayerPage} from './player/player.page';
 import {EpocOverviewPage} from './overview/overview.page';
@@ -27,9 +26,7 @@ import {AssessmentContentComponent} from './player/contents/assessment/assessmen
         FormsModule,
         SharedModule,
         RouterModule.forChild([
-            {path: '', component: EpocHomePage},
-            {path: ':id', component: EpocHomePage},
-            {path: 'overview/:id', component: EpocOverviewPage},
+            {path: ':id', component: EpocOverviewPage},
             {path: 'play/:id', component: EpocTocPage},
             {path: 'play/:id/:chapter', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId', component: EpocPlayerPage},
@@ -43,7 +40,6 @@ import {AssessmentContentComponent} from './player/contents/assessment/assessmen
         PipesModule
     ],
     declarations: [
-        EpocHomePage,
         EpocPlayerPage,
         EpocOverviewPage,
         EpocScorePage,
