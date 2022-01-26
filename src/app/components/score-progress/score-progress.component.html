@@ -3,7 +3,7 @@
     <div class="progress" [ngStyle]="{'width': progress + '%'}"></div>
     <div class="progress-delta" [ngStyle]="{'left': progress + '%', 'width': currentDelta + '%'}"></div>
   </div>
-  <div class="progress-threshold" [ngStyle]="{'left': threshold + '%'}" *ngIf="threshold < 100">
+  <div class="progress-threshold" [ngStyle]="{'left': 'calc(' + threshold + '% - 0.9rem)'}" *ngIf="threshold < 100">
     <div class="progress-threshold-label">
       Attestation<br/>
       {{thresholdPoints}} points
