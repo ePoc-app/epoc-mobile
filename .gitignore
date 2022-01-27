@@ -30,7 +30,5 @@ npm-debug.log*
 /plugins
 /www
 
-resources/*
-!resources/icon.png
-!resources/splash.png
+/resources
 src/assets/demo/

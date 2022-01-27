@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "e2e-local": "npx wdio run ./e2e/wdio.conf.local.js || true",
     "e2e": "npx wdio run ./e2e/wdio.conf.bs.js || true",
-    "resources": "cordova-res --skip-config --copy"
+    "resources": "rm -rf resources/* && cp -R resources-common/* resources/ && cordova-res --skip-config --copy",
+    "resources-zrr": "rm -rf resources/* && cp -R resources-zrr/* resources/ && cordova-res --skip-config --copy"
   },
   "postinstall": "jetifier",
   "private": true,
