@@ -259,7 +259,7 @@ export class EpocPlayerPage implements OnInit {
                 }
             },
             {
-                text: 'Tables des matières',
+                text: 'Table des matières',
                 icon: 'list-circle-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/toc/' + this.epoc.id);
