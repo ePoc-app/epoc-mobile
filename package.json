@@ -44,7 +44,7 @@
     "@sentry/angular": "^6.16.1",
     "@sentry/tracing": "^6.16.1",
     "@wdio/cli": "^7.14.1",
-    "capacitor-zip": "git+https://github.com/brospars/capacitor-zip.git",
+    "capacitor-zip": "git+https://git@github.com/brospars/capacitor-zip.git",
     "cordova-plugin-advanced-http": "^3.1.0",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-opener2": "^3.0.5",
