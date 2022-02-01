@@ -5,7 +5,7 @@
   "homepage": "https://learninglab.inria.fr",
   "scripts": {
     "dev": "ionic serve --external",
-    "android": "npm run resources && ionic capacitor run android --prod",
+    "build": "ng build",
     "android-zrr": "npm run resources-zrr && ionic capacitor run android --prod --mode=inria",
     "android-dev": "npm run resources && ionic capacitor run android --livereload-url=$(ipconfig getifaddr en0)",
     "ios": "npm run resources && ionic capacitor run ios --prod",
