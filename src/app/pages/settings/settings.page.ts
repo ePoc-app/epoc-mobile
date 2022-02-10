@@ -104,6 +104,10 @@ export class SettingsPage implements OnInit {
     }
 
     async setUser(){
+        if (this.mode.inria) {
+            this.router.navigateByUrl('/login');
+            return;
+        }
         const alert = await this.alertController.create({
             header: 'Renseigner vos informations',
             message: 'Ces informations serviront à l\'édition des attestations',
