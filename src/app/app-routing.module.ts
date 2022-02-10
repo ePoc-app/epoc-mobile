@@ -32,8 +32,7 @@ const routesDefault: Routes = [
 const routesInria: Routes = [
     {
         path: 'epoc',
-        // Disable auth for now
-        // canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
         loadChildren: () => import('./pages/epoc/epoc.module').then(m => m.EpocModule)
     },
     {

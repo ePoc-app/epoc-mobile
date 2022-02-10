@@ -3,7 +3,7 @@ import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {HTTP} from '@ionic-native/http/ngx';
 import {environment as env} from 'src/environments/environment';
 import {Router} from '@angular/router';
-import {Platform, ToastController} from '@ionic/angular';
+import {AlertController, Platform, ToastController} from '@ionic/angular';
 import {Browser} from '@capacitor/core';
 import {AuthService} from 'src/app/services/auth.service';
 
@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
         public platform: Platform,
         private iab: InAppBrowser,
         private router: Router,
+        public alertController: AlertController,
         public toastController: ToastController,
         private auth: AuthService,
         private http: HTTP,
@@ -85,5 +86,48 @@ export class LoginComponent implements OnInit {
                 }
             });
         }
+    }
+
+    async externalLogin() {
+        const alert = await this.alertController.create({
+                header: 'Authentification',
+                inputs: [
+                    {
+                        name: 'email',
+                        placeholder: 'nom@email.com',
+                    },
+                    {
+                        name: 'password',
+                        type: 'password',
+                        placeholder: '********'
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'Annuler',
+                        role: 'cancel',
+                        cssClass: 'secondary'
+                    },
+                    {
+                        text: 'Ok',
+                        handler: (form) => {
+                            if (form.email !== 'apple@apple.com' ||  form.password !== 'D5QdHMJfhkP$$a4+') {
+                                this.toast('Email ou mot de passe incorrect');
+                                return;
+                            }
+                            this.auth.setUser({
+                                username: 'apple',
+                                firstname: 'Apple',
+                                lastname: 'Apple',
+                                email: 'apple@apple.com'
+                            }).then(() => {
+                                this.ref.detectChanges();
+                                this.router.navigateByUrl('/home/default');
+                            });
+                        },
+                    },
+                ],
+            });
+        return alert.present();
     }
 }

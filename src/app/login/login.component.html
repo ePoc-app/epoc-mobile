@@ -16,12 +16,16 @@
   <div class="wrapper">
     <div class="epoc-welcome">
       <h1>Bienvenue</h1>
-      <h3>Dans la formation ePoc des nouveaux arrivants Inria en Zone à Régime Restrictif</h3>
+      <h3>Dans la formation ePoc : Zone à Régime Restrictif</h3>
       <img src="assets/img/ZRR-couv-4.png"/>
-      <p>Cette formation est réservée au personnel Inria. Pour commencer veuillez vous connecter.</p>
     </div>
+    <p>Pour commencer veuillez vous connecter</p>
     <ion-button class="start-course" (click)="oauthLogin()" routerDirection="forward" size="large" expand="block" color="inria-blue" strong>
       <span>Connexion CAS Inria</span>
     </ion-button>
+    <ion-button class="start-course" (click)="externalLogin()" routerDirection="forward" size="large" expand="block" fill="outline" color="inria-blue" strong>
+      <span>Connexion Externe</span>
+    </ion-button>
+    <p><a href="mailto:ill-epoc-contact@inria.fr">Demander un accès</a></p>
   </div>
 </ion-content>
