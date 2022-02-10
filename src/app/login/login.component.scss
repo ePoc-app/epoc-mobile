@@ -1,3 +1,9 @@
+ion-content::part(scroll){
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
 .wrapper{
   max-width: 600px;
   margin: auto;
