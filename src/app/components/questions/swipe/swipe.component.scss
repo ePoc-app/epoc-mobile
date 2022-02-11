@@ -83,6 +83,7 @@
   font-size: clamp(12px, 2.3vh, 18px);
   color:white;
   z-index:10;
+  touch-action: none;
 
   &:before {
     content:'';
