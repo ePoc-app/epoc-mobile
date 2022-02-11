@@ -28,31 +28,6 @@
   }
 }
 
-.about-author{
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  p{
-    flex:1;
-    margin:0;
-    font-size: 0.875rem;
-    color: var(--ion-color-inria-grey);
-
-    b{
-      font-size: 1.1em;
-      color: var(--ion-color-inria-blue);
-      display: block;
-    }
-  }
-
-  img{
-    width:60px;
-    height:60px;
-    margin-right: 1rem;
-    border-radius: 100%;
-  }
-}
-
 a{
   color: var(--ion-color-inria);
 }
