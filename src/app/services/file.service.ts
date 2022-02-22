@@ -21,10 +21,12 @@ export class FileService{
     readdir(dir): Observable<Entry[]> {
         return from(new Promise<Entry[]>((resolve, reject) => {
             try {
-                this.file.listDir(this.file.dataDirectory, dir).then((result) => {
-                    resolve(result);
-                }).catch(error => {
-                    resolve([])
+                document.addEventListener('deviceready', () => {
+                    this.file.listDir(this.file.dataDirectory, dir).then((result) => {
+                        resolve(result);
+                    }).catch(error => {
+                        resolve([])
+                    })
                 })
             } catch (error) {
                 resolve([])
