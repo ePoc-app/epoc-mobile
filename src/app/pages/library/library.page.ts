@@ -4,6 +4,7 @@ import {EpocLibrary} from 'src/app/classes/epoc';
 import {ActionSheetController} from '@ionic/angular';
 import {OnboardingService} from '../../services/onboarding.service';
 import {OnboardingItem} from '../../classes/onboarding';
+import {combineLatest} from 'rxjs';
 
 @Component({
   selector: 'app-library',
@@ -37,6 +38,10 @@ export class LibraryPage implements OnInit {
     this.onboardingService.onboarding$.subscribe((data => {
       this.onboarding = data;
     }))
+  }
+
+  ionViewDidEnter() {
+    this.libraryService.fetchLibrary();
   }
 
   downloadEpoc(epoc: EpocLibrary) {
