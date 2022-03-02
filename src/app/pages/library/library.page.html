@@ -13,6 +13,9 @@
 </ion-header>
 
 <ion-content *ngIf="library">
+  <ion-refresher slot="fixed" snapbackDuration="1000ms" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-slides class="onboarding" *ngIf="onboarding && onboarding.length" [options]="onboardingOptions" [pager]="onboarding.length > 1 ? 'true' : ''">
     <ion-slide class="onboarding-item" [ngClass]="item.image ? 'with-image':''" *ngFor="let item of onboarding">
       <div class="onboarding-item-image" *ngIf="item.image" [style]="'background-image:url('+item.image+')'"></div>

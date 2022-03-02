@@ -22,19 +22,7 @@ export class LibraryService {
     private cachedLibrary: EpocLibrary[] = JSON.parse(localStorage.getItem('library')) || [];
 
     constructor(private http: HttpClient, private fileService: FileService) {
-        this.fetchLibrary().subscribe((data: EpocLibrary[]) => this.library = data.map(item => {
-            item.downloading = false;
-            item.downloaded = false;
-            item.unzipping = false;
-            return item;
-        }), (e) => console.warn('Error fetching library', e), () => {
-            this.fileService.readdir('epocs').subscribe((data) => {
-                data.forEach(file => {
-                    const epocId = file.name;
-                    this.updateEpocState(epocId, false, false, true);
-                })
-            });
-        });
+        this.fetchLibrary();
     }
 
     get library(): EpocLibrary[] {
@@ -66,13 +54,24 @@ export class LibraryService {
         this.epocProgressesSubject$.next(this._epocProgresses);
     }
 
-    fetchLibrary(): Observable<EpocLibrary[]> {
-        const request = this.http.get<EpocLibrary[]>(this.libraryUrl).pipe(filter(data => {
+    fetchLibrary(): void {
+        this.http.get<EpocLibrary[]>(this.libraryUrl).pipe(filter(data => {
             if (!Array.isArray(data) || !data[0].id) return false; // cache only if valid
             localStorage.setItem('library', JSON.stringify(data)) // cache using localStorage
             return true;
-        }));
-        return request.pipe(startWith(this.cachedLibrary)); // return data starting with previous cached request
+        })).pipe(startWith(this.cachedLibrary)).subscribe((data: EpocLibrary[]) => this.library = data.map(item => {
+            item.downloading = false;
+            item.downloaded = false;
+            item.unzipping = false;
+            return item;
+        }), (e) => console.warn('Error fetching library', e), () => {
+            this.fileService.readdir('epocs').subscribe((data) => {
+                data.forEach(file => {
+                    const epocId = file.name;
+                    this.updateEpocState(epocId, false, false, true);
+                })
+            });
+        }); // return data starting with previous cached request
     }
 
     downloadEpoc(epoc: EpocMetadata): Observable<number> {
