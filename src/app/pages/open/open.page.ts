@@ -5,7 +5,6 @@ import {Zip} from 'capacitor-zip';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
-import {EpocService} from '../../services/epoc.service';
 
 const {Filesystem} = Plugins;
 
@@ -20,6 +19,7 @@ export class OpenPage {
     progress = 0;
     zip: Zip;
     zipList = [];
+    epocList = [];
     message = '';
     working = false;
 
@@ -29,8 +29,7 @@ export class OpenPage {
         private ref: ChangeDetectorRef,
         private elRef: ElementRef,
         private router: Router,
-        private file: File,
-        public epocService: EpocService
+        private file: File
     ) {
         this.zip = new Zip();
     }
@@ -69,7 +68,7 @@ export class OpenPage {
     }
 
     saveFile(file) {
-        this.file.writeFile(this.file.dataDirectory, file.name, '', {replace: true}).then((fileEntry: FileEntry) => {
+        this.file.writeFile(this.file.dataDirectory, `zips/${file.name}`, '', {replace: true}).then((fileEntry: FileEntry) => {
             this.loadingLog(`Création du fichier ${file.name}`);
             this.readdir();
             fileEntry.createWriter((fileWriter) => {
@@ -94,11 +93,10 @@ export class OpenPage {
         this.working = true;
         this.progress = 0;
         this.loadingLog(`Ouverture de ${filename}`);
-        this.epocService.setRootFolder(this.file.dataDirectory + 'epoc/');
         this.unzip(filename).then((epocId) => {
             this.toast('Démarrage', 'success');
             this.ngZone.run(() => {
-                this.router.navigateByUrl('/home/' + epocId);
+                this.router.navigateByUrl('/epoc/play/' + epocId);
             })
         }).catch((message) => {
             this.toast(message, 'danger');
@@ -111,52 +109,69 @@ export class OpenPage {
 
     unzip(filename) {
         return new Promise((resolve, reject) => {
-            this.file.checkDir(this.file.dataDirectory, 'epoc').then(() =>
-                this.file.removeRecursively(this.file.dataDirectory, 'epoc')
-            ).catch((e) =>
-                console.warn('Nothing to delete')
-            ).finally(() => {
-                this.zip.unZip({
-                    source: this.file.dataDirectory + filename,
-                    destination: this.file.dataDirectory + 'epoc',
-                }, (progress) => {
-                    this.progress = progress.value / 100;
-                    this.ref.detectChanges();
-                }).then(() => {
-                    Filesystem.readFile({
-                        // Path to NoCloud documents on iOS to be the same as cordova file plugin
-                        path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + 'epoc/content.json',
-                        directory: FilesystemDirectory.Data,
-                        encoding: FilesystemEncoding.UTF8
-                    }).then((result) => {
-                        const epoc = JSON.parse(result.data);
-                        resolve(epoc.id);
-                    }).catch(() => {
-                        reject('Erreur lors de l\'ouverture du content.json');
-                    });
-                }).catch(() => reject('Erreur lors du dézipage'));
-            });
+            const tmpId = Math.random().toString(36).substr(2, 9);
+            const tmpPath = 'epocs/' + tmpId;
+            this.zip.unZip({
+                source: this.file.dataDirectory + 'zips/' + filename,
+                destination: this.file.dataDirectory +  tmpPath,
+            }, (progress) => {
+                this.progress = progress.value / 100;
+                this.ref.detectChanges();
+            }).then(() => {
+                Filesystem.readFile({
+                    // Path to NoCloud documents on iOS to be the same as cordova file plugin
+                    path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `epocs/${tmpId}/content.json`,
+                    directory: FilesystemDirectory.Data,
+                    encoding: FilesystemEncoding.UTF8
+                }).then(async (result) => {
+                    const epoc = JSON.parse(result.data);
+                    const destPath = `epocs/${epoc.id}`;
+                    await this.dirDelete(epoc.id);
+                    await this.file.moveDir(this.file.dataDirectory, tmpPath, this.file.dataDirectory, destPath)
+                    resolve(epoc.id);
+                }).catch(() => {
+                    reject('Erreur lors de l\'ouverture du content.json');
+                });
+            }).catch(() => reject('Erreur lors du dézipage'));
         });
     }
 
-    readdir(path?) {
-        this.file.listDir(this.file.dataDirectory, path ? path : '').then((result) => {
-            this.zipList = result.map(file => file.name).filter(filename => filename.split('.').pop() === 'zip');
-        }).catch(() => {
-            console.warn('Unable to read dir');
-        });
+    async readdir() {
+        try{
+            // create zips directory if not exists
+            await this.file.createDir(this.file.dataDirectory, 'zips', false);
+        } catch {}
+        this.zipList = (await this.file.listDir(this.file.dataDirectory, 'zips'))
+            .filter(file => file.name.split('.').pop() === 'zip')
+            .map(file => file.name);
+        this.epocList = (await this.file.listDir(this.file.dataDirectory, 'epocs'))
+            .filter(file => file.isDirectory)
+            .map(file => file.name);
     }
 
     fileDelete(filename) {
         Filesystem.deleteFile({
             // Path to NoCloud documents on iOS to be the same as cordova file plugin
-            path: Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' + filename : filename,
+            path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `zips/${filename}`,
             directory: FilesystemDirectory.Data
         }).then(() => {
             this.readdir();
         }).catch(() => {
             this.toast('Erreur lors de la suppression', 'danger');
         });
+    }
+
+    async dirDelete(path) {
+        try {
+            await Filesystem.rmdir({
+                // Path to NoCloud documents on iOS to be the same as cordova file plugin
+                path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `epocs/${path}`,
+                directory: FilesystemDirectory.Data,
+                recursive: true
+            });
+            this.readdir();
+        } catch {
+        }
     }
 
     private writeFileInChunks(writer: FileWriter, file: Blob, progressCb?) {
