@@ -64,7 +64,7 @@ const routesInria: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(mode.inria ? routesInria : routesDefault, {preloadingStrategy: PreloadAllModules})
+        RouterModule.forRoot(mode === 'inria' ? routesInria : routesDefault, {preloadingStrategy: PreloadAllModules})
     ],
     exports: [RouterModule]
 })

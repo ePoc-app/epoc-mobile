@@ -104,7 +104,7 @@ export class SettingsPage implements OnInit {
     }
 
     async setUser(){
-        if (this.mode.inria) {
+        if (this.mode === 'inria') {
             this.router.navigateByUrl('/login');
             return;
         }
