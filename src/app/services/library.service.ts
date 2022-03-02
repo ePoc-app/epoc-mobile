@@ -4,6 +4,8 @@ import {forkJoin, Observable, ReplaySubject, timer} from 'rxjs';
 import {filter, startWith} from 'rxjs/operators';
 import {EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
+import {environment as env} from 'src/environments/environment';
+import {mode} from 'src/environments/environment.mode';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +18,7 @@ export class LibraryService {
     private _epocProgresses : {[EpocId: string] : number} = {};
     private epocProgressesSubject$ = new ReplaySubject<{[EpocId: string] : number}>(1);
     epocProgresses$ = this.epocProgressesSubject$.asObservable();
-
-    private libraryUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json';
+    private libraryUrl = env.mode[mode].libraryUrl;
     private cachedLibrary: EpocLibrary[] = JSON.parse(localStorage.getItem('library')) || [];
 
     constructor(private http: HttpClient, private fileService: FileService) {

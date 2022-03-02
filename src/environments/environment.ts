@@ -13,6 +13,14 @@ export const environment = {
         responseType: 'token',
         redirectUri: 'http://localhost/callback',
         scope: ''
+    },
+    mode: {
+        normal: {
+            libraryUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json'
+        },
+        inria: {
+            libraryUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list-inria.json'
+        }
     }
 };
 
