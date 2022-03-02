@@ -73,4 +73,16 @@ export class LibraryPage implements OnInit {
     });
     await actionSheet.present();
   }
+
+  doRefresh(event) {
+    const startTime = performance.now();
+    this.libraryService.fetchLibrary();
+    this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
+      const endTime = performance.now();
+      const delay = Math.max(0, 500 - (endTime - startTime)); // minimum delay of 500ms
+      setTimeout(() => {
+        event.target.complete();
+      }, delay);
+    });
+  }
 }
