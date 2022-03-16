@@ -31,6 +31,7 @@ export class Epoc extends EpocMetadata {
     questions: Record<uid, Question>;
     // initialized at runtime
     assessments?: Assessment[];
+    plugins: string[];
 }
 
 export class Chapter {

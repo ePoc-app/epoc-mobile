@@ -14,6 +14,7 @@ import {uid} from 'src/app/classes/types';
 import {DenormalizePipe} from 'src/app/pipes/denormalize.pipe';
 import {EpocService} from '../../../services/epoc.service';
 import {Content} from '../../../classes/contents/content';
+import {PluginService} from '../../../services/plugin.service';
 
 @Component({
     selector: 'app-epoc-player',
@@ -83,7 +84,8 @@ export class EpocPlayerPage implements OnInit {
         public actionSheetController: ActionSheetController,
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
-        private settingsStore: SettingsStoreService
+        private settingsStore: SettingsStoreService,
+        private pluginService: PluginService
     ) {
     }
 
@@ -106,6 +108,8 @@ export class EpocPlayerPage implements OnInit {
                 this.nextChapter = epoc.chapters[this.nextChapterId];
                 this.nextChapter.id = this.nextChapterId;
             }
+
+            this.pluginService.init(epoc.plugins)
         });
 
         combineLatest([this.epoc$, this.readingStore.readings$]).subscribe(([epoc, readings]) => {
