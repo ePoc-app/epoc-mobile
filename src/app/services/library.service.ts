@@ -6,6 +6,7 @@ import {EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
 import {environment as env} from 'src/environments/environment';
 import {mode} from 'src/environments/environment.mode';
+import {Capacitor} from '@capacitor/core';
 
 @Injectable({
     providedIn: 'root'
@@ -65,12 +66,23 @@ export class LibraryService {
             item.unzipping = false;
             return item;
         }), (e) => console.warn('Error fetching library', e), () => {
-            this.fileService.readdir('epocs').subscribe((data) => {
-                data.forEach(file => {
-                    const epocId = file.name;
-                    this.updateEpocState(epocId, false, false, true);
+            if (Capacitor.isNative) {
+                this.fileService.readdir('epocs').subscribe((data) => {
+                    data.forEach(file => {
+                        const epocId = file.name;
+                        this.updateEpocState(epocId, false, false, true);
+                    })
+                });
+            } else {
+                // To make it works on desktop (web)
+                this.library.forEach(epoc => {
+                    const url = Capacitor.convertFileSrc(`assets/demo/epocs/${epoc.id}/content.json`)
+                    this.http.head(url).subscribe(
+                        () => this.updateEpocState(epoc.id, false, false, true),
+                        () => {}
+                    )
                 })
-            });
+            }
         }); // return data starting with previous cached request
     }
 
