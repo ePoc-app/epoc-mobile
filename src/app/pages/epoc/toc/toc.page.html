@@ -38,19 +38,21 @@
                 </div>
                 <div class="toc-chapter-details" [ngClass]="{'opened': chapter.opened}">
                     <ng-container *ngFor="let content of chapter.contents | denormalize:epoc.contents;">
-                        <div class="toc-chapter-details-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
-                            <div class="toc-chapter-details-item-icon">
-                                <ion-icon *ngIf="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
-                                <ion-icon *ngIf="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
-                                <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
-                                <ion-icon *ngIf="content.type === 'simple-question' && !+epoc.questions[content.question].score"
-                                          name="bulb-outline" slot="start"></ion-icon>
-                                <ion-icon *ngIf="content.type === 'simple-question' && +epoc.questions[content.question].score"
-                                          name="checkbox-outline" slot="start"></ion-icon>
-                                <ion-icon *ngIf="content.type === 'choice'" name="git-branch-outline" slot="start"></ion-icon>
+                        <ng-container *ngIf="!content.hidden">
+                            <div class="toc-chapter-details-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
+                                <div class="toc-chapter-details-item-icon">
+                                    <ion-icon *ngIf="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
+                                    <ion-icon *ngIf="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
+                                    <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
+                                    <ion-icon *ngIf="content.type === 'simple-question' && !+epoc.questions[content.question].score"
+                                              name="bulb-outline" slot="start"></ion-icon>
+                                    <ion-icon *ngIf="content.type === 'simple-question' && +epoc.questions[content.question].score"
+                                              name="checkbox-outline" slot="start"></ion-icon>
+                                    <ion-icon *ngIf="content.type === 'choice'" name="git-branch-outline" slot="start"></ion-icon>
+                                </div>
+                                <div>{{content.title}}</div>
                             </div>
-                            <div>{{content.title}}</div>
-                        </div>
+                        </ng-container>
                     </ng-container>
                 </div>
             </div>
