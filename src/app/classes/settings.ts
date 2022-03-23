@@ -4,6 +4,7 @@ export class Settings {
     fontSize: number;
     lineHeight: number;
     darkMode: boolean;
+    libraryMode: 'libraryUrl'|'libraryQlfUrl';
 }
 
 

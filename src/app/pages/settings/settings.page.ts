@@ -25,7 +25,8 @@ export class SettingsPage implements OnInit {
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.5,
-        darkMode: false
+        darkMode: false,
+        libraryMode: 'libraryUrl'
     };
 
     info: DeviceInfo;
@@ -68,6 +69,7 @@ export class SettingsPage implements OnInit {
     }
 
     settingsChanged() {
+        console.log(this.settings)
         this.settingsStore.updateSettings(this.settings);
     }
 
@@ -150,5 +152,10 @@ export class SettingsPage implements OnInit {
     throwError() {
         this.presentToast('Une erreur a été émise');
         throw new Error(`Test Thrown Error`);
+    }
+
+    libraryChanged(event) {
+        this.settings.libraryMode = event.detail.value;
+        this.settingsChanged()
     }
 }

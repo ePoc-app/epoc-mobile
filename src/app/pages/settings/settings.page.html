@@ -110,6 +110,13 @@
         <ion-label>Ouvrir un autre ePoc</ion-label>
         <ion-icon slot="end" routerLink="/open" name="folder-open-outline"></ion-icon>
       </ion-item>
+      <ion-item>
+        <ion-label>Bibliothèque</ion-label>
+        <ion-select [value]="settings.libraryMode" (ionChange)="libraryChanged($event)">
+          <ion-select-option value="libraryUrl">Prod</ion-select-option>
+          <ion-select-option value="libraryQlfUrl">Qlf</ion-select-option>
+        </ion-select>
+      </ion-item>
       <div class="big-button" (click)="deleteData()">
           <div class="big-button-label"><ion-icon name="trash-outline"></ion-icon> Supprimer les données</div>
           <div class="big-button-sublabel">Attestations, quiz, préférences, etc.</div>

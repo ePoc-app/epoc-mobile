@@ -7,6 +7,7 @@ import {FileService} from './file.service';
 import {environment as env} from 'src/environments/environment';
 import {mode} from 'src/environments/environment.mode';
 import {Capacitor} from '@capacitor/core';
+import {SettingsStoreService} from './settings-store.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,8 +23,11 @@ export class LibraryService {
     private libraryUrl = env.mode[mode].libraryUrl;
     private cachedLibrary: EpocLibrary[] = JSON.parse(localStorage.getItem('library')) || [];
 
-    constructor(private http: HttpClient, private fileService: FileService) {
-        this.fetchLibrary();
+    constructor(private http: HttpClient, private fileService: FileService, private settingsStore: SettingsStoreService) {
+        this.settingsStore.settings$.subscribe(settings => {
+            this.libraryUrl = settings ? env.mode[mode][settings.libraryMode] : env.mode[mode].libraryUrl;
+            this.fetchLibrary();
+        });
     }
 
     get library(): EpocLibrary[] {
