@@ -13,7 +13,8 @@ export class SettingsStoreService {
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.5,
-        darkMode: false
+        darkMode: false,
+        libraryMode: 'libraryUrl'
     };
 
     private readonly settingsSubject = new BehaviorSubject<Settings>(undefined);

@@ -11,7 +11,6 @@ import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Location} from '@angular/common';
 import {Assessment} from 'src/app/classes/contents/assessment';
 import {uid} from 'src/app/classes/types';
-import {DenormalizePipe} from 'src/app/pipes/denormalize.pipe';
 import {EpocService} from '../../../services/epoc.service';
 import {Content} from '../../../classes/contents/content';
 import {PluginService} from '../../../services/plugin.service';
@@ -66,7 +65,8 @@ export class EpocPlayerPage implements OnInit {
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.4,
-        darkMode: false
+        darkMode: false,
+        libraryMode: 'libraryUrl'
     };
 
     readerStyles = {
