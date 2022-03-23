@@ -23,6 +23,8 @@ import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {FileTransfer} from '@ionic-native/file-transfer/ngx';
 import * as Sentry from '@sentry/angular';
 import {Integrations as TracingIntegrations} from '@sentry/tracing';
+import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
+import {NgxMatomoRouterModule} from '@ngx-matomo/router';
 
 Sentry.init(
     {
@@ -55,6 +57,11 @@ Sentry.init(
             name: '__epocdb',
             driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage]
         }),
+        NgxMatomoTrackerModule.forRoot({
+            siteId: 'YOUR_MATOMO_SITE_ID',
+            trackerUrl: 'https://piwik.inria.fr/',
+        }),
+        NgxMatomoRouterModule,
         PipesModule
     ],
     providers: [

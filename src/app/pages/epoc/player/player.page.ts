@@ -14,6 +14,7 @@ import {uid} from 'src/app/classes/types';
 import {EpocService} from '../../../services/epoc.service';
 import {Content} from '../../../classes/contents/content';
 import {PluginService} from '../../../services/plugin.service';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 @Component({
     selector: 'app-epoc-player',
@@ -85,7 +86,8 @@ export class EpocPlayerPage implements OnInit {
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService,
-        private pluginService: PluginService
+        private pluginService: PluginService,
+        private readonly tracker: MatomoTracker
     ) {
     }
 
@@ -170,14 +172,24 @@ export class EpocPlayerPage implements OnInit {
         )) return;
         this.showControls = !this.showControls;
     }
+    updateCurrentContent(index){
+        const content = this.chapter.initializedContents.filter(
+            c => !c.conditional || ( c.conditional && this.reading.flags.indexOf(c.id) !== -1 )
+        )[index - 1]
+        if (content) {
+            this.location.go('/epoc/play/'+this.epoc.id+'/'+this.chapterId+'/content/'+content.id)
+            this.readingStore.saveChapterProgress(this.epoc.id, this.chapterId, content.id);
+            this.tracker.trackPageView();
+        }
+    }
 
     onSlideChange() {
         this.stopAllMedia();
         this.readerSlides.getActiveIndex().then((index) => {
             this.currentPage = index;
             this.countPages();
+            this.updateCurrentContent(index);
             this.progress = index / this.pagesCount;
-            this.readingStore.saveChapterProgress(this.epoc.id, this.chapterId, 'todo');
         });
     }
 
