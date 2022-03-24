@@ -25,7 +25,7 @@
         <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
                         [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
                         [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
-                        [minLabel]="'0'"
+                        [minLabel]="0"
                         [maxLabel]="assessmentData.totalScore"></score-progress>
       </div>
     </div>
@@ -34,7 +34,7 @@
       <p>Gagnez {{epoc.certificateScore - assessmentData.totalUserScore}} points et obtenez votre attestation</p>
       <ion-button size="medium" expand="block" color="medium" fill="outline" (click)="getCertificate()">
         <ion-icon name="download-outline" slot="start"></ion-icon>
-        <span>Télécharger l'attestation</span>
+        <span>Obtenir l'attestation</span>
       </ion-button>
     </div>
     <div class="certificate success" *ngIf="certificateEnabled">
@@ -43,7 +43,7 @@
       <p>Vous avez atteint le score pour obtenir l’attestation</p>
       <ion-button size="medium" expand="block" (click)="getCertificate()">
         <ion-icon name="download-outline" slot="start"></ion-icon>
-        <span>Télécharger l'attestation</span>
+        <span>Obtenir l'attestation</span>
       </ion-button>
     </div>
     <div class="short-access">
