@@ -1,10 +1,10 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
-import {ActionSheetController} from '@ionic/angular';
+import {ActionSheetController, AlertController} from '@ionic/angular';
 import {OnboardingService} from '../../services/onboarding.service';
 import {OnboardingItem} from '../../classes/onboarding';
-import {combineLatest} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-library',
@@ -27,6 +27,8 @@ export class LibraryPage implements OnInit {
       public libraryService: LibraryService,
       public onboardingService: OnboardingService,
       public actionSheetController: ActionSheetController,
+      private router: Router,
+      public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -59,10 +61,24 @@ export class LibraryPage implements OnInit {
   async presentActionSheet(epoc) {
     const buttons = [
       {
+        text: 'Table des matières',
+        icon: 'list-circle-outline',
+        handler: () => {
+          this.router.navigateByUrl('/epoc/toc/' + epoc.id);
+        }
+      },
+      {
+        text: 'Scores & attestation',
+        icon: 'star-outline',
+        handler: () => {
+          this.router.navigateByUrl('/epoc/score/' + epoc.id);
+        }
+      },
+      {
         text: 'Supprimer',
         icon: 'trash',
         handler: () => {
-          this.deleteEpoc(epoc);
+          this.confirmDelete(epoc)
         }
       },
       {
@@ -79,10 +95,31 @@ export class LibraryPage implements OnInit {
     await actionSheet.present();
   }
 
+  async confirmDelete(epoc) {
+    const alert = await this.alertController.create({
+      header: 'Confirmation',
+      message: `Merci de confimer la suppresion de l'ePoc <b>"${epoc.title}"</b>`,
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Confirmer',
+          handler: () => {
+            this.deleteEpoc(epoc);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   doRefresh(event) {
     const startTime = performance.now();
     this.libraryService.fetchLibrary();
-    this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
+    this.libraryService.library$.subscribe(() => {
       const endTime = performance.now();
       const delay = Math.max(0, 500 - (endTime - startTime)); // minimum delay of 500ms
       setTimeout(() => {
