@@ -8,6 +8,8 @@ import {environment as env} from 'src/environments/environment';
 import {mode} from 'src/environments/environment.mode';
 import {Capacitor} from '@capacitor/core';
 import {SettingsStoreService} from './settings-store.service';
+import {ReadingStoreService} from './reading-store.service';
+import {Reading} from '../classes/reading';
 
 @Injectable({
     providedIn: 'root'
@@ -23,11 +25,19 @@ export class LibraryService {
     private libraryUrl = env.mode[mode].libraryUrl;
     private cachedLibrary: EpocLibrary[] = JSON.parse(localStorage.getItem('library')) || [];
 
-    constructor(private http: HttpClient, private fileService: FileService, private settingsStore: SettingsStoreService) {
+    private readings: Reading[];
+
+    constructor(
+        private http: HttpClient,
+        private fileService: FileService,
+        private settingsStore: SettingsStoreService,
+        private readingStore: ReadingStoreService
+    ) {
         this.settingsStore.settings$.subscribe(settings => {
             this.libraryUrl = settings ? env.mode[mode][settings.libraryMode] : env.mode[mode].libraryUrl;
             this.fetchLibrary();
         });
+        this.readingStore.readings$.subscribe(readings => this.readings = readings)
     }
 
     get library(): EpocLibrary[] {
@@ -39,13 +49,14 @@ export class LibraryService {
         this.librarySubject$.next(value);
     }
 
-    updateEpocState(epocId, downloading:boolean = false, unzipping:boolean = false, downloaded:boolean = false) {
+    updateEpocState(epocId, downloading:boolean = false, unzipping:boolean = false, downloaded:boolean = false, opened?:boolean) {
         const epocIndex = this._library.findIndex(item => item.id === epocId);
         if (epocIndex === -1) return;
         const epoc = this._library[epocIndex];
         epoc.downloading = downloading;
         epoc.downloaded = downloaded;
         epoc.unzipping = unzipping;
+        epoc.opened = opened ? opened:epoc.opened;
         this._library[epocIndex] = epoc;
         this.librarySubject$.next(this._library);
     }
@@ -68,6 +79,7 @@ export class LibraryService {
             item.downloading = false;
             item.downloaded = false;
             item.unzipping = false;
+            item.opened = false;
             return item;
         }), (e) => console.warn('Error fetching library', e), () => {
             if (Capacitor.isNative) {
@@ -85,6 +97,18 @@ export class LibraryService {
                         () => this.updateEpocState(epoc.id, false, false, true),
                         () => {}
                     )
+                })
+            }
+
+            if (this.readings) {
+                this.library.forEach(epoc => {
+                    this.updateEpocState(
+                        epoc.id,
+                        false,
+                        false,
+                        epoc.downloaded,
+                        this.readings.findIndex(reading => reading.epocId === epoc.id) !== -1
+                    );
                 })
             }
         }); // return data starting with previous cached request
