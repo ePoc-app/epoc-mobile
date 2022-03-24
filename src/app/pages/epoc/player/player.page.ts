@@ -211,7 +211,7 @@ export class EpocPlayerPage implements OnInit {
     }
 
     displayMenu() {
-        this.epocService.presentActionSheet(this.chapterIndex, this.chapter);
+        this.epocService.epocMainMenu(this.chapterIndex, this.chapter);
     }
 
     stopAllMedia() {

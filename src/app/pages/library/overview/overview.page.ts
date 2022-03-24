@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {LibraryService} from 'src/app/services/library.service';
-import {Epoc, EpocLibrary} from 'src/app/classes/epoc';
+import {EpocLibrary} from 'src/app/classes/epoc';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -43,6 +43,10 @@ export class EpocOverviewPage implements OnInit {
 
     downloadEpoc(epoc: EpocLibrary) {
         this.libraryService.downloadEpoc(epoc);
+    }
+
+    openEpocMenu(epoc){
+        this.libraryService.epocLibraryMenu(epoc);
     }
 
     ionViewWillLeave() {

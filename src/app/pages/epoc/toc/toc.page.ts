@@ -46,6 +46,7 @@ export class EpocTocPage implements OnInit {
                 if (this.reading) {
                     this.setProgress();
                 }
+                this.contentInitialized = true;
             }
         });
     }
@@ -54,6 +55,7 @@ export class EpocTocPage implements OnInit {
         if (this.reading) {
             this.setProgress();
         }
+        this.contentInitialized = true;
     }
 
     setProgress () {
@@ -84,7 +86,6 @@ export class EpocTocPage implements OnInit {
                 chapter.done = chapter.assessmentDone && chapter.chapterOpened && chapter.allViewed
             }
         }
-        this.contentInitialized = true;
     }
 
     toggleDetails (chapter) {
@@ -92,6 +93,6 @@ export class EpocTocPage implements OnInit {
     }
 
     displayMenu() {
-        this.epocService.presentActionSheet();
+        this.epocService.epocMainMenu();
     }
 }

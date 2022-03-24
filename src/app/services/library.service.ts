@@ -10,6 +10,8 @@ import {Capacitor} from '@capacitor/core';
 import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
 import {Reading} from '../classes/reading';
+import {ActionSheetController, AlertController} from '@ionic/angular';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +33,10 @@ export class LibraryService {
         private http: HttpClient,
         private fileService: FileService,
         private settingsStore: SettingsStoreService,
-        private readingStore: ReadingStoreService
+        private readingStore: ReadingStoreService,
+        public actionSheetController: ActionSheetController,
+        private router: Router,
+        public alertController: AlertController
     ) {
         this.settingsStore.settings$.subscribe(settings => {
             this.libraryUrl = settings ? env.mode[mode][settings.libraryMode] : env.mode[mode].libraryUrl;
@@ -156,5 +161,63 @@ export class LibraryService {
             deletions$.push(this.deleteEpoc(item));
         })
         return forkJoin([timer(100), ...deletions$]);
+    }
+
+    async epocLibraryMenu(epoc){
+        const buttons = [
+            {
+                text: 'Table des matières',
+                icon: 'list-circle-outline',
+                handler: () => {
+                    this.router.navigateByUrl('/epoc/toc/' + epoc.id);
+                }
+            },
+            {
+                text: 'Scores & attestation',
+                icon: 'star-outline',
+                handler: () => {
+                    this.router.navigateByUrl('/epoc/score/' + epoc.id);
+                }
+            },
+            {
+                text: 'Supprimer',
+                icon: 'trash',
+                handler: () => {
+                    this.confirmDelete(epoc)
+                }
+            },
+            {
+                text: 'Fermer',
+                role: 'cancel'
+            }
+        ];
+        const actionSheet = await this.actionSheetController.create({
+            header: epoc.title,
+            cssClass: 'custom-action-sheet',
+            mode: 'ios',
+            buttons
+        });
+        await actionSheet.present();
+    }
+
+    async confirmDelete(epoc) {
+        const alert = await this.alertController.create({
+            header: 'Confirmation',
+            message: `Merci de confimer la suppresion de l'ePoc <b>"${epoc.title}"</b>`,
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Confirmer',
+                    handler: () => {
+                        this.deleteEpoc(epoc);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }

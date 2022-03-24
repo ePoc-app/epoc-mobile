@@ -1,10 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
-import {ActionSheetController, AlertController} from '@ionic/angular';
 import {OnboardingService} from '../../services/onboarding.service';
 import {OnboardingItem} from '../../classes/onboarding';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-library',
@@ -25,10 +23,7 @@ export class LibraryPage implements OnInit {
   constructor(
       private ref: ChangeDetectorRef,
       public libraryService: LibraryService,
-      public onboardingService: OnboardingService,
-      public actionSheetController: ActionSheetController,
-      private router: Router,
-      public alertController: AlertController
+      public onboardingService: OnboardingService
   ) {}
 
   ngOnInit() {
@@ -50,70 +45,8 @@ export class LibraryPage implements OnInit {
     this.libraryService.downloadEpoc(epoc);
   }
 
-  deleteEpoc(epoc: EpocLibrary) {
-    this.libraryService.deleteEpoc(epoc);
-  }
-
   removeMessage(id) {
     this.onboardingService.remove(id);
-  }
-
-  async presentActionSheet(epoc) {
-    const buttons = [
-      {
-        text: 'Table des matières',
-        icon: 'list-circle-outline',
-        handler: () => {
-          this.router.navigateByUrl('/epoc/toc/' + epoc.id);
-        }
-      },
-      {
-        text: 'Scores & attestation',
-        icon: 'star-outline',
-        handler: () => {
-          this.router.navigateByUrl('/epoc/score/' + epoc.id);
-        }
-      },
-      {
-        text: 'Supprimer',
-        icon: 'trash',
-        handler: () => {
-          this.confirmDelete(epoc)
-        }
-      },
-      {
-        text: 'Fermer',
-        role: 'cancel'
-      }
-    ];
-    const actionSheet = await this.actionSheetController.create({
-      header: epoc.title,
-      cssClass: 'custom-action-sheet',
-      mode: 'ios',
-      buttons
-    });
-    await actionSheet.present();
-  }
-
-  async confirmDelete(epoc) {
-    const alert = await this.alertController.create({
-      header: 'Confirmation',
-      message: `Merci de confimer la suppresion de l'ePoc <b>"${epoc.title}"</b>`,
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Confirmer',
-          handler: () => {
-            this.deleteEpoc(epoc);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
   }
 
   doRefresh(event) {
@@ -126,5 +59,9 @@ export class LibraryPage implements OnInit {
         event.target.complete();
       }, delay);
     });
+  }
+
+  openEpocMenu(epoc){
+    this.libraryService.epocLibraryMenu(epoc);
   }
 }

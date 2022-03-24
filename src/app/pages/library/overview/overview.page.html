@@ -4,6 +4,11 @@
       <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
     </ion-buttons>
     <ion-title>Présentation du cours</ion-title>
+    <ion-buttons slot="end" *ngIf="epoc && epoc.downloaded">
+      <ion-button (click)="openEpocMenu(epoc)">
+        <ion-icon name="ellipsis-horizontal" color="inria-blue"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -64,7 +69,7 @@
       <div class="tab" *ngIf="selectedTab === 2">
         <div class="epoc-author" *ngFor="let author of epoc.authors | values">
           <div class="epoc-author-name">
-            <img *ngIf="author.image" [src]="author.image | safe: 'url'"/>
+            <img [alt]="'Photo de ' + author.name" *ngIf="author.image" [src]="author.image | safe: 'url'"/>
             {{author.name}}
           </div>
           <div class="epoc-author-description html-text" [innerHTML]="author.description"></div>
@@ -76,7 +81,8 @@
 
 <ion-footer mode="ios" *ngIf="epoc">
   <ion-toolbar>
-    <ion-button class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" size="large" expand="block" color="inria" strong *ngIf="epoc.downloaded">
+    <ion-button class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" size="large"
+                expand="block" color="inria" strong="" *ngIf="epoc.downloaded">
       <span *ngIf="!epoc.opened">C'est parti !</span>
       <span *ngIf="epoc.opened">Reprendre</span>
       <ion-icon *ngIf="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>

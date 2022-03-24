@@ -133,7 +133,7 @@ export class EpocService {
     return score;
   }
 
-  async presentActionSheet(chapterIndex?:number, chapter?:Chapter) {
+  async epocMainMenu(chapterIndex?:number, chapter?:Chapter) {
     const buttons = [
       {
         text: 'Accueil',
