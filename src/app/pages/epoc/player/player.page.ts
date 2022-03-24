@@ -129,6 +129,8 @@ export class EpocPlayerPage implements OnInit {
                     return !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1);
                 });
 
+                this.readingStore.saveChapterProgress(this.epoc.id, this.chapterId);
+
                 if (contentId) {
                     const pageIndex = this.contentsFilteredConditional.findIndex(content => content.id === contentId);
                     this.slidesOptions.initialSlide = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id

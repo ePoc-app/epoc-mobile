@@ -46,8 +46,11 @@ export class Chapter {
     assessmentCount?: number;
     initializedContents: Content[];
     assessments?: uid[];
+    done?: boolean;
+    allViewed?: boolean;
     chapterOpened?: boolean;
     assessmentDone?: boolean;
+    resumeLink?:string;
 }
 
 export class Parameters {

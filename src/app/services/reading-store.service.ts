@@ -83,13 +83,15 @@ export class ReadingStoreService {
         this.saveReadings();
     }
 
-    saveChapterProgress(epocId: string, chapterId: string, contentId: string) {
+    saveChapterProgress(epocId: string, chapterId: string, contentId?: string) {
         const index = this.readings.findIndex(reading => reading.epocId === epocId);
 
         const chapterIndex = this.readings[index].chaptersProgress.findIndex(chapter => chapter.id === chapterId);
 
-        if (chapterIndex !== -1 && this.readings[index].chaptersProgress[chapterIndex].contents.indexOf(contentId) === -1) {
-            this.readings[index].chaptersProgress[chapterIndex].contents.push(contentId)
+        if (chapterIndex !== -1) {
+            if (contentId && this.readings[index].chaptersProgress[chapterIndex].contents.indexOf(contentId) === -1) {
+                this.readings[index].chaptersProgress[chapterIndex].contents.push(contentId)
+            }
         } else {
             this.readings[index].chaptersProgress.push({
                 id: chapterId,

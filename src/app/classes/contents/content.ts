@@ -8,6 +8,7 @@ export abstract class Content {
     conditional?: boolean;
     conditionResolver?: ScoreResolver | ChoiceResolver;
     hidden?: boolean;
+    viewed?: boolean;
 }
 
 abstract class Resolver {

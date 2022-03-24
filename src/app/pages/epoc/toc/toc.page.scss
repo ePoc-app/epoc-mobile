@@ -94,6 +94,10 @@
       margin-top: .5rem;
       background: var(--ion-color-inria-light);
 
+      &.viewed{
+        background: var(--ion-color-inria-correct-tint);
+      }
+
       &-icon{
         display: flex;
         align-items: center;

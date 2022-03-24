@@ -7,21 +7,22 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="epoc">
+<ion-content *ngIf="contentInitialized">
     <div class="wrapper">
         <div class="toc-header">
-            <img [src]="(epocService.rootFolder +  epoc.image) | safe: 'url'">
+            <img alt="ePoc Image" [src]="(epocService.rootFolder +  epoc.image) | safe: 'url'">
             <div class="toc-header-title">{{epoc.title}} {{epoc.id}}</div>
         </div>
         <div class="toc-content">
             <div class="toc-chapter" *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
                 <div class="toc-chapter-summary">
-                    <div class="toc-chapter-progress" [ngClass]="{'done':chapter.assessmentDone && chapter.chapterOpened}">
-                        <ion-icon name="checkmark-outline" *ngIf="chapter.assessmentDone && chapter.chapterOpened"></ion-icon>
-                        <ion-icon name="time-outline" *ngIf="!chapter.assessmentDone || !chapter.chapterOpened"></ion-icon>
+                    <div class="toc-chapter-progress" [ngClass]="{'done':chapter.done}">
+                        <ion-icon name="checkmark-outline" *ngIf="chapter.done"></ion-icon>
+                        <ion-icon name="arrow-forward-outline" *ngIf="!chapter.done && chapter.chapterOpened"></ion-icon>
+                        <ion-icon name="time-outline" *ngIf="!chapter.done && !chapter.chapterOpened"></ion-icon>
                     </div>
                     <div class="toc-chapter-info">
-                        <div class="toc-chapter-info-title" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id">
+                        <div class="toc-chapter-info-title" [routerLink]="chapter.resumeLink">
                             <div class="toc-chapter-info-label">
                                 {{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}
                             </div>
@@ -39,7 +40,7 @@
                 <div class="toc-chapter-details" [ngClass]="{'opened': chapter.opened}">
                     <ng-container *ngFor="let content of chapter.contents | denormalize:epoc.contents;">
                         <ng-container *ngIf="!content.hidden">
-                            <div class="toc-chapter-details-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
+                            <div class="toc-chapter-details-item" [ngClass]="{'viewed':content.viewed}" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
                                 <div class="toc-chapter-details-item-icon">
                                     <ion-icon *ngIf="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
                                     <ion-icon *ngIf="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
