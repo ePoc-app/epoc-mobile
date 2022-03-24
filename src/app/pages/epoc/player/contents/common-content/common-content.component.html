@@ -3,8 +3,8 @@
     <div class="title-icon">
       <ion-icon [name]="icon" [src]="icon.indexOf('assets') !== -1 ? icon : null"></ion-icon>
     </div>
-    <h5 class="subtitle">{{subtitle}}</h5>
-    <h4 class="title">{{title}}</h4>
+    <h5 class="subtitle">{{subtitle | nbsp}}</h5>
+    <h4 class="title">{{title | nbsp}}</h4>
   </div>
   <ng-content></ng-content>
 </app-card>
