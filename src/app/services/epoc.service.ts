@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
-import {Epoc} from 'src/app/classes/epoc';
+import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {uid} from 'src/app/classes/types';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {HttpClient} from '@angular/common/http';
 import {File} from '@ionic-native/file/ngx';
+import {Router} from '@angular/router';
+import {ActionSheetController} from '@ionic/angular';
 const {Filesystem} = Plugins;
 
 @Injectable({
@@ -22,7 +24,9 @@ export class EpocService {
 
   constructor(
       private http: HttpClient,
-      private file: File
+      private file: File,
+      private router: Router,
+      public actionSheetController: ActionSheetController
   ) {}
 
   get epoc(): Epoc {
@@ -68,6 +72,7 @@ export class EpocService {
     epoc.parameters = epoc.parameters ? epoc.parameters : {};
 
     for (const [chapterId, chapter] of Object.entries(epoc.chapters)) {
+      chapter.resumeLink = `/epoc/play/${epoc.id}/${chapterId}`;
       chapter.time = 0;
       chapter.videoCount = 0;
       chapter.assessments = [];
@@ -114,7 +119,7 @@ export class EpocService {
   public calcScore(scoreMax, correction, userResponses) {
     let score = 0;
     if (typeof correction === 'string') {
-      score = userResponses.join('') === correction ? +scoreMax : 0;
+      score = userResponses.join('') === correction ? +scoreMax : score;
     } else {
       correction = correction as Array<any>;
       if (correction.length > 0 && correction[0].values){
@@ -126,5 +131,57 @@ export class EpocService {
       }
     }
     return score;
+  }
+
+  async presentActionSheet(chapterIndex?:number, chapter?:Chapter) {
+    const buttons = [
+      {
+        text: 'Accueil',
+        icon: 'home-outline',
+        handler: () => {
+          this.router.navigateByUrl('/home/' + this.epoc.id);
+        }
+      },
+      {
+        text: 'À propos du cours',
+        icon: 'information-circle-outline',
+        handler: () => {
+          this.router.navigateByUrl('/library/' + this.epoc.id);
+        }
+      },
+      ...(!this.router.isActive('/epoc/toc/' + this.epoc.id, true) ? [{
+        text: 'Table des matières',
+        icon: 'list-circle-outline',
+        handler: () => {
+          this.router.navigateByUrl('/epoc/toc/' + this.epoc.id);
+        }
+      }] : []),
+      {
+        text: 'Détails des scores',
+        icon: 'star-outline',
+        handler: () => {
+          this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
+        }
+      },
+      {
+        text: 'Paramètres',
+        icon: 'settings-outline',
+        handler: () => {
+          this.router.navigateByUrl('/settings');
+        }
+      },
+      {
+        text: 'Fermer',
+        role: 'cancel'
+      }
+    ];
+    const actionSheet = await this.actionSheetController.create({
+      cssClass: 'custom-action-sheet',
+      mode: 'ios',
+      header: this.epoc.title,
+      subHeader: chapterIndex ? `${chapterIndex  + 1}. ${chapter.title}` : '',
+      buttons
+    });
+    await actionSheet.present();
   }
 }

@@ -4,6 +4,11 @@
             <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
         </ion-buttons>
         <ion-title>Table des matières</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="displayMenu()">
+                <ion-icon slot="icon-only" name="menu-outline" color="inria-blue"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -33,7 +38,7 @@
                             <ng-container *ngIf="!chapter.opened">Voir plus...</ng-container>
                         </div>
                     </div>
-                    <div class="toc-chapter-open" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id">
+                    <div class="toc-chapter-open" [routerLink]="chapter.resumeLink">
                         <ion-icon name="chevron-forward-outline" color="inria"></ion-icon>
                     </div>
                 </div>

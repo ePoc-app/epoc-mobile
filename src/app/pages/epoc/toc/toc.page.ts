@@ -3,7 +3,6 @@ import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {combineLatest, Observable} from 'rxjs';
 import {Epoc} from 'src/app/classes/epoc';
-import {AlertController} from '@ionic/angular';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Reading} from 'src/app/classes/reading';
 import {EpocService} from '../../../services/epoc.service';
@@ -29,8 +28,7 @@ export class EpocTocPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public epocService: EpocService,
-        private readingStore: ReadingStoreService,
-        public alertController: AlertController,
+        private readingStore: ReadingStoreService
     ) {
     }
 
@@ -65,7 +63,6 @@ export class EpocTocPage implements OnInit {
             });
             const chapterIndex = this.reading.chaptersProgress.findIndex(chapterProgress => chapterProgress.id === chapterId);
             chapter.chapterOpened = chapterIndex !== -1;
-            chapter.resumeLink = '/epoc/play/'+this.epoc.id+'/'+chapter.id;
             if (chapter.chapterOpened) {
                 let resumeLink;
                 const readingChapter = this.reading.chaptersProgress[chapterIndex];
@@ -79,7 +76,7 @@ export class EpocTocPage implements OnInit {
                     if (!content.viewed) {
                         chapter.allViewed = false;
                         if (!resumeLink) {
-                            resumeLink = `/epoc/play/${this.epoc.id}/${chapter.id}/content/${content.id}`
+                            resumeLink = `/epoc/play/${this.epoc.id}/${chapterId}/content/${content.id}`;
                             chapter.resumeLink = resumeLink;
                         }
                     }
@@ -92,5 +89,9 @@ export class EpocTocPage implements OnInit {
 
     toggleDetails (chapter) {
         chapter.opened = !chapter.opened;
+    }
+
+    displayMenu() {
+        this.epocService.presentActionSheet();
     }
 }

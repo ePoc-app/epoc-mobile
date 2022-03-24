@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {ActionSheetController, AlertController, IonSlides} from '@ionic/angular';
+import {IonSlides} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
 import {combineLatest, Observable} from 'rxjs';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
@@ -81,8 +81,6 @@ export class EpocPlayerPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
-        public alertController: AlertController,
-        public actionSheetController: ActionSheetController,
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService,
@@ -213,7 +211,7 @@ export class EpocPlayerPage implements OnInit {
     }
 
     displayMenu() {
-        this.presentActionSheet();
+        this.epocService.presentActionSheet(this.chapterIndex, this.chapter);
     }
 
     stopAllMedia() {
@@ -258,58 +256,6 @@ export class EpocPlayerPage implements OnInit {
 
     dismissCertificateCard() {
         this.certificateShown = false;
-    }
-
-    async presentActionSheet() {
-        const buttons = [
-            {
-                text: 'Accueil',
-                icon: 'home-outline',
-                handler: () => {
-                    this.router.navigateByUrl('/home/' + this.epoc.id);
-                }
-            },
-            {
-                text: 'À propos du cours',
-                icon: 'information-circle-outline',
-                handler: () => {
-                    this.router.navigateByUrl('/library/' + this.epoc.id);
-                }
-            },
-            {
-                text: 'Table des matières',
-                icon: 'list-circle-outline',
-                handler: () => {
-                    this.router.navigateByUrl('/epoc/toc/' + this.epoc.id);
-                }
-            },
-            {
-                text: 'Détails des scores',
-                icon: 'star-outline',
-                handler: () => {
-                    this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
-                }
-            },
-            {
-                text: 'Paramètres',
-                icon: 'settings-outline',
-                handler: () => {
-                    this.router.navigateByUrl('/settings');
-                }
-            },
-            {
-                text: 'Fermer',
-                role: 'cancel'
-            }
-        ];
-        const actionSheet = await this.actionSheetController.create({
-            cssClass: 'custom-action-sheet',
-            mode: 'ios',
-            header: this.epoc.title,
-            subHeader: `${this.chapterIndex + 1}. ${this.chapter.title}`,
-            buttons
-        });
-        await actionSheet.present();
     }
 
     ionViewWillLeave() {
