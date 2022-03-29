@@ -25,10 +25,11 @@ import * as Sentry from '@sentry/angular';
 import {Integrations as TracingIntegrations} from '@sentry/tracing';
 import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
 import {NgxMatomoRouterModule} from '@ngx-matomo/router';
+import {environment as env} from 'src/environments/environment';
 
 Sentry.init(
     {
-        dsn: 'https://2992d74734b44e5cbc12b4926bdcd7be@o1092720.ingest.sentry.io/6111359',
+        dsn: env.production ? 'https://2992d74734b44e5cbc12b4926bdcd7be@o1092720.ingest.sentry.io/6111359' : null,
         // To set your release and dist versions
         release: 'fr.inria.epoc@dev',
         dist: '1',

@@ -69,7 +69,6 @@ export class SettingsPage implements OnInit {
     }
 
     settingsChanged() {
-        console.log(this.settings)
         this.settingsStore.updateSettings(this.settings);
     }
 

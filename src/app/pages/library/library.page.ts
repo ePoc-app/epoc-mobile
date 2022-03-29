@@ -37,10 +37,6 @@ export class LibraryPage implements OnInit {
     }))
   }
 
-  ionViewDidEnter() {
-    this.libraryService.fetchLibrary();
-  }
-
   downloadEpoc(epoc: EpocLibrary) {
     this.libraryService.downloadEpoc(epoc);
   }

@@ -39,7 +39,8 @@ export class LibraryService {
         public alertController: AlertController
     ) {
         this.settingsStore.settings$.subscribe(settings => {
-            this.libraryUrl = settings ? env.mode[mode][settings.libraryMode] : env.mode[mode].libraryUrl;
+            if (!settings) return;
+            this.libraryUrl = env.mode[mode][settings.libraryMode];
             this.fetchLibrary();
         });
         this.readingStore.readings$.subscribe(readings => this.readings = readings)

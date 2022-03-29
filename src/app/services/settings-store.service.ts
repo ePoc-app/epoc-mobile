@@ -17,7 +17,7 @@ export class SettingsStoreService {
         libraryMode: 'libraryUrl'
     };
 
-    private readonly settingsSubject = new BehaviorSubject<Settings>(undefined);
+    private readonly settingsSubject = new BehaviorSubject<Settings>(null);
     readonly settings$ = this.settingsSubject.asObservable();
 
     constructor(private storageService: StorageService) {
@@ -34,7 +34,7 @@ export class SettingsStoreService {
 
     fetchSettingss() {
         this.storageService.getValue('settings').then( (settings) => {
-            this.settings = settings ? JSON.parse(settings) : null;
+            this.settings = settings ? JSON.parse(settings) : this.defaultSettings;
         });
     }
 
