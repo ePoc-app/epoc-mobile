@@ -16,7 +16,7 @@
     <div class="wrapper">
         <div class="toc-header">
             <img alt="ePoc Image" [src]="(epocService.rootFolder +  epoc.image) | safe: 'url'">
-            <div class="toc-header-title">{{epoc.title}} {{epoc.id}}</div>
+            <div class="toc-header-title">{{epoc.title}}</div>
         </div>
         <div class="toc-content">
             <div class="toc-chapter" *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
