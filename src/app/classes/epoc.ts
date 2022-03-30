@@ -15,6 +15,7 @@ export class EpocMetadata {
     chaptersCount: number;
     assessmentsCount: number;
     download: string;
+    lastModif: string;
 }
 
 export class EpocLibrary extends EpocMetadata {
@@ -22,6 +23,8 @@ export class EpocLibrary extends EpocMetadata {
     downloaded: boolean;
     unzipping: boolean;
     opened:boolean;
+    updateAvailable: boolean;
+    lastModified: string;
 }
 
 export class Epoc extends EpocMetadata {

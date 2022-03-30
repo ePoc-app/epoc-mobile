@@ -1,17 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {forkJoin, Observable, ReplaySubject, timer} from 'rxjs';
-import {filter, startWith} from 'rxjs/operators';
-import {EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
+import {forkJoin, from, Observable, ReplaySubject, timer} from 'rxjs';
+import {filter, map, startWith} from 'rxjs/operators';
+import {Epoc, EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
 import {environment as env} from 'src/environments/environment';
 import {mode} from 'src/environments/environment.mode';
-import {Capacitor} from '@capacitor/core';
+import {Capacitor, Plugins, FilesystemDirectory, FilesystemEncoding} from '@capacitor/core';
 import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
 import {Reading} from '../classes/reading';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {File} from '@ionic-native/file/ngx';
+const {Filesystem} = Plugins;
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +34,7 @@ export class LibraryService {
     constructor(
         private http: HttpClient,
         private fileService: FileService,
+        private file: File,
         private settingsStore: SettingsStoreService,
         private readingStore: ReadingStoreService,
         public actionSheetController: ActionSheetController,
@@ -55,7 +58,19 @@ export class LibraryService {
         this.librarySubject$.next(value);
     }
 
-    updateEpocState(epocId, downloading:boolean = false, unzipping:boolean = false, downloaded:boolean = false, opened?:boolean) {
+    updateEpocLibraryState(epocId, {
+        downloading = false,
+        unzipping = false,
+        downloaded = false,
+        opened,
+        updateAvailable = false
+    }:{
+        downloading?: boolean,
+        unzipping?: boolean,
+        downloaded?: boolean,
+        opened?: boolean,
+        updateAvailable?: boolean
+    }){
         const epocIndex = this._library.findIndex(item => item.id === epocId);
         if (epocIndex === -1) return;
         const epoc = this._library[epocIndex];
@@ -63,6 +78,7 @@ export class LibraryService {
         epoc.downloaded = downloaded;
         epoc.unzipping = unzipping;
         epoc.opened = opened ? opened:epoc.opened;
+        epoc.updateAvailable = updateAvailable
         this._library[epocIndex] = epoc;
         this.librarySubject$.next(this._library);
     }
@@ -88,46 +104,49 @@ export class LibraryService {
             item.opened = false;
             return item;
         }), (e) => console.warn('Error fetching library', e), () => {
-            if (Capacitor.isNative) {
-                this.fileService.readdir('epocs').subscribe((data) => {
-                    data.forEach(file => {
-                        const epocId = file.name;
-                        this.updateEpocState(epocId, false, false, true);
-                    })
-                });
-            } else {
-                // To make it works on desktop (web)
-                this.library.forEach(epoc => {
-                    const url = Capacitor.convertFileSrc(`assets/demo/epocs/${epoc.id}/content.json`)
-                    this.http.head(url).subscribe(
-                        () => this.updateEpocState(epoc.id, false, false, true),
-                        () => {}
-                    )
+            this.library.forEach(epoc => {
+                this.readEpocContent(epoc.id).subscribe((localEpoc) => {
+                    const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
+                    const updateAvailable = new Date(epoc.lastModified) > downloadDate;
+                    this.updateEpocLibraryState(epoc.id, {downloaded: true, updateAvailable});
                 })
-            }
+            })
 
             if (this.readings) {
                 this.library.forEach(epoc => {
-                    this.updateEpocState(
+                    this.updateEpocLibraryState(
                         epoc.id,
-                        false,
-                        false,
-                        epoc.downloaded,
-                        this.readings.findIndex(reading => reading.epocId === epoc.id) !== -1
+                        {
+                            downloaded: epoc.downloaded,
+                            opened: this.readings.findIndex(reading => reading.epocId === epoc.id) !== -1
+                        }
                     );
                 })
             }
         }); // return data starting with previous cached request
     }
 
+    readEpocContent(epocId): Observable<Epoc> {
+        if (Capacitor.isNative) {
+            return from(Filesystem.readFile({
+                path: `../Library/NoCloud/epocs/${epocId}/content.json`,
+                directory: FilesystemDirectory.Data,
+                encoding: FilesystemEncoding.UTF8
+            })).pipe(map(file => JSON.parse(file.data)));
+        } else {
+            const url = Capacitor.convertFileSrc(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}epocs/${epocId}/content.json`)
+            return this.http.get<Epoc>(url)
+        }
+    }
+
     downloadEpoc(epoc: EpocMetadata): Observable<number> {
         const download = this.fileService.download(epoc.download, `epocs/${epoc.id}.zip`);
-        this.updateEpocState(epoc.id, true);
+        this.updateEpocLibraryState(epoc.id, {downloading: true});
         this.addEpocProgress(epoc.id);
         download.subscribe((progress) => {
             this.updateEpocProgress(epoc.id, progress);
         }, () => {
-            this.updateEpocState(epoc.id);
+            this.updateEpocLibraryState(epoc.id, {});
         }, () => {
             this.unzipEpoc(epoc);
         });
@@ -136,14 +155,14 @@ export class LibraryService {
 
     unzipEpoc(epoc: EpocMetadata): Observable<number> {
         const unzip = this.fileService.unzip(`epocs/${epoc.id}.zip`, `epocs/${epoc.id}`);
-        this.updateEpocState(epoc.id, false, true);
+        this.updateEpocLibraryState(epoc.id, {unzipping: true});
         this.addEpocProgress(epoc.id);
         unzip.subscribe((progress) => {
             this.updateEpocProgress(epoc.id, progress);
         }, () => {
-            this.updateEpocState(epoc.id);
+            this.updateEpocLibraryState(epoc.id, {});
         }, () => {
-            this.updateEpocState(epoc.id, false, false, true);
+            this.updateEpocLibraryState(epoc.id, {downloaded: true});
             this.fileService.deleteZip(`epocs/${epoc.id}.zip`);
         });
         return unzip;
@@ -151,7 +170,7 @@ export class LibraryService {
 
     deleteEpoc(epoc: EpocMetadata): Observable<any> {
         const rm = this.fileService.deleteFolder(`epocs/${epoc.id}`);
-        rm.subscribe(() => {}, () => {}, () => { this.updateEpocState(epoc.id); });
+        rm.subscribe(() => {}, () => {}, () => { this.updateEpocLibraryState(epoc.id, {}); });
         return rm;
     }
 
@@ -180,6 +199,13 @@ export class LibraryService {
                     this.router.navigateByUrl('/epoc/score/' + epoc.id);
                 }
             },
+            ...(epoc.updateAvailable ? [{
+                text: 'Mettre à jour',
+                icon: 'cloud-download-outline',
+                handler: () => {
+                    this.deleteEpoc(epoc).subscribe(() => this.downloadEpoc(epoc))
+                }
+            }] : []),
             {
                 text: 'Supprimer',
                 icon: 'trash',

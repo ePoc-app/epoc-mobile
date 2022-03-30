@@ -37,7 +37,7 @@
           <span *ngIf="epoc.opened">Continuer</span>
           <ion-icon *ngIf="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>
-        <ion-button class="round" color="inria-light" (click)="openEpocMenu(epoc)">
+        <ion-button class="round" [ngClass]="{'update-available': epoc.updateAvailable}" color="inria-light" (click)="openEpocMenu(epoc)">
           <span class="ellipsis">...</span>
         </ion-button>
       </div>

@@ -113,6 +113,22 @@
     display: flex;
   }
 
+  .update-available{
+    position: relative;
+
+    &:before{
+      content:'';
+      position: absolute;
+      top:1px;
+      right:1px;
+      width:6px;
+      height:6px;
+      border-radius: 6px;
+      background: var(--ion-color-inria);
+      z-index: 1;
+    }
+  }
+
   @media screen and (min-width: 768px) {
     flex: 0 0 calc(25 - var(--library-item-gap));
     width: calc(25% - var(--library-item-gap));
