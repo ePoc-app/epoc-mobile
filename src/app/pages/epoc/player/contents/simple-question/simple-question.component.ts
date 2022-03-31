@@ -5,6 +5,7 @@ import {Content} from 'src/app/classes/contents/content';
 import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {EpocService} from 'src/app/services/epoc.service';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 @Component({
     selector: 'simple-question',
@@ -28,7 +29,8 @@ export class SimpleQuestionComponent implements OnInit {
 
     constructor(
         private readingStore: ReadingStoreService,
-        private epocService: EpocService
+        private epocService: EpocService,
+        private readonly tracker: MatomoTracker
     ) {}
 
     ngOnInit() {
@@ -46,6 +48,7 @@ export class SimpleQuestionComponent implements OnInit {
         const score = this.epocService.calcScore(this.question.score, this.question.correctResponse, this.userResponses);
         this.readingStore.saveResponses(this.epocId, this.content.id, score, this.userResponses);
         this.questionComponent.showCorrection();
+        this.tracker.trackEvent('Assessments', 'Answered simple question', `Answered ${this.epocId} ${this.content.id}`, score);
     }
 
     onQuestionAnswered (event) {
