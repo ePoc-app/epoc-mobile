@@ -10,6 +10,7 @@ import {Reading} from 'src/app/classes/reading';
 import {Assessment, Question} from 'src/app/classes/contents/assessment';
 import {EpocService} from 'src/app/services/epoc.service';
 import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 @Component({
     selector: 'app-epoc-assessment',
@@ -51,7 +52,8 @@ export class EpocAssessmentPage implements OnInit {
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
         public alertController: AlertController,
-        public navCtrl: NavController
+        public navCtrl: NavController,
+        private readonly tracker: MatomoTracker
     ) {}
 
     ngOnInit() {
@@ -89,10 +91,12 @@ export class EpocAssessmentPage implements OnInit {
 
     checkAnswer() {
         const question = this.questions[this.currentQuestion];
+        const score = this.epocService.calcScore(question.score, question.correctResponse, this.currentQuestionUserResponse);
         this.explanationShown = true;
         this.questionsElement.toArray()[this.currentQuestion].showCorrection();
-        this.userScore += this.epocService.calcScore(question.score, question.correctResponse, this.currentQuestionUserResponse);
-        this.userResponses.push(this.currentQuestionUserResponse)
+        this.userScore += score;
+        this.userResponses.push(this.currentQuestionUserResponse);
+        this.tracker.trackEvent('Assessments', 'Answered', `Answered ${this.epocId} ${this.assessmentId} ${this.currentQuestion}`, score);
     }
 
     nextQuestion() {
@@ -108,6 +112,7 @@ export class EpocAssessmentPage implements OnInit {
     }
 
     setAssessmentsData() {
+        this.tracker.trackEvent('Assessments', 'Done', `Answered ${this.epocId} ${this.assessmentId}`, this.userScore);
         this.assessmentData = {
             userScore: this.userScore,
             totalUserScore: 0,
