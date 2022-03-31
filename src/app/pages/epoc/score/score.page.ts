@@ -182,7 +182,15 @@ export class EpocScorePage implements OnInit {
             orange: '#FFA029',
             lightblue: '#edf3f8'
         };
-        const doc = new jsPDF({orientation: 'portrait', compress: true});
+        const password = Math.random().toString(36).substring(2,12);
+        const doc = new jsPDF({
+            orientation: 'portrait',
+            compress: true,
+            encryption: {
+                userPermissions: ['print'],
+                ownerPassword: password
+            }
+        });
         const img = new Image();
         const centeredText = (text, y) => {
             const textWidth = doc.getStringUnitWidth(text) * doc.getFontSize() / doc.internal.scaleFactor;
@@ -245,7 +253,7 @@ export class EpocScorePage implements OnInit {
         doc.setFont('Helvetica', 'normal');
         centeredText(`N°${id}`, posY);
 
-        this.tracker.trackEvent('Certificate', 'Generate certificate', `Certificate ${this.epoc.id} n°${id}`);
+        this.tracker.trackEvent('Certificate', 'Generate certificate', `Certificate ${this.epoc.id} n°${id} (${password})`);
         return doc;
     }
 
