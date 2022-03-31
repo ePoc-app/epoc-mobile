@@ -14,6 +14,7 @@ import {Capacitor, FilesystemDirectory, Plugins} from '@capacitor/core';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {LoadingController} from '@ionic/angular';
 import {EpocService} from '../../../services/epoc.service';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 @Component({
     selector: 'app-epoc-score',
@@ -41,7 +42,8 @@ export class EpocScorePage implements OnInit {
         private auth: AuthService,
         private fileOpener: FileOpener,
         public alertController: AlertController,
-        public loadingController: LoadingController
+        public loadingController: LoadingController,
+        private readonly tracker: MatomoTracker
     ) {}
 
     ngOnInit() {
@@ -237,6 +239,13 @@ export class EpocScorePage implements OnInit {
         doc.setFontSize(10);
         doc.setFont('Helvetica', 'normal');
         centeredText(`Délivrée le ${date.getDate()}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`, posY);
+        const id = Math.floor(Math.random() * 10000000);
+        posY += 7;
+        doc.setFontSize(8);
+        doc.setFont('Helvetica', 'normal');
+        centeredText(`N°${id}`, posY);
+
+        this.tracker.trackEvent('Certificate', 'Generate certificate', `Certificate ${this.epoc.id} n°${id}`);
         return doc;
     }
 
@@ -251,7 +260,7 @@ export class EpocScorePage implements OnInit {
                 path: fileName,
                 data: output,
                 directory: FilesystemDirectory.Data
-            }).then((writeFileResult) => {
+            }).then(() => {
                 Filesystem.getUri({
                     directory: FilesystemDirectory.Data,
                     path: fileName
