@@ -13,6 +13,7 @@ import {Reading} from '../classes/reading';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {File} from '@ionic-native/file/ngx';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 const {Filesystem} = Plugins;
 
 @Injectable({
@@ -39,7 +40,8 @@ export class LibraryService {
         private readingStore: ReadingStoreService,
         public actionSheetController: ActionSheetController,
         private router: Router,
-        public alertController: AlertController
+        public alertController: AlertController,
+        private readonly tracker: MatomoTracker
     ) {
         this.settingsStore.settings$.subscribe(settings => {
             if (!settings) return;
@@ -150,6 +152,7 @@ export class LibraryService {
         }, () => {
             this.unzipEpoc(epoc);
         });
+        this.tracker.trackEvent('Library', 'Download', `Download ${epoc.id}`);
         return download;
     }
 
@@ -169,12 +172,14 @@ export class LibraryService {
     }
 
     deleteEpoc(epoc: EpocMetadata): Observable<any> {
+        this.tracker.trackEvent('Library', 'Delete', `Delete ${epoc.id}`);
         const rm = this.fileService.deleteFolder(`epocs/${epoc.id}`);
         rm.subscribe(() => {}, () => {}, () => { this.updateEpocLibraryState(epoc.id, {}); });
         return rm;
     }
 
     deleteAll(): Observable<any> {
+        this.tracker.trackEvent('Library', 'Delete', `Delete all`);
         const deletions$ = [];
         this.library.forEach(item => {
             if(!item.downloaded) return;
