@@ -129,7 +129,7 @@ export class LibraryService {
     }
 
     readEpocContent(epocId): Observable<Epoc> {
-        if (Capacitor.isNative) {
+        if (Capacitor.isNative && Capacitor.getPlatform() === 'ios') {
             return from(Filesystem.readFile({
                 path: `../Library/NoCloud/epocs/${epocId}/content.json`,
                 directory: FilesystemDirectory.Data,
