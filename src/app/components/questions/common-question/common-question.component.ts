@@ -17,7 +17,17 @@ export class CommonQuestionComponent implements OnInit {
   @Input() title: string;
   @Input() subtitle: string;
   @Input() icon: string;
-  @Input() userAssessment;
+
+  private _userAssessment;
+  @Input() set userAssessment(value) {
+
+    this._userAssessment = value;
+    this.setState();
+  }
+
+  get userAssessment() {
+    return this._userAssessment;
+  }
 
   @Output() userHasResponded = new EventEmitter<any>();
   @Output() questionAnswered = new EventEmitter<boolean>();
@@ -36,11 +46,21 @@ export class CommonQuestionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.setState();
+  }
+
+  setState() {
     if (this.userAssessment) {
       this.questionDisabled = true;
       this.userResponses = this.userAssessment.responses;
       this.flipped = true;
       this.questionAnswered.emit(true);
+    } else {
+      this.questionDisabled = false;
+      this.userResponses = null;
+      this.flipped = false;
+      this.questionAnswered.emit(false);
+      if (this.flipCardComponent) this.flipCardComponent.showFront();
     }
   }
 

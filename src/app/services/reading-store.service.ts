@@ -54,32 +54,34 @@ export class ReadingStoreService {
     }
 
     updateProgress(epocId: string, progress: number) {
-        const index = this.readings.findIndex(reading => reading.epocId === epocId);
+        const readings = [...this.readings];
+        const index = readings.findIndex(reading => reading.epocId === epocId);
 
-        this.readings[index].progress = progress;
-
+        readings[index].progress = progress;
+        this.readings = readings;
         this.saveReadings();
     }
 
     saveResponses(epocId: string, assessmentId: string, score: number, responses) {
-        const index = this.readings.findIndex(reading => reading.epocId === epocId);
+        const readings = [...this.readings];
+        const index = readings.findIndex(reading => reading.epocId === epocId);
 
-        const assessmentIndex = this.readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
+        const assessmentIndex = readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
 
         if (assessmentIndex !== -1) {
-            this.readings[index].assessments[assessmentIndex] = {
+            readings[index].assessments[assessmentIndex] = {
                 id: assessmentId,
                 score,
                 responses
             };
         } else {
-            this.readings[index].assessments.push({
+            readings[index].assessments.push({
                 id: assessmentId,
                 score,
                 responses
             });
         }
-
+        this.readings = readings;
         this.saveReadings();
     }
 
@@ -122,16 +124,16 @@ export class ReadingStoreService {
         readings[index].flags = readings[index].flags.concat(flags);
 
         this.readings = readings;
-
         this.saveReadings();
     }
 
     resetResponses(epocId: string, assessmentId) {
-        const index = this.readings.findIndex(reading => reading.epocId === epocId);
-        const assessmentIndex = this.readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
+        const readings = [...this.readings];
+        const index = readings.findIndex(reading => reading.epocId === epocId);
+        const assessmentIndex = readings[index].assessments.findIndex(assessment => assessment.id === assessmentId);
 
-        this.readings[index].assessments.splice(assessmentIndex, 1);
-
+        readings[index].assessments.splice(assessmentIndex, 1);
+        this.readings = readings;
         this.saveReadings();
     }
 
@@ -155,27 +157,31 @@ export class ReadingStoreService {
     }
 
     toggleBookmark(epocId: string, index: number) {
-        const readingIndex = this.readings.findIndex(reading => reading.epocId === epocId);
-        if (this.readings[readingIndex].bookmarks.indexOf(index) === -1) {
-            this.readings[readingIndex].bookmarks.push(index);
+        const readings = [...this.readings];
+        const readingIndex = readings.findIndex(reading => reading.epocId === epocId);
+        if (readings[readingIndex].bookmarks.indexOf(index) === -1) {
+            readings[readingIndex].bookmarks.push(index);
         } else {
-            this.readings[readingIndex].bookmarks.splice(this.readings[readingIndex].bookmarks.indexOf(index), 1);
+            readings[readingIndex].bookmarks.splice(readings[readingIndex].bookmarks.indexOf(index), 1);
         }
-
+        this.readings = readings;
         this.saveReadings();
     }
 
     removeBookmark(epocId: string, index: number) {
-        const readingIndex = this.readings.findIndex(reading => reading.epocId === epocId);
+        const readings = [...this.readings];
+        const readingIndex = readings.findIndex(reading => reading.epocId === epocId);
 
-        this.readings[readingIndex].bookmarks.splice(index, 1);
-
+        readings[readingIndex].bookmarks.splice(index, 1);
+        this.readings = readings;
         this.saveReadings();
     }
 
     updateCertificateShown(epocId: string, value: boolean) {
-        const index = this.readings.findIndex(reading => reading.epocId === epocId);
-        this.readings[index].certificateShown = value;
+        const readings = [...this.readings];
+        const index = readings.findIndex(reading => reading.epocId === epocId);
+        readings[index].certificateShown = value;
+        this.readings = readings;
         this.saveReadings();
     }
 }
