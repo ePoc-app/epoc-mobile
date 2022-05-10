@@ -128,6 +128,7 @@
   align-items: center;
 
   .swipe-action{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -146,6 +147,16 @@
 
     &.hidden{
       opacity: 0;
+    }
+
+    span{
+      position: absolute;
+      top:100%;
+      left:50%;
+      transform: translateX(-50%);
+      font-size: .75rem;
+      color: var(--ion-color-inria-grey);
+      white-space: nowrap;
     }
   }
 }
