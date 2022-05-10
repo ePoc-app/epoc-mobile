@@ -10,9 +10,9 @@ import {
     QueryList,
     ViewChildren
 } from '@angular/core';
-import {Response, SwipeQuestion} from 'src/app/classes/contents/assessment';
+import {SwipeQuestion} from 'src/app/classes/contents/assessment';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {AnimationController, GestureController, ModalController, Platform} from '@ionic/angular';
+import {AnimationController, GestureController} from '@ionic/angular';
 import {AbstractQuestionComponent} from '../abstract-question.component';
 
 @Component({
@@ -96,7 +96,7 @@ export class SwipeComponent extends AbstractQuestionComponent implements OnInit,
                 el: elem,
                 threshold: 0,
                 gestureName: 'swipe',
-                onStart: ev => {
+                onStart: () => {
                     this.isDragging = true;
                     this.dragging.emit('dragstart');
                     elem.style.transition = 'none';
@@ -158,8 +158,13 @@ export class SwipeComponent extends AbstractQuestionComponent implements OnInit,
         this.userResponse.emit(null);
     }
 
-    swipe(dir){
-        if(this.cardsRemaining.length > 0) this.startAnimation(this.cardsRemaining[this.cardsRemaining.length-1], dir);
+    swipe(side){
+        if(side === 'swipeRight') {
+            this.cardsRemaining[this.cardsRemaining.length-1].selectedSide = this.sides[0];
+        } else if (side === 'swipeLeft') {
+            this.cardsRemaining[this.cardsRemaining.length-1].selectedSide = this.sides[1];
+        }
+        if(this.cardsRemaining.length > 0) this.startAnimation(this.cardsRemaining[this.cardsRemaining.length-1], side);
     }
 
     selectSide(side) {
