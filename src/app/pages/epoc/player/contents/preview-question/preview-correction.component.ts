@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from 'src/app/classes/contents/assessment';
-import {Content} from 'src/app/classes/contents/content';
+import {Assessment, Question} from 'src/app/classes/contents/assessment';
 
 @Component({
     selector: 'preview-correction',
@@ -8,8 +7,9 @@ import {Content} from 'src/app/classes/contents/content';
     styleUrls: ['./preview-correction.component.scss'],
 })
 export class PreviewCorrectionComponent implements OnInit{
-    @Input() content: Content;
+    @Input() content: Assessment;
     @Input() question: Question;
+    @Input() questionIndex: number;
 
     userResponses;
 
@@ -27,7 +27,6 @@ export class PreviewCorrectionComponent implements OnInit{
                         return this.question.responses.find(response => response.value === value)
                     })
                 })
-                console.log(this.userResponses)
             }
         }
     }

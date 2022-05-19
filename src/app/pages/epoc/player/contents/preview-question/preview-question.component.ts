@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Question} from 'src/app/classes/contents/assessment';
-import {Content} from 'src/app/classes/contents/content';
+import {Assessment, Question} from 'src/app/classes/contents/assessment';
 
 @Component({
     selector: 'preview-question',
@@ -8,7 +7,7 @@ import {Content} from 'src/app/classes/contents/content';
     styleUrls: ['./preview-question.component.scss'],
 })
 export class PreviewQuestionComponent{
-    @Input() content: Content;
+    @Input() content: Assessment;
     @Input() question: Question;
     @Input() questionIndex: number;
 }
