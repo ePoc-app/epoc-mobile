@@ -18,6 +18,7 @@ import {ChapterEndComponent} from './player/contents/chapter-end/chapter-end.com
 import {CommonContentComponent} from './player/contents/common-content/common-content.component';
 import {VideoContentComponent} from './player/contents/video/video.component';
 import {AssessmentContentComponent} from './player/contents/assessment/assessment.component';
+import {EpocPreviewPage} from './preview/preview.page';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import {AssessmentContentComponent} from './player/contents/assessment/assessmen
         RouterModule.forChild([
             {path: ':id', component: EpocOverviewPage},
             {path: 'play/:id', component: EpocTocPage},
+            {path: 'preview/:id', component: EpocPreviewPage},
             {path: 'play/:id/:chapter', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId/:next', component: EpocPlayerPage},
@@ -52,7 +54,8 @@ import {AssessmentContentComponent} from './player/contents/assessment/assessmen
         ChapterEndComponent,
         CommonContentComponent,
         VideoContentComponent,
-        AssessmentContentComponent
+        AssessmentContentComponent,
+        EpocPreviewPage
     ],
     entryComponents: [TranscriptModalPage]
 })

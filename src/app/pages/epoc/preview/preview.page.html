@@ -1,0 +1,24 @@
+<div class="preview-contents" *ngIf="epoc">
+  <ng-container *ngFor="let chapter of chapters; let i = index">
+    <div class="separator">{{chapterLabel}} {{i + 1}}. {{chapter.title}}</div>
+    <div class="preview-content">
+      <chapter-info [chapter]="chapter"></chapter-info>
+    </div>
+    <ng-container *ngFor="let content of chapter.initializedContents; let index = index">
+      <div class="preview-content">
+        <common-content [title]="content.title" [subtitle]="content.subtitle" [icon]="iconFromType[content.type]" *ngIf="content.type !== 'simple-question'">
+          <html-content *ngIf="content.type === 'html'" [html]="content.html | srcConvert"></html-content>
+          <video-content *ngIf="content.type === 'video'" [inputContent]="content"></video-content>
+          <course-choice *ngIf="content.type === 'choice'" [epocId]="epoc.id" [content]="content"></course-choice>
+          <assessment-content *ngIf="content.type === 'assessment'" [inputContent]="content"></assessment-content>
+        </common-content>
+        <simple-question *ngIf="content.type === 'simple-question'" [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]"></simple-question>
+      </div>
+    </ng-container>
+    <div class="preview-content">
+      <common-content [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
+        <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="chapters[i+1]" [chapterLabel]="chapterLabel"></chapter-end>
+      </common-content>
+    </div>
+  </ng-container>
+</div>

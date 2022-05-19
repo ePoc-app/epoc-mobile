@@ -476,3 +476,16 @@ video {
 .dropdown-actionSheet span {
   color: #ADABC2;
 }
+
+body.preview{
+  position: relative;
+  height:auto;
+  max-height: none;
+  overflow-y: visible;
+
+  ion-router-outlet, .ion-page{
+    position: relative;
+    inset: auto;
+    overflow: visible;
+  }
+}
