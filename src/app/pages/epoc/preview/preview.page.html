@@ -14,6 +14,12 @@
         </common-content>
         <simple-question *ngIf="content.type === 'simple-question'" [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]"></simple-question>
       </div>
+      <ng-container *ngIf="content.type === 'assessment'">
+        <ng-container *ngFor="let question of content.questions | denormalize:epoc.questions; let questionIndex = index;">
+          <div class="preview-content"><preview-question [content]="content" [question]="question" [questionIndex]="questionIndex"></preview-question></div>
+          <div class="preview-content"><preview-correction [content]="content" [question]="question" [questionIndex]="questionIndex"></preview-correction></div>
+        </ng-container>
+      </ng-container>
     </ng-container>
     <div class="preview-content">
       <common-content [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">

@@ -1,0 +1,36 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width:100%;
+  overflow: hidden;
+}
+
+.title-container{
+  margin-bottom: 1rem;
+  text-align: center;
+
+  .subtitle{
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--ion-color-inria);
+    text-transform: uppercase;
+  }
+}
+
+.statement{
+  b{
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  div{
+    color: var(--ion-color-inria-grey);
+    font-size: 0.875rem;
+  }
+}
+
+.question{
+  margin-bottom: 2rem;
+}
+

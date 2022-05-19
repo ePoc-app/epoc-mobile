@@ -1,0 +1,22 @@
+<app-card>
+  <div class="correction">
+    <div class="title-container">
+      <h5 class="subtitle">Les réponses <br/> {{'Question '+(questionIndex+1)+'/'+content.questions.length | nbsp}}</h5>
+    </div>
+    <div class="statement ion-text-center">
+      <b>{{question.label}}</b>
+    </div>
+    <ng-container [ngSwitch]="question.type">
+      <correction-multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" [userResponses]="userResponses"></correction-multiple-choice>
+      <correction-reorder *ngSwitchCase="'reorder'" [question]="question" [userResponses]="userResponses"></correction-reorder>
+      <correction-sort *ngSwitchCase="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type) ? question.type : !question.type" [question]="question"  [userResponses]="userResponses"></correction-sort>
+      <correction-generic *ngSwitchDefault [question]="question" [userResponses]="userResponses"></correction-generic>
+    </ng-container>
+  </div>
+  <div class="explanation" *ngIf="question.explanation">
+    <div class="title-container">
+      <h5 class="subtitle">Explication</h5>
+    </div>
+    <html-content [html]="question.explanation"></html-content>
+  </div>
+</app-card>

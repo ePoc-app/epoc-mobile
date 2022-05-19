@@ -1,6 +1,7 @@
 .preview-contents{
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   width:141vw;
   transform: scale(0.7);
   transform-origin: top left;

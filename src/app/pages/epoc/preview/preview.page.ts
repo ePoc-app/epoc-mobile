@@ -50,6 +50,10 @@ export class EpocPreviewPage implements OnInit {
 
     ionViewDidEnter(){
         document.body.classList.add('preview')
+        setTimeout(() => {
+            document.body.querySelectorAll<HTMLInputElement>('.accordion [name="accordion-checkbox"]')
+                .forEach(checkbox => checkbox.checked = true)
+        }, 1000)
     }
 
     ionViewWillLeave(){

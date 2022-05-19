@@ -19,6 +19,8 @@ import {CommonContentComponent} from './player/contents/common-content/common-co
 import {VideoContentComponent} from './player/contents/video/video.component';
 import {AssessmentContentComponent} from './player/contents/assessment/assessment.component';
 import {EpocPreviewPage} from './preview/preview.page';
+import {PreviewQuestionComponent} from './player/contents/preview-question/preview-question.component';
+import {PreviewCorrectionComponent} from './player/contents/preview-question/preview-correction.component';
 
 @NgModule({
     imports: [
@@ -55,7 +57,9 @@ import {EpocPreviewPage} from './preview/preview.page';
         CommonContentComponent,
         VideoContentComponent,
         AssessmentContentComponent,
-        EpocPreviewPage
+        EpocPreviewPage,
+        PreviewQuestionComponent,
+        PreviewCorrectionComponent
     ],
     entryComponents: [TranscriptModalPage]
 })
