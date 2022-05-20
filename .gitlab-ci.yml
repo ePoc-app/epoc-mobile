@@ -26,6 +26,7 @@ build:
 pages:
   stage: deploy
   script:
+    - npm install adm-zip --save-dev
     - node ci/fetchEpocs.js
     - mv dist/ public/
   artifacts:
