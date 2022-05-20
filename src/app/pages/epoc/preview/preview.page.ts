@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {Chapter, Epoc} from 'src/app/classes/epoc';
-import {EpocService} from '../../../services/epoc.service';
-import {PluginService} from '../../../services/plugin.service';
+import {Chapter, Epoc, EpocLibrary} from 'src/app/classes/epoc';
+import {EpocService} from 'src/app/services/epoc.service';
+import {PluginService} from 'src/app/services/plugin.service';
+import {LibraryService} from 'src/app/services/library.service';
 
 @Component({
     selector: 'app-epoc-preview',
@@ -12,7 +13,8 @@ import {PluginService} from '../../../services/plugin.service';
     styleUrls: ['preview.page.scss']
 })
 export class EpocPreviewPage implements OnInit {
-
+    library: EpocLibrary[] | undefined;
+    epocId: string;
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     chapters: Chapter[];
@@ -30,16 +32,21 @@ export class EpocPreviewPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public epocService: EpocService,
+        public libraryService: LibraryService,
         private pluginService: PluginService
     ) {
     }
 
     ngOnInit() {
-        this.epoc$ = this.route.paramMap.pipe(
-            switchMap((params: ParamMap) =>
-                this.epocService.getEpoc(params.get('id')))
-        );
+        this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
+        if (this.route.snapshot.paramMap.get('id')) {
+            this.epocId = this.route.snapshot.paramMap.get('id')
+            this.fetchEpocData()
+        }
+    }
 
+    fetchEpocData () {
+        this.epoc$ = this.epocService.getEpoc(this.epocId)
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
             this.chapters = Object.values(this.epoc.chapters);
@@ -58,5 +65,10 @@ export class EpocPreviewPage implements OnInit {
 
     ionViewWillLeave(){
         document.body.classList.remove('preview')
+    }
+
+    onChange(value) {
+        this.epocId = value;
+        this.fetchEpocData();
     }
 }
