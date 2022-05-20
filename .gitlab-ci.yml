@@ -1,13 +1,13 @@
 stages:
-- build
-
-before_script:
-- apt-get update -qy
-- apt-get -y install zip
+  - build
+  - deploy
 
 build:
   image: node:14
   stage: build
+  before_script:
+    - apt-get update -qy
+    - apt-get -y install zip
   script:
   - export NG_CLI_ANALYTICS=ci
   - npm i
