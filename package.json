@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "ionic serve --external",
     "build": "ng build",
+    "build-preview": "ng build --configuration=preview --output-path=dist",
     "android": "npm run resources && ionic capacitor run android --prod",
     "android-zrr": "npm run resources-zrr && ionic capacitor run android --prod --mode=inria",
     "android-dev": "npm run resources && ionic build && ionic capacitor run android --livereload-url=http://$(ipconfig getifaddr en0):8100",

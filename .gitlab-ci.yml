@@ -1,9 +1,10 @@
+image: node:14
+
 stages:
   - build
   - deploy
 
 build:
-  image: node:14
   stage: build
   before_script:
     - apt-get update -qy
@@ -13,9 +14,7 @@ build:
   - npm i
   - npm run build
   - cd www && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd -
-  - ng build --configuration=preview && rm www/index.html && cp preview/index.html www/index.html
-  - mv www dist
-  - node ci/fetchEpocs.js
+  - npm run build-preview && rm dist/index.html && cp preview/index.html dist/index.html
   artifacts:
     expire_in: 1 week
     paths:
@@ -27,6 +26,7 @@ build:
 pages:
   stage: deploy
   script:
+    - node ci/fetchEpocs.js
     - mv dist/ public/
   artifacts:
     expire_in: 1 week
@@ -34,4 +34,5 @@ pages:
       - public
   only:
     - master
+    - web
 
