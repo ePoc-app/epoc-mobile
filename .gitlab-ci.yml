@@ -6,16 +6,31 @@ before_script:
 - apt-get -y install zip
 
 build:
-  image: node:10
+  image: node:14
   stage: build
   script:
   - export NG_CLI_ANALYTICS=ci
   - npm i
   - npm run build
+  - ng build --configuration=preview --output-path=dist && cp preview/index.html dist/index.html
+  - node ci/fetchEpocs.js
   - cd www && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd -
   artifacts:
-    expire_in: 1 yr
+    expire_in: 1 week
     paths:
     - preview.zip
+    - dist
   only:
   - master
+
+pages:
+  stage: deploy
+  script:
+    - mv dist/* public/*
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - public
+  only:
+    - master
+

@@ -69,10 +69,6 @@
             "preview": {
               "fileReplacements": [
                 {
-                  "replace": "src/index.html",
-                  "with": "preview/index.html"
-                },
-                {
                   "replace": "src/app/app-routing.module.ts",
                   "with": "preview/app-routing.module.ts"
                 },
@@ -98,18 +94,6 @@
                 }
               ]
             },
-            "previewServe": {
-              "fileReplacements": [
-                {
-                  "replace": "src/app/app-routing.module.ts",
-                  "with": "preview/app-routing.module.ts"
-                },
-                {
-                  "replace": "src/app/pages/epoc/epoc.module.ts",
-                  "with": "preview/epoc.module.ts"
-                }
-              ]
-            },
             "ci": {
               "progress": false
             }
@@ -125,7 +109,7 @@
               "browserTarget": "app:build:production"
             },
             "preview": {
-              "browserTarget": "app:build:previewServe"
+              "browserTarget": "app:build:preview"
             },
             "ci": {
               "progress": false
