@@ -14,7 +14,7 @@ build:
   - npm i
   - npm run build
   - cd www && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd -
-  - npm run build-preview && rm dist/index.html && cp preview/index.html dist/index.html
+  - rm src/index.html && cp preview/index.html src/index.html && npm run build-preview
   artifacts:
     expire_in: 1 week
     paths:
