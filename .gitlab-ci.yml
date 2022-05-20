@@ -12,9 +12,10 @@ build:
   - export NG_CLI_ANALYTICS=ci
   - npm i
   - npm run build
-  - ng build --configuration=preview --output-path=dist && cp preview/index.html dist/index.html
-  - node ci/fetchEpocs.js
   - cd www && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd -
+  - ng build --configuration=preview && cp preview/index.html www/index.html
+  - mv www dist
+  - node ci/fetchEpocs.js
   artifacts:
     expire_in: 1 week
     paths:
@@ -26,7 +27,7 @@ build:
 pages:
   stage: deploy
   script:
-    - mv dist/* public/*
+    - mv dist/ public/
   artifacts:
     expire_in: 1 week
     paths:
