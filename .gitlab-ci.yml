@@ -13,7 +13,7 @@ build:
   - npm i
   - npm run build
   - cd www && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd -
-  - ng build --configuration=preview && cp preview/index.html www/index.html
+  - ng build --configuration=preview && rm www/index.html && cp preview/index.html www/index.html
   - mv www dist
   - node ci/fetchEpocs.js
   artifacts:
