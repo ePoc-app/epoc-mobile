@@ -8,40 +8,83 @@ describe('ePoc e2e tests suite', () => {
     it('should launch and have a logo', async () => {
         await expect($('.logo')).toBeExisting();
     });
-    it('should show course details', async () => {
-        await $('app-home .start-course').click();
-        
-        const title = await $('app-about-epoc ion-title');
+    it('should show avaible ePoc', async () => {
+        await $('app-library ion-toolbar ion-button').click();
+
+        const title = await $('app-settings ion-title');
         await title.waitForDisplayed({ timeout: 1000 });
-        await expect(await title.getText()).toBe('Informations');
+        await expect(await title.getText()).toBe('PARAMÈTRES');
     });
-    it('should show course table of content', async () => {
-        await $('app-about-epoc .start-course').click();
+    it('should show bibliotheque', async () => {
+        const list = $$('app-settings ion-list')[2];
+        const item = list.$$('ion-item')[1];
+        const select = item.$('ion-select');
+        await select.click();
         
-        const toc = await $('app-toc-epoc .tocContent');
-        await toc.waitForDisplayed({ timeout: 1000 });
-        await expect(toc).toBeExisting();
+    });
+    it('should choose QLF', async () => {
+        const alert = $('ion-alert');
+        const button = alert.$$('button')[1];
+        await button.click();
+    });
+    it('should leave bibliotheque', async () => {
+        const alert = $('ion-alert');
+        const button = alert.$$('button')[3];
+        await button.click();
+    });
+    it('should return on home', async () => {
+        const alert = $('ion-toolbar ion-buttons');
+        await alert.click();
+
+        await expect($('.logo')).toBeExisting();
+    });
+    it('should enter demo', async () => {
+        const alert = $('app-library .library-item-toolbar ion-button');
+        await alert.click();
+
+        await expect($('.logo')).toBeExisting();
     });
     
     it('should click on first chapter and show chapter content', async () => {
-        await $$('.tocContent .chapters .part')[0].click();
-        
-        const chapterContent = await $('.page-content-chapter');
-        await chapterContent.waitForDisplayed({ timeout: 1000 });
-        await expect(chapterContent).toBeExisting();
+        await $$('.toc-chapter-open')[3].click();
+
+        const element = await $('.chapter-specs');
+        await element.waitForDisplayed({ timeout: 1000 });
     });
     
-    it('should have clickable slides', async () => {
-        await driver.pause(300);
-        const slides = await $$('ion-slide');
-        // Go to next page
-        await $('.page-action.page-next').click();
-        await driver.pause(300);
-        await expect(slides[1]).toHaveElementClass('swiper-slide-active')
-        // Go back to previous page
-        await $('.page-action.page-prev').click()
-        await driver.pause(300)
-        await expect(slides[0]).toHaveElementClass('swiper-slide-active')
+    it('should go on first txt', async () => {
+
+        const element2 = await $('.reader-action');
+        await element2.waitForDisplayed({ timeout: 1000 });
+        const btn = await $$('.reader-action');
+        if(btn.length >= 3){
+            await $$('.reader-action')[2].click();    
+        }else{
+            await $$('.reader-action')[1].click();
+        }
+    });
+    it('should go on second page', async () => {
+        const element = await $('html-content');
+        await element.waitForDisplayed({ timeout: 1000 });
+
+        await $$('.reader-action')[2].click();
+    });
+    it('should go on third page', async () => {
+        const element = await $('html-content img');
+        await element.waitForDisplayed({ timeout: 2000 });
+
+        await $$('.reader-action')[2].click();
+        await $$('.reader-action')[2].click();
+        await $$('.reader-action')[2].click();
+
+    });
+    it('should start swipe act', async () => {
+        const element = await $('assessment-content ion-button');
+        await element.waitForDisplayed({ timeout: 2000 });
+        
+        await $('assessment-content ion-button').click();
+        await browser.pause(5000);
+        
     });
     
     // it('should have swipeable slides', async () => {
