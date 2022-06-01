@@ -46,10 +46,12 @@ describe('ePoc e2e tests suite', () => {
     });
     
     it('should click on first chapter and show chapter content', async () => {
-        await $$('.toc-chapter-open')[3].click();
+        
+        const element = await $$('.toc-chapter-open')[3];
+        await element.waitForClickable({ timeout: 1000 });
 
-        const element = await $('.chapter-specs');
-        await element.waitForDisplayed({ timeout: 1000 });
+        await element.click();
+
     });
     
     it('should go on first txt', async () => {
@@ -64,18 +66,19 @@ describe('ePoc e2e tests suite', () => {
         }
     });
     it('should go on second page', async () => {
-        const element = await $('html-content');
-        await element.waitForDisplayed({ timeout: 1000 });
+        const element = await $$('.reader-action')[2];
+        await element.waitForClickable({ timeout: 1000 });
 
-        await $$('.reader-action')[2].click();
+        await element.click();
     });
     it('should go on third page', async () => {
-        const element = await $('html-content img');
-        await element.waitForDisplayed({ timeout: 2000 });
-
-        await $$('.reader-action')[2].click();
-        await $$('.reader-action')[2].click();
-        await $$('.reader-action')[2].click();
+        const element = await $$('.reader-action')[2];
+        await element.waitForClickable({ timeout: 1000 });
+        await element.click();
+        await element.waitForClickable({ timeout: 1000 });
+        await element.click();
+        await element.waitForClickable({ timeout: 1000 });
+        await element.click();
 
     });
     it('should start swipe act', async () => {
