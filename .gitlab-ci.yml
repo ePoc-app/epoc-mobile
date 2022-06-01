@@ -29,6 +29,7 @@ pages:
     - npm install adm-zip --save-dev
     - node ci/fetchEpocs.js
     - mv dist/ public/
+    - cp public/index.html public/404.html # workaround to have all url to behave like index.html (SPA deep linking)
   artifacts:
     expire_in: 1 week
     paths:
