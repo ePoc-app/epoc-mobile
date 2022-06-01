@@ -48,7 +48,7 @@ describe('ePoc e2e tests suite', () => {
         await alert.click();
 
         await expect($('.logo')).toBeExisting();
-        await browser.pause(5000);
+        await browser.pause(2000);
     });
     
     it('should click on first chapter and show chapter content', async () => {
@@ -57,7 +57,7 @@ describe('ePoc e2e tests suite', () => {
         await element.waitForClickable({ timeout: 1000 });
 
         await element.click();
-        await browser.pause(5000);
+        await browser.pause(2000);
     });
     
     it('should go on first txt', async () => {
@@ -70,19 +70,19 @@ describe('ePoc e2e tests suite', () => {
         }else{
             await $$('.reader-action')[1].click();
         }
-        await browser.pause(5000);
+        await browser.pause(2000);
     });
     it('should go on second page', async () => {
         const element = await $$('.reader-action')[2];
         await element.waitForClickable({ timeout: 1000 });
         await element.click();
-        await browser.pause(5000);
+        await browser.pause(2000);
     });
     it('should go on third page', async () => {
         const element = await $$('.reader-action')[2];
         await element.waitForClickable({ timeout: 1000 });
         await element.click();
-        await browser.pause(5000);
+        await browser.pause(2000);
         
         
 
@@ -93,7 +93,9 @@ describe('ePoc e2e tests suite', () => {
         ;
         await $('assessment-content ion-button').click();
         await browser.pause(5000);
-        
+
+        const card = await $('flip-card');
+        await expect(card).toBeExisting();
     });
     
     // it('should have swipeable slides', async () => {
