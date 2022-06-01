@@ -19,27 +19,32 @@ describe('ePoc e2e tests suite', () => {
         const list = $$('app-settings ion-list')[2];
         const item = list.$$('ion-item')[1];
         const select = item.$('ion-select');
+        await select.waitForClickable({ timeout: 1000 });
         await select.click();
         
     });
     it('should choose QLF', async () => {
         const alert = $('ion-alert');
         const button = alert.$$('button')[1];
+        await button.waitForClickable({ timeout: 1000 });
         await button.click();
     });
     it('should leave bibliotheque', async () => {
         const alert = $('ion-alert');
         const button = alert.$$('button')[3];
+        await button.waitForClickable({ timeout: 1000 });
         await button.click();
     });
     it('should return on home', async () => {
         const alert = $('ion-toolbar ion-buttons');
+        await alert.waitForClickable({ timeout: 1000 });
         await alert.click();
 
         await expect($('.logo')).toBeExisting();
     });
     it('should enter demo', async () => {
         const alert = $('app-library .library-item-toolbar ion-button');
+        await alert.waitForClickable({ timeout: 1000 });
         await alert.click();
 
         await expect($('.logo')).toBeExisting();
@@ -84,7 +89,7 @@ describe('ePoc e2e tests suite', () => {
     it('should start swipe act', async () => {
         const element = await $('assessment-content ion-button');
         await element.waitForDisplayed({ timeout: 2000 });
-        
+        ;
         await $('assessment-content ion-button').click();
         await browser.pause(5000);
         
