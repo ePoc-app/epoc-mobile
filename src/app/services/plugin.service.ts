@@ -24,7 +24,9 @@ export class PluginService implements Plugin {
             this.plugins.push(pluginLoad);
             const url = this.epocService.rootFolder.startsWith('assets/demo') ? `/${this.epocService.rootFolder}${src}` : `${this.epocService.rootFolder}${src}`;
             const loader = await pluginLoader.load(url);
-            pluginLoad.plugin = new loader.Plugin();
+            if (loader.Plugin) {
+                pluginLoad.plugin = new loader.Plugin();
+            }
             pluginLoad.initialized.next(true);
             this.onLoad();
         });
@@ -33,7 +35,7 @@ export class PluginService implements Plugin {
     genericHook(name, ...args) {
         this.plugins.forEach(plugin => {
             plugin.initialized.subscribe(() => {
-                if (plugin.plugin[name]) plugin.plugin[name](...args);
+                if (plugin.plugin && plugin.plugin[name]) plugin.plugin[name](...args);
             })
         })
     }
