@@ -22,7 +22,7 @@ export class PluginService implements Plugin {
         pluginFiles.forEach(async (src) => {
             const pluginLoad:PluginEntry = {initialized:new ReplaySubject(1), plugin: null};
             this.plugins.push(pluginLoad);
-            const url = this.epocService.rootFolder.startsWith('assets/demo') ? `/${this.epocService.rootFolder}${src}` : `${this.epocService.rootFolder}${src}`;
+            const url = this.epocService.rootFolder.startsWith('assets/demo') ? `${document.baseURI}${this.epocService.rootFolder}${src}` : `${this.epocService.rootFolder}${src}`;
             const loader = await pluginLoader.load(url);
             if (loader.Plugin) {
                 pluginLoad.plugin = new loader.Plugin();
