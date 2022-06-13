@@ -120,8 +120,6 @@ export class EpocPlayerPage implements OnInit {
                 this.loading = false;
 
                 const contentId = this.route.snapshot.paramMap.get('contentId');
-                // Go to the next content after contentId
-                const next = !!this.route.snapshot.paramMap.get('next');
 
                 this.contentsFilteredConditional = this.chapter.initializedContents.filter((content) => { // filter out conditional content
                     return !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1);
@@ -130,10 +128,7 @@ export class EpocPlayerPage implements OnInit {
                 this.readingStore.saveChapterProgress(this.epoc.id, this.chapterId);
 
                 if (contentId) {
-                    const pageIndex = this.contentsFilteredConditional.findIndex(content => content.id === contentId);
-                    this.slidesOptions.initialSlide = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
-                    this.countPages();
-                    this.progress = pageIndex / this.pagesCount
+                    this.goTo(contentId)
                 }
             }
         });
@@ -199,6 +194,21 @@ export class EpocPlayerPage implements OnInit {
 
     nextPage() {
         this.readerSlides.slideNext();
+    }
+
+    goTo(contentId) {
+        // Go to the next content after contentId
+        const next = !!this.route.snapshot.paramMap.get('next');
+        const pageIndex = this.contentsFilteredConditional.findIndex(content => content.id === contentId);
+        const index = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
+        if (this.readerSlides) {
+            this.readerSlides.slideTo(index);
+        } else {
+            this.slidesOptions.initialSlide = index;
+        }
+        this.currentPage = index;
+        this.countPages();
+        this.progress = pageIndex / this.pagesCount
     }
 
     // /!\ this event is binded from videplayer and dragable element
