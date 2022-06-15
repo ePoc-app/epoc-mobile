@@ -7,11 +7,10 @@ import {AuthService} from 'src/app/services/auth.service';
 import {Router} from '@angular/router';
 import {User} from 'src/app/classes/user';
 import {mode} from 'src/environments/environment.mode';
-import {Plugins} from '@capacitor/core';
-import {DeviceInfo} from '@capacitor/core/dist/esm/core-plugin-definitions';
+import { Device} from '@capacitor/device';
+import { App, AppInfo } from '@capacitor/app';
 import {LibraryService} from '../../services/library.service';
 
-const {Device} = Plugins;
 
 @Component({
     selector: 'app-settings',
@@ -28,8 +27,7 @@ export class SettingsPage implements OnInit {
         darkMode: false,
         libraryMode: 'libraryUrl'
     };
-
-    info: DeviceInfo;
+    info: AppInfo;
     user: User;
     mode = mode;
 
@@ -55,7 +53,7 @@ export class SettingsPage implements OnInit {
             this.user = user;
         });
 
-        Device.getInfo().then((info) => {
+        App.getInfo().then((info) => {
             this.info = info;
         });
     }

@@ -2,11 +2,11 @@ import {ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild} from '@angu
 import {Router} from '@angular/router';
 import {File, FileEntry, FileWriter} from '@ionic-native/file/ngx';
 import {Zip} from 'capacitor-zip';
-import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
+import {Capacitor} from '@capacitor/core';
+import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
 
-const {Filesystem} = Plugins;
 
 @Component({
     selector: 'app-open',
@@ -120,9 +120,9 @@ export class OpenPage {
             }).then(() => {
                 Filesystem.readFile({
                     // Path to NoCloud documents on iOS to be the same as cordova file plugin
-                    path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `epocs/${tmpId}/content.json`,
-                    directory: FilesystemDirectory.Data,
-                    encoding: FilesystemEncoding.UTF8
+                    path: (Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `epocs/${tmpId}/content.json`,
+                    directory: Directory.Data,
+                    encoding: Encoding.UTF8
                 }).then(async (result) => {
                     const epoc = JSON.parse(result.data);
                     const destPath = `epocs/${epoc.id}`;
@@ -152,8 +152,8 @@ export class OpenPage {
     fileDelete(filename) {
         Filesystem.deleteFile({
             // Path to NoCloud documents on iOS to be the same as cordova file plugin
-            path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `zips/${filename}`,
-            directory: FilesystemDirectory.Data
+            path: (Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `zips/${filename}`,
+            directory: Directory.Data
         }).then(() => {
             this.readdir();
         }).catch(() => {
@@ -165,8 +165,8 @@ export class OpenPage {
         try {
             await Filesystem.rmdir({
                 // Path to NoCloud documents on iOS to be the same as cordova file plugin
-                path: (Capacitor.isNative && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `epocs/${path}`,
-                directory: FilesystemDirectory.Data,
+                path: (Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'ios' ? '../Library/NoCloud/' : '') + `epocs/${path}`,
+                directory: Directory.Data,
                 recursive: true
             });
             this.readdir();

@@ -89,17 +89,17 @@
         </ion-item>
       </ng-container>
     </ion-list>
-    <ion-list *ngIf="info && info.appVersion">
+    <ion-list *ngIf="info && info.version">
       <ion-list-header>
         Informations Applications
       </ion-list-header>
       <ion-item>
         <ion-label>Version</ion-label>
-        <ion-note slot="end">v{{info.appVersion}}</ion-note>
+        <ion-note slot="end">v{{info.version}}</ion-note>
       </ion-item>
       <ion-item>
         <ion-label>Build version</ion-label>
-        <ion-note slot="end">{{info.appBuild}}</ion-note>
+        <ion-note slot="end">{{info.build}}</ion-note>
       </ion-item>
     </ion-list>
     <ion-list>

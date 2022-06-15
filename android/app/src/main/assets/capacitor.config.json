@@ -1,7 +1,1 @@
-{
-	"appId": "fr.inria.epoc",
-	"appName": "ePoc",
-	"bundledWebRuntime": false,
-	"npmClient": "npm",
-	"webDir": "www"
-}
+{}

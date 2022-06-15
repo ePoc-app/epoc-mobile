@@ -4,7 +4,7 @@ import {HTTP} from '@ionic-native/http/ngx';
 import {environment as env} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
-import {Browser} from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 import {AuthService} from 'src/app/services/auth.service';
 
 @Component({

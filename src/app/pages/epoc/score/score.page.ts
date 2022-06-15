@@ -10,7 +10,8 @@ import {Assessment} from 'src/app/classes/contents/assessment';
 import {jsPDF} from 'jspdf';
 import {User} from 'src/app/classes/user';
 import {AuthService} from 'src/app/services/auth.service';
-import {Capacitor, FilesystemDirectory, Plugins} from '@capacitor/core';
+import {Capacitor} from '@capacitor/core';
+import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {LoadingController} from '@ionic/angular';
 import {EpocService} from '../../../services/epoc.service';
@@ -258,7 +259,6 @@ export class EpocScorePage implements OnInit {
     }
 
     downloadPdf(doc: jsPDF) {
-        const { Filesystem } = Plugins;
         const fileName = `attestation-${this.epoc.id}.pdf`;
 
         if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === 'android') {
@@ -267,10 +267,10 @@ export class EpocScorePage implements OnInit {
             Filesystem.writeFile({
                 path: fileName,
                 data: output,
-                directory: FilesystemDirectory.Data
+                directory: Directory.Data
             }).then(() => {
                 Filesystem.getUri({
-                    directory: FilesystemDirectory.Data,
+                    directory: Directory.Data,
                     path: fileName
                 }).then((getUriResult) => {
                     const path = getUriResult.uri;

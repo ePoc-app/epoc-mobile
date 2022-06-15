@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
-import {Capacitor, FilesystemDirectory, FilesystemEncoding, Plugins} from '@capacitor/core';
+import {Capacitor} from '@capacitor/core';
+import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {uid} from 'src/app/classes/types';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
@@ -8,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {File} from '@ionic-native/file/ngx';
 import {Router} from '@angular/router';
 import {ActionSheetController} from '@ionic/angular';
-const {Filesystem} = Plugins;
+
 
 @Injectable({
     providedIn: 'root'
@@ -52,8 +53,8 @@ export class EpocService {
       // Backup support for iOS livereload (dev environment)
       Filesystem.readFile({
         path: `../Library/NoCloud/epocs/${id}/content.json`,
-        directory: FilesystemDirectory.Data,
-        encoding: FilesystemEncoding.UTF8
+        directory: Directory.Data,
+        encoding: Encoding.UTF8
       }).then((result) => {
         const epoc = JSON.parse(result.data);
         this.epoc = this.initCourseContent(epoc as Epoc);

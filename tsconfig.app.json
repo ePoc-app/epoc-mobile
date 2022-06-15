@@ -5,7 +5,9 @@
     "types": []
   },
   "include": [
-    "src/**/*.ts"
+    "src/main.ts",
+    "src/polyfills.ts", // modifier la ligne "src/**/*.ts"
+    "src/zone-flags.ts"
   ],
   "exclude": [
     "src/test.ts",

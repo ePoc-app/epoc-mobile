@@ -63,7 +63,7 @@ Sentry.init(
             trackerUrl: 'https://piwik.inria.fr/',
         }),
         NgxMatomoRouterModule,
-        PipesModule
+        PipesModule,
     ],
     providers: [
         {provide: ErrorHandler, useValue: Sentry.createErrorHandler()},

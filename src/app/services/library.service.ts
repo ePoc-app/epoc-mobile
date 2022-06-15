@@ -6,7 +6,8 @@ import {Epoc, EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
 import {environment as env} from 'src/environments/environment';
 import {mode} from 'src/environments/environment.mode';
-import {Capacitor, Plugins, FilesystemDirectory, FilesystemEncoding} from '@capacitor/core';
+import {Capacitor} from '@capacitor/core';
+import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
 import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
 import {Reading} from '../classes/reading';
@@ -14,7 +15,7 @@ import {ActionSheetController, AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {File} from '@ionic-native/file/ngx';
 import {MatomoTracker} from '@ngx-matomo/tracker';
-const {Filesystem} = Plugins;
+
 
 @Injectable({
     providedIn: 'root'
@@ -129,11 +130,11 @@ export class LibraryService {
     }
 
     readEpocContent(epocId): Observable<Epoc> {
-        if (Capacitor.isNative && Capacitor.getPlatform() === 'ios') {
+        if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'ios') {
             return from(Filesystem.readFile({
                 path: `../Library/NoCloud/epocs/${epocId}/content.json`,
-                directory: FilesystemDirectory.Data,
-                encoding: FilesystemEncoding.UTF8
+                directory: Directory.Data,
+                encoding: Encoding.UTF8
             })).pipe(map(file => JSON.parse(file.data)));
         } else {
             const url = Capacitor.convertFileSrc(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}epocs/${epocId}/content.json`)
