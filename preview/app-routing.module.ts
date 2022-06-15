@@ -4,7 +4,7 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        loadChildren: () => import('../app/pages/epoc/epoc.module').then(m => m.EpocModule)
+        loadChildren: () => import('src/app/pages/epoc/epoc.module').then(m => m.EpocModule)
     },
     {path: '**', redirectTo: '/'}
 ];
