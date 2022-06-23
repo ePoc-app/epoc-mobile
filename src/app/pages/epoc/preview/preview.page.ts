@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Chapter, Epoc, EpocLibrary} from 'src/app/classes/epoc';
 import {EpocService} from 'src/app/services/epoc.service';
@@ -65,10 +64,5 @@ export class EpocPreviewPage implements OnInit {
 
     ionViewWillLeave(){
         document.body.classList.remove('preview')
-    }
-
-    onChange(value) {
-        this.epocId = value;
-        this.fetchEpocData();
     }
 }
