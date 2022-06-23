@@ -18,6 +18,7 @@ export class EpocPreviewPage implements OnInit {
     epoc: Epoc;
     chapters: Chapter[];
     chapterLabel: string;
+    selectedTab = 0;
 
     iconFromType = {
         html: 'document-text-outline',
@@ -64,5 +65,9 @@ export class EpocPreviewPage implements OnInit {
 
     ionViewWillLeave(){
         document.body.classList.remove('preview')
+    }
+
+    selectTab(index) {
+        this.selectedTab = index;
     }
 }

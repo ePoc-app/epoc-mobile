@@ -1,5 +1,70 @@
 <div class="preview-contents" *ngIf="epoc">
-  <div class="separator">{{epoc.title}}</div>
+  <div class="preview-content">
+    <app-card>
+      <div class="epoc-title">
+        <h3>{{epoc.title}}</h3>
+        <ng-container *ngFor="let author of epoc.authors | values;let i = index;">
+          <span class="epoc-author" [ngClass]="{'align-left' : i%2 == 1, 'align-center': i%2 == 0 && i==(epoc.authors|values).length - 1}">
+            {{author.name}}
+          </span>
+          <span class="epoc-author-splitter" *ngIf="i%2 == 0 && i<(epoc.authors|values).length - 1">|</span>
+        </ng-container>
+      </div>
+
+      <div class="epoc-trailer">
+        <video-player [src]="epoc.teaser" [poster]="epoc.image" [controls]="{show:false, timeline: true, overlay: true}"></video-player>
+      </div>
+
+      <div class="epoc-specs">
+        <div class="epoc-spec">
+          <div class="epoc-spec-icon"><ion-icon name="reader-outline"></ion-icon></div>
+          <div class="epoc-spec-value">
+            {{epoc.chaptersCount}} {{epoc.chaptersCount > 1 ?'modules' : 'module'}}
+          </div>
+        </div>
+        <div class="epoc-spec">
+          <div class="epoc-spec-icon"><ion-icon name="cube-outline"></ion-icon></div>
+          <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{epoc.assessmentsCount > 1 ? 'activités':'activité'}}</div>
+        </div>
+        <div class="epoc-spec">
+          <div class="epoc-spec-icon"><ion-icon name="time-outline"></ion-icon></div>
+          <div class="epoc-spec-value">10 min/module</div>
+        </div>
+      </div>
+
+      <div class="tabs-headers">
+        <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
+          <span>{{epoc.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</span>
+        </div>
+        <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
+          <span>Résumé</span>
+        </div>
+        <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
+          <span>{{(epoc.authors|values).length > 1 ? 'Auteurs' : 'Auteur'}}</span>
+        </div>
+      </div>
+      <div class="tabs">
+        <div class="tab" *ngIf="selectedTab === 0">
+          <div class="course-objective" *ngFor="let objective of epoc.objectives">
+            <div class="course-objective-icon"><ion-icon name="checkmark-outline"></ion-icon></div>
+            <ion-text>{{objective}}</ion-text>
+          </div>
+        </div>
+        <div class="tab" *ngIf="selectedTab === 1">
+          <ion-text class="html-text" [innerHTML]="epoc.summary"></ion-text>
+        </div>
+        <div class="tab" *ngIf="selectedTab === 2">
+          <div class="epoc-author" *ngFor="let author of epoc.authors | values">
+            <div class="epoc-author-name">
+              <img *ngIf="author.image" [src]="author.image | safe: 'url'"/>
+              {{author.name}}
+            </div>
+            <div class="epoc-author-description html-text" [innerHTML]="author.description"></div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
   <ng-container *ngFor="let chapter of chapters; let i = index">
     <div class="separator">{{chapterLabel}} {{i + 1}}. {{chapter.title}}</div>
     <div class="preview-content">
