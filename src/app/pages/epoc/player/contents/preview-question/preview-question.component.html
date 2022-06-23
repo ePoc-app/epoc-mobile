@@ -1,6 +1,6 @@
 <app-card>
   <div class="title-container">
-    <h5 class="subtitle">{{'Question '+(questionIndex+1)+'/'+content.questions.length | nbsp}}</h5>
+    <h5 class="subtitle">{{questionIndex ? 'Question '+(questionIndex+1)+'/'+content.questions.length : '' | nbsp}}</h5>
   </div>
 
   <div class="statement ion-text-center">

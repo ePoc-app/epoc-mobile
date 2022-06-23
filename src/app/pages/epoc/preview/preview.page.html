@@ -14,15 +14,18 @@
       <chapter-info [chapter]="chapter"></chapter-info>
     </div>
     <ng-container *ngFor="let content of chapter.initializedContents; let index = index">
-      <div class="preview-content">
-        <common-content [title]="content.title" [subtitle]="content.subtitle" [icon]="iconFromType[content.type]" *ngIf="content.type !== 'simple-question'">
+      <div class="preview-content" *ngIf="content.type !== 'simple-question'">
+        <common-content [title]="content.title" [subtitle]="content.subtitle" [icon]="iconFromType[content.type]">
           <html-content *ngIf="content.type === 'html'" [html]="content.html | srcConvert"></html-content>
           <video-content *ngIf="content.type === 'video'" [inputContent]="content"></video-content>
           <course-choice *ngIf="content.type === 'choice'" [epocId]="epoc.id" [content]="content"></course-choice>
           <assessment-content *ngIf="content.type === 'assessment'" [inputContent]="content"></assessment-content>
         </common-content>
-        <simple-question *ngIf="content.type === 'simple-question'" [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]"></simple-question>
       </div>
+      <ng-container *ngIf="content.type === 'simple-question'">
+        <div class="preview-content"><preview-question *ngIf="content.type === 'simple-question'" [content]="content" [question]="epoc.questions[content.question]"></preview-question></div>
+        <div class="preview-content"><preview-correction [content]="content" [question]="epoc.questions[content.question]"></preview-correction></div>
+      </ng-container>
       <ng-container *ngIf="content.type === 'assessment'">
         <ng-container *ngFor="let question of content.questions | denormalize:epoc.questions; let questionIndex = index;">
           <div class="preview-content"><preview-question [content]="content" [question]="question" [questionIndex]="questionIndex"></preview-question></div>
