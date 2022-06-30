@@ -67,7 +67,8 @@ export class EpocPlayerPage implements OnInit {
         fontSize: 16,
         lineHeight: 1.4,
         darkMode: false,
-        libraryMode: 'libraryUrl'
+        libraryMode: 'libraryUrl',
+        devMode:false
     };
 
     readerStyles = {

@@ -5,6 +5,7 @@ export class Settings {
     lineHeight: number;
     darkMode: boolean;
     libraryMode: 'libraryUrl'|'libraryQlfUrl';
+    devMode: boolean;
 }
 
 

@@ -14,7 +14,8 @@ export class SettingsStoreService {
         fontSize: 16,
         lineHeight: 1.5,
         darkMode: false,
-        libraryMode: 'libraryUrl'
+        libraryMode: 'libraryUrl',
+        devMode:false
     };
 
     private readonly settingsSubject = new BehaviorSubject<Settings>(null);

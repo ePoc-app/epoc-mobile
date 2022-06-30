@@ -25,11 +25,13 @@ export class SettingsPage implements OnInit {
         fontSize: 16,
         lineHeight: 1.5,
         darkMode: false,
-        libraryMode: 'libraryUrl'
+        libraryMode: 'libraryUrl',
+        devMode: false
     };
     info: AppInfo;
     user: User;
     mode = mode;
+    private devModeCount = 0;
 
     constructor(
         private settingsStore: SettingsStoreService,
@@ -55,6 +57,13 @@ export class SettingsPage implements OnInit {
 
         App.getInfo().then((info) => {
             this.info = info;
+        }).catch(() => {
+            this.info = {
+                id: 'fr.inria.epoc',
+                name: 'epoc',
+                version: '0.0.0',
+                build: 'dev'
+            }
         });
     }
 
@@ -154,5 +163,18 @@ export class SettingsPage implements OnInit {
     libraryChanged(event) {
         this.settings.libraryMode = event.detail.value;
         this.settingsChanged()
+    }
+
+    setDevMode(event) {
+        event.stopPropagation();
+        this.devModeCount++;
+        if (this.devModeCount >= 10){
+            this.settings.devMode = true;
+            this.settingsChanged();
+        }
+    }
+
+    resetDevModeCount() {
+        this.devModeCount = 0;
     }
 }

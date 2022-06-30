@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="wrapper">
+  <div class="wrapper" (click)="resetDevModeCount()">
     <ion-list>
       <ion-list-header>
         Affichage
@@ -95,7 +95,7 @@
       </ion-list-header>
       <ion-item>
         <ion-label>Version</ion-label>
-        <ion-note slot="end">v{{info.version}}</ion-note>
+        <ion-note slot="end" (click)="setDevMode($event)">v{{info.version}}</ion-note>
       </ion-item>
       <ion-item>
         <ion-label>Build version</ion-label>
@@ -106,11 +106,11 @@
       <ion-list-header>
         Données ePocs
       </ion-list-header>
-      <ion-item>
+      <ion-item *ngIf="settings.devMode">
         <ion-label>Ouvrir un autre ePoc</ion-label>
         <ion-icon slot="end" routerLink="/open" name="folder-open-outline"></ion-icon>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="settings.devMode">
         <ion-label>Bibliothèque</ion-label>
         <ion-select [value]="settings.libraryMode" (ionChange)="libraryChanged($event)">
           <ion-select-option value="libraryUrl">Prod</ion-select-option>
