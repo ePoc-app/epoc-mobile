@@ -1,6 +1,6 @@
 <div class="video-player">
   <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
-    <video #video disablePictureInPicture playsinline preload="metadata"
+    <video *ngIf="src" #video disablePictureInPicture playsinline preload="metadata"
            [src]="src | safe: 'url': epocService.rootFolder">
       <ng-container *ngFor="let sub of subtitles">
         <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang"
@@ -11,19 +11,21 @@
       <h4 class="title">{{title}}</h4>
       <img [src]="poster | safe: 'url': epocService.rootFolder" *ngIf="poster"/>
     </div>
-    <div class="video-play-overlay">
-      <ion-icon src="assets/icon/play.svg"></ion-icon>
-    </div>
-    <div class="video-timeline" (click)="seek($event)" [style.display]="controls.timeline ? 'block':'none'">
-      <div class="video-timeline-progress" [style.width]="progress +'%'" #timelineProgress></div>
-      <div class="video-timeline-cursor" [style.left]="progress +'%'" #timelineCursor></div>
-    </div>
-    <div class="video-overlay-controls">
-      <ion-icon name="scan-outline" (click)="fullscreen($event)" *ngIf="controls.overlay"></ion-icon>
-    </div>
+    <ng-container *ngIf="src">
+      <div class="video-play-overlay">
+        <ion-icon src="assets/icon/play.svg"></ion-icon>
+      </div>
+      <div class="video-timeline" (click)="seek($event)" [style.display]="controls.timeline ? 'block':'none'">
+        <div class="video-timeline-progress" [style.width]="progress +'%'" #timelineProgress></div>
+        <div class="video-timeline-cursor" [style.left]="progress +'%'" #timelineCursor></div>
+      </div>
+      <div class="video-overlay-controls">
+        <ion-icon name="scan-outline" (click)="fullscreen($event)" *ngIf="controls.overlay"></ion-icon>
+      </div>
+    </ng-container>
   </div>
 
-  <ng-container *ngIf="controls.show">
+  <ng-container *ngIf="src && controls.show">
     <ion-item class="hidden-select" *ngIf="controls.subtitles && subtitles && subtitles.length >0">
       <ion-label>Sous-titres</ion-label>
       <ion-select #tracks [value]="trackSelected" (ionChange)='changeSubtitles($event)'>

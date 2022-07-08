@@ -3,6 +3,7 @@
 .video-player{
   .video-container{
     position: relative;
+    min-height: 56.25vw;
 
     .poster{
       display: flex;

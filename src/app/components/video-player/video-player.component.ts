@@ -51,6 +51,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     ) {}
 
     ngOnInit() {
+        if (!this.videoRef) return;
         this.controls = Object.assign(this.defaultControls, this.controls);
         this.video = this.videoRef.nativeElement;
         this.video.addEventListener('play', (event) => {
@@ -82,6 +83,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        if (!this.timelineCursorRef) return;
         let startCursorPos;
         let timelinePos;
         const gesture: Gesture = this.gestureCtrl.create({
@@ -112,6 +114,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     }
 
     play() {
+        if (!this.video) return;
         if (this.video.paused) {
             this.video.play();
         } else {
