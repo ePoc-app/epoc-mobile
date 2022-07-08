@@ -51,8 +51,8 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     ) {}
 
     ngOnInit() {
-        if (!this.videoRef) return;
         this.controls = Object.assign(this.defaultControls, this.controls);
+        if (!this.videoRef) return;
         this.video = this.videoRef.nativeElement;
         this.video.addEventListener('play', (event) => {
             this.hasPlayed = true;
