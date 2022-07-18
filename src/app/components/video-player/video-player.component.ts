@@ -9,7 +9,7 @@ import {EpocService} from '../../services/epoc.service';
 })
 export class VideoPlayerComponent implements OnInit, AfterViewInit {
 
-    @ViewChild('video', {static: true}) videoRef: ElementRef;
+    @ViewChild('video', {static: false}) videoRef: ElementRef;
     @ViewChild('tracks', {static: false}) trackSelectRef: IonSelect;
     @ViewChild('timelineProgress', {static: false}) timelineProgress: ElementRef;
     @ViewChild('timelineCursor', {static: false}) timelineCursorRef: ElementRef;
@@ -52,6 +52,9 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.controls = Object.assign(this.defaultControls, this.controls);
+    }
+
+    ngAfterViewInit() {
         if (!this.videoRef) return;
         this.video = this.videoRef.nativeElement;
         this.video.addEventListener('play', (event) => {
@@ -80,9 +83,6 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
                 }
             }
         });
-    }
-
-    ngAfterViewInit() {
         if (!this.timelineCursorRef) return;
         let startCursorPos;
         let timelinePos;
