@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {IonSlides} from '@ionic/angular';
-import {switchMap} from 'rxjs/operators';
+import {first, switchMap} from 'rxjs/operators';
 import {combineLatest, Observable} from 'rxjs';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
@@ -120,17 +120,11 @@ export class EpocPlayerPage implements OnInit {
                 this.dataInitialized = true;
                 this.loading = false;
 
-                const contentId = this.route.snapshot.paramMap.get('contentId');
-
                 this.contentsFilteredConditional = this.chapter.initializedContents.filter((content) => { // filter out conditional content
                     return !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1);
                 });
 
                 this.readingStore.saveChapterProgress(this.epoc.id, this.chapterId);
-
-                if (contentId) {
-                    this.goTo(contentId)
-                }
             }
         });
 
@@ -154,6 +148,15 @@ export class EpocPlayerPage implements OnInit {
         combineLatest([this.epoc$, this.readingStore.readings$]).subscribe(([epoc, readings]) => {
             if (epoc && readings) {
                 this.setAssessmentsData();
+            }
+        });
+        combineLatest([this.epoc$, this.readingStore.readings$]).pipe(first()).subscribe(([epoc, readings]) => {
+            if (epoc && readings) {
+                const contentId = this.route.snapshot.paramMap.get('contentId');
+
+                if (contentId) {
+                    this.goTo(contentId)
+                }
             }
         });
     }
