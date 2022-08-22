@@ -9,6 +9,7 @@ export class EpocMetadata {
     title: string;
     image: string;
     teaser?: string;
+    thumbnail?:string;
     authors: Record<uid, Author>;
     summary: html;
     objectives: string[];
