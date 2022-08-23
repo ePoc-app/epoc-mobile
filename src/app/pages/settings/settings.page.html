@@ -108,7 +108,7 @@
       </ion-list-header>
       <ion-item *ngIf="settings.devMode">
         <ion-label>Mode développeur</ion-label>
-        <ion-toggle [(ngModel)]="settings.devMode"></ion-toggle>
+        <ion-toggle [(ngModel)]="settings.devMode" (ionChange)="disableDevMode()"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="settings.devMode">
         <ion-label>Ouvrir un autre ePoc</ion-label>

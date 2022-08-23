@@ -165,6 +165,11 @@ export class SettingsPage implements OnInit {
         this.settingsChanged()
     }
 
+    disableDevMode() {
+        this.settings.libraryMode = 'libraryUrl';
+        this.settingsChanged()
+    }
+
     setDevMode(event) {
         event.stopPropagation();
         this.devModeCount++;
