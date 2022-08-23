@@ -165,7 +165,8 @@ export class SettingsPage implements OnInit {
         this.settingsChanged()
     }
 
-    disableDevMode() {
+    disableDevMode($event) {
+        if ($event) return;
         this.settings.libraryMode = 'libraryUrl';
         this.settingsChanged()
     }
