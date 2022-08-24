@@ -59,8 +59,9 @@ Sentry.init(
             driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage]
         }),
         NgxMatomoTrackerModule.forRoot({
+            disabled: !env.production,
             siteId: '133',
-            trackerUrl: 'https://piwik.inria.fr/',
+            trackerUrl: 'https://piwik.inria.fr/'
         }),
         NgxMatomoRouterModule,
         PipesModule,
