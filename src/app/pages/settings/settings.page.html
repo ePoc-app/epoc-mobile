@@ -101,6 +101,10 @@
         <ion-label>Build version</ion-label>
         <ion-note slot="end">{{info.build}}</ion-note>
       </ion-item>
+      <ion-item>
+        <ion-label>Collecte de statistiques anonymes</ion-label>
+        <ion-toggle [checked]="isUserOptIn" (ionChange)="trackerToggle()"></ion-toggle>
+      </ion-item>
     </ion-list>
     <ion-list>
       <ion-list-header>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Settings} from 'src/app/classes/settings';
 import {AlertController, ToastController} from '@ionic/angular';
@@ -10,6 +10,7 @@ import {mode} from 'src/environments/environment.mode';
 import { Device} from '@capacitor/device';
 import { App, AppInfo } from '@capacitor/app';
 import {LibraryService} from '../../services/library.service';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class SettingsPage implements OnInit {
     user: User;
     mode = mode;
     private devModeCount = 0;
+    isUserOptIn = true;
 
     constructor(
         private settingsStore: SettingsStoreService,
@@ -40,7 +42,9 @@ export class SettingsPage implements OnInit {
         public alertController: AlertController,
         public toastController: ToastController,
         private router: Router,
-        private auth: AuthService
+        private auth: AuthService,
+        private ref: ChangeDetectorRef,
+        private readonly tracker: MatomoTracker
     ) {
 
         this.settingsStore.settings$.subscribe(settings => {
@@ -65,6 +69,10 @@ export class SettingsPage implements OnInit {
                 build: 'dev'
             }
         });
+
+        this.tracker.isUserOptedOut().then((isUserOptOut) => {
+            this.isUserOptIn = !isUserOptOut;
+        })
     }
 
     getStyle() {
@@ -182,5 +190,15 @@ export class SettingsPage implements OnInit {
 
     resetDevModeCount() {
         this.devModeCount = 0;
+    }
+
+    trackerToggle() {
+        if (this.isUserOptIn) {
+            this.tracker.optUserOut();
+            this.isUserOptIn = false;
+        } else {
+            this.tracker.forgetUserOptOut();
+            this.isUserOptIn = true;
+        }
     }
 }
