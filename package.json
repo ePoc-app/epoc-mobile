@@ -70,6 +70,7 @@
     "tslib": "^2.4.0",
     "vtt.js": "^0.13.0",
     "wd": "^1.14.0",
+    "web-animations-js": "^2.3.2",
     "zone.js": "~0.11.5"
   },
   "devDependencies": {

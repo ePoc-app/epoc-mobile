@@ -27,6 +27,12 @@
  * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
  */
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
+// Polyfill animation iOS < v13 : see : https://github.com/angular/angular/issues/45016
+if (!('animate' in document.documentElement) || (navigator && /iPhone OS (8|9|10|11|12|13)_/.test(navigator.userAgent))) {
+    const script = document.createElement('script');
+    script.src = 'web-animations-js.js';
+    document.head.appendChild(script);
+}
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
