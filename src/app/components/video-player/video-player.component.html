@@ -1,6 +1,6 @@
 <div class="video-player">
   <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
-    <video *ngIf="src" #video disablePictureInPicture playsinline preload="metadata"
+    <video *ngIf="src" #video disablePictureInPicture playsinline preload="auto"
            [src]="src | safe: 'url': epocService.rootFolder">
       <ng-container *ngFor="let sub of subtitles">
         <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang"
