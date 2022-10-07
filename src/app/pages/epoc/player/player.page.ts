@@ -47,7 +47,6 @@ export class EpocPlayerPage implements OnInit {
 
     // Reader
     dataInitialized = false;
-    loading = true;
     currentPage = 0;
     progress = 0;
     slidesOptions = {
@@ -118,7 +117,6 @@ export class EpocPlayerPage implements OnInit {
                 this.reading = readings.find(item => item.epocId === this.epoc.id);
                 if (!this.reading) this.readingStore.addReading(this.epoc.id);
                 this.dataInitialized = true;
-                this.loading = false;
 
                 this.contentsFilteredConditional = this.chapter.initializedContents.filter((content) => { // filter out conditional content
                     return !content.conditional || (content.conditional && this.reading.flags.indexOf(content.id) !== -1);
@@ -144,6 +142,13 @@ export class EpocPlayerPage implements OnInit {
         this.pagesCount = this.contentsFilteredConditional.length + 1;
     }
 
+    ionViewWillEnter() {
+        const contentId = this.route.snapshot.paramMap.get('contentId');
+        if (contentId) {
+            this.dataInitialized = false
+        }
+    }
+
     ionViewDidEnter() {
         combineLatest([this.epoc$, this.readingStore.readings$]).subscribe(([epoc, readings]) => {
             if (epoc && readings) {
@@ -157,6 +162,7 @@ export class EpocPlayerPage implements OnInit {
                 if (contentId) {
                     this.goTo(contentId)
                 }
+                this.dataInitialized = true;
             }
         });
     }

@@ -1,10 +1,3 @@
-.loader{
-  position: fixed;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-}
-
 .reader-progress{
   width: 100%;
   top: var(--ion-safe-area-top);
@@ -20,9 +13,13 @@
   transition: opacity .3s ease;
   background: var(--ion-color-inria-light);
 
-  &.loading{
-    opacity: 0;
+  ion-spinner{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
   }
+
   .reader-slider{
     position: absolute;
     height:100%;

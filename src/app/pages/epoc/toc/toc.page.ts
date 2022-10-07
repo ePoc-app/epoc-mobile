@@ -67,6 +67,7 @@ export class EpocTocPage implements OnInit {
             chapter.chapterOpened = chapterIndex !== -1;
             if (chapter.chapterOpened) {
                 let resumeLink;
+                let prevContentId;
                 const readingChapter = this.reading.chaptersProgress[chapterIndex];
                 chapter.allViewed = true;
                 chapter.initializedContents.forEach(content => {
@@ -78,10 +79,11 @@ export class EpocTocPage implements OnInit {
                     if (!content.viewed) {
                         chapter.allViewed = false;
                         if (!resumeLink) {
-                            resumeLink = `/epoc/play/${this.epoc.id}/${chapterId}/content/${content.id}`;
+                            resumeLink = `/epoc/play/${this.epoc.id}/${chapterId}/${prevContentId ? `content/${prevContentId}` : ''}`;
                             chapter.resumeLink = resumeLink;
                         }
                     }
+                    prevContentId = content.id
                 })
                 chapter.done = chapter.assessmentDone && chapter.chapterOpened && chapter.allViewed
             }
