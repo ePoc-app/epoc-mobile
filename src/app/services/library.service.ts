@@ -15,6 +15,7 @@ import {ActionSheetController, AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {File} from '@ionic-native/file/ngx';
 import {MatomoTracker} from '@ngx-matomo/tracker';
+import {AppService} from './app.service';
 
 
 @Injectable({
@@ -42,7 +43,8 @@ export class LibraryService {
         public actionSheetController: ActionSheetController,
         private router: Router,
         public alertController: AlertController,
-        private readonly tracker: MatomoTracker
+        private readonly tracker: MatomoTracker,
+        public appService: AppService
     ) {
         this.settingsStore.settings$.subscribe(settings => {
             if (!settings) return;
@@ -212,6 +214,13 @@ export class LibraryService {
                     this.deleteEpoc(epoc).subscribe(() => this.downloadEpoc(epoc))
                 }
             }] : []),
+            {
+                text: 'Laisser un commentaire',
+                icon: 'chatbox-ellipses-outline',
+                handler: () => {
+                    this.appService.leaveComment(epoc.id)
+                }
+            },
             {
                 text: 'Supprimer',
                 icon: 'trash',

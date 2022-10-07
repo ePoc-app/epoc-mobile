@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Capacitor} from '@capacitor/core';
-import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
+import {Filesystem,Directory, Encoding} from '@capacitor/filesystem';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {uid} from 'src/app/classes/types';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
@@ -9,6 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {File} from '@ionic-native/file/ngx';
 import {Router} from '@angular/router';
 import {ActionSheetController} from '@ionic/angular';
+import {AppService} from './app.service';
 
 
 @Injectable({
@@ -27,7 +28,8 @@ export class EpocService {
       private http: HttpClient,
       private file: File,
       private router: Router,
-      public actionSheetController: ActionSheetController
+      public actionSheetController: ActionSheetController,
+      public appService: AppService
   ) {}
 
   get epoc(): Epoc {
@@ -162,6 +164,13 @@ export class EpocService {
         icon: 'star-outline',
         handler: () => {
           this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
+        }
+      },
+      {
+        text: 'Laisser un commentaire',
+        icon: 'chatbox-ellipses-outline',
+        handler: () => {
+          this.appService.leaveComment(this.epoc.id)
         }
       },
       {
