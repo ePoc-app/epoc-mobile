@@ -26,6 +26,14 @@ ion-footer{
   padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom)) 1rem;
 }
 
+.next-buttons{
+  display: flex;
+
+  ion-button{
+    width: 50%
+  }
+}
+
 .title-container{
   margin-bottom: 1rem;
   text-align: center;

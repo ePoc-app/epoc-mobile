@@ -41,6 +41,7 @@ export class EpocAssessmentPage implements OnInit {
     questions: Question[];
     currentQuestion = 0;
     currentQuestionUserResponse;
+    correctionShown = false;
     explanationShown = false;
     assessmentData = null;
     certificateShown = false;
@@ -92,16 +93,21 @@ export class EpocAssessmentPage implements OnInit {
     checkAnswer() {
         const question = this.questions[this.currentQuestion];
         const score = this.epocService.calcScore(question.score, question.correctResponse, this.currentQuestionUserResponse);
-        this.explanationShown = true;
+        this.correctionShown = true;
         this.questionsElement.toArray()[this.currentQuestion].showCorrection();
         this.userScore += score;
         this.userResponses.push(this.currentQuestionUserResponse);
         this.tracker.trackEvent('Assessments', 'Answered', `Answered ${this.epocId} ${this.assessmentId} ${this.currentQuestion}`, score);
     }
 
+    toggleExplanation() {
+        this.questionsElement.toArray()[this.currentQuestion].toggleExplanation();
+        this.explanationShown = !this.explanationShown;
+    }
+
     nextQuestion() {
         this.currentQuestionUserResponse = null;
-        this.explanationShown = false;
+        this.correctionShown = false;
         this.currentQuestion++;
         if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
@@ -183,7 +189,7 @@ export class EpocAssessmentPage implements OnInit {
         this.userResponses = [];
         this.assessmentData = null;
         this.currentQuestionUserResponse = null;
-        this.explanationShown = false;
+        this.correctionShown = false;
         this.currentQuestion = 0;
         this.questionSlides.slideTo(0);
         this.isEnd = false;

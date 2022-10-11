@@ -58,12 +58,19 @@
 </ion-content>
 
 <ion-footer *ngIf="!isEnd">
-    <ion-button size="large" expand="block" color="inria" [disabled]="!currentQuestionUserResponse" (click)="checkAnswer();" *ngIf="!explanationShown">
+    <ion-button size="large" expand="block" color="inria" [disabled]="!currentQuestionUserResponse" (click)="checkAnswer();" *ngIf="!correctionShown">
         <span>Valider</span>
     </ion-button>
-    <ion-button size="large" expand="block" color="inria" (click)="nextQuestion()" *ngIf="explanationShown">
-        <span>Compris, suivant !</span>
-    </ion-button>
+    <div class="next-buttons">
+        <ion-button size="large" color="inria" (click)="toggleExplanation()" *ngIf="correctionShown">
+            <span *ngIf="!explanationShown">Explications</span>
+            <span *ngIf="explanationShown">Réponses</span>
+        </ion-button>
+        <ion-button size="large" color="inria-grey" (click)="nextQuestion()" *ngIf="correctionShown">
+            <span>Suivant</span>
+            <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+    </div>
 </ion-footer>
 <ion-footer *ngIf="isEnd">
     <ion-button size="large" expand="block" color="inria" (click)="resume()">
