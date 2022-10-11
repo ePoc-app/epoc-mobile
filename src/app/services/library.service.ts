@@ -82,7 +82,7 @@ export class LibraryService {
         epoc.downloading = downloading;
         epoc.downloaded = downloaded;
         epoc.unzipping = unzipping;
-        epoc.opened = opened ? opened:epoc.opened;
+        epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
         epoc.updateAvailable = updateAvailable
         this._library[epocIndex] = epoc;
         this.librarySubject$.next(this._library);
@@ -221,6 +221,13 @@ export class LibraryService {
                     this.appService.leaveComment(epoc.id)
                 }
             },
+            ...(epoc.opened ? [{
+                text: 'Réinitialiser',
+                icon: 'refresh-outline',
+                handler: () => {
+                    this.confirmReset(epoc)
+                }
+            }] : []),
             {
                 text: 'Supprimer',
                 icon: 'trash',
@@ -240,6 +247,31 @@ export class LibraryService {
             buttons
         });
         await actionSheet.present();
+    }
+
+    async confirmReset(epoc) {
+        const alert = await this.alertController.create({
+            header: 'Confirmation',
+            message: `Attention la réinitialisation de l'ePoc <b>"${epoc.title}"</b> supprimera toute votre progression`,
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Confirmer',
+                    handler: () => {
+                        this.readingStore.removeReading(epoc.id);
+                        this.updateEpocLibraryState(epoc.id,{
+                            downloaded: epoc.downloaded,
+                            opened: false
+                        });
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     async confirmDelete(epoc) {
