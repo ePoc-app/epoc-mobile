@@ -17,8 +17,7 @@
     text-align: left;
 
     .onboarding-item-text{
-      display: block;
-      white-space: nowrap;
+      display: -webkit-box;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -48,7 +47,7 @@
     height: 5rem;
     margin-right: 1rem;
     float: left;
-    background: var(--ion-color-inria-blue) no-repeat center center;
+    background: white no-repeat center center;
     background-size: cover;
     border-radius: var(--epoc-border-radius);
     box-shadow: var(--epoc-box-shadow);
