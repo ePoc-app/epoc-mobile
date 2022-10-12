@@ -461,3 +461,9 @@ body.preview{
     display: inline;
   }
 }
+
+.alert-alignleft{
+  .alert-message {
+    text-align: left;
+  }
+}

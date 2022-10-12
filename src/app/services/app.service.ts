@@ -70,6 +70,21 @@ export class AppService {
         await alert.present();
     }
 
+    async displayLicence(epoc) {
+        const alert = await this.alertController.create({
+            header: 'Licence',
+            cssClass: 'alert-alignleft',
+            message: `<strong>Conditions d’utilisation des contenus de l\'ePoc :</strong><br/>
+                      Les ressources de l'ePoc sont, sauf mention contraire, diffusées sous Licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" title="Lien licence Creative Commons">Creative Commons CC-BY 4.0</a> :<br/>
+                      Attribution. Le titulaire des droits autorise toute exploitation de l’œuvre, y compris à des fins commerciales, ainsi que la création d’œuvres dérivées, dont la distribution est également autorisée sans restriction, à condition de l’attribuer à son auteur en citant son nom.<br/><br/>
+                      Si vous utilisez des contenus de l'ePoc, voici la mention à ajouter pour l'attribution selon l'utilisation :<br/>
+                      Crédit : <strong>"${epoc.title}"</strong>, ePoc Inria, publié sous licence CC-BY dans l'application <a href="https://epoc.inria.fr/" title="Lien vers site ePoc">https://epoc.inria.fr/</a>`,
+            buttons: ['OK'],
+        });
+
+        await alert.present();
+    }
+
 
     joinObject(object: any): string {
         if (typeof object !== 'object') return '';

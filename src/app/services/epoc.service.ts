@@ -8,7 +8,7 @@ import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {HttpClient} from '@angular/common/http';
 import {File} from '@ionic-native/file/ngx';
 import {Router} from '@angular/router';
-import {ActionSheetController} from '@ionic/angular';
+import {ActionSheetController, AlertController} from '@ionic/angular';
 import {AppService} from './app.service';
 
 
@@ -28,6 +28,7 @@ export class EpocService {
       private http: HttpClient,
       private file: File,
       private router: Router,
+      public alertController: AlertController,
       public actionSheetController: ActionSheetController,
       public appService: AppService
   ) {}
@@ -145,13 +146,6 @@ export class EpocService {
           this.router.navigateByUrl('/home/' + this.epoc.id);
         }
       },
-      {
-        text: 'À propos du cours',
-        icon: 'information-circle-outline',
-        handler: () => {
-          this.router.navigateByUrl('/library/' + this.epoc.id);
-        }
-      },
       ...(!this.router.isActive('/epoc/toc/' + this.epoc.id, true) ? [{
         text: 'Table des matières',
         icon: 'list-circle-outline',
@@ -164,6 +158,13 @@ export class EpocService {
         icon: 'star-outline',
         handler: () => {
           this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
+        }
+      },
+      {
+        text: 'Licence',
+        icon: 'receipt-outline',
+        handler: () => {
+          this.appService.displayLicence(this.epoc)
         }
       },
       {

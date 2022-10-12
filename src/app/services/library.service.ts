@@ -207,6 +207,13 @@ export class LibraryService {
                     this.router.navigateByUrl('/epoc/score/' + epoc.id);
                 }
             },
+            {
+                text: 'Licence',
+                icon: 'receipt-outline',
+                handler: () => {
+                    this.appService.displayLicence(epoc)
+                }
+            },
             ...(epoc.updateAvailable ? [{
                 text: 'Mettre à jour',
                 icon: 'cloud-download-outline',
