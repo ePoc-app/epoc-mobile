@@ -33,20 +33,7 @@
   <div class="reader-progress" slot="fixed">
     <ion-progress-bar color="inria" [value]="progress"></ion-progress-bar>
   </div>
-  <div class="certificate-container" slot="fixed" *ngIf="certificateShown">
-    <ion-card class="certificate-success-card">
-      <ion-card-header class="certificate-success-card-header">
-        <ion-icon name="checkmark-circle-outline"></ion-icon>
-      </ion-card-header>
-      <ion-card-content class="certificate-success-card-content">
-        <ion-card-title>Félicitations</ion-card-title>
-        <p>Vous avez atteint le score nécéssaire à l'obtention de l'attestation. Vous pouvez générer l'attestation maintenant ou continuer pour augmenter votre score.</p>
-        <ion-button (click)="goToCertificate()">Obtenir l'attestation</ion-button>
-        <ion-button (click)="dismissCertificateCard()" color="medium">Continuer</ion-button>
-        <p><small>(Vous trouverez l'attestation dans la page des scores)</small></p>
-      </ion-card-content>
-    </ion-card>
-  </div>
+  <certificate-modal *ngIf="dataInitialized" slot="fixed" [epocId]="epoc.id" [certificateShown]="certificateShown"></certificate-modal>
   <div class="reader-actions" [ngClass]="{'showing': showControls}" slot="fixed">
     <div class="reader-action" [ngClass]="currentPage === 0 ? 'disabled':''" (click)="prevPage()" *ngIf="dataInitialized">
       <ion-icon src="/assets/icon/double-gauche.svg"></ion-icon>

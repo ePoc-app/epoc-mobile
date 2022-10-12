@@ -1,0 +1,17 @@
+<div class="certificate-container" *ngIf="certificateShown">
+    <ion-card class="certificate-success-card">
+        <ion-card-header class="certificate-success-card-header">
+            <div class="close" (click)="dismissCertificateCard()">
+                <ion-icon size="default" name="close-outline"></ion-icon>
+              </div>
+            <ion-img class="certificate-img" src="assets/img/certificate.svg"></ion-img>
+        </ion-card-header>
+        <ion-card-content class="certificate-success-card-content">
+            <ion-card-title class="title">Félicitations</ion-card-title>
+            <h3 class="text1">Vous avez atteint le score pour obtenir l'attestation</h3>
+            <p class="text2">Obtenir l'attestation maintenant dans la page des scores ou continuer pour augmenter votre score.</p>
+            <ion-button size="large" expand="block" color="inria-certificate" (click)="goToCertificate()">Obtenir l'attestation</ion-button>
+            <ion-button size="large" expand="block" fill="outline" color="inria" (click)="dismissCertificateCard()">Continuer</ion-button>
+        </ion-card-content>
+    </ion-card>
+</div>

@@ -241,11 +241,6 @@ export class EpocPlayerPage implements OnInit {
         });
     }
 
-    goToCertificate() {
-        this.dismissCertificateCard();
-        this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
-    }
-
     setAssessmentsData() {
         this.assessmentData = {
             totalUserScore: 0,
@@ -272,10 +267,6 @@ export class EpocPlayerPage implements OnInit {
             this.certificateShown = true;
             this.readingStore.updateCertificateShown(this.epoc.id, true);
         }
-    }
-
-    dismissCertificateCard() {
-        this.certificateShown = false;
     }
 
     ionViewWillLeave() {

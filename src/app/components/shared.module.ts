@@ -23,6 +23,7 @@ import {CorrectionSortComponent} from './corrections/correction-sort/correction-
 import {CorrectionGenericComponent} from './corrections/correction-generic/correction-generic.component';
 import {CorrectionReorderComponent} from './corrections/correction-reorder/correction-reorder.component';
 import {DebugComponent} from './debug/debug.component';
+import {CertificateModalComponent} from './certificate-modal/certificate-modal.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {DebugComponent} from './debug/debug.component';
         CorrectionSortComponent,
         CorrectionGenericComponent,
         CorrectionReorderComponent,
-        DebugComponent
+        DebugComponent,
+        CertificateModalComponent
     ],
     exports: [
         ScoreProgressComponent,
@@ -74,7 +76,8 @@ import {DebugComponent} from './debug/debug.component';
         CorrectionSortComponent,
         CorrectionGenericComponent,
         CorrectionReorderComponent,
-        DebugComponent
+        DebugComponent,
+        CertificateModalComponent
     ]
 })
 export class SharedModule { }

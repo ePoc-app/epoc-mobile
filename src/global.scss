@@ -420,41 +420,6 @@ video {
   padding: 1em;
 }
 
-.certificate-container{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,.75);
-  z-index: 12;
-
-  .certificate-success-card {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    width: 90%;
-    margin: 0;
-    max-width: 500px;
-    text-align: center;
-    transform: translate(-50%, -50%);
-
-    &-header {
-      padding: 20px;
-      font-size: 70px;
-      line-height: 0;
-      color: white;
-      background: var(--ion-color-success);
-    }
-
-    &-content {
-      * {
-        margin: 1em;
-      }
-    }
-  }
-}
-
 .swipe-modal {
   margin: 15% 5% 15% 5%;
   border: 1px solid black!important;

@@ -145,16 +145,7 @@ export class EpocAssessmentPage implements OnInit {
         if (!this.reading.certificateShown) {
             this.certificateShown = true;
             this.readingStore.updateCertificateShown(this.epoc.id, true);
-        }
-    }
-
-    goToCertificate() {
-        this.dismissCertificateCard();
-        this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
-    }
-
-    dismissCertificateCard() {
-        this.certificateShown = false;
+        } 
     }
 
     back() {
