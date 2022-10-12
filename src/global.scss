@@ -30,10 +30,10 @@
 @import '_fonts';
 
 body{
-  color: var(--ion-color-inria-blue);
+  color: var(--ion-color-text);
   line-height: 1.6;
   --ion-font-family: 'Inria Sans', sans-serif;
-  --ion-text-color: var(--ion-color-inria-blue);
+  --ion-text-color: var(--ion-color-text);
   --epoc-border-radius: .8rem;
   --epoc-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.334316), 0px 9px 11px rgba(0, 0, 0, 0.160737);
 }
@@ -46,14 +46,10 @@ ion-toolbar {
   --padding-start:0;
   --padding-end:0;
   --min-height:55px;
-  --border-color: white;
-  box-shadow: 0 6px 14px 0 rgba(218,222,234,0.51);
   .icon-btn {
     margin-left: 1rem;
     --padding-start:0;
     --padding-end:0;
-    --background: white;
-    --background-activated: white;
     --box-shadow: none;
     --color: var(--ion-color-inria);
     --color-activated: var(--ion-color-inria-shade);
@@ -102,7 +98,7 @@ ion-toolbar {
     align-items: center;
     justify-content: center;
     bottom: .5rem;
-    --bullet-background: var(--ion-color-inria-lightgrey);
+    --bullet-background: var(--ion-color-bullet);
     --bullet-background-active: var(--ion-color-inria);
 
     .swiper-pagination-bullet {
@@ -466,4 +462,27 @@ body.preview{
   .alert-message {
     text-align: left;
   }
+}
+//Dark mode variables
+ion-content {
+  --background: var(--ion-color-background);
+}
+
+ion-slide {
+  background-color: var(--ion-color-content);
+  box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
+}
+
+ion-toolbar {
+  --background: var(--ion-color-content);
+  --border-color: var(--ion-color-content);
+  box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
+  .icon-btn {
+    --background: var(--ion-color-content);
+    --background-activated: var(--ion-color-content);
+  }
+}
+
+.base-btn {
+  color: var(--ion-color-text-button);
 }

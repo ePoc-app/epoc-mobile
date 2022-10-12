@@ -1,17 +1,71 @@
 $inria-red : #e63312;
 $inria-blue : #384257;
-$inria-grey: #6477A0;
+$inria-grey : #6477A0;
 $inria-spe : #2EC6FA;
 $inria-light : #F4F7FB;
+$inria-dark : #23232C;
 $inria-correct: #85CE70;
 $inria-correct-shade: #5EA51F;
 $inria-correct-tint: #EBF4E8;
 $inria-incorrect: #EB7575;
 $inria-certificate: #FFA029;
 $inria-lightgrey: #D3D7E0;
+$inria-darkgrey: #384156;
 
 .test{
   color: var(--ion-color-inria-lightgrey-rgb);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --ion-color-content: white;
+    --ion-color-background: white;
+    --ion-color-shadow: rgba(218,222,234,0.51);
+    --ion-color-text: var(--ion-color-inria-blue);
+    --ion-color-bullet: var(--ion-color-inria-lightgrey);
+    --ion-color-text-button: var(--ion-color-inria-blue);
+    
+    --ion-color-inria-icon: #{$inria-blue};
+    --ion-color-inria-icon-rgb: #{red($inria-blue)}, #{green($inria-blue)}, #{blue($inria-blue)};
+    --ion-color-inria-icon-contrast: #fff;
+    --ion-color-inria-icon-contrast-rgb: 255,255,255;
+    --ion-color-inria-icon-shade: #{darken($inria-blue, 10%)};
+    --ion-color-inria-icon-tint: #{lighten($inria-blue, 10%)};
+
+    --ion-color-inria-base-button: #{$inria-light};
+    --ion-color-inria-base-button-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};
+    --ion-color-inria-base-button-contrast: #{$inria-grey};
+    --ion-color-inria-base-button-contrast-rgb: #{$inria-grey};
+    --ion-color-inria-base-button-shade: #{darken($inria-light, 10%)};
+    --ion-color-inria-base-button-tint: #{lighten($inria-light, 10%)};
+
+    
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-color-content: var(--ion-color-inria-dark);
+    --ion-color-background: #17191A;
+    --ion-color-shadow: rgba(218,222,234,0);
+    --ion-color-text: var(--ion-color-inria-light);
+    --ion-color-bullet: var(--ion-color-inria-darkgrey);
+    --ion-color-text-button: #A6B1C9;
+    
+    --ion-color-inria-icon: #{$inria-light};
+    --ion-color-inria-icon-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};
+    --ion-color-inria-icon-contrast: #{$inria-grey};
+    --ion-color-inria-icon-contrast-rgb: #{$inria-grey};
+    --ion-color-inria-icon-shade: #{darken($inria-light, 10%)};
+    --ion-color-inria-icon-tint: #{lighten($inria-light, 10%)};
+
+    --ion-color-inria-base-button: #{$inria-dark};
+    --ion-color-inria-base-button-rgb: #{red($inria-dark)}, #{green($inria-dark)}, #{blue($inria-dark)};
+    --ion-color-inria-base-button-contrast: #{$inria-grey};
+    --ion-color-inria-base-button-contrast-rgb: #{$inria-grey};
+    --ion-color-inria-base-button-shade: #{darken($inria-dark, 10%)};
+    --ion-color-inria-base-button-tint: #{lighten($inria-dark, 10%)};
+  }
 }
 
 :root {
@@ -43,6 +97,13 @@ $inria-lightgrey: #D3D7E0;
   --ion-color-inria-light-shade: #{darken($inria-light, 10%)};
   --ion-color-inria-light-tint: #{lighten($inria-light, 10%)};
 
+  --ion-color-inria-dark: #{$inria-dark};
+  --ion-color-inria-dark-rgb: #{red($inria-dark)}, #{green($inria-dark)}, #{blue($inria-dark)};
+  --ion-color-inria-dark-contrast: #{$inria-grey};
+  --ion-color-inria-dark-contrast-rgb: #{$inria-grey};
+  --ion-color-inria-dark-shade: #{darken($inria-dark, 10%)};
+  --ion-color-inria-dark-tint: #{lighten($inria-dark, 10%)};
+
   --ion-color-inria-spe: #{$inria-spe};
   --ion-color-inria-spe-rgb: #{red($inria-spe)}, #{green($inria-spe)}, #{blue($inria-spe)};
   --ion-color-inria-spe-contrast: #fff;
@@ -71,6 +132,13 @@ $inria-lightgrey: #D3D7E0;
   --ion-color-inria-lightgrey-shade: #{darken($inria-lightgrey, 10%)};
   --ion-color-inria-lightgrey-tint: #{lighten($inria-lightgrey, 10%)};
 
+  --ion-color-inria-darkgrey: #{$inria-darkgrey};
+  --ion-color-inria-darkgrey-rgb : #{red($inria-darkgrey)}, #{green($inria-darkgrey)}, #{blue($inria-darkgrey)};
+  --ion-color-inria-darkgrey-contrast: #FFF;
+  --ion-color-inria-darkgrey-contrast-rgb: 255, 255, 255;
+  --ion-color-inria-darkgrey-shade: #{darken($inria-darkgrey, 10%)};
+  --ion-color-inria-darkgrey-tint: #{darken($inria-darkgrey, 10%)};
+
   --ion-color-inria-certificate: #{$inria-certificate};
   --ion-color-inria-certificate-rgb : #{red($inria-certificate)}, #{green($inria-certificate)}, #{blue($inria-certificate)};
   --ion-color-inria-certificate-contrast: #FFF;
@@ -88,6 +156,24 @@ $inria-lightgrey: #D3D7E0;
      */
     min-height: 1px !important;
   }
+}
+
+.ion-color-inria-base-button {
+  --ion-color-base: var(--ion-color-inria-base-button);
+  --ion-color-rgb : var(--ion-color-inria-base-button-rgb);
+  --ion-color-contrast: var(--ion-color-inria-base-button-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-base-button-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-base-button-shade);
+  --ion-color-tint: var(--ion-color-inria-base-button-tint);
+}
+
+.ion-color-inria-icon {
+  --ion-color-base: var(--ion-color-inria-icon);
+  --ion-color-rgb : var(--ion-color-inria-icon-rgb);
+  --ion-color-contrast: var(--ion-color-inria-icon-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-icon-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-icon-shade);
+  --ion-color-tint: var(--ion-color-inria-icon-tint);
 }
 
 .ion-color-inria {
@@ -126,6 +212,15 @@ $inria-lightgrey: #D3D7E0;
   --ion-color-tint: var(--ion-color-inria-light-tint);
 }
 
+.ion-color-inria-dark {
+  --ion-color-base: var(--ion-color-inria-dark);
+  --ion-color-base-rgb: var(--ion-color-inria-dark-rgb);
+  --ion-color-contrast: var(--ion-color-inria-dark-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-dark-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-dark-shade);
+  --ion-color-shade: var(--ion-color-inria-dark-tint);
+}
+
 .ion-color-inria-spe {
   --ion-color-base: var(--ion-color-inria-spe);
   --ion-color-base-rgb: var(--ion-color-inria-spe-rgb);
@@ -160,6 +255,15 @@ $inria-lightgrey: #D3D7E0;
   --ion-color-contrast-rgb: var(--ion-color-inria-lightgrey-contrast-rgb);
   --ion-color-shade: var(--ion-color-inria-lightgrey-shade);
   --ion-color-tint: var(--ion-color-inria-lightgrey-tint);
+}
+
+.ion-color-inria-darkgrey {
+  --ion-color-base: var(--ion-color-inria-darkgrey);
+  --ion-color-base-rgb: var(--ion-color-inria-darkgrey-rgb);
+  --ion-color-contrast: var(--ion-color-inria-darkgrey-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-inria-darkgrey-contrast-rgb);
+  --ion-color-shade: var(--ion-color-inria-darkgrey-shade);
+  --ion-color-tint: var(--ion-color-inria-darkgrey-tint);
 }
 
 .ion-color-inria-certificate {
