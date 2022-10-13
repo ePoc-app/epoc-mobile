@@ -29,6 +29,9 @@ $inria-black: #17191A;
     --ion-color-specs: var(--ion-color-inria-grey);
     --ion-color-contrast: var(--ion-color-inria-light);
     --ion-color-contrast-2: var(--ion-color-inria-light);
+    --ion-color-icon-2: var(--ion-color-inria);
+    --ion-color-fill-button: var(--ion-color-inria-light);
+    
     
     --ion-color-inria-icon: #{$inria-blue};
     --ion-color-inria-icon-rgb: #{red($inria-blue)}, #{green($inria-blue)}, #{blue($inria-blue)};
@@ -58,6 +61,9 @@ $inria-black: #17191A;
     --ion-color-specs: white;
     --ion-color-contrast: var(--ion-color-inria-blue);
     --ion-color-contrast-2: var(--ion-color-inria-black);
+    --ion-color-icon-2: var(--ion-color-inria-light);
+    --ion-color-fill-button: var(--ion-color-inria);
+
     
     --ion-color-inria-icon: #{$inria-light};
     --ion-color-inria-icon-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};

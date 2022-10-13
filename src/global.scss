@@ -219,7 +219,7 @@ ion-range.progress-indicator{
     margin-bottom: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    background: white;
+    background: var(--ion-color-content);
 
     &:last-child{
       margin-bottom: 0;
@@ -230,7 +230,7 @@ ion-range.progress-indicator{
     padding: 1rem;
     font-size: 1.1rem;
     font-weight: bold;
-    color: var(--ion-color-inria-blue);
+    color: var(--ion-color-text);
     background: none;
     text-align: left;
   }
@@ -246,19 +246,19 @@ ion-range.progress-indicator{
   .action-sheet-button{
     margin: 0 1rem .5rem 1rem;
     width: calc(100% - 2rem);
-    background: var(--ion-color-inria-light);
+    background: var(--ion-color-contrast);
     border-radius: .5rem;
     color: var(--ion-color-inria-blue);
   }
   .action-sheet-button-inner{
     justify-content: left;
-    color: var(--ion-color-inria-blue);
+    color: var(--ion-color-text);
   }
 
   .action-sheet-icon{
     font-size: 1.4rem!important;
     margin-right: 1rem !important;
-    color: var(--ion-color-inria)
+    color: var(--ion-color-icon-2);
   }
 
   .action-sheet-group-cancel{
@@ -273,7 +273,8 @@ ion-range.progress-indicator{
     .action-sheet-button-inner{
       padding-top: .2em;
       justify-content: center;
-      color: var(--ion-color-inria);
+      background: var(--ion-color-fill-button);
+      color: var(--ion-color-icon-2);
     }
   }
 }
