@@ -1,12 +1,12 @@
 <ion-header mode="ios" #header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
+      <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
     <ion-title>Présentation du cours</ion-title>
     <ion-buttons slot="end" *ngIf="epoc && epoc.downloaded">
       <ion-button (click)="openEpocMenu(epoc)">
-        <ion-icon name="ellipsis-horizontal" color="inria-blue"></ion-icon>
+        <ion-icon name="ellipsis-horizontal" color="inria-icon"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

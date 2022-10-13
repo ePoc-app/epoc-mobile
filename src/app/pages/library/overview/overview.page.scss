@@ -24,28 +24,6 @@
   }
 }
 
-span.epoc-author{
-  display: inline-block;
-  width: calc(50% - 10px);
-  font-size: 0.75rem;
-  color: var(--ion-color-inria-grey);
-  text-align: right;
-
-  &.align-left {
-    text-align: left;
-  }
-
-  &.align-center {
-    text-align: center;
-  }
-
-  &-splitter{
-    display: inline-block;
-    width:20px;
-    color: var(--ion-color-inria-lightgrey)
-  }
-}
-
 .epoc-trailer {
   position: relative;
   width: 100%;
@@ -56,58 +34,6 @@ span.epoc-author{
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
-.epoc-specs{
-  display: flex;
-  padding: 1rem;
-  font-size: 0.85rem;
-  color: var(--ion-color-inria-grey);
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-
-  .epoc-spec{
-    padding: 0 1rem;
-  }
-
-  .epoc-spec:nth-child(2){
-    border-left: 1px solid var(--ion-color-inria-lightgrey);
-    border-right: 1px solid var(--ion-color-inria-lightgrey);
-  }
-
-  ion-icon{
-    font-size: 1.5rem;
-  }
-}
-
-.tabs-headers{
-  display: flex;
-  padding: 1rem;
-  border-bottom: 1px solid var(--ion-color-inria-light);
-
-  .tabs-header {
-    flex: 1 1 0;
-    text-align: center;
-    background: var(--ion-color-inria-light);
-    border-radius: 1em;
-    font-size: .875rem;
-    text-transform: uppercase;
-
-    span{
-      display: inline-block;
-      font-weight: bold;
-      padding-top: .1em;
-    }
-
-    &:nth-child(2){
-      margin: 0 1rem;
-    }
-
-    &.selected{
-      color:white;
-      background: var(--ion-color-inria);
-    }
-  }
-}
 
 .tabs{
   padding: 1rem;
@@ -127,7 +53,7 @@ span.epoc-author{
     margin-right: 1rem;
     border-radius: .8rem;
     color: var(--ion-color-inria);
-    background: var(--ion-color-inria-light)
+    background: var(--ion-color-item)
   }
 
   ion-text{
@@ -137,38 +63,9 @@ span.epoc-author{
   }
 }
 
-div.epoc-author{
-  margin-bottom: 1rem;
-  padding: 0 0 1rem 0;
-  border-bottom: 1px solid var(--ion-color-inria-light);
-
-  &:last-child{
-    border-bottom: none;
-  }
-
-  &-name{
-    display: flex;
-    align-items: center;
-
-    img {
-      width: 3rem;
-      height: 3rem;
-      margin-right: 1em;
-      margin-bottom: 5px;
-      border-radius: 50%;
-      overflow: hidden;
-      object-fit: cover;
-    }
-  }
-
-  &-description{
-    font-size: .875rem;
-  }
-}
-
 ion-footer ion-toolbar{
   padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom, 0)) 1rem;
-  box-shadow: 0 -6px 14px 0 rgba(218,222,234,0.51);
+  box-shadow: 0 -6px 14px 0 var(--ion-color-shadow);
 
   ion-button{
     max-width: 25rem;

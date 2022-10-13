@@ -25,6 +25,7 @@ $inria-darkgrey: #384156;
     --ion-color-bullet: var(--ion-color-inria-lightgrey);
     --ion-color-text-button: var(--ion-color-inria-blue);
     --ion-color-item: var(--ion-color-inria-light);
+    --ion-color-specs: var(--ion-color-inria-grey);
     
     --ion-color-inria-icon: #{$inria-blue};
     --ion-color-inria-icon-rgb: #{red($inria-blue)}, #{green($inria-blue)}, #{blue($inria-blue)};
@@ -39,8 +40,6 @@ $inria-darkgrey: #384156;
     --ion-color-inria-base-button-contrast-rgb: #{$inria-grey};
     --ion-color-inria-base-button-shade: #{darken($inria-light, 10%)};
     --ion-color-inria-base-button-tint: #{lighten($inria-light, 10%)};
-
-    
   }
 }
 
@@ -53,6 +52,7 @@ $inria-darkgrey: #384156;
     --ion-color-bullet: var(--ion-color-inria-darkgrey);
     --ion-color-text-button: #A6B1C9;
     --ion-color-item: var(--ion-color-inria-dark);
+    --ion-color-specs: white;
     
     --ion-color-inria-icon: #{$inria-light};
     --ion-color-inria-icon-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};
