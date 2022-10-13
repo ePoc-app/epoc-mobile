@@ -23,9 +23,9 @@ ion-list-header{
 }
 
 ion-item{
+  background: var(--ion-color-item);
   margin-bottom: .5rem;
   padding: 1rem;
-  background: var(--ion-color-inria-light);
   border-radius: .5rem;
   --min-height:0;
   --background: none;
