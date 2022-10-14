@@ -509,8 +509,8 @@ body.preview{
   }
 
   .epoc-spec:nth-child(2){
-    border-left: 1px solid var(--ion-color-inria-lightgrey);
-    border-right: 1px solid var(--ion-color-inria-lightgrey);
+    border-left: 1px solid var(--ion-color-bullet);
+    border-right: 1px solid var(--ion-color-bullet);
   }
 
   ion-icon{
@@ -551,7 +551,7 @@ span.epoc-author{
   display: inline-block;
   width: calc(50% - 10px);
   font-size: 0.75rem;
-  color: var(--ion-color-inria-grey);
+  color: var(--ion-color-text-2);
   text-align: right;
 
   &.align-left {
@@ -565,7 +565,7 @@ span.epoc-author{
   &-splitter{
     display: inline-block;
     width:20px;
-    color: var(--ion-color-inria-lightgrey)
+    color: var(--ion-color-bullet)
   }
 }
 

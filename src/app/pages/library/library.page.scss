@@ -138,5 +138,9 @@
 ion-slide{
   background-color: var(--ion-color-content);
   box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
+  
+  ion-icon{
+    color: var(--ion-color-close);
+  }
 }
 

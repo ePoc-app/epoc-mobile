@@ -24,7 +24,7 @@
       <div class="onboarding-item-text">{{item.text}}</div>
       <a [routerLink]="item.link.url" *ngIf="item.link">{{item.link.text}}</a>
       <div class="onboarding-item-close" (click)="removeMessage(item.id)">
-        <ion-icon name="close-outline" color="inria-lightgrey"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
       </div>
     </ion-slide>
   </ion-slides>
