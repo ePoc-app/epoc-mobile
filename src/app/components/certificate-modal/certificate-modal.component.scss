@@ -31,7 +31,6 @@
     }
     
     .title {
-        color: #384257;
         font-family: "Inria Sans";
         font-size: 3rem;
         font-weight: bold;
@@ -40,8 +39,8 @@
     }
 
     .text1 {
+        color: var(--ion-color-text);
         margin-bottom: 10px;
-        color: #384257;
         font-family: "Inria Sans";
         font-size: 1rem;
         font-weight: bold;
@@ -49,6 +48,7 @@
     }
 
     .text2 {
+        color: var(--ion-color-text-2);
         font-size: 0.8rem;
         padding: 0 3vh 0 3vh;
         margin-bottom: 15px;
@@ -64,10 +64,10 @@
         width:1.8rem;
         height:1.8rem;
         z-index: 10;
-        background: var(--ion-color-inria-light);
+        background: var(--ion-color-contrast);
         border-radius: 2rem;
         --ionicon-stroke-width: 64px;
-        color: var(--ion-color-inria-blue);
+        color: var(--ion-color-text-button);
         font-size: 18px;
       }
 

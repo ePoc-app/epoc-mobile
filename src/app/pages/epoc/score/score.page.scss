@@ -48,7 +48,7 @@
   position: relative;
   margin: 1rem 0;
   padding: 1rem;
-  background: var(--ion-color-inria-light);
+  background: var(--ion-color-contrast);
   border-radius: .5rem;
 
   &.success{
@@ -86,7 +86,7 @@
     font-weight: bold;
     text-transform: uppercase;
     color: var(--ion-color-inria);
-    border-bottom: 1px solid var(--ion-color-inria-light);
+    border-bottom: 1px solid var(--ion-color-item);
   }
 
   &-item{
@@ -95,7 +95,7 @@
     padding: 1rem;
     margin-bottom: .5rem;
     border-radius: .5rem;
-    background: var(--ion-color-inria-light);
+    background: var(--ion-color-item);
 
     &:last-child{
       margin-bottom: 0;

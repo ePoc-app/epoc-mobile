@@ -571,6 +571,18 @@ span.epoc-author{
 
 
 ////////////////////////// Dark mode implentation //////////////////////////
+@media (prefers-color-scheme: light) {
+  .dark {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .light {
+    display: none;
+  }
+}
+
 
 ion-content{
   --background: var(--ion-color-background);

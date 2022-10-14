@@ -1,6 +1,6 @@
 <ng-container *ngIf="nextChapter">
   <p><b class="ion-text-capitalize">{{chapterLabel}} suivant :</b> {{nextChapter.title}} </p>
-  <ion-button expand="block" size="large" color="inria" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
+  <ion-button expand="block" size="large" color="outline-button" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
     <span>Table des matières</span>
   </ion-button>
   <ion-button expand="block" size="large" color="inria" [routerLink]="'/epoc/play/'+epoc.id+'/'+nextChapter.id">
@@ -13,7 +13,7 @@
     Pour obtenir l'attestation, consultez la page des scores.<br/>
     Ou retournez à la table des matières pour rejouer un <span>{{chapterLabel}}</span>.
   </p>
-  <ion-button expand="block" size="large" color="inria" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
+  <ion-button expand="block" size="large" color="outline-button" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
     <span>Table des matières</span>
   </ion-button>
   <ion-button expand="block" size="large" color="inria" [routerLink]="'/epoc/score/'+epoc.id">

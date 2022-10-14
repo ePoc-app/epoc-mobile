@@ -4,7 +4,7 @@
   <ion-button *ngIf="!questionAnswered && question.responses.length > 0" [disabled]="disableCheck" expand="block" size="large" color="inria" (click)="checkAnswer($event)">
     <span>Valider mes réponses</span>
   </ion-button>
-  <ion-button *ngIf="question.responses.length <= 0" expand="block" size="large" color="inria" fill="outline" (click)="checkAnswer($event)">
+  <ion-button *ngIf="question.responses.length <= 0" expand="block" size="large" color="outline-button" fill="outline" (click)="checkAnswer($event)">
     <span>J'ai terminé</span>
   </ion-button>
 </common-question>

@@ -12,15 +12,15 @@
     width:100%;
     margin-top: 1em;
     padding: 1em;
-    background: #fefefe;
+    background: var(--ion-color-content);
     font-weight: bold;
-    color:var(--ion-color-inria-blue);
+    color:var(--ion-color-text);
     border-radius: 4px;
-    border: 1px solid var(--ion-color-inria-blue);
+    border: 1px solid var(--ion-color-text);
 
     &.selected{
-      color:white;
-      background: var(--ion-color-inria-blue);
+      color: var(--ion-color-content);
+      background: var(--ion-color-text);
     }
   }
 }

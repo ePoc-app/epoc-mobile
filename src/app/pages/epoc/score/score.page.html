@@ -1,7 +1,7 @@
 <ion-header mode="ios" #header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="/home" color="inria-blue"></ion-back-button>
+      <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
     <ion-title>Score total</ion-title>
   </ion-toolbar>
@@ -51,7 +51,7 @@
       <ng-container *ngFor="let assessment of assessments">
         <div class="short-access-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">
           <ion-label>{{assessment.title}}</ion-label>
-          <ion-note [color]="assessment.score !== null ? assessment.score < assessment.scoreTotal ? 'inria-certificate':'inria-correct':'inria-blue'" *ngIf="assessment.scoreTotal > 0">
+          <ion-note [color]="assessment.score !== null ? assessment.score < assessment.scoreTotal ? 'inria-certificate':'inria-correct':'inria-icon'" *ngIf="assessment.scoreTotal > 0">
             {{assessment.score ? assessment.score : 0}}/{{assessment.scoreTotal}}
           </ion-note>
           <ion-icon name="chevron-forward-outline"></ion-icon>
