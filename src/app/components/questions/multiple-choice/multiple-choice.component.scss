@@ -1,13 +1,14 @@
 ion-list{
   display: block;
   margin-top: 2rem;
+  background: var(--ion-color-content);
 }
 
 ion-item{
   margin-bottom: .5rem;
   border-radius: .5rem;
   --min-height: 3.2rem;
-
+  --background: var(--ion-color-contrast);
   &:last-child{
     margin-bottom: 0;
   }
@@ -28,6 +29,6 @@ ion-checkbox{
 
   & + ion-label{
     padding-top: .2em;
-    color: var(--ion-color-inria-blue);
+    color: var(--ion-color-text);
   }
 }

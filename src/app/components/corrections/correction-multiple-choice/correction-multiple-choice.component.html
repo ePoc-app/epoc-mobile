@@ -14,10 +14,10 @@
     </div>
   </div>
   <h4>Vous avez répondu</h4>
-  <ion-item lines="none" color="inria-light" *ngFor="let response of correction">
+  <ion-item lines="none" *ngFor="let response of correction">
     <div class="correction-icon correct" *ngIf="response.correct"><ion-icon name="checkmark-outline"></ion-icon></div>
     <div class="correction-icon incorrect" *ngIf="!response.correct"><ion-icon name="close-outline"></ion-icon></div>
-    <ion-label class="ion-text-wrap" color="inria-blue">
+    <ion-label class="ion-text-wrap" color="inria-icon">
       {{response.label}}
       <div class="correction-right" *ngIf="response.correct">C'est une bonne réponse !</div>
       <div class="correction-wrong" *ngIf="!response.correct">C'est faux !</div>
@@ -26,11 +26,11 @@
 </ng-container>
 <ng-container *ngIf="missingResponses && missingResponses.length">
   <h4>Vous avez oublié</h4>
-  <ion-item lines="none" color="inria-light" *ngFor="let response of missingResponses">
+  <ion-item lines="none" *ngFor="let response of missingResponses">
     <div class="correction-icon">
       <ion-icon name="alert"></ion-icon>
     </div>
-    <ion-label class="ion-text-wrap" color="inria-blue">
+    <ion-label class="ion-text-wrap" color="inria-icon">
       {{response}}
       <div class="correction-missing">C'était une bonne réponse !</div>
     </ion-label>

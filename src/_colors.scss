@@ -32,6 +32,7 @@ $inria-black: #17191A;
     --ion-color-contrast-3: white;
     --ion-color-icon-2: var(--ion-color-inria);
     --ion-color-fill-button: var(--ion-color-inria-light);
+    --ion-color-border: #D0D2D7;
     
     
     --ion-color-inria-icon: #{$inria-blue};
@@ -72,6 +73,7 @@ $inria-black: #17191A;
     --ion-color-contrast-3: var(--ion-color-inria-blue);
     --ion-color-icon-2: var(--ion-color-inria-light);
     --ion-color-fill-button: var(--ion-color-inria);
+    --ion-color-border: var(--ion-color-inria-blue);
 
     
     --ion-color-inria-icon: #{$inria-light};

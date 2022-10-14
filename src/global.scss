@@ -169,7 +169,7 @@ ion-range.progress-indicator{
   border-radius: 1rem;
 
   &::part(bar){
-    background: var(--ion-color-inria-light);
+    background: var(--ion-color-contrast);
   }
 
   &::part(bar-active){

@@ -1,7 +1,8 @@
 .sort-group{
   padding:.5rem;
   margin-bottom: 1em;
-  border: 1px solid var(--ion-color-inria-light);
+  background: var(--ion-color-background);
+  border: 1px solid var(--ion-color-contrast-2);
   border-radius: 10px;
 
   &:last-child{
@@ -15,6 +16,14 @@
     font-size: 0.875rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: var(--ion-color-inria-blue);
+    color: var(--ion-color-text);
+  }
+
+  ion-item {
+    --background: var(--ion-color-item);
+
+    ion-label {
+      color: var(--ion-color-label);
+    }
   }
 }

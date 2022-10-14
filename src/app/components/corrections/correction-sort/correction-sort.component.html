@@ -12,7 +12,7 @@
   <h4>Vous avez répondu</h4>
   <div class="sort-group" *ngFor="let sortGroup of sortGroups; let index = index;">
     <div class="sort-group-label">{{sortGroup}}</div>
-    <ion-item lines="none" color="inria-light" *ngFor="let response of correction[index]">
+    <ion-item lines="none" *ngFor="let response of correction[index]">
       <div class="correction-icon correct" *ngIf="response.correct"><ion-icon name="checkmark-outline"></ion-icon></div>
       <div class="correction-icon incorrect" *ngIf="!response.correct"><ion-icon name="close-outline"></ion-icon></div>
       <ion-label class="ion-text-wrap" color="inria-blue">

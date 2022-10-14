@@ -7,8 +7,8 @@
 }
 
 .header{
-  background: white;
-  box-shadow: 0 6px 14px 0 rgba(218,222,234,0.51);
+  background: var(--ion-color-content);
+  box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
   max-height: 0;
   overflow: hidden;
   transition: max-height .3s ease-in-out 0s;
@@ -21,6 +21,7 @@
       margin: 0 .5rem;
       text-align: center;
       background: var(--ion-color-inria-lightgrey);
+      color: var(--ion-color-inria-blue);
       border-radius: 1em;
       font-size: .875rem;
       text-transform: uppercase;
@@ -57,7 +58,7 @@
   background: var(--ion-color-contrast);
   border-radius: 2rem;
   --ionicon-stroke-width: 64px;
-  color: var(--ion-color-inria-blue);
+  color: var(--ion-color-text-button);
 }
 
 .title-container{
