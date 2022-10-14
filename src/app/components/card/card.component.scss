@@ -18,8 +18,8 @@
   flex-shrink: 0;
   margin: 1rem;
   padding: 1rem;
-  background: #fff;
-  box-shadow: 0 1px 7px 0 #D5DDE9;
+  background: var(--ion-color-content);
+  box-shadow: 0 1px 7px 0 var(--ion-color-shadow);
   border-radius: 1rem;
 }
 

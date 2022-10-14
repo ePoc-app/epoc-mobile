@@ -29,6 +29,7 @@
 
   ion-slide{
     flex-direction: column;
+    background-color: var(--ion-color-contrast-2);
   }
 }
 
@@ -55,21 +56,21 @@
     width:3.5rem;
     height:3.5rem;
     margin: .2rem;
-    background: white;
+    background: var(--ion-color-contrast-3);
     box-shadow: -4px -4px 8px 0 #FAFBFF, 4px 4px 8px 0 #A6ABBD;
     border-radius: 4rem;
     font-size: 1.5rem;
-    color:var(--ion-color-inria);
+    color:var(--ion-color-icon-2);
 
     &.disabled{
-      color: var(--ion-color-inria-lightgrey);
+      color: var(--ion-color-bullet);
     }
 
     &.small{
       width:2.5rem;
       height:2.5rem;
       font-size: 1.25rem;
-      color:var(--ion-color-inria-blue);
+      color:var(--ion-color-icon);
     }
 
     &.hidden{

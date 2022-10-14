@@ -134,3 +134,9 @@
     max-width: calc(25% - var(--library-item-gap));
   }
 }
+
+ion-slide{
+  background-color: var(--ion-color-content);
+  box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
+}
+

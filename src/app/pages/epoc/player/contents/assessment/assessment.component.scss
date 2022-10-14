@@ -2,7 +2,7 @@
   display: flex;
   padding: 1rem;
   font-size: 0.85rem;
-  color: var(--ion-color-inria-grey);
+  color: var(--ion-color-specs);
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,7 @@
   }
 
   .assessment-spec:nth-child(2){
-    border-left: 1px solid var(--ion-color-inria-lightgrey);
+    border-left: 1px solid var(--ion-color-bullet);
   }
 
   ion-icon{

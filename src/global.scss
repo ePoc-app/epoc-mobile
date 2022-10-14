@@ -280,7 +280,7 @@ ion-range.progress-indicator{
 }
 
 .ion-page {
-  background: white;
+  background: var(--ion-color-background);
 }
 
 .bold{
@@ -576,11 +576,6 @@ ion-content{
   --background: var(--ion-color-background);
 }
 
-ion-slide{
-  background-color: var(--ion-color-content);
-  box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
-}
-
 ion-toolbar{
   --background: var(--ion-color-content);
   --border-color: var(--ion-color-content);
@@ -606,4 +601,9 @@ ion-list{
 
 ion-card{
   background-color: var(--ion-color-content);
+}
+
+.title-icon {
+  color: var(--ion-color-icon-2);
+  background: var(--ion-color-contrast);
 }

@@ -1,5 +1,5 @@
 <ion-radio-group [value]="selectedAnswer">
-  <ion-item lines="none" color="inria-light" *ngFor="let response of question.responses" (click)="selectAnswer(response.value)">
+  <ion-item lines="none" color="inria-contrast-button" *ngFor="let response of question.responses" (click)="selectAnswer(response.value)">
     <ion-radio mode="md" slot="start" [disabled]="disabled" [value]="response.value"></ion-radio>
     <ion-label class="ion-text-wrap">
       {{response.label}}

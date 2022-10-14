@@ -5,7 +5,7 @@
   width: 100%;
   opacity: 1;
   transition: opacity .3s ease;
-  background: var(--ion-color-inria-light);
+  background: var(--ion-color-contrast-2);
 
   &.loading{
     opacity: 0;
@@ -47,8 +47,6 @@ ion-footer{
     margin: auto;
     font-size: 1.5rem;
     border-radius: 1rem;
-    color: var(--ion-color-inria);
-    background: var(--ion-color-inria-light);
   }
 
   .subtitle{
