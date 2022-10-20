@@ -57,13 +57,13 @@
     height:3.5rem;
     margin: .2rem;
     background: var(--ion-color-contrast-3);
-    box-shadow: -4px -4px 8px 0 #FAFBFF, 4px 4px 8px 0 #A6ABBD;
+    box-shadow: -4px -4px 8px 0 var(--ion-color-reader-action-shadow-1), 4px 4px 8px 0 var(--ion-color-reader-action-shadow-2);
     border-radius: 4rem;
     font-size: 1.5rem;
     color:var(--ion-color-icon-2);
 
     &.disabled{
-      color: var(--ion-color-bullet);
+      color: var(--ion-color-reader-action-disabled);
     }
 
     &.small{

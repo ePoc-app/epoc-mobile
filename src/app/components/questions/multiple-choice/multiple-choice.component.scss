@@ -17,6 +17,7 @@ ion-item{
 ion-checkbox{
   --border-color: white;
   --border-color-checked: white;
+  --background: white;
   --background-checked: var(--ion-color-inria-spe);
   --border-radius: .375rem;
   --border-width: .25rem;
@@ -24,7 +25,7 @@ ion-checkbox{
   background: white;
   width: 1.5rem;
   height: 1.5rem;
-  border:1px solid var(--ion-color-inria-lightgrey);
+  border:1px solid var(--ion-color-correction);
   border-radius: .375rem;
 
   & + ion-label{

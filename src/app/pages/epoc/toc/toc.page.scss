@@ -51,7 +51,7 @@
 
     &.done{
       color: var(--ion-color-inria-correct);
-      background: var(--ion-color-inria-correct-tint);
+      background: var(--ion-color-correct-background);
     }
   }
 
@@ -96,7 +96,11 @@
       background: var(--ion-color-contrast-2);
 
       &.viewed{
-        background: var(--ion-color-inria-correct-tint);
+        background: var(--ion-color-correct-background);
+        
+        .toc-chapter-details-item-icon{
+          background: var(--ion-color-icon-correct-background);
+        }
       }
 
       &-icon{

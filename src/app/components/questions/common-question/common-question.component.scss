@@ -20,8 +20,8 @@
       padding: .2rem;
       margin: 0 .5rem;
       text-align: center;
-      background: var(--ion-color-inria-lightgrey);
-      color: var(--ion-color-inria-blue);
+      background: var(--ion-color-correction);
+      color: var(--ion-color-text);
       border-radius: 1em;
       font-size: .875rem;
       text-transform: uppercase;
@@ -33,8 +33,8 @@
       }
 
       &.selected{
-        color:white;
-        background: var(--ion-color-inria-grey);
+        color: var(--ion-color-contrast-3);
+        background: var(--ion-color-correction-selected);
       }
     }
   }
