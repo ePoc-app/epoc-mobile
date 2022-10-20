@@ -3,6 +3,8 @@ import {BehaviorSubject} from 'rxjs';
 import {Settings} from 'src/app/classes/settings';
 import {StorageService} from './storage.service';
 
+import { StatusBar, Style } from '@capacitor/status-bar';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -23,6 +25,7 @@ export class SettingsStoreService {
 
     constructor(private storageService: StorageService) {
         this.fetchSettingss();
+
     }
 
     get settings(): Settings {
@@ -34,8 +37,10 @@ export class SettingsStoreService {
     }
 
     fetchSettingss() {
+        this.loadTheme(this.getTheme());
         this.storageService.getValue('settings').then( (settings) => {
             this.settings = settings ? JSON.parse(settings) : this.defaultSettings;
+            this.loadTheme(this.settings.darkMode ? 'dark' : 'light');
         });
     }
 
@@ -50,6 +55,24 @@ export class SettingsStoreService {
 
     updateSettings(settings: Settings) {
         this.settings = settings;
+        this.loadTheme(this.settings.darkMode ? 'dark' : 'light');
         this.saveSettingss();
     }
+
+    getTheme() {
+       let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+       console.log("getTheme");
+       return theme;
+    }
+
+    loadTheme(theme) {
+        const root = document.querySelector(':root');
+        root.setAttribute('color-scheme', `${theme}`);
+        if (theme === 'dark') {
+            StatusBar.setStyle({ style: Style.Dark });
+        } else {
+            StatusBar.setStyle({ style: Style.Light });
+        }
+    }
+
 }

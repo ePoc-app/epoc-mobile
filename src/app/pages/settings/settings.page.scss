@@ -17,7 +17,7 @@ ion-list-header{
   &.preview{
     padding: 0;
     margin-top: 1.5rem;
-    color: var(--ion-color-inria-grey);
+    color: var(--ion-color-text-2);
     border: none;
   }
 }
@@ -64,7 +64,7 @@ ion-item{
 
     ion-icon{
       margin-inline: .5rem;
-      color: var(--ion-color-inria-grey);
+      color: var(--ion-color-text-2);
 
       & + ion-icon{
         margin-inline: .5rem 0;
@@ -73,7 +73,8 @@ ion-item{
   }
 
   ion-toggle{
-    --background-checked: var(--ion-color-inria-grey);
+    --background-checked: #2EC6FA;
+    --background: var(--ion-colo-unique-1);
   }
 }
 
@@ -85,10 +86,6 @@ ion-item{
   *:last-child{
     margin-bottom: 0;
   }
-}
-
-.big-button{
-
 }
 
 .big-button{
