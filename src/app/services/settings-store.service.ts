@@ -25,7 +25,7 @@ export class SettingsStoreService {
 
     constructor(private storageService: StorageService) {
         this.fetchSettingss();
-
+        this.loadTheme(this.getTheme());
     }
 
     get settings(): Settings {
@@ -61,7 +61,6 @@ export class SettingsStoreService {
 
     getTheme() {
        let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-       console.log("getTheme");
        return theme;
     }
 

@@ -23,7 +23,11 @@
           <ion-icon slot="icon-only" name="bug-outline"></ion-icon>
         </ion-button>
       </ion-item>
-      <ng-container *ngIf="true">
+      <ion-item>
+        <ion-label>Mode sombre</ion-label>
+        <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
+      </ion-item>
+      <ng-container *ngIf="false">
         <ion-item>
           <ion-label>Police</ion-label>
           <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
@@ -45,10 +49,6 @@
             <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
             <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
           </ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-label>Mode sombre</ion-label>
-          <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
         </ion-item>
         <ion-list-header class="preview">
           Prévisualisation
@@ -116,7 +116,7 @@
       </ion-item>
       <ion-item *ngIf="settings.devMode">
         <ion-label>Ouvrir un autre ePoc</ion-label>
-        <ion-icon slot="end" routerLink="/open" name="folder-open-outline"></ion-icon>
+        <ion-icon color="icon" slot="end" routerLink="/open" name="folder-open-outline"></ion-icon>
       </ion-item>
       <ion-item *ngIf="settings.devMode">
         <ion-label>Bibliothèque</ion-label>
