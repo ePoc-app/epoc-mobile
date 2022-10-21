@@ -52,7 +52,7 @@
             <span *ngIf="!explanationShown">Explications</span>
             <span *ngIf="explanationShown">Réponses</span>
         </ion-button>
-        <ion-button size="large" color="inria-grey" (click)="nextQuestion()" *ngIf="correctionShown">
+        <ion-button color="inria-grey" size="large" (click)="nextQuestion()" *ngIf="correctionShown">
             <span>Suivant</span>
             <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>

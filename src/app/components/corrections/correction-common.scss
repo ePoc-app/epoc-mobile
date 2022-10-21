@@ -45,7 +45,7 @@ ion-label{
       left:0;
       height:3rem;
       width:0;
-      border-left: 1px solid var(--ion-color-bullet);
+      border-left: 1px solid var(--ion-color-unique-2);
     }
   }
 
@@ -96,4 +96,15 @@ ion-label{
   b{
     color: var(--ion-color-text-2);
   }
+  p{
+    color: var(--ion-color-text);
+  }
+}
+
+.sc-ion-label-md-h{
+  color: var(--ion-color-text-2);
+}
+
+.sc-ion-label-ios-h{
+  color: var(--ion-color-text-2);
 }

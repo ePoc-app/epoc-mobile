@@ -1,9 +1,9 @@
 .responses{
   position: relative;
-  border: 2px dashed white;
+  border: 2px dashed var(--ion-color-content);
 
   &.dragging{
-    border: 2px dashed var(--ion-color-inria-lightgrey);
+    border: 2px dashed var(--ion-color-unique-2);
     border-radius: 10px;
   }
 }
@@ -14,10 +14,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background: white;
+  background: var(--ion-color-contrast-3);
   border-radius: .5rem;
-  box-shadow: 0 1px 7px 0 #D5DDE9;
+  box-shadow: 0 1px 7px 0 var(--ion-color-drag-drop-shadow);
   color: var(--ion-color-inria-spe);
+
+  ion-icon {
+    color: var(--ion-color-text-2);
+  }
 
   span{
     padding-left: .5rem;
@@ -34,13 +38,12 @@
 
   &.sorted{
     margin-top: .5rem;
-    background: var(--ion-color-inria-light);
+    background: var(--ion-color-contrast);
     box-shadow: none;
 
     ion-icon{
       flex-shrink: 0;
       margin-left: .5rem;
-      color: var(--ion-color-inria-blue);
     }
   }
 
@@ -62,8 +65,8 @@
     justify-content: center;
     margin:0 0 1rem 0;
     padding: 1rem;
-    color: var(--ion-color-inria-grey);
-
+    color: var(--ion-color-text-2);
+    
     span{
       margin-left: 1rem;
       font-size: 0.875rem;
@@ -73,7 +76,7 @@
   .drop-zone{
     padding:1rem;
     margin-bottom: 1em;
-    border: 2px dashed var(--ion-color-inria-lightgrey);
+    border: 2px dashed var(--ion-color-unique-1);
     border-radius: 10px;
 
     &:last-child{
@@ -91,7 +94,7 @@
       font-size: 0.875rem;
       font-weight: bold;
       text-transform: uppercase;
-      color: var(--ion-color-inria-blue);
+      color: var(--ion-color-text);
     }
 
     .zone-count{
@@ -104,7 +107,7 @@
       width:2rem;
       margin: 0 .5rem;
       color: var(--ion-color-inria-lightgrey-shade);
-      background: var(--ion-color-inria-light);
+      background: var(--ion-color-contrast);
       border-radius: 2rem;
 
       &.active{

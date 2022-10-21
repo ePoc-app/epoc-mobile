@@ -21,7 +21,7 @@
 
 <div class="swipe-actions">
   <div class="swipe-action" (click)="swipe('swipeLeft')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
-    <ion-icon src="/assets/icon/gauche.svg"></ion-icon>
+    <ion-icon class="swipe-right" src="/assets/icon/gauche.svg"></ion-icon>
     <span>{{sides[1]}}</span>
   </div>
   <div class="swipe-action small" [ngClass]="{'hidden' : this.cardsSorted.length <= 0 || this.undoDisabled}" (click)="this.undo()">

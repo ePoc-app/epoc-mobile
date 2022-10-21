@@ -9,12 +9,18 @@ div.item{
     margin-left: .5rem;
     padding: .5rem 0 .5rem 1rem;
     border-radius: .5rem;
-    box-shadow: 0 1px 7px 0 #D5DDE9;
+    box-shadow: 0 1px 7px 0 var(--ion-color-reader-action-shadow-2);
+    background: var(--ion-color-contrast-3);
     --padding-start: 0;
     --min-height:0;
+    --ion-background-color: var(--ion-color-contrast-3);
 
     ion-label{
       margin: .5rem .5rem .5rem 0;
+    }
+
+    ion-icon {
+      color: var(--ion-color-text-2);
     }
   }
 }
@@ -28,7 +34,7 @@ div.item{
   line-height: 1.2rem;
   text-align: center;
   border-radius: 1.2rem;
-  background: var(--ion-color-inria-light);
+  background: var(--ion-color-contrast);
 }
 
 ion-reorder{

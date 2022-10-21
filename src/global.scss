@@ -98,7 +98,7 @@ ion-toolbar {
     align-items: center;
     justify-content: center;
     bottom: .5rem;
-    --bullet-background: var(--ion-color-bullet);
+    --bullet-background: var(--ion-color-unique-2);
     --bullet-background-active: var(--ion-color-inria);
 
     .swiper-pagination-bullet {
@@ -248,7 +248,6 @@ ion-range.progress-indicator{
     width: calc(100% - 2rem);
     background: var(--ion-color-contrast);
     border-radius: .5rem;
-    color: var(--ion-color-inria-blue);
   }
   .action-sheet-button-inner{
     justify-content: left;
@@ -509,8 +508,8 @@ body.preview{
   }
 
   .epoc-spec:nth-child(2){
-    border-left: 1px solid var(--ion-color-bullet);
-    border-right: 1px solid var(--ion-color-bullet);
+    border-left: 1px solid var(--ion-color-unique-2);
+    border-right: 1px solid var(--ion-color-unique-2);
   }
 
   ion-icon{
@@ -565,7 +564,7 @@ span.epoc-author{
   &-splitter{
     display: inline-block;
     width:20px;
-    color: var(--ion-color-bullet)
+    color: var(--ion-color-unique-2)
   }
 }
 
@@ -610,6 +609,8 @@ ion-list{
   --ion-background-color: var(--ion-color-background);
   --background: var(--ion-color-background);
 }
+
+
 
 ion-card{
   background-color: var(--ion-color-content);

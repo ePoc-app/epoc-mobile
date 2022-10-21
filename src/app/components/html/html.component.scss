@@ -5,7 +5,7 @@
   $inria-blue-border : lighten($inria-blue, 50%);
   $inria-blue-bg : lighten($inria-blue, 64%);
   $inria-grey : #eeeff3;
-
+  
   @function pow($number, $exponent) {
     $value: 1;
 
@@ -23,7 +23,7 @@
       font-size: pow(1.125, $i) * 16px;
       font-weight: 700;
       line-height: 1;
-      color:$inria-blue;
+      color: var(--ion-color-text);
       margin: 0 0 .5em 0;
       padding: 0;
       text-transform: unset;
@@ -42,7 +42,7 @@
     display: flex;
     align-items: center;
     margin: 1em 0;
-    background: $inria-red;
+    background: var(--ion-color-inria);
 
     .ill-icon{
       min-width: 50px;
@@ -64,14 +64,14 @@
     }
 
     &.alert-blue{
-      background: $inria-blue;
+      background: var(--ion-color-inria-blue);
     }
 
     &.alert-grey{
-      background: $inria-grey;
+      background: var(--ion-color-inria-light);
 
       div, p, ul, ol, .ill-icon, .ill-icon + * {
-        color: $inria-blue;
+        color: var(--ion-color-text);
       }
     }
   }
@@ -85,7 +85,7 @@
       display: inline-block;
       margin-right: 5px;
       transition: transform .25s;
-      color: $inria-red;
+      color: var(--ion-color-inria);
       height: 1em;
     }
 
@@ -96,12 +96,12 @@
       padding: 7px 5px 5px 5px;
       border: 1px solid var(--ion-color-border);
       border-radius: 3px;
-      color:$inria-blue;
+      color: var(--ion-color-text);
       cursor: pointer;
 
       span {
         flex-grow: 1;
-        color:var(--ion-color-text)!important;
+        color: var(--ion-color-text)!important;
       }
     }
 
@@ -139,11 +139,12 @@
     width: 100%;
     margin-top: 1em;
     padding: .7em 1em 0.5em 1em;
-    background: #fefefe;
+    background: var(--ion-color-background);
     font-weight: bold;
-    color: var(--ion-color-inria-blue);
+    color: var(--ion-color-text);
     border-radius: 4px;
-    border: 1px solid var(--ion-color-inria-blue);
+    border: 1px solid var(--ion-color-text);
     cursor: pointer;
   }
+
 }

@@ -4,7 +4,7 @@
   justify-content: center;
   margin:0 0 1rem 0;
   padding: 1rem;
-  color: var(--ion-color-specs);
+  color: var(--ion-color-text-2);
 
   ion-icon{
     flex-shrink: 0;
@@ -126,6 +126,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--ion-color-specs);
 
   .swipe-action{
     position: relative;
