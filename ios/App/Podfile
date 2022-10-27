@@ -17,6 +17,7 @@ def capacitor_pods
   pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
   pod 'CapacitorSplashScreen', :path => '../../node_modules/@capacitor/splash-screen'
   pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
+  pod 'CapacitorVideoPlayer', :path => '../../node_modules/capacitor-video-player'
   pod 'CapacitorZip', :path => '../../node_modules/capacitor-zip'
   pod 'CordovaPlugins', :path => '../capacitor-cordova-ios-plugins'
 end
