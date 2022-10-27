@@ -18,6 +18,8 @@ export class CommonQuestionComponent implements OnInit {
   @Input() subtitle: string;
   @Input() icon: string;
 
+  @Input() showExplainButton: boolean;
+
   private _userAssessment;
   @Input() set userAssessment(value) {
 
@@ -77,7 +79,8 @@ export class CommonQuestionComponent implements OnInit {
     }
   }
 
-  toggleExplanation() {
+  toggleExplanation(event?) {
+    if (event) event.stopPropagation();
     this.explanationShown = !this.explanationShown;
   }
 
