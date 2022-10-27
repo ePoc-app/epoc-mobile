@@ -32,6 +32,10 @@
 		"classpath": "com.capacitorjs.plugins.statusbar.StatusBarPlugin"
 	},
 	{
+		"pkg": "capacitor-video-player",
+		"classpath": "com.jeep.plugin.capacitor.capacitorvideoplayer.CapacitorVideoPlayerPlugin"
+	},
+	{
 		"pkg": "capacitor-zip",
 		"classpath": "co.fitcom.capacitor.ZipPlugin"
 	}

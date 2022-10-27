@@ -55,6 +55,7 @@
     "@sentry/angular": "^7.0.0",
     "@sentry/tracing": "^7.0.0",
     "@wdio/cli": "^7.19.7",
+    "capacitor-video-player": "^3.7.5",
     "capacitor-zip": "git+https://git@github.com/brospars/capacitor-zip.git",
     "cordova-plugin-advanced-http": "^3.3.1",
     "cordova-plugin-file": "^7.0.0",

@@ -1,6 +1,9 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {IonSelect, ToastController, Gesture, GestureController} from '@ionic/angular';
 import {EpocService} from '../../services/epoc.service';
+import {Capacitor} from '@capacitor/core';
+import {CapacitorVideoPlayer} from 'capacitor-video-player';
+
 
 @Component({
   selector: 'video-player',
@@ -29,6 +32,12 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
 
     @Output() timelineDragging = new EventEmitter<string>();
 
+    // Android workaround video playback issue : https://github.com/ionic-team/capacitor/issues/6021
+    isAndroid = Capacitor.isNativePlatform && Capacitor.getPlatform() === 'android';
+    id: string;
+    videoPlayer;
+    // ---
+
     defaultControls = {
         show: true,
         timeline: true,
@@ -45,18 +54,53 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     progress = 0;
 
     constructor(
+        private ref: ChangeDetectorRef,
         public epocService: EpocService,
         public toastController: ToastController,
         private gestureCtrl: GestureController
     ) {}
 
     ngOnInit() {
+        this.id = `video-${Math.random().toString(16)}`
+        // Android workaround video playback issue : https://github.com/ionic-team/capacitor/issues/6021
+        this.videoPlayer = CapacitorVideoPlayer
         this.controls = Object.assign(this.defaultControls, this.controls);
+        // ---
     }
+
+    // Android workaround video playback issue : https://github.com/ionic-team/capacitor/issues/6021
+    async playAndroid() {
+        this.playing = true;
+        const url = this.src.startsWith('http') ? this.src : `application/files/epocs/${this.epocService.epoc.id}/${this.src}`;
+        const subindex = this.subtitles ? this.subtitles.findIndex(s => s.lang.indexOf('fr') !== -1) : -1;
+        const subtitle = subindex >= 0 ? this.subtitles[subindex].src : '';
+        const language = subindex >= 0 ? this.subtitles[subindex].lang : '';
+        this.videoPlayer.initPlayer({
+            mode: 'fullscreen',
+            url,
+            subtitle,
+            language,
+            playerId: this.id,
+            componentTag: 'div',
+            pipEnabled: false
+        }).then(async () => {
+            await this.videoPlayer.play({
+                playerId: this.id
+            })
+            await this.videoPlayer.addListener('jeepCapVideoPlayerExit', (data: any) => {
+                this.playing = false;
+                this.ref.detectChanges();
+            }, false);
+        })
+    }
+    // ---
 
     ngAfterViewInit() {
         if (!this.videoRef) return;
         this.video = this.videoRef.nativeElement;
+        this.video.addEventListener('error', (event) => {
+            this.presentToast('Error loading video');
+        })
         this.video.addEventListener('play', (event) => {
             this.hasPlayed = true;
             this.playing = true;

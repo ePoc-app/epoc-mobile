@@ -1,6 +1,6 @@
-<div class="video-player">
+<div class="video-player" *ngIf="!isAndroid">
   <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
-    <video *ngIf="src" #video disablePictureInPicture playsinline preload="auto"
+    <video *ngIf="src" #video disablePictureInPicture playsinline preload="metadata"
            [src]="src | safe: 'url': epocService.rootFolder">
       <ng-container *ngFor="let sub of subtitles">
         <track kind="subtitles" [label]="sub.label" [srclang]="sub.lang"
@@ -46,4 +46,18 @@
       </div>
     </div>
   </ng-container>
+</div>
+
+<div class="video-player" *ngIf="isAndroid">
+  <div [id]="id"></div>
+  <div class="video-container" (click)="playAndroid()">
+    <div class="poster" *ngIf="!playing">
+      <h4 class="title">{{title}}</h4>
+      <img [src]="poster | safe: 'url': epocService.rootFolder" *ngIf="poster"/>
+    </div>
+    <div class="video-play-overlay">
+      <ion-icon src="assets/icon/play.svg" *ngIf="!playing"></ion-icon>
+      <ion-spinner *ngIf="playing"></ion-spinner>
+    </div>
+  </div>
 </div>
