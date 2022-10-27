@@ -51,11 +51,11 @@
 <div class="video-player" *ngIf="isAndroid">
   <div [id]="id"></div>
   <div class="video-container" (click)="playAndroid()">
-    <div class="poster" *ngIf="!playing">
+    <div class="poster">
       <h4 class="title">{{title}}</h4>
       <img [src]="poster | safe: 'url': epocService.rootFolder" *ngIf="poster"/>
     </div>
-    <div class="video-play-overlay">
+    <div class="video-play-overlay" *ngIf="src">
       <ion-icon src="assets/icon/play.svg" *ngIf="!playing"></ion-icon>
       <ion-spinner *ngIf="playing"></ion-spinner>
     </div>

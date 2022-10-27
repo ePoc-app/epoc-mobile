@@ -70,6 +70,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
 
     // Android workaround video playback issue : https://github.com/ionic-team/capacitor/issues/6021
     async playAndroid() {
+        if (!this.src) return;
         this.playing = true;
         const url = this.src.startsWith('http') ? this.src : `application/files/epocs/${this.epocService.epoc.id}/${this.src}`;
         const subindex = this.subtitles ? this.subtitles.findIndex(s => s.lang.indexOf('fr') !== -1) : -1;
