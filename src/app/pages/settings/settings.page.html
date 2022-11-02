@@ -25,7 +25,11 @@
       </ion-item>
       <ion-item>
         <ion-label>Mode sombre</ion-label>
-        <ion-toggle [(ngModel)]="settings.darkMode" (ngModelChange)="settingsChanged()"></ion-toggle>
+        <ion-select [(ngModel)] ="settings.theme" (ngModelChange)="settingsChanged()">
+          <ion-select-option value="auto">Automatique</ion-select-option>
+          <ion-select-option value="light">Clair</ion-select-option>
+          <ion-select-option value="dark">Sombre</ion-select-option>
+        </ion-select>
       </ion-item>
       <ng-container *ngIf="false">
         <ion-item>

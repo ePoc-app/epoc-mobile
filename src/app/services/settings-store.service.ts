@@ -15,7 +15,7 @@ export class SettingsStoreService {
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.5,
-        darkMode: false,
+        theme: 'auto',
         libraryMode: 'libraryUrl',
         devMode:false,
         isUserOptIn: true
@@ -26,7 +26,7 @@ export class SettingsStoreService {
 
     constructor(private storageService: StorageService) {
         this.fetchSettingss();
-        this.loadTheme(this.getTheme());
+        this.loadTheme();
     }
 
     get settings(): Settings {
@@ -38,10 +38,9 @@ export class SettingsStoreService {
     }
 
     fetchSettingss() {
-        this.loadTheme(this.getTheme());
         this.storageService.getValue('settings').then( (settings) => {
             this.settings = settings ? {...this.defaultSettings, ...JSON.parse(settings)} : this.defaultSettings;
-            this.loadTheme(this.settings.darkMode ? 'dark' : 'light');
+            this.loadTheme();
         });
     }
 
@@ -56,18 +55,26 @@ export class SettingsStoreService {
 
     updateSettings(settings: Settings) {
         this.settings = settings;
-        this.loadTheme(this.settings.darkMode ? 'dark' : 'light');
+        this.loadTheme();
         this.saveSettingss();
     }
 
     getTheme() {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+       let preferedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+       return preferedTheme;
     }
 
-    loadTheme(theme) {
+    loadTheme() {
+        let myTheme;
+        if(this.settings) {
+            myTheme = (this.settings.theme === 'auto') ? this.getTheme() : this.settings.theme;
+        }else {
+            myTheme = this.getTheme();
+        }
+        
         const root = document.querySelector(':root');
-        root.setAttribute('color-scheme', `${theme}`);
-        if (theme === 'dark') {
+        root.setAttribute('color-scheme', `${myTheme}`);
+        if (myTheme === 'dark') {
             StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
         } else {
             StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
