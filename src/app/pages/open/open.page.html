@@ -1,7 +1,7 @@
 <ion-header mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
+      <ion-back-button aria-label="Retour" text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
     <ion-title>Ouvrir un ePoc</ion-title>
   </ion-toolbar>
@@ -21,7 +21,7 @@
             </ion-card-content>
             <ion-card-content>
               <ion-button class="start-course" expand="block" color="inria-blue" (click)="pickFile()" [disabled]="working" strong>
-                <ion-icon name="folder-open" mode="ios" slot="start"></ion-icon>
+                <ion-icon aria-hidden="true" name="folder-open" mode="ios" slot="start"></ion-icon>
                 Ouvrir ePoc
                 <input type="file" hidden (change)="fileHandler($event)" #file>
               </ion-button>
@@ -40,7 +40,7 @@
               <ion-list>
                 <ion-item *ngFor="let epoc of epocList">
                   <ion-label [routerLink]="'/epoc/toc/'+epoc">{{epoc}}</ion-label>
-                  <ion-icon color="icon" name="trash" slot="end" (click)="dirDelete(epoc)"></ion-icon>
+                  <ion-icon aria-label="Supprimer" aria-roledescription="bouton" color="icon" name="trash" slot="end" (click)="dirDelete(epoc)"></ion-icon>
                 </ion-item>
               </ion-list>
             </ion-card-content>

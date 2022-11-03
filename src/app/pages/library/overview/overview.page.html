@@ -1,12 +1,12 @@
 <ion-header mode="ios" #header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
+      <ion-back-button aria-label="Retour" text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
     <ion-title>Présentation du cours</ion-title>
     <ion-buttons slot="end" *ngIf="epoc && epoc.downloaded">
-      <ion-button (click)="openEpocMenu(epoc)">
-        <ion-icon name="ellipsis-horizontal" color="inria-icon"></ion-icon>
+      <ion-button aria-label="Options" (click)="openEpocMenu(epoc)">
+        <ion-icon aria-hidden="true" name="ellipsis-horizontal" color="inria-icon"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -24,36 +24,36 @@
 
     <div class="epoc-specs">
       <div class="epoc-spec">
-        <div class="epoc-spec-icon"><ion-icon name="reader-outline"></ion-icon></div>
+        <div class="epoc-spec-icon"><ion-icon aria-hidden="true" name="reader-outline"></ion-icon></div>
         <div class="epoc-spec-value">
           {{epoc.chaptersCount}} {{epoc.chaptersCount > 1 ?'modules' : 'module'}}
         </div>
       </div>
       <div class="epoc-spec">
-        <div class="epoc-spec-icon"><ion-icon name="cube-outline"></ion-icon></div>
+        <div class="epoc-spec-icon"><ion-icon aria-hidden="true" name="cube-outline"></ion-icon></div>
         <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{epoc.assessmentsCount > 1 ? 'activités':'activité'}}</div>
       </div>
       <div class="epoc-spec">
-        <div class="epoc-spec-icon"><ion-icon name="time-outline"></ion-icon></div>
-        <div class="epoc-spec-value">10 min/module</div>
+        <div class="epoc-spec-icon"><ion-icon aria-hidden="true" name="time-outline"></ion-icon></div>
+        <div role="img" aria-roledescription="Temps" aria-label="10 min par module" class="epoc-spec-value">10 min/module</div>
       </div>
     </div>
 
     <div class="tabs-headers">
-      <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
+      <div role="tab" [attr.aria-selected]="selectedTab === 0" class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
         <span>{{epoc.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</span>
       </div>
-      <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
+      <div role="tab" [attr.aria-selected]="selectedTab === 1" aria-selected="false" class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
         <span>Résumé</span>
       </div>
-      <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
+      <div role="tab" [attr.aria-selected]="selectedTab === 2" class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
         <span>{{(epoc.authors|values).length > 1 ? 'Auteurs' : 'Auteur'}}</span>
       </div>
     </div>
     <div class="tabs">
       <div class="tab" *ngIf="selectedTab === 0">
         <div class="course-objective" *ngFor="let objective of epoc.objectives">
-          <div class="course-objective-icon"><ion-icon name="checkmark-outline"></ion-icon></div>
+          <div class="course-objective-icon"><ion-icon aria-hidden="true" name="checkmark-outline"></ion-icon></div>
           <ion-text>{{objective}}</ion-text>
         </div>
       </div>
@@ -75,7 +75,7 @@
 
 <ion-footer mode="ios" *ngIf="epoc">
   <ion-toolbar>
-    <ion-button class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" size="large"
+    <ion-button role="button" class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" size="large"
                 expand="block" color="inria" strong="" *ngIf="epoc.downloaded">
       <span *ngIf="!epoc.opened">C'est parti !</span>
       <span *ngIf="epoc.opened">Reprendre</span>

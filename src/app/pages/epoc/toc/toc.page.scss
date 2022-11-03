@@ -81,11 +81,8 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height .3s ease-in-out;
-
-    &.opened{
-      border-top: 1px solid var(--ion-color-contrast);
-      max-height: none;
-    }
+    border-top: 1px solid var(--ion-color-contrast);
+    max-height: none;
 
     &-item{
       display: flex;
