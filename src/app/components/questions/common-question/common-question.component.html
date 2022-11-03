@@ -10,8 +10,8 @@
 </div>
 <flip-card [initFlipped]="flipped" (click)="flip()">
   <ng-container front>
-    <div class="close" *ngIf="closable" (click)="back($event)">
-      <ion-icon name="close-outline"></ion-icon>
+    <div role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
+      <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
     </div>
     <div class="title-container">
       <div class="title-icon" *ngIf="icon">

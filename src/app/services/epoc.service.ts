@@ -169,6 +169,7 @@ export class EpocService {
       },
       {
         text: 'Laisser un commentaire',
+        htmlAttributes: { ariaLabel: 'test' },
         icon: 'chatbox-ellipses-outline',
         handler: () => {
           this.appService.leaveComment(this.epoc.id)

@@ -1,5 +1,5 @@
 <div class="video-player" *ngIf="!isAndroid">
-  <div class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
+  <div aria-hidden="true" class="video-container" [ngClass]="{'playing':playing}" (click)="play()">
     <video *ngIf="src" #video disablePictureInPicture playsinline preload="metadata"
            [src]="src | safe: 'url': epocService.rootFolder">
       <ng-container *ngFor="let sub of subtitles">
@@ -39,10 +39,10 @@
         <ion-icon name="logo-closed-captioning" (click)="captions()" *ngIf="subtitles && subtitles.length >0"></ion-icon>
       </div>
       <div class="video-actions-center" *ngIf="controls.playbutton">
-        <ion-icon [name]="playing ? 'pause':'play'" (click)="play()"></ion-icon>
+        <ion-icon aria-label="Lancer la vidéo" [name]="playing ? 'pause':'play'" (click)="play()"></ion-icon>
       </div>
       <div class="video-actions-right" *ngIf="controls.fullscreen">
-        <ion-icon name="expand" (click)="fullscreen($event)"></ion-icon>
+        <ion-icon aria-label="Plein écran" name="expand" (click)="fullscreen($event)"></ion-icon>
       </div>
     </div>
   </ng-container>

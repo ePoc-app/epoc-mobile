@@ -1,12 +1,12 @@
 <div class="assessment-specs">
   <div class="assessment-spec">
-    <div class="assessment-spec-icon"><ion-icon name="school"></ion-icon></div>
+    <div class="assessment-spec-icon"><ion-icon aria-hidden="true" name="school"></ion-icon></div>
     <div class="assessment-spec-value" *ngIf="content.scoreTotal > 0">Noté</div>
     <div class="assessment-spec-value" *ngIf="content.scoreTotal <= 0">Non Noté</div>
   </div>
   <div class="assessment-spec">
-    <div class="assessment-spec-icon"><ion-icon name="help"></ion-icon></div>
-    <div class="assessment-spec-value">{{content.questions.length}} question<ng-container *ngIf="content.questions.length > 1">s</ng-container></div>
+    <div class="assessment-spec-icon"><ion-icon aria-hidden="true" name="help"></ion-icon></div>
+    <div class="assessment-spec-value">{{content.questions.length}} question<ng-container aria-hidden="true" *ngIf="content.questions.length > 1">s</ng-container></div>
   </div>
 </div>
 <p>{{content.summary}}</p>

@@ -51,7 +51,7 @@ export class EpocPlayerPage implements OnInit {
     progress = 0;
     slidesOptions = {
         slidesPerView: window.innerWidth > window.innerHeight ? 2 : 1,
-        initialSlide: 0
+        initialSlide: 0,
     };
 
     assessments: Assessment[];

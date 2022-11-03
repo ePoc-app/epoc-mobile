@@ -30,19 +30,19 @@
       </ion-slides>
     </ng-container>
   </div>
-  <div class="reader-progress" slot="fixed">
+  <div  aria-hidden="true" class="reader-progress" slot="fixed">
     <ion-progress-bar color="inria" [value]="progress"></ion-progress-bar>
   </div>
   <certificate-modal *ngIf="dataInitialized" slot="fixed" [epocId]="epoc.id" [certificateShown]="certificateShown"></certificate-modal>
   <div class="reader-actions" [ngClass]="{'showing': showControls}" slot="fixed">
-    <div class="reader-action" [ngClass]="currentPage === 0 ? 'disabled':''" (click)="prevPage()" *ngIf="dataInitialized">
-      <ion-icon src="/assets/icon/double-gauche.svg"></ion-icon>
+    <div aria-label="Précédent" role="button" class="reader-action" [ngClass]="currentPage === 0 ? 'disabled':''" (click)="prevPage()" *ngIf="dataInitialized">
+      <ion-icon aria-hidden="true" src="/assets/icon/double-gauche.svg"></ion-icon>
     </div>
-    <div class="reader-action small" (click)="displayMenu()">
-      <ion-icon name="menu"></ion-icon>
+    <div aria-label="Menu" role="button" class="reader-action small" (click)="displayMenu()">
+      <ion-icon aria-hidden="true" name="menu"></ion-icon>
     </div>
-    <div class="reader-action" [ngClass]="currentPage > contentsFilteredConditional.length ? 'disabled':''" (click)="nextPage()" *ngIf="dataInitialized">
-      <ion-icon src="/assets/icon/double-droite.svg"></ion-icon>
+    <div aria-label="Suivant" role="button" class="reader-action" [ngClass]="currentPage > contentsFilteredConditional.length ? 'disabled':''" (click)="nextPage()" *ngIf="dataInitialized">
+      <ion-icon aria-hidden="true" src="/assets/icon/double-droite.svg"></ion-icon>
     </div>
   </div>
 </ion-content>
