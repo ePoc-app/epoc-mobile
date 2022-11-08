@@ -1,5 +1,5 @@
 <p class="swipe-instruction" *ngIf="!disabled">
-  <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
+  <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg"></ion-icon>
   <span>Glissez la carte à gauche ou à droite dans la catégorie convenable</span>
 </p>
 <div class="swipe-cards">
@@ -10,7 +10,7 @@
       {{card.selectedSide}}
     </div>
     <div class="swipe-card-content">
-      <ion-icon src="/assets/icon/citation.svg"></ion-icon>
+      <ion-icon aria-hidden="true" src="/assets/icon/citation.svg"></ion-icon>
       <div>« {{card.label}} »</div>
     </div>
   </div>
@@ -21,14 +21,14 @@
 
 <div class="swipe-actions">
   <div class="swipe-action" (click)="swipe('swipeLeft')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
-    <ion-icon class="swipe-right" src="/assets/icon/gauche.svg"></ion-icon>
+    <ion-icon aria-hidden="true" class="swipe-right" src="/assets/icon/gauche.svg"></ion-icon>
     <span>{{sides[1]}}</span>
   </div>
   <div class="swipe-action small" [ngClass]="{'hidden' : this.cardsSorted.length <= 0 || this.undoDisabled}" (click)="this.undo()">
-    <ion-icon src="/assets/icon/annuler.svg"></ion-icon>
+    <ion-icon aria-hidden="true" src="/assets/icon/annuler.svg"></ion-icon>
   </div>
   <div class="swipe-action" (click)="swipe('swipeRight')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
-    <ion-icon src="/assets/icon/droite.svg"></ion-icon>
+    <ion-icon aria-hidden="true" src="/assets/icon/droite.svg"></ion-icon>
     <span>{{sides[0]}}</span>
   </div>
 </div>

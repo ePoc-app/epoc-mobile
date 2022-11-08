@@ -1,4 +1,4 @@
-<div class="header" *ngIf="question.explanation" [ngClass]="{'shown':flipped && question.responses.length > 0}">
+<div [attr.aria-hidden]="!flipped" class="header" *ngIf="question.explanation" [ngClass]="{'shown':flipped && question.responses.length > 0}">
   <div class="correction-tabs">
     <div class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':!explanationShown}">
       <span>Réponses</span>
@@ -38,7 +38,7 @@
   </ng-container>
   <ng-container back>
     <div class="close" *ngIf="closable" (click)="back($event)">
-      <ion-icon name="close-outline"></ion-icon>
+      <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
     </div>
     <div class="correction" *ngIf="flipped && !explanationShown && question.responses.length > 0">
       <div class="title-container">
