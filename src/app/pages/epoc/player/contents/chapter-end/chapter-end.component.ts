@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EpocService} from 'src/app/services/epoc.service';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
+import {AppService} from '../../../../../services/app.service';
 
 @Component({
   selector: 'chapter-end',
@@ -16,8 +17,13 @@ export class ChapterEndComponent implements OnInit {
 
   constructor(
       public epocService: EpocService,
+      public appService: AppService
   ) { }
 
   ngOnInit() {}
+
+  leaveComment() {
+    this.appService.leaveComment(this.epoc.id)
+  }
 
 }
