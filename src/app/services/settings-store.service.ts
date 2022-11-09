@@ -3,7 +3,7 @@ import {BehaviorSubject} from 'rxjs';
 import {Settings} from 'src/app/classes/settings';
 import {StorageService} from './storage.service';
 
-import { StatusBar, Style } from '@capacitor/status-bar';
+import {StatusBar, Style} from '@capacitor/status-bar';
 
 @Injectable({
     providedIn: 'root'
@@ -17,10 +17,11 @@ export class SettingsStoreService {
         lineHeight: 1.5,
         darkMode: false,
         libraryMode: 'libraryUrl',
-        devMode:false
+        devMode:false,
+        isUserOptIn: true
     };
 
-    private readonly settingsSubject = new BehaviorSubject<Settings>(null);
+    private readonly settingsSubject = new BehaviorSubject<Settings>(this.defaultSettings);
     readonly settings$ = this.settingsSubject.asObservable();
 
     constructor(private storageService: StorageService) {
@@ -39,7 +40,7 @@ export class SettingsStoreService {
     fetchSettingss() {
         this.loadTheme(this.getTheme());
         this.storageService.getValue('settings').then( (settings) => {
-            this.settings = settings ? JSON.parse(settings) : this.defaultSettings;
+            this.settings = settings ? {...this.defaultSettings, ...JSON.parse(settings)} : this.defaultSettings;
             this.loadTheme(this.settings.darkMode ? 'dark' : 'light');
         });
     }
@@ -60,17 +61,16 @@ export class SettingsStoreService {
     }
 
     getTheme() {
-       let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-       return theme;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
     loadTheme(theme) {
         const root = document.querySelector(':root');
         root.setAttribute('color-scheme', `${theme}`);
         if (theme === 'dark') {
-            StatusBar.setStyle({ style: Style.Dark });
+            StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
         } else {
-            StatusBar.setStyle({ style: Style.Light });
+            StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
         }
     }
 

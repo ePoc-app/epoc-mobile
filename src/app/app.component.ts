@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen'
 import {LibraryService} from './services/library.service';
 import { SettingsStoreService } from './services/settings-store.service'
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 
 @Component({
@@ -15,7 +15,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     public libraryService: LibraryService,
-    public settingsStoreService: SettingsStoreService
+    public settingsStoreService: SettingsStoreService,
+    private readonly tracker: MatomoTracker
   ) {
     this.initializeApp();
   }
@@ -24,6 +25,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.libraryService.library$.subscribe(data => {
         if (data && data.length) SplashScreen.hide();
+      })
+      this.settingsStoreService.settings$.subscribe(settings => {
+        if (!settings.isUserOptIn) {
+          this.tracker.optUserOut();
+        }
       })
     });
   }

@@ -59,21 +59,12 @@ export class EpocPlayerPage implements OnInit {
     certificateShown = false;
     showControls = true;
 
-    // Reading default settings
-    settings: Settings = {
-        debug:false,
-        font: 'Inria Sans',
-        fontSize: 16,
-        lineHeight: 1.4,
-        darkMode: false,
-        libraryMode: 'libraryUrl',
-        devMode:false
-    };
+    settings: Settings;
 
     readerStyles = {
-        'font-family': this.settings.font,
-        'font-size': this.settings.fontSize + 'px',
-        'line-height': this.settings.lineHeight
+        'font-family': 'Inria Sans',
+        'font-size': '16px',
+        'line-height': 1.4
     };
 
     constructor(

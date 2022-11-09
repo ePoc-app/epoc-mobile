@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Settings} from 'src/app/classes/settings';
 import {AlertController, ToastController} from '@ionic/angular';
@@ -7,8 +7,7 @@ import {AuthService} from 'src/app/services/auth.service';
 import {Router} from '@angular/router';
 import {User} from 'src/app/classes/user';
 import {mode} from 'src/environments/environment.mode';
-import { Device} from '@capacitor/device';
-import { App, AppInfo } from '@capacitor/app';
+import {App, AppInfo} from '@capacitor/app';
 import {LibraryService} from '../../services/library.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 
@@ -20,20 +19,11 @@ import {MatomoTracker} from '@ngx-matomo/tracker';
 })
 export class SettingsPage implements OnInit {
 
-    settings: Settings = {
-        debug:false,
-        font: 'Inria Sans',
-        fontSize: 16,
-        lineHeight: 1.5,
-        darkMode: false,
-        libraryMode: 'libraryUrl',
-        devMode: false
-    };
+    settings: Settings;
     info: AppInfo;
     user: User;
     mode = mode;
     private devModeCount = 0;
-    isUserOptIn = true;
 
     constructor(
         private settingsStore: SettingsStoreService,
@@ -43,7 +33,6 @@ export class SettingsPage implements OnInit {
         public toastController: ToastController,
         private router: Router,
         private auth: AuthService,
-        private ref: ChangeDetectorRef,
         private readonly tracker: MatomoTracker
     ) {
 
@@ -69,10 +58,6 @@ export class SettingsPage implements OnInit {
                 build: 'dev'
             }
         });
-
-        this.tracker.isUserOptedOut().then((isUserOptOut) => {
-            this.isUserOptIn = !isUserOptOut;
-        })
     }
 
     getStyle() {
@@ -193,12 +178,13 @@ export class SettingsPage implements OnInit {
     }
 
     trackerToggle() {
-        if (this.isUserOptIn) {
+        if (this.settings.isUserOptIn) {
             this.tracker.optUserOut();
-            this.isUserOptIn = false;
+            this.settings.isUserOptIn = false;
         } else {
             this.tracker.forgetUserOptOut();
-            this.isUserOptIn = true;
+            this.settings.isUserOptIn = true;
         }
+        this.settingsChanged();
     }
 }

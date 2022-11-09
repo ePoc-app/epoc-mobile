@@ -6,6 +6,7 @@ export class Settings {
     darkMode: boolean;
     libraryMode: 'libraryUrl'|'libraryQlfUrl';
     devMode: boolean;
+    isUserOptIn: boolean;
 }
 
 

@@ -103,7 +103,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Collecte de statistiques anonymes</ion-label>
-        <ion-toggle [checked]="isUserOptIn" (ionChange)="trackerToggle()"></ion-toggle>
+        <ion-toggle [checked]="settings.isUserOptIn" (ionChange)="trackerToggle()"></ion-toggle>
       </ion-item>
     </ion-list>
     <ion-list>
