@@ -16,12 +16,6 @@
   <div class="wrapper">
     <div class="epoc-title">
       <h3>{{epoc.title}}</h3>
-      <ng-container *ngFor="let author of epoc.authors | values;let i = index;">
-          <span class="epoc-author" [ngClass]="{'align-left' : i%2 == 1, 'align-center': i%2 == 0 && i==(epoc.authors|values).length - 1}">
-            {{author.name}}
-          </span>
-        <span class="epoc-author-splitter" *ngIf="i%2 == 0 && i<(epoc.authors|values).length - 1">|</span>
-      </ng-container>
     </div>
 
     <div class="epoc-trailer">
