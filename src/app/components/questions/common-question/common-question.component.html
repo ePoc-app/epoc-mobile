@@ -56,7 +56,7 @@
         <correction-sort *ngSwitchCase="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type) ? question.type : !question.type" [question]="question" [userResponses]="userResponses"></correction-sort>
         <correction-generic *ngSwitchDefault [question]="question" [userResponses]="userResponses"></correction-generic>
       </ng-container>
-      <div class="explanation-bottom-button">
+      <div class="explanation-bottom-button" *ngIf="question.explanation">
         <ion-button color="inria" (click)="toggleExplanation($event)" *ngIf="showExplainButton">
           <span>Explications</span>
           <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>

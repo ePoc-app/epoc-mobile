@@ -102,12 +102,16 @@ export class EpocAssessmentPage implements OnInit {
 
     toggleExplanation() {
         this.questionsElement.toArray()[this.currentQuestion].toggleExplanation();
-        this.explanationShown = !this.explanationShown;
+    }
+
+    onExplanationToggle(event) {
+        this.explanationShown = event
     }
 
     nextQuestion() {
         this.currentQuestionUserResponse = null;
         this.correctionShown = false;
+        this.explanationShown = false;
         this.currentQuestion++;
         if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
@@ -145,7 +149,7 @@ export class EpocAssessmentPage implements OnInit {
         if (!this.reading.certificateShown) {
             this.certificateShown = true;
             this.readingStore.updateCertificateShown(this.epoc.id, true);
-        } 
+        }
     }
 
     back() {
@@ -182,8 +186,9 @@ export class EpocAssessmentPage implements OnInit {
         this.currentQuestionUserResponse = null;
         this.correctionShown = false;
         this.currentQuestion = 0;
-        this.questionSlides.slideTo(0);
+        this.questionSlides?.slideTo(0);
         this.isEnd = false;
+        this.explanationShown = false;
     }
 
     resume() {

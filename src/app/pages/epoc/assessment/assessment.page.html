@@ -4,7 +4,7 @@
             <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
                 <ion-slide>
                     <common-question closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
-                         [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" *ngIf="!isEnd">
+                         [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" (explanationToggle)="onExplanationToggle($event)" *ngIf="!isEnd">
                     </common-question>
                 </ion-slide>
             </ng-container>

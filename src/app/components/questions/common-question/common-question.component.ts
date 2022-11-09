@@ -35,6 +35,7 @@ export class CommonQuestionComponent implements OnInit {
   @Output() questionAnswered = new EventEmitter<boolean>();
   @Output() dragging = new EventEmitter<string>();
   @Output() close = new EventEmitter<boolean>();
+  @Output() explanationToggle = new EventEmitter<boolean>();
 
   @ViewChild(FlipCardComponent, { static: false })
   private flipCardComponent!: FlipCardComponent;
@@ -82,6 +83,7 @@ export class CommonQuestionComponent implements OnInit {
   toggleExplanation(event?) {
     if (event) event.stopPropagation();
     this.explanationShown = !this.explanationShown;
+    this.explanationToggle.emit(this.explanationShown);
   }
 
   updateUserResponse(userResponse) {
