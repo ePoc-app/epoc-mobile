@@ -65,6 +65,7 @@
     "cordova-sqlite-storage": "^6.0.0",
     "core-js": "^3.22.7",
     "globalthis": "^1.0.3",
+    "hls.js": "^1.2.5",
     "jspdf": "^2.5.1",
     "localforage-cordovasqlitedriver": "^1.8.0",
     "rxjs": "~6.6.0",
