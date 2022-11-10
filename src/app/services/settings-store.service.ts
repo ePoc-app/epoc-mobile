@@ -15,7 +15,7 @@ export class SettingsStoreService {
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.5,
-        theme: 'auto',
+        theme: 'light',
         libraryMode: 'libraryUrl',
         devMode:false,
         isUserOptIn: true
