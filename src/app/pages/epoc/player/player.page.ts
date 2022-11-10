@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {IonSlides} from '@ionic/angular';
 import {first, switchMap} from 'rxjs/operators';
 import {combineLatest, Observable} from 'rxjs';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
@@ -15,6 +14,7 @@ import {EpocService} from '../../../services/epoc.service';
 import {Content} from '../../../classes/contents/content';
 import {PluginService} from '../../../services/plugin.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
+import {IonSlides} from '@ionic/angular';
 
 @Component({
     selector: 'app-epoc-player',
@@ -52,6 +52,7 @@ export class EpocPlayerPage implements OnInit {
     slidesOptions = {
         slidesPerView: window.innerWidth > window.innerHeight ? 2 : 1,
         initialSlide: 0,
+
     };
 
     assessments: Assessment[];
@@ -187,6 +188,10 @@ export class EpocPlayerPage implements OnInit {
             this.updateCurrentContent(index);
             this.progress = index / this.pagesCount;
         });
+    }
+
+    updateFocus() {
+        (document.querySelector('app-epoc-player.ion-page:not(.ion-page-hidden) .reader') as HTMLElement).focus();
     }
 
     prevPage() {

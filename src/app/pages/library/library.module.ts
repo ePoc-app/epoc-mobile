@@ -18,7 +18,7 @@ import {SharedModule} from '../../components/shared.module';
     IonicModule,
     LibraryPageRoutingModule,
     PipesModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [LibraryPage, EpocOverviewPage]
 })

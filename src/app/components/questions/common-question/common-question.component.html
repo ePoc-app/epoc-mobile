@@ -1,49 +1,50 @@
 <div [attr.aria-hidden]="!flipped" class="header" *ngIf="question.explanation" [ngClass]="{'shown':flipped && question.responses.length > 0}">
   <div class="correction-tabs">
-    <div class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':!explanationShown}">
+    <div role="tab" [attr.aria-selected]="!explanationShown" class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':!explanationShown}">
       <span>Réponses</span>
     </div>
-    <div class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':explanationShown}">
+    <div role="tab" [attr.aria-selected]="explanationShown" class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':explanationShown}">
       <span>Explications</span>
     </div>
   </div>
 </div>
 <flip-card [initFlipped]="flipped" (click)="flip()">
   <ng-container front>
-    <div role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
-      <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
-    </div>
-    <div class="title-container">
-      <div class="title-icon" *ngIf="icon">
-        <ion-icon [name]="icon"></ion-icon>
+    <div [attr.aria-hidden]="flipped">
+      <div role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
+        <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
       </div>
-      <h5 class="subtitle" *ngIf="subtitle">{{subtitle | nbsp}}</h5>
-      <h4 class="title" *ngIf="title">{{title | nbsp}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
+      <div class="title-container">
+        <div class="title-icon" *ngIf="icon">
+          <ion-icon [name]="icon"></ion-icon>
+        </div>
+        <h5 class="subtitle" *ngIf="subtitle">{{subtitle | nbsp}}</h5>
+        <h4 class="title" *ngIf="title">{{title | nbsp}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
+      </div>
+      <div class="statement ion-text-center">
+        <b>{{question.label | nbsp}}</b>
+        <div *ngIf="question.statement && !['swipe', 'drag-and-drop'].includes(question.type)">{{question.statement | nbsp}}</div>
+      </div>
+      <div class="question" [ngSwitch]="question.type">
+        <thoughts *ngSwitchCase="question.responses.length === 0 ? question.type : !question.type" [question]="question"></thoughts>
+        <simple-choice *ngSwitchCase="question.type === 'choice' && question.responses.length > 0 ? question.type : !question.type" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></simple-choice>
+        <multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></multiple-choice>
+        <reorder *ngSwitchCase="'reorder'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></reorder>
+        <drag-and-drop *ngSwitchCase="'drag-and-drop'" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (dragging)="onDrag($event)" (userResponse)="updateUserResponse($event)"></drag-and-drop>
+        <swipe *ngSwitchCase="'swipe'" [question]="question" [userPreviousResponse]="userResponses"  [disabled]="questionDisabled" (dragging)="onDrag($event)" (userResponse)="updateUserResponse($event)"></swipe>
+        <dropdown-list *ngSwitchCase="'dropdown-list'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></dropdown-list>
+      </div>
+      <ng-content></ng-content>
     </div>
-
-    <div class="statement ion-text-center">
-      <b>{{question.label | nbsp}}</b>
-      <div *ngIf="question.statement && !['swipe', 'drag-and-drop'].includes(question.type)">{{question.statement | nbsp}}</div>
-    </div>
-    <div class="question" [ngSwitch]="question.type">
-      <thoughts *ngSwitchCase="question.responses.length === 0 ? question.type : !question.type" [question]="question"></thoughts>
-      <simple-choice *ngSwitchCase="question.type === 'choice' && question.responses.length > 0 ? question.type : !question.type" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></simple-choice>
-      <multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></multiple-choice>
-      <reorder *ngSwitchCase="'reorder'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></reorder>
-      <drag-and-drop *ngSwitchCase="'drag-and-drop'" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (dragging)="onDrag($event)" (userResponse)="updateUserResponse($event)"></drag-and-drop>
-      <swipe *ngSwitchCase="'swipe'" [question]="question" [userPreviousResponse]="userResponses"  [disabled]="questionDisabled" (dragging)="onDrag($event)" (userResponse)="updateUserResponse($event)"></swipe>
-      <dropdown-list *ngSwitchCase="'dropdown-list'" [question]="question" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></dropdown-list>
-    </div>
-    <ng-content></ng-content>
   </ng-container>
   <ng-container back>
-    <div class="close" *ngIf="closable" (click)="back($event)">
+    <div role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
       <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
     </div>
     <div class="correction" *ngIf="flipped && !explanationShown && question.responses.length > 0">
       <div class="title-container">
         <div class="title-icon">
-          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <ion-icon aria-hidden="true" name="checkmark-circle-outline"></ion-icon>
         </div>
         <h5 class="subtitle">Les réponses</h5>
       </div>
@@ -59,14 +60,14 @@
       <div class="explanation-bottom-button" *ngIf="question.explanation">
         <ion-button color="inria" (click)="toggleExplanation($event)" *ngIf="showExplainButton">
           <span>Explications</span>
-          <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+          <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>
       </div>
     </div>
     <div class="explanation" *ngIf="explanationShown || question.responses.length === 0">
       <div class="title-container">
         <div class="title-icon">
-          <ion-icon name="document-text-outline"></ion-icon>
+          <ion-icon aria-hidden="true" name="document-text-outline"></ion-icon>
         </div>
         <h5 class="subtitle">Explication</h5>
       </div>

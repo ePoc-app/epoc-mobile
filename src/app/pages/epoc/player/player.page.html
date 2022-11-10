@@ -1,17 +1,17 @@
 <ion-content>
-  <div class="reader" slot="fixed" [ngStyle]="readerStyles">
+  <div class="reader" slot="fixed" [ngStyle]="readerStyles" tabindex="-1">
     <ion-spinner *ngIf="!dataInitialized"></ion-spinner>
     <ng-container *ngIf="dataInitialized">
-      <ion-slides #readerSlides [options]="slidesOptions" (ionSlideTap)="toggleControls($event)" (ionSlideDrag)="hideControls()" (ionSlideWillChange)="onSlideChange()" class="reader-slider">
+      <ion-slides #readerSlides [options]="slidesOptions" (ionSlideTap)="toggleControls($event)" (ionSlideDidChange)="updateFocus()" (ionSlideDrag)="hideControls()" (ionSlideWillChange)="onSlideChange()" class="reader-slider">
         <ion-slide>
           <app-debug [epocId]="epoc.id" [chapterId]="chapterId" contentId="debut"></app-debug>
-          <chapter-info [chapter]="chapter"></chapter-info>
+          <chapter-info [attr.aria-hidden]="currentPage !== 0" [chapter]="chapter"></chapter-info>
         </ion-slide>
         <ng-container *ngFor="let content of chapter.initializedContents; let index = index">
           <ng-container *ngIf="!content.conditional || ( content.conditional && reading.flags.indexOf(content.id) !== -1 )">
             <ion-slide>
               <app-debug [epocId]="epoc.id" [chapterId]="chapterId" [contentId]="content.id"></app-debug>
-              <common-content [title]="content.title" [subtitle]="content.subtitle" [icon]="iconFromType[content.type]" *ngIf="content.type !== 'simple-question'">
+              <common-content [attr.aria-hidden]="index + 1 !== currentPage" [title]="content.title" [subtitle]="content.subtitle" [icon]="iconFromType[content.type]" *ngIf="content.type !== 'simple-question'">
                 <html-content *ngIf="content.type === 'html'" [html]="content.html | srcConvert" (goTo)="goTo($event)"></html-content>
                 <video-content *ngIf="content.type === 'video'" [inputContent]="content" (timelineDragging)="onDrag($event)"></video-content>
                 <course-choice *ngIf="content.type === 'choice'" [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
@@ -23,7 +23,7 @@
         </ng-container>
         <ion-slide>
           <app-debug [epocId]="epoc.id" [chapterId]="chapterId" contentId="fin"></app-debug>
-          <common-content [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
+          <common-content [attr.aria-hidden]="pagesCount - 1 !== currentPage" [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
             <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="nextChapter" [chapterLabel]="chapterLabel"></chapter-end>
           </common-content>
         </ion-slide>

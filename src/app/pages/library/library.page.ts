@@ -17,7 +17,7 @@ export class LibraryPage implements OnInit {
 
   onboardingOptions = {
     slidesPerView: 1,
-    spaceBetween: 16
+    spaceBetween: 16,
   }
 
   constructor(

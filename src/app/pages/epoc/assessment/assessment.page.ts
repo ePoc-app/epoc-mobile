@@ -18,8 +18,8 @@ import {MatomoTracker} from '@ngx-matomo/tracker';
     styleUrls: ['assessment.page.scss']
 })
 export class EpocAssessmentPage implements OnInit {
-    @ViewChild('questionSlides', { static: false }) questionSlides: IonSlides;
     @ViewChildren(CommonQuestionComponent) questionsElement:QueryList<CommonQuestionComponent>;
+    @ViewChild('questionSlides', {static: false}) questionSlides: IonSlides;
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;

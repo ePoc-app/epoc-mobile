@@ -17,7 +17,7 @@ import {PipesModule} from 'src/app/pipes/pipes.module';
             {path: ':epocId/:assessmentId', component: EpocAssessmentPage},
             {path: '**', redirectTo: '/'},
         ]),
-        PipesModule
+        PipesModule,
     ],
     declarations: [
         EpocAssessmentPage

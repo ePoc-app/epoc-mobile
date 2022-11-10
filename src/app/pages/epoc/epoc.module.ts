@@ -41,7 +41,7 @@ import {PreviewCorrectionComponent} from './player/contents/preview-question/pre
             {path: 'bookmarks/:id', component: EpocBookmarksPage},
             {path: '**', redirectTo: '/'},
         ]),
-        PipesModule
+        PipesModule,
     ],
     declarations: [
         EpocPlayerPage,

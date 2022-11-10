@@ -3,7 +3,7 @@
         <ion-slides class="slider" #questionSlides [options]="slidesOptions">
             <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
                 <ion-slide>
-                    <common-question closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
+                    <common-question [attr.aria-hidden]="questionIndex !== currentQuestion" closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
                          [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" (explanationToggle)="onExplanationToggle($event)" *ngIf="!isEnd">
                     </common-question>
                 </ion-slide>
@@ -52,14 +52,14 @@
             <span *ngIf="!explanationShown">Explications</span>
             <span *ngIf="explanationShown">Réponses</span>
         </ion-button>
-        <ion-button color="inria-grey" size="large" (click)="nextQuestion()" *ngIf="correctionShown">
+        <ion-button role="button" color="inria-grey" size="large" (click)="nextQuestion()" *ngIf="correctionShown">
             <span>Suivant</span>
-            <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+            <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>
     </div>
 </ion-footer>
 <ion-footer *ngIf="isEnd">
-    <ion-button size="large" expand="block" color="inria" (click)="resume()">
+    <ion-button role="button" size="large" expand="block" color="inria" (click)="resume()">
         <span>Continuer le cours</span>
     </ion-button>
 </ion-footer>
