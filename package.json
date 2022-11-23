@@ -54,7 +54,7 @@
     "@ngx-matomo/tracker": "^2.4.2",
     "@sentry/angular": "^7.0.0",
     "@sentry/tracing": "^7.0.0",
-    "@theankur/cordova-plugin-file-opener2": "^1.0.1",
+    "cordova-plugin-file-opener2": "git+https://github.com/brospars/cordova-plugin-file-opener2",
     "@wdio/cli": "^7.19.7",
     "capacitor-video-player": "^3.7.5",
     "capacitor-zip": "git+https://git@github.com/brospars/capacitor-zip.git",
