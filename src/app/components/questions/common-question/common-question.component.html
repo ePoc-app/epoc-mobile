@@ -1,4 +1,4 @@
-<div [attr.aria-hidden]="!flipped" class="header" *ngIf="question.explanation" [ngClass]="{'shown':flipped && question.responses.length > 0}">
+<div aria-hidden="true" class="header" *ngIf="question.explanation" [ngClass]="{'shown':flipped && question.responses.length > 0}">
   <div class="correction-tabs">
     <div role="tab" [attr.aria-selected]="!explanationShown" class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':!explanationShown}">
       <span>Réponses</span>
@@ -11,15 +11,15 @@
 <flip-card [initFlipped]="flipped" (click)="flip()">
   <ng-container front>
     <div [attr.aria-hidden]="flipped">
-      <div role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
-        <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
-      </div>
       <div class="title-container">
         <div class="title-icon" *ngIf="icon">
-          <ion-icon [name]="icon"></ion-icon>
+          <ion-icon aria-hidden="true" [name]="icon"></ion-icon>
         </div>
         <h5 class="subtitle" *ngIf="subtitle">{{subtitle | nbsp}}</h5>
         <h4 class="title" *ngIf="title">{{title | nbsp}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
+      </div>
+      <div role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
+        <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
       </div>
       <div class="statement ion-text-center">
         <b>{{question.label | nbsp}}</b>
@@ -38,15 +38,15 @@
     </div>
   </ng-container>
   <ng-container back>
-    <div role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
-      <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
-    </div>
     <div class="correction" *ngIf="flipped && !explanationShown && question.responses.length > 0">
       <div class="title-container">
         <div class="title-icon">
           <ion-icon aria-hidden="true" name="checkmark-circle-outline"></ion-icon>
         </div>
         <h5 class="subtitle">Les réponses</h5>
+      </div>
+      <div [attr.aria-hidden]="!flipped" role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
+        <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
       </div>
       <div class="statement ion-text-center">
         <b>{{question.label}}</b>

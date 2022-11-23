@@ -1,5 +1,5 @@
 <ion-content [scrollY]="false" *ngIf="assessment">
-    <div class="slider-wrapper" slot="fixed">
+    <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
         <ion-slides class="slider" #questionSlides [options]="slidesOptions">
             <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
                 <ion-slide>

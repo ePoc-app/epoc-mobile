@@ -3,13 +3,13 @@
   <span>Glissez la carte à gauche ou à droite dans la catégorie convenable</span>
 </p>
 <div class="swipe-cards">
-  <div class="swipe-card" *ngFor ="let card of cardsRemaining" [ngStyle]="{transform: card.transform}"
+  <div class="swipe-card" *ngFor ="let card of cardsRemaining; index as cardIndex" [ngStyle]="{transform: card.transform}"
        [@swipeAnimations]="{value: card.animationState, params: {transform: card.transform}}"
        (@swipeAnimations.done)="animationDone($event)" #swipeCards>
     <div class="swipe-card-choice" *ngIf="card.selectedSide">
       {{card.selectedSide}}
     </div>
-    <div class="swipe-card-content">
+    <div [attr.aria-hidden]="cardsRemaining.length-1 !== cardIndex" class="swipe-card-content">
       <ion-icon aria-hidden="true" src="/assets/icon/citation.svg"></ion-icon>
       <div>« {{card.label}} »</div>
     </div>
@@ -24,7 +24,7 @@
     <ion-icon aria-hidden="true" class="swipe-right" src="/assets/icon/gauche.svg"></ion-icon>
     <span>{{sides[1]}}</span>
   </div>
-  <div role="button" class="swipe-action small" [ngClass]="{'hidden' : this.cardsSorted.length <= 0 || this.undoDisabled}" (click)="this.undo()">
+  <div [attr.aria-hidden]="cardsSorted.length < 1" aria-roledescription="Retour" role="button" class="swipe-action small" [ngClass]="{'hidden' : this.cardsSorted.length <= 0 || this.undoDisabled}" (click)="this.undo()">
     <ion-icon aria-hidden="true" src="/assets/icon/annuler.svg"></ion-icon>
   </div>
   <div role="button" class="swipe-action" (click)="swipe('swipeRight')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">

@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {first, switchMap} from 'rxjs/operators';
-import {combineLatest, Observable} from 'rxjs';
+import {combineLatest, from, Observable} from 'rxjs';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
@@ -15,6 +15,8 @@ import {Content} from '../../../classes/contents/content';
 import {PluginService} from '../../../services/plugin.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {IonSlides} from '@ionic/angular';
+import {ScreenReader} from '@capacitor/screen-reader';
+
 
 @Component({
     selector: 'app-epoc-player',
@@ -36,6 +38,8 @@ export class EpocPlayerPage implements OnInit {
     pagesCount: number;
     reading: Reading;
     contentsFilteredConditional: Content[];
+    screenReaderDetected$: Observable<any>;
+    screenReaderDetected: boolean;
 
     iconFromType = {
         html: 'document-text-outline',
@@ -128,6 +132,12 @@ export class EpocPlayerPage implements OnInit {
                 };
             }
         });
+
+        // this.screenReaderDetected$ = from(ScreenReader.isEnabled());
+        // this.screenReaderDetected$.subscribe(screenReaderDetected => {
+        //     this.screenReaderDetected = screenReaderDetected;
+        // });
+        this.screenReaderDetected = false;
     }
 
     countPages() {
@@ -160,14 +170,18 @@ export class EpocPlayerPage implements OnInit {
     }
 
     hideControls(){
-        this.showControls = false;
+        if(!this.screenReaderDetected) {
+            this.showControls = false;
+        }
     }
 
     toggleControls($event){
         if (['ion-icon', 'button', 'ion-button', 'ion-icon', 'ion-checkbox', 'ion-radio', 'span'].includes(
             $event.detail.target.tagName.toLowerCase()
         )) return;
-        this.showControls = !this.showControls;
+        if(!this.screenReaderDetected) {
+            this.showControls = !this.showControls;
+        }
     }
     updateCurrentContent(index){
         const content = this.chapter.initializedContents.filter(

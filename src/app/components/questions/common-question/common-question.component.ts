@@ -77,7 +77,11 @@ export class CommonQuestionComponent implements OnInit {
     if (this.questionDisabled) {
       this.flipCardComponent.flip();
       this.flipped = this.flipCardComponent.flipped;
+      this.updateFocus();
     }
+    setTimeout(() => {
+      this.updateFocus();
+    }, 600);
   }
 
   toggleExplanation(event?) {
@@ -99,5 +103,9 @@ export class CommonQuestionComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     this.close.emit(true)
+  }
+
+  updateFocus() {
+    (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
   }
 }

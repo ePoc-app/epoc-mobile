@@ -119,6 +119,10 @@ export class EpocAssessmentPage implements OnInit {
             this.isEnd = true;
         }
         this.questionSlides.slideNext();
+        setTimeout(() => {
+            this.updateFocus();
+            console.log("update Focus"); 
+        }, 1000);
     }
 
     setAssessmentsData() {
@@ -193,5 +197,9 @@ export class EpocAssessmentPage implements OnInit {
 
     resume() {
         this.router.navigateByUrl(`/epoc/play/${this.epoc.id}/${this.assessment.chapterId}/content/${this.assessmentId}/next`);
+    }
+
+    updateFocus() {
+        (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
     }
 }
