@@ -3,6 +3,7 @@ import {IonSelect, ToastController, Gesture, GestureController} from '@ionic/ang
 import {EpocService} from '../../services/epoc.service';
 import {Capacitor} from '@capacitor/core';
 import {CapacitorVideoPlayer} from 'capacitor-video-player';
+import {Platform} from '@ionic/angular';
 
 
 @Component({
@@ -57,7 +58,8 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         private ref: ChangeDetectorRef,
         public epocService: EpocService,
         public toastController: ToastController,
-        private gestureCtrl: GestureController
+        private gestureCtrl: GestureController,
+        private platform: Platform
     ) {}
 
     ngOnInit() {
@@ -83,14 +85,20 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
             language,
             playerId: this.id,
             componentTag: 'div',
-            pipEnabled: false
+            pipEnabled: false,
+            bkmodeEnabled: false,
+            chromecast: false
         }).then(async () => {
+            const backbutton = this.platform.backButton.subscribeWithPriority(9999, () => {
+                // do nothing
+            });
             await this.videoPlayer.play({
                 playerId: this.id
             })
             await this.videoPlayer.addListener('jeepCapVideoPlayerExit', (data: any) => {
                 this.playing = false;
                 this.ref.detectChanges();
+                backbutton.unsubscribe();
             }, false);
         })
     }
