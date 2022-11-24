@@ -17,6 +17,7 @@
         </meta-data>
 
         <activity
+            android:exported="true"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
             android:name="fr.inria.epoc.MainActivity"
@@ -24,12 +25,12 @@
             android:theme="@style/AppTheme.NoActionBarLaunch"
             android:launchMode="singleTask">
 
-            <intent-filter>
+            <intent-filter android:exported="false">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter>
+            <intent-filter android:exported="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
