@@ -16,6 +16,8 @@ import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {LoadingController} from '@ionic/angular';
 import {EpocService} from '../../../services/epoc.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
+import {SettingsStoreService} from '../../../services/settings-store.service';
+import {Settings} from '../../../classes/settings';
 
 @Component({
     selector: 'app-epoc-score',
@@ -35,6 +37,8 @@ export class EpocScorePage implements OnInit {
     loading: boolean;
     certificateEnabled = false;
 
+    settings: Settings;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -44,7 +48,8 @@ export class EpocScorePage implements OnInit {
         private fileOpener: FileOpener,
         public alertController: AlertController,
         public loadingController: LoadingController,
-        private readonly tracker: MatomoTracker
+        private readonly tracker: MatomoTracker,
+        private settingsStore: SettingsStoreService
     ) {}
 
     ngOnInit() {
@@ -60,6 +65,12 @@ export class EpocScorePage implements OnInit {
 
         this.auth.getUser().subscribe(user => {
             this.user = user;
+        });
+
+        this.settingsStore.settings$.subscribe(settings => {
+            if (settings) {
+                this.settings = settings;
+            }
         });
     }
 
@@ -122,7 +133,7 @@ export class EpocScorePage implements OnInit {
 
     async getCertificate() {
         if (!this.loading) {
-            if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
+            if (this.settings.devMode || this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
                 if (!this.user) {
                     this.setUser().then();
                 } else {

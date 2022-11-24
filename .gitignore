@@ -33,3 +33,6 @@ npm-debug.log*
 
 /resources
 src/assets/demo/
+src/environments/secrets.prod.ts
+
+ios/DerivedData/

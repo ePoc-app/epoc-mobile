@@ -7,6 +7,7 @@ import {AuthService} from 'src/app/services/auth.service';
 import {Router} from '@angular/router';
 import {User} from 'src/app/classes/user';
 import {mode} from 'src/environments/environment.mode';
+import {environment as env} from 'src/environments/environment';
 import {App, AppInfo} from '@capacitor/app';
 import {LibraryService} from '../../services/library.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
@@ -167,10 +168,46 @@ export class SettingsPage implements OnInit {
     setDevMode(event) {
         event.stopPropagation();
         this.devModeCount++;
-        if (this.devModeCount >= 10){
-            this.settings.devMode = true;
-            this.settingsChanged();
+        if (this.devModeCount >= 10) {
+            this.confirmDevMode().finally()
         }
+    }
+
+    async confirmDevMode() {
+        this.resetDevModeCount();
+        const alert = await this.alertController.create({
+            header: 'Activation du mode développeur',
+            message: 'Veuillez fournir le mot de passe',
+            inputs: [
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'Mot de passe',
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Confirmer',
+                    handler: (data) => {
+                        this.user = {firstname: data.firstname, lastname: data.lastname, username: null, email: null};
+                        this.auth.setUser(this.user);
+
+                        if (data.password === env.devModeSecret) {
+                            this.settings.devMode = true;
+                            this.settingsChanged();
+                        } else {
+                            this.presentToast('Mot de passe erroné')
+                        }
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     resetDevModeCount() {

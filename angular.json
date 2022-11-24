@@ -63,6 +63,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/environments/secrets.ts",
+                  "with": "src/environments/secrets.prod.ts"
                 }
               ],
               "optimization": true,
