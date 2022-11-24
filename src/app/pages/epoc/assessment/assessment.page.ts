@@ -11,6 +11,7 @@ import {Assessment, Question} from 'src/app/classes/contents/assessment';
 import {EpocService} from 'src/app/services/epoc.service';
 import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
 import {MatomoTracker} from '@ngx-matomo/tracker';
+import {AppService} from 'src/app/services/app.service';
 
 @Component({
     selector: 'app-epoc-assessment',
@@ -54,7 +55,8 @@ export class EpocAssessmentPage implements OnInit {
         private readingStore: ReadingStoreService,
         public alertController: AlertController,
         public navCtrl: NavController,
-        private readonly tracker: MatomoTracker
+        private readonly tracker: MatomoTracker,
+        public appService: AppService,
     ) {}
 
     ngOnInit() {
@@ -121,7 +123,6 @@ export class EpocAssessmentPage implements OnInit {
         this.questionSlides.slideNext();
         setTimeout(() => {
             this.updateFocus();
-            console.log("update Focus"); 
         }, 1000);
     }
 
@@ -200,6 +201,12 @@ export class EpocAssessmentPage implements OnInit {
     }
 
     updateFocus() {
-        (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
+        if(this.appService.screenReaderDetected) {
+            (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
+        }
+    }
+
+    ionViewDidEnter() {
+        this.updateFocus();
     }
 }

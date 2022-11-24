@@ -15,7 +15,7 @@
       </ion-list-header>
       <ion-item>
         <ion-label>Debug</ion-label>
-        <ion-toggle [(ngModel)]="settings.debug" (ngModelChange)="settingsChanged()"></ion-toggle>
+        <ion-toggle aria-label="Debug" [(ngModel)]="settings.debug" (ngModelChange)="settingsChanged()"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="settings.debug">
         <ion-label>Émettre une erreur de test</ion-label>
@@ -25,7 +25,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Thème</ion-label>
-        <ion-select [(ngModel)] ="settings.theme" (ngModelChange)="settingsChanged()">
+        <ion-select role="dialog" [(ngModel)] ="settings.theme" (ngModelChange)="settingsChanged()">
           <ion-select-option value="auto">Automatique</ion-select-option>
           <ion-select-option value="light">Clair</ion-select-option>
           <ion-select-option value="dark">Sombre</ion-select-option>

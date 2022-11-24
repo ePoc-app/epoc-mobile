@@ -18,7 +18,7 @@
             <img aria-hidden="true" alt="ePoc Image" [src]="(epocService.rootFolder +  epoc.image) | safe: 'url'">
             <div class="toc-header-title">{{epoc.title}}</div>
         </div>
-        <div class="toc-content">
+        <div class="toc-content" tabindex="-1">
             <div class="toc-chapter" *ngFor="let chapter of epoc.chapters | denormalize;let index = index">
                 <div class="toc-chapter-summary">
                     <div class="toc-chapter-progress" [ngClass]="{'done':chapter.done}">

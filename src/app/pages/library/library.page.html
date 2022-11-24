@@ -1,6 +1,6 @@
 <ion-header mode="ios" class="home">
   <ion-toolbar>
-    <div class="logo" slot="start">
+    <div aria-hidden="true" class="logo" slot="start">
       <ion-img src="assets/img/ePoc.svg"></ion-img>
       <ion-img class="by-inria" src="assets/img/ePoc-by-Inria-seul.svg"></ion-img>
     </div>
@@ -17,7 +17,7 @@
   <ion-refresher slot="fixed" snapbackDuration="1000ms" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-slides class="onboarding" *ngIf="onboarding && onboarding.length" [options]="onboardingOptions" [pager]="onboarding.length > 1 ? 'true' : ''">
+  <ion-slides aria-hidden="true" class="onboarding" *ngIf="onboarding && onboarding.length" [options]="onboardingOptions" [pager]="onboarding.length > 1 ? 'true' : ''">
     <ion-slide class="onboarding-item" [ngClass]="item.image ? 'with-image':''" *ngFor="let item of onboarding">
       <div class="onboarding-item-image" *ngIf="item.image" [style]="'background-image:url('+item.image+')'"></div>
       <div class="onboarding-item-title">{{item.title}}</div>
@@ -28,7 +28,7 @@
       </div>
     </ion-slide>
   </ion-slides>
-  <div class="library-items">
+  <div class="library-items" tabindex="-1">
     <div class="library-item" *ngFor="let epoc of library">
       <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/'+epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>
       <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>

@@ -12,7 +12,7 @@
                 <app-card *ngIf="assessmentData">
                     <div class="title-container">
                         <div class="title-icon">
-                            <ion-icon name="star-outline"></ion-icon>
+                            <ion-icon aria-hidden="true" name="star-outline"></ion-icon>
                         </div>
                         <h5 class="title" *ngIf="scoreMax > 0">Vous obtenez</h5>
                         <h5 class="title" *ngIf="scoreMax <= 0">Activité non noté</h5>
@@ -25,7 +25,7 @@
                                 {{assessmentData.totalUserScore + assessmentData.userScore}} / {{assessmentData.totalScore}}
                             </div>
                         </div>
-                        <div class="score-chart">
+                        <div aria-hidden="true" class="score-chart">
                             <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
                                             [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
                                             [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
@@ -43,7 +43,7 @@
     <certificate-modal [epocId]="epocId" [certificateShown]="certificateShown"></certificate-modal>
 </ion-content>
 
-<ion-footer *ngIf="!isEnd">
+<ion-footer tabindex="0" *ngIf="!isEnd">
     <ion-button size="large" expand="block" color="inria" [disabled]="!currentQuestionUserResponse" (click)="checkAnswer();" *ngIf="!correctionShown">
         <span>Valider</span>
     </ion-button>

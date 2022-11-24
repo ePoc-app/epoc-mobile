@@ -20,14 +20,14 @@
            [max]="question.responses.length" [value]="question.responses.length - cardsRemaining.length" snaps="true"></ion-range>
 
 <div class="swipe-actions">
-  <div role="button" class="swipe-action" (click)="swipe('swipeLeft')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
+  <div [attr.aria-hidden]="cardsRemaining.length < 1" role="button" class="swipe-action" (click)="swipe('swipeLeft')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
     <ion-icon aria-hidden="true" class="swipe-right" src="/assets/icon/gauche.svg"></ion-icon>
     <span>{{sides[1]}}</span>
   </div>
   <div [attr.aria-hidden]="cardsSorted.length < 1" aria-roledescription="Retour" role="button" class="swipe-action small" [ngClass]="{'hidden' : this.cardsSorted.length <= 0 || this.undoDisabled}" (click)="this.undo()">
     <ion-icon aria-hidden="true" src="/assets/icon/annuler.svg"></ion-icon>
   </div>
-  <div role="button" class="swipe-action" (click)="swipe('swipeRight')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
+  <div [attr.aria-hidden]="cardsRemaining.length < 1" role="button" class="swipe-action" (click)="swipe('swipeRight')" [ngClass]="{'hidden' : this.cardsRemaining.length <= 0 || this.undoDisabled}">
     <ion-icon aria-hidden="true" src="/assets/icon/droite.svg"></ion-icon>
     <span>{{sides[0]}}</span>
   </div>

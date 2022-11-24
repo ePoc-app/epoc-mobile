@@ -3,6 +3,7 @@ import {Question} from 'src/app/classes/contents/assessment';
 import {Reading} from 'src/app/classes/reading';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {FlipCardComponent} from 'src/app/components/flip-card/flip-card.component';
+import {AppService} from 'src/app/services/app.service';
 
 @Component({
   selector: 'common-question',
@@ -46,7 +47,9 @@ export class CommonQuestionComponent implements OnInit {
   explanationShown = false;
   userResponses;
 
-  constructor() { }
+  constructor(
+    public appService: AppService,
+  ) { }
 
   ngOnInit() {
     this.setState();
@@ -106,6 +109,8 @@ export class CommonQuestionComponent implements OnInit {
   }
 
   updateFocus() {
-    (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
+    if(this.appService.screenReaderDetected) {
+      (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
+    }
   }
 }

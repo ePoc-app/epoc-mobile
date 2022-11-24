@@ -17,13 +17,13 @@
                 <course-choice *ngIf="content.type === 'choice'" [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
                 <assessment-content *ngIf="content.type === 'assessment'" [inputContent]="content"></assessment-content>
               </common-content>
-              <simple-question *ngIf="content.type === 'simple-question'" [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]" (dragging)="onDrag($event)"></simple-question>
+              <simple-question [attr.aria-hidden]="index + 1 !== currentPage" *ngIf="content.type === 'simple-question'" [epocId]="epoc.id" [content]="content" [question]="epoc.questions[content.question]" (dragging)="onDrag($event)"></simple-question>
             </ion-slide>
           </ng-container>
         </ng-container>
         <ion-slide>
           <app-debug [epocId]="epoc.id" [chapterId]="chapterId" contentId="fin"></app-debug>
-          <common-content [attr.aria-hidden]="pagesCount - 1 !== currentPage" [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
+          <common-content tabindex="-1" class="chapter-end" [attr.aria-hidden]="pagesCount !== currentPage" [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
             <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="nextChapter" [chapterLabel]="chapterLabel"></chapter-end>
           </common-content>
         </ion-slide>
@@ -35,13 +35,13 @@
   </div>
   <certificate-modal *ngIf="dataInitialized" slot="fixed" [epocId]="epoc.id" [certificateShown]="certificateShown"></certificate-modal>
   <div class="reader-actions" [ngClass]="{'showing': showControls}" slot="fixed">
-    <div aria-label="Précédent" role="button" class="reader-action" [ngClass]="currentPage === 0 ? 'disabled':''" (click)="prevPage()" *ngIf="dataInitialized">
+    <div [attr.aria-disabled]="currentPage === 0" aria-label="Précédent" role="button" class="reader-action" [ngClass]="currentPage === 0 ? 'disabled':''" (click)="prevPage()" *ngIf="dataInitialized">
       <ion-icon aria-hidden="true" src="/assets/icon/double-gauche.svg"></ion-icon>
     </div>
     <div aria-label="Menu" role="button" class="reader-action small" (click)="displayMenu()">
       <ion-icon aria-hidden="true" name="menu"></ion-icon>
     </div>
-    <div aria-label="Suivant" role="button" class="reader-action" [ngClass]="currentPage > contentsFilteredConditional.length ? 'disabled':''" (click)="nextPage()" *ngIf="dataInitialized">
+    <div [attr.aria-disabled]="currentPage > contentsFilteredConditional.length" aria-label="Suivant" role="button" class="reader-action" [ngClass]="currentPage > contentsFilteredConditional.length ? 'disabled':''" (click)="nextPage()" *ngIf="dataInitialized">
       <ion-icon aria-hidden="true" src="/assets/icon/double-droite.svg"></ion-icon>
     </div>
   </div>

@@ -3,12 +3,15 @@ import {Device} from '@capacitor/device';
 import {App, AppInfo} from '@capacitor/app';
 import {Capacitor} from '@capacitor/core';
 import {AlertController} from '@ionic/angular';
+import {ScreenReader} from '@capacitor/screen-reader';
+import { from } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppService {
     appInfo: AppInfo;
+    screenReaderDetected: boolean;
     deviceInfo;
 
     constructor(public alertController: AlertController) {
@@ -21,6 +24,11 @@ export class AppService {
                 version: '0.0.0',
                 build: 'dev'
             }
+        });
+
+        
+        from(ScreenReader.isEnabled()).subscribe(screenReaderDetected => {
+            this.screenReaderDetected = screenReaderDetected.value;
         });
 
         Device.getInfo().then((info) => {
@@ -92,4 +100,6 @@ export class AppService {
             return `${prevVal}${entry.join('=')},`
         }, '');
     }
+
+
 }

@@ -14,8 +14,8 @@ import {EpocService} from '../../../services/epoc.service';
 import {Content} from '../../../classes/contents/content';
 import {PluginService} from '../../../services/plugin.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
-import {IonSlides} from '@ionic/angular';
-import {ScreenReader} from '@capacitor/screen-reader';
+import {IonSlides, Platform} from '@ionic/angular';
+import {AppService} from 'src/app/services/app.service';
 
 
 @Component({
@@ -38,8 +38,6 @@ export class EpocPlayerPage implements OnInit {
     pagesCount: number;
     reading: Reading;
     contentsFilteredConditional: Content[];
-    screenReaderDetected$: Observable<any>;
-    screenReaderDetected: boolean;
 
     iconFromType = {
         html: 'document-text-outline',
@@ -81,7 +79,8 @@ export class EpocPlayerPage implements OnInit {
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService,
         private pluginService: PluginService,
-        private readonly tracker: MatomoTracker
+        private readonly tracker: MatomoTracker,
+        public appService: AppService, 
     ) {
     }
 
@@ -132,12 +131,6 @@ export class EpocPlayerPage implements OnInit {
                 };
             }
         });
-
-        // this.screenReaderDetected$ = from(ScreenReader.isEnabled());
-        // this.screenReaderDetected$.subscribe(screenReaderDetected => {
-        //     this.screenReaderDetected = screenReaderDetected;
-        // });
-        this.screenReaderDetected = false;
     }
 
     countPages() {
@@ -167,10 +160,11 @@ export class EpocPlayerPage implements OnInit {
                 this.dataInitialized = true;
             }
         });
+        this.updateFocus();
     }
 
     hideControls(){
-        if(!this.screenReaderDetected) {
+        if(!this.appService.screenReaderDetected) {
             this.showControls = false;
         }
     }
@@ -179,7 +173,7 @@ export class EpocPlayerPage implements OnInit {
         if (['ion-icon', 'button', 'ion-button', 'ion-icon', 'ion-checkbox', 'ion-radio', 'span'].includes(
             $event.detail.target.tagName.toLowerCase()
         )) return;
-        if(!this.screenReaderDetected) {
+        if(!this.appService.screenReaderDetected) {
             this.showControls = !this.showControls;
         }
     }
@@ -205,7 +199,9 @@ export class EpocPlayerPage implements OnInit {
     }
 
     updateFocus() {
-        (document.querySelector('app-epoc-player.ion-page:not(.ion-page-hidden) .reader') as HTMLElement).focus();
+        if(this.appService.screenReaderDetected) {
+            (document.querySelector('app-epoc-player.ion-page:not(.ion-page-hidden) .reader') as HTMLElement).focus();
+        }
     }
 
     prevPage() {

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Settings} from 'src/app/classes/settings';
 import {StorageService} from './storage.service';
-
 import {StatusBar, Style} from '@capacitor/status-bar';
+import {Platform} from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +24,7 @@ export class SettingsStoreService {
     private readonly settingsSubject = new BehaviorSubject<Settings>(this.defaultSettings);
     readonly settings$ = this.settingsSubject.asObservable();
 
-    constructor(private storageService: StorageService) {
+    constructor(private storageService: StorageService, public platform: Platform) {
         this.fetchSettingss();
         this.loadTheme();
     }
@@ -75,10 +75,14 @@ export class SettingsStoreService {
         const root = document.querySelector(':root');
         root.setAttribute('color-scheme', `${myTheme}`);
         if (myTheme === 'dark') {
-            StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
+            if(this.platform.is('ios')) {
+                StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
+            }
         } else {
-            StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
-        }
+            if(this.platform.is('ios')) {
+                StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
+            }
+        } 
     }
 
 }

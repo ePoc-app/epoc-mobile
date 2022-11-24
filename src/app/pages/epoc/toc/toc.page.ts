@@ -6,6 +6,7 @@ import {Epoc} from 'src/app/classes/epoc';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Reading} from 'src/app/classes/reading';
 import {EpocService} from '../../../services/epoc.service';
+import {AppService} from 'src/app/services/app.service';
 
 @Component({
     selector: 'app-epoc-toc',
@@ -28,7 +29,8 @@ export class EpocTocPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public epocService: EpocService,
-        private readingStore: ReadingStoreService
+        private readingStore: ReadingStoreService,
+        public appService: AppService,
     ) {
     }
 
@@ -56,6 +58,9 @@ export class EpocTocPage implements OnInit {
             this.setProgress();
         }
         this.contentInitialized = true;
+        if(this.appService.screenReaderDetected) {
+            (document.querySelector('.toc-content') as HTMLElement).focus();
+        }
     }
 
     setProgress () {

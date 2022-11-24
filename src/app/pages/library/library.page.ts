@@ -3,6 +3,7 @@ import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
 import {OnboardingService} from '../../services/onboarding.service';
 import {OnboardingItem} from '../../classes/onboarding';
+import {AppService} from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-library',
@@ -23,7 +24,8 @@ export class LibraryPage implements OnInit {
   constructor(
       private ref: ChangeDetectorRef,
       public libraryService: LibraryService,
-      public onboardingService: OnboardingService
+      public onboardingService: OnboardingService,
+      public appService: AppService,
   ) {}
 
   ngOnInit() {
@@ -59,5 +61,12 @@ export class LibraryPage implements OnInit {
 
   openEpocMenu(epoc){
     this.libraryService.epocLibraryMenu(epoc);
+  }
+
+  ionViewDidEnter() {
+    if(this.appService.screenReaderDetected) {
+      const content = document.querySelector('.library-items') as HTMLElement;
+      content.focus();
+    }
   }
 }
