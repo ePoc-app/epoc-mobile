@@ -70,6 +70,11 @@ export class SettingsPage implements OnInit {
     }
 
     settingsChanged() {
+        if (this.settings.isUserOptIn) {
+            this.tracker.forgetUserOptOut();
+        } else {
+            this.tracker.optUserOut();
+        }
         this.settingsStore.updateSettings(this.settings);
     }
 
@@ -212,16 +217,5 @@ export class SettingsPage implements OnInit {
 
     resetDevModeCount() {
         this.devModeCount = 0;
-    }
-
-    trackerToggle() {
-        if (this.settings.isUserOptIn) {
-            this.tracker.optUserOut();
-            this.settings.isUserOptIn = false;
-        } else {
-            this.tracker.forgetUserOptOut();
-            this.settings.isUserOptIn = true;
-        }
-        this.settingsChanged();
     }
 }
