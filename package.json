@@ -4,7 +4,7 @@
   "author": "Inria Learning Lab",
   "homepage": "https://learninglab.inria.fr",
   "scripts": {
-    "dev": "ionic serve --external --host=$(hostname)",
+    "dev": "ionic serve --external --host=$(hostname) --configuration=dev",
     "build": "ng build",
     "build-preview": "ng build --configuration=preview --output-path=dist",
     "android": "npm run resources && ionic capacitor run android --prod --open",
