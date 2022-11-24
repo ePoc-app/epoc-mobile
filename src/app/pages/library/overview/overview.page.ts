@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
+import {AppService} from 'src/app/services/app.service';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -19,7 +20,8 @@ export class EpocOverviewPage implements OnInit {
         private ref: ChangeDetectorRef,
         private route: ActivatedRoute,
         private router: Router,
-        public libraryService: LibraryService
+        public libraryService: LibraryService,
+        public appService: AppService,
     ) {}
 
     ngOnInit() {
@@ -54,5 +56,11 @@ export class EpocOverviewPage implements OnInit {
         medias.forEach((media) => {
             media.pause();
         });
+    }
+
+    ionViewDidChange() {
+        if(this.appService.screenReaderDetected) {
+            (document.querySelector('.epoc-title'));
+        }
     }
 }
