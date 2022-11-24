@@ -43,7 +43,7 @@
     <certificate-modal [epocId]="epocId" [certificateShown]="certificateShown"></certificate-modal>
 </ion-content>
 
-<ion-footer tabindex="0" *ngIf="!isEnd">
+<ion-footer *ngIf="!isEnd">
     <ion-button size="large" expand="block" color="inria" [disabled]="!currentQuestionUserResponse" (click)="checkAnswer();" *ngIf="!correctionShown">
         <span>Valider</span>
     </ion-button>

@@ -78,11 +78,7 @@
   }
 
   &-details{
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .3s ease-in-out;
     border-top: 1px solid var(--ion-color-contrast);
-    max-height: none;
 
     &-item{
       display: flex;

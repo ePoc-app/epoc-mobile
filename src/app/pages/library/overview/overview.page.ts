@@ -58,9 +58,4 @@ export class EpocOverviewPage implements OnInit {
         });
     }
 
-    ionViewDidChange() {
-        if(this.appService.screenReaderDetected) {
-            (document.querySelector('.epoc-title'));
-        }
-    }
 }
