@@ -1,0 +1,118 @@
+{
+    "LIBRARY_PAGE": {
+        "DOWNLOAD": "Télécharger",
+        "CONTINUE": "Continuer",
+        "DOWNLOADING": "Téléchargement",
+        "DISCOVER": "Découvrir",
+        "MENU": {
+            "TOC": "Table de matières",
+            "CERTIFICATE": "Score & attestation",
+            "LICENSE": "Licence",
+            "UPDATE": "Mettre à jour",
+            "COMMENT": "Laisser un commentaire",
+            "DELETE": "Supprimer"
+        },
+        "OPEN_ZIP": "Ouverture du zip"
+    },
+    "ABOUT_PAGE": {
+        "ABOUT": "A propos",
+        "EPOC_APPLICATION": "L'application ePoc",
+        "EPOC_DESCRIPTION": "ePoc (Electronic Pocket Open Course) est une application de formation numérique pour mobile. Elle a été développée au sein d'<a href=\"https://learninglab.inria.fr\" target=\"_blank\" title=\"Site d'Inria Learning Lab\" class=\"about-page-link\">Inria Learning Lab",
+        "PERSONAL_DATA": "Les données personnelles",
+        "PERSONAL_DATA_DESCRIPTION": "Aucune donnée personnelle n'est collectée.",
+        "ANALYTICS": "Analytics",
+        "ANALYTICS_DESCRIPTION_1": "Nous utilisons Matomo, un logiciel libre et open source de mesure de statistiques, préconisé par la CNIL.",
+        "ANALYTICS_DESCRIPTION_2": "Ces analytiques sont utilisés uniquement à des fins de recherche interne sur la manière dont nous pouvons améliorer le service que nous offrons à tous nos utilisateurs.",
+        "ANALYTICS_DESCRIPTION_3": "Ils permettent simplement d’évaluer la manière dont vous interagissez avec notre application en tant qu’<b>utilisateur anonyme</b> (les données recueillies ne permettent pas de vous identifier personnellement).",
+        "ANALYTICS_DESCRIPTION_4": "Vous pouvez vous opposer à cette collecte dans les paramètres de l'application. Cela protégera votre vie privée, mais empêchera également le propriétaire d'apprendre de vos actions et de créer une meilleure expérience pour vous et les autres utilisateurs.",
+        "CONTACT": "Contact",
+        "CONTACT_ILL": "Vous avez une question ? Vous pouvez nous contacter à l'adresse suivante : ",
+        "CONTACT_DPO": "Délégué à la protection des données : "
+    },
+    "SETTINGS_PAGE": {
+        "SETTINGS": "Paramètres",
+        "DISPLAY": "Affichage",
+        "DEBUG": "Debug",
+        "DEBUG_ERROR": "Émettre une erreur de test",
+        "THEME": "Thème",
+        "THEME_AUTO": "Automatique",
+        "THEME_LIGHT": "Clair",
+        "THEME_DARK": "Sombre",
+        "FONT": "Police",
+        "SIZE": "Taille",
+        "INTERLINE": "Interligne",
+        "PREVIEW": "Prévisualisation",
+        "PREVIEW_TITLE": "Titre",
+        "USER": "Utilisateur",
+        "EMAIL": "Email",
+        "NAME": "Nom",
+        "FIRSTNAME": "Prénom",
+        "USERNAME": "Username",
+        "DEFINE_USER": "Définir un utilisateur",
+        "APP_INFO": "Informations Application",
+        "VERSION": "Version",
+        "BUILD_VERSION": "Build version",
+        "DATA_COLLECTION": "Collecte de statistiques anonymes",
+        "EPOC_DATA": "Donées ePocs",
+        "DEV_MODE": "Mode développeur",
+        "OPEN_EPOC": "Ouvrir un autre ePoc",
+        "LIBRARY": "Bibliothèque",
+        "DELETE_DATA": "Supprimer les données",
+        "DATA_EXAMPLE": "Attestations, quiz, préférences, etc.",
+        "SET_USER": {
+            "INFO": "Renseigner vos informations",
+            "MESSAGE": "Ces informations serviront à l'édition des attestations",
+            "LASTNAME_PLACEHOLDER": "Nom",
+            "FIRSTNAME_PLACEHOLDER": "Prénom"
+        },
+        "DEV_MODE_MODAL": {
+            "INFO": "Activation du mode développeur",
+            "MESSAGE": "Veuillez fournir le mot de passe",
+            "PASSWORD": "Mot de passe",
+            "WRONG_PASSWORD": "Mot de passe erroné"
+        },
+        "OPEN_PAGE": {
+            "HEADER": "Ouvrir un ePoc",
+            "OPEN": "Ouvrir",
+            "INFO": "Merci de charger un zip ou choisir dans les listes ci-dessous",
+            "BUTTON": "Ouvrir ePoc",
+            "ZIPS": "Zips disponibles",
+            "EPOCS": "ePocs disponibles"
+        },
+        "DELETE_DATA_MODAL": {
+            "INFO": "Êtes vous sûr ? ",
+            "MESSAGE": "Cette action effacera les données des exercices de l'application <br/><small>(attestations, quiz, préférences, etc.)</small>"
+        }
+    },
+    "OVERVIEW_PAGE": {
+        "PRESENTATION": "Présentation du cours",
+        "ACTIVITIES": {
+            "singular": "Activité",
+            "plural": "Activités"
+        },
+        "CHAPTERS": {
+            "singular": "Module",
+            "plural": "Modules"
+        },
+        "MIN_MODULE": "min/module",
+        "OBJECTIVES": {
+            "singular": "Objectif",
+            "plural": "Objectifs"
+        },
+        "RESUME": "Résumé",
+        "AUTHORS": {
+            "singular": "Auteur",
+            "plural": "Auteurs"
+        },
+        "PICTURE_ALT": "Photo de ",
+        "GO": "C'est parti !",
+        "CONTINUE": "Continuer",
+        "DOWNLOAD": "Télécharger",
+        "DOWNLOADING": "Téléchargement",
+        "OPENING": "Ouverture"
+    },
+
+    "LOADING": "Chargement",
+    "CANCEL": "Annuler",
+    "CONFIRM": "Confirmer"
+}

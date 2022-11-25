@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
-    <ion-title>Paramètres</ion-title>
+    <ion-title>{{"SETTINGS_PAGE.SETTINGS" | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,29 +11,29 @@
   <div class="wrapper" (click)="resetDevModeCount()">
     <ion-list>
       <ion-list-header>
-        Affichage
+        {{"SETTINGS_PAGE.DISPLAY" | translate}}
       </ion-list-header>
       <ion-item>
-        <ion-label>Debug</ion-label>
+        <ion-label>{{"SETTINGS_PAGE.DEBUG" | translate}}</ion-label>
         <ion-toggle aria-label="Debug" [(ngModel)]="settings.debug" (ngModelChange)="settingsChanged()"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="settings.debug">
-        <ion-label>Émettre une erreur de test</ion-label>
+        <ion-label>{{"SETTINGS_PAGE.DEBUG_ERROR" | translate}}</ion-label>
         <ion-button slot="end" color="inria-grey" (click)="throwError()">
           <ion-icon slot="icon-only" name="bug-outline"></ion-icon>
         </ion-button>
       </ion-item>
       <ion-item>
-        <ion-label>Thème</ion-label>
-        <ion-select role="dialog" [(ngModel)] ="settings.theme" (ngModelChange)="settingsChanged()">
-          <ion-select-option value="auto">Automatique</ion-select-option>
-          <ion-select-option value="light">Clair</ion-select-option>
-          <ion-select-option value="dark">Sombre</ion-select-option>
+        <ion-label>{{"SETTINGS_PAGE.THEME" | translate}}</ion-label>
+        <ion-select [(ngModel)] ="settings.theme" (ngModelChange)="settingsChanged()">
+          <ion-select-option value="auto">{{"SETTINGS_PAGE.THEME_AUTO" | translate}}</ion-select-option>
+          <ion-select-option value="light">{{"SETTINGS_PAGE.THEME_LIGHT" | translate}}</ion-select-option>
+          <ion-select-option value="dark">{{"SETTINGS_PAGE.THEME_DARK" | translate}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ng-container *ngIf="false">
         <ion-item>
-          <ion-label>Police</ion-label>
+          <ion-label>{{"SETTINGS_PAGE.FONT" | translate}}</ion-label>
           <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
             <ion-select-option value="Inria Sans">Sans serif</ion-select-option>
             <ion-select-option value="Inria Serif">Serif</ion-select-option>
@@ -41,25 +41,25 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label>Taille</ion-label>
+          <ion-label>{{"SETTINGS_PAGE.SIZE" | translate}}</ion-label>
           <ion-range min="12" max="20" step="4" [(ngModel)]="settings.fontSize" (ngModelChange)="settingsChanged()" snaps>
             <ion-icon slot="start" size="small" src="assets/icon/text-size.svg"></ion-icon>
             <ion-icon slot="end" src="assets/icon/text-size.svg"></ion-icon>
           </ion-range>
         </ion-item>
         <ion-item>
-          <ion-label>Interligne</ion-label>
+          <ion-label>{{"SETTINGS_PAGE.INTERLINE" | translate}}</ion-label>
           <ion-range min="1" max="2" step="0.5" [(ngModel)]="settings.lineHeight" (ngModelChange)="settingsChanged()" snaps>
             <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
             <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
           </ion-range>
         </ion-item>
         <ion-list-header class="preview">
-          Prévisualisation
+          {{"SETTINGS_PAGE.PREVIEW" | translate}}
         </ion-list-header>
         <ion-item>
           <ion-text class="preview-settings" [ngStyle]="getStyle()">
-            <h4>Titre</h4>
+            <h4>{{"SETTINGS_PAGE.PREVIEW_TITLE" | translate}}</h4>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias consequatur,
               cumque iusto modi molestiae nihil quibusdam temporibus voluptatem?
@@ -70,68 +70,68 @@
     </ion-list>
     <ion-list>
       <ion-list-header>
-        Utilisateur
+        {{"SETTINGS_PAGE.USER" | translate}}
       </ion-list-header>
       <ng-container *ngIf="user">
         <ion-item *ngIf="user.email">
-          <ion-label>Email : {{user.email}}</ion-label>
+          <ion-label>{{"SETTINGS_PAGE.USER" | translate}} : {{user.email}}</ion-label>
           <ion-icon slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-label>Nom : {{user.lastname}}</ion-label>
+          <ion-label>{{"SETTINGS_PAGE.NAME" | translate}} : {{user.lastname}}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Prenom : {{user.firstname}}</ion-label>
+          <ion-label>{{"SETTINGS_PAGE.FIRSTNAME" | translate}} : {{user.firstname}}</ion-label>
         </ion-item>
         <ion-item *ngIf="user.username">
-          <ion-label>Username : {{user.username}}</ion-label>
+          <ion-label>{{"SETTINGS_PAGE.USERNAME" | translate}} : {{user.username}}</ion-label>
         </ion-item>
       </ng-container>
       <ng-container *ngIf="!user">
         <ion-item (click)="setUser()" detail>
-          <ion-label role="button">Définir un utilisateur</ion-label>
+          <ion-label role="button">{{"SETTINGS_PAGE.DEFINE_USER" | translate}}</ion-label>
         </ion-item>
       </ng-container>
     </ion-list>
     <ion-list *ngIf="info && info.version">
       <ion-list-header>
-        Informations Applications
+        {{"SETTINGS_PAGE.APP_INFO" | translate}}
       </ion-list-header>
       <ion-item>
-        <ion-label>Version</ion-label>
+        <ion-label>{{"SETTINGS_PAGE.VERSION" | translate}}</ion-label>
         <ion-note slot="end" (click)="setDevMode($event)">v{{info.version}}</ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Build version</ion-label>
+        <ion-label>{{"SETTINGS_PAGE.BUILD_VERSION" | translate}}</ion-label>
         <ion-note slot="end">{{info.build}}</ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Collecte de statistiques anonymes</ion-label>
+        <ion-label>{{"SETTINGS_PAGE.DATA_COLLECTION" | translate}}</ion-label>
         <ion-toggle [(ngModel)]="settings.isUserOptIn" (ngModelChange)="settingsChanged()"></ion-toggle>
       </ion-item>
     </ion-list>
     <ion-list>
       <ion-list-header>
-        Données ePocs
+        {{"SETTINGS_PAGE.EPOC_DATA" | translate}}
       </ion-list-header>
       <ion-item *ngIf="settings.devMode">
-        <ion-label>Mode développeur</ion-label>
+        <ion-label>{{"SETTINGS_PAGE.DEV_MODE" | translate}}</ion-label>
         <ion-toggle [(ngModel)]="settings.devMode" (ngModelChange)="disableDevMode($event)"></ion-toggle>
       </ion-item>
       <ion-item role="button" *ngIf="settings.devMode">
-        <ion-label >Ouvrir un autre ePoc</ion-label>
+        <ion-label >{{"SETTINGS_PAGE.OPEN_EPOC" | translate}}</ion-label>
         <ion-icon color="icon" slot="end" routerLink="/open" name="folder-open-outline"></ion-icon>
       </ion-item>
       <ion-item *ngIf="settings.devMode">
-        <ion-label>Bibliothèque</ion-label>
+        <ion-label>{{"SETTINGS_PAGE.LIBRARY" | translate}}</ion-label>
         <ion-select [value]="settings.libraryMode" (ionChange)="libraryChanged($event)">
           <ion-select-option value="libraryUrl">Prod</ion-select-option>
           <ion-select-option value="libraryQlfUrl">Qlf</ion-select-option>
         </ion-select>
       </ion-item>
       <div role="button" class="big-button" (click)="deleteData()">
-          <div class="big-button-label"><ion-icon aria-hidden="true" name="trash-outline"></ion-icon> Supprimer les données</div>
-          <div class="big-button-sublabel">Attestations, quiz, préférences, etc.</div>
+          <div class="big-button-label"><ion-icon aria-hidden="true" name="trash-outline"></ion-icon>{{"SETTINGS_PAGE.DELETE_DATA" | translate}}</div>
+          <div class="big-button-sublabel">{{"SETTINGS_PAGE.DATA_EXAMPLE" | translate}}</div>
       </div>
     </ion-list>
   </div>

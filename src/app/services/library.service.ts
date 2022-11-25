@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
 import {File} from '@ionic-native/file/ngx';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {AppService} from './app.service';
-
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
@@ -44,7 +44,8 @@ export class LibraryService {
         private router: Router,
         public alertController: AlertController,
         private readonly tracker: MatomoTracker,
-        public appService: AppService
+        public appService: AppService,
+        public translate: TranslateService
     ) {
         this.settingsStore.settings$.subscribe(settings => {
             if (!settings) return;
@@ -194,49 +195,49 @@ export class LibraryService {
     async epocLibraryMenu(epoc){
         const buttons = [
             {
-                text: 'Table des matières',
+                text: this.translate.instant('LIBRARY_PAGE.MENU.TOC'),
                 icon: 'list-circle-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/toc/' + epoc.id);
                 }
             },
             {
-                text: 'Scores & attestation',
+                text: this.translate.instant('LIBRARY_PAGE.MENU.CERTIFICATE'),
                 icon: 'star-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/score/' + epoc.id);
                 }
             },
             {
-                text: 'Licence',
+                text: this.translate.instant('LIBRARY_PAGE.MENU.LICENSE'),
                 icon: 'receipt-outline',
                 handler: () => {
                     this.appService.displayLicence(epoc)
                 }
             },
             ...(epoc.updateAvailable ? [{
-                text: 'Mettre à jour',
+                text: this.translate.instant('LIBRARY_PAGE.MENU.UPDATE'),
                 icon: 'cloud-download-outline',
                 handler: () => {
                     this.deleteEpoc(epoc).subscribe(() => this.downloadEpoc(epoc))
                 }
             }] : []),
             {
-                text: 'Laisser un commentaire',
+                text: this.translate.instant('LIBRARY_PAGE.MENU.COMMENT'),
                 icon: 'chatbox-ellipses-outline',
                 handler: () => {
                     this.appService.leaveComment(epoc.id)
                 }
             },
             ...(epoc.opened ? [{
-                text: 'Réinitialiser',
+                text: this.translate.instant('LIBRARY_PAGE.MENU.RESET'),
                 icon: 'refresh-outline',
                 handler: () => {
                     this.confirmReset(epoc)
                 }
             }] : []),
             {
-                text: 'Supprimer',
+                text: this.translate.instant('LIBRARY_PAGE.MENU.DELETE'),
                 icon: 'trash',
                 handler: () => {
                     this.confirmDelete(epoc)
