@@ -34,8 +34,8 @@
       <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
       <div class="library-item-toolbar" *ngIf="epoc.downloaded">
         <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.id">
-          <span *ngIf="!epoc.opened">Découvrir</span>
-          <span *ngIf="epoc.opened">Continuer</span>
+          <span *ngIf="!epoc.opened">{{'LIBRARY_PAGE.DISCOVER' | translate}}</span>
+          <span *ngIf="epoc.opened">{{'LIBRARY_PAGE.CONTINUE' | translate}}</span>
           <ion-icon aria-hidden="true" *ngIf="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>
         <ion-button class="round" [ngClass]="{'update-available': epoc.updateAvailable}" color="inria-base-button" (click)="openEpocMenu(epoc)">
@@ -45,19 +45,19 @@
       <div class="library-item-toolbar" *ngIf="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">
         <ion-button class="expanded" color="inria-base-button" (click)="downloadEpoc(epoc)">
           <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>
-          <span class="base-btn">Télécharger</span>
+          <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOAD' | translate}}</span>
         </ion-button>
       </div>
       <div class="library-item-toolbar" *ngIf="epoc.downloading">
         <ion-button class="expanded" disabled="true" color="inria-base-button">
           <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>
-          <span class="base-btn">Téléchargement <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
+          <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOADING' | translate}} <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
         </ion-button>
       </div>
       <div class="library-item-toolbar" *ngIf="epoc.unzipping">
         <ion-button class="expanded" disabled="true" color="inria-base-button">
           <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>
-          <span class="base-btn">Ouverture du zip<ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
+          <span class="base-btn">{{'LIBRARY_PAGE.OPEN_ZIP' | translate}}<ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
         </ion-button>
       </div>
     </div>

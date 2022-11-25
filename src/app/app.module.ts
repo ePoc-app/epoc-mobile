@@ -7,7 +7,7 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
@@ -27,6 +27,10 @@ import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
 import {NgxMatomoRouterModule} from '@ngx-matomo/router';
 import {environment as env} from 'src/environments/environment';
 
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+
 Sentry.init(
     {
         dsn: env.production ? 'https://2992d74734b44e5cbc12b4926bdcd7be@o1092720.ingest.sentry.io/6111359' : null,
@@ -44,6 +48,10 @@ Sentry.init(
         ]
     }
 );
+
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
@@ -65,6 +73,14 @@ Sentry.init(
         }),
         NgxMatomoRouterModule,
         PipesModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            },
+            defaultLanguage: 'fr'
+        })
     ],
     providers: [
         {provide: ErrorHandler, useValue: Sentry.createErrorHandler()},

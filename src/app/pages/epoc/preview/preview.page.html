@@ -3,12 +3,6 @@
     <app-card>
       <div class="epoc-title">
         <h3>{{epoc.title}}</h3>
-        <ng-container *ngFor="let author of epoc.authors | values;let i = index;">
-          <span class="epoc-author" [ngClass]="{'align-left' : i%2 == 1, 'align-center': i%2 == 0 && i==(epoc.authors|values).length - 1}">
-            {{author.name}}
-          </span>
-          <span class="epoc-author-splitter" *ngIf="i%2 == 0 && i<(epoc.authors|values).length - 1">|</span>
-        </ng-container>
       </div>
 
       <div class="epoc-trailer">
@@ -19,28 +13,28 @@
         <div class="epoc-spec">
           <div class="epoc-spec-icon"><ion-icon name="reader-outline"></ion-icon></div>
           <div class="epoc-spec-value">
-            {{epoc.chaptersCount}} {{epoc.chaptersCount > 1 ?'modules' : 'module'}}
+            {{epoc.chaptersCount}} {{'OVERVIEW_PAGE.CHAPTERS' | plural: epoc.chaptersCount | translate}}
           </div>
         </div>
         <div class="epoc-spec">
           <div class="epoc-spec-icon"><ion-icon name="cube-outline"></ion-icon></div>
-          <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{epoc.assessmentsCount > 1 ? 'activités':'activité'}}</div>
+          <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{'OVERVIEW_PAGE.ACTIVITIES' | plural: epoc.assessmentsCount | translate}}</div>
         </div>
         <div class="epoc-spec">
           <div class="epoc-spec-icon"><ion-icon name="time-outline"></ion-icon></div>
-          <div class="epoc-spec-value">10 min/module</div>
+          <div class="epoc-spec-value">10 {{'OVERVIEW_PAGE.MIN_MODULE' | translate}}</div>
         </div>
       </div>
 
       <div class="tabs-headers">
         <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
-          <span>{{epoc.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</span>
+          <span>{{'OVERVIEW_PAGE.OBJECTIVES' | plural: epoc.objectives.length | translate}}</span>
         </div>
         <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
-          <span>Résumé</span>
+          <span>{{'OVERVIEW_PAGE.RESUME' | translate}}</span>
         </div>
         <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
-          <span>{{(epoc.authors|values).length > 1 ? 'Auteurs' : 'Auteur'}}</span>
+          <span>{{'OVERVIEW_PAGE.AUTHORS' | plural:(epoc.authors|values).length | translate}}</span>
         </div>
       </div>
       <div class="tabs">

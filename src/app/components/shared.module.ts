@@ -24,7 +24,7 @@ import {CorrectionGenericComponent} from './corrections/correction-generic/corre
 import {CorrectionReorderComponent} from './corrections/correction-reorder/correction-reorder.component';
 import {DebugComponent} from './debug/debug.component';
 import {CertificateModalComponent} from './certificate-modal/certificate-modal.component';
-
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -77,7 +77,8 @@ import {CertificateModalComponent} from './certificate-modal/certificate-modal.c
         CorrectionGenericComponent,
         CorrectionReorderComponent,
         DebugComponent,
-        CertificateModalComponent
+        CertificateModalComponent,
+        TranslateModule
     ]
 })
 export class SharedModule { }

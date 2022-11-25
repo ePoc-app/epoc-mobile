@@ -11,6 +11,7 @@ import {environment as env} from 'src/environments/environment';
 import {App, AppInfo} from '@capacitor/app';
 import {LibraryService} from '../../services/library.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class SettingsPage implements OnInit {
         public toastController: ToastController,
         private router: Router,
         private auth: AuthService,
-        private readonly tracker: MatomoTracker
+        private readonly tracker: MatomoTracker,
+        public translate: TranslateService
     ) {
 
         this.settingsStore.settings$.subscribe(settings => {
@@ -80,15 +82,15 @@ export class SettingsPage implements OnInit {
 
     async deleteData() {
         const alert = await this.alertController.create({
-            header: 'Êtes vous sûr ?',
-            message: 'Cette action effacera les données des exercices de l\'application <br/><small>(attestations, quiz, préférences, etc.)</small>',
+            header: this.translate.instant("SETTINGS_PAGE.DELETE_DATA_MODAL.INFO"),
+            message: this.translate.instant("SETTINGS_PAGE.DELETE_DATA_MODAL.MESSAGE"),
             buttons: [
                 {
-                    text: 'Annuler',
+                    text: this.translate.instant("CANCEL"),
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: 'Confirmer',
+                    text: this.translate.instant("CONFIRM"),
                     handler: () => {
                         this.readingStore.resetAll();
                         this.settingsStore.resetSettings();
@@ -116,27 +118,27 @@ export class SettingsPage implements OnInit {
             return;
         }
         const alert = await this.alertController.create({
-            header: 'Renseigner vos informations',
-            message: 'Ces informations serviront à l\'édition des attestations',
+            header: this.translate.instant('SETTINGS_PAGE.SET_USER.INFO'),
+            message: this.translate.instant('SETTINGS_PAGE.SET_USER.MESSAGE'),
             inputs: [
                 {
                     name: 'lastname',
                     type: 'text',
-                    placeholder: 'Nom',
+                    placeholder: this.translate.instant('SETTINGS_PAGE.SET_USER.LASTNAME_PLACEHOLDER'),
                 },
                 {
                     name: 'firstname',
                     type: 'text',
-                    placeholder: 'Prenom',
+                    placeholder: this.translate.instant('SETTINGS_PAGE.SET_USER.FIRSTNAME_PLACEHOLDER'),
                 }
             ],
             buttons: [
                 {
-                    text: 'Annuler',
+                    text: this.translate.instant('CANCEL'),
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: 'Confirmer',
+                    text: this.translate.instant('CONFIRM'),
                     handler: (data) => {
                         this.user = {firstname:data.firstname, lastname: data.lastname , username: null, email: null};
                         this.auth.setUser(this.user);
@@ -181,22 +183,22 @@ export class SettingsPage implements OnInit {
     async confirmDevMode() {
         this.resetDevModeCount();
         const alert = await this.alertController.create({
-            header: 'Activation du mode développeur',
-            message: 'Veuillez fournir le mot de passe',
+            header: this.translate.instant('SETTINGS_PAGE.DEV_MODE_MODAL.INFO'),
+            message: this.translate.instant('SETTINGS_PAGE.DEV_MODE_MODAL.MESSAGE'),
             inputs: [
                 {
                     name: 'password',
                     type: 'password',
-                    placeholder: 'Mot de passe',
+                    placeholder: this.translate.instant('SETTINGS_PAGE.DEV_MODE_MODAL.PASSWORD'),
                 }
             ],
             buttons: [
                 {
-                    text: 'Annuler',
+                    text: this.translate.instant('CANCEL'),
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: 'Confirmer',
+                    text: this.translate.instant('CONFIRM'),
                     handler: (data) => {
                         this.user = {firstname: data.firstname, lastname: data.lastname, username: null, email: null};
                         this.auth.setUser(this.user);
@@ -205,7 +207,7 @@ export class SettingsPage implements OnInit {
                             this.settings.devMode = true;
                             this.settingsChanged();
                         } else {
-                            this.presentToast('Mot de passe erroné')
+                            this.presentToast(this.translate.instant('SETTINGS_PAGE.DEV_MODE_MODAL.WRONG_PASSWORD'));
                         }
                     }
                 }
