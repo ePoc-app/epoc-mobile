@@ -4,6 +4,7 @@ import { SplashScreen } from '@capacitor/splash-screen'
 import {LibraryService} from './services/library.service';
 import { SettingsStoreService } from './services/settings-store.service'
 import {MatomoTracker} from '@ngx-matomo/tracker';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -16,9 +17,14 @@ export class AppComponent {
     private platform: Platform,
     public libraryService: LibraryService,
     public settingsStoreService: SettingsStoreService,
-    private readonly tracker: MatomoTracker
+    private readonly tracker: MatomoTracker,
+    public translate: TranslateService
   ) {
     this.initializeApp();
+    // this language will be used as a fallback when a translation isn't found in the current language
+    translate.setDefaultLang('fr');
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    translate.use('en');
   }
 
   initializeApp() {

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button aria-label="Retour" text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
-    <ion-title>Ouvrir un ePoc</ion-title>
+    <ion-title>{{"SETTINGS_PAGE.OPEN_PAGE.HEADER" | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,20 +14,20 @@
         <ion-col>
           <ion-card *ngIf="!working">
             <ion-card-header>
-              <ion-card-title>Ouvrir</ion-card-title>
+              <ion-card-title>{{"SETTINGS_PAGE.OPEN_PAGE.OPEN" | translate}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <p>Merci de charger un zip ou choisir dans les listes ci-dessous.</p>
+              <p>{{"SETTINGS_PAGE.OPEN_PAGE.INFO" | translate}}</p>
             </ion-card-content>
             <ion-card-content>
               <ion-button class="start-course" expand="block" color="inria-blue" (click)="pickFile()" [disabled]="working" strong>
                 <ion-icon aria-hidden="true" name="folder-open" mode="ios" slot="start"></ion-icon>
-                Ouvrir ePoc
+                {{"SETTINGS_PAGE.OPEN_PAGE.BUTTON" | translate}}
                 <input type="file" hidden (change)="fileHandler($event)" #file>
               </ion-button>
             </ion-card-content>
             <ion-card-content *ngIf="zipList?.length > 0">
-              <ion-card-subtitle>Zips disponibles :</ion-card-subtitle>
+              <ion-card-subtitle>{{"SETTINGS_PAGE.OPEN_PAGE.ZIPS" | translate}}</ion-card-subtitle>
               <ion-list>
                 <ion-item *ngFor="let zip of zipList">
                   <ion-label (click)="openEpoc(zip)">{{zip}}</ion-label>
@@ -36,7 +36,7 @@
               </ion-list>
             </ion-card-content>
             <ion-card-content *ngIf="epocList?.length > 0">
-              <ion-card-subtitle>ePocs disponibles :</ion-card-subtitle>
+              <ion-card-subtitle>{{"SETTINGS_PAGE.OPEN_PAGE.EPOCS" | translate}}</ion-card-subtitle>
               <ion-list>
                 <ion-item *ngFor="let epoc of epocList">
                   <ion-label [routerLink]="'/epoc/toc/'+epoc">{{epoc}}</ion-label>
@@ -47,7 +47,7 @@
           </ion-card>
           <ion-card *ngIf="working">
             <ion-card-header>
-              <ion-card-title>Chargement</ion-card-title>
+              <ion-card-title>{{"LOADING" | translate}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>{{message}}</ion-card-content>
             <ion-card-content class="loader">

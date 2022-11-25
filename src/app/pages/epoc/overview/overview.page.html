@@ -26,28 +26,28 @@
       <div class="epoc-spec">
         <div class="epoc-spec-icon"><ion-icon name="reader-outline"></ion-icon></div>
         <div class="epoc-spec-value">
-          {{epoc.chaptersCount}} {{epoc.chaptersCount > 1 ?'modules' : 'module'}}
+          {{epoc.chaptersCount}} {{'OVERVIEW_PAGE.CHAPTERS' | plural:epoc.chaptersCount | translate}}
         </div>
       </div>
       <div class="epoc-spec">
         <div class="epoc-spec-icon"><ion-icon name="cube-outline"></ion-icon></div>
-        <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{epoc.assessmentsCount > 1 ? 'activités':'activité'}}</div>
+        <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{'OVERVIEW_PAGE.ACTIVITIES' | plural:epoc.assessmentsCount | translate}}</div>
       </div>
       <div class="epoc-spec">
         <div class="epoc-spec-icon"><ion-icon name="time-outline"></ion-icon></div>
-        <div class="epoc-spec-value">10 min/module</div>
+        <div class="epoc-spec-value">10 {{'OVERVIEW_PAGE.MIN_MODULE' | translate}}</div>
       </div>
     </div>
 
     <div class="tabs-headers">
       <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
-        <span>{{epoc.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</span>
+        <span>{{'OVERVIEW_PAGE.OBJECTIVES' | plural: epoc.objectives.length | translate}}</span>
       </div>
       <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
-        <span>Résumé</span>
+        <span>{{'OVERVIEW_PAGE.RESUME' | translate}}</span>
       </div>
       <div class="tabs-header" (click)="selectTab(2)" [ngClass]="selectedTab === 2 ? 'selected':''">
-        <span>{{(epoc.authors|values).length > 1 ? 'Auteurs' : 'Auteur'}}</span>
+        <span>{{'OVERVIEW_PAGE.AUTHORS' | plural: (epoc.authors|values).length | translate}}</span>
       </div>
     </div>
     <div class="tabs">
@@ -76,21 +76,21 @@
 <ion-footer mode="ios" *ngIf="epoc">
   <ion-toolbar>
     <ion-button class="start-course" [routerLink]="'/epoc/toc/'+epoc.id" routerDirection="forward" size="large" expand="block" color="inria" strong *ngIf="epoc.downloaded">
-      <span *ngIf="!epoc.opened">C'est parti !</span>
-      <span *ngIf="epoc.opened">Reprendre</span>
+      <span *ngIf="!epoc.opened">{{'OVERVIEW_PAGE.GO' | translate}}</span>
+      <span *ngIf="epoc.opened">{{'OVERVIEW_PAGE.CONTINUE' | translate}}</span>
       <ion-icon *ngIf="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>
     </ion-button>
     <ion-button class="expanded" color="inria-contrast-button" size="large" expand="block" (click)="downloadEpoc(epoc)" *ngIf="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">
       <ion-icon name="cloud-download-outline" slot="start"></ion-icon>
-      <span>Télécharger</span>
+      <span>{{'OVERVIEW_PAGE.DOWNLOAD' | translate}}</span>
     </ion-button>
     <ion-button class="expanded" size="large" expand="block" disabled="true" color="inria-contrast-button" *ngIf="epoc.downloading">
       <ion-icon name="sync-outline" class="spin" slot="start"></ion-icon>
-      <span>Téléchargement <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
+      <span>{{'OVERVIEW_PAGE.DOWNLOADING' | translate}} <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
     </ion-button>
     <ion-button class="expanded" size="large" expand="block" disabled="true" color="inria-contrast-button" *ngIf="epoc.unzipping">
       <ion-icon name="cog-outline" class="spin" slot="start"></ion-icon>
-      <span>Ouverture <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
+      <span>{{'OVERVIEW_PAGE.OPENING' | translate}} <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
     </ion-button>
   </ion-toolbar>
 </ion-footer>

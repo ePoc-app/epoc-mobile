@@ -3,13 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
-    <ion-title>A propos</ion-title>
+    <ion-title>{{'ABOUT_PAGE.ABOUT' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="about-content-wrapper">
-    <div aria-hidden="true" class="about-header">
+    <div class="about-header">
       <div class="logo" slot="start">
         <ion-img src="assets/img/ePoc.svg"></ion-img>
       </div>
@@ -18,41 +18,34 @@
       </div>
     </div>
     <div class="about-text">
-      <h4>L'application ePoc</h4>
-      <p>
-        ePoc (Electronic Pocket Open Course) est une application de formation numérique pour mobile.
-        Elle a été développée au sein d'<a href="https://learninglab.inria.fr" target="_blank" title="Site d'Inria Learning Lab">Inria Learning Lab</a>.
+      <h4>{{'ABOUT_PAGE.EPOC_APPLICATION' | translate}}</h4>
+      <p [innerHTML]="'ABOUT_PAGE.EPOC_DESCRIPTION' | translate">
       </p>
     </div>
     <div class="about-data">
-      <h4>Les données personnelles</h4>
-      <p>Aucune donnée personnelle n'est collectée.</p>
-      <h4>Analytics</h4>
+      <h4>{{'ABOUT_PAGE.PERSONAL_DATA' | translate}}</h4>
+      <p>{{'ABOUT_PAGE.PERSONAL_DATA_DESCRIPTION' | translate}}</p>
+      <h4>{{'ABOUT_PAGE.ANALYTICS' | translate}}</h4>
       <p>
-        Nous utilisons Matomo, un logiciel libre et open source de mesure de statistiques, préconisé par la CNIL.
+        {{'ABOUT_PAGE.ANALYTICS_DESCRIPTION_1' | translate}}
       </p>
       <p>
-        Ces analytiques sont utilisés uniquement à des fins de recherche interne sur la manière dont nous
-        pouvons améliorer le service que nous offrons à tous nos utilisateurs.
+        {{'ABOUT_PAGE.ANALYTICS_DESCRIPTION_2' | translate}}
+      </p>
+      <p [innerHTML]="'ABOUT_PAGE.ANALYTICS_DESCRIPTION_3' | translate">
       </p>
       <p>
-        Ils permettent simplement d’évaluer la manière dont vous interagissez avec notre applications en tant qu’<b>utilisateur anonyme</b>
-        (les données recueillies ne permettent pas de vous identifier personnellement).
-      </p>
-      <p>
-        Vous pouvez vous opposer à cette collecte dans les paramètres de l'application. Cela protégera votre vie privée,
-        mais empêchera également le propriétaire d'apprendre de vos actions et de créer une meilleure expérience pour
-        vous et les autres utilisateurs.
+        {{'ABOUT_PAGE.ANALYTICS_DESCRIPTION_4' | translate}}
       </p>
     </div>
     <div class="about-contact">
-      <h4>Contact</h4>
+      <h4>{{'ABOUT_PAGE.CONTACT' | translate}}</h4>
       <p>
-        Vous avez une question ? Vous pouvez nous contacter à l'adresse suivante : <br/>
+        {{'ABOUT_PAGE.CONTACT_ILL' | translate}}<br/>
         <a href="mailto:ill-epoc-contact@inria.fr" title="Contact Inria Learning Lab">ill-ePoc-contact@inria.fr</a>
       </p>
       <p>
-        Délégué à la protection des données : <br/>
+        {{'ABOUT_PAGE.CONTACT_DPO' | translate}}<br/>
         <a href="mailto:dpo@inria.fr" title="Contact Délégué à la protection des données">dpo@inria.fr</a>
       </p>
     </div>

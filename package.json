@@ -5,6 +5,7 @@
   "homepage": "https://learninglab.inria.fr",
   "scripts": {
     "dev": "ionic serve --external --host=$(hostname) --configuration=dev",
+    "dev-preview": "ionic serve --external --host=$(hostname) --configuration=preview",
     "build": "ng build",
     "build-preview": "ng build --configuration=preview --output-path=dist",
     "android": "npm run resources && ionic capacitor run android --prod --open",
@@ -53,6 +54,8 @@
     "@ionic/storage-angular": "^3.0.6",
     "@ngx-matomo/router": "^2.4.2",
     "@ngx-matomo/tracker": "^2.4.2",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "@sentry/angular": "^7.0.0",
     "@sentry/tracing": "^7.0.0",
     "@wdio/cli": "^7.19.7",

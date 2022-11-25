@@ -1,0 +1,122 @@
+{
+    "LIBRARY_PAGE": {
+        "DOWNLOAD": "Download",
+        "CONTINUE": "Continue",
+        "DOWNLOADING": "Downloading",
+        "DISCOVER": "Discover",
+        "MENU": {
+            "TOC": "Table of Contents",
+            "CERTIFICATE": "Score & certificate",
+            "LICENSE": "License",
+            "UPDATE": "Update",
+            "COMMENT": "Leave a comment",
+            "DELETE": "Delete",
+            "RESET": "Reset"
+        }
+    },
+    "ABOUT_PAGE": {
+        "ABOUT": "About",
+        "EPOC_APPLICATION": "The ePoc application",
+        "EPOC_DESCRIPTION": "ePoc (Electronic Pocket Open Course) is a digital training application for mobile. It has been developed within<a href=\"https://learninglab.inria.fr\" target=\"_blank\" title=\"Inria Learning Lab website \" class=\"about-page-link\">Inria Learning Lab",
+        "PERSONAL_DATA": "Personal data",
+        "PERSONAL_DATA_DESCRIPTION": "No personal data is collected.",
+        "ANALYTICS": "Analytics",
+        "ANALYTICS_DESCRIPTION_1": "We use Matomo, a free and open source software to measure statistics, recommended by the CNIL.",
+        "ANALYTICS_DESCRIPTION_2": "These analytics are used solely for internal research purposes on how we can improve the service we offer to all our users",
+        "ANALYTICS_DESCRIPTION_3": "They simply allow us to evaluate how you interact with our application as an <b>anonymous user</b> (the data collected does not identify you personally).",
+        "ANALYTICS_DESCRIPTION_4": "You can object to this collection in the application settings. This will protect your privacy, but will also prevent the owner from learning about your actions and creating a better experience for you and others users.",
+        "CONTACT": "Contact",
+        "CONTACT_ILL": "You have a question ? You can contact us at the following address : ",
+        "CONTACT_DPO": "Data Protection Officer : "
+    },
+    "SETTINGS_PAGE": {
+        "SETTINGS": "Settings",
+        "DISPLAY": "Display",
+        "DEBUG": "Debug",
+        "DEBUG_ERROR": "Issue a test error",
+        "THEME": "Theme",
+        "THEME_AUTO": "Automatic",
+        "THEME_LIGHT": "Light",
+        "THEME_DARK": "Dark",
+        "FONT": "Font",
+        "SIZE": "Size",
+        "INTERLINE": "Interline",
+        "PREVIEW": "Preview",
+        "PREVIEW_TITLE": "Title",
+        "USER": "User",
+        "EMAIL": "Email",
+        "NAME": "Last name",
+        "FIRSTNAME": "First name",
+        "USERNAME": "Username",
+        "DEFINE_USER": "Define user",
+        "APP_INFO": "Application Information",
+        "VERSION": "Version",
+        "BUILD_VERSION": "Build version",
+        "DATA_COLLECTION": "Anonymous statisctics collection",
+        "EPOC_DATA": "ePocs data",
+        "DEV_MODE": "Developer mode",
+        "OPEN_EPOC": "Open a different ePoc",
+        "LIBRARY": "Library",
+        "DELETE_DATA": "Delete data",
+        "DATA_EXAMPLE": "Certificates, quizzes, preferences, etc.",
+        "SET_USER": {
+            "INFO": "Fill in your information",
+            "MESSAGE": "This information wil be used to issue certificates",
+            "LASTNAME_PLACEHOLDER": "Last name",
+            "FIRSTNAME_PLACEHOLDER": "First name",
+            "CANCEL": "Cancel",
+            "CONFIRM": "Confirm"
+        },
+        "DEV_MODE_MODAL": {
+            "INFO": "Activation of developer mode",
+            "MESSAGE": "Please provide the password",
+            "PASSWORD": "Password",
+            "CANCEL": "Cancel",
+            "CONFIRM": "Confirm",
+            "WRONG_PASSWORD": "Wrong password"
+        },
+        "OPEN_PAGE": {
+            "HEADER": "Open an ePoc",
+            "OPEN": "Open",
+            "INFO": "Please upload a zip or choose from the lists below",
+            "BUTTON": "Open ePoc",
+            "ZIPS": "Avalaible zips",
+            "EPOCS": "Avalaible ePocs"
+        },
+        "DELETE_DATA_MODAL": {
+            "INFO": "Are you sure ? ",
+            "MESSAGE": "This action will delete the exercise data from the application <br/><small>(certificates, quizzes, preferences, etc.)</small>"
+        }
+    },
+    "OVERVIEW_PAGE": {
+        "PRESENTATION": "Course presentation",
+        "ACTIVITIES": {
+            "singular": "Activity",
+            "plural": "Activities"
+        },
+        "CHAPTERS": {
+            "singular": "Module",
+            "plural": "Modules"
+        },
+        "MIN_MODULE": "min/module",
+        "OBJECTIVES": {
+            "singular": "Objective",
+            "plural": "Objectives"
+        },
+        "RESUME": "Summary",
+        "AUTHORS": {
+            "singular": "Author",
+            "plural": "Authors"
+        },
+        "PICTURE_ALT": "Picture of ",
+        "GO": "Let's go !",
+        "CONTINUE": "Continue",
+        "DOWNLOAD": "Download",
+        "DOWNLOADING": "Downloading",
+        "OPENING": "Opening"
+    },
+
+    "LOADING": "Loading",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm"
+}
