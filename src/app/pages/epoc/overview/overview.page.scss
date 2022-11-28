@@ -64,7 +64,7 @@
 
 ion-footer ion-toolbar{
   padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom, 0)) 1rem;
-  box-shadow: 0 -6px 14px 0 rgba(218,222,234,0.51);
+  box-shadow: 0 -6px 14px 0 var(--ion-color-shadow);
 
   ion-button{
     max-width: 25rem;
