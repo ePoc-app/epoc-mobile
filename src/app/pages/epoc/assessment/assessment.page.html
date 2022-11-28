@@ -14,14 +14,14 @@
                         <div class="title-icon">
                             <ion-icon aria-hidden="true" name="star-outline"></ion-icon>
                         </div>
-                        <h5 class="title" *ngIf="scoreMax > 0">Vous obtenez</h5>
-                        <h5 class="title" *ngIf="scoreMax <= 0">Activité non noté</h5>
+                        <h5 class="title" *ngIf="scoreMax > 0">{{'QUESTION.ASSESSMENT_PAGE.SCORE' | translate}}</h5>
+                        <h5 class="title" *ngIf="scoreMax <= 0">{{'QUESTION.ASSESSMENT_PAGE.NOT_GRADED' | translate}}</h5>
                     </div>
                     <div class="score" *ngIf="scoreMax > 0">
                         <div class="score-points">
                             <div class="score-points-assessment">{{assessmentData.userScore}} pts</div>
                             <div class="score-points-total">
-                                <b>Score total :</b>
+                                <b>{{'QUESTION.ASSESSMENT_PAGE.TOTAL_SCORE' | translate}}</b>
                                 {{assessmentData.totalUserScore + assessmentData.userScore}} / {{assessmentData.totalScore}}
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <ion-button size="large" expand="block" color="outline-button" fill="outline" (click)="retry()">
-                        <span>Recommencer l'activité</span>
+                        <span>{{'QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY' | translate}}</span>
                     </ion-button>
                 </app-card>
             </ion-slide>
@@ -45,21 +45,21 @@
 
 <ion-footer *ngIf="!isEnd">
     <ion-button size="large" expand="block" color="inria" [disabled]="!currentQuestionUserResponse" (click)="checkAnswer();" *ngIf="!correctionShown">
-        <span>Valider</span>
+        <span>{{'QUESTION.VALIDATE' | translate}}</span>
     </ion-button>
     <div class="next-buttons">
         <ion-button size="large" color="inria" (click)="toggleExplanation()" *ngIf="correctionShown">
-            <span *ngIf="!explanationShown">Explications</span>
-            <span *ngIf="explanationShown">Réponses</span>
+            <span *ngIf="!explanationShown">{{'QUESTION.EXPLANATIONS' | translate}}</span>
+            <span *ngIf="explanationShown">{{'QUESTION.RESPONSES' | translate}}</span>
         </ion-button>
         <ion-button role="button" color="inria-grey" size="large" (click)="nextQuestion()" *ngIf="correctionShown">
-            <span>Suivant</span>
+            <span>{{'QUESTION.NEXT' | translate}}</span>
             <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>
     </div>
 </ion-footer>
 <ion-footer *ngIf="isEnd">
     <ion-button role="button" size="large" expand="block" color="inria" (click)="resume()">
-        <span>Continuer le cours</span>
+        <span>{{'QUESTION.ASSESSMENT_PAGE.CONTINUE_COURSE' | translate}}</span>
     </ion-button>
 </ion-footer>

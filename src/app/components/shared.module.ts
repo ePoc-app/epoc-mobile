@@ -31,7 +31,8 @@ import {TranslateModule} from '@ngx-translate/core';
         IonicModule,
         CommonModule,
         PipesModule,
-        RouterModule
+        RouterModule,
+        TranslateModule
     ],
     declarations: [
         ScoreProgressComponent,

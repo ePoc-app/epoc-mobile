@@ -162,6 +162,12 @@
             },
             "START": "Commencer l'activité",
             "REDO": "Refaire l'activité"
+        },
+        "CHAPTER_END": {
+            "NEXT": "{{chapter}} suivant",
+            "MSG": "Bravo, vous avez atteint la fin de la formation.<br/>Pour obtenir l'attestation, consultez la page des scores<br/>Ou retournez à la table des matières pour rejouer un <span>{{chapter}}</span>.",
+            "SCORE": "Page des scores",
+            "REVIEW": "Donner votre avis"
         }
     },
 
@@ -169,7 +175,18 @@
         "PREVIEW": {
             "RESPONSES": "Les réponses",
             "EXPLANATION": "Explication"
-        }
+        },
+        "ASSESSMENT_PAGE": {
+            "SCORE": "Vous obtenez",
+            "NOT_GRADED": "Activité non notée",
+            "TOTAL_SCORE": "Score total :",
+            "RESTART_ACTIVITY": "Recommencer l'activité",
+            "CONTINUE_COURSE": "Continuer le cours"
+        },
+        "VALIDATE": "Valider",
+        "NEXT": "Suivant",
+        "EXPLANATIONS": "Explications",
+        "RESPONSES": "Réponses"
     },
 
     "LOADING": "Chargement",
