@@ -1,25 +1,22 @@
 <ng-container *ngIf="nextChapter">
-  <p><b class="ion-text-capitalize">{{chapterLabel}} suivant :</b> {{nextChapter.title}} </p>
+  <p><b class="ion-text-capitalize"[translate]="'PLAYER.CHAPTER_END.NEXT'" [translateParams]="{chapter: chapterLabel}" > :</b> {{nextChapter.title}} </p>
   <ion-button expand="block" size="large" color="outline-button" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
-    <span>Table des matières</span>
+    <span>{{'FLOATING_MENU.TOC' | translate}}</span>
   </ion-button>
   <ion-button expand="block" size="large" color="inria" [routerLink]="'/epoc/play/'+epoc.id+'/'+nextChapter.id">
-    <span>{{chapterLabel}} suivant</span>
+    <span [translate]="'PLAYER.CHAPTER_END.NEXT'" [translateParams]="{chapter: chapterLabel}"></span>
   </ion-button>
 </ng-container>
 <ng-container *ngIf="!nextChapter">
-  <p>
-    Bravo, vous avez atteint la fin de la formation.<br/>
-    Pour obtenir l'attestation, consultez la page des scores.<br/>
-    Ou retournez à la table des matières pour rejouer un <span>{{chapterLabel}}</span>.
+  <p [translate]="'PLAYER.CHAPTER_END.MSG'" [translateParams]="{chapter: chapterLabel}">
   </p>
   <ion-button expand="block" size="large" color="outline-button" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
-    <span>Table des matières</span>
+    <span>{{'FLOATING_MENU.TOC' | translate}}</span>
   </ion-button>
   <ion-button expand="block" size="large" color="inria" [routerLink]="'/epoc/score/'+epoc.id">
-    <span>Page des scores</span>
+    <span>{{'PLAYER.CHAPTER_END.SCORE' | translate}}</span>
   </ion-button>
   <ion-button expand="block" size="large" color="inria-grey" (click)="leaveComment()">
-    <span>Donner votre avis</span>
+    <span>{{'PLAYER.CHAPTER_END.REVIEW' | translate}}</span>
   </ion-button>
 </ng-container>

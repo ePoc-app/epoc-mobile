@@ -1,10 +1,10 @@
 <div aria-hidden="true" class="header" *ngIf="question.explanation" [ngClass]="{'shown':flipped && question.responses.length > 0}">
   <div class="correction-tabs">
     <div role="tab" [attr.aria-selected]="!explanationShown" class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':!explanationShown}">
-      <span>Réponses</span>
+      <span>{{'QUESTION.RESPONSES' | translate}}</span>
     </div>
     <div role="tab" [attr.aria-selected]="explanationShown" class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':explanationShown}">
-      <span>Explications</span>
+      <span>{{'QUESTION.EXPLANATIONS' | translate}}</span>
     </div>
   </div>
 </div>
@@ -43,7 +43,7 @@
         <div class="title-icon">
           <ion-icon aria-hidden="true" name="checkmark-circle-outline"></ion-icon>
         </div>
-        <h5 class="subtitle">Les réponses</h5>
+        <h5 class="subtitle">{{'QUESTION.PREVIEW.RESPONSES' | translate}}</h5>
       </div>
       <div [attr.aria-hidden]="!flipped" role="button" aria-label="Fermer" class="close" *ngIf="closable" (click)="back($event)">
         <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
@@ -59,7 +59,7 @@
       </ng-container>
       <div class="explanation-bottom-button" *ngIf="question.explanation">
         <ion-button color="inria" (click)="toggleExplanation($event)" *ngIf="showExplainButton">
-          <span>Explications</span>
+          <span>{{'QUESTION.EXPLANATIONS' | translate}}</span>
           <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>
       </div>
@@ -69,7 +69,7 @@
         <div class="title-icon">
           <ion-icon aria-hidden="true" name="document-text-outline"></ion-icon>
         </div>
-        <h5 class="subtitle">Explication</h5>
+        <h5 class="subtitle">{{'QUESTION.PREVIEW.EXPLANATION' | translate}}</h5>
       </div>
       <html-content [html]="question.explanation"></html-content>
     </div>

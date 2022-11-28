@@ -165,13 +165,30 @@
             },
             "START": "Start the activity",
             "REDO": "Redo the activity"
+        },
+        "CHAPTER_END": {
+            "NEXT": "next {{chapter}}",
+            "MSG": "Congratulation, you have reached the end of the course.<br/>To get the certificate, visit the score page<br/>Or return to the table of contents to replay a <span>{{chapter}}</span>.",
+            "SCORE": "Scores page",
+            "REVIEW": "Give your opinion"
         }
     },
     "QUESTION": {
         "PREVIEW": {
             "RESPONSES": "The responses",
             "EXPLANATION": "Explanation"
-        }
+        },
+        "ASSESSMENT_PAGE": {
+            "SCORE": "You obtain",
+            "NOT_GRADED": "Activity not graded",
+            "TOTAL_SCORE": "Total score :",
+            "RESTART_ACTIVITY": "Restart the activity",
+            "CONTINUE_COURSE": "Continue the course"
+        },
+        "VALIDATE": "Validate",
+        "NEXT": "Next",
+        "EXPLANATIONS": "Explanations",
+        "RESPONSES": "Responses"
     },
 
     "LOADING": "Loading",
