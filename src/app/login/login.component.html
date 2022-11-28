@@ -15,17 +15,17 @@
 <ion-content>
   <div class="wrapper">
     <div class="epoc-welcome">
-      <h1>Bienvenue</h1>
-      <h3>Dans la formation ePoc : Zone à Régime Restrictif</h3>
+      <h1>{{'ZRR.LOGIN.HEADER' | translate}}</h1>
+      <h3>{{'ZRR.LOGIN.ZRR_MSG' | translate}}</h3>
       <img src="assets/img/ZRR-couv-4.png"/>
     </div>
-    <p>Pour commencer veuillez vous connecter</p>
+    <p>{{'ZRR.LOGIN.MSG' | translate}}</p>
     <ion-button class="start-course" (click)="oauthLogin()" routerDirection="forward" size="large" expand="block" color="inria-icon" strong>
-      <span>Connexion CAS Inria</span>
+      <span>{{'ZRR.LOGIN.SPAN_CAS' | translate}}</span>
     </ion-button>
     <ion-button class="start-course" (click)="externalLogin()" routerDirection="forward" size="large" expand="block" fill="outline" color="inria-icon" strong>
-      <span>Connexion Externe</span>
+      <span>{{'ZRR.LOGIN.SPAN_EXT' | translate}}</span>
     </ion-button>
-    <p><a href="mailto:ill-epoc-contact@inria.fr">Demander un accès</a></p>
+    <p><a href="mailto:ill-epoc-contact@inria.fr">{{'ZRR.LOGIN.ACCESS' | translate}}</a></p>
   </div>
 </ion-content>

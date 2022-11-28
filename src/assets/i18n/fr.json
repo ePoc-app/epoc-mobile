@@ -4,14 +4,6 @@
         "CONTINUE": "Continuer",
         "DOWNLOADING": "Téléchargement",
         "DISCOVER": "Découvrir",
-        "MENU": {
-            "TOC": "Table de matières",
-            "CERTIFICATE": "Score & attestation",
-            "LICENSE": "Licence",
-            "UPDATE": "Mettre à jour",
-            "COMMENT": "Laisser un commentaire",
-            "DELETE": "Supprimer"
-        },
         "OPEN_ZIP": "Ouverture du zip"
     },
     "ABOUT_PAGE": {
@@ -111,8 +103,77 @@
         "DOWNLOADING": "Téléchargement",
         "OPENING": "Ouverture"
     },
+    "TOC_PAGE": {
+        "HEADER": "Table des matières",
+        "VIEW_MORE": "Voir plus",
+        "VIEW_LESS": "Voir moins"
+    },
+    "LICENSE_MODAL": {
+        "HEADER": "Licence",
+        "MESSAGE": "<strong>Conditions d’utilisation des contenus de l'ePoc :</strong><br/> Les ressources de l'ePoc sont, sauf mention contraire, diffusées sous Licence <a href=\"https://creativecommons.org/licenses/by/4.0/deed.fr\" title=\"Lien licence Creative Commons\">Creative Commons CC-BY 4.0</a> :<br/>Attribution. Le titulaire des droits autorise toute exploitation de l’œuvre, y compris à des fins commerciales, ainsi que la création d’œuvres dérivées, dont la distribution est également autorisée sans restriction, à condition de l’attribuer à son auteur en citant son nom.<br/><br/>Si vous utilisez des contenus de l'ePoc, voici la mention à ajouter pour l'attribution selon l'utilisation :<br/>Crédit : <strong>\"{{epoc}}\"</strong>, ePoc Inria, publié sous licence CC-BY dans l'application <a href=\"https://epoc.inria.fr/\" title=\"Lien vers site ePoc\">https://epoc.inria.fr/</a>"
+    },
+    "COMMENT_MODAL": {
+        "HEADER": "Laisser un commentaire",
+        "MESSAGE": "Sur quel service souhaitez-vous laisser un commentaire ?"
+    },
+    "ZRR": {
+        "LOGIN_PAGE": {
+            "HEADER": "Bienvenue",
+            "ZRR_MSG": "Dans la formation ePoc: Zone à Régime Restrictif",
+            "MSG": "Pour commencer veuillez vous connecter",
+            "SPAN_CAS": "Connexion à CAS Inria",
+            "SPAN_EXT": "Connexion externe",
+            "ACCESS": "Demander un accès",
+            "WELCOME": "Bienvenue",
+            "ERROR_RECUP": "Problème de récupération du profil", 
+            "ERROR_AUTH": "Problème d'authentification"
+        },
+        "LOGIN_MODAL": {
+            "HEADER": "Authentification",
+            "EMAIL_PLACEHOLDER": "nom@gmail.com",
+            "ERROR": "Email ou mot de passe incorrect"
+       }
+    },
+
+    "FLOATING_MENU": {
+        "HOME": "Accueil",
+        "TOC": "Table de matières",
+        "CERTIFICATE": "Score & attestation",
+        "LICENSE": "Licence",
+        "UPDATE": "Mettre à jour",
+        "COMMENT": "Laisser un commentaire",
+        "DELETE": "Supprimer",
+        "RESET": "Réinitialiser",
+        "SCORE_DETAILS": "Détails des scores",
+        "SETTINGS": "Paramètres"
+    },
+
+    "PLAYER": {
+        "VIDEOS": {
+            "singular": "Video",
+            "plural": "Videos"
+        },
+        "ASSESSMENT_COMPONENT": {
+            "GRADED": "Noté",
+            "NOT_GRADED": "Non noté",
+            "QUESTIONS": {
+                "singular": "Question",
+                "plural": "Questions"
+            },
+            "START": "Commencer l'activité",
+            "REDO": "Refaire l'activité"
+        }
+    },
+
+    "QUESTION": {
+        "PREVIEW": {
+            "RESPONSES": "Les réponses",
+            "EXPLANATION": "Explication"
+        }
+    },
 
     "LOADING": "Chargement",
     "CANCEL": "Annuler",
-    "CONFIRM": "Confirmer"
+    "CONFIRM": "Confirmer",
+    "CLOSE": "Fermer"
 }

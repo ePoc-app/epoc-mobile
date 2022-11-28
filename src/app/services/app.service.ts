@@ -5,6 +5,7 @@ import {Capacitor} from '@capacitor/core';
 import {AlertController} from '@ionic/angular';
 import {ScreenReader} from '@capacitor/screen-reader';
 import { from } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ export class AppService {
     screenReaderDetected: boolean;
     deviceInfo;
 
-    constructor(public alertController: AlertController) {
+    constructor(public alertController: AlertController, public translate: TranslateService) {
         App.getInfo().then((info) => {
             this.appInfo = info;
         }).catch(() => {
@@ -54,8 +55,8 @@ export class AppService {
         const platform = Capacitor.isNativePlatform() ? Capacitor.getPlatform() : 'web';
         const infos = `${this.joinObject(this.deviceInfo)}${this.joinObject(this.appInfo)}ePoc=${epoc.id}`;
         const alert = await this.alertController.create({
-            header: 'Laisser un commentaire',
-            message: `Sur quel service souhaitez-vous laisser un commentaire ?`,
+            header: this.translate.instant('COMMENT_MODAL.HEADER'),
+            message: this.translate.instant('COMMENT_MODAL.MESSAGE'),
             buttons: [
                 {
                     text: platform === 'ios' ? 'App Store' : 'Play Store',
@@ -80,13 +81,9 @@ export class AppService {
 
     async displayLicence(epoc) {
         const alert = await this.alertController.create({
-            header: 'Licence',
+            header: this.translate.instant('LICENSE_MODAL.HEADER'),
             cssClass: 'alert-alignleft',
-            message: `<strong>Conditions d’utilisation des contenus de l\'ePoc :</strong><br/>
-                      Les ressources de l'ePoc sont, sauf mention contraire, diffusées sous Licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" title="Lien licence Creative Commons">Creative Commons CC-BY 4.0</a> :<br/>
-                      Attribution. Le titulaire des droits autorise toute exploitation de l’œuvre, y compris à des fins commerciales, ainsi que la création d’œuvres dérivées, dont la distribution est également autorisée sans restriction, à condition de l’attribuer à son auteur en citant son nom.<br/><br/>
-                      Si vous utilisez des contenus de l'ePoc, voici la mention à ajouter pour l'attribution selon l'utilisation :<br/>
-                      Crédit : <strong>"${epoc.title}"</strong>, ePoc Inria, publié sous licence CC-BY dans l'application <a href="https://epoc.inria.fr/" title="Lien vers site ePoc">https://epoc.inria.fr/</a>`,
+            message: this.translate.instant('LICENSE_MODAL.MESSAGE', {epoc: epoc.title }),
             buttons: ['OK'],
         });
 

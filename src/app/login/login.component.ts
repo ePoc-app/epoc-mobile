@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
 import {AuthService} from 'src/app/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
         public toastController: ToastController,
         private auth: AuthService,
         private http: HTTP,
-        private ref: ChangeDetectorRef
+        private ref: ChangeDetectorRef,
+        public translate: TranslateService
     ) {
     }
 
@@ -72,15 +74,15 @@ export class LoginComponent implements OnInit {
                                 lastname: user.sn,
                                 email: user.mail
                             }).then(() => {
-                                this.toast(`Bienvenue ${user.givenName} ${user.sn}`, 'success');
+                                this.toast( `${this.translate.instant('ZRR.LOGIN_PAGE.WELCOME')} ${user.givenName} ${user.sn}`, 'success');
                                 this.ref.detectChanges();
                                 this.router.navigateByUrl('/home/default');
                             });
                         }, (err) => {
-                            this.toast('Problème de récupération du profil');
+                            this.toast(this.translate.instant('ZRR.LOGIN_PAGE.ERROR_RECUP'));
                         });
                     } else {
-                        this.toast('Problème d’authentification');
+                        this.toast(this.translate.instant('ZRR.LOGIN_PAGE.ERROR_AUTH'));
                     }
                     browser.close();
                 }
@@ -90,11 +92,11 @@ export class LoginComponent implements OnInit {
 
     async externalLogin() {
         const alert = await this.alertController.create({
-                header: 'Authentification',
+                header: this.translate.instant('ZRR.LOGIN_MODAL.HEADER'),
                 inputs: [
                     {
                         name: 'email',
-                        placeholder: 'nom@email.com',
+                        placeholder: this.translate.instant('ZRR.LOGIN_MODAL.EMAIL_PLACEHOLDER'),
                     },
                     {
                         name: 'password',
@@ -104,7 +106,7 @@ export class LoginComponent implements OnInit {
                 ],
                 buttons: [
                     {
-                        text: 'Annuler',
+                        text: this.translate.instant('CANCEL'),
                         role: 'cancel',
                         cssClass: 'secondary'
                     },
@@ -112,7 +114,7 @@ export class LoginComponent implements OnInit {
                         text: 'Ok',
                         handler: (form) => {
                             if (form.email !== 'apple@apple.com' ||  form.password !== 'D5QdHMJfhkP$$a4+') {
-                                this.toast('Email ou mot de passe incorrect');
+                                this.toast(this.translate.instant('ZRR.LOGIN_MODAL.ERROR'));
                                 return;
                             }
                             this.auth.setUser({

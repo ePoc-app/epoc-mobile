@@ -3,16 +3,7 @@
         "DOWNLOAD": "Download",
         "CONTINUE": "Continue",
         "DOWNLOADING": "Downloading",
-        "DISCOVER": "Discover",
-        "MENU": {
-            "TOC": "Table of Contents",
-            "CERTIFICATE": "Score & certificate",
-            "LICENSE": "License",
-            "UPDATE": "Update",
-            "COMMENT": "Leave a comment",
-            "DELETE": "Delete",
-            "RESET": "Reset"
-        }
+        "DISCOVER": "Discover"
     },
     "ABOUT_PAGE": {
         "ABOUT": "About",
@@ -115,8 +106,76 @@
         "DOWNLOADING": "Downloading",
         "OPENING": "Opening"
     },
+    "TOC_PAGE": {
+        "HEADER": "Table of contents",
+        "VIEW_MORE": "View more",
+        "VIEW_LESS": "View less"
+    },
+    "LICENSE_MODAL": {
+        "HEADER": "License",
+        "MESSAGE": "<strong>Terms of use of ePoc content :</strong><br/>The ePoc resources are, unless otherwise noted, released under the license  <a href=\"https://creativecommons.org/licenses/by/4.0/deed.fr\" title=\"Creative Commons license link\">Creative Commons CC-BY 4.0</a> :<br/>Attribution. The owner of the rights authorize any exploitation of the work, including for commercial purposes, as well as the creation of derivative works, the distribution of which is also authorized wihtout restriction, provided that it is attributed to it's author by citing his or her name.<br/><br/>If you are using ePoc content, here is the statement to add for attribution according to use :<br/>Credit : <strong>\"{{epoc}}\"</strong>, ePoc Inria, published under CC-BY license in the application <a href=\"https://epoc.inria.fr/\" title=\"ePoc website link\">https://epoc.inria.fr/</a>"
+    },
+    "COMMENT_MODAL": {
+        "HEADER": "Leave a comment",
+        "MESSAGE": "Which service would you like to comment on ?"
+    },
+    "ZRR": {
+        "LOGIN_PAGE": {
+            "HEADER": "Welcome",
+            "ZRR_MSG": "In the ePoc training: Restricted Area",
+            "MSG": "To get started please log in",
+            "SPAN_CAS": "Connection to CAS Inria",
+            "SPAN_EXT": "External connection",
+            "ACCESS": "Request access",
+            "WELCOME": "Welcome",
+            "ERROR_RECUP": "Problem with profile retrieval", 
+            "ERROR_AUTH": "Authentification problem"
+        },
+        "LOGIN_MODAL": {
+            "HEADER": "Authentification",
+            "EMAIL_PLACEHOLDER": "name@gmail.com",
+            "ERROR": "Incorrect email or password"
+       }
+    },
+
+    "FLOATING_MENU": {
+        "HOME": "Home",
+        "TOC": "Table of Contents",
+        "CERTIFICATE": "Score & certificate",
+        "LICENSE": "License",
+        "UPDATE": "Update",
+        "COMMENT": "Leave a comment",
+        "DELETE": "Delete",
+        "RESET": "Reset",
+        "SCORE_DETAILS": "Score details",
+        "SETTINGS": "Settings"
+    },
+
+    "PLAYER": {
+        "VIDEOS": {
+            "singular": "Video",
+            "plural": "Videos"
+        },
+        "ASSESSMENT_COMPONENT": {
+            "GRADED": "Graded",
+            "NOT_GRADED": "Not graded",
+            "QUESTIONS": {
+                "singular": "Question",
+                "plural": "Questions"
+            },
+            "START": "Start the activity",
+            "REDO": "Redo the activity"
+        }
+    },
+    "QUESTION": {
+        "PREVIEW": {
+            "RESPONSES": "The responses",
+            "EXPLANATION": "Explanation"
+        }
+    },
 
     "LOADING": "Loading",
     "CANCEL": "Cancel",
-    "CONFIRM": "Confirm"
+    "CONFIRM": "Confirm",
+    "CLOSE": "Close"
 }

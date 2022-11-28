@@ -10,6 +10,7 @@ import {File} from '@ionic-native/file/ngx';
 import {Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {AppService} from './app.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable({
@@ -30,7 +31,8 @@ export class EpocService {
       private router: Router,
       public alertController: AlertController,
       public actionSheetController: ActionSheetController,
-      public appService: AppService
+      public appService: AppService,
+      public translate: TranslateService
   ) {}
 
   get epoc(): Epoc {
@@ -140,49 +142,49 @@ export class EpocService {
   async epocMainMenu(chapterIndex?:number, chapter?:Chapter) {
     const buttons = [
       {
-        text: 'Accueil',
+        text: this.translate.instant('FLOATING_MENU.HOME'),
         icon: 'home-outline',
         handler: () => {
           this.router.navigateByUrl('/home/' + this.epoc.id);
         }
       },
       ...(!this.router.isActive('/epoc/toc/' + this.epoc.id, true) ? [{
-        text: 'Table des matières',
+        text: this.translate.instant('FLOATING_MENU.TOC'),
         icon: 'list-circle-outline',
         handler: () => {
           this.router.navigateByUrl('/epoc/toc/' + this.epoc.id);
         }
       }] : []),
       {
-        text: 'Détails des scores',
+        text: this.translate.instant('FLOATING_MENU.SCORE_DETAILS'),
         icon: 'star-outline',
         handler: () => {
           this.router.navigateByUrl('/epoc/score/' + this.epoc.id);
         }
       },
       {
-        text: 'Licence',
+        text: this.translate.instant('FLOATING_MENU.LICENSE'),
         icon: 'receipt-outline',
         handler: () => {
           this.appService.displayLicence(this.epoc)
         }
       },
       {
-        text: 'Laisser un commentaire',
+        text: this.translate.instant('FLOATING_MENU.COMMENT'),
         icon: 'chatbox-ellipses-outline',
         handler: () => {
           this.appService.leaveComment(this.epoc.id)
         }
       },
       {
-        text: 'Paramètres',
+        text: this.translate.instant('FLOATING_MENU.SETTINGS'),
         icon: 'settings-outline',
         handler: () => {
           this.router.navigateByUrl('/settings');
         }
       },
       {
-        text: 'Fermer',
+        text: this.translate.instant('CLOSE'),
         role: 'cancel'
       }
     ];

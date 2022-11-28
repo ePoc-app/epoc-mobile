@@ -195,49 +195,49 @@ export class LibraryService {
     async epocLibraryMenu(epoc){
         const buttons = [
             {
-                text: this.translate.instant('LIBRARY_PAGE.MENU.TOC'),
+                text: this.translate.instant('FLOATING_MENU.TOC'),
                 icon: 'list-circle-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/toc/' + epoc.id);
                 }
             },
             {
-                text: this.translate.instant('LIBRARY_PAGE.MENU.CERTIFICATE'),
+                text: this.translate.instant('FLOATING_MENU.CERTIFICATE'),
                 icon: 'star-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/score/' + epoc.id);
                 }
             },
             {
-                text: this.translate.instant('LIBRARY_PAGE.MENU.LICENSE'),
+                text: this.translate.instant('FLOATING_MENU.LICENSE'),
                 icon: 'receipt-outline',
                 handler: () => {
                     this.appService.displayLicence(epoc)
                 }
             },
             ...(epoc.updateAvailable ? [{
-                text: this.translate.instant('LIBRARY_PAGE.MENU.UPDATE'),
+                text: this.translate.instant('FLOATING_MENU.UPDATE'),
                 icon: 'cloud-download-outline',
                 handler: () => {
                     this.deleteEpoc(epoc).subscribe(() => this.downloadEpoc(epoc))
                 }
             }] : []),
             {
-                text: this.translate.instant('LIBRARY_PAGE.MENU.COMMENT'),
+                text: this.translate.instant('FLOATING_MENU.COMMENT'),
                 icon: 'chatbox-ellipses-outline',
                 handler: () => {
                     this.appService.leaveComment(epoc.id)
                 }
             },
             ...(epoc.opened ? [{
-                text: this.translate.instant('LIBRARY_PAGE.MENU.RESET'),
+                text: this.translate.instant('FLOATING_MENU.RESET'),
                 icon: 'refresh-outline',
                 handler: () => {
                     this.confirmReset(epoc)
                 }
             }] : []),
             {
-                text: this.translate.instant('LIBRARY_PAGE.MENU.DELETE'),
+                text: this.translate.instant('FLOATING_MENU.DELETE'),
                 icon: 'trash',
                 handler: () => {
                     this.confirmDelete(epoc)
