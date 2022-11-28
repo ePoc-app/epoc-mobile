@@ -29,7 +29,7 @@ import {environment as env} from 'src/environments/environment';
 
 Sentry.init(
     {
-        dsn: env.production ? 'https://2992d74734b44e5cbc12b4926bdcd7be@o1092720.ingest.sentry.io/6111359' : null,
+        dsn: env.sentry,
         // To set your release and dist versions
         release: 'fr.inria.epoc@dev',
         dist: '1',
