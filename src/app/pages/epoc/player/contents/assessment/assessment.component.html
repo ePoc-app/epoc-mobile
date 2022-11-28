@@ -1,8 +1,8 @@
 <div class="assessment-specs">
   <div class="assessment-spec">
     <div class="assessment-spec-icon"><ion-icon aria-hidden="true" name="school"></ion-icon></div>
-    <div class="assessment-spec-value" *ngIf="content.scoreTotal > 0">Noté</div>
-    <div class="assessment-spec-value" *ngIf="content.scoreTotal <= 0">Non Noté</div>
+    <div class="assessment-spec-value" *ngIf="content.scoreTotal > 0">{{'PLAYER.ASSESSMENT_COMPONENT.GRADED' | translate}}</div>
+    <div class="assessment-spec-value" *ngIf="content.scoreTotal <= 0">{{'PLAYER.ASSESSMENT_COMPONENT.NOT_GRADED' | translate}}</div>
   </div>
   <div class="assessment-spec">
     <div class="assessment-spec-icon"><ion-icon aria-hidden="true" name="help"></ion-icon></div>
@@ -13,10 +13,10 @@
 <div>
   <ion-button expand="block" size="large" fill="outline" color="outline-button" [routerLink]="['/epoc/assessment', epocId, content.id]">
     <span *ngIf="!userAssessment">
-      Commencer l'activité
+      {{'PLAYER.ASSESSMENT_COMPONENT.START' | translate}}
     </span>
     <span *ngIf="userAssessment">
-      Refaire l'activité
+      {{'PLAYER.ASSESSMENT_COMPONENT.REDO' | translate}}
     </span>
   </ion-button>
 </div>

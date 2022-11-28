@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
 import {Browser} from '@capacitor/browser';
 import {AuthService} from 'src/app/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 import {secrets} from 'src/environments/secrets'
 
 @Component({
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
         public toastController: ToastController,
         private auth: AuthService,
         private http: HTTP,
-        private ref: ChangeDetectorRef
+        private ref: ChangeDetectorRef,
+        public translate: TranslateService
     ) {
     }
 
@@ -70,23 +72,23 @@ export class LoginComponent implements OnInit {
                     }
                     if (parsedResponse.access_token !== undefined && parsedResponse.access_token !== null) {
                         this.http.get(env.oauth.resourceUrl + `?access_token=${parsedResponse.access_token}`, {}, {})
-                            .then((response) => {
-                                const user = JSON.parse(response.data);
-                                this.auth.setUser({
-                                    username: user.id,
-                                    firstname: user.givenName,
-                                    lastname: user.sn,
-                                    email: user.mail
-                                }).then(() => {
-                                    this.toast(`Bienvenue ${user.givenName} ${user.sn}`, 'success');
-                                    this.ref.detectChanges();
-                                    this.router.navigateByUrl('/home/default');
-                                });
-                            }, (err) => {
-                                this.toast('Problème de récupération du profil');
+                        .then((response) => {
+                            const user = JSON.parse(response.data);
+                            this.auth.setUser({
+                                username: user.id,
+                                firstname: user.givenName,
+                                lastname: user.sn,
+                                email: user.mail
+                            }).then(() => {
+                                this.toast( `${this.translate.instant('ZRR.LOGIN_PAGE.WELCOME')} ${user.givenName} ${user.sn}`, 'success');
+                                this.ref.detectChanges();
+                                this.router.navigateByUrl('/home/default');
                             });
+                        }, (err) => {
+                            this.toast(this.translate.instant('ZRR.LOGIN_PAGE.ERROR_RECUP'));
+                        });
                     } else {
-                        this.toast('Problème d’authentification');
+                        this.toast(this.translate.instant('ZRR.LOGIN_PAGE.ERROR_AUTH'));
                     }
                     browser.close();
                 }
@@ -96,44 +98,44 @@ export class LoginComponent implements OnInit {
 
     async externalLogin() {
         const alert = await this.alertController.create({
-            header: 'Authentification',
-            inputs: [
-                {
-                    name: 'email',
-                    placeholder: 'nom@email.com',
-                },
-                {
-                    name: 'password',
-                    type: 'password',
-                    placeholder: '********'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Annuler',
-                    role: 'cancel',
-                    cssClass: 'secondary'
-                },
-                {
-                    text: 'Ok',
-                    handler: (form) => {
-                        if (form.email !== secrets.appleAccount.password || form.password !== secrets.appleAccount.password) {
-                            this.toast('Email ou mot de passe incorrect');
-                            return;
-                        }
-                        this.auth.setUser({
-                            username: 'apple',
-                            firstname: 'Apple',
-                            lastname: 'Apple',
-                            email: 'apple@apple.com'
-                        }).then(() => {
-                            this.ref.detectChanges();
-                            this.router.navigateByUrl('/home/default');
-                        });
+                header: this.translate.instant('ZRR.LOGIN_MODAL.HEADER'),
+                inputs: [
+                    {
+                        name: 'email',
+                        placeholder: this.translate.instant('ZRR.LOGIN_MODAL.EMAIL_PLACEHOLDER'),
                     },
-                },
-            ],
-        });
+                    {
+                        name: 'password',
+                        type: 'password',
+                        placeholder: '********'
+                    }
+                ],
+                buttons: [
+                    {
+                        text: this.translate.instant('CANCEL'),
+                        role: 'cancel',
+                        cssClass: 'secondary'
+                    },
+                    {
+                        text: 'Ok',
+                        handler: (form) => {
+                            if (form.email !== 'apple@apple.com' ||  form.password !== 'D5QdHMJfhkP$$a4+') {
+                                this.toast(this.translate.instant('ZRR.LOGIN_MODAL.ERROR'));
+                                return;
+                            }
+                            this.auth.setUser({
+                                username: 'apple',
+                                firstname: 'Apple',
+                                lastname: 'Apple',
+                                email: 'apple@apple.com'
+                            }).then(() => {
+                                this.ref.detectChanges();
+                                this.router.navigateByUrl('/home/default');
+                            });
+                        },
+                    },
+                ],
+            });
         return alert.present();
     }
 }

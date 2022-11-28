@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
         </ion-buttons>
-        <ion-title>Table des matières</ion-title>
+        <ion-title>{{'TOC_PAGE.HEADER' | translate}}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="displayMenu()">
                 <ion-icon slot="icon-only" name="menu-outline" color="inria-icon"></ion-icon>
@@ -34,8 +34,8 @@
                             {{chapter.title}}
                         </div>
                         <div class="toc-chapter-info-details" (click)="toggleDetails(chapter)">
-                            <ng-container *ngIf="chapter.opened">Voir moins...</ng-container>
-                            <ng-container *ngIf="!chapter.opened">Voir plus...</ng-container>
+                            <ng-container *ngIf="chapter.opened">{{'TOC_PAGE.VIEW_LESS' | translate}}</ng-container>
+                            <ng-container *ngIf="!chapter.opened">{{'TOC_PAGE.VIEW_MORE' | translate}}</ng-container>
                         </div>
                     </div>
                     <div role="link" [attr.aria-label]="'Allez à' + (epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre') + (index+1)" class="toc-chapter-open" [routerLink]="chapter.resumeLink">

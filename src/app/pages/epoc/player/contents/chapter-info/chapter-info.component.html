@@ -14,16 +14,16 @@
     </div>
     <div class="chapter-spec">
       <div class="chapter-spec-icon"><ion-icon aria-hidden="true" name="play-circle-outline"></ion-icon></div>
-      <div class="chapter-spec-value">{{chapter.videoCount}} {{chapter.videoCount > 1 ? 'videos':'video'}}</div>
+      <div class="chapter-spec-value">{{chapter.videoCount}} {{'PLAYER.VIDEOS' | plural: chapter.videoCount | translate}}</div>
     </div>
     <div class="chapter-spec">
       <div class="chapter-spec-icon"><ion-icon aria-hidden="true" name="cube-outline"></ion-icon></div>
-      <div class="chapter-spec-value">{{chapter.assessmentCount}} {{chapter.assessmentCount > 1 ? 'activités':'activité'}}</div>
+      <div class="chapter-spec-value">{{chapter.assessmentCount}} {{'OVERVIEW_PAGE.ACTIVITIES' | plural: chapter.assessmentCount | translate}}</div>
     </div>
   </div>
 
   <ng-container *ngIf="chapter.objectives && chapter.objectives.length > 0">
-    <h4 class="chapter-objectives-label">{{chapter.objectives.length > 1 ? 'Objectifs' : 'Objectif'}}</h4>
+    <h4 class="chapter-objectives-label">{{'OVERVIEW_PAGE.OBJECTIVES' | plural:chapter.objectives.length | translate}}</h4>
     <div class="chapter-objectives">
       <div class="chapter-objective" *ngFor="let objective of chapter.objectives">
         <div class="chapter-objective-icon"><ion-icon name="checkmark-outline"></ion-icon></div>
