@@ -34,5 +34,6 @@ npm-debug.log*
 /resources
 src/assets/demo/
 src/environments/secrets.prod.ts
+src/environments/libraries.prod.ts
 
 ios/DerivedData/
