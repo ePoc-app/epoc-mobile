@@ -95,6 +95,11 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
             await this.videoPlayer.play({
                 playerId: this.id
             })
+            await this.videoPlayer.addListener('jeepCapVideoPlayerEnded', (data: any) => {
+                this.playing = false;
+                this.ref.detectChanges();
+                backbutton.unsubscribe();
+            }, false);
             await this.videoPlayer.addListener('jeepCapVideoPlayerExit', (data: any) => {
                 this.playing = false;
                 this.ref.detectChanges();
