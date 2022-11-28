@@ -4,8 +4,9 @@ import {HTTP} from '@ionic-native/http/ngx';
 import {environment as env} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
-import { Browser } from '@capacitor/browser';
+import {Browser} from '@capacitor/browser';
 import {AuthService} from 'src/app/services/auth.service';
+import {secrets} from 'src/environments/secrets'
 
 @Component({
     selector: 'app-login',
@@ -55,7 +56,12 @@ export class LoginComponent implements OnInit {
         } else {
             let responseParams;
             const parsedResponse = {access_token: null};
-            const browser = this.iab.create(oauthUrl, '_blank', {hideurlbar: 'yes', hidenavigationbuttons: 'yes', location: 'no', closebuttoncaption: 'X Fermer'});
+            const browser = this.iab.create(oauthUrl, '_blank', {
+                hideurlbar: 'yes',
+                hidenavigationbuttons: 'yes',
+                location: 'no',
+                closebuttoncaption: 'X Fermer'
+            });
             browser.on('loadstart').subscribe((evt) => {
                 if ((evt.url).indexOf(env.oauth.redirectUri) === 0) {
                     responseParams = ((evt.url).split('#')[1]).split('&');
@@ -64,21 +70,21 @@ export class LoginComponent implements OnInit {
                     }
                     if (parsedResponse.access_token !== undefined && parsedResponse.access_token !== null) {
                         this.http.get(env.oauth.resourceUrl + `?access_token=${parsedResponse.access_token}`, {}, {})
-                        .then((response) => {
-                            const user = JSON.parse(response.data);
-                            this.auth.setUser({
-                                username: user.id,
-                                firstname: user.givenName,
-                                lastname: user.sn,
-                                email: user.mail
-                            }).then(() => {
-                                this.toast(`Bienvenue ${user.givenName} ${user.sn}`, 'success');
-                                this.ref.detectChanges();
-                                this.router.navigateByUrl('/home/default');
+                            .then((response) => {
+                                const user = JSON.parse(response.data);
+                                this.auth.setUser({
+                                    username: user.id,
+                                    firstname: user.givenName,
+                                    lastname: user.sn,
+                                    email: user.mail
+                                }).then(() => {
+                                    this.toast(`Bienvenue ${user.givenName} ${user.sn}`, 'success');
+                                    this.ref.detectChanges();
+                                    this.router.navigateByUrl('/home/default');
+                                });
+                            }, (err) => {
+                                this.toast('Problème de récupération du profil');
                             });
-                        }, (err) => {
-                            this.toast('Problème de récupération du profil');
-                        });
                     } else {
                         this.toast('Problème d’authentification');
                     }
@@ -90,44 +96,44 @@ export class LoginComponent implements OnInit {
 
     async externalLogin() {
         const alert = await this.alertController.create({
-                header: 'Authentification',
-                inputs: [
-                    {
-                        name: 'email',
-                        placeholder: 'nom@email.com',
+            header: 'Authentification',
+            inputs: [
+                {
+                    name: 'email',
+                    placeholder: 'nom@email.com',
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    placeholder: '********'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                },
+                {
+                    text: 'Ok',
+                    handler: (form) => {
+                        if (form.email !== secrets.appleAccount.password || form.password !== secrets.appleAccount.password) {
+                            this.toast('Email ou mot de passe incorrect');
+                            return;
+                        }
+                        this.auth.setUser({
+                            username: 'apple',
+                            firstname: 'Apple',
+                            lastname: 'Apple',
+                            email: 'apple@apple.com'
+                        }).then(() => {
+                            this.ref.detectChanges();
+                            this.router.navigateByUrl('/home/default');
+                        });
                     },
-                    {
-                        name: 'password',
-                        type: 'password',
-                        placeholder: '********'
-                    }
-                ],
-                buttons: [
-                    {
-                        text: 'Annuler',
-                        role: 'cancel',
-                        cssClass: 'secondary'
-                    },
-                    {
-                        text: 'Ok',
-                        handler: (form) => {
-                            if (form.email !== 'apple@apple.com' ||  form.password !== 'D5QdHMJfhkP$$a4+') {
-                                this.toast('Email ou mot de passe incorrect');
-                                return;
-                            }
-                            this.auth.setUser({
-                                username: 'apple',
-                                firstname: 'Apple',
-                                lastname: 'Apple',
-                                email: 'apple@apple.com'
-                            }).then(() => {
-                                this.ref.detectChanges();
-                                this.router.navigateByUrl('/home/default');
-                            });
-                        },
-                    },
-                ],
-            });
+                },
+            ],
+        });
         return alert.present();
     }
 }

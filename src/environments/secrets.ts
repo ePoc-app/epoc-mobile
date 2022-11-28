@@ -10,5 +10,9 @@ export const secrets = {
         redirectUri: '',
         scope: ''
     },
-    devModeSecret: null
+    devModeSecret: null,
+    appleAccount: {
+        login: null,
+        password: null
+    }
 }
