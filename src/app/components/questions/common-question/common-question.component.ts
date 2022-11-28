@@ -76,7 +76,8 @@ export class CommonQuestionComponent implements OnInit {
     this.flip();
   }
 
-  flip() {
+  flip(event?) {
+    if (event && (['SUMMARY'].indexOf(event.target.tagName) !== -1 || event.target.closest('a'))) return;
     if (this.questionDisabled) {
       this.flipCardComponent.flip();
       this.flipped = this.flipCardComponent.flipped;

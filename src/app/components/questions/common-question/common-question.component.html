@@ -8,7 +8,7 @@
     </div>
   </div>
 </div>
-<flip-card [initFlipped]="flipped" (click)="flip()">
+<flip-card [initFlipped]="flipped" (click)="flip($event)">
   <ng-container front>
     <div [attr.aria-hidden]="flipped">
       <div class="title-container">
