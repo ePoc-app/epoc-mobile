@@ -3,11 +3,11 @@
                 [subtitles]="content.subtitles" [title]="content.title"
                 (timelineDragging)="forwardEvent($event)"></video-player>
   <ng-container *ngIf="content.summary">
-    <h4>{{'QUESTION.VIDEO.SUMMARY' | translate}}</h4>
+    <h4>{{'PLAYER.VIDEO.SUMMARY' | translate}}</h4>
 
     <div class="video-summary">
       <html-content [html]="content.summary" *ngIf="content.summary && content.summary.length > 0"></html-content>
-      <p *ngIf="!content.summary || content.summary.length <= 0">{{'QUESTION.VIDEO.NO_SUMMARY' | translate}}</p>
+      <p *ngIf="!content.summary || content.summary.length <= 0">{{'PLAYER.VIDEO.NO_SUMMARY' | translate}}</p>
     </div>
   </ng-container>
 </ng-container>
