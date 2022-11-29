@@ -5,8 +5,8 @@
   </div>
   <div class="progress-threshold" [ngStyle]="{'left': 'calc(' + threshold + '% - 0.9rem)'}" *ngIf="threshold < 100">
     <div class="progress-threshold-label">
-      Attestation<br/>
-      {{thresholdPoints}} points
+      {{'QUESTION.CERTIFICATE' | translate}}<br/>
+      {{thresholdPoints}} {{'PLAYER.SCORE.PTS' | translate}}
     </div>
     <ion-icon src="/assets/icon/badge.svg"></ion-icon>
   </div>

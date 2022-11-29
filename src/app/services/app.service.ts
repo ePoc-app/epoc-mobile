@@ -84,7 +84,7 @@ export class AppService {
             header: this.translate.instant('LICENSE_MODAL.HEADER'),
             cssClass: 'alert-alignleft',
             message: this.translate.instant('LICENSE_MODAL.MESSAGE', {epoc: epoc.title }),
-            buttons: ['OK'],
+            buttons: [this.translate.instant('OK')],
         });
 
         await alert.present();

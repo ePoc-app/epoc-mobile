@@ -6,6 +6,7 @@ import {Capacitor} from '@capacitor/core';
 import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
 import {ToastController} from '@ionic/angular';
 import {getPromise} from '@ionic-native/core';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class OpenPage {
         private ref: ChangeDetectorRef,
         private elRef: ElementRef,
         private router: Router,
-        private file: File
+        private file: File,
+        public translate: TranslateService
     ) {
         this.zip = new Zip();
     }
@@ -69,10 +71,10 @@ export class OpenPage {
 
     saveFile(file) {
         this.file.writeFile(this.file.dataDirectory, `zips/${file.name}`, '', {replace: true}).then((fileEntry: FileEntry) => {
-            this.loadingLog(`Création du fichier ${file.name}`);
+            this.loadingLog(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.CREATING', {filename: file.name}));
             this.readdir();
             fileEntry.createWriter((fileWriter) => {
-                this.loadingLog(`Copie du fichier ${file.name}`);
+                this.loadingLog(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.COPYING', {filename: file.name}));
                 this.writeFileInChunks(fileWriter, file, (progress) => {
                     this.progress = progress.written / progress.total;
                     this.ref.detectChanges();
@@ -82,7 +84,7 @@ export class OpenPage {
                 });
             });
         }).catch((e) => {
-            this.toast('Erreur lors de l\'écriture du fichier', 'danger');
+            this.toast(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.ERROR'), 'danger');
         });
     }
 
@@ -92,9 +94,9 @@ export class OpenPage {
         }
         this.working = true;
         this.progress = 0;
-        this.loadingLog(`Ouverture de ${filename}`);
+        this.loadingLog(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.OPENING', {filename: filename}));
         this.unzip(filename).then((epocId) => {
-            this.toast('Démarrage', 'success');
+            this.toast(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.STARTING'), 'success');
             this.ngZone.run(() => {
                 this.router.navigateByUrl('/epoc/play/' + epocId);
             })
@@ -130,9 +132,9 @@ export class OpenPage {
                     await this.file.moveDir(this.file.dataDirectory, tmpPath, this.file.dataDirectory, destPath)
                     resolve(epoc.id);
                 }).catch(() => {
-                    reject('Erreur lors de l\'ouverture du content.json');
+                    reject(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.ERROR_OPEN'));
                 });
-            }).catch(() => reject('Erreur lors du dézipage'));
+            }).catch(() => reject(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.ERROR_ZIP')));
         });
     }
 
@@ -157,7 +159,7 @@ export class OpenPage {
         }).then(() => {
             this.readdir();
         }).catch(() => {
-            this.toast('Erreur lors de la suppression', 'danger');
+            this.toast(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.ERROR_DELETE'), 'danger');
         });
     }
 

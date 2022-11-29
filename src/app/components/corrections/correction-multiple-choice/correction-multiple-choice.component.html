@@ -2,37 +2,37 @@
   <div class="correction-specs">
     <div class="correction-spec">
       <div class="correction-spec-icon"><ion-icon aria-hidden="true" name="checkmark-outline"></ion-icon></div>
-      <div class="correction-spec-value">{{rightResponses}} {{rightResponses > 1 ? 'bonnes réponses' : 'bonne réponse'}}</div>
+      <div class="correction-spec-value">{{rightResponses}} {{'QUESTION.CORRECTION.CORRECT_ANSWERS' | plural:rightResponses | translate}}</div>
     </div>
     <div class="correction-spec">
       <div class="correction-spec-icon"><ion-icon aria-hidden="true" name="close-outline"></ion-icon></div>
-      <div class="correction-spec-value">{{wrongResponses}} {{wrongResponses > 1 ? 'mauvaises réponses' : 'mauvaise réponse'}}</div>
+      <div class="correction-spec-value">{{wrongResponses}} {{'QUESTION.CORRECTION.WRONG_ANSWERS' | plural:wrongResponses | translate}}</div>
     </div>
     <div class="correction-spec" *ngIf="missingResponses && missingResponses.length">
       <div class="correction-spec-icon"><ion-icon aria-hidden="true" name="warning-outline"></ion-icon></div>
-      <div class="correction-spec-value">{{missingResponses.length}} oublie{{missingResponses.length > 1 ? 's' : ''}}</div>
+      <div class="correction-spec-value">{{missingResponses.length}} {{'QUESTION.CORRECTION.OMISSION' | plural:missingResponses.length | translate}}</div>
     </div>
   </div>
-  <h4>Vous avez répondu</h4>
+  <h4>{{'QUESTION.CORRECTION.RESPONDED' | translate}}</h4>
   <ion-item lines="none" *ngFor="let response of correction">
     <div class="correction-icon correct" *ngIf="response.correct"><ion-icon aria-hidden="true" name="checkmark-outline"></ion-icon></div>
     <div class="correction-icon incorrect" *ngIf="!response.correct"><ion-icon aria-hidden="true" name="close-outline"></ion-icon></div>
     <ion-label class="ion-text-wrap" color="inria-icon">
       {{response.label}}
-      <div class="correction-right" *ngIf="response.correct">C'est une bonne réponse !</div>
-      <div class="correction-wrong" *ngIf="!response.correct">C'est faux !</div>
+      <div class="correction-right" *ngIf="response.correct">{{'QUESTION.CORRECTION.TRUE' | translate}}</div>
+      <div class="correction-wrong" *ngIf="!response.correct">{{'QUESTION.CORRECTION.FALSE' | translate}}</div>
     </ion-label>
   </ion-item>
 </ng-container>
 <ng-container *ngIf="missingResponses && missingResponses.length">
-  <h4>Vous avez oublié</h4>
+  <h4>{{'QUESTION.CORRECTION.FORGOTTEN' | translate}}</h4>
   <ion-item lines="none" *ngFor="let response of missingResponses">
     <div class="correction-icon">
       <ion-icon aria-hidden="true" name="alert"></ion-icon>
     </div>
     <ion-label class="ion-text-wrap" color="inria-icon">
       {{response}}
-      <div class="correction-missing">C'était une bonne réponse !</div>
+      <div class="correction-missing">{{'QUESTION.CORRECTION.WAS_TRUE' | translate}}</div>
     </ion-label>
   </ion-item>
 </ng-container>

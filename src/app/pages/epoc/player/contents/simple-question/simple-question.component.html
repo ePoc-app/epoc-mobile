@@ -3,9 +3,9 @@
                  (questionAnswered)="onQuestionAnswered($event)"
                  (dragging)="onDrag($event)" (userHasResponded)="onUserHasResponded($event)">
   <ion-button *ngIf="!questionAnswered && question.responses.length > 0" [disabled]="disableCheck" expand="block" size="large" color="inria" (click)="checkAnswer($event)">
-    <span>Valider mes réponses</span>
+    <span>{{'QUESTION.SIMPLE_QUESTION.VALIDATE' | translate}}</span>
   </ion-button>
   <ion-button *ngIf="question.responses.length <= 0" expand="block" size="large" color="outline-button" fill="outline" (click)="checkAnswer($event)">
-    <span>J'ai terminé</span>
+    <span>{{'QUESTION.SIMPLE_QUESTION.FINISH' | translate}}</span>
   </ion-button>
 </common-question>

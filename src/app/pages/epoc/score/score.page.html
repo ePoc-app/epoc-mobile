@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
     </ion-buttons>
-    <ion-title>Score total</ion-title>
+    <ion-title>{{'PLAYER.SCORE.HEADER' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,12 +14,12 @@
         <ion-icon name="star-outline"></ion-icon>
       </div>
       <h5 class="title">
-        Votre score total
+        {{'PLAYER.SCORE.TOTAL_SCORE' | translate}}
       </h5>
     </div>
     <div class="score">
       <div class="score-points">
-          {{assessmentData.totalUserScore}} points
+          {{assessmentData.totalUserScore}} {{'PLAYER.SCORE.PTS' | translate}}
       </div>
       <div class="score-chart">
         <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
@@ -30,24 +30,24 @@
       </div>
     </div>
     <div class="certificate" *ngIf="!certificateEnabled">
-      <h5>Continuez !</h5>
-      <p>Gagnez {{epoc.certificateScore - assessmentData.totalUserScore}} points et obtenez votre attestation</p>
+      <h5>{{'PLAYER.SCORE.CONTINUE' | translate}}</h5>
+      <p [translate]="'PLAYER.SCORE.REMAINING'" [translateParams]="{remaining: epoc.certificateScore - assessmentData.totalUserScore}"></p>
       <ion-button size="medium" expand="block" color="medium" fill="outline" (click)="getCertificate()">
         <ion-icon name="download-outline" slot="start"></ion-icon>
-        <span>Obtenir l'attestation</span>
+        <span>{{'PLAYER.SCORE.GET_CERTIFICATE' | translate}}</span>
       </ion-button>
     </div>
     <div class="certificate success" *ngIf="certificateEnabled">
       <ion-icon class="badge" src="/assets/icon/badge.svg"></ion-icon>
-      <h5>Félicitations !</h5>
-      <p>Vous avez atteint le score pour obtenir l’attestation</p>
+      <h5>{{'PLAYER.SCORE.CONGRATS' | translate}}</h5>
+      <p>{{'PLAYER.SCORE.CERTIFICATE_WIN' | translate}}</p>
       <ion-button size="medium" expand="block" (click)="getCertificate()">
         <ion-icon name="download-outline" slot="start"></ion-icon>
-        <span>Obtenir l'attestation</span>
+        <span>{{'PLAYER.SCORE.GET_CERTIFICATE' | translate}}</span>
       </ion-button>
     </div>
     <div class="short-access">
-      <h4 class="short-access-label">Récapitulatif des points</h4>
+      <h4 class="short-access-label">{{'PLAYER.SCORE.PTS_RECAP' | translate}}</h4>
       <ng-container *ngFor="let assessment of assessments">
         <div class="short-access-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">
           <ion-label>{{assessment.title}}</ion-label>

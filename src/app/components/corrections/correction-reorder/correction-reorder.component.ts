@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {DragAndDropquestion, Question} from 'src/app/classes/contents/assessment';
 
 @Component({
@@ -14,7 +15,7 @@ export class CorrectionReorderComponent implements OnInit {
   rightResponses = 0;
   wrongResponses = 0;
 
-  constructor() { }
+  constructor(public translate:TranslateService) { }
 
   ngOnInit () {
     this.correction = this.userResponses.map((response, index) => {
@@ -24,7 +25,7 @@ export class CorrectionReorderComponent implements OnInit {
       return {
         correct,
         label: response.label,
-        correctResponse: 'Position ' + (rightIndex+1)
+        correctResponse: this.translate.instant('QUESTION.CORRECTION.POSITION') + (rightIndex+1)
       }
     });
   }

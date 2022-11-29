@@ -69,12 +69,23 @@
             "INFO": "Merci de charger un zip ou choisir dans les listes ci-dessous",
             "BUTTON": "Ouvrir ePoc",
             "ZIPS": "Zips disponibles",
-            "EPOCS": "ePocs disponibles"
+            "EPOCS": "ePocs disponibles",
+            "FILE": {
+                "OPENING": "Ouverture de {{file}}",
+                "STARTING": "Démarrage",
+                "CREATING": "Création du fichier {{file}}",
+                "COPYING": "Copie du fichier {{file}}",
+                "ERROR": "Erreur lors de l'écriture du fichier",
+                "ERROR_OPEN": "Erreur lors de l'ouverture du content.json",
+                "ERROR_ZIP": "Erreur lors du dézipage",
+                "ERROR_DELETE": "Erreur lors de la suppression"
+            }
         },
         "DELETE_DATA_MODAL": {
             "INFO": "Êtes vous sûr ? ",
             "MESSAGE": "Cette action effacera les données des exercices de l'application <br/><small>(attestations, quiz, préférences, etc.)</small>"
-        }
+        },
+        "THROW_ERROR": "Une erreur a été émise"
     },
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Présentation du cours",
@@ -168,6 +179,51 @@
             "MSG": "Bravo, vous avez atteint la fin de la formation.<br/>Pour obtenir l'attestation, consultez la page des scores<br/>Ou retournez à la table des matières pour rejouer un <span>{{chapter}}</span>.",
             "SCORE": "Page des scores",
             "REVIEW": "Donner votre avis"
+        },
+        "MODULE_END": {
+            "FINISH": "Vous avez terminé ce {{chapter}}",
+            "CONGRATS": "Félicitations"
+        },
+        "VIDEO": {
+            "SUMMARY": "Résumé",
+            "NO_SUMMARY": "Pas de résumé."
+        },
+        "TRANSCRIPT": {
+            "TRANSCRIPT": "Transcript",
+            "CLOSE": "Fermer"   
+        },
+        "SCORE": {
+            "HEADER": "Score total",
+            "TOTAL_SCORE": "Votre score total",
+            "PTS": "points",
+            "CONTINUE": "Continuez !",
+            "REMAINING": "Gagnez {{remaining}} points et obtenez votre attestation",
+            "GET_CERTIFICATE": "Obtenir l'attestation",
+            "CONGRATS": "Félicitations !",
+            "CERTIFICATE_WIN": "Vous avez atteint le score pour obtenir l'attestation",
+            "PTS_RECAP": "Récapitulatif des points",
+            "FAIL_MODAL": {
+                "HEADER": "Non disponible",
+                "MSG": "Vous n'avez pas encore atteint le score nécessaire ({{score}} pts) pour obtenir l'attestation."
+            },
+            "CERTIFICATE_PDF": {
+                "COMPLETION_CERTIFICATE": "ATTESTATION DE SUIVI",
+                "AUTHORS": "Auteur(s)",
+                "EPOC_EDITION": "Edition de l'ePoc",
+                "DELIVERED_TO": "Attestation délivrée à :",
+                "DELIVERED_THE": "Délivrée le",
+                "ERROR": "Erreur",
+                "ERROR_PROMPT": "Une erreur s'est produite lors de {{type}} de l'attestation",
+                "ERROR_TYPE": {
+                    "OPEN": "l'ouverture",
+                    "RECUP": "la récupération",
+                    "SAVE": "la sauvegarde"
+                }, 
+                "WAITING": "Veuillez patienter...",
+                "DOWNLOAD_FINISH": "Téléchargement terminé",
+                "CERTIFICATE_OBTENTION": "Vous avez bien obtenu l'attestation."
+                
+            } 
         }
     },
 
@@ -183,14 +239,63 @@
             "RESTART_ACTIVITY": "Recommencer l'activité",
             "CONTINUE_COURSE": "Continuer le cours"
         },
+        "QUIT_MODAL": {
+            "HEADER": "Souhaitez-vous vraiment quitter cette activité ?",
+            "MSG": "Vous perdrez votre progression et devrez recommencer cette activité complètement.",
+            "STAY": "Non, continuer l'activité",
+            "QUIT": "Oui, quitter"
+        },
+        "SIMPLE_QUESTION": {
+            "VALIDATE": "Valider mes réponses",
+            "FINISH": "J'ai terminé"
+        },
+        "DRAG_DROP_INSTRUCTION": "Cliquez ou glissez l'étiquette dans la bonne catégorie ci-dessous :",
+        "DROPDOWN_INSTRUCTION": "Sélectionnez une réponse",
+        "SWIPE": {
+            "INSTRUCTION": "Glissez la carte à gauche ou à droite dans la catégorie convenable",
+            "FINISH": "C'est terminé !"
+        },
+        "CERTIFICATE": "Attestation",
+        "CORRECTION": {
+            "RESPONDED": "Vous avez répondu",
+            "TRUE": "C'est une bonne réponse !",
+            "FALSE": "C'est faux !",
+            "CORRECT": "Bonne réponse : ",
+            "FORGOTTEN": "Vous avez oublié",
+            "OMISSION": {
+                "singular": "oubli",
+                "plural": "oublis"
+            },
+            "WAS_TRUE": "C'était une bonne réponse !",
+            "CORRECT_ANSWERS": {
+                "singular": "bonne réponse",
+                "plural": "bonnes réponses"
+            },
+            "WRONG_ANSWERS": {
+                "singular": "mauvaise réponse",
+                "plural": "mauvaises réponses"
+            },
+            "CORRECT_RANKING": "Voici le bon classement",
+            "POSITION": "Position "
+        },
+
         "VALIDATE": "Valider",
         "NEXT": "Suivant",
         "EXPLANATIONS": "Explications",
         "RESPONSES": "Réponses"
     },
+    "DEBUG_REPORT": "Signaler",
+    "CERTIFICATE_MODAL": {
+        "HEADER": "Félicitations",
+        "SCORE_REACHED": "Vous avez atteint le score nécessaire pour obtenir l'attestation",
+        "MSG": "Obtenir l'attestation maintenant dans la page des scores ou continuer pour augmenter votre score.",
+        "GET": "Obtenir l'attestation",
+        "CONTINUE": "Continuer"
+    },
 
     "LOADING": "Chargement",
     "CANCEL": "Annuler",
     "CONFIRM": "Confirmer",
-    "CLOSE": "Fermer"
+    "CLOSE": "Fermer",
+    "OK": "OK"
 }

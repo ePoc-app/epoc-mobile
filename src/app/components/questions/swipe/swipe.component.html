@@ -1,6 +1,6 @@
 <p class="swipe-instruction" *ngIf="!disabled">
   <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg"></ion-icon>
-  <span>Glissez la carte à gauche ou à droite dans la catégorie convenable</span>
+  <span>{{"QUESTION.SWIPE.INSTRUCTION" | translate}}</span>
 </p>
 <div class="swipe-cards">
   <div class="swipe-card" *ngFor ="let card of cardsRemaining; index as cardIndex" [ngStyle]="{transform: card.transform}"
@@ -14,7 +14,7 @@
       <div>« {{card.label}} »</div>
     </div>
   </div>
-  <div *ngIf="cardsRemaining.length <= 0">C'est terminé !</div>
+  <div *ngIf="cardsRemaining.length <= 0">{{'QUESTION.SWIPE.FINISH' | translate}}</div>
 </div>
 <ion-range class="progress-indicator" disabled="true" mode="md" step="1" min="0"
            [max]="question.responses.length" [value]="question.responses.length - cardsRemaining.length" snaps="true"></ion-range>

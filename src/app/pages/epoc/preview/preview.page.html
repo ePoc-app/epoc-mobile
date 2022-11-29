@@ -85,7 +85,7 @@
       </ng-container>
     </ng-container>
     <div class="preview-content">
-      <common-content [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
+      <common-content [title]="'PLAYER.MODULE_END.FINISH' | translate:{chapter: chapterLabel}"  [subtitle]="'PLAYER.MODULE_END.CONGRATS' | translate" icon="assets/icon/modulecheck.svg">
         <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="chapters[i+1]" [chapterLabel]="chapterLabel"></chapter-end>
       </common-content>
     </div>

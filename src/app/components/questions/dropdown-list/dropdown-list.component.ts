@@ -3,6 +3,7 @@ import {DropDownListQuestion} from 'src/app/classes/contents/assessment';
 import {ActionSheetController} from '@ionic/angular';
 import {AbstractQuestionComponent} from '../abstract-question.component';
 import {ActionSheetButton} from '@ionic/core/dist/types/components/action-sheet/action-sheet-interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'dropdown-list',
@@ -16,7 +17,7 @@ export class DropdownListComponent extends AbstractQuestionComponent implements 
     userResponses: {label:string, value:string, category?: number}[];
     answers = [];
 
-    constructor(private actionSheetController: ActionSheetController) {
+    constructor(private actionSheetController: ActionSheetController, public translate: TranslateService) {
         super();
     }
 
@@ -41,12 +42,12 @@ export class DropdownListComponent extends AbstractQuestionComponent implements 
             }
         }),
         {
-            text: 'Fermer',
+            text: this.translate.instant('CANCEL'),
             role: 'cancel'
         }];
         const actionSheet = await this.actionSheetController.create({
             mode: 'ios',
-            header: 'Sélectionnez une réponse',
+            header: this.translate.instant('QUESTION.DROPDOWN_INSTRUCTION'),
             cssClass: 'custom-action-sheet',
             buttons
         });

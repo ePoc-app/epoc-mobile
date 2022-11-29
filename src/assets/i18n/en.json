@@ -72,12 +72,23 @@
             "INFO": "Please upload a zip or choose from the lists below",
             "BUTTON": "Open ePoc",
             "ZIPS": "Avalaible zips",
-            "EPOCS": "Avalaible ePocs"
+            "EPOCS": "Avalaible ePocs",
+            "FILE": {
+                "OPENING": "Opening of{{file}}",
+                "STARTING": "Starting",
+                "CREATING": "Creation of the {{file}} file",
+                "COPYING": "Copy of the {{file}} file",
+                "ERROR": "Error while writing the file",
+                "ERROR_OPEN": "Error while opening the content.json",
+                "ERROR_ZIP": "Error during unzipping",
+                "ERROR_DELETE": "Error during deletion"
+            }
         },
         "DELETE_DATA_MODAL": {
             "INFO": "Are you sure ? ",
             "MESSAGE": "This action will delete the exercise data from the application <br/><small>(certificates, quizzes, preferences, etc.)</small>"
-        }
+        },
+        "THROW_ERROR": "An error has been issued"
     },
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Course presentation",
@@ -122,7 +133,7 @@
     "ZRR": {
         "LOGIN_PAGE": {
             "HEADER": "Welcome",
-            "ZRR_MSG": "In the ePoc training: Restricted Area",
+            "ZRR_MSG": "In the ePoc training: Restricted Area (ZRR)",
             "MSG": "To get started please log in",
             "SPAN_CAS": "Connection to CAS Inria",
             "SPAN_EXT": "External connection",
@@ -171,6 +182,50 @@
             "MSG": "Congratulation, you have reached the end of the course.<br/>To get the certificate, visit the score page<br/>Or return to the table of contents to replay a <span>{{chapter}}</span>.",
             "SCORE": "Scores page",
             "REVIEW": "Give your opinion"
+        },
+        "MODULE_END": {
+            "FINISH": "You have completed this {{chapter}}",
+            "CONGRATS": "Congratulations"
+        },
+        "VIDEO": {
+            "SUMMARY": "Summary",
+            "NO_SUMMARY": "No summary."
+        },
+        "TRANSCRIPT": {
+            "TRANSCRIPT": "Transcript",
+            "CLOSE": "Close"   
+        },
+        "SCORE": {
+            "HEADER": "Total score",
+            "TOTAL_SCORE": "Your total score",
+            "PTS": "points",
+            "CONTINUE": "Continue !",
+            "REMAINING": "Earn {{remaining}} points and get your certificate",
+            "GET_CERTIFICATE": "Get the certificate",
+            "CONGRATS": "Congratulations",
+            "CERTIFICATE_WIN": "You have reached the score to obtain the certificate",
+            "PTS_RECAP": "Summary of points",
+            "FAIL_MODAL": {
+                "HEADER": "Not available",
+                "MSG": "You have not yet reached the required score ({{score}} pts) to obtain the certificate."
+            },
+            "CERTIFICATE_PDF": {
+                "COMPLETION_CERTIFICATE": "CERTIFICATE OF COMPLETION",
+                "AUTHORS": "Author(s)",
+                "EPOC_EDITION": "ePoc edition",
+                "DELIVERED_TO": "Certificate delivered to :",
+                "DELIVERED_THE": "Delivered on",
+                "ERROR": "Error",
+                "ERROR_PROMPT": "An error occured while {{type}} the certificate",
+                "ERROR_TYPE": {
+                    "OPEN": "opening",
+                    "RECUP": "retrieving",
+                    "SAVE": "saving"
+                }, 
+                "WAITING": "Please wait...",
+                "DOWNLOAD_FINISH": "Download complete",
+                "CERTIFICATE_OBTENTION": "You have received the certificate"
+            }
         }
     },
     "QUESTION": {
@@ -185,14 +240,62 @@
             "RESTART_ACTIVITY": "Restart the activity",
             "CONTINUE_COURSE": "Continue the course"
         },
+        "QUIT_MODAL": {
+            "HEADER": "Do you really want to leave this activity ?",
+            "MSG": "You will lose your progress and have to start this activity all over again",
+            "STAY": "No, continue the activity",
+            "QUIT": "Yes, leave"
+        },
+        "SIMPLE_QUESTION": {
+            "VALIDATE": "Confirm my answers",
+            "FINISH": "I finished"
+        },
+        "DRAG_DROP_INSTRUCTION": "Click or drag the label to the correct category below :",
+        "DROPDOWN_INSTRUCTION": "Select an answer",
+        "SWIPE": {
+            "INSTRUCTION": "Drag the card to the left or right into the appropriate category",
+            "FINISH": "It's over !"
+        },
+        "CERTIFICATE": "Certificate",
+        "CORRECTION": {
+            "RESPONDED": "You answered",
+            "TRUE": "That's a good answer !",
+            "FALSE": "This is not true !",
+            "CORRECT": "Correct answer : ",
+            "FORGOTTEN": "You forgot",
+            "OMISSION": {
+                "singular": "omission",
+                "plural": "omissions"
+            },
+            "WAS_TRUE": "It was a good answer !",
+            "CORRECT_ANSWERS": {
+                "singular": "correct answer",
+                "plural": "correct answers"
+            },
+            "WRONG_ANSWERS": {
+                "singular": "wrong answer",
+                "plural": "wrong answers"
+            },
+            "CORRECT_RANKING": "Here is the correct ranking"
+        },
+
         "VALIDATE": "Validate",
         "NEXT": "Next",
         "EXPLANATIONS": "Explanations",
         "RESPONSES": "Responses"
     },
+    "DEBUG_REPORT": "Report",
+    "CERTIFICATE_MODAL": {
+        "HEADER": "Congratulations",
+        "SCORE_REACHED": "You have reached the score required to obtain the certificate",
+        "MSG": "Get the certificate now in the score page or continue to increase your score.",
+        "GET": "Obtain the certificate",
+        "CONTINUE": "Continue"
+    },
 
     "LOADING": "Loading",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "OK": "OK"
 }
