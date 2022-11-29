@@ -8,7 +8,7 @@
   </ion-button>
 </ng-container>
 <ng-container *ngIf="!nextChapter">
-  <p [translate]="'PLAYER.CHAPTER_END.MSG'" [translateParams]="{chapter: chapterLabel}">
+  <p [innerHTML]="'PLAYER.CHAPTER_END.MSG' | translate:{chapter: chapterLabel}">
   </p>
   <ion-button expand="block" size="large" color="outline-button" fill="outline" [routerLink]="'/epoc/toc/'+epoc.id">
     <span>{{'FLOATING_MENU.TOC' | translate}}</span>

@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
                         cssClass: 'secondary'
                     },
                     {
-                        text: 'Ok',
+                        text: this.translate.instant('OK'),
                         handler: (form) => {
                             if (form.email !== 'apple@apple.com' ||  form.password !== 'D5QdHMJfhkP$$a4+') {
                                 this.toast(this.translate.instant('ZRR.LOGIN_MODAL.ERROR'));

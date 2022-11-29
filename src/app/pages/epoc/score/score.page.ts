@@ -18,6 +18,7 @@ import {EpocService} from '../../../services/epoc.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {SettingsStoreService} from '../../../services/settings-store.service';
 import {Settings} from '../../../classes/settings';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-epoc-score',
@@ -49,7 +50,8 @@ export class EpocScorePage implements OnInit {
         public alertController: AlertController,
         public loadingController: LoadingController,
         private readonly tracker: MatomoTracker,
-        private settingsStore: SettingsStoreService
+        private settingsStore: SettingsStoreService,
+        public translate: TranslateService
     ) {}
 
     ngOnInit() {
@@ -143,8 +145,8 @@ export class EpocScorePage implements OnInit {
                 }
             } else {
                 this.presentFail(
-                    'Non disponible',
-                    `Vous n'avez pas encore atteint le score nécessaire (${this.epoc.certificateScore} pts) pour obtenir l'attestation.`
+                    this.translate.instant('PLAYER.SCORE.FAIL_MODAL.HEADER'),
+                    this.translate.instant('PLAYER.SCORE.FAIL_MODAL.MSG', {score: this.epoc.certificateScore})
                 );
             }
         }
@@ -152,27 +154,27 @@ export class EpocScorePage implements OnInit {
 
     async setUser(){
         const alert = await this.alertController.create({
-            header: 'Renseigner vos informations',
-            message: 'Ces informations serviront à l\'édition des attestations',
+            header: this.translate.instant('SETTINGS_PAGE.SET_USER.INFO'),
+            message: this.translate.instant('SETTINGS_PAGE.SET_USER.MESSAGE'),
             inputs: [
                 {
                     name: 'lastname',
                     type: 'text',
-                    placeholder: 'Nom',
+                    placeholder: this.translate.instant('SETTINGS_PAGE.SET_USER.LASTNAME_PLACEHOLDER'),
                 },
                 {
                     name: 'firstname',
                     type: 'text',
-                    placeholder: 'Prenom',
+                    placeholder: this.translate.instant('SETTINGS_PAGE.SET_USER.FIRSTNAME_PLACEHOLDER'),
                 }
             ],
             buttons: [
                 {
-                    text: 'Annuler',
+                    text: this.translate.instant('CANCEL'),
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: 'Confirmer',
+                    text: this.translate.instant('CONFIRM'),
                     handler: (data) => {
                         this.user = {firstname:data.firstname, lastname: data.lastname , username: null, email: null};
                         this.auth.setUser(this.user);
@@ -215,7 +217,7 @@ export class EpocScorePage implements OnInit {
         doc.setFont('Helvetica', 'bold');
         doc.setFontSize(15);
         doc.setTextColor(colors.orange);
-        centeredText('ATTESTATION DE SUIVI', 90);
+        centeredText(this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.COMPLETION_CERTIFICATE'), 90);
         doc.setFontSize(18);
         doc.setTextColor(colors.darkblue);
         centeredText(this.epoc.title, 110);
@@ -223,7 +225,7 @@ export class EpocScorePage implements OnInit {
         doc.roundedRect(90, 120, 30, 1, 1, 1, 'F');
         doc.setFontSize(12);
         doc.setFont('Helvetica', 'normal');
-        centeredText('Auteur(s)', 130);
+        centeredText(this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.AUTHORS'), 130);
         doc.setFontSize(10);
         doc.setTextColor(colors.blue);
         let posY = 140;
@@ -244,13 +246,13 @@ export class EpocScorePage implements OnInit {
             }
         });
         doc.setTextColor(colors.darkblue);
-        centeredText(`Edition de l'ePoc : ${this.epoc.edition ? this.epoc.edition : date.getFullYear()}`, posY);
+        centeredText(`${this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.EPOC_EDITION')} : ${this.epoc.edition ? this.epoc.edition : date.getFullYear()}`, posY);
         posY += 6;
         doc.setFillColor(colors.lightblue);
         doc.roundedRect(50, posY, 110, 1, 1, 1, 'F');
         posY += 10;
         doc.setFontSize(12);
-        centeredText(`Attestation délivrée à :`, posY);
+        centeredText(this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.DELIVERED_TO'), posY);
         posY += 10;
         doc.setFontSize(18);
         doc.setFont('Helvetica', 'bold');
@@ -258,7 +260,7 @@ export class EpocScorePage implements OnInit {
         posY += 7;
         doc.setFontSize(10);
         doc.setFont('Helvetica', 'normal');
-        centeredText(`Délivrée le ${date.getDate()}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`, posY);
+        centeredText(`${this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.DELIVERED_THE')} ${this.translate.currentLang === 'fr' ? date.toLocaleDateString('fr') : date.toLocaleDateString('en-US')}`, posY);
         const id = Math.floor(Math.random() * 10000000);
         posY += 7;
         doc.setFontSize(8);
@@ -290,24 +292,24 @@ export class EpocScorePage implements OnInit {
                     }).catch(() => {
                         this.dismissLoading().then(() => {
                             this.presentFail(
-                                'Erreur',
-                                'Une erreur s\'est produite lors de l\'ouverture de l\'attestation',
+                                this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                                this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {type: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN')}),
                             );
                         });
                     });
                 }).catch(() => {
                     this.dismissLoading().then(() => {
                         this.presentFail(
-                            'Erreur',
-                            'Une erreur s\'est produite lors de la récupération de l\'attestation',
+                            this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                            this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {type: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.RECUP')}),
                         );
                     });
                 });
             }).catch(() => {
                 this.dismissLoading().then(() => {
                     this.presentFail(
-                        'Erreur',
-                        'Un erreur s\'est produite lors de la sauvegarde de l\'attestation',
+                        this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                            this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {type: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.SAVE')}),
                     );
                 });
             });
@@ -320,7 +322,7 @@ export class EpocScorePage implements OnInit {
     async presentLoading() {
         this.loading = true;
         const loading = await this.loadingController.create({
-            message: 'Veuillez patienter...',
+            message: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.WAITING'),
         });
         await loading.present();
     }
@@ -334,7 +336,7 @@ export class EpocScorePage implements OnInit {
         const alert = await this.alertController.create({
             header,
             message,
-            buttons: ['OK']
+            buttons: [this.translate.instant('OK')]
         });
 
         await alert.present();
@@ -342,9 +344,9 @@ export class EpocScorePage implements OnInit {
 
     async presentSuccess() {
         const alert = await this.alertController.create({
-            header: 'Téléchargement terminé',
-            message: 'Vous avez bien obtenu l\'attestation.',
-            buttons: ['OK']
+            header: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.DOWNLOAD_FINISH'),
+            message: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.CERTIFICATE_OBTENTION'),
+            buttons: [this.translate.instant('OK')]
         });
 
         await alert.present();

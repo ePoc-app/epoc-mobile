@@ -23,7 +23,7 @@
         </ng-container>
         <ion-slide>
           <app-debug [epocId]="epoc.id" [chapterId]="chapterId" contentId="fin"></app-debug>
-          <common-content tabindex="-1" class="chapter-end" [attr.aria-hidden]="pagesCount !== currentPage" [title]="'Vous avez terminé ce ' + chapterLabel"  subtitle="Félicitations" icon="assets/icon/modulecheck.svg">
+          <common-content tabindex="-1" class="chapter-end" [attr.aria-hidden]="pagesCount !== currentPage" [title]="'PLAYER.MODULE_END.FINISH' | translate:{chapter: chapterLabel}" [subtitle]="'PLAYER.MODULE_END.CONGRATS' | translate" icon="assets/icon/modulecheck.svg">
             <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="nextChapter" [chapterLabel]="chapterLabel"></chapter-end>
           </common-content>
         </ion-slide>

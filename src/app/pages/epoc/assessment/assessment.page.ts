@@ -12,6 +12,7 @@ import {EpocService} from 'src/app/services/epoc.service';
 import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {AppService} from 'src/app/services/app.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-epoc-assessment',
@@ -57,6 +58,7 @@ export class EpocAssessmentPage implements OnInit {
         public navCtrl: NavController,
         private readonly tracker: MatomoTracker,
         public appService: AppService,
+        public translate: TranslateService
     ) {}
 
     ngOnInit() {
@@ -163,15 +165,15 @@ export class EpocAssessmentPage implements OnInit {
 
     async presentAlertConfirm() {
         const alert = await this.alertController.create({
-            header: 'Souhaitez-vous vraiment quitter cette activité ?',
-            message: 'Vous perdrez votre progression et devrez recommencer cette activité complètement.',
+            header: this.translate.instant("QUESTION.QUIT_MODAL.HEADER"),
+            message: this.translate.instant("QUESTION.QUIT_MODAL.MSG"),
             buttons: [
                 {
-                    text: 'Non, continuer l\'activité',
+                    text: this.translate.instant("QUESTION.QUIT_MODAL.STAY"),
                     role: 'cancel'
                 },
                 {
-                    text: 'Oui, quitter',
+                    text: this.translate.instant("QUESTION.QUIT_MODAL.QUIT"),
                     handler: () => {
                         this.navCtrl.navigateBack(
                             '/epoc/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId

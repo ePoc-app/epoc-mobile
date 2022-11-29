@@ -2,14 +2,14 @@
   <div class="correction-specs">
     <div class="correction-spec">
       <div class="correction-spec-icon"><ion-icon aria-hidden="true" name="checkmark-outline"></ion-icon></div>
-      <div class="correction-spec-value">{{rightResponses}} {{rightResponses > 1 ? 'bonnes réponses' : 'bonne réponse'}}</div>
+      <div class="correction-spec-value">{{rightResponses}} {{'QUESTION.CORRECTION.CORRECT_ANSWERS' | plural:rightResponses | translate}}</div>
     </div>
     <div class="correction-spec">
       <div class="correction-spec-icon"><ion-icon aria-hidden="true" name="close-outline"></ion-icon></div>
-      <div class="correction-spec-value">{{wrongResponses}} {{wrongResponses > 1 ? 'mauvaises réponses' : 'mauvaise réponse'}}</div>
+      <div class="correction-spec-value">{{wrongResponses}} {{'QUESTION.CORRECTION.WRONG_ANSWERS' | plural:wrongResponses | translate}}</div>
     </div>
   </div>
-  <h4>Vous avez répondu</h4>
+  <h4>{{'QUESTION.CORRECTION.RESPONDED' | translate}}</h4>
   <div class="item" *ngFor="let response of correction; let index = index;">
     <span class="item-index">{{index+1}}</span>
     <ion-item lines="none">
@@ -17,16 +17,16 @@
       <div class="correction-icon incorrect" *ngIf="!response.correct"><ion-icon aria-hidden="true" name="close-outline"></ion-icon></div>
       <ion-label class="ion-text-wrap" color="inria-blue">
         {{response.label}}
-        <div class="correction-right" *ngIf="response.correct">C'est une bonne réponse !</div>
-        <div class="correction-wrong" *ngIf="!response.correct">C'est faux !</div>
+        <div class="correction-right" *ngIf="response.correct">{{'QUESTION.CORRECTION.TRUE' | translate}}</div>
+        <div class="correction-wrong" *ngIf="!response.correct">{{'QUESTION.CORRECTION.FALSE' | translate}}</div>
         <div class="correction-right-answer" *ngIf="!response.correct">
-          <b>Bonne réponse : </b><span>{{response.correctResponse}}</span>
+          <b>{{'QUESTION.CORRECTION.CORRECT' | translate}}</b><span>{{response.correctResponse}}</span>
         </div>
       </ion-label>
     </ion-item>
   </div>
   <ng-container>
-    <h4>Voici le bon classement</h4>
+    <h4>{{'QUESTION.CORRECTION.CORRECT_RANKING' | translate}}</h4>
     <div class="item" *ngFor="let response of question.responses; let index = index;">
       <span class="item-index correct">{{index+1}}</span>
       <ion-item lines="none">

@@ -2,7 +2,7 @@
   <div class="item" *ngFor="let response of userResponses">
     <div class="ion-text-wrap">{{response.label}}</div>
     <div class="select" [ngClass]="{'disabled':disabled}" slot="start" (click)="openActionSheet(response)">
-      <span *ngIf="!response.hasOwnProperty('category')">Sélectionnez une réponse</span>
+      <span *ngIf="!response.hasOwnProperty('category')">{{'QUESTION.DROPDOWN_INSTRUCTION' | translate}}</span>
       <span *ngIf="response.hasOwnProperty('category')">{{question.correctResponse[response.category].label}}</span>
       <ion-icon name="chevron-down-outline" color="inria"></ion-icon>
     </div>
