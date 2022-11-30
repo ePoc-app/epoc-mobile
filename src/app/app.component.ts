@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@capacitor/splash-screen'
+import {Component} from '@angular/core';
+import {Platform} from '@ionic/angular';
+import {SplashScreen} from '@capacitor/splash-screen'
 import {LibraryService} from './services/library.service';
 import { SettingsStoreService } from './services/settings-store.service'
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
-
+import {combineLatest} from 'rxjs';
+import {StatusBar, Style} from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +22,10 @@ export class AppComponent {
     public translate: TranslateService
   ) {
     this.initializeApp();
+    translate.addLangs(['fr', 'en']);
     // this language will be used as a fallback when a translation isn't found in the current language
-    translate.setDefaultLang('fr');
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    translate.use('fr');
+    translate.setDefaultLang('en');
+    document.querySelector('html').setAttribute('lang', translate.currentLang);
   }
 
   initializeApp() {
@@ -32,11 +33,44 @@ export class AppComponent {
       this.libraryService.library$.subscribe(data => {
         if (data && data.length) SplashScreen.hide();
       })
-      this.settingsStoreService.settings$.subscribe(settings => {
+      this.settingsStoreService.settings$.subscribe((settings) => {
         if (!settings.isUserOptIn) {
           this.tracker.optUserOut();
         }
+        this.loadTheme(settings.theme);
       })
+      combineLatest([this.settingsStoreService.settings$, this.settingsStoreService.settingsFetched$]).subscribe(([settings, fetched]) => {
+        if (!fetched) return;
+        this.loadLang(settings.lang);
+      });
     });
   }
+
+  loadLang(lang: string) {
+    this.translate.use(lang);
+    document.querySelector('html').setAttribute('lang', lang);
+  }
+
+getTheme() {
+   let preferedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+   return preferedTheme;
+}
+
+loadTheme(theme: string) {
+    let myTheme;
+    if(theme) {
+        myTheme = (theme === 'auto') ? this.getTheme() : theme;
+    }
+    const root = document.querySelector(':root');
+    root.setAttribute('color-scheme', `${myTheme}`);
+    if (myTheme === 'dark') {
+        if(this.platform.is('ios')) {
+            StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
+        }
+    } else {
+        if(this.platform.is('ios')) {
+            StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
+        }
+    } 
+}
 }

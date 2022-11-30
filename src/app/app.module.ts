@@ -79,7 +79,6 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             },
-            defaultLanguage: 'fr'
         })
     ],
     providers: [

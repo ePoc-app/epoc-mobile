@@ -12,7 +12,7 @@ import {App, AppInfo} from '@capacitor/app';
 import {LibraryService} from '../../services/library.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
-
+import {languages} from 'src/environments/languages';
 
 @Component({
     selector: 'app-settings',
@@ -26,6 +26,7 @@ export class SettingsPage implements OnInit {
     user: User;
     mode = mode;
     private devModeCount = 0;
+    langs = languages
 
     constructor(
         private settingsStore: SettingsStoreService,

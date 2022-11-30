@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Settings} from 'src/app/classes/settings';
 import {StorageService} from './storage.service';
-import {StatusBar, Style} from '@capacitor/status-bar';
 import {Platform} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
+import {languages} from 'src/environments/languages';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,7 @@ export class SettingsStoreService {
         font: 'Inria Sans',
         fontSize: 16,
         lineHeight: 1.5,
+        lang: languages.has(navigator.language.substring(0,2)) ? navigator.language.substring(0,2) : 'en',
         theme: 'light',
         libraryMode: 'libraryUrl',
         devMode:false,
@@ -24,9 +26,11 @@ export class SettingsStoreService {
     private readonly settingsSubject = new BehaviorSubject<Settings>(this.defaultSettings);
     readonly settings$ = this.settingsSubject.asObservable();
 
-    constructor(private storageService: StorageService, public platform: Platform) {
+    private readonly settingsFetched = new BehaviorSubject<boolean>(false);
+    readonly settingsFetched$ = this.settingsFetched.asObservable();
+
+    constructor(private storageService: StorageService, public platform: Platform, public translate: TranslateService) {
         this.fetchSettingss();
-        this.loadTheme();
     }
 
     get settings(): Settings {
@@ -40,7 +44,7 @@ export class SettingsStoreService {
     fetchSettingss() {
         this.storageService.getValue('settings').then( (settings) => {
             this.settings = settings ? {...this.defaultSettings, ...JSON.parse(settings)} : this.defaultSettings;
-            this.loadTheme();
+            this.settingsFetched.next(true)
         });
     }
 
@@ -55,34 +59,6 @@ export class SettingsStoreService {
 
     updateSettings(settings: Settings) {
         this.settings = settings;
-        this.loadTheme();
         this.saveSettingss();
     }
-
-    getTheme() {
-       let preferedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-       return preferedTheme;
-    }
-
-    loadTheme() {
-        let myTheme;
-        if(this.settings) {
-            myTheme = (this.settings.theme === 'auto') ? this.getTheme() : this.settings.theme;
-        }else {
-            myTheme = this.getTheme();
-        }
-        
-        const root = document.querySelector(':root');
-        root.setAttribute('color-scheme', `${myTheme}`);
-        if (myTheme === 'dark') {
-            if(this.platform.is('ios')) {
-                StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
-            }
-        } else {
-            if(this.platform.is('ios')) {
-                StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
-            }
-        } 
-    }
-
 }

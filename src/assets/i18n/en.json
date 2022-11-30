@@ -25,6 +25,7 @@
         "DISPLAY": "Display",
         "DEBUG": "Debug",
         "DEBUG_ERROR": "Issue a test error",
+        "LANGUAGE": "Language",
         "THEME": "Theme",
         "THEME_AUTO": "Automatic",
         "THEME_LIGHT": "Light",

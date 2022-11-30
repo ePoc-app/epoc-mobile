@@ -3,6 +3,7 @@ export class Settings {
     font: string;
     fontSize: number;
     lineHeight: number;
+    lang: string;
     theme: 'auto' | 'dark' | 'light';
     libraryMode: 'libraryUrl'|'libraryQlfUrl';
     devMode: boolean;

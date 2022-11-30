@@ -24,8 +24,14 @@
         </ion-button>
       </ion-item>
       <ion-item>
+        <ion-label>{{'SETTINGS_PAGE.LANGUAGE' | translate}}</ion-label>
+        <ion-select [(ngModel)]="settings.lang" (ngModelChange)="settingsChanged()">
+          <ion-select-option *ngFor="let lang of langs | keyvalue" [value]="lang.key">{{lang.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
         <ion-label>{{"SETTINGS_PAGE.THEME" | translate}}</ion-label>
-        <ion-select [(ngModel)] ="settings.theme" (ngModelChange)="settingsChanged()">
+        <ion-select [(ngModel)]="settings.theme" (ngModelChange)="settingsChanged()">
           <ion-select-option value="auto">{{"SETTINGS_PAGE.THEME_AUTO" | translate}}</ion-select-option>
           <ion-select-option value="light">{{"SETTINGS_PAGE.THEME_LIGHT" | translate}}</ion-select-option>
           <ion-select-option value="dark">{{"SETTINGS_PAGE.THEME_DARK" | translate}}</ion-select-option>

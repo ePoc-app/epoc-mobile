@@ -26,6 +26,7 @@
         "DISPLAY": "Affichage",
         "DEBUG": "Debug",
         "DEBUG_ERROR": "Émettre une erreur de test",
+        "LANGUAGE": "Langage",
         "THEME": "Thème",
         "THEME_AUTO": "Automatique",
         "THEME_LIGHT": "Clair",
