@@ -9,8 +9,8 @@ import {Reading} from 'src/app/classes/reading';
 })
 export class AssessmentButtonComponent implements OnInit {
 
-    @Input('epoc') epoc;
-    @Input('content') content;
+    @Input() epoc;
+    @Input() content;
 
     reading: Reading;
 

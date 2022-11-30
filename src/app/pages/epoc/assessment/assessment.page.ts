@@ -165,15 +165,15 @@ export class EpocAssessmentPage implements OnInit {
 
     async presentAlertConfirm() {
         const alert = await this.alertController.create({
-            header: this.translate.instant("QUESTION.QUIT_MODAL.HEADER"),
-            message: this.translate.instant("QUESTION.QUIT_MODAL.MSG"),
+            header: this.translate.instant('QUESTION.QUIT_MODAL.HEADER'),
+            message: this.translate.instant('QUESTION.QUIT_MODAL.MSG'),
             buttons: [
                 {
-                    text: this.translate.instant("QUESTION.QUIT_MODAL.STAY"),
+                    text: this.translate.instant('QUESTION.QUIT_MODAL.STAY'),
                     role: 'cancel'
                 },
                 {
-                    text: this.translate.instant("QUESTION.QUIT_MODAL.QUIT"),
+                    text: this.translate.instant('QUESTION.QUIT_MODAL.QUIT'),
                     handler: () => {
                         this.navCtrl.navigateBack(
                             '/epoc/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId

@@ -35,7 +35,10 @@ import {PreviewCorrectionComponent} from 'src/app/pages/epoc/player/contents/pre
             {path: 'play/:id/:chapter', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId/:next', component: EpocPlayerPage},
-            {path: 'assessment', loadChildren: () => import('src/app/pages/epoc/assessment/assessment.module').then(m => m.AssessmentModule)},
+            {
+                path: 'assessment',
+                loadChildren: () => import('src/app/pages/epoc/assessment/assessment.module').then(m => m.AssessmentModule)
+            },
             {path: 'score/:id', component: EpocScorePage},
             {path: 'toc/:id', component: EpocTocPage},
             {path: 'bookmarks/:id', component: EpocBookmarksPage},

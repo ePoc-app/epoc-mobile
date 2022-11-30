@@ -83,15 +83,15 @@ export class SettingsPage implements OnInit {
 
     async deleteData() {
         const alert = await this.alertController.create({
-            header: this.translate.instant("SETTINGS_PAGE.DELETE_DATA_MODAL.INFO"),
-            message: this.translate.instant("SETTINGS_PAGE.DELETE_DATA_MODAL.MESSAGE"),
+            header: this.translate.instant('SETTINGS_PAGE.DELETE_DATA_MODAL.INFO'),
+            message: this.translate.instant('SETTINGS_PAGE.DELETE_DATA_MODAL.MESSAGE'),
             buttons: [
                 {
-                    text: this.translate.instant("CANCEL"),
+                    text: this.translate.instant('CANCEL'),
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: this.translate.instant("CONFIRM"),
+                    text: this.translate.instant('CONFIRM'),
                     handler: () => {
                         this.readingStore.resetAll();
                         this.settingsStore.resetSettings();

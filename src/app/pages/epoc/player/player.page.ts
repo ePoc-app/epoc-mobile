@@ -80,7 +80,7 @@ export class EpocPlayerPage implements OnInit {
         private settingsStore: SettingsStoreService,
         private pluginService: PluginService,
         private readonly tracker: MatomoTracker,
-        public appService: AppService, 
+        public appService: AppService,
     ) {
     }
 

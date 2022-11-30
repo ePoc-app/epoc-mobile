@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@capacitor/splash-screen'
 import {LibraryService} from './services/library.service';
-import { SettingsStoreService } from './services/settings-store.service'
+import {SettingsStoreService} from './services/settings-store.service'
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
 import {combineLatest} from 'rxjs';
@@ -52,8 +52,7 @@ export class AppComponent {
   }
 
 getTheme() {
-   let preferedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-   return preferedTheme;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 loadTheme(theme: string) {
@@ -71,6 +70,6 @@ loadTheme(theme: string) {
         if(this.platform.is('ios')) {
             StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
         }
-    } 
+    }
 }
 }

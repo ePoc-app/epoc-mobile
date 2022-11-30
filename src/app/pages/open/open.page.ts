@@ -94,7 +94,7 @@ export class OpenPage {
         }
         this.working = true;
         this.progress = 0;
-        this.loadingLog(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.OPENING', {filename: filename}));
+        this.loadingLog(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.OPENING', {filename}));
         this.unzip(filename).then((epocId) => {
             this.toast(this.translate.instant('SETTINGS_PAGE.OPEN_PAGE.FILE.STARTING'), 'success');
             this.ngZone.run(() => {

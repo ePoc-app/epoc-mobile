@@ -27,7 +27,7 @@ export class AppService {
             }
         });
 
-        
+
         from(ScreenReader.isEnabled()).subscribe(screenReaderDetected => {
             this.screenReaderDetected = screenReaderDetected.value;
         });
