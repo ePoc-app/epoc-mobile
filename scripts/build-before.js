@@ -15,11 +15,23 @@ export const mode:'ill'|'inria'|'normal' = '${mode}';
   const packageIdAndroid = `fr.inria.epoc`;
   const packageIdApple = `fr.inria.learninglab.epoc`;
 
-  console.log(`ANDROID PACKAGE ID : ${packageIdAndroid}${mode !== 'normal' ? '.zrr' : ''}`)
-  console.log(`APPLE PACKAGE ID : ${packageIdAndroid}${mode !== 'normal' ? '.zrr' : ''}`)
+  const appNameSearch = mode !== 'normal' ? 'ePoc' : 'ePoc ZRR';
+  const appNameReplace = mode !== 'normal' ? 'ePoc ZRR' : 'ePoc';
+  const searchApple = `${packageIdApple}${mode !== 'normal' ? '':'.zrr'};`;
+  const replaceApple = `${packageIdApple}${mode !== 'normal' ? '.zrr': ''};`;
+  const searchAndroid = `${packageIdAndroid}${mode !== 'normal' ? '':'.zrr'}"`;
+  const replaceAndroid = `${packageIdAndroid}${mode !== 'normal' ? '.zrr': ''}"`;
 
-  searchAndReplace('android/app/build.gradle', new RegExp(`${packageIdAndroid}${mode !== 'normal' ? '': '.zrr'}`,'g'), `${packageIdAndroid}${mode !== 'normal' ? '.zrr' : ''}`)
-  searchAndReplace('ios/App/App.xcodeproj/project.pbxproj', new RegExp(`${packageIdApple}${mode !== 'normal' ? '': '.zrr'}`,'g'), `${packageIdApple}${mode !== 'normal' ? '.zrr' : ''}`)
+  console.log(`APP NAME : ${appNameReplace}`)
+  console.log(`APPLE PACKAGE ID : ${replaceApple}`)
+  console.log(`ANDROID PACKAGE ID : ${searchAndroid} ${replaceAndroid}`)
+
+  searchAndReplace('ios/App/App.xcodeproj/project.pbxproj', new RegExp(searchApple,'g'), replaceApple)
+  searchAndReplace('ios/App/App/Info.plist', `<string>${appNameSearch}</string>`, `<string>${appNameReplace}</string>`)
+
+  searchAndReplace('android/app/build.gradle', new RegExp(searchAndroid,'g'), replaceAndroid)
+  searchAndReplace('android/app/src/main/res/values/strings.xml', `<string name="app_name">${appNameSearch}</string>`, `<string name="app_name">${appNameReplace}</string>`)
+  searchAndReplace('android/app/src/main/res/values/strings.xml', `<string name="title_activity_main">${appNameSearch}</string>`, `<string name="title_activity_main">${appNameReplace}</string>`)
 };
 
 function searchAndReplace(file, search, replace) {
