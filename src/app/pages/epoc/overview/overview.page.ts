@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Observable} from 'rxjs';
 import {Epoc, EpocLibrary} from 'src/app/classes/epoc';
@@ -8,6 +7,7 @@ import {AlertController} from '@ionic/angular';
 import {Content} from 'src/app/classes/contents/content';
 import {EpocService} from '../../../services/epoc.service';
 import {LibraryService} from '../../../services/library.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -25,13 +25,14 @@ export class EpocOverviewPage implements OnInit {
         private ref: ChangeDetectorRef,
         private route: ActivatedRoute,
         private router: Router,
-        public libraryService: LibraryService
+        public libraryService: LibraryService,
+        private translate: TranslateService
     ) {}
 
     ngOnInit() {
         this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
             this.library = data;
-            this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
+            this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'));
         });
         this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
             this.epocProgresses = epocProgresses;
@@ -56,5 +57,11 @@ export class EpocOverviewPage implements OnInit {
         medias.forEach((media) => {
             media.pause();
         });
+    }
+
+    ionViewWillEnter() {
+        if(this.epoc.lang !== this.translate.currentLang && this.epoc.translation[this.translate.currentLang]) {
+            this.router.navigateByUrl('/epoc/' + this.epoc.translation[this.translate.currentLang]);
+        }
     }
 }

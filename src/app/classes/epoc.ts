@@ -26,6 +26,8 @@ export class EpocLibrary extends EpocMetadata {
     opened:boolean;
     updateAvailable: boolean;
     lastModified: string;
+    lang: string;
+    translation: Object | null;
 }
 
 export class Epoc extends EpocMetadata {

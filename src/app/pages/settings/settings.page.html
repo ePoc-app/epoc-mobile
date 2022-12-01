@@ -81,7 +81,7 @@
       <ng-container *ngIf="user">
         <ion-item *ngIf="user.email">
           <ion-label>{{"SETTINGS_PAGE.USER" | translate}} : {{user.email}}</ion-label>
-          <ion-icon slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
+          <ion-icon color="inria-icon" slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
         </ion-item>
         <ion-item>
           <ion-label>{{"SETTINGS_PAGE.NAME" | translate}} : {{user.lastname}}</ion-label>
