@@ -16,8 +16,8 @@
     "ios-dev": "npm run resources && ionic build && ionic capacitor run ios --open --livereload-url=http://$(hostname):8100",
     "e2e-local": "npx wdio run ./e2e/wdio.conf.local.js || true",
     "e2e": "npx wdio run ./e2e/wdio.conf.bs.js || true",
-    "resources": "rm -rf resources/* && cp -R resources-common/* resources/ && cordova-res --skip-config --copy",
-    "resources-zrr": "rm -rf resources/* && cp -R resources-zrr/* resources/ && cordova-res --skip-config --copy"
+    "resources": "rm -rf resources/* && cp -R resources-common/* resources/ && npx capacitor-assets generate",
+    "resources-zrr": "rm -rf resources/* && cp -R resources-zrr/* resources/ && npx capacitor-assets generate"
   },
   "postinstall": "jetifier",
   "private": true,
@@ -85,6 +85,7 @@
     "@angular/compiler": "~13.3.11",
     "@angular/compiler-cli": "~13.3.11",
     "@angular/language-service": "~13.3.11",
+    "@capacitor/assets": "^2.0.4",
     "@capacitor/cli": "3.5.1",
     "@ionic/angular-toolkit": "^6.1.0",
     "@types/jasmine": "~4.0.3",
@@ -98,7 +99,6 @@
     "adm-zip": "^0.5.9",
     "chromedriver": "^101.0.0",
     "codelyzer": "^6.0.2",
-    "cordova-res": "^0.15.4",
     "jasmine-core": "~4.1.1",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.3.20",
