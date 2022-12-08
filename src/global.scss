@@ -449,6 +449,7 @@ body.preview{
   height:auto;
   max-height: none;
   overflow-y: visible;
+  background: var(--ion-color-background);
 
   ion-router-outlet, .ion-page{
     position: relative;

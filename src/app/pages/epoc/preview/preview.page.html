@@ -1,4 +1,4 @@
-<div class="preview-contents" *ngIf="epoc">
+<div class="preview-contents" *ngIf="epocId && epoc">
   <div class="preview-content">
     <app-card>
       <div class="epoc-title">
@@ -90,4 +90,12 @@
       </common-content>
     </div>
   </ng-container>
+</div>
+<div class="preview-wrapper" *ngIf="!epocId">
+  <h1>Liste des ePocs disponibles en preview :</h1>
+  <ul>
+    <li *ngFor="let epoc of library">
+      <a [routerLink]="epoc.id">{{epoc.title}}</a>
+    </li>
+  </ul>
 </div>

@@ -113,10 +113,6 @@
                 {
                   "replace": "src/app/app-routing.module.ts",
                   "with": "preview/app-routing.module.ts"
-                },
-                {
-                  "replace": "src/app/pages/epoc/epoc.module.ts",
-                  "with": "preview/epoc.module.ts"
                 }
               ],
               "optimization": true,

@@ -12,9 +12,9 @@ build:
   script:
   - export NG_CLI_ANALYTICS=ci
   - npm i
-  - npm run build
-  - cd www && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd -
-  - rm src/index.html && cp preview/index.html src/index.html && npm run build-preview
+  - npm run build-preview # build preview for editor
+  - cd dist && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd - # zip editor preview
+  - rm src/index.html && cp preview/index.html src/index.html && npm run build-preview # build web preview
   artifacts:
     expire_in: 1 week
     paths:

@@ -10,17 +10,9 @@ import {EpocPlayerPage} from './player/player.page';
 import {EpocOverviewPage} from './overview/overview.page';
 import {EpocScorePage} from './score/score.page';
 import {EpocBookmarksPage} from './bookmarks/bookmarks.page';
-import {TranscriptModalPage} from './player/contents/transcript-modal/transcript-modal.page';
-import {SimpleQuestionComponent} from './player/contents/simple-question/simple-question.component';
-import {CourseChoiceComponent} from './player/contents/course-choice/course-choice.component';
-import {ChapterInfoComponent} from './player/contents/chapter-info/chapter-info.component';
-import {ChapterEndComponent} from './player/contents/chapter-end/chapter-end.component';
-import {CommonContentComponent} from './player/contents/common-content/common-content.component';
-import {VideoContentComponent} from './player/contents/video/video.component';
-import {AssessmentContentComponent} from './player/contents/assessment/assessment.component';
+import {PlayerModule} from './player/player.module';
 import {EpocPreviewPage} from './preview/preview.page';
-import {PreviewQuestionComponent} from './player/contents/preview-question/preview-question.component';
-import {PreviewCorrectionComponent} from './player/contents/preview-question/preview-correction.component';
+import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
 
 @NgModule({
     imports: [
@@ -31,7 +23,6 @@ import {PreviewCorrectionComponent} from './player/contents/preview-question/pre
         RouterModule.forChild([
             {path: ':id', component: EpocOverviewPage},
             {path: 'play/:id', component: EpocTocPage},
-            {path: 'preview/:id', component: EpocPreviewPage},
             {path: 'play/:id/:chapter', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId/:next', component: EpocPlayerPage},
@@ -39,9 +30,12 @@ import {PreviewCorrectionComponent} from './player/contents/preview-question/pre
             {path: 'score/:id', component: EpocScorePage},
             {path: 'toc/:id', component: EpocTocPage},
             {path: 'bookmarks/:id', component: EpocBookmarksPage},
+            {path: 'preview/:id', component: EpocPreviewPage},
+            {path: 'preview-editor/:id', component: EpocPreviewEditorPage},
             {path: '**', redirectTo: '/'},
         ]),
         PipesModule,
+        PlayerModule
     ],
     declarations: [
         EpocPlayerPage,
@@ -49,19 +43,9 @@ import {PreviewCorrectionComponent} from './player/contents/preview-question/pre
         EpocScorePage,
         EpocTocPage,
         EpocBookmarksPage,
-        TranscriptModalPage,
-        SimpleQuestionComponent,
-        CourseChoiceComponent,
-        ChapterInfoComponent,
-        ChapterEndComponent,
-        CommonContentComponent,
-        VideoContentComponent,
-        AssessmentContentComponent,
         EpocPreviewPage,
-        PreviewQuestionComponent,
-        PreviewCorrectionComponent
-    ],
-    entryComponents: [TranscriptModalPage]
+        EpocPreviewEditorPage
+    ]
 })
 export class EpocModule {
     constructor() {
