@@ -20,7 +20,7 @@
         <div class="correction-right" *ngIf="response.correct">{{"QUESTION.CORRECTION.TRUE" | translate}}</div>
         <div class="correction-wrong" *ngIf="!response.correct">{{'QUESTION.CORRECTION.FALSE' | translate}}</div>
         <div class="correction-right-answer" *ngIf="!response.correct">
-          <b>{{'QUESTION.CORRECTION.CORRECT'}}</b><span>{{response.correctResponse}}</span>
+          <b>{{'QUESTION.CORRECTION.CORRECT' | translate}}</b><span>{{response.correctResponse}}</span>
         </div>
       </ion-label>
     </ion-item>
