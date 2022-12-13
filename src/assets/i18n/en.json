@@ -3,7 +3,8 @@
         "DOWNLOAD": "Download",
         "CONTINUE": "Continue",
         "DOWNLOADING": "Downloading",
-        "DISCOVER": "Discover"
+        "DISCOVER": "Discover",
+        "OPEN_ZIP": "Zip opening"
     },
     "ABOUT_PAGE": {
         "ABOUT": "About",
@@ -55,16 +56,12 @@
             "INFO": "Fill in your information",
             "MESSAGE": "This information wil be used to issue certificates",
             "LASTNAME_PLACEHOLDER": "Last name",
-            "FIRSTNAME_PLACEHOLDER": "First name",
-            "CANCEL": "Cancel",
-            "CONFIRM": "Confirm"
+            "FIRSTNAME_PLACEHOLDER": "First name"
         },
         "DEV_MODE_MODAL": {
             "INFO": "Activation of developer mode",
             "MESSAGE": "Please provide the password",
             "PASSWORD": "Password",
-            "CANCEL": "Cancel",
-            "CONFIRM": "Confirm",
             "WRONG_PASSWORD": "Wrong password"
         },
         "OPEN_PAGE": {
@@ -277,7 +274,8 @@
                 "singular": "wrong answer",
                 "plural": "wrong answers"
             },
-            "CORRECT_RANKING": "Here is the correct ranking"
+            "CORRECT_RANKING": "Here is the correct ranking",
+            "POSITION": "Position"
         },
 
         "VALIDATE": "Validate",

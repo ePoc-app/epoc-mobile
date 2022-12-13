@@ -223,11 +223,9 @@
                 "WAITING": "Veuillez patienter...",
                 "DOWNLOAD_FINISH": "Téléchargement terminé",
                 "CERTIFICATE_OBTENTION": "Vous avez bien obtenu l'attestation."
-                
             } 
         }
     },
-
     "QUESTION": {
         "PREVIEW": {
             "RESPONSES": "Les réponses",
