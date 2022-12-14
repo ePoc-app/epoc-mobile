@@ -192,7 +192,7 @@ export class EpocService {
       cssClass: 'custom-action-sheet',
       mode: 'ios',
       header: this.epoc.title,
-      subHeader: chapterIndex ? `${chapterIndex  + 1}. ${chapter.title}` : '',
+      subHeader: chapter && chapter.title ? `${chapterIndex  + 1}. ${chapter.title}` : '',
       buttons
     });
     await actionSheet.present();
