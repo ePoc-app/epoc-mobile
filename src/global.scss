@@ -58,6 +58,20 @@ ion-toolbar {
   .logo {
     text-align: left;
 
+    .epoc-logo{
+      width: 100px;
+      height:30.5px;
+      background: var(--epoc-logo) no-repeat;
+    }
+
+    .by-inria{
+      width: 35px;
+      height: 9.4px;
+      margin-left: 65px;
+      margin-top: -5px;
+      background: var(--by-inria) no-repeat;
+    }
+
     ion-img {
       display: block;
       width: 100px;
@@ -69,12 +83,6 @@ ion-toolbar {
       margin-top: 5px;
       margin-left:20px;
       font-size: .8em;
-    }
-
-    .by-inria{
-      width: 35px;
-      margin-left: 65px;
-      margin-top: -5px;
     }
   }
 

@@ -5,8 +5,8 @@
                 fill:#384258;
             }
             .cls-2{
-                fill:#e93100;
-            }
+                 fill:#e93100;
+             }
             .cls-3{
                 fill:#87cccb;
             }
@@ -14,7 +14,7 @@
                 fill: #fff;
             }
             .cls-txt {
-                fill:#384258;
+                fill: #F4F7FB;
             }
         </style>
     </defs>
