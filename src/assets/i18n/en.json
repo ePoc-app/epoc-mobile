@@ -27,7 +27,7 @@
         "DEBUG": "Debug",
         "DEBUG_ERROR": "Issue a test error",
         "LANGUAGE": "Language",
-        "THEME": "Theme",
+        "THEME": "Appearance",
         "THEME_AUTO": "Automatic",
         "THEME_LIGHT": "Light",
         "THEME_DARK": "Dark",
