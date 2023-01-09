@@ -5,6 +5,7 @@
   "homepage": "https://learninglab.inria.fr",
   "scripts": {
     "dev": "ionic serve --external --host=$(hostname) --configuration=dev",
+    "dev-zrr": "ionic serve --external --host=$(hostname) --configuration=dev --mode=inria",
     "dev-preview": "ionic serve --external --host=$(hostname) --configuration=preview",
     "build": "ng build",
     "build-preview": "ng build --configuration=preview --output-path=dist",
