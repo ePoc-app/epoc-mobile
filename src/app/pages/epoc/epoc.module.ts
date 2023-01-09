@@ -7,7 +7,6 @@ import {SharedModule} from 'src/app/components/shared.module';
 import {PipesModule} from 'src/app/pipes/pipes.module';
 import {EpocTocPage} from './toc/toc.page';
 import {EpocPlayerPage} from './player/player.page';
-import {EpocOverviewPage} from './overview/overview.page';
 import {EpocScorePage} from './score/score.page';
 import {EpocBookmarksPage} from './bookmarks/bookmarks.page';
 import {PlayerModule} from './player/player.module';
@@ -21,7 +20,6 @@ import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
         FormsModule,
         SharedModule,
         RouterModule.forChild([
-            {path: ':id', component: EpocOverviewPage},
             {path: 'play/:id', component: EpocTocPage},
             {path: 'play/:id/:chapter', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId', component: EpocPlayerPage},
@@ -39,7 +37,6 @@ import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
     ],
     declarations: [
         EpocPlayerPage,
-        EpocOverviewPage,
         EpocScorePage,
         EpocTocPage,
         EpocBookmarksPage,
