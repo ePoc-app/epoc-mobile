@@ -119,7 +119,7 @@ export class LoginComponent implements OnInit {
                     {
                         text: this.translate.instant('OK'),
                         handler: (form) => {
-                            if (form.email !== 'apple@apple.com' ||  form.password !== 'D5QdHMJfhkP$$a4+') {
+                            if (form.email !== secrets.appleAccount.login ||  form.password !== secrets.appleAccount.login) {
                                 this.toast(this.translate.instant('ZRR.LOGIN_MODAL.ERROR'));
                                 return;
                             }
@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
                                 username: 'apple',
                                 firstname: 'Apple',
                                 lastname: 'Apple',
-                                email: 'apple@apple.com'
+                                email: secrets.appleAccount.login
                             }).then(() => {
                                 this.ref.detectChanges();
                                 this.router.navigateByUrl('/home/default');
