@@ -9,7 +9,7 @@ export class SafePipe implements PipeTransform {
   constructor(protected sanitizer: DomSanitizer) {}
 
   public transform(value: any, type: string, prefix: string = ''): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
-    value = value.startsWith('http') ? value : prefix + value;
+    value = value.startsWith('http') || value.startsWith('capacitor') ? value : prefix + value;
     switch (type) {
       case 'html': return this.sanitizer.bypassSecurityTrustHtml(value);
       case 'style': return this.sanitizer.bypassSecurityTrustStyle(value);

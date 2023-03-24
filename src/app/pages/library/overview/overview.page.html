@@ -19,7 +19,10 @@
     </div>
 
     <div class="epoc-trailer">
-      <video-player [src]="epoc.teaser" [poster]="epoc.thumbnail" [controls]="{show:false, timeline: true, overlay: true}"></video-player>
+      <video-player [src]="epoc.teaser ? rootFolder + epoc.teaser : ''"
+                    [poster]="rootFolder + epoc.thumbnail"
+                    [controls]="{show:false, timeline: true, overlay: true}">
+      </video-player>
     </div>
 
     <div class="epoc-specs">
@@ -63,7 +66,7 @@
       <div class="tab" *ngIf="selectedTab === 2">
         <div class="epoc-author" *ngFor="let author of epoc.authors | values">
           <div class="epoc-author-name">
-            <img [alt]="('OVERVIEW_PAGE.PICTURE_ALT' | translate) + author.name" *ngIf="author.image" [src]="author.image | safe: 'url'"/>
+            <img [alt]="('OVERVIEW_PAGE.PICTURE_ALT' | translate) + author.name" *ngIf="author.image" [src]="rootFolder + author.image | safe: 'url'"/>
             {{author.name}}
           </div>
           <div class="epoc-author-description html-text" [innerHTML]="author.description"></div>

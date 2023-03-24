@@ -74,7 +74,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     async playAndroid() {
         if (!this.src) return;
         this.playing = true;
-        const url = this.src.startsWith('http') ? this.src : `application/files/epocs/${this.epocService.epoc.id}/${this.src}`;
+        const url = this.src.startsWith('http') || this.src.startsWith('capacitor') ? this.src : `application/files/epocs/${this.epocService.epoc.id}/${this.src}`;
         const subindex = this.subtitles ? this.subtitles.findIndex(s => s.lang.indexOf('fr') !== -1) : -1;
         const subtitle = subindex >= 0 ? this.subtitles[subindex].src : '';
         const language = subindex >= 0 ? this.subtitles[subindex].lang : '';

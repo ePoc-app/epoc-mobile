@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
 import {AppService} from 'src/app/services/app.service';
+import {Capacitor} from '@capacitor/core';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -15,6 +16,7 @@ export class EpocOverviewPage implements OnInit {
     epocProgresses : {[EpocId: string] : number} = {};
     epoc: EpocLibrary;
     selectedTab = 0;
+    rootFolder = '';
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -25,10 +27,18 @@ export class EpocOverviewPage implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
-            this.library = data;
-            this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
-        });
+        if (this.route.snapshot.paramMap.get('dir')) {
+            this.libraryService.localEpocs$.subscribe((data: EpocLibrary[]) => {
+                const dir = `local-epocs/${this.route.snapshot.paramMap.get('dir')}`;
+                this.epoc = data.find(epoc => epoc.dir === dir);
+                if (this.epoc) this.rootFolder = this.epoc.rootFolder;
+            });
+        } else {
+            this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
+                this.library = data;
+                this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
+            });
+        }
         this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
             this.epocProgresses = epocProgresses;
             this.ref.detectChanges();

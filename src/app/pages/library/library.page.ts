@@ -13,6 +13,7 @@ import {AppService} from 'src/app/services/app.service';
 export class LibraryPage implements OnInit {
 
   library: EpocLibrary[] | undefined;
+  localEpocs: EpocLibrary[] | undefined;
   onboarding: OnboardingItem[];
   epocProgresses : {[EpocId: string] : number} = {};
 
@@ -30,6 +31,7 @@ export class LibraryPage implements OnInit {
 
   ngOnInit() {
     this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
+    this.libraryService.localEpocs$.subscribe((data: EpocLibrary[]) => { this.localEpocs = data; });
     this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
       this.epocProgresses = epocProgresses;
       this.ref.detectChanges();

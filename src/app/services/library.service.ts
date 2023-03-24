@@ -26,6 +26,11 @@ export class LibraryService {
     private librarySubject$ = new ReplaySubject<EpocLibrary[]>(1);
     library$ = this.librarySubject$.asObservable()
 
+
+    private _localEpocs : EpocLibrary[];
+    private localEpocsSubject$ = new ReplaySubject<EpocLibrary[]>(1);
+    localEpocs$ = this.localEpocsSubject$.asObservable()
+
     private _epocProgresses : {[EpocId: string] : number} = {};
     private epocProgressesSubject$ = new ReplaySubject<{[EpocId: string] : number}>(1);
     epocProgresses$ = this.epocProgressesSubject$.asObservable();
@@ -62,6 +67,15 @@ export class LibraryService {
     set library(value: EpocLibrary[]) {
         this._library = value;
         this.librarySubject$.next(value);
+    }
+
+    get localEpocs(): EpocLibrary[] {
+        return this._localEpocs;
+    }
+
+    set localEpocs(value: EpocLibrary[]) {
+        this._localEpocs = value;
+        this.localEpocsSubject$.next(value);
     }
 
     updateEpocLibraryState(epocId, {
@@ -111,8 +125,8 @@ export class LibraryService {
             return item;
         }), (e) => console.warn('Error fetching library', e), () => {
             this.library.forEach(epoc => {
-                this.readEpocContent(epoc.id).subscribe((localEpoc) => {
-                    const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
+                this.readEpocContent('epocs', epoc.id).subscribe((localEpoc) => {
+                    const downloadDate = localEpoc.epoc.lastModif ? new Date(localEpoc.epoc.lastModif.replace(/-/g, '/')) : new Date();
                     const updateAvailable = new Date(epoc.lastModified) > downloadDate;
                     this.updateEpocLibraryState(epoc.id, {downloaded: true, updateAvailable});
                 })
@@ -130,18 +144,60 @@ export class LibraryService {
                 })
             }
         }); // return data starting with previous cached request
+        this.fetchLocalEpocs();
     }
 
-    readEpocContent(epocId): Observable<Epoc> {
+    async fetchLocalEpocs() {
+        try{
+            // create zips directory if not exists
+            await this.file.createDir(this.file.dataDirectory, 'local-epocs', false);
+        } catch {}
+
+        forkJoin((await this.file.listDir(this.file.dataDirectory, 'local-epocs'))
+        .filter(file => file.isDirectory)
+        .map(file => {
+            this.localEpocs = [];
+            return this.readEpocContent('local-epocs', file.name)
+        })).subscribe(epocs => {
+            this.localEpocs = epocs.map(localEpoc => {
+                return {
+                    ...(localEpoc.epoc as EpocMetadata),
+                    downloading: false,
+                    downloaded: true,
+                    unzipping: false,
+                    opened: false,
+                    updateAvailable: false,
+                    lastModified: new Date().toISOString(),
+                    lang: '',
+                    translation: '',
+                    rootFolder: Capacitor.convertFileSrc(`${this.file.dataDirectory}/${localEpoc.rootFolder}/`),
+                    dir: localEpoc.rootFolder
+                }
+            })
+            // this.localEpocs.push()
+        })
+    }
+
+    readEpocContent(dir, epocId): Observable<{epoc: Epoc, rootFolder: string}> {
         if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'ios') {
             return from(Filesystem.readFile({
-                path: `../Library/NoCloud/epocs/${epocId}/content.json`,
+                path: `../Library/NoCloud/${dir}/${epocId}/content.json`,
                 directory: Directory.Data,
                 encoding: Encoding.UTF8
-            })).pipe(map(file => JSON.parse(file.data)));
+            })).pipe(map(file => {
+                return {
+                    epoc: (JSON.parse(file.data) as Epoc),
+                    rootFolder: `${dir}/${epocId}`
+                }
+            }));
         } else {
-            const url = Capacitor.convertFileSrc(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}epocs/${epocId}/content.json`)
-            return this.http.get<Epoc>(url)
+            const url = Capacitor.convertFileSrc(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}${dir}/${epocId}/content.json`)
+            return this.http.get<Epoc>(url).pipe(map(epoc => {
+                return {
+                    epoc,
+                    rootFolder: `${dir}/${epocId}`
+                }
+            }));
         }
     }
 

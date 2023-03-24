@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: ':id',
     component: EpocOverviewPage
+  },
+  {
+    path: 'local-epocs/:dir',
+    component: EpocOverviewPage
   }
 ];
 

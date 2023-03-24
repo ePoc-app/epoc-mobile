@@ -28,6 +28,8 @@ export class EpocLibrary extends EpocMetadata {
     lastModified: string;
     lang: string;
     translation: Object | null;
+    rootFolder?: string;
+    dir?: string;
 }
 
 export class Epoc extends EpocMetadata {

@@ -4,7 +4,8 @@
         "CONTINUE": "Continuer",
         "DOWNLOADING": "Téléchargement",
         "DISCOVER": "Découvrir",
-        "OPEN_ZIP": "Ouverture du zip"
+        "OPEN_ZIP": "Ouverture du zip",
+        "OPEN": "Ouvrir"
     },
     "ABOUT_PAGE": {
         "ABOUT": "A propos",
