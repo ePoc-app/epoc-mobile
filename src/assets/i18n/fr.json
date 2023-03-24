@@ -5,7 +5,8 @@
         "DOWNLOADING": "Téléchargement",
         "DISCOVER": "Découvrir",
         "OPEN_ZIP": "Ouverture du zip",
-        "OPEN": "Ouvrir"
+        "OPEN": "Ouvrir",
+        "ADD_EPOC": "Ajouter votre ePoc"
     },
     "ABOUT_PAGE": {
         "ABOUT": "A propos",

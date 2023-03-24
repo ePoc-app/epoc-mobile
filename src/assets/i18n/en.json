@@ -5,7 +5,8 @@
         "DOWNLOADING": "Downloading",
         "DISCOVER": "Discover",
         "OPEN_ZIP": "Zip opening",
-        "OPEN": "Open"
+        "OPEN": "Open",
+        "ADD_EPOC": "Add your ePoc"
     },
     "ABOUT_PAGE": {
         "ABOUT": "About",
