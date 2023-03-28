@@ -159,7 +159,10 @@
         "DELETE": "Delete",
         "RESET": "Reset",
         "SCORE_DETAILS": "Score details",
-        "SETTINGS": "Settings"
+        "SETTINGS": "Settings",
+        "IMPORT_FILE": "Import from file",
+        "IMPORT_LINK": "Import from link",
+        "IMPORT_QR": "Import from QR Code"
     },
 
     "PLAYER": {

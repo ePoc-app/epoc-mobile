@@ -1,9 +1,12 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
 import {OnboardingService} from '../../services/onboarding.service';
 import {OnboardingItem} from '../../classes/onboarding';
 import {AppService} from 'src/app/services/app.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ActionSheetController, AlertController} from '@ionic/angular';
+import {LocalEpocsService} from '../../services/localEpocs.service';
 
 @Component({
   selector: 'app-library',
@@ -11,7 +14,7 @@ import {AppService} from 'src/app/services/app.service';
   styleUrls: ['./library.page.scss'],
 })
 export class LibraryPage implements OnInit {
-
+  @ViewChild('file', {static: false}) fileRef: ElementRef;
   library: EpocLibrary[] | undefined;
   localEpocs: EpocLibrary[] | undefined;
   onboarding: OnboardingItem[];
@@ -27,11 +30,16 @@ export class LibraryPage implements OnInit {
       public libraryService: LibraryService,
       public onboardingService: OnboardingService,
       public appService: AppService,
+      public translate: TranslateService,
+      public actionSheetController: ActionSheetController,
+      public alertController: AlertController,
+      public localEpocsService: LocalEpocsService
   ) {}
 
   ngOnInit() {
+    this.localEpocsService.fetchLocalEpocs();
     this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
-    this.libraryService.localEpocs$.subscribe((data: EpocLibrary[]) => { this.localEpocs = data; });
+    this.localEpocsService.localEpocs$.subscribe((data: EpocLibrary[]) => { this.localEpocs = data; });
     this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
       this.epocProgresses = epocProgresses;
       this.ref.detectChanges();
@@ -63,6 +71,74 @@ export class LibraryPage implements OnInit {
 
   openEpocMenu(epoc){
     this.libraryService.epocLibraryMenu(epoc);
+  }
+  async openAddMenu() {
+    const buttons = [
+      {
+        text: this.translate.instant('FLOATING_MENU.IMPORT_FILE'),
+        icon: '/assets/icon/importer.svg',
+        handler: () => {
+          this.fileRef.nativeElement.click();
+        }
+      },
+      {
+        text: this.translate.instant('FLOATING_MENU.IMPORT_LINK'),
+        icon: '/assets/icon/lien.svg',
+        handler: () => {
+          this.linkInputAlert();
+        }
+      },
+      {
+        text: this.translate.instant('FLOATING_MENU.IMPORT_QR'),
+        icon: '/assets/icon/qr.svg',
+        handler: () => {
+          console.log('import qr')
+        }
+      },
+      {
+        text: 'Fermer',
+        role: 'cancel'
+      }
+    ];
+    const actionSheet = await this.actionSheetController.create({
+      header: '',
+      cssClass: 'custom-action-sheet',
+      mode: 'ios',
+      buttons
+    });
+    await actionSheet.present();
+  }
+
+  fileHandler(event) {
+    const file = event.target.files[0];
+    console.log(file);
+  }
+
+  async linkInputAlert() {
+    const alert = await this.alertController.create({
+      header: 'Saisissez le lien du fichier ePoc que vous souhaitez importer',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel'
+        },
+        {
+          text: 'Importer',
+          handler: (e) => {
+            console.log('link', e.link)
+            this.localEpocsService.downloadLocalEpoc(e.link);
+          }
+        }
+      ],
+      inputs: [
+        {
+          name: 'link',
+          placeholder: 'Saisissez le lien',
+        }
+      ],
+    });
+
+    await alert.present();
   }
 
   ionViewDidEnter() {

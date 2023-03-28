@@ -4,6 +4,7 @@ import {LibraryService} from 'src/app/services/library.service';
 import {EpocLibrary} from 'src/app/classes/epoc';
 import {AppService} from 'src/app/services/app.service';
 import {Capacitor} from '@capacitor/core';
+import {LocalEpocsService} from '../../../services/localEpocs.service';
 
 @Component({
     selector: 'app-epoc-overview',
@@ -23,12 +24,13 @@ export class EpocOverviewPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public libraryService: LibraryService,
+        public localEpocsService: LocalEpocsService,
         public appService: AppService,
     ) {}
 
     ngOnInit() {
         if (this.route.snapshot.paramMap.get('dir')) {
-            this.libraryService.localEpocs$.subscribe((data: EpocLibrary[]) => {
+            this.localEpocsService.localEpocs$.subscribe((data: EpocLibrary[]) => {
                 const dir = `local-epocs/${this.route.snapshot.paramMap.get('dir')}`;
                 this.epoc = data.find(epoc => epoc.dir === dir);
                 if (this.epoc) this.rootFolder = this.epoc.rootFolder;
