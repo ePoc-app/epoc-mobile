@@ -51,21 +51,43 @@ export class EpocService {
 
   getEpoc(id: string): Observable<Epoc> {
     if (this._epoc && this._epoc.id === id) return this.epoc$;
-    this.setRootFolder(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}epocs/${id}/`);
-    this.http.get<Epoc>(`${this.rootFolder}content.json`).subscribe((epoc) => {
-      this.epoc = this.initCourseContent(epoc);
-    }, () => {
-      // Backup support for iOS livereload (dev environment)
-      Filesystem.readFile({
-        path: `../Library/NoCloud/epocs/${id}/content.json`,
-        directory: Directory.Data,
-        encoding: Encoding.UTF8
-      }).then((result) => {
-        const epoc = JSON.parse(result.data);
-        this.epoc = this.initCourseContent(epoc as Epoc);
+    this.findEpocDir(id).then(dir => {
+      if (!dir) return;
+      console.log('DIR', dir);
+      this.setRootFolder(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}${dir}/${id}/`);
+      this.http.get<Epoc>(`${this.rootFolder}content.json`).subscribe((epoc) => {
+        this.epoc = this.initCourseContent(epoc);
+      }, () => {
+        // Backup support for iOS livereload (dev environment)
+        Filesystem.readFile({
+          path: `../Library/NoCloud/${dir}/${id}/content.json`,
+          directory: Directory.Data,
+          encoding: Encoding.UTF8
+        }).then((result) => {
+          const epoc = JSON.parse(result.data);
+          this.epoc = this.initCourseContent(epoc as Epoc);
+        });
       });
-    });
+    })
     return this.epoc$;
+  }
+
+  /**
+   * Find in which directory is the epoc stored
+   * @param id The unique id of an ePoc directory
+   */
+  async findEpocDir(id: string): Promise<string | null> {
+    if (!Capacitor.isNativePlatform()) return 'epocs'
+    const dirs = await this.file.listDir(this.file.dataDirectory, '');
+    for (const dir of dirs) {
+      if (dir.isDirectory) {
+        try {
+          await this.file.checkFile(this.file.dataDirectory, `${dir.name}/${id}/content.json`);
+          return dir.name;
+        } catch {}
+      }
+    }
+    return null;
   }
 
   /**
