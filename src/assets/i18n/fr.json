@@ -6,7 +6,8 @@
         "DISCOVER": "Découvrir",
         "OPEN_ZIP": "Ouverture du zip",
         "OPEN": "Ouvrir",
-        "ADD_EPOC": "Ajouter votre ePoc"
+        "ADD_EPOC": "Ajouter votre ePoc",
+        "IMPORT": "Import en cours"
     },
     "ABOUT_PAGE": {
         "ABOUT": "A propos",
@@ -162,7 +163,8 @@
         "SETTINGS": "Paramètres",
         "IMPORT_FILE": "Importer depuis un fichier",
         "IMPORT_LINK": "Importer depuis un lien",
-        "IMPORT_QR": "Importer depuis un QR Code"
+        "IMPORT_QR": "Importer depuis un QR Code",
+        "ERROR": "Une erreur s'est produite"
     },
 
     "PLAYER": {

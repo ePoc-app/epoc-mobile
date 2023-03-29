@@ -128,7 +128,7 @@
     }
   }
 
-  &.library-item-add{
+  &.library-item-add, &.library-item-import{
     text-align: center;
     color: #ACCAE1;
 
@@ -150,6 +150,10 @@
       height:30%;
       transform: translate(-50%,-50%);
     }
+  }
+
+  &.library-item-import{
+    text-align: left;
   }
 
   @media screen and (min-width: 768px) {

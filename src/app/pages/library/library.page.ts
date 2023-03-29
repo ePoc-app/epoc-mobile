@@ -88,13 +88,12 @@ export class LibraryPage implements OnInit {
           this.linkInputAlert();
         }
       },
-      {
+      /* todo add qr {
         text: this.translate.instant('FLOATING_MENU.IMPORT_QR'),
         icon: '/assets/icon/qr.svg',
         handler: () => {
-          console.log('import qr')
         }
-      },
+      },*/
       {
         text: 'Fermer',
         role: 'cancel'
@@ -110,8 +109,8 @@ export class LibraryPage implements OnInit {
   }
 
   fileHandler(event) {
-    const file = event.target.files[0];
-    console.log(file);
+    const file = (event.target as HTMLInputElement).files[0];
+    this.localEpocsService.importFile(file);
   }
 
   async linkInputAlert() {
@@ -125,7 +124,6 @@ export class LibraryPage implements OnInit {
         {
           text: 'Importer',
           handler: (e) => {
-            console.log('link', e.link)
             this.localEpocsService.downloadLocalEpoc(e.link);
           }
         }

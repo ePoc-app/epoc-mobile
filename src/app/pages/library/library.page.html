@@ -67,7 +67,7 @@
     <div class="library-item" *ngFor="let epoc of localEpocs">
       <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/'+epoc.dir" [style]="'background-image:url('+epoc.rootFolder+epoc.image+')'"></div>
       <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
-      <div class="library-item-toolbar" *ngIf="epoc.downloaded">
+      <div class="library-item-toolbar">
         <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.id">
           <span>{{'LIBRARY_PAGE.OPEN' | translate}}</span>
         </ion-button>
@@ -75,18 +75,10 @@
           <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
         </ion-button>
       </div>
-      <div class="library-item-toolbar" *ngIf="epoc.downloading">
-        <ion-button class="expanded" disabled="true" color="inria-base-button">
-          <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>
-          <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOADING' | translate}} <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
-        </ion-button>
-      </div>
-      <div class="library-item-toolbar" *ngIf="epoc.unzipping">
-        <ion-button class="expanded" disabled="true" color="inria-base-button">
-          <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>
-          <span class="base-btn">{{'LIBRARY_PAGE.OPEN_ZIP' | translate}}<ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>
-        </ion-button>
-      </div>
+    </div>
+    <div class="library-item library-item-import" *ngFor="let item of localEpocsService.imports | keyvalue">
+      <div class="library-item-image"></div>
+      <h3 aria-hidden="true" class="library-item-title">{{item.value}}</h3>
     </div>
     <div class="library-item library-item-add" (click)="openAddMenu()">
       <div class="library-item-image">

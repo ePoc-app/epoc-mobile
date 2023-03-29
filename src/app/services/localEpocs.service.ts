@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {forkJoin, from, Observable, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -8,11 +8,12 @@ import {Capacitor} from '@capacitor/core';
 import {Filesystem,Directory, Encoding} from '@capacitor/filesystem';
 import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
-import {ActionSheetController, AlertController} from '@ionic/angular';
+import {ActionSheetController, AlertController, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
-import {File} from '@ionic-native/file/ngx';
+import {File, FileEntry, FileWriter} from '@ionic-native/file/ngx';
 import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';
+import {getPromise} from '@ionic-native/core';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,7 @@ export class LocalEpocsService {
     private _localEpocs : EpocLibrary[];
     private localEpocsSubject$ = new ReplaySubject<EpocLibrary[]>(1);
     localEpocs$ = this.localEpocsSubject$.asObservable()
+    imports : { [key: string]: string } = {};
 
     constructor(
         private http: HttpClient,
@@ -32,7 +34,9 @@ export class LocalEpocsService {
         private router: Router,
         public alertController: AlertController,
         public appService: AppService,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public toastController: ToastController,
+        private ngZone: NgZone,
     ) {}
 
     get localEpocs(): EpocLibrary[] {
@@ -51,9 +55,6 @@ export class LocalEpocsService {
         } catch {}
 
         this.localEpocs = [];
-
-
-        console.log(await this.file.listDir(this.file.dataDirectory, 'local-epocs'));
 
         forkJoin((await this.file.listDir(this.file.dataDirectory, 'local-epocs'))
         .filter(file => file.isDirectory)
@@ -115,50 +116,81 @@ export class LocalEpocsService {
 
     downloadLocalEpoc(url: string): Observable<number> {
         const id = this.simpleHash(url);
+        this.imports = {...this.imports, [id]: this.translate.instant('LIBRARY_PAGE.IMPORT')};
         const download = this.fileService.download(url, `local-epocs/${id}.zip`);
-        this._localEpocs.push({
-            assessmentsCount: 0,
-            authors: undefined,
-            chaptersCount: 0,
-            download: '',
-            downloaded: false,
-            downloading: true,
-            edition: '',
-            image: '',
-            lang: '',
-            lastModif: '',
-            lastModified: '',
-            objectives: [],
-            opened: false,
-            summary: '',
-            title: 'Import en cours',
-            translation: undefined,
-            unzipping: false,
-            updateAvailable: false,
-            id
-        });
-        this.localEpocs = this._localEpocs;
-        download.subscribe((progress) => {}, () => {
-            this.fetchLocalEpocs();
+        download.subscribe(() => {}, () => {
+            this.toast(this.translate.instant('FLOATING_MENU.ERROR'), 'danger');
+            delete this.imports[id];
+            this.imports = {...this.imports};
         }, () => {
             this.unzipLocalEpoc(id);
         });
         return download;
     }
 
-    unzipLocalEpoc(id: string): Observable<number> {
-        const epoc = this._localEpocs.find(e => e.id === id);
-        epoc.downloading = false;
-        epoc.unzipping = true;
-        this.localEpocs = this._localEpocs;
+    importFile(file) {
+        const id = this.simpleHash(file.name);
+        this.imports = {...this.imports, [id]: this.translate.instant('LIBRARY_PAGE.IMPORT')};
+        this.file.writeFile(this.file.dataDirectory, `local-epocs/${id}.zip`, '', {replace: true}).then((fileEntry: FileEntry) => {
+            fileEntry.createWriter((fileWriter) => {
+                this.writeFileInChunks(fileWriter, file, (progress) => {
+                    this.ngZone.run(() => {
+                        const p = Math.round(progress.written / progress.total * 100);
+                        this.imports[id] = `${this.translate.instant('LIBRARY_PAGE.IMPORT')} (${p}%)`
+                    });
+                }).then(() => {
+                    this.ngZone.run(() => {
+                        this.unzipLocalEpoc(id);
+                    })
+                });
+            });
+        }).catch(() => {
+            this.toast(this.translate.instant('FLOATING_MENU.ERROR'), 'danger');
+            delete this.imports[id];
+            this.imports = {...this.imports};
+        });
+    }
 
+    private writeFileInChunks(writer: FileWriter, file: Blob, progressCb?) {
+        const BLOCK_SIZE = 1024 * 1024;
+        let writtenSize = 0;
+
+        function writeNextChunk() {
+            const size = Math.min(BLOCK_SIZE, file.size - writtenSize);
+            const chunk = file.slice(writtenSize, writtenSize + size);
+            writtenSize += size;
+            writer.write(chunk);
+            progressCb({
+                written: writtenSize,
+                total: file.size
+            });
+        }
+
+        return getPromise<any>((resolve, reject) => {
+            writer.onerror = reject as (event: ProgressEvent) => void;
+            writer.onwrite = () => {
+                if (writtenSize < file.size) {
+                    writeNextChunk();
+                } else {
+                    resolve();
+                }
+            };
+            writeNextChunk();
+        });
+    }
+
+    unzipLocalEpoc(id: string): Observable<number> {
         const unzip = this.fileService.unzip(`local-epocs/${id}.zip`, `local-epocs/${id}`);
-        unzip.subscribe((progress) => {}, () => {
+        unzip.subscribe(() => {}, () => {
+            delete this.imports[id];
+            this.imports = {...this.imports};
+            this.toast(this.translate.instant('FLOATING_MENU.ERROR'), 'secondary');
             this.fileService.deleteZip(`local-epocs/${id}.zip`);
-            this.fetchLocalEpocs();
         }, () => {
-            this.fileService.deleteZip(`local-epocs/${id}.zip`);
+            delete this.imports[id];
+            this.imports = {...this.imports};
             this.fetchLocalEpocs();
+            this.fileService.deleteZip(`local-epocs/${id}.zip`);
         });
         return unzip;
     }
@@ -167,6 +199,16 @@ export class LocalEpocsService {
         const rm = this.fileService.deleteFolder(dir);
         this.fetchLocalEpocs();
         return rm;
+    }
+
+    async toast(message, color?) {
+        const toast = await this.toastController.create({
+            message,
+            color,
+            position: 'top',
+            duration: 2000
+        });
+        await toast.present();
     }
 
     async localEpocLibraryMenu(epoc){
@@ -218,7 +260,6 @@ export class LocalEpocsService {
                 }, {
                     text: 'Confirmer',
                     handler: () => {
-                        console.log(epoc);
                         this.deleteEpoc(epoc.dir);
                     }
                 }
