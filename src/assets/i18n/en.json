@@ -67,24 +67,6 @@
             "PASSWORD": "Password",
             "WRONG_PASSWORD": "Wrong password"
         },
-        "OPEN_PAGE": {
-            "HEADER": "Open an ePoc",
-            "OPEN": "Open",
-            "INFO": "Please upload a zip or choose from the lists below",
-            "BUTTON": "Open ePoc",
-            "ZIPS": "Avalaible zips",
-            "EPOCS": "Avalaible ePocs",
-            "FILE": {
-                "OPENING": "Opening of{{file}}",
-                "STARTING": "Starting",
-                "CREATING": "Creation of the {{file}} file",
-                "COPYING": "Copy of the {{file}} file",
-                "ERROR": "Error while writing the file",
-                "ERROR_OPEN": "Error while opening the content.json",
-                "ERROR_ZIP": "Error during unzipping",
-                "ERROR_DELETE": "Error during deletion"
-            }
-        },
         "DELETE_DATA_MODAL": {
             "INFO": "Are you sure ? ",
             "MESSAGE": "This action will delete the exercise data from the application <br/><small>(certificates, quizzes, preferences, etc.)</small>"

@@ -124,10 +124,6 @@
         <ion-label>{{"SETTINGS_PAGE.DEV_MODE" | translate}}</ion-label>
         <ion-toggle [(ngModel)]="settings.devMode" (ngModelChange)="disableDevMode($event)"></ion-toggle>
       </ion-item>
-      <ion-item role="button" *ngIf="settings.devMode">
-        <ion-label >{{"SETTINGS_PAGE.OPEN_EPOC" | translate}}</ion-label>
-        <ion-icon color="icon" slot="end" routerLink="/open" name="folder-open-outline"></ion-icon>
-      </ion-item>
       <ion-item *ngIf="settings.devMode">
         <ion-label>{{"SETTINGS_PAGE.LIBRARY" | translate}}</ion-label>
         <ion-select [value]="settings.libraryMode" (ionChange)="libraryChanged($event)">

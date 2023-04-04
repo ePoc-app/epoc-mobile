@@ -67,24 +67,6 @@
             "PASSWORD": "Mot de passe",
             "WRONG_PASSWORD": "Mot de passe erroné"
         },
-        "OPEN_PAGE": {
-            "HEADER": "Ouvrir un ePoc",
-            "OPEN": "Ouvrir",
-            "INFO": "Merci de charger un zip ou choisir dans les listes ci-dessous",
-            "BUTTON": "Ouvrir ePoc",
-            "ZIPS": "Zips disponibles",
-            "EPOCS": "ePocs disponibles",
-            "FILE": {
-                "OPENING": "Ouverture de {{file}}",
-                "STARTING": "Démarrage",
-                "CREATING": "Création du fichier {{file}}",
-                "COPYING": "Copie du fichier {{file}}",
-                "ERROR": "Erreur lors de l'écriture du fichier",
-                "ERROR_OPEN": "Erreur lors de l'ouverture du content.json",
-                "ERROR_ZIP": "Erreur lors du dézipage",
-                "ERROR_DELETE": "Erreur lors de la suppression"
-            }
-        },
         "DELETE_DATA_MODAL": {
             "INFO": "Êtes vous sûr ? ",
             "MESSAGE": "Cette action effacera les données des exercices de l'application <br/><small>(attestations, quiz, préférences, etc.)</small>"

@@ -19,10 +19,6 @@ const routesDefault: Routes = [
         loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
     },
     {
-        path: 'open',
-        loadChildren: () => import('./pages/open/open.module').then(m => m.OpenPageModule)
-    },
-    {
         path: 'settings',
         loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
     },
@@ -55,10 +51,6 @@ const routesInria: Routes = [
     {
         path: 'callback',
         component: LoginCallbackComponent
-    },
-    {
-        path: 'open',
-        loadChildren: () => import('./pages/open/open.module').then(m => m.OpenPageModule)
     },
     {
         path: 'settings',
