@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { File, Entry, RemoveResult, DirectoryEntry } from '@ionic-native/file/ngx';
+import { File, Entry, RemoveResult, Metadata } from '@ionic-native/file/ngx';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Zip } from 'capacitor-zip';
 import { from, Observable, Observer } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import {distinctUntilChanged, finalize} from 'rxjs/operators';
+
+export interface ExtendedEntry extends Entry {
+    metadata: Metadata
+}
 
 @Injectable({
     providedIn: 'root'
@@ -18,13 +22,42 @@ export class FileService {
         this.zip = new Zip();
     }
 
+    getMetadataPromise(entry) {
+        return new Promise((resolve, reject) => {
+            entry.getMetadata(resolve, reject);
+        });
+    }
+
+
+    async listDirMetadata(dir): Promise<ExtendedEntry[]> {
+        return new Promise<ExtendedEntry[]>((resolve, reject) => {
+            try {
+                document.addEventListener('deviceready', () => {
+                    this.file.listDir(this.file.dataDirectory, dir).then((entries) => {
+                        Promise.all(entries.map(entry =>
+                            this.getMetadataPromise(entry).then((metadata : Metadata) => {
+                                return {
+                                    ...entry,
+                                    metadata
+                                }
+                            })
+                        )).then(result => resolve(result)).catch(() => []);
+                    }).catch(() => []);
+                })
+            } catch (error) {
+                resolve([])
+            }
+        })
+    }
+
+
     readdir(dir): Observable<Entry[]> {
         return from(new Promise<Entry[]>((resolve, reject) => {
             try {
                 document.addEventListener('deviceready', () => {
                     this.file.listDir(this.file.dataDirectory, dir).then((result) => {
                         resolve(result);
-                    }).catch(error => {
+                    }).catch(() => {
                         resolve([])
                     })
                 })
@@ -39,10 +72,10 @@ export class FileService {
         return new Observable((observer: Observer<number>) => {
             this.createFolderIfNotExist('epocs').then(() => {
                 const fileTransfer: FileTransferObject = this.transfer.create();
-                fileTransfer.download(encodeURI(url), this.file.dataDirectory + filename).then((entry) => {
+                fileTransfer.download(encodeURI(url), this.file.dataDirectory + filename).then(() => {
                     observer.complete();
-                }, (error) => {
-                    console.warn(error);
+                }, (e) => {
+                    console.warn(e);
                 });
                 fileTransfer.onProgress((e) => {
                     observer.next(Math.round(e.loaded / e.total * 100))
@@ -60,7 +93,7 @@ export class FileService {
             this.file.checkDir(this.file.dataDirectory, dir).then(() => {
                 resolve(false);
             },
-           async (error) => {
+           async () => {
               await this.file.createDir(this.file.dataDirectory, dir, false);
               resolve(true);
             });
@@ -73,18 +106,15 @@ export class FileService {
 
     unzip(filename, dir): Observable<number> {
         return new Observable((observer: Observer<number>) => {
-            this.file.checkDir(this.file.dataDirectory, dir).then(() =>
-                this.deleteFolder(dir)
-            ).catch((e) =>
-                console.warn('Nothing to delete')
-            ).finally(() => {
+            this.deleteFolder(dir).pipe(finalize(() => {
                 this.zip.unZip({
                     source: this.file.dataDirectory + filename,
                     destination: this.file.dataDirectory + dir,
+                    overwrite: true
                 }, (progress) => {
                     observer.next(progress.value);
                 }).then(() => observer.complete()).catch(() => observer.error('Erreur lors du dézipage'));
-            });
+            })).subscribe(() => {}, (e) => console.log(e));
         });
     }
 }

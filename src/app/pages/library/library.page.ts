@@ -60,6 +60,7 @@ export class LibraryPage implements OnInit {
   doRefresh(event) {
     const startTime = performance.now();
     this.libraryService.fetchLibrary();
+    this.localEpocsService.fetchLocalEpocs();
     this.libraryService.library$.subscribe(() => {
       const endTime = performance.now();
       const delay = Math.max(0, 500 - (endTime - startTime)); // minimum delay of 500ms
@@ -111,6 +112,7 @@ export class LibraryPage implements OnInit {
   fileHandler(event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.localEpocsService.importFile(file);
+    this.fileRef.nativeElement.value = '';
   }
 
   async linkInputAlert() {

@@ -53,7 +53,6 @@ export class EpocService {
     if (this._epoc && this._epoc.id === id) return this.epoc$;
     this.findEpocDir(id).then(dir => {
       if (!dir) return;
-      console.log('DIR', dir);
       this.setRootFolder(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}${dir}/${id}/`);
       this.http.get<Epoc>(`${this.rootFolder}content.json`).subscribe((epoc) => {
         this.epoc = this.initCourseContent(epoc);
