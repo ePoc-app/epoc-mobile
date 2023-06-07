@@ -36,13 +36,21 @@
 
     <div class="video-actions">
       <div class="video-actions-left" *ngIf="controls.subtitles">
-        <ion-icon name="logo-closed-captioning" (click)="captions()" *ngIf="subtitles && subtitles.length >0"></ion-icon>
+        <button class="video-action" (click)="captions()" >
+          <ion-icon name="logo-closed-captioning"></ion-icon>
+        </button>
       </div>
       <div class="video-actions-center" *ngIf="controls.playbutton">
-        <ion-icon aria-label="Lancer la vidéo" [name]="playing ? 'pause':'play'" (click)="play()"></ion-icon>
+        <button class="video-action" aria-label="-10s" (click)="jump(-10)">-10</button>
+        <button class="video-action" aria-label="Lancer la lecture" (click)="play()">
+          <ion-icon [name]="playing ? 'pause':'play'"></ion-icon>
+        </button>
+        <button class="video-action" aria-label="-10s" (click)="jump(10)">+10</button>
       </div>
       <div class="video-actions-right" *ngIf="controls.fullscreen">
-        <ion-icon aria-label="Plein écran" name="expand" (click)="fullscreen($event)"></ion-icon>
+        <button class="video-action" aria-label="Plein écran" (click)="fullscreen($event)">
+          <ion-icon  name="expand"></ion-icon>
+        </button>
       </div>
     </div>
   </ng-container>

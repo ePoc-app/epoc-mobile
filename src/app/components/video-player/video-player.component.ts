@@ -180,6 +180,11 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         }
     }
 
+    jump(delta) {
+        this.video.currentTime = this.video.currentTime + delta;
+        this.video.play();
+    }
+
     fullscreen(event) {
         event.preventDefault();
         event.stopPropagation();
