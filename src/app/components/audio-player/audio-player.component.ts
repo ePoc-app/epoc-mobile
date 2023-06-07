@@ -20,7 +20,6 @@ export class AudioPlayerComponent implements OnInit, AfterViewInit {
         playbutton?: boolean
     };
     @Input() src: string;
-    @Input() poster: string;
     @Input() title: string;
 
     @Output() timelineDragging = new EventEmitter<string>();

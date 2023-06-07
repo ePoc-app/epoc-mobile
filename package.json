@@ -42,7 +42,7 @@
     "@capacitor/screen-reader": "^1.0.8",
     "@capacitor/splash-screen": "^1.2.2",
     "@capacitor/status-bar": "^1.0.8",
-    "@epoc/epoc-types": "^2.0.0-beta.4",
+    "@epoc/epoc-types": "^2.0.0-beta.5",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/file": "^5.36.0",
     "@ionic-native/file-opener": "^5.36.0",
