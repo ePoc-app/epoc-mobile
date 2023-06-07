@@ -1,0 +1,11 @@
+<ng-container *ngIf="content">
+  <audio-player [src]="content.source" [poster]="content.poster" [title]="content.title" (timelineDragging)="forwardEvent($event)"></audio-player>
+  <ng-container *ngIf="content.summary">
+    <h4>{{'PLAYER.VIDEO.SUMMARY' | translate}}</h4>
+
+    <div class="audio-summary">
+      <html-content [html]="content.summary" *ngIf="content.summary && content.summary.length > 0"></html-content>
+      <p *ngIf="!content.summary || content.summary.length <= 0">{{'PLAYER.VIDEO.NO_SUMMARY' | translate}}</p>
+    </div>
+  </ng-container>
+</ng-container>

@@ -14,6 +14,7 @@
               <common-content [attr.aria-hidden]="index + 1 !== currentPage" [title]="content.title" [subtitle]="content.subtitle" [icon]="iconFromType[content.type]" *ngIf="content.type !== 'simple-question'">
                 <html-content *ngIf="content.type === 'html'" [html]="content.html | srcConvert" (goTo)="goTo($event)"></html-content>
                 <video-content *ngIf="content.type === 'video'" [inputContent]="content" (timelineDragging)="onDrag($event)"></video-content>
+                <audio-content *ngIf="content.type === 'audio'" [inputContent]="content" (timelineDragging)="onDrag($event)"></audio-content>
                 <course-choice *ngIf="content.type === 'choice'" [epocId]="epoc.id" [content]="content" (chosen)="nextPage()"></course-choice>
                 <assessment-content *ngIf="content.type === 'assessment'" [inputContent]="content"></assessment-content>
               </common-content>

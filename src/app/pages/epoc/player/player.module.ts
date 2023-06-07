@@ -15,6 +15,7 @@ import {AssessmentContentComponent} from './contents/assessment/assessment.compo
 import {PreviewQuestionComponent} from './contents/preview-question/preview-question.component';
 import {PreviewCorrectionComponent} from './contents/preview-question/preview-correction.component';
 import {TranscriptModalPage} from './contents/transcript-modal/transcript-modal.page';
+import {AudioContentComponent} from './contents/audio/audio.component';
 
 @NgModule({
     imports: [
@@ -32,6 +33,7 @@ import {TranscriptModalPage} from './contents/transcript-modal/transcript-modal.
         ChapterEndComponent,
         CommonContentComponent,
         VideoContentComponent,
+        AudioContentComponent,
         AssessmentContentComponent,
         PreviewQuestionComponent,
         PreviewCorrectionComponent,
@@ -44,6 +46,7 @@ import {TranscriptModalPage} from './contents/transcript-modal/transcript-modal.
         ChapterEndComponent,
         CommonContentComponent,
         VideoContentComponent,
+        AudioContentComponent,
         AssessmentContentComponent,
         PreviewQuestionComponent,
         PreviewCorrectionComponent,

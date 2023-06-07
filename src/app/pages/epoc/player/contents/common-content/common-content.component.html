@@ -1,6 +1,6 @@
 <app-card>
   <div class="title-container">
-    <div class="title-icon">
+    <div class="title-icon" *ngIf="icon">
       <ion-icon aria-hidden="true" [name]="icon" [src]="icon.indexOf('assets') !== -1 ? icon : null"></ion-icon>
     </div>
     <h5 class="subtitle">{{subtitle | nbsp}}</h5>

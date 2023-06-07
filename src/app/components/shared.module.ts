@@ -25,6 +25,7 @@ import {CorrectionReorderComponent} from './corrections/correction-reorder/corre
 import {DebugComponent} from './debug/debug.component';
 import {CertificateModalComponent} from './certificate-modal/certificate-modal.component';
 import {TranslateModule} from '@ngx-translate/core';
+import {AudioPlayerComponent} from './audio-player/audio-player.component';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import {TranslateModule} from '@ngx-translate/core';
         AssessmentButtonComponent,
         HtmlComponent,
         VideoPlayerComponent,
+        AudioPlayerComponent,
         CardComponent,
         FlipCardComponent,
         SimpleChoiceComponent,
@@ -62,6 +64,7 @@ import {TranslateModule} from '@ngx-translate/core';
         AssessmentButtonComponent,
         HtmlComponent,
         VideoPlayerComponent,
+        AudioPlayerComponent,
         CardComponent,
         FlipCardComponent,
         SimpleChoiceComponent,
