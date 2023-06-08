@@ -1,4 +1,5 @@
-import {uid} from './types';
+import {uid} from '@epoc/epoc-types/dist/v1';
+
 
 export class OnboardingItem {
     id: uid;

@@ -3,14 +3,14 @@ import {Observable, ReplaySubject} from 'rxjs';
 import {Capacitor} from '@capacitor/core';
 import {Filesystem,Directory, Encoding} from '@capacitor/filesystem';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
-import {uid} from 'src/app/classes/types';
-import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {HttpClient} from '@angular/common/http';
 import {File} from '@ionic-native/file/ngx';
 import {Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {AppService} from './app.service';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
+import {uid} from '@epoc/epoc-types/dist/v1';
+import {Content} from '../classes/contents/content';
 
 
 @Injectable({
@@ -101,28 +101,28 @@ export class EpocService {
     for (const [chapterId, chapter] of Object.entries(epoc.chapters)) {
       chapter.resumeLink = `/epoc/play/${epoc.id}/${chapterId}`;
       chapter.time = 0;
-      chapter.videoCount = 0;
+      chapter.mediaCount = 0;
       chapter.assessments = [];
       chapter.initializedContents = chapter.contents.map((id) => {
-        const currentContent = epoc.contents[id];
+        const currentContent: Content = epoc.contents[id];
         currentContent.id = id;
         if (currentContent.type === 'assessment') {
-          (currentContent as Assessment).scoreTotal = this.calcScoreTotal(epoc, (currentContent as Assessment).questions);
-          (currentContent as Assessment).chapterId = chapterId;
-          chapter.time = chapter.time + (currentContent as Assessment).questions.length;
+          currentContent.scoreTotal = this.calcScoreTotal(epoc, currentContent.questions);
+          currentContent.chapterId = chapterId;
+          chapter.time = chapter.time + currentContent.questions.length;
           chapter.assessments.push(id);
-          if ((currentContent as Assessment).scoreTotal > 0) {
-            epoc.assessments.push((currentContent as Assessment));
+          if (currentContent.scoreTotal > 0) {
+            epoc.assessments.push(currentContent);
           }
         } else if (currentContent.type === 'simple-question' &&
-            Number(epoc.questions[(currentContent as SimpleQuestion).question].score) > 0) {
-          (currentContent as Assessment).scoreTotal = this.calcScoreTotal(epoc, [(currentContent as SimpleQuestion).question]);
-          (currentContent as Assessment).questions = [(currentContent as SimpleQuestion).question];
-          (currentContent as Assessment).chapterId = chapterId;
+            Number(epoc.questions[currentContent.question].score) > 0) {
+          currentContent.scoreTotal = this.calcScoreTotal(epoc, [currentContent.question]);
+          currentContent.questions = [currentContent.question];
+          currentContent.chapterId = chapterId;
           chapter.assessments.push(id);
-          epoc.assessments.push((currentContent as Assessment));
-        } else if (currentContent.type === 'video') {
-          chapter.videoCount++;
+          epoc.assessments.push(currentContent);
+        } else if (currentContent.type === 'video' || currentContent.type === 'audio') {
+          chapter.mediaCount++;
           chapter.time = chapter.time + 3;
         }
         return currentContent;

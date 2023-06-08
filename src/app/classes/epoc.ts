@@ -1,57 +1,35 @@
-import {Author} from './author';
-import {Content} from './contents/content';
-import {html, uid} from './types';
-import {Assessment, Question} from './contents/assessment';
+import {uid} from '@epoc/epoc-types/src/v1';
+import {Epoc as EpocType, EpocMetadata} from '@epoc/epoc-types/dist/v1';
+import {Chapter as ChapterType} from '@epoc/epoc-types/src/v1/epoc';
+import {Content} from './contents/content'
+import {Assessment, Question, SimpleQuestion} from './contents/assessment';
 
-export class EpocMetadata {
-    edition: string;
-    id: string;
-    title: string;
-    image: string;
-    teaser?: string;
-    thumbnail?:string;
-    authors: Record<uid, Author>;
-    summary: html;
-    objectives: string[];
-    chaptersCount: number;
-    assessmentsCount: number;
-    download: string;
-    lastModif: string;
+export {EpocMetadata} from '@epoc/epoc-types/dist/v1'
+
+export interface Epoc extends EpocType {
+    assessments: (Assessment|SimpleQuestion)[]
+    chapters:  Record<uid, Chapter>;
+    contents: Record<uid, Content>;
+    questions: Record<uid, Question>
 }
 
-export class EpocLibrary extends EpocMetadata {
+export interface EpocLibrary extends EpocMetadata {
     downloading: boolean;
     downloaded: boolean;
     unzipping: boolean;
-    opened:boolean;
+    opened: boolean;
+    dir: string;
+    rootFolder: string;
     updateAvailable: boolean;
     lastModified: string;
     lang: string;
-    translation: Object | null;
-    rootFolder?: string;
-    dir?: string;
+    translation: '';
 }
 
-export class Epoc extends EpocMetadata {
-    certificateScore: number;
-    parameters: Parameters;
-    contents: Record<uid, Content>;
-    chapters: Record<uid, Chapter>;
-    questions: Record<uid, Question>;
-    // initialized at runtime
-    assessments?: Assessment[];
-    plugins: string[];
-}
-
-export class Chapter {
-    id: uid;
-    title: string;
-    image?: string;
-    objectives?: string[];
-    contents: uid[];
-    // initialized at runtime
+export interface Chapter extends ChapterType {
+    id?: uid;
     time?: number;
-    videoCount?: number;
+    mediaCount?: number;
     assessmentCount?: number;
     initializedContents: Content[];
     assessments?: uid[];
@@ -60,10 +38,4 @@ export class Chapter {
     chapterOpened?: boolean;
     assessmentDone?: boolean;
     resumeLink?:string;
-}
-
-export class Parameters {
-    chapterParameter?: string;
-    easierScoring?: boolean;
-    openQuestionButton?: string;
 }

@@ -6,19 +6,19 @@ import {combineLatest, Observable} from 'rxjs';
 import {Epoc} from 'src/app/classes/epoc';
 import {AlertController} from '@ionic/angular';
 import {Reading} from 'src/app/classes/reading';
-import {Assessment} from 'src/app/classes/contents/assessment';
+import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {jsPDF} from 'jspdf';
 import {User} from 'src/app/classes/user';
 import {AuthService} from 'src/app/services/auth.service';
 import {Capacitor} from '@capacitor/core';
-import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
+import {Filesystem,Directory} from '@capacitor/filesystem';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {LoadingController} from '@ionic/angular';
 import {EpocService} from '../../../services/epoc.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {SettingsStoreService} from '../../../services/settings-store.service';
 import {Settings} from '../../../classes/settings';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-epoc-score',
@@ -30,7 +30,7 @@ export class EpocScorePage implements OnInit {
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     reading: Reading;
-    assessments: Assessment[];
+    assessments: (Assessment|SimpleQuestion)[];
 
     assessmentData;
 

@@ -7,7 +7,7 @@ import {switchMap} from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
-import {Assessment, Question} from 'src/app/classes/contents/assessment';
+import {Assessment, Question, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {EpocService} from 'src/app/services/epoc.service';
 import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
 import {MatomoTracker} from '@ngx-matomo/tracker';
@@ -25,7 +25,7 @@ export class EpocAssessmentPage implements OnInit {
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
-    assessments: Assessment[];
+    assessments: (Assessment|SimpleQuestion)[];
     assessment: Assessment;
     epocId;
     assessmentId;
@@ -80,7 +80,7 @@ export class EpocAssessmentPage implements OnInit {
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
             this.assessments = epoc.assessments;
-            this.assessment = epoc.contents[this.assessmentId];
+            this.assessment = epoc.contents[this.assessmentId] as Assessment;
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
             this.scoreMax = this.epocService.calcScoreTotal(this.epoc, this.assessment.questions);
         });

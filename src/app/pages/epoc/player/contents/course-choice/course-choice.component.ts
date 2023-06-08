@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Reading} from 'src/app/classes/reading';
 import {Content} from 'src/app/classes/contents/content';
+import {ChoiceCondition} from '@epoc/epoc-types/dist/v1';
 
 @Component({
     selector: 'course-choice',
@@ -23,7 +24,7 @@ export class CourseChoiceComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.resolver = this.content.conditionResolver;
+        this.resolver = (this.content as ChoiceCondition).conditionResolver;
 
         this.readingStore.readings$.subscribe(readings => {
             if (readings) {
@@ -40,8 +41,12 @@ export class CourseChoiceComponent implements OnInit {
 
     selectAnswer(answer) {
         this.answer = answer;
-        const flags = this.content.conditionResolver.conditionalFlag.find(condition => condition.value === this.answer).flags;
-        const flagsToRemove = this.content.conditionResolver.conditionalFlag.reduce((acc, condition) => acc.concat(condition.flags), []);
+        const flags = (this.content as ChoiceCondition).conditionResolver.conditionalFlag.find(
+            condition => condition.value === this.answer
+        ).flags;
+        const flagsToRemove = (this.content as ChoiceCondition).conditionResolver.conditionalFlag.reduce(
+            (acc, condition) => acc.concat(condition.flags), []
+        );
         this.readingStore.saveChoices(this.epocId, this.content.id, this.answer, flags, flagsToRemove);
         setTimeout(() => {this.chosen.emit()}, 200)
     }

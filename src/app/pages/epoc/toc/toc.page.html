@@ -49,6 +49,7 @@
                                 <div aria-hidden="true" class="toc-chapter-details-item-icon">
                                     <ion-icon *ngIf="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
                                     <ion-icon *ngIf="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
+                                    <ion-icon *ngIf="content.type === 'audio'" name="musical-notes-outline" slot="start"></ion-icon>
                                     <ion-icon *ngIf="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
                                     <ion-icon *ngIf="content.type === 'simple-question' && !+epoc.questions[content.question].score"
                                               name="bulb-outline" slot="start"></ion-icon>

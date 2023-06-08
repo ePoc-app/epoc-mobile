@@ -1,20 +1,20 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {first, switchMap} from 'rxjs/operators';
-import {combineLatest, from, Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {Settings} from 'src/app/classes/settings';
 import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Location} from '@angular/common';
-import {Assessment} from 'src/app/classes/contents/assessment';
-import {uid} from 'src/app/classes/types';
+import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
+import {uid} from '@epoc/epoc-types/src/v1';
 import {EpocService} from '../../../services/epoc.service';
 import {Content} from '../../../classes/contents/content';
 import {PluginService} from '../../../services/plugin.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
-import {IonSlides, Platform} from '@ionic/angular';
+import {IonSlides} from '@ionic/angular';
 import {AppService} from 'src/app/services/app.service';
 
 
@@ -57,7 +57,7 @@ export class EpocPlayerPage implements OnInit {
 
     };
 
-    assessments: Assessment[];
+    assessments: (SimpleQuestion | Assessment)[];
     assessmentData;
     certificateShown = false;
     showControls = true;

@@ -1,35 +1,15 @@
-import {uid} from '../types';
+import {ChoiceCondition, Html, uid, Video, Audio} from '@epoc/epoc-types/dist/v1';
+import {Assessment, SimpleQuestion} from './assessment';
 
-export abstract class Content {
+export interface ContentRuntime {
     id: uid;
-    type: 'html' | 'assessment' | 'video' | 'simple-question' | 'choice';
-    title: string;
-    subtitle?: string;
-    conditional?: boolean;
-    conditionResolver?: ScoreResolver | ChoiceResolver;
-    hidden?: boolean;
     viewed?: boolean;
 }
 
-abstract class Resolver {
-    conditionalFlag: ConditionalFlag[];
-}
-
-export class ScoreResolver extends Resolver{
-    type: 'score';
-}
-
-export class ChoiceResolver extends Resolver{
-    type: 'choice';
-    choices: Choice[];
-}
-
-export class Choice {
-    label: string;
-    value: string;
-}
-
-export class ConditionalFlag {
-    value: string;
-    flags: uid[];
-}
+// Extends base content types with runtime properties
+export type Content = (Video & ContentRuntime) |
+    (Audio & ContentRuntime) |
+    (Html & ContentRuntime) |
+    (ChoiceCondition & ContentRuntime) |
+    (SimpleQuestion & ContentRuntime) |
+    (Assessment & ContentRuntime);

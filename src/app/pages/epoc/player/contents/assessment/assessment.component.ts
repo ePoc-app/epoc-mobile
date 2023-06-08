@@ -4,7 +4,7 @@ import {Content} from 'src/app/classes/contents/content';
 import {Reading, UserAssessment} from 'src/app/classes/reading';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {EpocService} from 'src/app/services/epoc.service';
-import {uid} from 'src/app/classes/types';
+import {uid} from '@epoc/epoc-types/src/v1';
 
 @Component({
     selector: 'assessment-content',
