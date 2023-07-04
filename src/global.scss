@@ -577,6 +577,10 @@ span.epoc-author{
   }
 }
 
+.qr-scan .ion-page{
+  background: transparent !important;
+}
+
 
 ////////////////////////// Dark mode implentation //////////////////////////
 @media (prefers-color-scheme: light) {

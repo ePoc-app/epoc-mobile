@@ -7,6 +7,7 @@ import {AppService} from 'src/app/services/app.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {LocalEpocsService} from '../../services/localEpocs.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-library',
@@ -27,6 +28,7 @@ export class LibraryPage implements OnInit {
 
   constructor(
       private ref: ChangeDetectorRef,
+      private router: Router,
       public libraryService: LibraryService,
       public onboardingService: OnboardingService,
       public appService: AppService,
@@ -89,12 +91,13 @@ export class LibraryPage implements OnInit {
           this.linkInputAlert();
         }
       },
-      /* todo add qr {
+      {
         text: this.translate.instant('FLOATING_MENU.IMPORT_QR'),
         icon: '/assets/icon/qr.svg',
         handler: () => {
+          this.router.navigateByUrl('/library/qr')
         }
-      },*/
+      },
       {
         text: 'Fermer',
         role: 'cancel'

@@ -3,8 +3,11 @@
 ## Requirements
 
 * Recent version of Node and npm
-* Ionic `npm install -g ionic`
-* Android studio [(guide)](https://ionicframework.com/docs/installation/android) and/or xcode [(guide)](https://ionicframework.com/docs/installation/ios)
+* Ionic `npm install -g @ionic/cli`
+* Cocoapods `sudo gem install cocoapods`
+* Android studio [(guide)](https://ionicframework.com/docs/installation/android)
+* Xcode [(guide)](https://ionicframework.com/docs/installation/ios)
+    * Enable xcode command line tools `sudo xcode-select -s /Applications/Xcode.app/Contents/Developers`
 
 ## Getting started
 

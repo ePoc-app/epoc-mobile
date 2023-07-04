@@ -8,6 +8,7 @@ import { LibraryPageRoutingModule } from './library-routing.module';
 
 import { LibraryPage } from './library.page';
 import {EpocOverviewPage} from './overview/overview.page';
+import {EpocQrPage} from './qr/qr.page';
 import {PipesModule} from '../../pipes/pipes.module';
 import {SharedModule} from '../../components/shared.module';
 
@@ -20,6 +21,6 @@ import {SharedModule} from '../../components/shared.module';
     PipesModule,
     SharedModule,
   ],
-  declarations: [LibraryPage, EpocOverviewPage]
+  declarations: [LibraryPage, EpocOverviewPage, EpocQrPage]
 })
 export class LibraryModule {}

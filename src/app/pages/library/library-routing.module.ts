@@ -3,11 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LibraryPage } from './library.page';
 import {EpocOverviewPage} from './overview/overview.page';
+import {EpocQrPage} from './qr/qr.page';
 
 const routes: Routes = [
   {
     path: '',
     component: LibraryPage
+  },
+  {
+    path: 'qr',
+    component: EpocQrPage
   },
   {
     path: ':id',
