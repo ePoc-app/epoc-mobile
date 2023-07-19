@@ -1,7 +1,12 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Reading} from 'src/app/classes/reading';
+import {Reading, Statements, Verb} from 'src/app/classes/reading';
 import {StorageService} from './storage.service';
+import {uid} from '@epoc/epoc-types/dist/v1';
+import {Badge} from 'src/app/classes/epoc';
+import * as jsonLogic from 'json-logic-js/logic';
+import {ToastController} from '@ionic/angular';
+import {EpocService} from './epoc.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +16,11 @@ export class ReadingStoreService {
     private readonly readingsSubject = new BehaviorSubject<Reading[]>(undefined);
     readonly readings$ = this.readingsSubject.asObservable();
 
-    constructor(private storageService: StorageService) {
+    constructor(
+        private storageService: StorageService,
+        private epocService: EpocService,
+        private toastController: ToastController
+    ) {
         this.fetchReadings();
     }
 
@@ -45,7 +54,11 @@ export class ReadingStoreService {
                     bookmarks: [],
                     choices: [],
                     flags: [],
-                    certificateShown: false
+                    certificateShown: false,
+                    statements: {
+                        contents: {}
+                    },
+                    badges: []
                 }
             ];
 
@@ -135,6 +148,39 @@ export class ReadingStoreService {
         readings[index].assessments.splice(assessmentIndex, 1);
         this.readings = readings;
         this.saveReadings();
+    }
+
+    saveStatement(epocId: uid, contentId: uid, verb: Verb, value: string|number|boolean) {
+        const readings = [...this.readings];
+        const reading = readings.find(r => r.epocId === epocId);
+        if (!reading.statements) reading.statements = {contents:{}}
+        if (!reading.statements.contents[contentId]) reading.statements.contents[contentId] = {}
+        reading.statements.contents[contentId][verb] = value;
+        if (!reading.badges) reading.badges = [];
+        this.checkBadges(reading);
+        this.readings = readings;
+        this.saveReadings();
+    }
+
+    checkBadges (reading: Reading) {
+        const epoc = this.epocService.epoc;
+        for (const [badgeId, badge] of Object.entries(epoc.badges)) {
+            if (jsonLogic.apply(badge.rule, reading.statements) && !reading.badges.includes(badgeId)) {
+                this.presentBadge(badge).then(() => {});
+                reading.badges.push(badgeId);
+            }
+        }
+        console.log(reading.badges);
+    }
+
+    async presentBadge(badge: Badge) {
+        const toast = await this.toastController.create({
+            message: badge.title,
+            duration: 1500,
+            position: 'top'
+        });
+
+        await toast.present();
     }
 
     removeReading(id: string) {

@@ -1,5 +1,6 @@
 import {uid} from '@epoc/epoc-types/src/v1';
 import {Epoc as EpocType, EpocMetadata} from '@epoc/epoc-types/dist/v1';
+import {Rule} from '@epoc/epoc-types/dist/v2/rule';
 import {Chapter as ChapterType} from '@epoc/epoc-types/src/v1/epoc';
 import {Content} from './contents/content'
 import {Assessment, Question, SimpleQuestion} from './contents/assessment';
@@ -10,7 +11,8 @@ export interface Epoc extends EpocType {
     assessments: (Assessment|SimpleQuestion)[]
     chapters:  Record<uid, Chapter>;
     contents: Record<uid, Content>;
-    questions: Record<uid, Question>
+    questions: Record<uid, Question>;
+    badges: Record<uid, Badge>;
 }
 
 export interface EpocLibrary extends EpocMetadata {
@@ -38,4 +40,12 @@ export interface Chapter extends ChapterType {
     chapterOpened?: boolean;
     assessmentDone?: boolean;
     resumeLink?:string;
+}
+
+
+export interface Badge {
+    title: string;
+    description: string;
+    icon: string;
+    rule: Rule
 }

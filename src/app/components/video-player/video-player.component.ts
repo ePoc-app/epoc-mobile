@@ -32,6 +32,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     };
 
     @Output() timelineDragging = new EventEmitter<string>();
+    @Output() playEvent = new EventEmitter<boolean>();
 
     // Android workaround video playback issue : https://github.com/ionic-team/capacitor/issues/6021
     isAndroid = Capacitor.isNativePlatform && Capacitor.getPlatform() === 'android';
@@ -118,6 +119,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         this.video.addEventListener('play', (event) => {
             this.hasPlayed = true;
             this.playing = true;
+            this.playEvent.emit(true);
         });
         this.video.addEventListener('pause', (event) => {
             this.playing = false;

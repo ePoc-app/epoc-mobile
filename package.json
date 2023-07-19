@@ -73,6 +73,7 @@
     "core-js": "^3.22.7",
     "globalthis": "^1.0.3",
     "hls.js": "^1.2.5",
+    "json-logic-js": "^2.0.2",
     "jspdf": "^2.5.1",
     "localforage-cordovasqlitedriver": "^1.8.0",
     "rxjs": "~6.6.0",
