@@ -183,11 +183,12 @@
             "CLOSE": "Fermer"   
         },
         "SCORE": {
-            "HEADER": "Score total",
+            "HEADER": "Mon attestation",
             "TOTAL_SCORE": "Votre score total",
             "PTS": "points",
             "CONTINUE": "Continuez !",
             "REMAINING": "Gagnez {{remaining}} points et obtenez votre attestation",
+            "BADGE_REMAINING": "Gagnez encore {{remaining}} badges pour obtenir votre attestation",
             "GET_CERTIFICATE": "Obtenir l'attestation",
             "CONGRATS": "Félicitations !",
             "CERTIFICATE_WIN": "Vous avez atteint le score pour obtenir l'attestation",

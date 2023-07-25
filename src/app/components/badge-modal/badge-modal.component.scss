@@ -1,0 +1,82 @@
+:host {
+  z-index: 60
+}
+
+.badge-modal-container{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background: rgba(0,0,0,.75);
+  z-index: 60;
+
+  .badge-modal-success-card {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 90%;
+    margin: 0;
+    max-width: 500px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+
+    &-header {
+      padding: 30px 20px 10px 20px;
+    }
+
+    &-content {
+      padding-bottom: 30px;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color:var(--ion-color-text)
+    }
+
+    .text1 {
+      color: var(--ion-color-text);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .close{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top:1rem;
+      right:1rem;
+      width:1.8rem;
+      height:1.8rem;
+      z-index: 10;
+      background: var(--ion-color-contrast);
+      border-radius: 2rem;
+      --ionicon-stroke-width: 64px;
+      color: var(--ion-color-text-button);
+      font-size: 18px;
+    }
+
+    .badge-modal-img{
+      display: inline-block;
+      position: relative;
+      width: 150px;
+
+      .badge-modal-bg {
+        display: block;
+      }
+
+      badge {
+        position: absolute;
+        top:50%;
+        left:50%;
+        width:60%;
+        height:auto;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}

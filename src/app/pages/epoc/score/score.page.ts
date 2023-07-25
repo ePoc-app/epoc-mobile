@@ -3,7 +3,7 @@ import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {combineLatest, Observable} from 'rxjs';
-import {Epoc} from 'src/app/classes/epoc';
+import {Badge, Epoc} from 'src/app/classes/epoc';
 import {AlertController} from '@ionic/angular';
 import {Reading} from 'src/app/classes/reading';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
@@ -14,11 +14,12 @@ import {Capacitor} from '@capacitor/core';
 import {Filesystem,Directory} from '@capacitor/filesystem';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import {LoadingController} from '@ionic/angular';
-import {EpocService} from '../../../services/epoc.service';
+import {EpocService} from 'src/app/services/epoc.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
-import {SettingsStoreService} from '../../../services/settings-store.service';
-import {Settings} from '../../../classes/settings';
+import {SettingsStoreService} from 'src/app/services/settings-store.service';
+import {Settings} from 'src/app/classes/settings';
 import {TranslateService} from '@ngx-translate/core';
+import {uid} from '@epoc/epoc-types/dist/v1';
 
 @Component({
     selector: 'app-epoc-score',
@@ -39,6 +40,11 @@ export class EpocScorePage implements OnInit {
     certificateEnabled = false;
 
     settings: Settings;
+
+    badgeMode = false;
+    unlockedBadges: uid[] = [];
+    badgeModal: Badge = null;
+    showBadgeModal = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -63,6 +69,9 @@ export class EpocScorePage implements OnInit {
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
             this.assessments = epoc.assessments;
+            if (Object.keys(this.epoc.badges).length > 0) {
+                this.badgeMode = true;
+            }
         });
 
         this.auth.getUser().subscribe(user => {
@@ -81,7 +90,12 @@ export class EpocScorePage implements OnInit {
             if (epoc && readings) {
                 this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
                 if (!this.reading) this.readingStore.addReading(this.epoc.id);
-                this.setAssessmentsData();
+                if (this.badgeMode) {
+                    console.log(this.reading.badges);
+                    this.unlockedBadges = this.reading.badges;
+                } else {
+                    this.setAssessmentsData();
+                }
             }
         });
     }
@@ -317,6 +331,11 @@ export class EpocScorePage implements OnInit {
             doc.save(fileName);
             this.dismissLoading();
         }
+    }
+
+    showBadgeDetail(badge: Badge) {
+        this.badgeModal = badge;
+        this.showBadgeModal = true;
     }
 
     async presentLoading() {

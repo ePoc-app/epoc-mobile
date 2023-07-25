@@ -183,11 +183,12 @@
             "CLOSE": "Close"   
         },
         "SCORE": {
-            "HEADER": "Total score",
+            "HEADER": "My certificate",
             "TOTAL_SCORE": "Your total score",
             "PTS": "points",
             "CONTINUE": "Continue !",
             "REMAINING": "Earn {{remaining}} points and get your certificate",
+            "BADGE_REMAINING": "Earn {{remaining}} badges and get your certificate",
             "GET_CERTIFICATE": "Get the certificate",
             "CONGRATS": "Congratulations",
             "CERTIFICATE_WIN": "You have reached the score to obtain the certificate",

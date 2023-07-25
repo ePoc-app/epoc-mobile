@@ -51,11 +51,32 @@
   background: var(--ion-color-contrast);
   border-radius: .5rem;
 
+  &.flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &-text {
+    width: calc(100% - 1rem - 75px);
+    margin-right: 1rem;
+  }
+
+  &-badge {
+    width: 75px;
+    flex-shrink: 0;
+  }
+
+  ion-button {
+    margin-top: 1rem;
+  }
+
   &.success{
     color: white;
     background: var(--ion-color-inria-certificate);
 
     ion-button{
+      width:100%;
+      flex-shrink: 0;
       --background: white;
       --background-activated: var(--ion-color-light);
       --background-focused: var(--ion-color-light);
@@ -76,6 +97,27 @@
     font-size: 2rem;
     font-weight: bold;
   }
+
+  h6{
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin:0 0 5px 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -5px;
+}
+
+.badge-item {
+  width: calc(33.333% - 10px);
+  margin: 0 5px 20px 5px;
 }
 
 .short-access{

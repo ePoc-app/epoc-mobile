@@ -1,0 +1,73 @@
+:host {
+  display: block;
+}
+
+.badge {
+  display: flex;
+  flex-direction: column;
+
+  .badge-background {
+    position: relative;
+    width:100%;
+    padding-bottom:100%;
+    background: var(--ion-color-inria-base-button);
+    border-radius: 8px;
+  }
+
+  .badge-image {
+    position: absolute;
+    width: 70%;
+    height: 100%;
+    top: 0;
+    left: 15%;
+
+    img {
+      display: block;
+      position: absolute;
+      top:50%;
+      left:50%;
+      width: 100%;
+      height: auto;
+      transform: translate(-50%, -50%);
+    }
+
+    .image-icon {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40%;
+    }
+  }
+
+  .badge-title {
+    margin-top: 10px;
+    width: 100%;
+    line-height: 1.2;
+    font-size: .875rem;
+    font-weight: bold;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  &.locked {
+    .badge-title {
+      color: var(--ion-color-text-2);
+      opacity: .7;
+    }
+  }
+
+  &.nobg {
+    .badge-background {
+      background: none;
+    }
+    .badge-image {
+      width: 100%;
+      left:0;
+    }
+  }
+}

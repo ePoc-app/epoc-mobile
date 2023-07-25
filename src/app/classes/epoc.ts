@@ -13,6 +13,7 @@ export interface Epoc extends EpocType {
     contents: Record<uid, Content>;
     questions: Record<uid, Question>;
     badges: Record<uid, Badge>;
+    certificateBadgeCount: number;
 }
 
 export interface EpocLibrary extends EpocMetadata {
@@ -44,6 +45,7 @@ export interface Chapter extends ChapterType {
 
 
 export interface Badge {
+    id?: uid;
     title: string;
     description: string;
     icon: string;

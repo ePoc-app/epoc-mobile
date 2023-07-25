@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="wrapper" *ngIf="assessmentData">
+  <div class="wrapper" *ngIf="epoc && assessmentData && !badgeMode">
     <div class="title-container">
       <div class="title-icon">
         <ion-icon name="star-outline"></ion-icon>
@@ -59,4 +59,34 @@
       </ng-container>
     </div>
   </div>
+  <div class="wrapper" *ngIf="epoc && badgeMode">
+    <div class="certificate flex" *ngIf="!certificateEnabled">
+      <div class="certificate-text">
+        <h6>{{'PLAYER.SCORE.CONTINUE' | translate}}</h6>
+        <p [translate]="'PLAYER.SCORE.BADGE_REMAINING'" [translateParams]="{remaining: epoc.certificateBadgeCount - unlockedBadges.length}"></p>
+      </div>
+      <div class="certificate-badge">
+        <badge icon="cert-grey" grey="true" nobg="true"></badge>
+      </div>
+    </div>
+    <div class="certificate flex success" *ngIf="certificateEnabled">
+      <div class="certificate-text">
+        <h6>{{'PLAYER.SCORE.CONGRATS' | translate}}</h6>
+        <p>{{'PLAYER.SCORE.CERTIFICATE_WIN' | translate}}</p>
+      </div>
+      <div class="certificate-badge">
+        <badge icon="cert" nobg="true"></badge>
+      </div>
+      <ion-button size="medium" expand="block" (click)="getCertificate()">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        <span>{{'PLAYER.SCORE.GET_CERTIFICATE' | translate}}</span>
+      </ion-button>
+    </div>
+    <div class="badge-list">
+      <div class="badge-item" [ngClass]="{'unlocked': unlockedBadges.includes(badge.id)}" *ngFor="let badge of (epoc.badges | denormalize)" (click)="showBadgeDetail(badge)">
+        <badge [title]="badge.title" [icon]="badge.icon" [locked]="unlockedBadges.includes(badge.id)"></badge>
+      </div>
+    </div>
+  </div>
 </ion-content>
+<badge-modal [showModal]="showBadgeModal" [badge]="badgeModal" (dismiss)="showBadgeModal = false"></badge-modal>

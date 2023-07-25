@@ -26,6 +26,8 @@ import {DebugComponent} from './debug/debug.component';
 import {CertificateModalComponent} from './certificate-modal/certificate-modal.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {AudioPlayerComponent} from './audio-player/audio-player.component';
+import {BadgeComponent} from 'src/app/components/badge/badge.component';
+import {BadgeModalComponent} from 'src/app/components/badge-modal/badge-modal.component';
 
 @NgModule({
     imports: [
@@ -57,7 +59,9 @@ import {AudioPlayerComponent} from './audio-player/audio-player.component';
         CorrectionGenericComponent,
         CorrectionReorderComponent,
         DebugComponent,
-        CertificateModalComponent
+        CertificateModalComponent,
+        BadgeComponent,
+        BadgeModalComponent
     ],
     exports: [
         ScoreProgressComponent,
@@ -82,7 +86,9 @@ import {AudioPlayerComponent} from './audio-player/audio-player.component';
         CorrectionReorderComponent,
         DebugComponent,
         CertificateModalComponent,
-        TranslateModule
+        TranslateModule,
+        BadgeComponent,
+        BadgeModalComponent
     ]
 })
 export class SharedModule { }
