@@ -170,7 +170,6 @@ export class ReadingStoreService {
                 reading.badges.push(badgeId);
             }
         }
-        console.log(reading.badges);
     }
 
     async presentBadge(badge: Badge) {

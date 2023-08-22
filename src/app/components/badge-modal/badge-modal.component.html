@@ -12,6 +12,15 @@
     <ion-card-content class="badge-modal-success-card-content">
       <ion-card-title class="title">{{badge.title}}</ion-card-title>
       <p class="text1">{{badge.description}}</p>
+      <div class="badge-rule-list">
+        <div class="badge-rule-item" *ngFor="let rule of ruleList">
+          <span class="badge-rule-item-check">
+            <ion-icon src="/assets/icon/check-round.svg" *ngIf="rule.success"></ion-icon>
+            <ion-icon src="/assets/icon/clock-round.svg" *ngIf="!rule.success"></ion-icon>
+          </span>
+          <span class="badge-rule-item-label"> {{rule.label}}</span>
+        </div>
+      </div>
       <ion-button size="large" expand="block" fill="outline" color="outline-button" (click)="hide()">{{'CLOSE' | translate}}</ion-button>
     </ion-card-content>
   </ion-card>

@@ -80,3 +80,27 @@
     }
   }
 }
+
+.badge-rule {
+  &-list {
+    text-align: left;
+    font-size: 0.875rem;
+    color: var(--ion-color-text)
+  }
+
+  &-item {
+    display: flex;
+    margin-bottom: 5px;
+    &-check {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+
+    &-label {
+    }
+
+    &:last-child{
+      margin-bottom: 1rem;
+    }
+  }
+}

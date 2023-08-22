@@ -84,9 +84,9 @@
     </div>
     <div class="badge-list">
       <div class="badge-item" [ngClass]="{'unlocked': unlockedBadges.includes(badge.id)}" *ngFor="let badge of (epoc.badges | denormalize)" (click)="showBadgeDetail(badge)">
-        <badge [title]="badge.title" [icon]="badge.icon" [locked]="unlockedBadges.includes(badge.id)"></badge>
+        <badge [title]="badge.title" [icon]="badge.icon" [locked]="!unlockedBadges.includes(badge.id)"></badge>
       </div>
     </div>
   </div>
 </ion-content>
-<badge-modal [showModal]="showBadgeModal" [badge]="badgeModal" (dismiss)="showBadgeModal = false"></badge-modal>
+<badge-modal *ngIf="badgeModal" [showModal]="showBadgeModal" [badge]="badgeModal" [reading]="reading" (dismiss)="showBadgeModal = false"></badge-modal>

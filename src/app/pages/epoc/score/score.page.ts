@@ -91,7 +91,6 @@ export class EpocScorePage implements OnInit {
                 this.reading = readings.find(item => item.epocId === this.route.snapshot.paramMap.get('id'));
                 if (!this.reading) this.readingStore.addReading(this.epoc.id);
                 if (this.badgeMode) {
-                    console.log(this.reading.badges);
                     this.unlockedBadges = this.reading.badges;
                 } else {
                     this.setAssessmentsData();
