@@ -18,7 +18,7 @@
             <ion-icon src="/assets/icon/check-round.svg" *ngIf="rule.success"></ion-icon>
             <ion-icon src="/assets/icon/clock-round.svg" *ngIf="!rule.success"></ion-icon>
           </span>
-          <span class="badge-rule-item-label"> {{rule.label}}</span>
+          <span class="badge-rule-item-label"> {{rule.label | translate}}</span>
         </div>
       </div>
       <ion-button size="large" expand="block" fill="outline" color="outline-button" (click)="hide()">{{'CLOSE' | translate}}</ion-button>

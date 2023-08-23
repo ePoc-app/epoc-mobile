@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Badge} from 'src/app/classes/epoc';
+import {Badge, Epoc} from 'src/app/classes/epoc';
 import {Reading} from 'src/app/classes/reading';
 import * as jsonLogic from 'json-logic-js/logic';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'badge-modal',
@@ -11,21 +12,30 @@ import * as jsonLogic from 'json-logic-js/logic';
 export class BadgeModalComponent implements OnInit, OnChanges {
   @Input() showModal: boolean;
   @Input() badge: Badge;
+  @Input() epoc: Epoc;
   @Input() reading: Reading;
 
   @Output() dismiss = new EventEmitter<boolean>();
 
-  ruleList: {label: string, success: boolean}[] = []
+  ruleList: {label: string, success: boolean}[] = [];
 
 
-  constructor() {}
+  constructor(public translate: TranslateService) {}
 
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.ruleList = this.badge.rule.and.map(rule => {
+      const statement = Object.values(rule)[0][0].var;
+      const value = Object.values(rule)[0][1];
+      const split = statement.split('.');
+      const type = split[0];
+      const id = split[1];
+      const verb = this.translate.instant(`BADGE.PASSIVE_VERBS.${split[2]}`, {[split[2]]: value});
+      const entity = this.epoc[type][id];
+      const entityType = this.translate.instant(`BADGE.ENTITY_TYPES.${entity.type}`);
       return {
-        label: Object.values(rule)[0][0].var, // todo : trad statement to english/french
+        label: `${verb} ${entityType} "${entity.title}"`,
         success: jsonLogic.apply(rule, this.reading.statements)
       }
     })

@@ -281,7 +281,31 @@
         "GET": "Obtain the certificate",
         "CONTINUE": "Continue"
     },
+    "BADGE": {
+        "VERBS": {
 
+        },
+        "PASSIVE_VERBS": {
+            "started": "Have started",
+            "completed": "Have completed",
+            "viewed": "Have viewed",
+            "read": "Have read",
+            "played": "Have played",
+            "watched": "Have watched",
+            "listened": "Have listened",
+            "attempted": "Have attempted",
+            "scored": "Have scored {{scored}} at"
+        },
+        "ENTITY_TYPES": {
+            "video": "the video",
+            "chapter": "the chapter",
+            "page": "the page",
+            "html": "the text",
+            "audio": "the audio",
+            "assessment": "the activity",
+            "question": "the question"
+        }
+    },
     "LOADING": "Loading",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",

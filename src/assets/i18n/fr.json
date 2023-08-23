@@ -281,7 +281,31 @@
         "GET": "Obtenir l'attestation",
         "CONTINUE": "Continuer"
     },
+    "BADGE": {
+        "VERBS": {
 
+        },
+        "PASSIVE_VERBS": {
+            "started": "Avoir commencé",
+            "completed": "Avoir terminé",
+            "viewed": "Avoir vu",
+            "read": "Avoir lu",
+            "played": "Avoir joué",
+            "watched": "Avoir regardé",
+            "listened": "Avoir écouté",
+            "attempted": "Avoir tenté",
+            "scored": "Avoir obtenu un score de {{scored}} à"
+        },
+        "ENTITY_TYPES": {
+            "video": "la vidéo",
+            "chapter": "le chapitre",
+            "page": "la page",
+            "html": "le texte",
+            "audio": "l'audio",
+            "assessment": "l'activité",
+            "question": "la question"
+        }
+    },
     "LOADING": "Chargement",
     "CANCEL": "Annuler",
     "CONFIRM": "Confirmer",
