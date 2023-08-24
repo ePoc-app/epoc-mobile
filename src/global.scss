@@ -286,6 +286,46 @@ ion-range.progress-indicator{
   }
 }
 
+ion-toast.badge-toast {
+  --border-radius: var(--epoc-border-radius);
+  --background: var(--ion-color-content);
+  --box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
+  --color: var(--ion-color-text);
+
+  &::part(header) {
+    color: var(--ion-color-inria);
+    font-weight: bold;
+  }
+
+  &::part(message) {
+    color: var(--ion-color-text);
+  }
+
+  &::part(icon) {
+    position: relative;
+    background: var(--ion-color-inria-base-button) url('/assets/icon/badge/shape.svg');
+    background-size: 40px 44px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    width: 16px;
+    height: 16px;
+    margin: .8rem 0 .8rem .8rem;
+    padding: 20px 22px 24px 22px;
+
+    &:before {
+      content:'';
+      position: absolute;
+      width: 40px;
+      height:44px;
+      top: 8px;
+      left: 10px;
+      background: url('/assets/icon/badge/shadow.svg');
+      background-size: cover;
+    }
+  }
+}
+
 .ion-page {
   background: var(--ion-color-background);
 }

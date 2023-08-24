@@ -7,6 +7,7 @@ import {Badge} from 'src/app/classes/epoc';
 import * as jsonLogic from 'json-logic-js/logic';
 import {ToastController} from '@ionic/angular';
 import {EpocService} from './epoc.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,8 @@ export class ReadingStoreService {
     constructor(
         private storageService: StorageService,
         private epocService: EpocService,
-        private toastController: ToastController
+        private toastController: ToastController,
+        public translate: TranslateService
     ) {
         this.fetchReadings();
     }
@@ -174,8 +176,11 @@ export class ReadingStoreService {
 
     async presentBadge(badge: Badge) {
         const toast = await this.toastController.create({
+            header: this.translate.instant('BADGE.NEW_BADGE_UNLOCKED'),
             message: badge.title,
-            duration: 1500,
+            icon: `/assets/icon/badge/${badge.icon}.svg`,
+            cssClass: 'badge-toast',
+            duration: 150000,
             position: 'top'
         });
 

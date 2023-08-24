@@ -282,8 +282,8 @@
         "CONTINUE": "Continue"
     },
     "BADGE": {
+        "NEW_BADGE_UNLOCKED": "New reward obtained !",
         "VERBS": {
-
         },
         "PASSIVE_VERBS": {
             "started": "Have started",
