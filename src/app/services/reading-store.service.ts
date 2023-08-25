@@ -8,6 +8,7 @@ import * as jsonLogic from 'json-logic-js/logic';
 import {ToastController} from '@ionic/angular';
 import {EpocService} from './epoc.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,8 @@ export class ReadingStoreService {
         private storageService: StorageService,
         private epocService: EpocService,
         private toastController: ToastController,
-        public translate: TranslateService
+        public translate: TranslateService,
+        private router: Router
     ) {
         this.fetchReadings();
     }
@@ -180,11 +182,16 @@ export class ReadingStoreService {
             message: badge.title,
             icon: `/assets/icon/badge/${badge.icon}.svg`,
             cssClass: 'badge-toast',
-            duration: 150000,
+            duration: 2000,
             position: 'top'
         });
 
         await toast.present();
+
+        toast.addEventListener('click', () => {
+            this.router.navigateByUrl('/epoc/score/' + this.epocService.epoc.id);
+            toast.dismiss();
+        })
     }
 
     removeReading(id: string) {
