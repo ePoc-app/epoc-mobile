@@ -1,5 +1,4 @@
 import {uid} from '@epoc/epoc-types/dist/v1';
-import {Content} from "./contents/content";
 
 export class Reading {
     epocId: string;
@@ -29,7 +28,7 @@ export interface Statements {
     contents: Record<uid, Verbs>
 }
 
-export type Verb = 'watched' | 'scored' | 'completed';
+export type Verb = 'played' | 'watched' | 'scored' | 'completed';
 
 export type Verbs = {
     [key in Verb]?: string|number|boolean;

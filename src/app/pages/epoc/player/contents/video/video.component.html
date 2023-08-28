@@ -1,7 +1,7 @@
 <ng-container *ngIf="content">
   <video-player [src]="content.source" [poster]="content.poster"
                 [subtitles]="content.subtitles" [title]="content.title"
-                (timelineDragging)="forwardEvent($event)" (playEvent)="play()"></video-player>
+                (timelineDragging)="forwardEvent($event)" (videoData)="setVideoData($event)" (playPause)="playPause($event)"></video-player>
   <ng-container *ngIf="content.summary">
     <h4>{{'PLAYER.VIDEO.SUMMARY' | translate}}</h4>
 

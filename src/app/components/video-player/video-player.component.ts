@@ -31,8 +31,9 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         overlay?: boolean
     };
 
+    @Output() videoData = new EventEmitter<{duration: number}>();
     @Output() timelineDragging = new EventEmitter<string>();
-    @Output() playEvent = new EventEmitter<boolean>();
+    @Output() playPause = new EventEmitter<boolean>();
 
     // Android workaround video playback issue : https://github.com/ionic-team/capacitor/issues/6021
     isAndroid = Capacitor.isNativePlatform && Capacitor.getPlatform() === 'android';
@@ -75,6 +76,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     async playAndroid() {
         if (!this.src) return;
         this.playing = true;
+        this.playPause.emit(true);
         const url = this.src.startsWith('http') || this.src.startsWith('capacitor') ? this.src : `application/files/epocs/${this.epocService.epoc.id}/${this.src}`;
         const subindex = this.subtitles ? this.subtitles.findIndex(s => s.lang.indexOf('fr') !== -1) : -1;
         const subtitle = subindex >= 0 ? this.subtitles[subindex].src : '';
@@ -100,12 +102,19 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
                 this.playing = false;
                 this.ref.detectChanges();
                 backbutton.unsubscribe();
+                this.playPause.emit(false);
             }, false);
             await this.videoPlayer.addListener('jeepCapVideoPlayerExit', (data: any) => {
                 this.playing = false;
                 this.ref.detectChanges();
                 backbutton.unsubscribe();
+                this.playPause.emit(false);
             }, false);
+            this.videoPlayer.getDuration({
+                playerId: this.id
+            }).then((r) => {
+                this.videoData.emit({duration: r.value})
+            })
         })
     }
     // ---
@@ -116,13 +125,17 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         this.video.addEventListener('error', (event) => {
             this.presentToast('Error loading video');
         })
+        this.video.addEventListener('loadedmetadata', (event) => {
+            this.videoData.emit({duration: this.video.duration});
+        });
         this.video.addEventListener('play', (event) => {
             this.hasPlayed = true;
             this.playing = true;
-            this.playEvent.emit(true);
+            this.playPause.emit(true);
         });
         this.video.addEventListener('pause', (event) => {
             this.playing = false;
+            this.playPause.emit(false);
         });
         this.video.addEventListener('timeupdate', (event) => {
             this.progress = this.video.currentTime / this.video.duration * 100;
