@@ -104,7 +104,9 @@ export class EpocPlayerPage implements OnInit {
                 this.nextChapter.id = this.nextChapterId;
             }
 
-            this.pluginService.init(epoc.plugins)
+            this.pluginService.init(epoc.plugins);
+
+            this.readingStore.saveStatement(this.epoc.id, 'chapters', this.chapterId, 'started', true);
         });
 
         combineLatest([this.epoc$, this.readingStore.readings$]).subscribe(([epoc, readings]) => {
