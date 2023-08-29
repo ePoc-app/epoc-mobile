@@ -51,11 +51,7 @@ export class SimpleQuestionComponent implements OnInit {
         this.tracker.trackEvent('Assessments', 'Answered simple question', `Answered ${this.epocId} ${this.content.id}`, score);
         this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'attempted', true);
         this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'scored', score);
-        if (score > 0) {
-            this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'passed', true);
-        } else {
-            this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'failed', true);
-        }
+        this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'passed', score > 0);
     }
 
     onQuestionAnswered (event) {

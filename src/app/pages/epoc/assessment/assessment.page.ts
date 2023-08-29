@@ -105,11 +105,7 @@ export class EpocAssessmentPage implements OnInit {
         this.tracker.trackEvent('Assessments', 'Answered', `Answered ${this.epocId} ${this.assessmentId} ${this.currentQuestion}`, score);
         this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'attempted', true);
         this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'scored', score);
-        if (score > 0) {
-            this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'passed', true);
-        } else {
-            this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'failed', true);
-        }
+        this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'passed', score > 0);
     }
 
     toggleExplanation() {
