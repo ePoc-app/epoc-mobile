@@ -22,7 +22,10 @@ export class AudioPlayerComponent implements OnInit, AfterViewInit {
     @Input() src: string;
     @Input() title: string;
 
+    @Output() audioData = new EventEmitter<{duration: number}>();
     @Output() timelineDragging = new EventEmitter<string>();
+    @Output() playPause = new EventEmitter<boolean>();
+
     id: string;
     audioPlayer;
 
@@ -53,12 +56,17 @@ export class AudioPlayerComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         if (!this.audioRef || !this.canvasRef) return;
         this.audio = this.audioRef.nativeElement;
+        this.audio.addEventListener('loadedmetadata', (event) => {
+            this.audioData.emit({duration: this.audio.duration});
+        });
         this.audio.addEventListener('play', () => {
             this.hasPlayed = true;
             this.playing = true;
+            this.playPause.emit(true);
         });
         this.audio.addEventListener('pause', () => {
             this.playing = false;
+            this.playPause.emit(false);
         });
         this.audio.addEventListener('timeupdate', () => {
             this.progress = this.audio.currentTime / this.audio.duration * 100;

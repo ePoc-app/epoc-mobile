@@ -1,5 +1,6 @@
 <ng-container *ngIf="content">
-  <audio-player [src]="content.source" [title]="content.title" (timelineDragging)="forwardEvent($event)"></audio-player>
+  <audio-player [src]="content.source" [title]="content.title" (timelineDragging)="forwardEvent($event)"
+                (audioData)="setAudioData($event)" (playPause)="playPause($event)"></audio-player>
   <ng-container *ngIf="content.summary">
     <h4>{{'PLAYER.VIDEO.SUMMARY' | translate}}</h4>
 
