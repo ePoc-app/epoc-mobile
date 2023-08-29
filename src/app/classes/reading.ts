@@ -33,7 +33,7 @@ export interface Statements {
 }
 
 export type EntityTypes = 'global' | 'chapters' | 'screens' | 'contents' | 'questions';
-export type Verb = 'played' | 'watched' | 'listened' | 'started' | 'attempted' | 'scored' | 'completed' | 'passed' | 'failed';
+export type Verb = 'played' | 'watched' | 'listened' | 'started' | 'attempted' | 'scored' | 'completed' | 'passed' | 'failed' | 'viewed' | 'read';
 
 export type Verbs = {
     [key in Verb]?: string|number|boolean;
