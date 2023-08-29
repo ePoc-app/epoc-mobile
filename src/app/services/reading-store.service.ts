@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Reading, Statements, Verb} from 'src/app/classes/reading';
+import {EntityTypes, Reading, Statements, Verb} from 'src/app/classes/reading';
 import {StorageService} from './storage.service';
 import {uid} from '@epoc/epoc-types/dist/v1';
 import {Badge} from 'src/app/classes/epoc';
@@ -60,7 +60,11 @@ export class ReadingStoreService {
                     flags: [],
                     certificateShown: false,
                     statements: {
-                        contents: {}
+                        global: {},
+                        chapters: {},
+                        screens: {},
+                        contents: {},
+                        questions: {}
                     },
                     badges: []
                 }
@@ -154,12 +158,18 @@ export class ReadingStoreService {
         this.saveReadings();
     }
 
-    saveStatement(epocId: uid, contentId: uid, verb: Verb, value: string|number|boolean) {
+    saveStatement(epocId: uid, entityType:EntityTypes, entityId: uid, verb: Verb, value: string|number|boolean) {
         const readings = [...this.readings];
         const reading = readings.find(r => r.epocId === epocId);
-        if (!reading.statements) reading.statements = {contents:{}}
-        if (!reading.statements.contents[contentId]) reading.statements.contents[contentId] = {}
-        reading.statements.contents[contentId][verb] = value;
+        if (!reading.statements) reading.statements = {
+            global: {},
+            chapters: {},
+            screens: {},
+            contents: {},
+            questions: {}
+        }
+        if (!reading.statements[entityType][entityId]) reading.statements[entityType][entityId] = {}
+        reading.statements[entityType][entityId][verb] = value;
         if (!reading.badges) reading.badges = [];
         this.checkBadges(reading);
         this.readings = readings;

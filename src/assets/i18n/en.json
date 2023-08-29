@@ -288,6 +288,8 @@
         "PASSIVE_VERBS": {
             "started": "Have started",
             "completed": "Have completed",
+            "passed": "Have passed",
+            "failed": "Have failed",
             "viewed": "Have viewed",
             "read": "Have read",
             "played": "Have played",

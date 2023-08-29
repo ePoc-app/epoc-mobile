@@ -37,12 +37,12 @@ export class VideoContentComponent implements OnInit {
         const epocId = this.epocService.epoc.id;
 
         if (playing) {
-            this.readingService.saveStatement(epocId, this.content.id, 'played', true);
+            this.readingService.saveStatement(epocId, 'contents', this.content.id, 'played', true);
             this.startTime = performance.now();
         } else {
             this.elapsed += Math.round((performance.now() - this.startTime) / 1000);
             if (this.elapsed > Math.round(this.videoData.duration/2)) {
-                this.readingService.saveStatement(epocId, this.content.id, 'watched', true);
+                this.readingService.saveStatement(epocId, 'contents', this.content.id, 'watched', true);
             }
         }
     }

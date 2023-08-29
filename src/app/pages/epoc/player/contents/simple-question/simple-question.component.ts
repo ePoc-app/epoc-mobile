@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Question} from 'src/app/classes/contents/assessment';
+import {Question, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {Reading} from 'src/app/classes/reading';
 import {Content} from 'src/app/classes/contents/content';
 import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
@@ -49,6 +49,13 @@ export class SimpleQuestionComponent implements OnInit {
         this.readingStore.saveResponses(this.epocId, this.content.id, score, this.userResponses);
         this.questionComponent.showCorrection();
         this.tracker.trackEvent('Assessments', 'Answered simple question', `Answered ${this.epocId} ${this.content.id}`, score);
+        this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'attempted', true);
+        this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'scored', score);
+        if (score > 0) {
+            this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'passed', true);
+        } else {
+            this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'failed', true);
+        }
     }
 
     onQuestionAnswered (event) {

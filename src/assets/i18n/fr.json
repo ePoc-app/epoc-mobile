@@ -289,9 +289,11 @@
         "PASSIVE_VERBS": {
             "started": "Avoir commencé",
             "completed": "Avoir terminé",
+            "passed": "Avoir réussi",
+            "failed": "Avoir échoué à",
             "viewed": "Avoir vu",
             "read": "Avoir lu",
-            "played": "Avoir joué",
+            "played": "Avoir lancé",
             "watched": "Avoir regardé",
             "listened": "Avoir écouté",
             "attempted": "Avoir tenté",

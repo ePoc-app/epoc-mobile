@@ -25,10 +25,15 @@ class UserChoice {
 }
 
 export interface Statements {
+    global: Verbs
+    chapters: Record<uid, Verbs>
+    screens: Record<uid, Verbs>
     contents: Record<uid, Verbs>
+    questions: Record<uid, Verbs>
 }
 
-export type Verb = 'played' | 'watched' | 'listened' | 'started' | 'scored' | 'completed';
+export type EntityTypes = 'global' | 'chapters' | 'screens' | 'contents' | 'questions';
+export type Verb = 'played' | 'watched' | 'listened' | 'started' | 'attempted' | 'scored' | 'completed' | 'passed' | 'failed';
 
 export type Verbs = {
     [key in Verb]?: string|number|boolean;
