@@ -28,7 +28,7 @@ export interface Statements {
     contents: Record<uid, Verbs>
 }
 
-export type Verb = 'played' | 'watched' | 'listened' | 'scored' | 'completed';
+export type Verb = 'played' | 'watched' | 'listened' | 'started' | 'scored' | 'completed';
 
 export type Verbs = {
     [key in Verb]?: string|number|boolean;

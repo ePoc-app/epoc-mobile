@@ -83,6 +83,7 @@ export class EpocAssessmentPage implements OnInit {
             this.assessment = epoc.contents[this.assessmentId] as Assessment;
             this.questions = this.assessment.questions.map(questionId => this.epoc.questions[questionId]);
             this.scoreMax = this.epocService.calcScoreTotal(this.epoc, this.assessment.questions);
+            this.readingStore.saveStatement(this.epocId, this.assessmentId, 'started', true);
         });
     }
 
@@ -121,6 +122,8 @@ export class EpocAssessmentPage implements OnInit {
             this.setAssessmentsData();
             this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
             this.isEnd = true;
+            this.readingStore.saveStatement(this.epocId, this.assessmentId, 'completed', true);
+            this.readingStore.saveStatement(this.epocId, this.assessmentId, 'scored', this.userScore);
         }
         this.questionSlides.slideNext();
         setTimeout(() => {
