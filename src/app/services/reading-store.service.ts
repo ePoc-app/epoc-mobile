@@ -178,6 +178,7 @@ export class ReadingStoreService {
 
     checkBadges (reading: Reading) {
         const epoc = this.epocService.epoc;
+        if (!epoc.badges) return;
         for (const [badgeId, badge] of Object.entries(epoc.badges)) {
             if (jsonLogic.apply(badge.rule, reading.statements) && !reading.badges.includes(badgeId)) {
                 this.presentBadge(badge).then(() => {});

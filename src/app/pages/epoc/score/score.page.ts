@@ -92,6 +92,7 @@ export class EpocScorePage implements OnInit {
                 if (!this.reading) this.readingStore.addReading(this.epoc.id);
                 if (this.badgeMode) {
                     this.unlockedBadges = this.reading.badges;
+                    this.certificateEnabled = epoc.certificateBadgeCount <= this.unlockedBadges.length
                 } else {
                     this.setAssessmentsData();
                 }

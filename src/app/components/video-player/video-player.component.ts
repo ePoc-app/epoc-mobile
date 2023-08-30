@@ -102,7 +102,6 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
                 this.playing = false;
                 this.ref.detectChanges();
                 backbutton.unsubscribe();
-                this.playPause.emit(false);
             }, false);
             await this.videoPlayer.addListener('jeepCapVideoPlayerExit', (data: any) => {
                 this.playing = false;
