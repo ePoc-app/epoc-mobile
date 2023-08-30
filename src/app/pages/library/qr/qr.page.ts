@@ -47,12 +47,18 @@ export class EpocQrPage implements OnInit {
     return false;
   };
 
+  ionViewWillLeave() {
+    BarcodeScanner.showBackground().then();
+    BarcodeScanner.stopScan().then();
+    document.body.classList.remove('qr-scan');
+  }
+
   async startScan() {
     const allowed = await this.didUserGrantPermission();
     if (!allowed) this.router.navigateByUrl('library');
 
     await BarcodeScanner.hideBackground();
-    document.body.classList.add('qr-scan')
+    document.body.classList.add('qr-scan');
 
     const result = await BarcodeScanner.startScan({ targetedFormats: [SupportedFormat.QR_CODE] });
 
