@@ -32,7 +32,7 @@ export interface Statements {
     questions: Record<uid, Verbs>
 }
 
-export type EntityTypes = 'global' | 'chapters' | 'screens' | 'contents' | 'questions';
+export type EntityTypes = 'global' | 'chapters' | 'pages' | 'contents' | 'questions';
 export type Verb = 'played' | 'watched' | 'listened' | 'started' | 'attempted' | 'scored' | 'completed' | 'passed' | 'viewed' | 'read';
 
 export type Verbs = {

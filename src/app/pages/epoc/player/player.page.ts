@@ -187,7 +187,7 @@ export class EpocPlayerPage implements OnInit {
             this.location.go('/epoc/play/'+this.epoc.id+'/'+this.chapterId+'/content/'+content.id)
             this.readingStore.saveChapterProgress(this.epoc.id, this.chapterId, content.id);
             this.tracker.trackPageView();
-            this.readingStore.saveStatement(this.epoc.id, 'screens', content.id, 'viewed', true);
+            this.readingStore.saveStatement(this.epoc.id, 'pages', content.id, 'viewed', true);
             if (content.type === 'html') {
                 this.readingStore.saveStatement(this.epoc.id, 'contents', content.id, 'read', true);
             }
