@@ -3,6 +3,13 @@ ion-content{
   --background: transparent;
 }
 
+ion-spinner, .unsupported{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
 .qr-overlay{
   position: absolute;
   top: 50%;

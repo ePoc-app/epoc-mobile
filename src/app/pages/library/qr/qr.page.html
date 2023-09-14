@@ -7,5 +7,7 @@
 </ion-header>
 
 <ion-content>
-    <div class="qr-overlay" slot="fixed"></div>
+    <ion-spinner slot="fixed" *ngIf="!scanning"></ion-spinner>
+    <div class="unsupported" slot="fixed" *ngIf="unsupported">Unsupported</div>
+    <div class="qr-overlay" slot="fixed" *ngIf="scanning"></div>
 </ion-content>

@@ -191,7 +191,7 @@ export class ReadingStoreService {
         const toast = await this.toastController.create({
             header: this.translate.instant('BADGE.NEW_BADGE_UNLOCKED'),
             message: badge.title,
-            icon: `/assets/icon/badge/${badge.icon}.svg`,
+            icon: badge.icon.endsWith('.svg') ?  this.epocService.rootFolder + badge.icon : `/assets/icon/badge/${badge.icon}.svg`,
             cssClass: 'badge-toast',
             duration: 2000,
             position: 'top'

@@ -3,13 +3,17 @@ import {BarcodeScanner, SupportedFormat } from '@capacitor-community/barcode-sca
 import { AlertController } from '@ionic/angular';
 import {Router} from '@angular/router';
 import {LocalEpocsService} from 'src/app/services/localEpocs.service';
+import {Capacitor} from '@capacitor/core';
 
 @Component({
   selector: 'app-epoc-qr',
   templateUrl: './qr.page.html',
   styleUrls: ['./qr.page.scss'],
 })
-export class EpocQrPage implements OnInit {
+export class EpocQrPage {
+
+  unsupported = false;
+  scanning = false;
 
   constructor(
       private alertController: AlertController,
@@ -17,7 +21,12 @@ export class EpocQrPage implements OnInit {
       public localEpocsService: LocalEpocsService
   ) { }
 
-  async ngOnInit() {
+  async ionViewDidEnter() {
+    if (!Capacitor.isNativePlatform()) {
+      this.unsupported = true;
+      this.scanning = true;
+      return;
+    }
     await this.startScan();
   }
 
@@ -48,12 +57,15 @@ export class EpocQrPage implements OnInit {
   };
 
   ionViewWillLeave() {
+    this.scanning = false;
+    if (!Capacitor.isNativePlatform()) return;
     BarcodeScanner.showBackground().then();
     BarcodeScanner.stopScan().then();
     document.body.classList.remove('qr-scan');
   }
 
   async startScan() {
+    this.scanning = true;
     const allowed = await this.didUserGrantPermission();
     if (!allowed) this.router.navigateByUrl('library');
 
