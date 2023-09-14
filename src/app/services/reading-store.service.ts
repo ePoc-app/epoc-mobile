@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {EntityTypes, Reading, Statements, Verb} from 'src/app/classes/reading';
+import {EntityTypes, Reading, Verb} from 'src/app/classes/reading';
 import {StorageService} from './storage.service';
 import {uid} from '@epoc/epoc-types/dist/v1';
 import {Badge} from 'src/app/classes/epoc';
@@ -62,7 +62,7 @@ export class ReadingStoreService {
                     statements: {
                         global: {},
                         chapters: {},
-                        screens: {},
+                        pages: {},
                         contents: {},
                         questions: {}
                     },
@@ -164,7 +164,7 @@ export class ReadingStoreService {
         if (!reading.statements) reading.statements = {
             global: {},
             chapters: {},
-            screens: {},
+            pages: {},
             contents: {},
             questions: {}
         }

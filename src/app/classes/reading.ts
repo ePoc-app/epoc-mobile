@@ -27,7 +27,7 @@ class UserChoice {
 export interface Statements {
     global: Verbs
     chapters: Record<uid, Verbs>
-    screens: Record<uid, Verbs>
+    pages: Record<uid, Verbs>
     contents: Record<uid, Verbs>
     questions: Record<uid, Verbs>
 }
