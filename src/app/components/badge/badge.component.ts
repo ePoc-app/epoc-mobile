@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {EpocService} from 'src/app/services/epoc.service';
 
 @Component({
   selector: 'badge',
@@ -17,7 +18,7 @@ export class BadgeComponent implements OnInit {
   shape = '';
   shadow = '';
 
-  constructor() {}
+  constructor(public epocService: EpocService) {}
 
   ngOnInit(): void {
     this.shape = this.prefix + (this.grey ? 'shape-grey' : 'shape') + '.svg';
@@ -25,6 +26,8 @@ export class BadgeComponent implements OnInit {
 
     if (!this.icon.endsWith('.svg')) {
       this.icon = this.prefix + this.icon + '.svg';
+    } else {
+      this.icon = this.epocService.rootFolder + this.icon;
     }
   }
 }
