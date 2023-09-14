@@ -34,9 +34,10 @@ export class BadgeModalComponent implements OnInit, OnChanges {
       const verb = this.translate.instant(`BADGE.PASSIVE_VERBS.${split[2]}`, {[split[2]]: value});
       const entity = this.epoc[type !== 'pages' ? type : 'contents'][id]; // To remove in V2
       const entityType = this.translate.instant(`BADGE.ENTITY_TYPES.${type !== 'pages' ? entity.type : 'page'}`); // To remove in V2
+      const title = entity.title ? entity.title : entity.type;
       const statements = this.reading?.statements ? this.reading.statements : {};
       return {
-        label: `${verb} ${entityType} "${entity.title}"`,
+        label: `${verb} ${entityType} "${title}"`,
         success: jsonLogic.apply(rule, statements)
       }
     })

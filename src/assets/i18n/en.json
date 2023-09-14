@@ -305,7 +305,12 @@
             "html": "the text",
             "audio": "the audio",
             "assessment": "the activity",
-            "question": "the question"
+            "question": "the question",
+            "choice": "the question",
+            "drag-and-drop": "the question",
+            "reorder": "the question",
+            "swipe": "the question",
+            "dropdown-list": "the question"
         }
     },
     "LOADING": "Loading",

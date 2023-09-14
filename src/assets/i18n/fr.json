@@ -306,7 +306,12 @@
             "html": "le texte",
             "audio": "l'audio",
             "assessment": "l'activité",
-            "question": "la question"
+            "question": "la question",
+            "choice": "la question",
+            "drag-and-drop": "la question",
+            "reorder": "la question",
+            "swipe": "la question",
+            "dropdown-list": "la question"
         }
     },
     "LOADING": "Chargement",
