@@ -144,20 +144,25 @@ export class EpocService {
    * Calcule le score d'une question en fonction des réponses d'un apprenant
    */
   public calcScore(scoreMax, correction, userResponses) {
-    let score = 0;
+    return this.isUserResponsesCorrect(correction, userResponses) ? +scoreMax : 0;
+  }
+
+  /**
+   * Check if the learner responses is correct
+   */
+  public isUserResponsesCorrect(correction, userResponses) {
     if (typeof correction === 'string') {
-      score = userResponses.join('') === correction ? +scoreMax : score;
+      return userResponses.join('') === correction;
     } else {
       correction = correction as Array<any>;
       if (correction.length > 0 && correction[0].values){
-        score = correction.every((group, index) => {
+        return correction.every((group, index) => {
           return JSON.stringify(group.values.sort()) === JSON.stringify(userResponses[index].map(r => r.value).sort())
-        }) ? +scoreMax : 0;
+        });
       } else {
-        score = JSON.stringify(correction.sort()) === JSON.stringify(userResponses.sort())? +scoreMax : 0;
+        return JSON.stringify(correction.sort()) === JSON.stringify(userResponses.sort());
       }
     }
-    return score;
   }
 
   async epocMainMenu(chapterIndex?:number, chapter?:Chapter) {

@@ -45,13 +45,14 @@ export class SimpleQuestionComponent implements OnInit {
     checkAnswer(event) {
         event.preventDefault();
         event.stopPropagation();
-        const score = this.epocService.calcScore(this.question.score, this.question.correctResponse, this.userResponses);
+        const userSucceeded = this.epocService.isUserResponsesCorrect(this.question.correctResponse, this.userResponses);
+        const score = userSucceeded ? +this.question.score : 0;
         this.readingStore.saveResponses(this.epocId, this.content.id, score, this.userResponses);
         this.questionComponent.showCorrection();
         this.tracker.trackEvent('Assessments', 'Answered simple question', `Answered ${this.epocId} ${this.content.id}`, score);
         this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'attempted', true);
         this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'scored', score);
-        this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'passed', score > 0);
+        this.readingStore.saveStatement(this.epocId, 'questions', (this.content as SimpleQuestion).question, 'passed', userSucceeded);
     }
 
     onQuestionAnswered (event) {

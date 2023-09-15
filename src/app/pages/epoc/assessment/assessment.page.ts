@@ -97,7 +97,11 @@ export class EpocAssessmentPage implements OnInit {
 
     checkAnswer() {
         const question = this.questions[this.currentQuestion];
-        const score = this.epocService.calcScore(question.score, question.correctResponse, this.currentQuestionUserResponse);
+        const userSucceeded = this.epocService.isUserResponsesCorrect(
+            question.correctResponse,
+            this.currentQuestionUserResponse
+        );
+        const score = userSucceeded ? +question.score : 0;
         this.correctionShown = true;
         this.questionsElement.toArray()[this.currentQuestion].showCorrection();
         this.userScore += score;
@@ -105,7 +109,7 @@ export class EpocAssessmentPage implements OnInit {
         this.tracker.trackEvent('Assessments', 'Answered', `Answered ${this.epocId} ${this.assessmentId} ${this.currentQuestion}`, score);
         this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'attempted', true);
         this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'scored', score);
-        this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'passed', score > 0);
+        this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'passed', userSucceeded);
     }
 
     toggleExplanation() {
