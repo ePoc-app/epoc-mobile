@@ -16,16 +16,27 @@ export class AppService {
     deviceInfo;
 
     constructor(public alertController: AlertController, public translate: TranslateService) {
-        App.getInfo().then((info) => {
-            this.appInfo = info;
-        }).catch(() => {
+        if (!Capacitor.isNativePlatform()) {
             this.appInfo = {
                 id: 'fr.inria.epoc',
                 name: 'epoc',
                 version: '0.0.0',
                 build: 'dev'
-            }
-        });
+            };
+            this.deviceInfo = {
+                model: 'unknown',
+                operatingSystem: 'unknown',
+                osVersion: '0.0.0',
+                manufacturer: 'unknown',
+                webViewVersion: '0.0.0',
+            };
+            this.screenReaderDetected = false;
+            return;
+        }
+
+        App.getInfo().then((info) => {
+            this.appInfo = info;
+        }).catch(() => {});
 
 
         from(ScreenReader.isEnabled()).subscribe(screenReaderDetected => {
@@ -40,15 +51,7 @@ export class AppService {
                 manufacturer: info.manufacturer,
                 webViewVersion: info.webViewVersion
             }
-        }).catch(() => {
-            this.deviceInfo = {
-                model: 'unknown',
-                operatingSystem: 'unknown',
-                osVersion: '0.0.0',
-                manufacturer: 'unknown',
-                webViewVersion: '0.0.0',
-            }
-        });
+        }).catch(() => {});
     }
 
     async leaveComment(epoc) {
