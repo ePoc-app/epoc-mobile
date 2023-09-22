@@ -54,7 +54,9 @@ export class EpocService {
     this.findEpocDir(id).then(dir => {
       if (!dir) return;
       this.setRootFolder(`${this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/'}${dir}/${id}/`);
-      this.http.get<Epoc>(`${this.rootFolder}content.json`).subscribe((epoc) => {
+      this.http.get<Epoc>(`${this.rootFolder}content.json`).subscribe((data) => {
+        const epoc = data;
+        if (epoc.id !== id) epoc.id = id; // Fix id when local epocs are imported
         this.epoc = this.initCourseContent(epoc);
       }, () => {
         // Backup support for iOS livereload (dev environment)
@@ -64,6 +66,7 @@ export class EpocService {
           encoding: Encoding.UTF8
         }).then((result) => {
           const epoc = JSON.parse(result.data);
+          if (epoc.id !== id) epoc.id = id; // Fix id when local epocs are imported
           this.epoc = this.initCourseContent(epoc as Epoc);
         });
       });
