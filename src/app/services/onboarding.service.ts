@@ -16,8 +16,8 @@ export class OnboardingService {
   private removedOnboarding = JSON.parse(localStorage.getItem('removedOnboarding')) || [];
 
   private onboardingUrls = {
-    'fr' : 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/onboarding.json',
-    'en' : 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/onboarding-en.json'
+    fr : 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/onboarding.json',
+    en : 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/onboarding-en.json'
   };
   constructor(
     private http: HttpClient,
@@ -25,7 +25,6 @@ export class OnboardingService {
   ) {
     this.fetch(this.translate.currentLang);
     this.translate.onLangChange.subscribe(event => {
-      console.log('change lang', event)
       this.fetch(event.lang)
     })
   }
