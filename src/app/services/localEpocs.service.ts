@@ -48,6 +48,7 @@ export class LocalEpocsService {
     }
 
     async fetchLocalEpocs() {
+        if (!Capacitor.isNativePlatform()) return;
         try{
             // create zips directory if not exists
             await this.file.createDir(this.file.dataDirectory, 'local-epocs', false);
