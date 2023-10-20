@@ -5,7 +5,7 @@ import {OnboardingService} from '../../services/onboarding.service';
 import {OnboardingItem} from '../../classes/onboarding';
 import {AppService} from 'src/app/services/app.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ActionSheetController, AlertController} from '@ionic/angular';
+import {ActionSheetController, AlertController, IonicSlides} from '@ionic/angular';
 import {LocalEpocsService} from '../../services/localEpocs.service';
 import {Router} from '@angular/router';
 
@@ -16,6 +16,8 @@ import {Router} from '@angular/router';
 })
 export class LibraryPage implements OnInit {
   @ViewChild('file', {static: false}) fileRef: ElementRef;
+  swiperModules = [IonicSlides];
+
   library: EpocLibrary[] | undefined;
   localEpocs: EpocLibrary[] | undefined;
   onboarding: OnboardingItem[];

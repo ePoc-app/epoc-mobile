@@ -1,14 +1,14 @@
 <ion-content [scrollY]="false" *ngIf="assessment">
     <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
-        <ion-slides class="slider" #questionSlides [options]="slidesOptions">
+        <swiper-container [modules]="swiperModules" class="slider" #questionSlides [allowTouchMove]="slidesOptions.allowTouchMove">
             <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
-                <ion-slide>
+                <swiper-slide>
                     <common-question [attr.aria-hidden]="questionIndex !== currentQuestion" closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
                          [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" (explanationToggle)="onExplanationToggle($event)" *ngIf="!isEnd">
                     </common-question>
-                </ion-slide>
+                </swiper-slide>
             </ng-container>
-            <ion-slide class="assessment-end">
+            <swiper-slide class="assessment-end">
                 <app-card *ngIf="assessmentData">
                     <div class="title-container">
                         <div class="title-icon">
@@ -37,8 +37,8 @@
                         <span>{{'QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY' | translate}}</span>
                     </ion-button>
                 </app-card>
-            </ion-slide>
-        </ion-slides>
+            </swiper-slide>
+        </swiper-container>
     </div>
     <certificate-modal [epocId]="epocId" [certificateShown]="certificateShown"></certificate-modal>
 </ion-content>

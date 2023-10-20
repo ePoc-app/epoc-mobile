@@ -13,7 +13,7 @@ import {ReadingStoreService} from './reading-store.service';
 import {Reading} from '../classes/reading';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
-import {File} from '@ionic-native/file/ngx';
+import {File} from '@awesome-cordova-plugins/file/ngx';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';

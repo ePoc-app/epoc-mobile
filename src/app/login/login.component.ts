@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
-import {HTTP} from '@ionic-native/http/ngx';
+import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
+import {HTTP} from '@awesome-cordova-plugins/http/ngx';
 import {environment as env} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {AlertController, Platform, ToastController} from '@ionic/angular';

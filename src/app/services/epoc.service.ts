@@ -4,7 +4,7 @@ import {Capacitor} from '@capacitor/core';
 import {Filesystem,Directory, Encoding} from '@capacitor/filesystem';
 import {Chapter, Epoc} from 'src/app/classes/epoc';
 import {HttpClient} from '@angular/common/http';
-import {File} from '@ionic-native/file/ngx';
+import {File} from '@awesome-cordova-plugins/file/ngx';
 import {Router} from '@angular/router';
 import {ActionSheetController, AlertController} from '@ionic/angular';
 import {AppService} from './app.service';

@@ -17,8 +17,8 @@
   <ion-refresher slot="fixed" snapbackDuration="1000ms" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-slides aria-hidden="true" class="onboarding" *ngIf="onboarding && onboarding.length" [options]="onboardingOptions" [pager]="onboarding.length > 1 ? 'true' : ''">
-    <ion-slide class="onboarding-item" [ngClass]="item.image ? 'with-image':''" *ngFor="let item of onboarding">
+  <swiper-container [modules]="swiperModules" aria-hidden="true" class="onboarding" *ngIf="onboarding && onboarding.length" [slidesPerView]="onboardingOptions.slidesPerView" [spaceBetween]="onboardingOptions.spaceBetween" [pagination]="onboarding.length > 1 ? 'true' : ''">
+    <swiper-slide class="onboarding-item" [ngClass]="item.image ? 'with-image':''" *ngFor="let item of onboarding">
       <div class="onboarding-item-image" *ngIf="item.image" [style]="'background-image:url('+item.image+')'"></div>
       <div class="onboarding-item-title">{{item.title}}</div>
       <div class="onboarding-item-text">{{item.text}}</div>
@@ -26,8 +26,8 @@
       <div class="onboarding-item-close" (click)="removeMessage(item.id)">
         <ion-icon name="close-outline"></ion-icon>
       </div>
-    </ion-slide>
-  </ion-slides>
+    </swiper-slide>
+  </swiper-container>
   <div class="library-items" tabindex="-1">
     <div class="library-item" *ngFor="let epoc of library">
       <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/'+epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>

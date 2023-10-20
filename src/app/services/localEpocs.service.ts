@@ -10,10 +10,9 @@ import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
 import {ActionSheetController, AlertController, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
-import {File, FileEntry, FileWriter} from '@ionic-native/file/ngx';
+import {File} from '@awesome-cordova-plugins/file/ngx';
 import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';
-import {getPromise} from '@ionic-native/core';
 
 @Injectable({
     providedIn: 'root'
@@ -142,7 +141,7 @@ export class LocalEpocsService {
         this.imports = {...this.imports, [id]: `${this.translate.instant('LIBRARY_PAGE.IMPORT')} ${file.name}`};
 
 
-        this.file.writeFile(this.file.dataDirectory, `local-epocs/${id}.zip`, file, {replace: true}).then((fileEntry: FileEntry) => {
+        this.file.writeFile(this.file.dataDirectory, `local-epocs/${id}.zip`, file, {replace: true}).then(() => {
             this.unzipLocalEpoc(id);
         }).catch(() => {
             this.toast(this.translate.instant('FLOATING_MENU.ERROR'), 'danger');

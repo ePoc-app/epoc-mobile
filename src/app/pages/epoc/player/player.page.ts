@@ -10,11 +10,11 @@ import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Location} from '@angular/common';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {uid} from '@epoc/epoc-types/src/v1';
-import {EpocService} from '../../../services/epoc.service';
-import {Content} from '../../../classes/contents/content';
-import {PluginService} from '../../../services/plugin.service';
+import {EpocService} from 'src/app/services/epoc.service';
+import {Content} from 'src/app/classes/contents/content';
+import {PluginService} from 'src/app/services/plugin.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
-import {IonSlides} from '@ionic/angular';
+import {IonicSlides} from '@ionic/angular';
 import {AppService} from 'src/app/services/app.service';
 
 
@@ -25,7 +25,8 @@ import {AppService} from 'src/app/services/app.service';
 })
 export class EpocPlayerPage implements OnInit {
 
-    @ViewChild('readerSlides', {static: false}) readerSlides: IonSlides;
+    @ViewChild('readerSlides', {static: false}) readerSlides: ElementRef;
+    swiperModules = [IonicSlides];
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -51,11 +52,6 @@ export class EpocPlayerPage implements OnInit {
     dataInitialized = false;
     currentPage = 0;
     progress = 0;
-    slidesOptions = {
-        slidesPerView: window.innerWidth > window.innerHeight ? 2 : 1,
-        initialSlide: 0,
-
-    };
 
     assessments: (SimpleQuestion | Assessment)[];
     assessmentData;
@@ -137,6 +133,7 @@ export class EpocPlayerPage implements OnInit {
 
     countPages() {
         this.pagesCount = this.contentsFilteredConditional.length + 1;
+        this.readerSlides?.nativeElement?.swiper?.updateSlides();
     }
 
     ionViewWillEnter() {
@@ -155,11 +152,13 @@ export class EpocPlayerPage implements OnInit {
         combineLatest([this.epoc$, this.readingStore.readings$]).pipe(first()).subscribe(([epoc, readings]) => {
             if (epoc && readings) {
                 const contentId = this.route.snapshot.paramMap.get('contentId');
+                this.dataInitialized = true;
 
                 if (contentId) {
-                    this.goTo(contentId)
+                    setTimeout(() => {
+                        this.goTo(contentId, 0);
+                    }, 0);
                 }
-                this.dataInitialized = true;
             }
         });
         this.updateFocus();
@@ -173,7 +172,7 @@ export class EpocPlayerPage implements OnInit {
 
     toggleControls($event){
         if (['ion-icon', 'button', 'ion-button', 'ion-icon', 'ion-checkbox', 'ion-radio', 'span'].includes(
-            $event.detail.target.tagName.toLowerCase()
+            $event.target.tagName.toLowerCase()
         )) return;
         if(!this.appService.screenReaderDetected) {
             this.showControls = !this.showControls;
@@ -196,12 +195,11 @@ export class EpocPlayerPage implements OnInit {
 
     onSlideChange() {
         this.stopAllMedia();
-        this.readerSlides.getActiveIndex().then((index) => {
-            this.currentPage = index;
-            this.countPages();
-            this.updateCurrentContent(index);
-            this.progress = index / this.pagesCount;
-        });
+        const index = this.readerSlides.nativeElement.swiper.activeIndex;
+        this.currentPage = index;
+        this.countPages();
+        this.updateCurrentContent(index);
+        this.progress = index / this.pagesCount;
     }
 
     updateFocus() {
@@ -211,34 +209,34 @@ export class EpocPlayerPage implements OnInit {
     }
 
     prevPage() {
-        this.readerSlides.slidePrev();
+        this.readerSlides.nativeElement.swiper.slidePrev();
     }
 
     nextPage() {
-        this.readerSlides.slideNext();
+        this.readerSlides.nativeElement.swiper.slideNext();
     }
 
-    goTo(contentId) {
+    goTo(contentId: uid, time?: number) {
         // Go to the next content after contentId
         const next = !!this.route.snapshot.paramMap.get('next');
         const pageIndex = this.contentsFilteredConditional.findIndex(content => content.id === contentId);
         const index = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
-        if (this.readerSlides) {
-            this.readerSlides.slideTo(index);
-        } else {
-            this.slidesOptions.initialSlide = index;
+
+        this.countPages();
+
+        if (this.readerSlides && this.readerSlides.nativeElement.swiper) {
+            this.readerSlides.nativeElement.swiper.slideTo(index, time);
         }
         this.currentPage = index;
-        this.countPages();
-        this.progress = pageIndex / this.pagesCount
+        this.progress = pageIndex / this.pagesCount;
     }
 
     // /!\ this event is binded from videplayer and dragable element
     onDrag(event) {
         if (event === 'dragstart') {
-            this.readerSlides.lockSwipes(true);
+            this.readerSlides.nativeElement.swiper.disable()
         } else {
-            this.readerSlides.lockSwipes(false);
+            this.readerSlides.nativeElement.swiper.enable();
         }
     }
 

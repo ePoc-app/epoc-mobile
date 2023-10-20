@@ -51,8 +51,7 @@ import {AudioContentComponent} from './contents/audio/audio.component';
         PreviewQuestionComponent,
         PreviewCorrectionComponent,
         TranscriptModalPage,
-    ],
-    entryComponents: [TranscriptModalPage]
+    ]
 })
 export class PlayerModule {
     constructor() {

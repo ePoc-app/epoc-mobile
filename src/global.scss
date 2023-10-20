@@ -101,19 +101,19 @@ ion-toolbar {
 }
 
 .onboarding{
-  .swiper-pagination{
+  &::part(pagination){
     display: flex;
     align-items: center;
     justify-content: center;
     bottom: .5rem;
-    --bullet-background: var(--ion-color-unique-2);
-    --bullet-background-active: var(--ion-color-inria);
+    --swiper-pagination-bullet-inactive-color: var(--ion-color-unique-2);
+    --swiper-pagination-color: var(--ion-color-inria);
+  }
 
-    .swiper-pagination-bullet {
-      width: 5px;
-      height:5px;
-      opacity: 1;
-    }
+  &::part(bullet), &::part(bullet-active) {
+    width: 5px;
+    height:5px;
+    opacity: 1;
   }
 }
 
@@ -126,6 +126,7 @@ ion-button{
     height: 2.5rem;
     font-size: 1rem;
   }
+  min-height: 1.7rem;
   height: 1.7rem;
   margin:0;
   font-size: 13px;
@@ -680,4 +681,39 @@ ion-card{
 
 a.about-page-link{
   color: var(--ion-color-text);
+}
+
+
+
+swiper-container {
+  --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
+  --swiper-pagination-color: var(--ion-color-inria);
+  --swiper-pagination-progressbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.25);
+  --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+  --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
+}
+
+swiper-slide {
+  display: flex;
+  position: relative;
+
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 18px;
+
+  text-align: center;
+  box-sizing: border-box;
+}
+
+swiper-slide img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
 }

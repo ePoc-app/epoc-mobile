@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -21,6 +21,7 @@ import {SharedModule} from '../../components/shared.module';
     PipesModule,
     SharedModule,
   ],
-  declarations: [LibraryPage, EpocOverviewPage, EpocQrPage]
+  declarations: [LibraryPage, EpocOverviewPage, EpocQrPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LibraryModule {}

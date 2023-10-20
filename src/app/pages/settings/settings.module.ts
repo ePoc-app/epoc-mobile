@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SettingsPage} from './settings.page';
-import {File} from '@ionic-native/file/ngx';
+import {File} from '@awesome-cordova-plugins/file/ngx';
 import {SharedModule} from 'src/app/components/shared.module';
 
 @NgModule({

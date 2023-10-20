@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 
-import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import {Drivers} from '@ionic/storage';
 import {IonicStorageModule} from '@ionic/storage-angular';
@@ -17,12 +17,11 @@ import {PipesModule} from './pipes/pipes.module';
 import {LoginComponent} from './login/login.component';
 import {LoginCallbackComponent} from './login/login-callback.component';
 import {AuthGuardService} from './services/auth-guard.service';
-import {File} from '@ionic-native/file/ngx';
-import {HTTP} from '@ionic-native/http/ngx';
-import {FileOpener} from '@ionic-native/file-opener/ngx';
-import {FileTransfer} from '@ionic-native/file-transfer/ngx';
-import * as Sentry from '@sentry/angular';
-import {Integrations as TracingIntegrations} from '@sentry/tracing';
+import {File} from '@awesome-cordova-plugins/file/ngx';
+import {HTTP} from '@awesome-cordova-plugins/http/ngx';
+import {FileOpener} from '@awesome-cordova-plugins/file-opener/ngx';
+import {FileTransfer} from '@awesome-cordova-plugins/file-transfer/ngx';
+import * as Sentry from '@sentry/angular-ivy';
 import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
 import {NgxMatomoRouterModule} from '@ngx-matomo/router';
 import {environment as env} from 'src/environments/environment';
@@ -40,12 +39,7 @@ Sentry.init(
         // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
         // We recommend adjusting this value in production.
         tracesSampleRate: 1.0,
-        integrations: [
-            new TracingIntegrations.BrowserTracing({
-                tracingOrigins: ['localhost'],
-                routingInstrumentation: Sentry.routingInstrumentation,
-            }),
-        ]
+        integrations: []
     }
 );
 
@@ -55,7 +49,6 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
     declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
-    entryComponents: [],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -82,8 +75,8 @@ export function createTranslateLoader(http: HttpClient) {
         })
     ],
     providers: [
-        {provide: ErrorHandler, useValue: Sentry.createErrorHandler()},
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        { provide: ErrorHandler, useValue: Sentry.createErrorHandler() },
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         File,
         FileTransfer,
         InAppBrowser,

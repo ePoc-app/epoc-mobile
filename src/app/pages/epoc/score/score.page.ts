@@ -12,7 +12,7 @@ import {User} from 'src/app/classes/user';
 import {AuthService} from 'src/app/services/auth.service';
 import {Capacitor} from '@capacitor/core';
 import {Filesystem,Directory} from '@capacitor/filesystem';
-import {FileOpener} from '@ionic-native/file-opener/ngx';
+import {FileOpener} from '@awesome-cordova-plugins/file-opener/ngx';
 import {LoadingController} from '@ionic/angular';
 import {EpocService} from 'src/app/services/epoc.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';

@@ -1,6 +1,6 @@
 import {IonicModule} from '@ionic/angular';
 import {RouterModule} from '@angular/router';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SharedModule} from 'src/app/components/shared.module';
@@ -42,7 +42,8 @@ import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
         EpocBookmarksPage,
         EpocPreviewPage,
         EpocPreviewEditorPage
-    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class EpocModule {
     constructor() {

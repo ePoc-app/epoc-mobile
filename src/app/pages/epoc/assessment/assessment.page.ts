@@ -1,7 +1,7 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
-import {AlertController, IonSlides, NavController} from '@ionic/angular';
+import {AlertController, IonicSlides, NavController} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
@@ -21,7 +21,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class EpocAssessmentPage implements OnInit {
     @ViewChildren(CommonQuestionComponent) questionsElement:QueryList<CommonQuestionComponent>;
-    @ViewChild('questionSlides', {static: false}) questionSlides: IonSlides;
+    @ViewChild('questionSlides', {static: false}) questionSlides: ElementRef;
+    swiperModules = [IonicSlides];
 
     epoc$: Observable<Epoc>;
     epoc: Epoc;
@@ -132,7 +133,7 @@ export class EpocAssessmentPage implements OnInit {
             this.readingStore.saveStatement(this.epocId, 'contents', this.assessmentId, 'completed', true);
             this.readingStore.saveStatement(this.epocId, 'contents', this.assessmentId, 'scored', this.userScore);
         }
-        this.questionSlides.slideNext();
+        this.questionSlides.nativeElement.swiper.slideNext();
         setTimeout(() => {
             this.updateFocus();
         }, 1000);
@@ -203,7 +204,7 @@ export class EpocAssessmentPage implements OnInit {
         this.currentQuestionUserResponse = null;
         this.correctionShown = false;
         this.currentQuestion = 0;
-        this.questionSlides?.slideTo(0);
+        this.questionSlides?.nativeElement.swiper.slideTo(0);
         this.isEnd = false;
         this.explanationShown = false;
     }

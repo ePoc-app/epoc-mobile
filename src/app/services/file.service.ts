@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { File, Entry, RemoveResult, Metadata } from '@ionic-native/file/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File, Entry, RemoveResult, Metadata } from '@awesome-cordova-plugins/file/ngx';
+import { FileTransfer, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 import { Zip } from 'capacitor-zip';
 import { from, Observable, Observer } from 'rxjs';
 import {distinctUntilChanged, finalize} from 'rxjs/operators';
@@ -30,7 +30,7 @@ export class FileService {
 
 
     async listDirMetadata(dir): Promise<ExtendedEntry[]> {
-        return new Promise<ExtendedEntry[]>((resolve, reject) => {
+        return new Promise<ExtendedEntry[]>((resolve) => {
             try {
                 document.addEventListener('deviceready', () => {
                     this.file.listDir(this.file.dataDirectory, dir).then((entries) => {
@@ -52,7 +52,7 @@ export class FileService {
 
 
     readdir(dir): Observable<Entry[]> {
-        return from(new Promise<Entry[]>((resolve, reject) => {
+        return from(new Promise<Entry[]>((resolve) => {
             try {
                 document.addEventListener('deviceready', () => {
                     this.file.listDir(this.file.dataDirectory, dir).then((result) => {

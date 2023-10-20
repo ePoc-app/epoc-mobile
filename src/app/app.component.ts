@@ -7,6 +7,9 @@ import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
 import {combineLatest} from 'rxjs';
 import {StatusBar, Style} from '@capacitor/status-bar';
+import {register} from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-root',
