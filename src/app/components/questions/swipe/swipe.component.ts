@@ -75,7 +75,7 @@ export class SwipeComponent extends AbstractQuestionComponent implements OnInit,
             .map(a => a[1]);
         if (!this.userPreviousResponse) {
             this.cardsRemaining = shuffleArray(this.question.responses).map(response => {
-                return {...response, animationState: 'initial'}
+                return {...response, animationState: 'initial', transform: 'none'}
             });
         }
         this.sides = this.question.correctResponse.map(response => response.label);
