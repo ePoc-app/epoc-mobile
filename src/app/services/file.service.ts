@@ -72,7 +72,7 @@ export class FileService {
         return new Observable((observer: Observer<number>) => {
             this.createFolderIfNotExist('epocs').then(() => {
                 const fileTransfer: FileTransferObject = this.transfer.create();
-                fileTransfer.download(encodeURI(url), this.file.dataDirectory + filename, true).then(() => {
+                fileTransfer.download(encodeURI(url), this.file.dataDirectory + filename).then(() => {
                     observer.complete();
                 }, (e) => {
                     observer.error(e);

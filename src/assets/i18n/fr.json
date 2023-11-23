@@ -146,7 +146,8 @@
         "IMPORT_FILE": "Importer depuis un fichier",
         "IMPORT_LINK": "Importer depuis un lien",
         "IMPORT_QR": "Importer depuis un QR Code",
-        "ERROR": "Une erreur s'est produite"
+        "ERROR": "Une erreur s'est produite",
+        "ERROR_SSL": "Téléchargement impossible depuis une source non fiable (l'url n'utilise pas https)"
     },
 
     "PLAYER": {

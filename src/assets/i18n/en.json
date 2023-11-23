@@ -146,7 +146,8 @@
         "IMPORT_FILE": "Import from file",
         "IMPORT_LINK": "Import from link",
         "IMPORT_QR": "Import from QR Code",
-        "ERROR": "An error occurred"
+        "ERROR": "An error occurred",
+        "ERROR_SSL": "Cannot download from unsafe source (url does not use https)"
     },
 
     "PLAYER": {

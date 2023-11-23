@@ -123,6 +123,10 @@ export class LocalEpocsService {
     }
 
     downloadLocalEpoc(url: string): Observable<number> {
+        if (!url.startsWith('https')) {
+            this.toast(this.translate.instant('FLOATING_MENU.ERROR_SSL'), 'danger');
+            return;
+        }
         const id = this.simpleHash(url);
         this.imports = {...this.imports, [id]: this.translate.instant('LIBRARY_PAGE.DOWNLOADING')};
         const download = this.fileService.download(url, `local-epocs/${id}.zip`);
