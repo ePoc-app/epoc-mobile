@@ -75,7 +75,7 @@ export class FileService {
                 fileTransfer.download(encodeURI(url), this.file.dataDirectory + filename).then(() => {
                     observer.complete();
                 }, (e) => {
-                    console.warn(e);
+                    observer.error(e);
                 });
                 fileTransfer.onProgress((e) => {
                     observer.next(Math.round(e.loaded / e.total * 100))
