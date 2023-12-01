@@ -89,8 +89,12 @@ export class AppService {
             licenseName: 'CC-BY 4.0',
             licenseUrl: 'https://creativecommons.org/licenses/by/4.0/deed.fr'
         })
-        if (epoc.license?.name) {
-            message = epoc.license.name
+        if (epoc.license?.name && epoc.license?.url) {
+            this.translate.instant('LICENSE_MODAL.MESSAGE', {
+                epoc: epoc.title,
+                licenseName: epoc.license.name,
+                licenseUrl: epoc.license.url
+            })
         }
         console.log(message);
         const alert = await this.alertController.create({
