@@ -84,19 +84,21 @@ export class AppService {
     }
 
     async displayLicence(epoc: Epoc) {
-        let message = this.translate.instant('LICENSE_MODAL.MESSAGE', {
-            epoc: epoc.title,
-            licenseName: 'CC-BY 4.0',
-            licenseUrl: 'https://creativecommons.org/licenses/by/4.0/deed.fr'
-        })
+        let message;
         if (epoc.license?.name && epoc.license?.url) {
-            this.translate.instant('LICENSE_MODAL.MESSAGE', {
+            message = this.translate.instant('LICENSE_MODAL.MESSAGE', {
                 epoc: epoc.title,
                 licenseName: epoc.license.name,
                 licenseUrl: epoc.license.url
             })
+        } else {
+            message = this.translate.instant('LICENSE_MODAL.MESSAGE', {
+                epoc: epoc.title,
+                licenseName: 'CC-BY 4.0',
+                licenseUrl: 'https://creativecommons.org/licenses/by/4.0/deed'
+            })
         }
-        console.log(message);
+
         const alert = await this.alertController.create({
             header: this.translate.instant('LICENSE_MODAL.HEADER'),
             cssClass: 'alert-alignleft',
