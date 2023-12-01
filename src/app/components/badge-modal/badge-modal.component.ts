@@ -25,6 +25,7 @@ export class BadgeModalComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
+    if (typeof this.badge.rule.and === 'string') return;
     this.ruleList = this.badge.rule.and.map(rule => {
       const statement = Object.values(rule)[0][0].var;
       const value = Object.values(rule)[0][1];

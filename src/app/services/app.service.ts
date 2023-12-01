@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {Device} from '@capacitor/device';
 import {App, AppInfo} from '@capacitor/app';
 import {Capacitor} from '@capacitor/core';
-import {AlertController} from '@ionic/angular';
+import {AlertController, IonicSafeString} from '@ionic/angular';
 import {ScreenReader} from '@capacitor/screen-reader';
 import { from } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import {Epoc} from 'src/app/classes/epoc';
 
 @Injectable({
     providedIn: 'root'
@@ -82,11 +83,20 @@ export class AppService {
         await alert.present();
     }
 
-    async displayLicence(epoc) {
+    async displayLicence(epoc: Epoc) {
+        let message = this.translate.instant('LICENSE_MODAL.MESSAGE', {
+            epoc: epoc.title,
+            licenseName: 'CC-BY 4.0',
+            licenseUrl: 'https://creativecommons.org/licenses/by/4.0/deed.fr'
+        })
+        if (epoc.license?.name) {
+            message = epoc.license.name
+        }
+        console.log(message);
         const alert = await this.alertController.create({
             header: this.translate.instant('LICENSE_MODAL.HEADER'),
             cssClass: 'alert-alignleft',
-            message: this.translate.instant('LICENSE_MODAL.MESSAGE', {epoc: epoc.title }),
+            message: new IonicSafeString(message),
             buttons: [this.translate.instant('OK')],
         });
 

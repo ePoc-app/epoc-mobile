@@ -52,7 +52,9 @@ export function createTranslateLoader(http: HttpClient) {
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        IonicModule.forRoot(),
+        IonicModule.forRoot({
+            innerHTMLTemplatesEnabled: true
+        }),
         AppRoutingModule,
         HttpClientModule,
         IonicStorageModule.forRoot({

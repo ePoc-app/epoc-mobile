@@ -107,7 +107,7 @@
     },
     "LICENSE_MODAL": {
         "HEADER": "License",
-        "MESSAGE": "<strong>Terms of use of ePoc content :</strong><br/>The ePoc resources are, unless otherwise noted, released under the license  <a href=\"https://creativecommons.org/licenses/by/4.0/deed.fr\" title=\"Creative Commons license link\">Creative Commons CC-BY 4.0</a> :<br/>Attribution. The owner of the rights authorize any exploitation of the work, including for commercial purposes, as well as the creation of derivative works, the distribution of which is also authorized wihtout restriction, provided that it is attributed to it's author by citing his or her name.<br/><br/>If you are using ePoc content, here is the statement to add for attribution according to use :<br/>Credit : <strong>\"{{epoc}}\"</strong>, ePoc Inria, published under CC-BY license in the application <a href=\"https://epoc.inria.fr/\" title=\"ePoc website link\">https://epoc.inria.fr/</a>"
+        "MESSAGE": "Conditions of use for ePoc content <strong>\"{{epoc}}\"</strong>:<br/><br/>Unless otherwise stated, the resources in this ePoc are distributed under the <a href=\"{{licenseUrl}}\" title=\"License link\" target=\"_blank\">{{licenseName}}</a> license. <br/><br/>If you are using ePoc content, here is the attribution to be added depending on the use:<br/>Credit: ePoc <strong>\"{{epoc}}\"</strong>, published under the {{licenseName}} license in the application <a href=\"https://epoc.inria.fr/\" title=\"Link to ePoc site\" target=\"_blank\">https://epoc.inria.fr/</a>"
     },
     "COMMENT_MODAL": {
         "HEADER": "Leave a comment",
