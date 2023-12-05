@@ -578,6 +578,8 @@ div.epoc-author{
 
   &-name{
     display: flex;
+    font-weight: bold;
+    line-height: 1.2;
     align-items: center;
 
     img {
@@ -589,6 +591,11 @@ div.epoc-author{
       overflow: hidden;
       object-fit: cover;
     }
+  }
+
+  &-title{
+    font-size: 0.875em;
+    color: var(--ion-color-text-2);
   }
 
   &-description{
