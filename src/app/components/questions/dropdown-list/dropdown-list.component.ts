@@ -48,7 +48,7 @@ export class DropdownListComponent extends AbstractQuestionComponent implements 
         const actionSheet = await this.actionSheetController.create({
             mode: 'ios',
             header: this.translate.instant('QUESTION.DROPDOWN_INSTRUCTION'),
-            cssClass: 'custom-action-sheet',
+            cssClass: 'custom-action-sheet dropdown-list',
             buttons
         });
 

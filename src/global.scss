@@ -285,6 +285,15 @@ ion-range.progress-indicator{
       color: var(--ion-color-icon-2);
     }
   }
+
+  &.dropdown-list{
+    .action-sheet-group:not(.action-sheet-group-cancel) {
+      .action-sheet-button{
+        height:auto;
+        contain: content;
+      }
+    }
+  }
 }
 
 ion-toast.badge-toast {
