@@ -44,6 +44,7 @@ export class EpocPlayerPage implements OnInit {
         html: 'document-text-outline',
         assessment: 'cube-outline',
         video: 'play-circle-outline',
+        audio: 'mic-outline',
         'simple-question': 'help-outline',
         choice: 'git-branch-outline'
     };
