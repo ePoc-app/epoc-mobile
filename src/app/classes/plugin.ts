@@ -13,6 +13,12 @@ export interface Plugin {
 }
 
 export interface PluginEntry {
-    initialized: ReplaySubject<boolean>
-    plugin:Plugin
+    uid: string;
+    src: string;
+    config: PluginConfig;
+}
+
+export interface PluginConfig {
+    shortcode: string;
+    template: string;
 }

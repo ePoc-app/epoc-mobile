@@ -733,3 +733,17 @@ swiper-slide img {
   height: auto;
   max-height: 100%;
 }
+
+iframe.plugin{
+  width:100%;
+  height:auto;
+  border:none;
+
+  &.invisible{
+    position: absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+  }
+}

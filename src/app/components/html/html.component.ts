@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EpocService} from '../../services/epoc.service';
+import {PluginService} from 'src/app/services/plugin.service';
 
 @Component({
     selector: 'html-content',
@@ -26,15 +27,17 @@ export class HtmlComponent implements OnInit, OnDestroy {
 
     epocId: string;
     chapterId: string;
+    pluggedHtml: string;
     clickListener: () => void;
 
     constructor(
         private renderer: Renderer2,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private pluginService: PluginService
     ) {}
 
-    ngOnInit() {
+    async ngOnInit() {
         this.epocId = this.route.snapshot.paramMap.get('id');
         this.chapterId = this.route.snapshot.paramMap.get('chapter');
         this.clickListener = this.renderer.listen(this.content.nativeElement, 'click', ({target}) => {
@@ -47,6 +50,8 @@ export class HtmlComponent implements OnInit, OnDestroy {
                 }
             }
         });
+        this.pluggedHtml = this.html;
+        this.pluggedHtml = await this.pluginService.embed(this.html);
     }
 
     ngOnDestroy() {
