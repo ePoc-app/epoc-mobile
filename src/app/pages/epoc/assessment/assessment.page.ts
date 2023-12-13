@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
 import {AlertController, IonicSlides, NavController} from '@ionic/angular';
@@ -53,6 +53,7 @@ export class EpocAssessmentPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
+        private ref: ChangeDetectorRef,
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
         public alertController: AlertController,
@@ -94,6 +95,7 @@ export class EpocAssessmentPage implements OnInit {
 
     onUserHasResponded(userResponses) {
         this.currentQuestionUserResponse = userResponses;
+        this.ref.detectChanges();
     }
 
     checkAnswer() {
