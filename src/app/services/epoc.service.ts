@@ -11,6 +11,7 @@ import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';
 import {uid} from '@epoc/epoc-types/dist/v1';
 import {Content} from '../classes/contents/content';
+import {PluginService} from 'src/app/services/plugin.service';
 
 
 @Injectable({
@@ -32,6 +33,7 @@ export class EpocService {
       public alertController: AlertController,
       public actionSheetController: ActionSheetController,
       public appService: AppService,
+      private pluginService: PluginService,
       public translate: TranslateService
   ) {}
 
@@ -132,6 +134,8 @@ export class EpocService {
       });
       chapter.assessmentCount = chapter.assessments.length;
     }
+
+    this.pluginService.init(this.rootFolder, epoc);
 
     return epoc;
   }

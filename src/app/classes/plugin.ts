@@ -16,6 +16,7 @@ export interface PluginEntry {
     uid: string;
     src: string;
     config: PluginConfig;
+    embeds: string[]
 }
 
 export interface PluginConfig {

@@ -12,7 +12,6 @@ import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {uid} from '@epoc/epoc-types/src/v1';
 import {EpocService} from 'src/app/services/epoc.service';
 import {Content} from 'src/app/classes/contents/content';
-import {PluginService} from 'src/app/services/plugin.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {IonicSlides} from '@ionic/angular';
 import {AppService} from 'src/app/services/app.service';
@@ -75,7 +74,6 @@ export class EpocPlayerPage implements OnInit {
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
         private settingsStore: SettingsStoreService,
-        private pluginService: PluginService,
         private readonly tracker: MatomoTracker,
         public appService: AppService,
     ) {
@@ -100,8 +98,6 @@ export class EpocPlayerPage implements OnInit {
                 this.nextChapter = epoc.chapters[this.nextChapterId];
                 this.nextChapter.id = this.nextChapterId;
             }
-
-            this.pluginService.init(epoc.plugins);
 
             this.readingStore.saveStatement(this.epoc.id, 'chapters', this.chapterId, 'started', true);
         });

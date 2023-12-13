@@ -32,8 +32,7 @@ export class EpocPreviewPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public epocService: EpocService,
-        public libraryService: LibraryService,
-        private pluginService: PluginService
+        public libraryService: LibraryService
     ) {
     }
 
@@ -56,7 +55,6 @@ export class EpocPreviewPage implements OnInit {
             this.epoc = epoc;
             this.chapters = Object.values(this.epoc.chapters);
             this.chapterLabel = epoc.parameters?.chapterParameter?.toLowerCase() || 'chapitre';
-            this.pluginService.init(epoc.plugins)
         });
     }
 
