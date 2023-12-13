@@ -141,7 +141,8 @@ export class SettingsPage implements OnInit {
                 }, {
                     text: this.translate.instant('CONFIRM'),
                     handler: (data) => {
-                        this.user = {firstname:data.firstname, lastname: data.lastname , username: null, email: null};
+                        if (!data.firstname || !data.lastname) return;
+                        this.user = {firstname:data.firstname, lastname: data.lastname, username: null, email: null};
                         this.auth.setUser(this.user);
                     }
                 }

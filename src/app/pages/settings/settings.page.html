@@ -14,8 +14,9 @@
         {{"SETTINGS_PAGE.DISPLAY" | translate}}
       </ion-list-header>
       <ion-item>
-        <ion-label>{{"SETTINGS_PAGE.DEBUG" | translate}}</ion-label>
-        <ion-toggle aria-label="Debug" [(ngModel)]="settings.debug" (ngModelChange)="settingsChanged()"></ion-toggle>
+        <ion-toggle aria-label="Debug" [(ngModel)]="settings.debug" (ngModelChange)="settingsChanged()">
+          {{"SETTINGS_PAGE.DEBUG" | translate}}
+        </ion-toggle>
       </ion-item>
       <ion-item *ngIf="settings.debug">
         <ion-label>{{"SETTINGS_PAGE.DEBUG_ERROR" | translate}}</ion-label>
@@ -24,14 +25,12 @@
         </ion-button>
       </ion-item>
       <ion-item>
-        <ion-label>{{'SETTINGS_PAGE.LANGUAGE' | translate}}</ion-label>
-        <ion-select [(ngModel)]="settings.lang" (ngModelChange)="settingsChanged()">
+        <ion-select [label]="'SETTINGS_PAGE.LANGUAGE' | translate" [(ngModel)]="settings.lang" (ngModelChange)="settingsChanged()">
           <ion-select-option *ngFor="let lang of langs | keyvalue" [value]="lang.key">{{lang.value}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>{{"SETTINGS_PAGE.THEME" | translate}}</ion-label>
-        <ion-select [(ngModel)]="settings.theme" (ngModelChange)="settingsChanged()">
+        <ion-select [label]="'SETTINGS_PAGE.THEME' | translate" [(ngModel)]="settings.theme" (ngModelChange)="settingsChanged()">
           <ion-select-option value="auto">{{"SETTINGS_PAGE.THEME_AUTO" | translate}}</ion-select-option>
           <ion-select-option value="light">{{"SETTINGS_PAGE.THEME_LIGHT" | translate}}</ion-select-option>
           <ion-select-option value="dark">{{"SETTINGS_PAGE.THEME_DARK" | translate}}</ion-select-option>
@@ -39,25 +38,24 @@
       </ion-item>
       <ng-container *ngIf="false">
         <ion-item>
-          <ion-label>{{"SETTINGS_PAGE.FONT" | translate}}</ion-label>
-          <ion-select [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
+          <ion-select [label]="'SETTINGS_PAGE.FONT' | translate" [(ngModel)]="settings.font" (ngModelChange)="settingsChanged()">
             <ion-select-option value="Inria Sans">Sans serif</ion-select-option>
             <ion-select-option value="Inria Serif">Serif</ion-select-option>
             <ion-select-option value="open-dyslexic">Open Dyslexic</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label>{{"SETTINGS_PAGE.SIZE" | translate}}</ion-label>
           <ion-range min="12" max="20" step="4" [(ngModel)]="settings.fontSize" (ngModelChange)="settingsChanged()" snaps>
             <ion-icon slot="start" size="small" src="assets/icon/text-size.svg"></ion-icon>
             <ion-icon slot="end" src="assets/icon/text-size.svg"></ion-icon>
+            <div slot="label">{{"SETTINGS_PAGE.SIZE" | translate}}</div>
           </ion-range>
         </ion-item>
         <ion-item>
-          <ion-label>{{"SETTINGS_PAGE.INTERLINE" | translate}}</ion-label>
           <ion-range min="1" max="2" step="0.5" [(ngModel)]="settings.lineHeight" (ngModelChange)="settingsChanged()" snaps>
             <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
             <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
+            <div slot="label">{{"SETTINGS_PAGE.INTERLINE" | translate}}</div>
           </ion-range>
         </ion-item>
         <ion-list-header class="preview">
@@ -78,7 +76,7 @@
       <ion-list-header>
         {{"SETTINGS_PAGE.USER" | translate}}
       </ion-list-header>
-      <ng-container *ngIf="user">
+      <ng-container *ngIf="user && user.firstname">
         <ion-item *ngIf="user.email">
           <ion-label>{{"SETTINGS_PAGE.USER" | translate}} : {{user.email}}</ion-label>
           <ion-icon color="inria-icon" slot="end" name="log-out-outline" (click)="logout()"></ion-icon>
@@ -93,7 +91,7 @@
           <ion-label>{{"SETTINGS_PAGE.USERNAME" | translate}} : {{user.username}}</ion-label>
         </ion-item>
       </ng-container>
-      <ng-container *ngIf="!user">
+      <ng-container *ngIf="!user || !user.firstname">
         <ion-item (click)="setUser()" detail>
           <ion-label role="button">{{"SETTINGS_PAGE.DEFINE_USER" | translate}}</ion-label>
         </ion-item>
@@ -112,8 +110,7 @@
         <ion-note slot="end">{{info.build}}</ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>{{"SETTINGS_PAGE.DATA_COLLECTION" | translate}}</ion-label>
-        <ion-toggle [(ngModel)]="settings.isUserOptIn" (ngModelChange)="settingsChanged()"></ion-toggle>
+        <ion-toggle [(ngModel)]="settings.isUserOptIn" (ngModelChange)="settingsChanged()">{{"SETTINGS_PAGE.DATA_COLLECTION" | translate}}</ion-toggle>
       </ion-item>
     </ion-list>
     <ion-list>
@@ -121,12 +118,10 @@
         {{"SETTINGS_PAGE.EPOC_DATA" | translate}}
       </ion-list-header>
       <ion-item *ngIf="settings.devMode">
-        <ion-label>{{"SETTINGS_PAGE.DEV_MODE" | translate}}</ion-label>
-        <ion-toggle [(ngModel)]="settings.devMode" (ngModelChange)="disableDevMode($event)"></ion-toggle>
+        <ion-toggle [(ngModel)]="settings.devMode" (ngModelChange)="disableDevMode($event)">{{"SETTINGS_PAGE.DEV_MODE" | translate}}</ion-toggle>
       </ion-item>
       <ion-item *ngIf="settings.devMode">
-        <ion-label>{{"SETTINGS_PAGE.LIBRARY" | translate}}</ion-label>
-        <ion-select [value]="settings.libraryMode" (ionChange)="libraryChanged($event)">
+        <ion-select [label]="'SETTINGS_PAGE.LIBRARY' | translate" [value]="settings.libraryMode" (ionChange)="libraryChanged($event)">
           <ion-select-option value="libraryUrl">Prod</ion-select-option>
           <ion-select-option value="libraryQlfUrl">Qlf</ion-select-option>
         </ion-select>
