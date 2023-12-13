@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,8 @@ export class LocalEpocsService {
         public alertController: AlertController,
         public appService: AppService,
         public translate: TranslateService,
-        public toastController: ToastController
+        public toastController: ToastController,
+        private readonly tracker: MatomoTracker
     ) {}
 
     get localEpocs(): EpocLibrary[] {
@@ -130,6 +132,7 @@ export class LocalEpocsService {
         const id = this.simpleHash(url);
         this.imports = {...this.imports, [id]: this.translate.instant('LIBRARY_PAGE.DOWNLOADING')};
         const download = this.fileService.download(url, `local-epocs/${id}.zip`);
+        this.tracker.trackEvent('Local ePocs', 'Import from URL', url);
         download.subscribe(() => {}, () => {
             this.toast(this.translate.instant('FLOATING_MENU.ERROR'), 'danger');
             delete this.imports[id];
@@ -144,6 +147,7 @@ export class LocalEpocsService {
         const id = this.simpleHash(file.name);
         this.imports = {...this.imports, [id]: `${this.translate.instant('LIBRARY_PAGE.IMPORT')} ${file.name}`};
 
+        this.tracker.trackEvent('Local ePocs', 'Import from file', file);
 
         this.file.writeFile(this.file.dataDirectory, `local-epocs/${id}.zip`, file, {replace: true}).then(() => {
             this.unzipLocalEpoc(id);
