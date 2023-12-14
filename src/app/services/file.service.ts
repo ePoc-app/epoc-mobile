@@ -100,6 +100,10 @@ export class FileService {
         });
     }
 
+    checkDirExist(dir: string): Promise<boolean> {
+        return this.file.checkDir(this.file.dataDirectory, dir)
+    }
+
     deleteFolder(dir): Observable<RemoveResult> {
         return from(this.file.removeRecursively(this.file.dataDirectory, dir));
     }

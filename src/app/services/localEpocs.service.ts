@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {forkJoin, from, Observable, of, ReplaySubject} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import {forkJoin, from, lastValueFrom, Observable, of, ReplaySubject} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import {Epoc, EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
 import {Capacitor} from '@capacitor/core';
@@ -124,16 +124,50 @@ export class LocalEpocsService {
         return hash.toString(36).substring(0, 6).toUpperCase();
     }
 
-    downloadLocalEpoc(url: string): Observable<number> {
+    async downloadLocalEpoc(url: string): Promise<void> {
         if (!url.startsWith('https')) {
             this.toast(this.translate.instant('FLOATING_MENU.ERROR_SSL'), 'danger');
             return;
         }
         const id = this.simpleHash(url);
+        const dir = `local-epocs/${id}`;
+        try {
+            await this.fileService.checkDirExist(dir);
+        } catch {
+            this.download(url, id);
+            return;
+        }
+        const ePoc = this.localEpocs.find(e => e.id === id)
+        const alert = await this.alertController.create({
+            header: 'Confirmation',
+            subHeader: `Ecraser l'ePoc "${ePoc.title}" existant ?`,
+            buttons: [
+                {
+                    text: 'Non',
+                    role: 'cancel',
+                    handler: () => {
+                        this.download(url, id+(Math.random() + 1).toString(36).substring(3))
+                    },
+                },
+                {
+                    text: 'Oui',
+                    role: 'confirm',
+                    handler: async () => {
+                        await lastValueFrom(this.deleteEpoc(dir));
+                        this.download(url, id)
+                    },
+                },
+            ],
+        });
+        await alert.present();
+    }
+
+    download(url, id): Observable<number> {
         this.imports = {...this.imports, [id]: this.translate.instant('LIBRARY_PAGE.DOWNLOADING')};
         const download = this.fileService.download(url, `local-epocs/${id}.zip`);
         this.tracker.trackEvent('Local ePocs', 'Import from URL', url);
-        download.subscribe(() => {}, () => {
+        download.subscribe(() => {
+        }, () => {
             this.toast(this.translate.instant('FLOATING_MENU.ERROR'), 'danger');
             delete this.imports[id];
             this.imports = {...this.imports};
@@ -142,6 +176,7 @@ export class LocalEpocsService {
         });
         return download;
     }
+
 
     importFile(file) {
         const id = this.simpleHash(file.name);
@@ -175,10 +210,10 @@ export class LocalEpocsService {
         return unzip;
     }
 
-    deleteEpoc(dir: string): Observable<any> {
-        const rm = this.fileService.deleteFolder(dir);
-        this.fetchLocalEpocs();
-        return rm;
+    deleteEpoc(dir: string): Observable<void> {
+        return this.fileService.deleteFolder(dir).pipe(
+            switchMap(() => from(this.fetchLocalEpocs()))
+        );
     }
 
     async toast(message, color?) {
