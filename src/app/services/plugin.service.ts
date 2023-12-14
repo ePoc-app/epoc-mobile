@@ -39,26 +39,26 @@ export class PluginService implements Plugin {
                 iframe.id = `plugin-${uid}`;
                 iframe.sandbox.toggle('allow-scripts');
                 iframe.classList.add('plugin', 'invisible');
-                iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+                iframe.srcdoc = html;
                 wrapper.appendChild(iframe);
 
                 const context = {
                     url,
                     epoc
                 };
-
-                // Setup listener when plugin iframe load and send message to retrieve config
-                iframe.addEventListener('load', () => {
-                    iframe.contentWindow.postMessage({
-                        event: 'load',
-                        context
-                    }, '*');
-                });
                 // Setup listener to received message from iframes (plugin or embeds)
                 window.addEventListener('message', (message) => {
                     if (message.data.pluginId && message.data.pluginId === uid) {
+                        // Setup listener when plugin iframe load and send message to retrieve config with context
+                        if (message.data.event === 'load' && !this.plugins.some(p => p.uid === uid)) {
+                            iframe.contentWindow.postMessage({
+                                event: 'load',
+                                context
+                            }, '*');
+                        }
+
                         // When plugin finished load store plugin config and infos
-                        if (message.data.event === 'loaded' && !this.plugins.some(p => p.uid === uid)) {
+                        if (message.data.event === 'config' && !this.plugins.some(p => p.uid === uid)) {
                             const plugin:PluginEntry = {uid, src, config: message.data.config, embeds: []};
                             this.plugins.push(plugin);
                             resolve(true);
@@ -111,7 +111,6 @@ export class PluginService implements Plugin {
     async embed(html: string) {
         await this.allPluginLoaded;
         const regex = /\[#([^\[#]+)\]/gm;
-        // @ts-ignore
         const matches = html.match(regex);
         if (!matches) return html;
         for (const match of matches) {
