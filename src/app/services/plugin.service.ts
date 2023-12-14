@@ -139,11 +139,10 @@ export class PluginService implements Plugin {
                 `${document.baseURI}${this.rootFolder}` : `${this.rootFolder}`;
             iframe.src = rootUrl + plugin.src.split('/')[0] + '/' + plugin.config.template + `#${uid}-${uidEmbed}`
         } else {
-            const html = `<body>
+            iframe.srcdoc = `<body>
                 ${plugin.config.template}
                 <script src="${document.baseURI}assets/js/plugin-api-embed.js" uid="${uid}-${uidEmbed}"></script>
             </body>`;
-            iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
         }
         return iframe.outerHTML;
     }
