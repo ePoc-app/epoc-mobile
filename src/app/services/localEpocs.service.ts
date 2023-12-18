@@ -129,37 +129,9 @@ export class LocalEpocsService {
             this.toast(this.translate.instant('FLOATING_MENU.ERROR_SSL'), 'danger');
             return;
         }
-        const id = this.simpleHash(url);
-        const dir = `local-epocs/${id}`;
-        try {
-            await this.fileService.checkDirExist(dir);
-        } catch {
-            this.download(url, id);
-            return;
-        }
-        const ePoc = this.localEpocs.find(e => e.id === id)
-        const alert = await this.alertController.create({
-            header: 'Confirmation',
-            subHeader: `Ecraser l'ePoc "${ePoc.title}" existant ?`,
-            buttons: [
-                {
-                    text: 'Non',
-                    role: 'cancel',
-                    handler: () => {
-                        this.download(url, id+(Math.random() + 1).toString(36).substring(3))
-                    },
-                },
-                {
-                    text: 'Oui',
-                    role: 'confirm',
-                    handler: async () => {
-                        await lastValueFrom(this.deleteEpoc(dir));
-                        this.download(url, id)
-                    },
-                },
-            ],
-        });
-        await alert.present();
+        // const id = this.simpleHash(url); broken with some urls
+        const id = (Math.random() + 1).toString(36).substring(3);
+        this.download(url, id);
     }
 
     download(url, id): Observable<number> {
@@ -210,10 +182,12 @@ export class LocalEpocsService {
         return unzip;
     }
 
-    deleteEpoc(dir: string): Observable<void> {
-        return this.fileService.deleteFolder(dir).pipe(
-            switchMap(() => from(this.fetchLocalEpocs()))
-        );
+    deleteEpoc(dir: string): Observable<any> {
+        const delete$ = this.fileService.deleteFolder(dir);
+        delete$.subscribe(async () => {
+            await this.fetchLocalEpocs();
+        });
+        return delete$;
     }
 
     async toast(message, color?) {
