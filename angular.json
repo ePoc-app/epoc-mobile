@@ -46,6 +46,9 @@
               },
               {
                 "input": "src/global.scss"
+              },
+              {
+                "input": "node_modules/katex/dist/katex.min.css"
               }
             ],
             "scripts": [

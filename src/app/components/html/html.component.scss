@@ -147,4 +147,16 @@
     cursor: pointer;
   }
 
+  .katex-display {
+    display: inline;
+
+    .katex {
+      display: inline;
+
+      .katex-html {
+        display: inline;
+      }
+    }
+  }
+
 }
