@@ -13,6 +13,7 @@ import {
 import {ActivatedRoute, Router} from '@angular/router';
 import {EpocService} from '../../services/epoc.service';
 import {PluginService} from 'src/app/services/plugin.service';
+import mermaid from 'mermaid';
 
 @Component({
     selector: 'html-content',
@@ -52,6 +53,16 @@ export class HtmlComponent implements OnInit, OnDestroy {
         });
         this.pluggedHtml = this.html;
         this.pluggedHtml = await this.pluginService.embed(this.html);
+    }
+
+    // tslint:disable-next-line:use-lifecycle-interface
+    async ngAfterViewInit() {
+        mermaid.initialize({ startOnLoad: false });
+        const mermaidDiagram = this.content.nativeElement.querySelector('.mermaid');
+        if(mermaidDiagram) {
+            const { svg } = await mermaid.render('mermaid-svg', mermaidDiagram.innerHTML);
+            mermaidDiagram.innerHTML = svg;
+        }
     }
 
     ngOnDestroy() {
