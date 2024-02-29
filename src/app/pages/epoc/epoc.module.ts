@@ -12,6 +12,7 @@ import {EpocBookmarksPage} from './bookmarks/bookmarks.page';
 import {PlayerModule} from './player/player.module';
 import {EpocPreviewPage} from './preview/preview.page';
 import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
+import { EpocOrphanPlayerPage } from './player/orphan-player.page';
 
 @NgModule({
     imports: [
@@ -23,6 +24,7 @@ import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
             {path: 'play/:id', component: EpocTocPage},
             {path: 'play/:id/:chapter', component: EpocPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId', component: EpocPlayerPage},
+            {path: 'play/:id/content/:contentId', component: EpocOrphanPlayerPage},
             {path: 'play/:id/:chapter/content/:contentId/:next', component: EpocPlayerPage},
             {path: 'assessment', loadChildren: () => import('./assessment/assessment.module').then(m => m.AssessmentModule)},
             {path: 'score/:id', component: EpocScorePage},
@@ -37,6 +39,7 @@ import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
     ],
     declarations: [
         EpocPlayerPage,
+        EpocOrphanPlayerPage,
         EpocScorePage,
         EpocTocPage,
         EpocBookmarksPage,
