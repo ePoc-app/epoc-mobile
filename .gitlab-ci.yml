@@ -14,7 +14,6 @@ build:
   - npm i
   - npm run build-preview # build preview for editor
   - cd dist && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd - # zip editor preview
-  - rm src/index.html && cp preview/index.html src/index.html && npm run build-preview # build web preview
   artifacts:
     expire_in: 1 week
     paths:
@@ -22,19 +21,4 @@ build:
     - dist
   only:
   - master
-
-pages:
-  stage: deploy
-  script:
-    - npm install adm-zip --save-dev
-    - node ci/fetchEpocs.js
-    - mv dist/ public/
-    - cp public/index.html public/404.html # workaround to have all url to behave like index.html (SPA deep linking)
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - public
-  only:
-    - master
-    - web
 
