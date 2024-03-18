@@ -161,6 +161,12 @@ export class PluginService implements Plugin {
         return this.createEmbeddedIframe(pluginEntry);
     }
 
+    broadcastMessage (message) {
+        document.querySelectorAll('iframe').forEach(frame => {
+            frame.contentWindow.postMessage(message, '*')
+        });
+    }
+
     genericHook(name, ...args) {
         /*this.plugins.forEach(plugin => {
             plugin.initialized.subscribe(() => {

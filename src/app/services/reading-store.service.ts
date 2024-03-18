@@ -9,6 +9,7 @@ import {ToastController} from '@ionic/angular';
 import {EpocService} from './epoc.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
+import {PluginService} from 'src/app/services/plugin.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,7 @@ export class ReadingStoreService {
     constructor(
         private storageService: StorageService,
         private epocService: EpocService,
+        private pluginService: PluginService,
         private toastController: ToastController,
         public translate: TranslateService,
         private router: Router
@@ -174,6 +176,16 @@ export class ReadingStoreService {
         this.checkBadges(reading);
         this.readings = readings;
         this.saveReadings();
+        this.pluginService.broadcastMessage({
+            event: 'statement',
+            statement: {
+                epocId,
+                entityType,
+                entityId,
+                verb,
+                value
+            }
+    });
     }
 
     checkBadges (reading: Reading) {
