@@ -1,0 +1,28 @@
+ion-radio-group{
+  display: block;
+  margin-top: 2rem;
+}
+
+ion-item{
+  margin-bottom: .5rem;
+  border-radius: .5rem;
+  --min-height: 3.2rem;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
+
+ion-radio{
+  --color: var(--ion-color-inria-lightgrey);
+  --color-checked: var(--ion-color-inria-spe);
+  background: white;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 1.5rem;
+
+  & + ion-label{
+    padding-top: .2em;
+    color: var(--ion-color-text);
+  }
+}

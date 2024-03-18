@@ -28,6 +28,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {AudioPlayerComponent} from './audio-player/audio-player.component';
 import {BadgeComponent} from 'src/app/components/badge/badge.component';
 import {BadgeModalComponent} from 'src/app/components/badge-modal/badge-modal.component';
+import {CustomQuestionComponent} from 'src/app/components/questions/custom-question/custom-question.component';
 
 @NgModule({
     imports: [
@@ -61,7 +62,8 @@ import {BadgeModalComponent} from 'src/app/components/badge-modal/badge-modal.co
         DebugComponent,
         CertificateModalComponent,
         BadgeComponent,
-        BadgeModalComponent
+        BadgeModalComponent,
+        CustomQuestionComponent
     ],
     exports: [
         ScoreProgressComponent,

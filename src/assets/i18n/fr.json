@@ -247,7 +247,10 @@
         },
         "CERTIFICATE": "Attestation",
         "CORRECTION": {
+            "CORRECTION": "Correction",
             "RESPONDED": "Vous avez répondu",
+            "SUCCESS": "Vous avez réussi",
+            "FAILURE": "Vous n'avez pas réussi",
             "TRUE": "C'est une bonne réponse !",
             "FALSE": "C'est faux !",
             "CORRECT": "Bonne réponse : ",

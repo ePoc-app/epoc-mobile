@@ -247,7 +247,10 @@
         },
         "CERTIFICATE": "Certificate",
         "CORRECTION": {
+            "CORRECTION": "Correction",
             "RESPONDED": "You answered",
+            "SUCCESS": "You succeeded",
+            "FAILURE": "You failed",
             "TRUE": "That's a good answer !",
             "FALSE": "This is not true !",
             "CORRECT": "Correct answer : ",

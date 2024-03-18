@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Plugin, PluginEntry} from 'src/app/classes/plugin';
 import {Epoc} from 'src/app/classes/epoc';
+import {Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -9,6 +10,7 @@ export class PluginService implements Plugin {
     private plugins:PluginEntry[] = [];
     private rootFolder;
     public allPluginLoaded: Promise<boolean[]>;
+    public $message = new Subject();
 
     constructor() {}
 
@@ -94,6 +96,8 @@ export class PluginService implements Plugin {
                                 pluginIframe.contentWindow.postMessage(message.data.payload, '*');
                             }
                         }
+
+                        this.$message.next(message.data);
                     }
                 });
             });
@@ -128,6 +132,7 @@ export class PluginService implements Plugin {
      * @param plugin The plugin entry
      */
     createEmbeddedIframe (plugin: PluginEntry) {
+        if (!plugin) return 'No plugin found';
         const iframe = document.createElement('iframe');
         const uid = plugin.uid;
         const uidEmbed = (Math.random() + 1).toString(36).substring(3);
@@ -145,6 +150,15 @@ export class PluginService implements Plugin {
             </body>`;
         }
         return iframe.outerHTML;
+    }
+
+    /**
+     * Create an iframe with plugin html template.
+     * @param templateName The name of the html template file
+     */
+    createEmbeddedIframeFromTemplateName (templateName: string) {
+        const pluginEntry = this.plugins.find(p => p.config.template === templateName);
+        return this.createEmbeddedIframe(pluginEntry);
     }
 
     genericHook(name, ...args) {

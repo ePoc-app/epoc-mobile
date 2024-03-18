@@ -18,6 +18,7 @@ window.addEventListener('load', () =>  {
 })
 
 window.addEventListener('message', (message) => {
+    if (!message.data) return;
     if (message.data.event === 'load') {
         const config = ePoc.onLoad(message.data.context);
         parent.postMessage({pluginId: uid, event: 'config', config }, '*');
