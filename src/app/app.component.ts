@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@capacitor/splash-screen'
 import {LibraryService} from './services/library.service';
@@ -8,6 +8,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {combineLatest} from 'rxjs';
 import {StatusBar, Style} from '@capacitor/status-bar';
 import {register} from 'swiper/element/bundle';
+import {App, URLOpenListenerEvent} from '@capacitor/app';
+import {Router} from '@angular/router';
 
 register();
 
@@ -19,6 +21,8 @@ register();
 export class AppComponent {
   constructor(
     private platform: Platform,
+    private router: Router,
+    private zone: NgZone,
     public libraryService: LibraryService,
     public settingsStoreService: SettingsStoreService,
     private readonly tracker: MatomoTracker,
@@ -45,6 +49,16 @@ export class AppComponent {
       combineLatest([this.settingsStoreService.settings$, this.settingsStoreService.settingsFetched$]).subscribe(([settings, fetched]) => {
         if (!fetched) return;
         this.loadLang(settings.lang);
+      });
+    });
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      this.zone.run(() => {
+          // Example url: https://epoc.inria.fr/app-redirect/settings
+          // slug = /settings
+          const slug = event.url.split('app-redirect').pop();
+          if (slug) {
+              this.router.navigateByUrl(slug);
+          }
       });
     });
   }
