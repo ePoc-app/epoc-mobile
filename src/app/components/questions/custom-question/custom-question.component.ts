@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractQuestionComponent} from '../abstract-question.component';
 import {PluginService} from 'src/app/services/plugin.service';
+import {CustomQuestion} from '@epoc/epoc-types/dist/v1/question';
 
 @Component({
     selector: 'custom-question',
@@ -9,7 +10,7 @@ import {PluginService} from 'src/app/services/plugin.service';
 })
 export class CustomQuestionComponent extends AbstractQuestionComponent implements OnInit{
 
-    @Input() question: any;
+    @Input() question: CustomQuestion;
 
     html: string;
 
