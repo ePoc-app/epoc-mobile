@@ -8,7 +8,7 @@
     "dev-zrr": "ionic serve --external --configuration=dev --mode=inria",
     "dev-preview": "ionic serve --external --configuration=preview",
     "build": "ng build",
-    "build-preview": "ng build --configuration=preview --output-path=dist",
+    "build-preview": "ng build --configuration=preview --output-path=dist && node scripts/commit-hash.js",
     "android": "npm run resources && ionic capacitor run android --prod --open; node scripts/fix-config.js",
     "android-zrr": "npm run resources-zrr && ionic capacitor run android --prod --open --mode=inria; node scripts/fix-config.js",
     "android-dev": "npm run resources && ionic build && ionic capacitor sync android; node scripts/fix-config.js",
