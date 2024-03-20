@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {Platform} from '@ionic/angular';
+import {AlertController, Platform} from '@ionic/angular';
 import {SplashScreen} from '@capacitor/splash-screen'
 import {LibraryService} from './services/library.service';
 import {SettingsStoreService} from './services/settings-store.service'
@@ -10,6 +10,7 @@ import {StatusBar, Style} from '@capacitor/status-bar';
 import {register} from 'swiper/element/bundle';
 import {App, URLOpenListenerEvent} from '@capacitor/app';
 import {Router} from '@angular/router';
+import {LocalEpocsService} from 'src/app/services/localEpocs.service';
 
 register();
 
@@ -24,8 +25,10 @@ export class AppComponent {
     private router: Router,
     private zone: NgZone,
     public libraryService: LibraryService,
+    public localEpocsService: LocalEpocsService,
     public settingsStoreService: SettingsStoreService,
     private readonly tracker: MatomoTracker,
+    private alertController: AlertController,
     public translate: TranslateService
   ) {
     this.initializeApp();
@@ -53,10 +56,17 @@ export class AppComponent {
     });
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
-          // Example url: https://epoc.inria.fr/app-redirect/settings
-          // slug = /settings
-          const slug = event.url.split('app-redirect').pop();
-          if (slug) {
+          const urlOpen = new URL(event.url);
+          const slug = urlOpen.pathname.replace('/app-redirect', '');
+          if (slug === '/dl') {
+              // Example url: https://epoc.inria.fr/app-redirect/dl?url=https://example.com/epoc.zip
+              // Ask to download the linked ePoc
+              if (urlOpen.searchParams.has('url')) {
+                  this.confirmOpen(urlOpen.searchParams.get('url'));
+              }
+          } else if (slug) {
+              // Example url: https://epoc.inria.fr/app-redirect/settings
+              // Redirect to /settings
               this.router.navigateByUrl(slug);
           }
       });
@@ -68,25 +78,48 @@ export class AppComponent {
     document.querySelector('html').setAttribute('lang', lang);
   }
 
-getTheme() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
+    getTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
 
-loadTheme(theme: string) {
-    let myTheme;
-    if(theme) {
-        myTheme = (theme === 'auto') ? this.getTheme() : theme;
-    }
-    const root = document.querySelector(':root');
-    root.setAttribute('color-scheme', `${myTheme}`);
-    if (myTheme === 'dark') {
-        if(this.platform.is('ios')) {
-            StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
+    loadTheme(theme: string) {
+        let myTheme;
+        if(theme) {
+            myTheme = (theme === 'auto') ? this.getTheme() : theme;
         }
-    } else {
-        if(this.platform.is('ios')) {
-            StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
+        const root = document.querySelector(':root');
+        root.setAttribute('color-scheme', `${myTheme}`);
+        if (myTheme === 'dark') {
+            if(this.platform.is('ios')) {
+                StatusBar.setStyle({ style: Style.Dark }).catch(()=>{});
+            }
+        } else {
+            if(this.platform.is('ios')) {
+                StatusBar.setStyle({ style: Style.Light }).catch(()=>{});
+            }
         }
     }
-}
+
+    async confirmOpen(url) {
+        const alert = await this.alertController.create({
+            header: 'Confirmation',
+            subHeader: `Importation de l'ePoc ${url}`,
+            buttons: [
+                {
+                    text: 'Annuler',
+                    role: 'cancel'
+                },
+                {
+                    text: 'Confirmer',
+                    role: 'confirm',
+                    handler: () => {
+                        this.localEpocsService.downloadLocalEpoc(url);
+                        this.router.navigateByUrl('/library');
+                    },
+                },
+            ],
+        });
+
+        await alert.present();
+    }
 }
