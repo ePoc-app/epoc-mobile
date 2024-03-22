@@ -91,6 +91,12 @@ export class PluginService implements Plugin {
                                         embedId: message.data.embedId
                                     }, '*');
                                 }
+                            // Check if the message is to set the iframe height
+                            } else if (message.data.event === 'setIframeHeight') {
+                                const selector = `embed-${plugin.uid}-${message.data.embedId}`;
+                                const embedIframe = document.getElementById(selector) as HTMLIFrameElement;
+                                if (!embedIframe) return;
+                                embedIframe.style.height =  message.data.height + 'px';
                             // else redirect message from embed to main plugin iframe
                             } else {
                                 pluginIframe.contentWindow.postMessage(message.data.payload, '*');
@@ -144,7 +150,11 @@ export class PluginService implements Plugin {
                 `${document.baseURI}${this.rootFolder}` : `${this.rootFolder}`;
             iframe.src = rootUrl + plugin.src.split('/')[0] + '/' + plugin.config.template + `#${uid}-${uidEmbed}`
         } else {
-            iframe.srcdoc = `<body>
+            iframe.srcdoc = `
+            <head>
+                <link rel="stylesheet" href="/assets/css/plugin-embed.css">
+            </head>
+            <body>
                 ${plugin.config.template}
                 <script src="${document.baseURI}assets/js/plugin-api-embed.js" uid="${uid}-${uidEmbed}"></script>
             </body>`;

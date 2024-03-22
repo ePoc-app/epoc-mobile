@@ -12,6 +12,12 @@ window.plugin = {
 
 window.addEventListener('load', () =>  {
     parent.postMessage({pluginId, embedId, event: 'embed-loaded'}, '*');
+
+    // Get the height of the iframe content
+    var iframeHeight = document.documentElement.scrollHeight;
+
+    // Send a message to the parent window with the height
+    parent.postMessage({ pluginId, embedId, event: 'setIframeHeight', height: iframeHeight }, '*');
 })
 
 window.addEventListener('message', (message) => {
