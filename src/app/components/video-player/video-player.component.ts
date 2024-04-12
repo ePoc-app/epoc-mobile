@@ -77,8 +77,16 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         if (!this.src) return;
         this.playing = true;
         this.playPause.emit(true);
-        const directory = this.epocService.rootFolder.replace(/\/+$/, '').split('/').slice(-2).join('/');
-        const url = this.src.startsWith('http') || this.src.startsWith('capacitor') ? this.src : `application/files/${directory}/${this.src}`;
+        let url = '';
+        if (this.src.startsWith('http') && this.src.indexOf('_capacitor_file_') !== -1) {
+            const directory = this.src.split('fr.inria.epoc/')[1];
+            url = `application/${directory}/${this.src}`;
+        } else if (!this.src.startsWith('http') && !this.src.startsWith('capacitor')) {
+            const directory = this.epocService.rootFolder.replace(/\/+$/, '').split('/').slice(-2).join('/');
+            url = `application/files/${directory}/${this.src}`;
+        } else {
+            url = this.src;
+        }
         const subindex = this.subtitles ? this.subtitles.findIndex(s => s.lang.indexOf('fr') !== -1) : -1;
         const subtitle = subindex >= 0 ? this.subtitles[subindex].src : '';
         const language = subindex >= 0 ? this.subtitles[subindex].lang : '';
