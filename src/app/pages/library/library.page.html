@@ -86,6 +86,6 @@
       </div>
       <h3 aria-hidden="true" class="library-item-title">{{'LIBRARY_PAGE.ADD_EPOC' | translate}}</h3>
     </div>
-    <input type="file" accept=".zip,.epoc" hidden (change)="fileHandler($event)" #file>
+    <input type="file" accept="application/octet-stream,application/zip" hidden (change)="fileHandler($event)" #file>
   </div>
 </ion-content>
