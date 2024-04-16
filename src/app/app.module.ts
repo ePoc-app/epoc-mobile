@@ -19,7 +19,6 @@ import {LoginCallbackComponent} from './login/login-callback.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {HTTP} from '@awesome-cordova-plugins/http/ngx';
-import {FileOpener} from '@awesome-cordova-plugins/file-opener/ngx';
 import {FileTransfer} from '@awesome-cordova-plugins/file-transfer/ngx';
 import * as Sentry from '@sentry/angular-ivy';
 import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
@@ -83,8 +82,7 @@ export function createTranslateLoader(http: HttpClient) {
         FileTransfer,
         InAppBrowser,
         AuthGuardService,
-        HTTP,
-        FileOpener
+        HTTP
     ],
     bootstrap: [AppComponent]
 })

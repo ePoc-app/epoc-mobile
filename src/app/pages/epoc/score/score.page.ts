@@ -12,7 +12,7 @@ import {User} from 'src/app/classes/user';
 import {AuthService} from 'src/app/services/auth.service';
 import {Capacitor} from '@capacitor/core';
 import {Filesystem,Directory} from '@capacitor/filesystem';
-import {FileOpener} from '@awesome-cordova-plugins/file-opener/ngx';
+import {FileOpener, FileOpenerOptions} from '@capacitor-community/file-opener';
 import {LoadingController} from '@ionic/angular';
 import {EpocService} from 'src/app/services/epoc.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
@@ -52,7 +52,6 @@ export class EpocScorePage implements OnInit {
         public epocService: EpocService,
         private readingStore: ReadingStoreService,
         private auth: AuthService,
-        private fileOpener: FileOpener,
         public alertController: AlertController,
         public loadingController: LoadingController,
         private readonly tracker: MatomoTracker,
@@ -300,17 +299,31 @@ export class EpocScorePage implements OnInit {
                     directory: Directory.Data,
                     path: fileName
                 }).then((getUriResult) => {
-                    const path = getUriResult.uri;
-                    this.fileOpener.open(path, 'application/pdf').then(() => {
-                        this.dismissLoading();
-                    }).catch(() => {
+                    try {
+                        const path = getUriResult.uri;
+                        const fileOpenerOptions: FileOpenerOptions = {
+                            filePath: path,
+                            contentType: 'application/pdf',
+                            openWithDefault: true,
+                        };
+                        FileOpener.open(fileOpenerOptions).then(() => {
+                            this.dismissLoading();
+                        }).catch(() => {
+                            this.dismissLoading().then(() => {
+                                this.presentFail(
+                                    this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                                    this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {type: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN')}),
+                                );
+                            });
+                        });
+                    } catch (e) {
                         this.dismissLoading().then(() => {
                             this.presentFail(
                                 this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
                                 this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {type: this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN')}),
                             );
                         });
-                    });
+                    }
                 }).catch(() => {
                     this.dismissLoading().then(() => {
                         this.presentFail(
