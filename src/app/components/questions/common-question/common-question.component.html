@@ -52,6 +52,7 @@
         <b>{{question.label}}</b>
       </div>
       <ng-container [ngSwitch]="question.type">
+        <correction-simple-choice *ngSwitchCase="'choice'" [question]="question" [userResponses]="userResponses"></correction-simple-choice>
         <correction-multiple-choice *ngSwitchCase="'multiple-choice'" [question]="question" [userResponses]="userResponses"></correction-multiple-choice>
         <correction-reorder *ngSwitchCase="'reorder'" [question]="question" [userResponses]="userResponses"></correction-reorder>
         <correction-sort *ngSwitchCase="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type) ? question.type : !question.type" [question]="question" [userResponses]="userResponses"></correction-sort>

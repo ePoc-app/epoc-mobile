@@ -18,6 +18,7 @@ import {DropdownListComponent} from './questions/dropdown-list/dropdown-list.com
 import {AbstractQuestionComponent} from './questions/abstract-question.component';
 import {CommonQuestionComponent} from './questions/common-question/common-question.component';
 import {ThoughtsComponent} from './questions/thoughts/thoughts.component';
+import {CorrectionSimpleChoiceComponent} from './corrections/correction-simple-choice/correction-simple-choice.component';
 import {CorrectionMultipleChoiceComponent} from './corrections/correction-multiple-choice/correction-multiple-choice.component';
 import {CorrectionSortComponent} from './corrections/correction-sort/correction-sort.component';
 import {CorrectionGenericComponent} from './corrections/correction-generic/correction-generic.component';
@@ -55,6 +56,7 @@ import {CustomQuestionComponent} from 'src/app/components/questions/custom-quest
         AbstractQuestionComponent,
         CommonQuestionComponent,
         ThoughtsComponent,
+        CorrectionSimpleChoiceComponent,
         CorrectionMultipleChoiceComponent,
         CorrectionSortComponent,
         CorrectionGenericComponent,
@@ -82,6 +84,7 @@ import {CustomQuestionComponent} from 'src/app/components/questions/custom-quest
         AbstractQuestionComponent,
         CommonQuestionComponent,
         ThoughtsComponent,
+        CorrectionSimpleChoiceComponent,
         CorrectionMultipleChoiceComponent,
         CorrectionSortComponent,
         CorrectionGenericComponent,
