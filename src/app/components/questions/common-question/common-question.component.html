@@ -71,7 +71,7 @@
         </div>
         <h5 class="subtitle">{{'QUESTION.PREVIEW.EXPLANATION' | translate}}</h5>
       </div>
-      <html-content [html]="question.explanation"></html-content>
+      <html-content [html]="question.explanation | srcConvert"></html-content>
     </div>
   </ng-container>
 </flip-card>
