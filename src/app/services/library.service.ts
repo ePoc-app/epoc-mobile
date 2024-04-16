@@ -223,13 +223,6 @@ export class LibraryService {
                     this.deleteEpoc(epoc).subscribe(() => this.downloadEpoc(epoc))
                 }
             }] : []),
-            {
-                text: this.translate.instant('FLOATING_MENU.COMMENT'),
-                icon: 'chatbox-ellipses-outline',
-                handler: () => {
-                    this.appService.leaveComment(epoc.id)
-                }
-            },
             ...(epoc.opened ? [{
                 text: this.translate.instant('FLOATING_MENU.RESET'),
                 icon: 'refresh-outline',

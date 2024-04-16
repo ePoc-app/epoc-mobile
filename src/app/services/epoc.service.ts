@@ -203,13 +203,6 @@ export class EpocService {
         }
       },
       {
-        text: this.translate.instant('FLOATING_MENU.COMMENT'),
-        icon: 'chatbox-ellipses-outline',
-        handler: () => {
-          this.appService.leaveComment(this.epoc.id)
-        }
-      },
-      {
         text: this.translate.instant('FLOATING_MENU.SETTINGS'),
         icon: 'settings-outline',
         handler: () => {

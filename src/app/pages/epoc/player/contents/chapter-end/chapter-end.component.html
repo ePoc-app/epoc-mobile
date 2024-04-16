@@ -16,7 +16,8 @@
   <ion-button expand="block" size="large" color="inria" [routerLink]="'/epoc/score/'+epoc.id">
     <span>{{'PLAYER.CHAPTER_END.SCORE' | translate}}</span>
   </ion-button>
-  <ion-button expand="block" size="large" color="inria-grey" (click)="leaveComment()">
-    <span>{{'PLAYER.CHAPTER_END.REVIEW' | translate}}</span>
+  <ion-button expand="block" size="large" color="inria-grey" routerLink="/">
+    <ion-icon slot="start" name="home"></ion-icon>
+    <span>{{'FLOATING_MENU.HOME' | translate}}</span>
   </ion-button>
 </ng-container>

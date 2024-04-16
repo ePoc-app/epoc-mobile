@@ -15,15 +15,7 @@ export class ChapterEndComponent implements OnInit {
   @Input() nextChapter : Chapter;
   @Input() chapterLabel : string;
 
-  constructor(
-      public epocService: EpocService,
-      public appService: AppService
-  ) { }
+  constructor() { }
 
   ngOnInit() {}
-
-  leaveComment() {
-    this.appService.leaveComment(this.epoc.id)
-  }
-
 }

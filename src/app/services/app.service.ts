@@ -55,32 +55,13 @@ export class AppService {
         }).catch(() => {});
     }
 
-    async leaveComment(epoc) {
+    leaveComment() {
         const platform = Capacitor.isNativePlatform() ? Capacitor.getPlatform() : 'web';
-        const infos = `${this.joinObject(this.deviceInfo)}${this.joinObject(this.appInfo)}ePoc=${epoc.id}`;
-        const alert = await this.alertController.create({
-            header: this.translate.instant('COMMENT_MODAL.HEADER'),
-            message: this.translate.instant('COMMENT_MODAL.MESSAGE'),
-            buttons: [
-                {
-                    text: platform === 'ios' ? 'App Store' : 'Play Store',
-                    handler: () => {
-                        if (platform === 'ios') {
-                            window.open(`https://apps.apple.com/app/${this.appInfo.name}/id1596317383`, '_system', 'location=yes');
-                        } else {
-                            window.open(`https://play.google.com/store/apps/details?id=${this.appInfo.id}`, '_system', 'location=yes');
-                        }
-                    }
-                }, {
-                    text: 'Sondage',
-                    handler: () => {
-                        window.open(`https://epoc.inria.fr/sondage-redirect?appdata=${infos}`, '_system', 'location=yes');
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
+        if (platform === 'ios') {
+            window.open(`https://apps.apple.com/app/${this.appInfo.name}/id1596317383`, '_system', 'location=yes');
+        } else {
+            window.open(`https://play.google.com/store/apps/details?id=${this.appInfo.id}`, '_system', 'location=yes');
+        }
     }
 
     async displayLicence(epoc: Epoc) {
