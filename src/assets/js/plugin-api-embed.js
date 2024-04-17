@@ -1,6 +1,3 @@
-const uid = document.currentScript.getAttribute('uid') || location.hash.substring(1);
-const pluginId = uid.split('-')[0];
-const embedId = uid.split('-')[1];
 window.plugin = {
     pluginId,
     embedId,

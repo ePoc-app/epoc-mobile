@@ -20,7 +20,7 @@ export class CustomQuestionComponent extends AbstractQuestionComponent implement
 
     async ngOnInit() {
         await this.pluginService.allPluginLoaded;
-        this.html = this.pluginService.createEmbeddedIframeFromTemplateName(this.question.template);
+        this.html = await this.pluginService.createEmbeddedIframeFromTemplateName(this.question.template, this.question.data);
         this.pluginService.$message.subscribe((message: any) => {
             if (message.event === 'user-responded') {
                 this.userResponded(message.payload);

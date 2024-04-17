@@ -120,14 +120,29 @@ export class PluginService implements Plugin {
      */
     async embed(html: string) {
         await this.allPluginLoaded;
-        const regex = /\[#([^\[#]+)\]/gm;
-        const matches = html.match(regex);
-        if (!matches) return html;
-        for (const match of matches) {
-            const plugin = this.plugins.find(p => p.config.shortcode === match);
-            if (plugin){
-                const iframeHtml = this.createEmbeddedIframe(plugin);
-                html = html.replace(plugin.config.shortcode, iframeHtml);
+        // Find all shortcodes in the input string
+        const shortcodes = html.match(/\[#[^\] ]+[^\]]*]/gm);
+        if (!shortcodes) return html;
+        for (const shortcode of shortcodes) {
+            // Extract the shortcode name
+            const shortcodeMatch = shortcode.match(/\[#(\S+)[^\]]*]/);
+            if (shortcodeMatch) {
+                const shortcodeName = `[#${shortcodeMatch[1]}]`;
+
+                // Extract the key/value pairs
+                const keyValuePairs = shortcode.match(/(\w+)="([^"]*)"/g);
+                const data = {};
+                if (keyValuePairs) {
+                    for (const pair of keyValuePairs) {
+                        const [key, value] = pair.match(/(\w+)="([^"]*)"/).slice(1);
+                        data[key] = value;
+                    }
+                }
+                const plugin = this.plugins.find(p => p.config.shortcode === shortcodeName);
+                if (plugin){
+                    const iframeHtml = await this.createEmbeddedIframe(plugin, data);
+                    html = html.replace(shortcode, iframeHtml);
+                }
             }
         }
         return html;
@@ -136,8 +151,9 @@ export class PluginService implements Plugin {
     /**
      * Create an iframe with plugin html template. It could be either a file or inline html
      * @param plugin The plugin entry
+     * @param data The optional data to init the plugin embed with
      */
-    createEmbeddedIframe (plugin: PluginEntry) {
+    async createEmbeddedIframe(plugin: PluginEntry, data?: unknown) {
         if (!plugin) return 'No plugin found';
         const iframe = document.createElement('iframe');
         const uid = plugin.uid;
@@ -145,18 +161,30 @@ export class PluginService implements Plugin {
         iframe.sandbox.toggle('allow-scripts');
         iframe.className = 'plugin embed';
         iframe.id = `embed-${uid}-${uidEmbed}`;
+        const pluginEmbedHead = `
+            <link rel="stylesheet" href="/assets/css/plugin-embed.css">
+            <script>
+                const pluginId = '${uid}';
+                const embedId = '${uidEmbed}';
+                const pluginData = JSON.parse('${JSON.stringify(data)}')
+            </script>
+            <script src="${document.baseURI}assets/js/plugin-api-embed.js"></script>
+        `;
         if (plugin.config.template.endsWith('.html')) {
-            const rootUrl = this.rootFolder.startsWith('assets/demo') ?
-                `${document.baseURI}${this.rootFolder}` : `${this.rootFolder}`;
-            iframe.src = rootUrl + plugin.src.split('/')[0] + '/' + plugin.config.template + `#${uid}-${uidEmbed}`
+            const rootUrl = this.rootFolder.startsWith('assets/demo') ? `${document.baseURI}${this.rootFolder}` : `${this.rootFolder}`;
+            const templateUrl = rootUrl + plugin.src.split('/')[0] + '/' + plugin.config.template + `#${uid}-${uidEmbed}`;
+            const templateString = await (await fetch(templateUrl)).text();
+            const parser = new DOMParser();
+            const templateHtml = parser.parseFromString(templateString, 'text/html');
+            templateHtml.head.innerHTML += pluginEmbedHead;
+            iframe.srcdoc = templateHtml.documentElement.innerHTML;
         } else {
             iframe.srcdoc = `
             <head>
-                <link rel="stylesheet" href="/assets/css/plugin-embed.css">
+                ${pluginEmbedHead}
             </head>
             <body>
                 ${plugin.config.template}
-                <script src="${document.baseURI}assets/js/plugin-api-embed.js" uid="${uid}-${uidEmbed}"></script>
             </body>`;
         }
         return iframe.outerHTML;
@@ -165,10 +193,11 @@ export class PluginService implements Plugin {
     /**
      * Create an iframe with plugin html template.
      * @param templateName The name of the html template file
+     * @param data The optional data to init the plugin embed with
      */
-    createEmbeddedIframeFromTemplateName (templateName: string) {
+    async createEmbeddedIframeFromTemplateName (templateName: string, data: unknown) {
         const pluginEntry = this.plugins.find(p => p.config.template === templateName);
-        return this.createEmbeddedIframe(pluginEntry);
+        return await this.createEmbeddedIframe(pluginEntry, data);
     }
 
     broadcastMessage (message) {
