@@ -98,8 +98,12 @@ export class EpocPlayerPage implements OnInit {
                 this.nextChapter = epoc.chapters[this.nextChapterId];
                 this.nextChapter.id = this.nextChapterId;
             }
+        });
 
-            this.readingStore.saveStatement(this.epoc.id, 'chapters', this.chapterId, 'started', true);
+        combineLatest([this.epoc$, this.readingStore.readings$]).pipe(first()).subscribe(([epoc, readings]) => {
+            if (epoc && readings) {
+                this.readingStore.saveStatement(this.epoc.id, 'chapters', this.chapterId, 'started', true);
+            }
         });
 
         combineLatest([this.epoc$, this.readingStore.readings$]).subscribe(([epoc, readings]) => {
