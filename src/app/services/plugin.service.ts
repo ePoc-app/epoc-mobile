@@ -166,7 +166,7 @@ export class PluginService implements Plugin {
             <script>
                 const pluginId = '${uid}';
                 const embedId = '${uidEmbed}';
-                const pluginData = JSON.parse('${JSON.stringify(data)}')
+                const pluginData = JSON.parse('${JSON.stringify(data ? data : {})}')
             </script>
             <script src="${document.baseURI}assets/js/plugin-api-embed.js"></script>
         `;
@@ -195,7 +195,7 @@ export class PluginService implements Plugin {
      * @param templateName The name of the html template file
      * @param data The optional data to init the plugin embed with
      */
-    async createEmbeddedIframeFromTemplateName (templateName: string, data: unknown) {
+    async createEmbeddedIframeFromTemplateName (templateName: string, data?: unknown) {
         const pluginEntry = this.plugins.find(p => p.config.template === templateName);
         return await this.createEmbeddedIframe(pluginEntry, data);
     }
