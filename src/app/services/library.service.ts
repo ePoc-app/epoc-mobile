@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {forkJoin, from, Observable, ReplaySubject, timer} from 'rxjs';
+import {BehaviorSubject, forkJoin, from, Observable, ReplaySubject, timer} from 'rxjs';
 import {filter, map, startWith} from 'rxjs/operators';
-import {Epoc, EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
+import {Chapter, CustomLibrary, Epoc, EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
 import {environment as env} from 'src/environments/environment';
 import {mode} from 'src/environments/environment.mode';
@@ -17,14 +17,23 @@ import {File} from '@awesome-cordova-plugins/file/ngx';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Settings} from 'src/app/classes/settings';
+import {uid} from '@epoc/epoc-types/src/v1';
+import {hash} from 'src/app/utils/uid';
+import {lineBreakRegex} from 'mermaid/dist/diagrams/common/common';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LibraryService {
+    settings: Settings;
+
     private _library : EpocLibrary[];
     private librarySubject$ = new ReplaySubject<EpocLibrary[]>(1);
     library$ = this.librarySubject$.asObservable()
+
+    private customLibrariesSubject = new BehaviorSubject<Record<uid, CustomLibrary>>({});
+    customLibraries$: Observable<Record<uid, CustomLibrary>> = this.customLibrariesSubject.asObservable();
 
     private _epocProgresses : {[EpocId: string] : number} = {};
     private epocProgressesSubject$ = new ReplaySubject<{[EpocId: string] : number}>(1);
@@ -49,8 +58,10 @@ export class LibraryService {
     ) {
         this.settingsStore.settings$.subscribe(settings => {
             if (!settings) return;
+            this.settings = settings;
             this.libraryUrl = env.mode[mode][settings.libraryMode];
             this.fetchLibrary();
+            this.fetchCustomLibraries();
         });
         this.readingStore.readings$.subscribe(readings => this.readings = readings)
     }
@@ -96,6 +107,33 @@ export class LibraryService {
     updateEpocProgress(epocId, progress) {
         this._epocProgresses[epocId] = progress;
         this.epocProgressesSubject$.next(this._epocProgresses);
+    }
+
+    fetchCustomLibraries(): void {
+        const epocObservables = this.settings.customLibrairies.map(library =>
+            this.http.get<EpocLibrary[]>(library.url).pipe(
+                map(epocs => {
+                    return {
+                        ...library,
+                        epocs: epocs.map(epoc => {
+                            epoc.downloading = false;
+                            epoc.downloaded = false;
+                            epoc.unzipping = false;
+                            epoc.opened = false;
+                            return epoc;
+                        })
+                    }
+                })
+            )
+        );
+
+        forkJoin(epocObservables).subscribe(libraries => {
+            const customLibraries: Record<string, CustomLibrary> = {};
+            libraries.forEach((library, index) => {
+                customLibraries[hash(library.url)] = library
+            });
+            this.customLibrariesSubject.next(customLibraries);
+        });
     }
 
     fetchLibrary(): void {
@@ -146,7 +184,8 @@ export class LibraryService {
         }
     }
 
-    downloadEpoc(epoc: EpocMetadata): Observable<number> {
+    downloadEpoc(epoc: EpocMetadata, libraryId?: string): Observable<number> {
+        console.log(libraryId)
         const download = this.fileService.download(epoc.download, `epocs/${epoc.id}.zip`);
         this.updateEpocLibraryState(epoc.id, {downloading: true});
         this.addEpocProgress(epoc.id);

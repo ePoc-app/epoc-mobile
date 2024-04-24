@@ -26,7 +26,38 @@ export class SettingsPage implements OnInit {
     user: User;
     mode = mode;
     private devModeCount = 0;
-    langs = languages
+    libraryUrl = env.mode[mode].libraryUrl;
+    langs = languages;
+
+    libraryPromptButtons = [{
+        text: this.translate.instant('CANCEL'),
+        role: 'cancel',
+        cssClass: 'secondary'
+    }, {
+        text: this.translate.instant('CONFIRM'),
+        handler: (data) => {
+            if(!data[0] || !data[1]) return;
+            this.settings.customLibrairies.push({name:data[0], url:data[1]});
+            this.settingsChanged();
+        }
+    }];
+    libraryPromptInputs = [
+        {
+            placeholder: this.translate.instant('SETTINGS_PAGE.LIBRARY_NAME')
+        },
+        {
+            placeholder: 'URL'
+        }
+    ];
+
+    libraryDeleteButtons = [{
+        text: this.translate.instant('CANCEL'),
+        role: 'cancel',
+        cssClass: 'secondary'
+    }, {
+        text: this.translate.instant('CONFIRM'),
+        role: 'confirm'
+    }];
 
     constructor(
         private settingsStore: SettingsStoreService,
@@ -43,6 +74,7 @@ export class SettingsPage implements OnInit {
         this.settingsStore.settings$.subscribe(settings => {
             if (settings) {
                 this.settings = settings;
+                this.libraryUrl = env.mode[mode][settings.libraryMode];
             }
         });
     }
@@ -221,5 +253,12 @@ export class SettingsPage implements OnInit {
 
     resetDevModeCount() {
         this.devModeCount = 0;
+    }
+
+    deleteLibrary(event: any, libraryIndex: number) {
+        if (event.detail.role === 'confirm') {
+            this.settings.customLibrairies.splice(libraryIndex, 1)
+            this.settingsChanged();
+        }
     }
 }

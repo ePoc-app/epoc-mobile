@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {LibraryService} from 'src/app/services/library.service';
-import {EpocLibrary} from 'src/app/classes/epoc';
+import {CustomLibrary, EpocLibrary} from 'src/app/classes/epoc';
 import {AppService} from 'src/app/services/app.service';
 import {Capacitor} from '@capacitor/core';
 import {LocalEpocsService} from '../../../services/localEpocs.service';
@@ -35,6 +35,11 @@ export class EpocOverviewPage implements OnInit {
                 this.epoc = data.find(epoc => epoc.dir === dir);
                 if (this.epoc) this.rootFolder = this.epoc.rootFolder;
             });
+        } else if (this.route.snapshot.paramMap.get('libraryId') && this.route.snapshot.paramMap.get('id')) {
+            this.libraryService.customLibraries$.subscribe((data: Record<string, CustomLibrary>) => {
+                this.library = data[this.route.snapshot.paramMap.get('libraryId')].epocs;
+                this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
+            });
         } else {
             this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
                 this.library = data;
@@ -56,7 +61,7 @@ export class EpocOverviewPage implements OnInit {
     }
 
     downloadEpoc(epoc: EpocLibrary) {
-        this.libraryService.downloadEpoc(epoc);
+        this.libraryService.downloadEpoc(epoc, this.route.snapshot.paramMap.get('libraryId'));
     }
 
     openEpocMenu(epoc){

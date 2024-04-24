@@ -7,6 +7,12 @@ import {Assessment, Question, SimpleQuestion} from './contents/assessment';
 
 export {EpocMetadata} from '@epoc/epoc-types/dist/v1'
 
+export interface CustomLibrary {
+    name: string;
+    url: string;
+    epocs: EpocLibrary[]
+}
+
 export interface Epoc extends EpocType {
     assessments: (Assessment|SimpleQuestion)[]
     chapters:  Record<uid, Chapter>;

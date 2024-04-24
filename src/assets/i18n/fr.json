@@ -71,7 +71,13 @@
             "INFO": "Êtes vous sûr ? ",
             "MESSAGE": "Cette action effacera les données des exercices de l'application <br/><small>(attestations, quiz, préférences, etc.)</small>"
         },
-        "THROW_ERROR": "Une erreur a été émise"
+        "THROW_ERROR": "Une erreur a été émise",
+        "DEVELOPER": "Développeur",
+        "EPOC_LIBRARIES": "Bibliothèques d'ePocs",
+        "ADDING_LIBRARY": "Ajout d'une bibliothèque",
+        "CONFIRM_DELETE_LIBRARY": "Supprimer la bibliothèque ?",
+        "ADD_LIBRARY": "Ajouter une bibliothèque",
+        "LIBRARY_NAME": "Nom de la bibliothèque"
     },
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Présentation du cours",

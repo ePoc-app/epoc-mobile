@@ -71,7 +71,13 @@
             "INFO": "Are you sure ? ",
             "MESSAGE": "This action will delete the exercise data from the application <br/><small>(certificates, quizzes, preferences, etc.)</small>"
         },
-        "THROW_ERROR": "An error has been issued"
+        "THROW_ERROR": "An error has been issued",
+        "DEVELOPER": "Developer",
+        "EPOC_LIBRARIES": "ePocs libraries",
+        "ADDING_LIBRARY": "Adding a library",
+        "CONFIRM_DELETE_LIBRARY": "Delete library?",
+        "ADD_LIBRARY": "Add a library",
+        "LIBRARY_NAME": "Library name"
     },
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Course presentation",

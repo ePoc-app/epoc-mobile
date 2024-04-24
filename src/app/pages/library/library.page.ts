@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
-import {EpocLibrary} from 'src/app/classes/epoc';
+import {CustomLibrary, EpocLibrary} from 'src/app/classes/epoc';
 import {OnboardingService} from '../../services/onboarding.service';
 import {OnboardingItem} from '../../classes/onboarding';
 import {AppService} from 'src/app/services/app.service';
@@ -19,6 +19,7 @@ export class LibraryPage implements OnInit {
   swiperModules = [IonicSlides];
 
   library: EpocLibrary[] | undefined;
+  customLibraries: Record<string, CustomLibrary> | undefined;
   localEpocs: EpocLibrary[] | undefined;
   onboarding: OnboardingItem[];
   epocProgresses : {[EpocId: string] : number} = {};
@@ -42,7 +43,8 @@ export class LibraryPage implements OnInit {
 
   ngOnInit() {
     this.localEpocsService.fetchLocalEpocs();
-    this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
+    this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data;});
+    this.libraryService.customLibraries$.subscribe((data: Record<string, CustomLibrary>) => { this.customLibraries = data });
     this.localEpocsService.localEpocs$.subscribe((data: EpocLibrary[]) => { this.localEpocs = data; });
     this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
       this.epocProgresses = epocProgresses;
@@ -152,4 +154,6 @@ export class LibraryPage implements OnInit {
       content.focus();
     }
   }
+
+  protected readonly Object = Object;
 }
