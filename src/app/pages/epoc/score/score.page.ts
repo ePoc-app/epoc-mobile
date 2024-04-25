@@ -1,25 +1,32 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {combineLatest, Observable} from 'rxjs';
 import {Badge, Epoc} from 'src/app/classes/epoc';
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import {Reading} from 'src/app/classes/reading';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {jsPDF} from 'jspdf';
+import 'svg2pdf.js'
 import {User} from 'src/app/classes/user';
 import {AuthService} from 'src/app/services/auth.service';
 import {Capacitor} from '@capacitor/core';
-import {Filesystem,Directory} from '@capacitor/filesystem';
+import {Directory, Filesystem} from '@capacitor/filesystem';
 import {FileOpener, FileOpenerOptions} from '@capacitor-community/file-opener';
-import {LoadingController} from '@ionic/angular';
 import {EpocService} from 'src/app/services/epoc.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {SettingsStoreService} from 'src/app/services/settings-store.service';
 import {Settings} from 'src/app/classes/settings';
 import {TranslateService} from '@ngx-translate/core';
 import {uid} from '@epoc/epoc-types/dist/v1';
+
+const colors = {
+    darkblue: '#384257',
+    blue: '#6477A0',
+    orange: '#FFA029',
+    lightblue: '#edf3f8'
+};
 
 @Component({
     selector: 'app-epoc-score',
@@ -152,8 +159,8 @@ export class EpocScorePage implements OnInit {
                 if (!this.user) {
                     this.setUser().then();
                 } else {
-                    this.presentLoading().then(() => {
-                        this.downloadPdf(this.generatePdf());
+                    this.presentLoading().then(async () => {
+                        this.downloadPdf(await this.generatePdf());
                     });
                 }
             } else {
@@ -191,8 +198,8 @@ export class EpocScorePage implements OnInit {
                     handler: (data) => {
                         this.user = {firstname:data.firstname, lastname: data.lastname , username: null, email: null};
                         this.auth.setUser(this.user);
-                        this.presentLoading().then(() => {
-                            this.downloadPdf(this.generatePdf());
+                        this.presentLoading().then(async () => {
+                            this.downloadPdf(await this.generatePdf());
                         });
                     }
                 }
@@ -202,14 +209,81 @@ export class EpocScorePage implements OnInit {
         await alert.present();
     }
 
-    generatePdf(): jsPDF {
-        const colors = {
-            darkblue: '#384257',
-            blue: '#6477A0',
-            orange: '#FFA029',
-            lightblue: '#edf3f8'
-        };
-        const password = Math.random().toString(36).substring(2,12);
+    svgToPNG (url, width) : Promise<string> {
+        return new Promise(resolve => {
+            const img = document.createElement('img');
+            img.onload = () => {
+                document.body.appendChild(img);
+                const canvas = document.createElement('canvas');
+                const ratio = (img.clientWidth / img.clientHeight) || 1;
+                document.body.removeChild(img);
+                canvas.width = width;
+                canvas.height = width / ratio;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                try {
+                    const data = canvas.toDataURL('image/png');
+                    resolve(data);
+                } catch (e) {
+                    resolve(null);
+                }
+            };
+            img.onerror = () => {
+                resolve(null);
+            };
+            img.src = url;
+        });
+    }
+
+
+    async insertBadges(doc: jsPDF, posY: number): Promise<number> {
+        const badges = Object.entries(this.epoc.badges);
+
+        const w = 20;
+        const h = w * 1.111;
+        const size = w * 0.4;
+        const offset = 25;
+        const center = doc.internal.pageSize.width / 2;
+        const startX = center - (badges.length*(offset/2))
+
+        let x = startX;
+        const y = posY;
+
+        for (const [key, badge] of badges) {
+            let url;
+            const prefix = '/assets/icon/badge/';
+            if (!badge.icon.endsWith('.svg')) {
+                url = prefix + badge.icon + '.svg';
+            } else {
+                url = this.epocService.rootFolder + badge.icon;
+            }
+
+            if (this.unlockedBadges.includes(key)) {
+                const bg = await this.svgToPNG(prefix + 'shape.svg', 500);
+                doc.addImage(bg, 'PNG', x, y, w, h);
+                try {
+                    const icon = await this.svgToPNG(url, 500);
+                    doc.addImage(icon, 'PNG', x + 6, y + 6, size, size);
+                } catch (e) {
+                    console.log(url)
+                }
+                const fg = await this.svgToPNG(prefix + 'shadow-grey.svg', 500);
+                doc.addImage(fg, 'PNG', x, y, w, h);
+            } else {
+                const bg = await this.svgToPNG(prefix + 'locked.svg', 500);
+                doc.addImage(bg, 'PNG', x, y, w, h);
+            }
+
+            doc.setFontSize(8);
+            doc.text(badge.title, x+10, y+26, {align: 'center', maxWidth: 20});
+            x += offset;
+        }
+
+        return y + 40;
+    }
+
+    async generatePdf(): Promise<jsPDF> {
+        const password = Math.random().toString(36).substring(2, 12);
         const doc = new jsPDF({
             orientation: 'portrait',
             compress: true,
@@ -236,12 +310,22 @@ export class EpocScorePage implements OnInit {
         centeredText(this.epoc.title, 110);
         doc.setFillColor(colors.orange);
         doc.roundedRect(90, 120, 30, 1, 1, 1, 'F');
+
+        let posY = 130;
+
+        if (this.epoc.badges && Object.values(this.epoc.badges).length > 0) {
+            doc.setFontSize(12);
+            doc.setFont('Helvetica', 'normal');
+            centeredText('Bagdes', posY);
+            posY = await this.insertBadges(doc, posY+10);
+        }
+
         doc.setFontSize(12);
         doc.setFont('Helvetica', 'normal');
-        centeredText(this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.AUTHORS'), 130);
+        centeredText(this.translate.instant('PLAYER.SCORE.CERTIFICATE_PDF.AUTHORS'), posY);
         doc.setFontSize(10);
         doc.setTextColor(colors.blue);
-        let posY = 140;
+        posY += 10;
         const margin = 2;
         const date = new Date();
         Object.values(this.epoc.authors).forEach((author, index, array) => {
@@ -341,7 +425,7 @@ export class EpocScorePage implements OnInit {
                 });
             });
         } else {
-            doc.save(fileName);
+            doc.output('dataurlnewwindow');
             this.dismissLoading();
         }
     }
