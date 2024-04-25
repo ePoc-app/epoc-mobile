@@ -8,7 +8,6 @@ import {AlertController, LoadingController} from '@ionic/angular';
 import {Reading} from 'src/app/classes/reading';
 import {Assessment, SimpleQuestion} from 'src/app/classes/contents/assessment';
 import {jsPDF} from 'jspdf';
-import 'svg2pdf.js'
 import {User} from 'src/app/classes/user';
 import {AuthService} from 'src/app/services/auth.service';
 import {Capacitor} from '@capacitor/core';
