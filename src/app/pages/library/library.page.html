@@ -66,20 +66,20 @@
     <div class="library-separator"><span>{{library.value.name}}</span></div>
     <div class="library-items" tabindex="-1">
       <div class="library-item" *ngFor="let epoc of library.value.epocs">
-        <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/'+library.key + '/' + epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>
+        <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/' + library.key + '/' + epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>
         <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
         <div class="library-item-toolbar" *ngIf="epoc.downloaded">
-          <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.id">
+          <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/' + epoc.id">
             <span *ngIf="!epoc.opened">{{'LIBRARY_PAGE.DISCOVER' | translate}}</span>
             <span *ngIf="epoc.opened">{{'LIBRARY_PAGE.CONTINUE' | translate}}</span>
             <ion-icon aria-hidden="true" *ngIf="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>
           </ion-button>
-          <ion-button class="round" [ngClass]="{'update-available': epoc.updateAvailable}" color="inria-base-button" (click)="openEpocMenu(epoc)">
+          <ion-button class="round" [ngClass]="{'update-available': epoc.updateAvailable}" color="inria-base-button" (click)="openEpocMenu(epoc, library.key)">
             <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
           </ion-button>
         </div>
         <div class="library-item-toolbar" *ngIf="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">
-          <ion-button class="expanded" color="inria-base-button" (click)="downloadEpoc(epoc)">
+          <ion-button class="expanded" color="inria-base-button" (click)="downloadEpoc(epoc, library.key)">
             <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>
             <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOAD' | translate}}</span>
           </ion-button>

@@ -55,8 +55,8 @@ export class LibraryPage implements OnInit {
     }))
   }
 
-  downloadEpoc(epoc: EpocLibrary) {
-    this.libraryService.downloadEpoc(epoc);
+  downloadEpoc(epoc: EpocLibrary, libraryId?: string) {
+    this.libraryService.downloadEpoc(epoc, libraryId);
   }
 
   removeMessage(id) {
@@ -76,8 +76,8 @@ export class LibraryPage implements OnInit {
     });
   }
 
-  openEpocMenu(epoc){
-    this.libraryService.epocLibraryMenu(epoc);
+  openEpocMenu(epoc, libraryId?: string){
+    this.libraryService.epocLibraryMenu(epoc, libraryId);
   }
   async openAddMenu() {
     const buttons = [

@@ -87,17 +87,30 @@ export class LibraryService {
         downloaded?: boolean,
         opened?: boolean,
         updateAvailable?: boolean
-    }){
-        const epocIndex = this._library.findIndex(item => item.id === epocId);
-        if (epocIndex === -1) return;
-        const epoc = this._library[epocIndex];
-        epoc.downloading = downloading;
-        epoc.downloaded = downloaded;
-        epoc.unzipping = unzipping;
-        epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
-        epoc.updateAvailable = updateAvailable
-        this._library[epocIndex] = epoc;
-        this.librarySubject$.next(this._library);
+    }, libraryId?: string){
+        if (libraryId) {
+            const customLibrairies = this.customLibrariesSubject.value;
+            const epocIndex = customLibrairies[libraryId].epocs.findIndex(item => item.id === epocId);
+            if (epocIndex === -1) return;
+            const epoc = customLibrairies[libraryId].epocs[epocIndex];
+            epoc.downloading = downloading;
+            epoc.downloaded = downloaded;
+            epoc.unzipping = unzipping;
+            epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
+            epoc.updateAvailable = updateAvailable;
+            this.customLibrariesSubject.next(customLibrairies);
+        } else {
+            const epocIndex = this._library.findIndex(item => item.id === epocId);
+            if (epocIndex === -1) return;
+            const epoc = this._library[epocIndex];
+            epoc.downloading = downloading;
+            epoc.downloaded = downloaded;
+            epoc.unzipping = unzipping;
+            epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
+            epoc.updateAvailable = updateAvailable
+            this._library[epocIndex] = epoc;
+            this.librarySubject$.next(this._library);
+        }
     }
 
     addEpocProgress(epocId) {
@@ -116,6 +129,7 @@ export class LibraryService {
                     return {
                         ...library,
                         epocs: epocs.map(epoc => {
+                            epoc.id = hash(library.url) + '-' + epoc.id; // prefix ePoc id by library id
                             epoc.downloading = false;
                             epoc.downloaded = false;
                             epoc.unzipping = false;
@@ -130,7 +144,15 @@ export class LibraryService {
         forkJoin(epocObservables).subscribe(libraries => {
             const customLibraries: Record<string, CustomLibrary> = {};
             libraries.forEach((library, index) => {
-                customLibraries[hash(library.url)] = library
+                const libraryId = hash(library.url);
+                customLibraries[hash(library.url)] = library;
+                library.epocs.forEach(epoc => {
+                    this.readEpocContent(epoc.id).subscribe((localEpoc) => {
+                        const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
+                        const updateAvailable = new Date(epoc.lastModified) > downloadDate;
+                        this.updateEpocLibraryState(epoc.id, {downloaded: true, updateAvailable}, libraryId);
+                    })
+                })
             });
             this.customLibrariesSubject.next(customLibraries);
         });
@@ -185,40 +207,39 @@ export class LibraryService {
     }
 
     downloadEpoc(epoc: EpocMetadata, libraryId?: string): Observable<number> {
-        console.log(libraryId)
         const download = this.fileService.download(epoc.download, `epocs/${epoc.id}.zip`);
-        this.updateEpocLibraryState(epoc.id, {downloading: true});
+        this.updateEpocLibraryState(epoc.id, {downloading: true}, libraryId);
         this.addEpocProgress(epoc.id);
         download.subscribe((progress) => {
             this.updateEpocProgress(epoc.id, progress);
         }, () => {
             this.updateEpocLibraryState(epoc.id, {});
         }, () => {
-            this.unzipEpoc(epoc);
+            this.unzipEpoc(epoc.id, libraryId);
         });
         this.tracker.trackEvent('Library', 'Download', `Download ${epoc.id}`);
         return download;
     }
 
-    unzipEpoc(epoc: EpocMetadata): Observable<number> {
-        const unzip = this.fileService.unzip(`epocs/${epoc.id}.zip`, `epocs/${epoc.id}`);
-        this.updateEpocLibraryState(epoc.id, {unzipping: true});
-        this.addEpocProgress(epoc.id);
+    unzipEpoc(epocId: string, libraryId?: string): Observable<number> {
+        const unzip = this.fileService.unzip(`epocs/${epocId}.zip`, `epocs/${epocId}`);
+        this.updateEpocLibraryState(epocId, {unzipping: true}, libraryId);
+        this.addEpocProgress(epocId);
         unzip.subscribe((progress) => {
-            this.updateEpocProgress(epoc.id, progress);
+            this.updateEpocProgress(epocId, progress);
         }, () => {
-            this.updateEpocLibraryState(epoc.id, {});
+            this.updateEpocLibraryState(epocId, {}, libraryId);
         }, () => {
-            this.updateEpocLibraryState(epoc.id, {downloaded: true});
-            this.fileService.deleteZip(`epocs/${epoc.id}.zip`);
+            this.updateEpocLibraryState(epocId, {downloaded: true}, libraryId);
+            this.fileService.deleteZip(`epocs/${epocId}.zip`);
         });
         return unzip;
     }
 
-    deleteEpoc(epoc: EpocMetadata): Observable<any> {
+    deleteEpoc(epoc: EpocMetadata, libraryId?: string): Observable<any> {
         this.tracker.trackEvent('Library', 'Delete', `Delete ${epoc.id}`);
         const rm = this.fileService.deleteFolder(`epocs/${epoc.id}`);
-        rm.subscribe(() => {}, () => {}, () => { this.updateEpocLibraryState(epoc.id, {}); });
+        rm.subscribe(() => {}, () => {}, () => { this.updateEpocLibraryState(epoc.id, {}, libraryId); });
         return rm;
     }
 
@@ -232,7 +253,7 @@ export class LibraryService {
         return forkJoin([timer(100), ...deletions$]);
     }
 
-    async epocLibraryMenu(epoc){
+    async epocLibraryMenu(epoc, libraryId?: string){
         const buttons = [
             {
                 text: this.translate.instant('FLOATING_MENU.TOC'),
@@ -259,21 +280,21 @@ export class LibraryService {
                 text: this.translate.instant('FLOATING_MENU.UPDATE'),
                 icon: 'cloud-download-outline',
                 handler: () => {
-                    this.deleteEpoc(epoc).subscribe(() => this.downloadEpoc(epoc))
+                    this.deleteEpoc(epoc, libraryId).subscribe(() => this.downloadEpoc(epoc, libraryId))
                 }
             }] : []),
             ...(epoc.opened ? [{
                 text: this.translate.instant('FLOATING_MENU.RESET'),
                 icon: 'refresh-outline',
                 handler: () => {
-                    this.confirmReset(epoc)
+                    this.confirmReset(epoc, libraryId)
                 }
             }] : []),
             {
                 text: this.translate.instant('FLOATING_MENU.DELETE'),
                 icon: 'trash',
                 handler: () => {
-                    this.confirmDelete(epoc)
+                    this.confirmDelete(epoc, libraryId)
                 }
             },
             {
@@ -290,7 +311,7 @@ export class LibraryService {
         await actionSheet.present();
     }
 
-    async confirmReset(epoc) {
+    async confirmReset(epoc, libraryId?: string) {
         const alert = await this.alertController.create({
             header: 'Confirmation',
             message: `Attention la réinitialisation de l'ePoc <b>"${epoc.title}"</b> supprimera toute votre progression`,
@@ -306,7 +327,7 @@ export class LibraryService {
                         this.updateEpocLibraryState(epoc.id,{
                             downloaded: epoc.downloaded,
                             opened: false
-                        });
+                        }, libraryId);
                     }
                 }
             ]
@@ -315,7 +336,7 @@ export class LibraryService {
         await alert.present();
     }
 
-    async confirmDelete(epoc) {
+    async confirmDelete(epoc, libraryId?: string) {
         const alert = await this.alertController.create({
             header: 'Confirmation',
             message: `Merci de confimer la suppresion de l'ePoc <b>"${epoc.title}"</b>`,
@@ -327,7 +348,7 @@ export class LibraryService {
                 }, {
                     text: 'Confirmer',
                     handler: () => {
-                        this.deleteEpoc(epoc);
+                        this.deleteEpoc(epoc, libraryId);
                     }
                 }
             ]
