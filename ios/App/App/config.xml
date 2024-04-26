@@ -11,10 +11,6 @@
     <param name="onload" value="true"/>
   </feature>
 
-  <feature name="FileOpener2">
-    <param name="ios-package" value="FileOpener2"/>
-  </feature>
-
   <feature name="FileTransfer">
     <param name="ios-package" value="CDVFileTransfer"/>
   </feature>
