@@ -166,7 +166,7 @@ export class PluginService implements Plugin {
             <script>
                 const pluginId = '${uid}';
                 const embedId = '${uidEmbed}';
-                const pluginData = JSON.parse('${JSON.stringify(data ? data : {})}')
+                const pluginData = ${JSON.stringify(data ? data : {})};
             </script>
             <script src="${document.baseURI}assets/js/plugin-api-embed.js"></script>
         `;
