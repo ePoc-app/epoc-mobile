@@ -58,8 +58,11 @@
       <div class="tab" *ngIf="selectedTab === 2">
         <div class="epoc-author" *ngFor="let author of epoc.authors | values">
           <div class="epoc-author-name">
-            <img *ngIf="author.image" [src]="author.image | safe: 'url': epocService.rootFolder"/>
-            {{author.name}}
+            <img [alt]="('OVERVIEW_PAGE.PICTURE_ALT' | translate) + author.name" *ngIf="author.image" [src]="author.image | safe: 'url': epocService.rootFolder"/>
+            <div>
+              {{author.name}}
+              <div class="epoc-author-title">{{author.title}}</div>
+            </div>
           </div>
           <div class="epoc-author-description html-text" [innerHTML]="author.description"></div>
         </div>

@@ -3,8 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {LibraryService} from 'src/app/services/library.service';
 import {CustomLibrary, EpocLibrary} from 'src/app/classes/epoc';
 import {AppService} from 'src/app/services/app.service';
-import {Capacitor} from '@capacitor/core';
-import {LocalEpocsService} from '../../../services/localEpocs.service';
+import {LocalEpocsService} from 'src/app/services/localEpocs.service';
 
 @Component({
     selector: 'app-epoc-overview',

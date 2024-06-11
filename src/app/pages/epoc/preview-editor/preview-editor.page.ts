@@ -7,7 +7,7 @@ import {EpocService} from 'src/app/services/epoc.service';
 @Component({
     selector: 'app-epoc-preview-editor',
     templateUrl: 'preview-editor.page.html',
-    styleUrls: ['preview-editor.page.scss']
+    styleUrls: ['../../library/overview/overview.page.scss']
 })
 export class EpocPreviewEditorPage implements OnInit {
     epoc: Epoc;
