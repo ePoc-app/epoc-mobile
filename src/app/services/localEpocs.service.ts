@@ -76,7 +76,15 @@ export class LocalEpocsService {
                     lang: '',
                     translation: '',
                     rootFolder: Capacitor.convertFileSrc(`${this.file.dataDirectory}/${localEpoc.rootFolder}/`),
-                    dir: localEpoc.rootFolder
+                    dir: localEpoc.rootFolder,
+                    chaptersCount: Object.keys(localEpoc.epoc.chapters).length,
+                    assessmentsCount: Object.values(localEpoc.epoc.contents).reduce(
+                        (count, content) => {
+                            count = content.type === 'assessment' ? count + 1 : count;
+                            return count;
+                        },
+                        0
+                    )
                 })
                 return localEpocs;
             }, [])
