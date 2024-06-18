@@ -33,6 +33,7 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
     answer;
     dropZones: {label:string, isOpen:boolean}[];
     isDragging = false;
+    interval:number;
 
     constructor(
         private ref: ChangeDetectorRef,
@@ -76,8 +77,37 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
                 this.ref.detectChanges();
             },
             onMove: ev => {
-                elem.style.transform = `translate(${ev.deltaX}px, ${ev.deltaY}px)`;
+                // Calculate the current position of the draggable element
+                const scrollArea = elem.closest('app-card');
+
+                const currentY = this.getRelativeYPosition(elem, scrollArea);
+
+                clearInterval(this.interval);
+
+                // Check if the draggable element is near the edge of the screen
+                let scrollTo = scrollArea.scrollTop;
+                if (currentY < 0) {
+                    scrollTo -= 10;
+                    scrollArea.scrollTo({top: scrollTo});
+                    this.interval = setInterval(() => {
+                        scrollTo -= 10;
+                        scrollArea.scrollTo({top: scrollTo});
+                        elem.style.transform = `translate(${ev.deltaX}px, ${ev.deltaY + scrollArea.scrollTop}px)`;
+                    }, 50);
+                } else if (currentY > (scrollArea.offsetHeight - elem.offsetHeight)) {
+                    scrollTo += 10;
+                    scrollArea.scrollTo({top: scrollTo});
+                    this.interval = setInterval(() => {
+                        scrollTo += 10;
+                        scrollArea.scrollTo({top: scrollTo});
+                        elem.style.transform = `translate(${ev.deltaX}px, ${ev.deltaY + scrollArea.scrollTop}px)`;
+                    }, 50);
+                }
+
+                // Move the draggable element
+                elem.style.transform = `translate(${ev.deltaX}px, ${ev.deltaY + scrollArea.scrollTop}px)`;
                 elem.style.zIndex = 10;
+
                 const zoneIndex = this.hoveringZone(ev.currentX, ev.currentY);
                 if (zoneIndex !== -1) {
                     this.dropZonesElems.toArray()[zoneIndex].nativeElement.style.borderColor = 'var(--ion-color-inria-spe)';
@@ -87,6 +117,7 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
             onEnd: ev => {
                 elem.style.transform = `translate(0,0)`;
                 this.isDragging = false;
+                clearInterval(this.interval);
                 this.dragging.emit('dragend');
                 const zoneIndex = this.hoveringZone(ev.currentX, ev.currentY);
                 if (zoneIndex !== -1) {
@@ -132,5 +163,11 @@ export class DragAndDropComponent extends AbstractQuestionComponent implements O
     openZone($event, zone) {
         $event.stopPropagation();
         zone.isOpen = !zone.isOpen;
+    }
+
+    getRelativeYPosition(node1, node2) {
+        const rect1 = node1.getBoundingClientRect();
+        const rect2 = node2.getBoundingClientRect();
+        return rect1.top - rect2.top;
     }
 }
