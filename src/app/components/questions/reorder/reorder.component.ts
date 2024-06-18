@@ -31,12 +31,17 @@ export class ReorderComponent extends AbstractQuestionComponent implements OnIni
             this.correction[i] =
                 this.question.responses[this.question.responses.findIndex(rep => rep.value === this.question.correctResponse[i])];
         }
+        setTimeout(() => {
+            const answer = this.responses.map((response) => response.value);
+            this.userResponse.emit(answer);
+        }, 100)
     }
 
     doReorder(ev: any) {
         this.responses = ev.detail.complete(this.responses);
         const answer = this.responses.map((response) => response.value);
         this.userResponse.emit(answer);
+        console.log('reorder', answer)
     }
 
     shuffleArray(array) {
