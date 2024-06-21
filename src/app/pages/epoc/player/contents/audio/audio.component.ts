@@ -3,6 +3,7 @@ import {Content, Audio} from '@epoc/epoc-types/dist/v1/content';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {EpocService} from 'src/app/services/epoc.service';
 import {ContentRuntime} from 'src/app/classes/contents/content';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 @Component({
     selector: 'audio-content',
@@ -19,7 +20,11 @@ export class AudioContentComponent implements OnInit {
     elapsed = 0;
     audioData: {duration:number};
 
-    constructor(private readingService: ReadingStoreService, private epocService: EpocService) {}
+    constructor(
+        private readingService: ReadingStoreService,
+        private epocService: EpocService,
+        private readonly tracker: MatomoTracker
+    ) {}
 
     ngOnInit() {
         this.content = this.inputContent as (Audio & ContentRuntime);
@@ -39,6 +44,7 @@ export class AudioContentComponent implements OnInit {
 
         if (playing) {
             this.readingService.saveStatement(epocId, 'contents', this.content.id, 'played', true);
+            this.tracker.trackEvent('Audio', 'played', `User played audio ${epocId} ${this.content.id}`);
             this.startTime = performance.now();
         } else {
             this.elapsed += Math.round((performance.now() - this.startTime) / 1000);

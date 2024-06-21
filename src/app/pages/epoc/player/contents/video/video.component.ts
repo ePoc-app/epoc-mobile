@@ -3,6 +3,7 @@ import {Video} from 'src/app/classes/contents/video';
 import {Content, ContentRuntime} from 'src/app/classes/contents/content';
 import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {EpocService} from 'src/app/services/epoc.service';
+import {MatomoTracker} from '@ngx-matomo/tracker';
 
 @Component({
     selector: 'video-content',
@@ -19,7 +20,11 @@ export class VideoContentComponent implements OnInit {
     elapsed = 0;
     videoData: {duration:number};
 
-    constructor(private readingService: ReadingStoreService, private epocService: EpocService) {}
+    constructor(
+        private readingService: ReadingStoreService,
+        private epocService: EpocService,
+        private readonly tracker: MatomoTracker
+    ) {}
 
     ngOnInit() {
         this.content = this.inputContent as (Video & ContentRuntime);
@@ -38,6 +43,7 @@ export class VideoContentComponent implements OnInit {
 
         if (playing) {
             this.readingService.saveStatement(epocId, 'contents', this.content.id, 'played', true);
+            this.tracker.trackEvent('Video', 'played', `User played video ${epocId} ${this.content.id}`);
             this.startTime = performance.now();
         } else {
             this.elapsed += Math.round((performance.now() - this.startTime) / 1000);
