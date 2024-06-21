@@ -162,7 +162,7 @@ export class LocalEpocsService {
         const id = this.simpleHash(file.name);
         this.imports = {...this.imports, [id]: `${this.translate.instant('LIBRARY_PAGE.IMPORT')} ${file.name}`};
 
-        this.tracker.trackEvent('Local ePocs', 'Import from file', file);
+        this.tracker.trackEvent('Local ePocs', 'Import from file', file.name);
 
         this.file.writeFile(this.file.dataDirectory, `local-epocs/${id}.zip`, file, {replace: true}).then(() => {
             this.unzipLocalEpoc(id);
