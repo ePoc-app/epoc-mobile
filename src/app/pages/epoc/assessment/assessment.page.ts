@@ -34,10 +34,6 @@ export class EpocAssessmentPage implements OnInit {
     assessmentDone: Array<boolean>;
     isEnd = false;
 
-    slidesOptions = {
-        allowTouchMove: false
-    };
-
     scoreMax = 0;
     userScore = 0;
     userResponses: Array<any> = [];
@@ -223,5 +219,11 @@ export class EpocAssessmentPage implements OnInit {
 
     ionViewDidEnter() {
         this.updateFocus();
+        // @ts-ignore
+        if (!!window.isPreviewWindow) {
+            setTimeout(() => {
+                this.questionSlides.nativeElement.swiper.allowTouchMove = true;
+            }, 100);
+        }
     }
 }
