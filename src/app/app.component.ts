@@ -36,6 +36,17 @@ export class AppComponent {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
     document.querySelector('html').setAttribute('lang', translate.currentLang);
+
+
+
+    document.addEventListener('selectionchange', () => {
+        const selection = window.getSelection();
+        if (selection.anchorNode) {
+            document.querySelectorAll('swiper-container').forEach(swiperContainer => {
+                swiperContainer.swiper.allowTouchMove = false;
+            });
+        }
+    });
   }
 
   initializeApp() {
@@ -121,5 +132,14 @@ export class AppComponent {
         });
 
         await alert.present();
+    }
+
+    resetSelection() {
+        window.getSelection().removeAllRanges();
+        setTimeout(() => {
+            document.querySelectorAll('swiper-container').forEach(swiperContainer => {
+                swiperContainer.swiper.allowTouchMove = true;
+            });
+        }, 50);
     }
 }
