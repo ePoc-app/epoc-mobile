@@ -1,5 +1,5 @@
 import {ErrorHandler, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouteReuseStrategy} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
@@ -28,6 +28,11 @@ import {environment as env} from 'src/environments/environment';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
+export class MyHammerConfig extends HammerGestureConfig {
+    overrides = {
+        press: { time: 1000 }
+    }
+}
 
 Sentry.init(
     {
@@ -73,11 +78,13 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             },
-        })
+        }),
+        HammerModule
     ],
     providers: [
         { provide: ErrorHandler, useValue: Sentry.createErrorHandler() },
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},
         File,
         FileTransfer,
         InAppBrowser,

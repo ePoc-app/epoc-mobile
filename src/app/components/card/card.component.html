@@ -1,5 +1,7 @@
-<div class="card">
-  <div class="card-content">
-    <ng-content></ng-content>
-  </div>
+<div class="card" (pinchmove)="zoomInOut($event)" (pinchstart)="zoomStart()" (pinchend)="zoomEnd()" (panstart)="panStart()" (panmove)="panMove($event)" (panend)="panEnd()" (tap)="resetZoom($event)"
+     [style.transform]="'scale(' + scale + ') translate(' + offsetX + 'px, ' + offsetY + 'px)'"
+     [style.touch-action]="pinching ? 'pinch-zoom':'pan-y pan-x'" #card>
+    <div class="card-content">
+      <ng-content></ng-content>
+    </div>
 </div>

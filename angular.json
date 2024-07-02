@@ -56,6 +56,9 @@
                 "input": "node_modules/web-animations-js/web-animations.min.js",
                 "inject": false,
                 "bundleName": "web-animations-js"
+              },
+              {
+                "input": "node_modules/hammerjs/hammer.min.js"
               }
             ]
           },

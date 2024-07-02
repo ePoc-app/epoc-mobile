@@ -70,6 +70,7 @@
     "cordova-sqlite-storage": "^6.0.0",
     "core-js": "^3.22.7",
     "globalthis": "^1.0.3",
+    "hammerjs": "^2.0.8",
     "hls.js": "^1.2.5",
     "json-logic-js": "^2.0.2",
     "jspdf": "^2.5.1",

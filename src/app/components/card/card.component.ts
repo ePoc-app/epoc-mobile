@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -6,9 +6,76 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
+  @ViewChild('card') card: ElementRef;
+  pinching = false;
+  zoomedIn = false;
+  initScale = 1;
+  scale = 1;
 
+  panning = false;
+  offsetX = 0;
+  offsetY = 0;
+  panStartX = 0;
+  panStartY = 0;
   constructor() { }
 
   ngOnInit() {}
 
+  zoomStart() {
+    console.log('Init : ' + this.initScale);
+    this.initScale = this.scale;
+    this.zoomedIn = true;
+    this.pinching = true;
+    this.card.nativeElement.closest('swiper-container').swiper.allowTouchMove = false;
+  }
+
+  zoomInOut(event) {
+    event.srcEvent.preventDefault();
+    event.srcEvent.stopPropagation();
+    console.log('Pinch : ' + this.initScale + ' / ' + event.scale, event);
+    this.scale = this.initScale * event.scale;
+  }
+
+  zoomEnd() {
+    this.pinching = false;
+    if (this.scale < 1.1) {
+      this.scale = 1;
+      this.offsetX = 0;
+      this.offsetY = 0;
+      this.card.nativeElement.closest('swiper-container').swiper.allowTouchMove = true;
+      this.zoomedIn = false;
+    }
+  }
+
+  panStart() {
+    if (!this.zoomedIn) return;
+    this.panning = true;
+    this.panStartX = this.offsetX;
+    this.panStartY = this.offsetY;
+  }
+
+  panMove(event) {
+    if (!this.zoomedIn || !this.panning) return;
+    this.offsetX = this.panStartX + (event.deltaX/this.scale);
+    this.offsetY = this.panStartY +  (event.deltaY/this.scale);
+
+    if (this.offsetX > window.innerWidth/2) this.offsetX = window.innerWidth/2;
+    if (this.offsetX < -window.innerWidth/2) this.offsetX = -window.innerWidth/2;
+
+    if (this.offsetY > window.innerHeight/2) this.offsetY = window.innerHeight/2;
+    if (this.offsetY < -window.innerHeight/2) this.offsetY = -window.innerHeight/2;
+  }
+
+  panEnd() {
+    this.panning = false;
+  }
+
+  resetZoom(event) {
+    if (event.tapCount >= 2) {
+      this.scale = 1;
+      this.offsetX = 0;
+      this.offsetY = 0;
+      this.card.nativeElement.closest('swiper-container').swiper.allowTouchMove = true;
+    }
+  }
 }
