@@ -39,7 +39,7 @@
 
 .chapter-specs{
   display: flex;
-  padding: 1rem;
+  padding: 1rem 0;
   font-size: 0.85rem;
   color: var(--ion-color-specs);
   text-align: center;
@@ -48,11 +48,11 @@
 
   .chapter-spec{
     padding: 0 1.5rem;
+    border-right: 1px solid var(--ion-color-unique-2);
   }
 
-  .chapter-spec:nth-child(2){
-    border-left: 1px solid var(--ion-color-unique-2);
-    border-right: 1px solid var(--ion-color-unique-2);
+  .chapter-spec:last-child{
+    border-right: none;
   }
 
   ion-icon{

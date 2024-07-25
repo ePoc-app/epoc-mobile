@@ -12,11 +12,11 @@
       <div class="chapter-spec-icon"><ion-icon aria-hidden="true" name="time-outline"></ion-icon></div>
       <div class="chapter-spec-value">{{chapter.time}} min</div>
     </div>
-    <div class="chapter-spec">
+    <div class="chapter-spec" *ngIf="chapter.mediaCount > 0">
       <div class="chapter-spec-icon"><ion-icon aria-hidden="true" name="play-circle-outline"></ion-icon></div>
       <div class="chapter-spec-value">{{chapter.mediaCount}} {{'PLAYER.VIDEOS' | plural: chapter.mediaCount | translate}}</div>
     </div>
-    <div class="chapter-spec">
+    <div class="chapter-spec" *ngIf="chapter.assessmentCount > 0">
       <div class="chapter-spec-icon"><ion-icon aria-hidden="true" name="cube-outline"></ion-icon></div>
       <div class="chapter-spec-value">{{chapter.assessmentCount}} {{'OVERVIEW_PAGE.ACTIVITIES' | plural: chapter.assessmentCount | translate}}</div>
     </div>

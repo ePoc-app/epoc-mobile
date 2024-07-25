@@ -132,6 +132,7 @@ export class EpocService {
         }
         return currentContent;
       });
+      chapter.time = chapter.duration ? chapter.duration : chapter.time;
       chapter.assessmentCount = chapter.assessments.length;
     }
 
