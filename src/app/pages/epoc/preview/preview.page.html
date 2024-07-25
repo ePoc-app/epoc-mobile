@@ -30,6 +30,9 @@
         <div class="tabs-header" (click)="selectTab(0)" [ngClass]="selectedTab === 0 ? 'selected':''">
           <span>{{'OVERVIEW_PAGE.OBJECTIVES' | plural: epoc.objectives.length | translate}}</span>
         </div>
+        <div class="tabs-header" (click)="selectTab(3)" [ngClass]="selectedTab === 3 ? 'selected':''" *ngIf="epoc.prerequisites">
+          <span>{{'OVERVIEW_PAGE.PREREQUISITES' | translate}}</span>
+        </div>
         <div class="tabs-header" (click)="selectTab(1)" [ngClass]="selectedTab === 1 ? 'selected':''">
           <span>{{'OVERVIEW_PAGE.RESUME' | translate}}</span>
         </div>
@@ -42,6 +45,12 @@
           <div class="course-objective" *ngFor="let objective of epoc.objectives">
             <div class="course-objective-icon"><ion-icon name="checkmark-outline"></ion-icon></div>
             <ion-text>{{objective}}</ion-text>
+          </div>
+        </div>
+        <div class="tab" *ngIf="selectedTab === 3">
+          <div class="course-prerequisites" *ngFor="let prerequisite of epoc.prerequisites">
+            <div class="course-prerequisites-icon"><ion-icon aria-hidden="true" name="arrow-forward-outline"></ion-icon></div>
+            <ion-text>{{prerequisite}}</ion-text>
           </div>
         </div>
         <div class="tab" *ngIf="selectedTab === 1">

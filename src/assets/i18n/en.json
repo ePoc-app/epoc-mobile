@@ -94,6 +94,7 @@
             "singular": "Objective",
             "plural": "Objectives"
         },
+        "PREREQUISITES": "Prerequisites",
         "RESUME": "Summary",
         "AUTHORS": {
             "singular": "Author",

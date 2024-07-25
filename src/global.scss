@@ -530,10 +530,13 @@ body.preview{
 .tabs-headers{
   display: flex;
   padding: 1rem;
+  gap: 0 1rem;
   border-bottom: 1px solid var(--ion-color-item);
+  overflow-x: scroll;
 
   .tabs-header {
     flex: 1 1 0;
+    padding: 0 .5rem;
     text-align: center;
     background: var(--ion-color-item);
     border-radius: 1em;
@@ -544,10 +547,6 @@ body.preview{
       display: inline-block;
       font-weight: bold;
       padding-top: .1em;
-    }
-
-    &:nth-child(2){
-      margin: 0 1rem;
     }
 
     &.selected{
