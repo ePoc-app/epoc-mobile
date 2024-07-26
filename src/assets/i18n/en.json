@@ -22,7 +22,9 @@
         "ANALYTICS_DESCRIPTION_4": "You can object to this collection in the application settings. This will protect your privacy, but will also prevent the owner from learning about your actions and creating a better experience for you and others users.",
         "CONTACT": "Contact",
         "CONTACT_ILL": "You have a question ? You can contact us at the following address : ",
-        "CONTACT_DPO": "Data Protection Officer : "
+        "CONTACT_DPO": "Data Protection Officer : ",
+        "PRIVACY_POLICY_ABOUT": "To know more about our privacy policy : ",
+        "PRIVACY_POLICY": "Privacy policy"
     },
     "SETTINGS_PAGE": {
         "SETTINGS": "Settings",

@@ -22,7 +22,9 @@
         "ANALYTICS_DESCRIPTION_4": "Vous pouvez vous opposer à cette collecte dans les paramètres de l'application. Cela protégera votre vie privée, mais empêchera également le propriétaire d'apprendre de vos actions et de créer une meilleure expérience pour vous et les autres utilisateurs.",
         "CONTACT": "Contact",
         "CONTACT_ILL": "Vous avez une question ? Vous pouvez nous contacter à l'adresse suivante : ",
-        "CONTACT_DPO": "Délégué à la protection des données : "
+        "CONTACT_DPO": "Délégué à la protection des données : ",
+        "PRIVACY_POLICY_ABOUT": "Pour en savoir plus à propos de nos règles de confidentialité : ",
+        "PRIVACY_POLICY": "Règles de confidentialité"
     },
     "SETTINGS_PAGE": {
         "SETTINGS": "Paramètres",
