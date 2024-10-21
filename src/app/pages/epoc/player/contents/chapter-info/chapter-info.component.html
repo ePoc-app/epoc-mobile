@@ -10,7 +10,7 @@
   <div class="chapter-specs">
     <div class="chapter-spec">
       <div class="chapter-spec-icon"><ion-icon aria-hidden="true" name="time-outline"></ion-icon></div>
-      <div class="chapter-spec-value">{{chapter.time}} min</div>
+      <div class="chapter-spec-value">{{chapter.time || epocService.epoc.chapterDuration || 10}} min</div>
     </div>
     <div class="chapter-spec" *ngIf="chapter.mediaCount > 0">
       <div class="chapter-spec-icon"><ion-icon aria-hidden="true" name="play-circle-outline"></ion-icon></div>
