@@ -22,7 +22,6 @@ export class CardComponent implements OnInit {
   ngOnInit() {}
 
   zoomStart() {
-    console.log('Init : ' + this.initScale);
     this.initScale = this.scale;
     this.zoomedIn = true;
     this.pinching = true;
@@ -32,7 +31,6 @@ export class CardComponent implements OnInit {
   zoomInOut(event) {
     event.srcEvent.preventDefault();
     event.srcEvent.stopPropagation();
-    console.log('Pinch : ' + this.initScale + ' / ' + event.scale, event);
     this.scale = this.initScale * event.scale;
   }
 
@@ -76,6 +74,7 @@ export class CardComponent implements OnInit {
       this.offsetX = 0;
       this.offsetY = 0;
       this.card.nativeElement.closest('swiper-container').swiper.allowTouchMove = true;
+      this.zoomedIn = false;
     }
   }
 }
