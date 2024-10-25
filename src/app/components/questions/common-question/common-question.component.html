@@ -1,13 +1,3 @@
-<div aria-hidden="true" class="header" *ngIf="question.explanation" [ngClass]="{'shown':flipped && question.responses.length > 0}">
-  <div class="correction-tabs">
-    <div role="tab" [attr.aria-selected]="!explanationShown" class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':!explanationShown}">
-      <span>{{'QUESTION.RESPONSES' | translate}}</span>
-    </div>
-    <div role="tab" [attr.aria-selected]="explanationShown" class="correction-tab" (click)="toggleExplanation()" [ngClass]="{'selected':explanationShown}">
-      <span>{{'QUESTION.EXPLANATIONS' | translate}}</span>
-    </div>
-  </div>
-</div>
 <flip-card [initFlipped]="flipped" (click)="flip($event)">
   <ng-container front>
     <div [attr.aria-hidden]="flipped">
@@ -38,7 +28,7 @@
     </div>
   </ng-container>
   <ng-container back>
-    <div class="correction" *ngIf="flipped && !explanationShown && question.responses.length > 0">
+    <div class="correction" *ngIf="flipped && question.responses.length > 0">
       <div class="title-container">
         <div class="title-icon">
           <ion-icon aria-hidden="true" name="checkmark-circle-outline"></ion-icon>
@@ -58,21 +48,10 @@
         <correction-sort *ngSwitchCase="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type) ? question.type : !question.type" [question]="question" [userResponses]="userResponses"></correction-sort>
         <correction-generic *ngSwitchDefault [question]="question" [userResponses]="userResponses"></correction-generic>
       </ng-container>
-      <div class="explanation-bottom-button" *ngIf="question.explanation">
-        <ion-button color="inria" (click)="toggleExplanation($event)" *ngIf="showExplainButton">
-          <span>{{'QUESTION.EXPLANATIONS' | translate}}</span>
-          <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
-        </ion-button>
+      <div class="explanation" *ngIf=" question.feedback || question.explanation">
+        <h4>{{'QUESTION.PREVIEW.EXPLANATION' | translate}}</h4>
+        <html-content [html]="(question.feedback ?  question.feedback : question.explanation) | srcConvert"></html-content>
       </div>
-    </div>
-    <div class="explanation" *ngIf="explanationShown || question.responses.length === 0">
-      <div class="title-container">
-        <div class="title-icon">
-          <ion-icon aria-hidden="true" name="document-text-outline"></ion-icon>
-        </div>
-        <h5 class="subtitle">{{'QUESTION.PREVIEW.EXPLANATION' | translate}}</h5>
-      </div>
-      <html-content [html]="question.explanation | srcConvert"></html-content>
     </div>
   </ng-container>
 </flip-card>

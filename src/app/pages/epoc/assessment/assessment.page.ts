@@ -41,7 +41,6 @@ export class EpocAssessmentPage implements OnInit {
     currentQuestion = 0;
     currentQuestionUserResponse;
     correctionShown = false;
-    explanationShown = false;
     assessmentData = null;
     certificateShown = false;
 
@@ -111,18 +110,9 @@ export class EpocAssessmentPage implements OnInit {
         this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'passed', userSucceeded);
     }
 
-    toggleExplanation() {
-        this.questionsElement.toArray()[this.currentQuestion].toggleExplanation();
-    }
-
-    onExplanationToggle(event) {
-        this.explanationShown = event
-    }
-
     nextQuestion() {
         this.currentQuestionUserResponse = null;
         this.correctionShown = false;
-        this.explanationShown = false;
         this.currentQuestion++;
         if (this.currentQuestion >= this.questions.length) {
             this.setAssessmentsData();
@@ -204,7 +194,6 @@ export class EpocAssessmentPage implements OnInit {
         this.currentQuestion = 0;
         this.questionSlides?.nativeElement.swiper.slideTo(0);
         this.isEnd = false;
-        this.explanationShown = false;
     }
 
     resume() {

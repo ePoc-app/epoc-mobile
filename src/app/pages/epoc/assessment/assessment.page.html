@@ -4,7 +4,7 @@
             <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
                 <swiper-slide>
                     <common-question [attr.aria-hidden]="questionIndex !== currentQuestion" closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
-                         [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" (explanationToggle)="onExplanationToggle($event)" *ngIf="!isEnd">
+                         [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" *ngIf="!isEnd">
                     </common-question>
                 </swiper-slide>
             </ng-container>
@@ -48,11 +48,7 @@
         <span>{{'QUESTION.VALIDATE' | translate}}</span>
     </ion-button>
     <div class="next-buttons">
-        <ion-button size="large" color="inria" (click)="toggleExplanation()" *ngIf="correctionShown">
-            <span *ngIf="!explanationShown">{{'QUESTION.EXPLANATIONS' | translate}}</span>
-            <span *ngIf="explanationShown">{{'QUESTION.RESPONSES' | translate}}</span>
-        </ion-button>
-        <ion-button role="button" color="inria-grey" size="large" (click)="nextQuestion()" *ngIf="correctionShown">
+        <ion-button role="button" color="inria-grey" size="large" expand="block" (click)="nextQuestion()" *ngIf="correctionShown">
             <span>{{'QUESTION.NEXT' | translate}}</span>
             <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
         </ion-button>

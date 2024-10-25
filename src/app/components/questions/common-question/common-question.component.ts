@@ -19,8 +19,6 @@ export class CommonQuestionComponent implements OnInit {
   @Input() subtitle: string;
   @Input() icon: string;
 
-  @Input() showExplainButton: boolean;
-
   private _userAssessment;
   @Input() set userAssessment(value) {
 
@@ -36,7 +34,6 @@ export class CommonQuestionComponent implements OnInit {
   @Output() questionAnswered = new EventEmitter<boolean>();
   @Output() dragging = new EventEmitter<string>();
   @Output() close = new EventEmitter<boolean>();
-  @Output() explanationToggle = new EventEmitter<boolean>();
 
   @ViewChild(FlipCardComponent, { static: false })
   private flipCardComponent!: FlipCardComponent;
@@ -44,7 +41,6 @@ export class CommonQuestionComponent implements OnInit {
   reading: Reading;
   flipped = false;
   questionDisabled = false;
-  explanationShown = false;
   userResponses;
 
   constructor(
@@ -86,12 +82,6 @@ export class CommonQuestionComponent implements OnInit {
     setTimeout(() => {
       this.updateFocus();
     }, 600);
-  }
-
-  toggleExplanation(event?) {
-    if (event) event.stopPropagation();
-    this.explanationShown = !this.explanationShown;
-    this.explanationToggle.emit(this.explanationShown);
   }
 
   updateUserResponse(userResponse) {

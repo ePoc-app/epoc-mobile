@@ -1,5 +1,5 @@
 <common-question icon="help-circle-outline" [title]="content.title" [subtitle]="content.subtitle" [contentId]="content.id"
-                 [epocId]="epocId" [question]="question" [userAssessment]="userAssessment" [showExplainButton]="true"
+                 [epocId]="epocId" [question]="question" [userAssessment]="userAssessment"
                  (questionAnswered)="onQuestionAnswered($event)"
                  (dragging)="onDrag($event)" (userHasResponded)="onUserHasResponded($event)">
   <ion-button *ngIf="!questionAnswered && question.responses.length > 0" [disabled]="disableCheck" expand="block" size="large" color="inria" (click)="checkAnswer($event)">
