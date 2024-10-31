@@ -1,6 +1,6 @@
 <ion-content [scrollY]="false" *ngIf="assessment">
     <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
-        <swiper-container [modules]="swiperModules" class="slider" #questionSlides allow-touch-move="false">
+        <swiper-container [modules]="swiperModules" class="slider assessment-swiper" #questionSlides allow-touch-move="false">
             <ng-container *ngFor="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
                 <swiper-slide>
                     <common-question [attr.aria-hidden]="questionIndex !== currentQuestion" closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"

@@ -37,11 +37,7 @@ export class CardComponent implements OnInit {
   zoomEnd() {
     this.pinching = false;
     if (this.scale < 1.1) {
-      this.scale = 1;
-      this.offsetX = 0;
-      this.offsetY = 0;
-      this.card.nativeElement.closest('swiper-container').swiper.allowTouchMove = true;
-      this.zoomedIn = false;
+      this.resetZoom();
     }
   }
 
@@ -68,13 +64,18 @@ export class CardComponent implements OnInit {
     this.panning = false;
   }
 
-  resetZoom(event) {
+  tap(event) {
     if (event.tapCount >= 2) {
+      this.resetZoom();
+    }
+  }
+
+  resetZoom() {
       this.scale = 1;
       this.offsetX = 0;
       this.offsetY = 0;
-      this.card.nativeElement.closest('swiper-container').swiper.allowTouchMove = true;
+      const s = this.card.nativeElement.closest('swiper-container:not(.assessment-swiper)');
+      if (s) s.swiper.allowTouchMove = true;
       this.zoomedIn = false;
-    }
   }
 }

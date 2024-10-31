@@ -7,7 +7,7 @@ import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
 import {combineLatest} from 'rxjs';
 import {StatusBar, Style} from '@capacitor/status-bar';
-import {register} from 'swiper/element/bundle';
+import {register, SwiperContainer} from 'swiper/element/bundle';
 import {App, URLOpenListenerEvent} from '@capacitor/app';
 import {Router} from '@angular/router';
 import {LocalEpocsService} from 'src/app/services/localEpocs.service';
@@ -137,7 +137,7 @@ export class AppComponent {
     resetSelection() {
         window.getSelection().removeAllRanges();
         setTimeout(() => {
-            document.querySelectorAll('swiper-container').forEach(swiperContainer => {
+            (document.querySelectorAll('.reader swiper-container') as NodeListOf<SwiperContainer>).forEach(swiperContainer => {
                 swiperContainer.swiper.allowTouchMove = true;
             });
         }, 50);

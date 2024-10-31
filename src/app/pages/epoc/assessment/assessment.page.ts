@@ -209,10 +209,9 @@ export class EpocAssessmentPage implements OnInit {
     ionViewDidEnter() {
         this.updateFocus();
         // @ts-ignore
-        if (!!window.isPreviewWindow) {
-            setTimeout(() => {
-                this.questionSlides.nativeElement.swiper.allowTouchMove = true;
-            }, 100);
-        }
+        const allowTouch = !!window.isPreviewWindow;
+        setTimeout(() => {
+            this.questionSlides.nativeElement.swiper.allowTouchMove = allowTouch;
+        }, 100);
     }
 }
