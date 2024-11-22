@@ -750,3 +750,8 @@ iframe.plugin{
     height:0;
   }
 }
+
+.plt-mobile .glightbox-clean .gclose{
+  top: calc(var(--ion-safe-area-top) + 15px);
+  right: calc(var(--ion-safe-area-right) + 10px);
+}

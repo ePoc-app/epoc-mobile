@@ -14,6 +14,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PluginService} from 'src/app/services/plugin.service';
 import renderMathInElement from 'katex/contrib/auto-render';
 import mermaid from 'mermaid';
+import GLightbox from 'glightbox';
 
 @Component({
     selector: 'html-content',
@@ -58,7 +59,6 @@ export class HtmlComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:use-lifecycle-interface
     async ngAfterViewInit() {
         this.renderMath()
-
         await this.renderMermaid()
     }
 
@@ -83,6 +83,32 @@ export class HtmlComponent implements OnInit, OnDestroy {
             throwOnError: false,
             output: 'html'
         });
+    }
+
+    handleClick(event: Event) {
+        if ((event.target as HTMLElement).tagName === 'IMG') {
+            const imgSrc = (event.target as HTMLImageElement).src;
+            this.openLightBox(imgSrc);
+        }
+    }
+
+    openLightBox(imageUrl: string) {
+        const lightbox = GLightbox({
+            touchNavigation: true,
+            loop: false,
+            zoomable: true,
+            draggable: true,
+            // @ts-ignore
+            elements: [
+                {
+                    href: imageUrl,
+                    type: 'image',
+                    alt: 'image text alternatives'
+                }
+            ],
+        });
+        // @ts-ignore
+        lightbox.open();
     }
 
     ngOnDestroy() {

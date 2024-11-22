@@ -49,6 +49,9 @@
               },
               {
                 "input": "node_modules/katex/dist/katex.min.css"
+              },
+              {
+                "input": "node_modules/glightbox/dist/css/glightbox.min.css"
               }
             ],
             "scripts": [

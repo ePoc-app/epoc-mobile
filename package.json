@@ -69,6 +69,7 @@
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-sqlite-storage": "^6.0.0",
     "core-js": "^3.22.7",
+    "glightbox": "^3.3.0",
     "globalthis": "^1.0.3",
     "hammerjs": "^2.0.8",
     "hls.js": "^1.2.5",
