@@ -21,7 +21,12 @@
         <div class="correction-wrong" *ngIf="!response.correct">{{'QUESTION.CORRECTION.FALSE' | translate}}</div>
         <div class="correction-right-answer" *ngIf="!response.correct">
           <b>{{'QUESTION.CORRECTION.CORRECT' | translate}}</b><span>{{response.correctResponse}}</span>
+          {{response.feedback}}
         </div>
+        <details [open]="!response.correct" *ngIf="response.feedback">
+          <summary>{{'QUESTION.PREVIEW.EXPLANATION' | translate}} <ion-icon name="chevron-down-outline"></ion-icon></summary>
+          <div>{{response.feedback}}</div>
+        </details>
       </ion-label>
     </ion-item>
   </div>

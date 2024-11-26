@@ -11,7 +11,7 @@ export class CorrectionReorderComponent implements OnInit {
   @Input() question: DragAndDropquestion;
   @Input() userResponses: any[];
 
-  correction: {correct: boolean, label: string, correctResponse: string}[] = [];
+  correction: {correct: boolean, label: string, correctResponse: string, feedback: string}[] = [];
   rightResponses = 0;
   wrongResponses = 0;
 
@@ -22,10 +22,12 @@ export class CorrectionReorderComponent implements OnInit {
       const rightIndex = this.question.responses.findIndex(r => r.value === response);
       const correct =  rightIndex === index;
       correct ? this.rightResponses++ : this.wrongResponses++;
+      console.log(response)
       return {
         correct,
         label: response.label,
-        correctResponse: this.translate.instant('QUESTION.CORRECTION.POSITION') + (rightIndex+1)
+        correctResponse: this.translate.instant('QUESTION.CORRECTION.POSITION') + (rightIndex+1),
+        feedback: this.question.responses[rightIndex].feedback
       }
     });
   }
