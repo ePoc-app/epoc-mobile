@@ -13,7 +13,7 @@
       </div>
       <div class="statement ion-text-center">
         <b>{{question.label | nbsp}}</b>
-        <div *ngIf="question.statement && !['swipe', 'drag-and-drop'].includes(question.type)">{{question.statement | nbsp}}</div>
+        <div *ngIf="question.statement && !['swipe', 'drag-and-drop'].includes(question.type)" [innerHTML]="question.statement | nbsp | srcConvert | safe:'html'"></div>
       </div>
       <div class="question" [ngSwitch]="question.type">
         <simple-choice *ngSwitchCase="question.type === 'choice' && question.responses.length > 0 ? question.type : !question.type" [question]="question" [userPreviousResponse]="userResponses" [disabled]="questionDisabled" (userResponse)="updateUserResponse($event)"></simple-choice>

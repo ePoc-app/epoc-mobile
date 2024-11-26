@@ -9,8 +9,13 @@
   <ion-range class="progress-indicator" disabled="true" mode="md" step="1" min="0" *ngIf="!disabled"
              [max]="question.responses.length" [value]="question.responses.length - responses.length" snaps="true"></ion-range>
   <p class="drop-zones-instruction" *ngIf="!disabled">
-    <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
-    <span>{{'QUESTION.DRAG_DROP_INSTRUCTION' | translate}}</span>
+    <ng-container *ngIf="question.statement">
+      <span class="custom" *ngIf="!disabled" [innerHTML]="question.statement | nbsp | srcConvert | safe:'html'"></span>
+    </ng-container>
+    <ng-container *ngIf="!question.statement">
+      <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
+      <span>{{'QUESTION.DRAG_DROP_INSTRUCTION' | translate}}</span>
+    </ng-container>
   </p>
   <div class="drop-zone" [ngClass]="{'open': zone.isOpen && answer[zoneIndex].length > 0}" (click)="addResponse(zoneIndex)" *ngFor="let zone of dropZones; let zoneIndex = index;" #dropZonesElems>
     <div class="zone-header">

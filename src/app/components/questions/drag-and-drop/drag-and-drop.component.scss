@@ -66,11 +66,25 @@
     margin:0 0 1rem 0;
     padding: 1rem;
     color: var(--ion-color-text-2);
+
+    ion-icon{
+      flex-shrink: 0;
+      margin-right: 1rem;
+    }
     
     span{
-      margin-left: 1rem;
       font-size: 0.875rem;
     }
+
+    .custom {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  .statement{
+    color: var(--ion-color-inria-grey);
+    font-size: 0.875rem;
   }
 
   .drop-zone{

@@ -1,6 +1,11 @@
 <p class="swipe-instruction" *ngIf="!disabled">
-  <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg"></ion-icon>
-  <span>{{"QUESTION.SWIPE.INSTRUCTION" | translate}}</span>
+  <ng-container *ngIf="question.statement">
+    <span class="custom" *ngIf="!disabled" [innerHTML]="question.statement | nbsp | srcConvert | safe:'html'"></span>
+  </ng-container>
+  <ng-container *ngIf="!question.statement">
+    <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg"></ion-icon>
+    <span>{{"QUESTION.SWIPE.INSTRUCTION" | translate}}</span>
+  </ng-container>
 </p>
 <div class="swipe-cards">
   <div class="swipe-card" *ngFor ="let card of cardsRemaining; index as cardIndex" [ngStyle]="{transform: card.transform}"
