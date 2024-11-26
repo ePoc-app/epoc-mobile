@@ -10,7 +10,7 @@ export class CorrectionSortComponent implements OnInit {
   @Input() question: DragAndDropquestion;
   @Input() userResponses: any[];
 
-  correction: {correct: boolean, label: string, correctResponse: string}[][] = [];
+  correction: {correct: boolean, label: string, correctResponse: string, feedback: string}[][] = [];
   rightResponses = 0;
   wrongResponses = 0;
   sortGroups:string[];
@@ -26,7 +26,8 @@ export class CorrectionSortComponent implements OnInit {
         return {
           correct,
           label: response.label,
-          correctResponse: this.question.correctResponse.find(correctGroup => correctGroup.values.indexOf(response.value) !== -1).label
+          correctResponse: this.question.correctResponse.find(correctGroup => correctGroup.values.indexOf(response.value) !== -1).label,
+          feedback: this.question.responses.find(r => r.value === response.value).feedback
         }
       })
     });
