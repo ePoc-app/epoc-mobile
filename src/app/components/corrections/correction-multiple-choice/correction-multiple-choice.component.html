@@ -21,6 +21,10 @@
       {{response.label}}
       <div class="correction-right" *ngIf="response.correct">{{'QUESTION.CORRECTION.TRUE' | translate}}</div>
       <div class="correction-wrong" *ngIf="!response.correct">{{'QUESTION.CORRECTION.FALSE' | translate}}</div>
+      <details [open]="!response.correct" *ngIf="response.feedback">
+        <summary>{{'QUESTION.PREVIEW.EXPLANATION' | translate}} <ion-icon name="chevron-down-outline"></ion-icon></summary>
+        <div>{{response.feedback}}</div>
+      </details>
     </ion-label>
   </ion-item>
 </ng-container>
@@ -31,8 +35,13 @@
       <ion-icon aria-hidden="true" name="alert"></ion-icon>
     </div>
     <ion-label class="ion-text-wrap" color="inria-icon">
-      {{response}}
+      {{response.label}}
       <div class="correction-missing">{{'QUESTION.CORRECTION.WAS_TRUE' | translate}}</div>
+
+      <details open *ngIf="response.feedback">
+        <summary>{{'QUESTION.PREVIEW.EXPLANATION' | translate}} <ion-icon name="chevron-down-outline"></ion-icon></summary>
+        <div>{{response.feedback}}</div>
+      </details>
     </ion-label>
   </ion-item>
 </ng-container>

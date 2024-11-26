@@ -108,3 +108,29 @@ ion-label{
 .sc-ion-label-ios-h{
   color: var(--ion-color-text-2);
 }
+
+details {
+  background: rgba(0,0,0,0.03);
+  padding: .4rem;
+  border-radius: .4rem;
+  summary {
+    font-weight: bold;
+    list-style: none;
+    color: var(--ion-color-text-2);
+
+    ion-icon {
+      float: right;
+      transform: translateY(3px) rotate(-90deg);
+      transition: transform .3s ease-in-out;
+      pointer-events: none;
+    }
+  }
+
+  &[open]{
+    summary {
+      ion-icon {
+        transform: translateY(3px) rotate(0deg);
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ export class CorrectionSimpleChoiceComponent implements OnInit {
   @Input() question: Question;
   @Input() userResponses: any[];
 
-  correction: { correct: boolean, userResponseLabel: string, correctResponse: string }[] = [];
+  correction: { correct: boolean, userResponseLabel: string, feedback: string, correctResponse: string }[] = [];
 
   constructor() {
   }
@@ -20,6 +20,7 @@ export class CorrectionSimpleChoiceComponent implements OnInit {
       this.correction.push({
         correct: this.question.correctResponse.indexOf(userResponse) !== -1,
         userResponseLabel: this.question.responses.find(response => response.value === userResponse).label,
+        feedback: this.question.responses.find(response => response.value === userResponse).feedback,
         correctResponse: this.question.responses.find(response => response.value === this.question.correctResponse[index]).label
       })
     })
