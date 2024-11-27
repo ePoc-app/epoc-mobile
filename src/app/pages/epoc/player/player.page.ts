@@ -268,7 +268,7 @@ export class EpocPlayerPage implements OnInit {
             this.assessmentData.totalScore += scoreTotal;
         });
 
-        if (this.assessmentData.totalUserScore >= this.epoc.certificateScore) {
+        if (this.assessmentData.totalUserScore >= this.epoc.certificateScore && this.reading.badges.length >= this.epoc.certificateBadgeCount) {
             this.showCertificateCard();
         }
     }

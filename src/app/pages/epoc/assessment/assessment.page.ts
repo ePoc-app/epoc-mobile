@@ -144,7 +144,7 @@ export class EpocAssessmentPage implements OnInit {
             }
             this.assessmentData.totalScore += assessment.scoreTotal;
         });
-        if (this.assessmentData.totalUserScore + this.assessmentData.userScore >= this.epoc.certificateScore) {
+        if (this.assessmentData.totalUserScore + this.assessmentData.userScore >= this.epoc.certificateScore && this.reading.badges.length >= this.epoc.certificateBadgeCount) {
             setTimeout(() => {
                 this.showCertificateCard();
             }, 1500);
