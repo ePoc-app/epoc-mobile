@@ -109,14 +109,17 @@ ion-label{
   color: var(--ion-color-text-2);
 }
 
+.correction-icon + ion-label {
+  overflow: visible;
+}
+
 details {
-  background: rgba(0,0,0,0.03);
-  padding: .4rem;
-  border-radius: .4rem;
+  padding-top: .25rem;
+  margin-top: .25rem;
+  border-top: 1px solid var(--ion-color-close);
   summary {
     font-weight: bold;
     list-style: none;
-    color: var(--ion-color-text-2);
 
     ion-icon {
       float: right;
