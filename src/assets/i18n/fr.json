@@ -84,8 +84,8 @@
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Présentation du cours",
         "ACTIVITIES": {
-            "singular": "Activité",
-            "plural": "Activités"
+            "singular": "Évaluation",
+            "plural": "Évaluations"
         },
         "CHAPTERS": {
             "singular": "Module",
@@ -170,8 +170,8 @@
                 "singular": "Question",
                 "plural": "Questions"
             },
-            "START": "Commencer l'activité",
-            "REDO": "Refaire l'activité"
+            "START": "Commencer l'évaluation",
+            "REDO": "Refaire l'évaluation"
         },
         "CHAPTER_END": {
             "NEXT": "{{chapter}} suivant",
@@ -232,15 +232,15 @@
         },
         "ASSESSMENT_PAGE": {
             "SCORE": "Vous obtenez",
-            "NOT_GRADED": "Activité non notée",
+            "NOT_GRADED": "Évaluation non notée",
             "TOTAL_SCORE": "Score total :",
-            "RESTART_ACTIVITY": "Recommencer l'activité",
+            "RESTART_ACTIVITY": "Recommencer l'évaluation",
             "CONTINUE_COURSE": "Continuer le cours"
         },
         "QUIT_MODAL": {
-            "HEADER": "Souhaitez-vous vraiment quitter cette activité ?",
-            "MSG": "Vous perdrez votre progression et devrez recommencer cette activité complètement.",
-            "STAY": "Non, continuer l'activité",
+            "HEADER": "Souhaitez-vous vraiment quitter cette évaluation ?",
+            "MSG": "Vous perdrez votre progression et devrez recommencer cette évaluation complètement.",
+            "STAY": "Non, continuer l'évaluation",
             "QUIT": "Oui, quitter"
         },
         "SIMPLE_QUESTION": {
@@ -317,7 +317,7 @@
             "page": "la page",
             "html": "le texte",
             "audio": "l'audio",
-            "assessment": "l'activité",
+            "assessment": "l'évaluation",
             "question": "la question",
             "choice": "la question",
             "drag-and-drop": "la question",

@@ -84,8 +84,8 @@
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Course presentation",
         "ACTIVITIES": {
-            "singular": "Activity",
-            "plural": "Activities"
+            "singular": "Assessment",
+            "plural": "Assessments"
         },
         "CHAPTERS": {
             "singular": "Module",
@@ -170,8 +170,8 @@
                 "singular": "Question",
                 "plural": "Questions"
             },
-            "START": "Start the activity",
-            "REDO": "Redo the activity"
+            "START": "Start the assessment",
+            "REDO": "Redo the assessment"
         },
         "CHAPTER_END": {
             "NEXT": "next {{chapter}}",
@@ -232,15 +232,15 @@
         },
         "ASSESSMENT_PAGE": {
             "SCORE": "You obtain",
-            "NOT_GRADED": "Activity not graded",
+            "NOT_GRADED": "Assessment not graded",
             "TOTAL_SCORE": "Total score :",
-            "RESTART_ACTIVITY": "Restart the activity",
+            "RESTART_ACTIVITY": "Restart the assessment",
             "CONTINUE_COURSE": "Continue the course"
         },
         "QUIT_MODAL": {
-            "HEADER": "Do you really want to leave this activity ?",
-            "MSG": "You will lose your progress and have to start this activity all over again",
-            "STAY": "No, continue the activity",
+            "HEADER": "Do you really want to leave this assessment ?",
+            "MSG": "You will lose your progress and have to start this assessment all over again",
+            "STAY": "No, continue the assessment",
             "QUIT": "Yes, leave"
         },
         "SIMPLE_QUESTION": {
@@ -316,7 +316,7 @@
             "page": "the page",
             "html": "the text",
             "audio": "the audio",
-            "assessment": "the activity",
+            "assessment": "the assessment",
             "question": "the question",
             "choice": "the question",
             "drag-and-drop": "the question",
