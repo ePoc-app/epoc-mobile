@@ -1,95 +1,109 @@
-# Epoc Mobile
+# ePoc Mobile
 
-## Requirements
+Mobile application for reading ePoc (Electronic Pocket Open Course) content.
 
-* Recent version of Node and npm
-* Ionic `npm install -g @ionic/cli`
-* Cocoapods `sudo gem install cocoapods`
-* Android studio [(guide)](https://ionicframework.com/docs/installation/android)
-* Xcode [(guide)](https://ionicframework.com/docs/installation/ios)
-    * Enable xcode command line tools `sudo xcode-select -s /Applications/Xcode.app/Contents/Developers`
+## About
 
-## Getting started
+ePoc Mobile is a cross-platform mobile application built with Ionic 8, Vue 3, and Capacitor 5. It allows users to browse, download, and read ePoc content from various libraries.
 
-```bash
-# Install dependencies
-npm i
-```
+## Features
 
-```bash
-# Build app
-ionic build
+- Browse ePoc libraries
+- Download and manage ePoc content
+- Read ePoc content offline
+- Track progress and scores
+- Support for multiple languages
+- Dark mode support
+- Accessibility features
 
-# Serve app (browser)
-ionic serve
-```
+## Technology Stack
 
-**Android**
-```
-# Add android platform using capacitor (need to build first)
-ionic capacitor add android
+- **Framework**: Vue 3
+- **UI Library**: Ionic 8
+- **Native Bridge**: Capacitor 5
+- **State Management**: Pinia
+- **Internationalization**: Vue I18n
+- **Styling**: SCSS
+- **Build Tool**: Vite
 
-# Copy assets and plugins to android project
-ionic capacitor sync android
+## Getting Started
 
+### Prerequisites
 
-# Run app
-ionic capacitor run android
+- Node.js 20.x or higher
+- npm 10.x or higher
+- Ionic CLI 7.x or higher
 
-# Run app with livereload
-ionic capacitor run android -l --address=[YOUR_IP_ADRESS]
-```
+### Installation
 
-This should have open Android Studio and you just need to run the app on a device. 
-You may need to invalidate caches `File > Invalidate Caches / Restart` and sync gradle files
+1. Clone the repository
+   ```bash
+   git clone https://github.com/your-username/epoc-mobile.git
+   cd epoc-mobile
+   ```
 
-More info on : https://ionicframework.com/docs/building/android
+2. Install dependencies
+   ```bash
+   npm install
+   ```
 
-**iOS**
-```
-# Add ios platform using capacitor (need to build first)
-ionic capacitor add ios
+3. Run the development server
+   ```bash
+   npm run dev
+   ```
 
-# Run app
-ionic capacitor run ios
-
-# Run app with livereload
-ionic capacitor run ios -l --address=[YOUR_IP_ADRESS]
-```
-
-This should have open Xcode and you just need to run the app on a device. 
-
-More info on : https://ionicframework.com/docs/building/ios
-
-## App mode version (normal, inria, ill)
-
-### ILL
-
-This mode build the app for Inria Learning Lab internal use and allow to open an ePoc from a zip.
-
-`ionic serve --mode=ill` ou `ionic cap run android --mode=ill`
-
-### Inria
-
-This mode build the app for Inria internal use (ZRR) and lock the cotnent behind an authentication guard.
-
-`ionic serve --mode=inria` ou `ionic cap run android --mode=inria`
-
-
-#### Inria : Authentication
-
-Authentication is based on oAuth and the callback url is 
-`http://localhost/callback` this works on mobile by using `InAppBrowser`
-thats catches the callback and save it. 
-
-To make it work on development environment you need to redirect the 
-browser callback to `http://localhost:8100/callback` or whatever port
-you are using. For this you can use an iptable rule :
+### Building for Production
 
 ```bash
-# Add
-sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8100
-
-# Remove
-sudo iptables -t nat -D OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8100
+npm run build
 ```
+
+### Running on iOS
+
+```bash
+npm run ios
+```
+
+### Running on Android
+
+```bash
+npm run android
+```
+
+## Project Structure
+
+```
+epoc-mobile/
+├── public/              # Static assets
+├── src/                 # Source code
+│   ├── assets/          # Assets (images, fonts, etc.)
+│   ├── components/      # Reusable Vue components
+│   ├── environments/    # Environment configuration
+│   ├── router/          # Vue Router configuration
+│   ├── stores/          # Pinia stores
+│   ├── theme/           # Theme configuration
+│   ├── views/           # Vue views/pages
+│   ├── App.vue          # Main App component
+│   └── main.ts          # Application entry point
+├── capacitor.config.ts  # Capacitor configuration
+├── index.html           # HTML entry point
+├── ionic.config.json    # Ionic configuration
+├── package.json         # Project dependencies
+├── tsconfig.json        # TypeScript configuration
+└── vite.config.ts       # Vite configuration
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the terms of the LICENSE file included in the repository.
+
+## Acknowledgements
+
+- [Inria Learning Lab](https://learninglab.inria.fr) for the ePoc platform
+- [Ionic Framework](https://ionicframework.com) for the UI components
+- [Vue.js](https://vuejs.org) for the frontend framework
+- [Capacitor](https://capacitorjs.com) for the native runtime

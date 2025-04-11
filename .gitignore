@@ -17,12 +17,13 @@ $RECYCLE.BIN/
 log.txt
 npm-debug.log*
 
-.idea
+/.idea
 /.ionic
 /.sass-cache
 /.sourcemaps
 /.versions
-/.vscode
+/.vscode/*
+!/.vscode/extensions.json
 /coverage
 /dist
 /node_modules
@@ -31,9 +32,19 @@ npm-debug.log*
 /www
 .angular
 
-/resources
-src/assets/demo/
-src/environments/secrets.prod.ts
-src/environments/libraries.prod.ts
+# Sensitive information
+/src/environments/secrets.ts
 
-ios/DerivedData/
+# Capacitor
+/ios/App/App/public/
+/ios/App/App/capacitor.config.json
+/ios/App/Pods/
+/ios/DerivedData/
+/ios/App/App/GoogleService-Info.plist
+/android/app/src/main/assets/public
+/android/app/google-services.json
+/android/app/capacitor.build.gradle
+/android/.gradle/
+/android/build/
+/android/app/build/
+/android/capacitor-cordova-android-plugins/build/

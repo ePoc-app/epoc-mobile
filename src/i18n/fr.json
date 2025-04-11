@@ -1,0 +1,94 @@
+{
+  "APP": {
+    "TITLE": "ePoc"
+  },
+  "COMMON": {
+    "CANCEL": "Annuler",
+    "CONFIRM": "Confirmer",
+    "DELETE": "Supprimer",
+    "SAVE": "Enregistrer",
+    "CLOSE": "Fermer",
+    "LOADING": "Chargement...",
+    "ERROR": "Erreur",
+    "SUCCESS": "Succès",
+    "WARNING": "Avertissement",
+    "INFO": "Information"
+  },
+  "LIBRARY_PAGE": {
+    "TITLE": "Bibliothèque",
+    "DOWNLOAD": "Télécharger",
+    "DOWNLOADING": "Téléchargement",
+    "OPEN_ZIP": "Extraction",
+    "DISCOVER": "Découvrir",
+    "CONTINUE": "Continuer",
+    "OPEN": "Ouvrir",
+    "ADD_EPOC": "Ajouter un ePoc"
+  },
+  "FLOATING_MENU": {
+    "TOC": "Table des matières",
+    "CERTIFICATE": "Certificat",
+    "LICENSE": "Licence",
+    "UPDATE": "Mettre à jour",
+    "RESET": "Réinitialiser la progression",
+    "DELETE": "Supprimer",
+    "IMPORT_FILE": "Importer depuis un fichier",
+    "IMPORT_LINK": "Importer depuis un lien",
+    "IMPORT_QR": "Scanner un QR code"
+  },
+  "SETTINGS_PAGE": {
+    "TITLE": "Paramètres",
+    "THEME": "Thème",
+    "THEME_LIGHT": "Clair",
+    "THEME_DARK": "Sombre",
+    "THEME_AUTO": "Auto",
+    "LANGUAGE": "Langue",
+    "FONT": "Police",
+    "FONT_DEFAULT": "Par défaut",
+    "FONT_DYSLEXIC": "OpenDyslexic",
+    "ANALYTICS": "Analytiques",
+    "ANALYTICS_DESCRIPTION": "Aidez-nous à améliorer l'application en envoyant des données d'utilisation anonymes",
+    "LIBRARIES": "Bibliothèques",
+    "ADD_LIBRARY": "Ajouter une bibliothèque",
+    "LIBRARY_NAME": "Nom de la bibliothèque",
+    "LIBRARY_URL": "URL de la bibliothèque",
+    "ABOUT": "À propos",
+    "VERSION": "Version",
+    "PRIVACY_POLICY": "Politique de confidentialité",
+    "TERMS_OF_SERVICE": "Conditions d'utilisation",
+    "ACKNOWLEDGEMENTS": "Remerciements"
+  },
+  "ABOUT_PAGE": {
+    "TITLE": "À propos",
+    "DESCRIPTION": "ePoc Mobile est une application mobile multiplateforme pour lire du contenu ePoc (Electronic Pocket Open Course).",
+    "DEVELOPED_BY": "Développé par Inria Learning Lab",
+    "VERSION": "Version",
+    "COPYRIGHT": "© 2025 Inria Learning Lab. Tous droits réservés."
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "Connexion",
+    "USERNAME": "Nom d'utilisateur",
+    "PASSWORD": "Mot de passe",
+    "LOGIN": "Se connecter",
+    "FORGOT_PASSWORD": "Mot de passe oublié ?",
+    "NO_ACCOUNT": "Vous n'avez pas de compte ?",
+    "REGISTER": "S'inscrire",
+    "ERROR": "Échec de la connexion. Veuillez vérifier vos identifiants et réessayer."
+  },
+  "EPOC_PAGE": {
+    "TOC": "Table des matières",
+    "SCORE": "Score",
+    "CERTIFICATE": "Certificat",
+    "CHAPTERS": "Chapitres",
+    "PROGRESS": "Progression",
+    "COMPLETED": "Terminé",
+    "NOT_STARTED": "Non commencé",
+    "IN_PROGRESS": "En cours"
+  },
+  "READER_PAGE": {
+    "NEXT": "Suivant",
+    "PREVIOUS": "Précédent",
+    "CHAPTER": "Chapitre",
+    "PAGE": "Page",
+    "OF": "sur"
+  }
+}

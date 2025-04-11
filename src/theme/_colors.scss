@@ -1,0 +1,156 @@
+/* Custom color variables and utility classes */
+
+:root {
+  /* Inria brand colors */
+  --inria-red: #e63312;
+  --inria-dark-red: #ca2d10;
+  --inria-light-red: #e9482a;
+  
+  /* Neutral colors */
+  --neutral-100: #f8f9fa;
+  --neutral-200: #e9ecef;
+  --neutral-300: #dee2e6;
+  --neutral-400: #ced4da;
+  --neutral-500: #adb5bd;
+  --neutral-600: #6c757d;
+  --neutral-700: #495057;
+  --neutral-800: #343a40;
+  --neutral-900: #212529;
+  
+  /* Semantic colors */
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+}
+
+/* Background color utility classes */
+.bg-inria {
+  background-color: var(--inria-red);
+}
+
+.bg-inria-dark {
+  background-color: var(--inria-dark-red);
+}
+
+.bg-inria-light {
+  background-color: var(--inria-light-red);
+}
+
+.bg-neutral-100 {
+  background-color: var(--neutral-100);
+}
+
+.bg-neutral-200 {
+  background-color: var(--neutral-200);
+}
+
+.bg-neutral-300 {
+  background-color: var(--neutral-300);
+}
+
+.bg-neutral-400 {
+  background-color: var(--neutral-400);
+}
+
+.bg-neutral-500 {
+  background-color: var(--neutral-500);
+}
+
+.bg-neutral-600 {
+  background-color: var(--neutral-600);
+}
+
+.bg-neutral-700 {
+  background-color: var(--neutral-700);
+}
+
+.bg-neutral-800 {
+  background-color: var(--neutral-800);
+}
+
+.bg-neutral-900 {
+  background-color: var(--neutral-900);
+}
+
+/* Text color utility classes */
+.text-inria {
+  color: var(--inria-red);
+}
+
+.text-inria-dark {
+  color: var(--inria-dark-red);
+}
+
+.text-inria-light {
+  color: var(--inria-light-red);
+}
+
+.text-neutral-100 {
+  color: var(--neutral-100);
+}
+
+.text-neutral-200 {
+  color: var(--neutral-200);
+}
+
+.text-neutral-300 {
+  color: var(--neutral-300);
+}
+
+.text-neutral-400 {
+  color: var(--neutral-400);
+}
+
+.text-neutral-500 {
+  color: var(--neutral-500);
+}
+
+.text-neutral-600 {
+  color: var(--neutral-600);
+}
+
+.text-neutral-700 {
+  color: var(--neutral-700);
+}
+
+.text-neutral-800 {
+  color: var(--neutral-800);
+}
+
+.text-neutral-900 {
+  color: var(--neutral-900);
+}
+
+/* Semantic color utility classes */
+.text-success {
+  color: var(--success);
+}
+
+.text-info {
+  color: var(--info);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+.bg-success {
+  background-color: var(--success);
+}
+
+.bg-info {
+  background-color: var(--info);
+}
+
+.bg-warning {
+  background-color: var(--warning);
+}
+
+.bg-danger {
+  background-color: var(--danger);
+}

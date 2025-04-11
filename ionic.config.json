@@ -1,12 +1,5 @@
 {
-  "name": "ePoc",
-  "integrations": {
-    "capacitor": {},
-    "cordova": {}
-  },
-  "type": "angular",
-  "hooks": {
-    "serve:before": "./scripts/build-before.js",
-    "build:before": "./scripts/build-before.js"
-  }
+  "name": "epoc-mobile-vue",
+  "integrations": {},
+  "type": "vue-vite"
 }

@@ -1,15 +1,39 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import {secrets} from './secrets';
-import {modeLibraries} from './libraries';
 
 export const environment = {
-    production: false,
-    oauth: secrets.oauth,
-    sentry: secrets.sentry,
-    mode: modeLibraries,
-    devModeSecret: secrets.devModeSecret
+  production: false,
+  mode: {
+    default: {
+      libraryUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json',
+      apiUrl: 'https://epoc.inria.fr/api',
+      authUrl: 'https://epoc.inria.fr/auth',
+      matomoUrl: 'https://epoc.inria.fr/matomo',
+      matomoSiteId: 1
+    },
+    inria: {
+      libraryUrl: 'https://epoc.inria.fr/api/library.jsone',
+      apiUrl: 'https://epoc.inria.fr/api',
+      authUrl: 'https://epoc.inria.fr/auth',
+      matomoUrl: 'https://epoc.inria.fr/matomo',
+      matomoSiteId: 1
+    },
+    dev: {
+      libraryUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json',
+      apiUrl: 'https://epoc.inria.fr/api',
+      authUrl: 'https://epoc.inria.fr/auth',
+      matomoUrl: 'https://epoc.inria.fr/matomo',
+      matomoSiteId: 1
+    },
+    preview: {
+      libraryUrl: 'https://epoc.inria.fr/api/library.json',
+      apiUrl: 'https://epoc.inria.fr/api',
+      authUrl: 'https://epoc.inria.fr/auth',
+      matomoUrl: 'https://epoc.inria.fr/matomo',
+      matomoSiteId: 1
+    }
+  }
 };
 
 /*
@@ -20,4 +44,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-

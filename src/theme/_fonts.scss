@@ -1,0 +1,62 @@
+/* Font imports and definitions */
+
+@font-face {
+  font-family: 'Inria Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/font/inria/InriaSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inria Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/assets/font/inria/InriaSans-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inria Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/assets/font/inria/InriaSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inria Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: url('/assets/font/inria/InriaSans-BoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/font/open-dyslexic/OpenDyslexic-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/assets/font/open-dyslexic/OpenDyslexic-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/assets/font/open-dyslexic/OpenDyslexic-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: italic;
+  font-weight: 700;
+  src: url('/assets/font/open-dyslexic/OpenDyslexic-BoldItalic.woff2') format('woff2');
+}
+
+/* Font classes */
+.font-dyslexic {
+  font-family: 'OpenDyslexic', sans-serif !important;
+}

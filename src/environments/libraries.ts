@@ -1,12 +1,8 @@
-// Fake libraries urls please contact @brospars to have the real one
-// Or make your own libraries.prod.ts
-export const modeLibraries = {
-    normal: {
-        libraryUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json',
-        libraryQlfUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json'
-    },
-    inria: {
-        libraryUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json',
-        libraryQlfUrl: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json'
-    }
-};
+// This file defines the default libraries for the application
+
+export const libraries = [
+  {
+    name: 'Inria Learning Lab',
+    url: 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/list.json'
+  }
+];

@@ -1,0 +1,94 @@
+{
+  "APP": {
+    "TITLE": "ePoc"
+  },
+  "COMMON": {
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "DELETE": "Delete",
+    "SAVE": "Save",
+    "CLOSE": "Close",
+    "LOADING": "Loading...",
+    "ERROR": "Error",
+    "SUCCESS": "Success",
+    "WARNING": "Warning",
+    "INFO": "Information"
+  },
+  "LIBRARY_PAGE": {
+    "TITLE": "Library",
+    "DOWNLOAD": "Download",
+    "DOWNLOADING": "Downloading",
+    "OPEN_ZIP": "Extracting",
+    "DISCOVER": "Discover",
+    "CONTINUE": "Continue",
+    "OPEN": "Open",
+    "ADD_EPOC": "Add an ePoc"
+  },
+  "FLOATING_MENU": {
+    "TOC": "Table of Contents",
+    "CERTIFICATE": "Certificate",
+    "LICENSE": "License",
+    "UPDATE": "Update",
+    "RESET": "Reset Progress",
+    "DELETE": "Delete",
+    "IMPORT_FILE": "Import from file",
+    "IMPORT_LINK": "Import from link",
+    "IMPORT_QR": "Scan QR code"
+  },
+  "SETTINGS_PAGE": {
+    "TITLE": "Settings",
+    "THEME": "Theme",
+    "THEME_LIGHT": "Light",
+    "THEME_DARK": "Dark",
+    "THEME_AUTO": "Auto",
+    "LANGUAGE": "Language",
+    "FONT": "Font",
+    "FONT_DEFAULT": "Default",
+    "FONT_DYSLEXIC": "OpenDyslexic",
+    "ANALYTICS": "Analytics",
+    "ANALYTICS_DESCRIPTION": "Help us improve the app by sending anonymous usage data",
+    "LIBRARIES": "Libraries",
+    "ADD_LIBRARY": "Add Library",
+    "LIBRARY_NAME": "Library Name",
+    "LIBRARY_URL": "Library URL",
+    "ABOUT": "About",
+    "VERSION": "Version",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "TERMS_OF_SERVICE": "Terms of Service",
+    "ACKNOWLEDGEMENTS": "Acknowledgements"
+  },
+  "ABOUT_PAGE": {
+    "TITLE": "About",
+    "DESCRIPTION": "ePoc Mobile is a cross-platform mobile application for reading ePoc (Electronic Pocket Open Course) content.",
+    "DEVELOPED_BY": "Developed by Inria Learning Lab",
+    "VERSION": "Version",
+    "COPYRIGHT": "© 2025 Inria Learning Lab. All rights reserved."
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "Login",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "LOGIN": "Login",
+    "FORGOT_PASSWORD": "Forgot Password?",
+    "NO_ACCOUNT": "Don't have an account?",
+    "REGISTER": "Register",
+    "ERROR": "Login failed. Please check your credentials and try again."
+  },
+  "EPOC_PAGE": {
+    "TOC": "Table of Contents",
+    "SCORE": "Score",
+    "CERTIFICATE": "Certificate",
+    "CHAPTERS": "Chapters",
+    "PROGRESS": "Progress",
+    "COMPLETED": "Completed",
+    "NOT_STARTED": "Not Started",
+    "IN_PROGRESS": "In Progress"
+  },
+  "READER_PAGE": {
+    "NEXT": "Next",
+    "PREVIOUS": "Previous",
+    "CHAPTER": "Chapter",
+    "PAGE": "Page",
+    "OF": "of"
+  }
+}

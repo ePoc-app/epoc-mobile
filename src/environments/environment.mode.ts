@@ -1,2 +1,4 @@
-// This file is replaced during build by using --mode=ill|inria|normal
-export const mode:'ill'|'inria'|'normal' = 'normal';
+// This file defines the current mode of the application
+// It can be 'default' or 'inria'
+
+export const mode = 'default';
