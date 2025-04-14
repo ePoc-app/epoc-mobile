@@ -130,7 +130,7 @@
             "ACCESS": "Richiesta di accesso",
             "WELCOME": "Benvenuto",
             "ERROR_RECUP": "Problema con il recupero del profilo", 
-            "ERROR_AUTH": Problema di autenticazione"
+            "ERROR_AUTH": "Problema di autenticazione"
         },
         "LOGIN_MODAL": {
             "HEADER": "Autenticazione",
