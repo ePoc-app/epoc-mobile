@@ -2,10 +2,10 @@
     "LIBRARY_PAGE": {
         "DOWNLOAD": "Download",
         "CONTINUE": "Continua",
-        "DOWNLOADING": "Scaricamento",
-        "DISCOVER": "Scoprire",
-        "OPEN_ZIP": "Apertura con zip",
-        "OPEN": "Opri",
+        "DOWNLOADING": "Scarica",
+        "DISCOVER": "Scopri",
+        "OPEN_ZIP": "Apri file zip",
+        "OPEN": "Apri",
         "ADD_EPOC": "Aggiungi il tuo ePoc",
         "IMPORT": "Importa da"
     },
@@ -52,32 +52,32 @@
         "DATA_COLLECTION": "Raccolta di statistiche anonime",
         "EPOC_DATA": "ePocs data",
         "DEV_MODE": "Modalità sviluppatore",
-        "OPEN_EPOC": "Apri un diverso ePoc",
+        "OPEN_EPOC": "Apri un altro ePoc",
         "LIBRARY": "Libreria",
         "DELETE_DATA": "Elimina dati",
-        "DATA_EXAMPLE": "Certificati, quiz, preferenze, ecc.",
+        "DATA_EXAMPLE": "Attestati, quiz, preferenze, ecc.",
         "SET_USER": {
             "INFO": "Compila le tue informazioni",
-            "MESSAGE": "Queste informazioni saranno utilizzate per emettere i certificati",
+            "MESSAGE": "Queste informazioni saranno utilizzate per rilasciare gli attestati",
             "LASTNAME_PLACEHOLDER": "Cognome",
             "FIRSTNAME_PLACEHOLDER": "Nome"
         },
         "DEV_MODE_MODAL": {
             "INFO": "Attivazione della modalità sviluppatore",
-            "MESSAGE": "Si prega di fornire la password",
+            "MESSAGE": "Si prega di inserire la password",
             "PASSWORD": "Password",
             "WRONG_PASSWORD": "Password errata"
         },
         "DELETE_DATA_MODAL": {
-            "INFO": "Ne sei sicuro ? ",
-            "MESSAGE": "Questa azione eliminerà i dati degli esercizi dall'applicazione <br/><small>(certificati, quiz, preferenze, ecc.)</small>"
-        "THROW_ERROR": "È stato generato un errore",
+            "INFO": "Ne sei sicuro? ",
+            "MESSAGE": "Questa azione eliminerà i dati degli esercizi dall'applicazione <br/><small>(attestati, quiz, preferenze, ecc.)</small>"
+        "THROW_ERROR": "Si è generato un errore",
         "DEVELOPER": "Sviluppatore",
         "EPOC_LIBRARIES": "Librerie ePocs",
         "ADDING_LIBRARY": "Aggiunta di una libreria",
         "CONFIRM_DELETE_LIBRARY": "Eliminare libreria?",
         "ADD_LIBRARY": "Aggiungi una libreria",
-        "LIBRARY_NAME": "Nome della libraria"
+        "LIBRARY_NAME": "Nome della libreria"
     },
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Presentazione del corso",
@@ -91,8 +91,8 @@
         },
         "MIN_MODULE": "min/modulo",
         "OBJECTIVES": {
-            "singular": "Obbiettivo",
-            "plural": "Obbiettivi"
+            "singular": "Obiettivo",
+            "plural": "Obiettivi"
         },
         "PREREQUISITES": "Prerequisiti",
         "RESUME": "Sommario",
@@ -101,7 +101,7 @@
             "plural": "Autori"
         },
         "PICTURE_ALT": "Foto di ",
-        "GO": "Andiamo !",
+        "GO": "Iniziamo!",
         "CONTINUE": "Continua",
         "DOWNLOAD": "Download",
         "DOWNLOADING": "Download in corso",
@@ -118,7 +118,7 @@
     },
     "COMMENT_MODAL": {
         "HEADER": "Lascia un commento",
-        "MESSAGE": "Quale servizio desideri commentare?"
+        "MESSAGE": "Quale servizio vuoi commentare?"
     },
     "ZRR": {
         "LOGIN_PAGE": {
@@ -142,7 +142,7 @@
     "FLOATING_MENU": {
         "HOME": "Home",
         "TOC": "Tavola dei contenuti",
-        "CERTIFICATE": "Punteggio & certificato",
+        "CERTIFICATE": "Punteggio & attestato",
         "LICENSE": "Licenza",
         "UPDATE": "Aggiornamento",
         "DELETE": "Elimina",
@@ -167,13 +167,15 @@
             "QUESTIONS": {
                 "singular": "Domanda",
                 "plural": "Domande"
-            },
+            }, non va 
+
+quelle est la meilleure 
             "START": "Inizia la valutazione",
-            "REDO": "Ripetere la valutazione"
+            "REDO": "Ripeti la valutazione"
         },
         "CHAPTER_END": {
             "NEXT": "prossimo {{chapter}}",
-            "MSG": "Congratulazioni, hai raggiunto la fine del corso.<br/>Per ottenere il certificato, visita la pagina dei punteggi<br/>Oppure torna all'indice per riprodurre un <span>{{chapter}}</span>.",
+            "MSG": "Congratulazioni, hai raggiunto la fine del corso.<br/>Per ottenere l'attestato, visita la pagina dei punteggi<br/>Oppure torna all'indice per riprodurre un <span>{{chapter}}</span>.",
             "SCORE": "Pagina dei risultati",
             "REVIEW": "Esprimi la tua opinione"
         },
@@ -190,28 +192,28 @@
             "CLOSE": "Chiudi"   
         },
         "SCORE": {
-            "HEADER": "Il mio certificato",
+            "HEADER": "Il mio attestato",
             "TOTAL_SCORE": "Il tuo punteggio totale",
             "PTS": "punti",
-            "CONTINUE": "Continua !",
-            "REMAINING": "Quadagna {{remaining}} punti e ottieni il tuo certificato",
-            "BADGE_REMAINING": "Quadagna {{remaining}} ottieni il tuo certificato",
-            "GET_CERTIFICATE": "Ottieni il certificato",
+            "CONTINUE": "Continua!",
+            "REMAINING": "Guadagna {{remaining}} punti e ottieni il tuo attestato",
+            "BADGE_REMAINING": "Guadagna ancora {{remaining}} e ottieni il tuo attestato",
+            "GET_CERTIFICATE": "Ottieni il attestato",
             "CONGRATS": "Congratulazioni",
             "CERTIFICATE_WIN": "Hai raggiunto il punteggio per ottenere l'attestato",
             "PTS_RECAP": "Riepilogo dei punti",
             "FAIL_MODAL": {
                 "HEADER": "Non disponibile",
-                "MSG": "Non hai ancora raggiunto il punteggio richiesto ({{score}} punti) per ottenere il certificato."
+                "MSG": "Non hai ancora raggiunto il punteggio richiesto ({{score}} punti) per ottenere il attestato."
             },
             "CERTIFICATE_PDF": {
-                "COMPLETION_CERTIFICATE": "CERTIFICATE OF COMPLETION",
+                "COMPLETION_CERTIFICATE": "ATTESTATO DI COMPLETAMENTO",
                 "AUTHORS": "Autore(i)",
                 "EPOC_EDITION": "Edizioe di ePoc",
-                "DELIVERED_TO": "Certificato consegnato a :",
+                "DELIVERED_TO": "Attestato consegnato a:",
                 "DELIVERED_THE": "Consegnato il",
                 "ERROR": "Errore",
-                "ERROR_PROMPT": "Si è verificato un errore durante {{type}} il certificato",
+                "ERROR_PROMPT": "Si è verificato un errore durante {{type}} l'attestato",
                 "ERROR_TYPE": {
                     "OPEN": "apertura in corso",
                     "RECUP": "recupero in corso",
@@ -219,7 +221,7 @@
                 }, 
                 "WAITING": "Attendere prego...",
                 "DOWNLOAD_FINISH": "Download completato",
-                "CERTIFICATE_OBTENTION": "Hai ricevuto il certificato"
+                "CERTIFICATE_OBTENTION": "Hai ricevuto l'attestato"
             }
         }
     },
@@ -230,13 +232,13 @@
         },
         "ASSESSMENT_PAGE": {
             "SCORE": "Ottenuto",
-            "NOT_GRADED": "Valutazione non valutata",
-            "TOTAL_SCORE": "Punteggio totale :",
+            "NOT_GRADED": "Valutazione non annotata",
+            "TOTAL_SCORE": "Punteggio totale:",
             "RESTART_ACTIVITY": "Riavvia la valutazione",
             "CONTINUE_COURSE": "Continua il corso"
         },
         "QUIT_MODAL": {
-            "HEADER": "Vuoi davvero abbandonare questa valutazione?t ?",
+            "HEADER": "Vuoi davvero abbandonare questa valutazione?",
             "MSG": "Perderai i tuoi progressi e dovrai ricominciare questa valutazione dall'inizio",
             "STAY": "No, continua la valutazione",
             "QUIT": "Sì, lascia"
@@ -245,20 +247,22 @@
             "VALIDATE": "Conferma le mie risposte",
             "FINISH": "Ho finito"
         },
-        "DRAG_DROP_INSTRUCTION": "Fai clic o trascina l'etichetta nella categoria corretta qui sotto :",
-        "DROPDOWN_INSTRUCTION": "Seleziona una risposta",
+        "DRAG_DROP_INSTRUCTION": "Fai clic o trascina l'etichetta nella categoria corretta qui sotto:",
+        "DROPDOWN_INSTRUCTION": "Seleziona una risposta", non va 
+
+quelle est la meilleure 
         "SWIPE": {
             "INSTRUCTION": "Trascina la card a sinistra o a destra nella categoria appropriata",
-            "FINISH": "È finito !"
+            "FINISH": "È finito!"
         },
-        "CERTIFICATE": "Certificato",
+        "CERTIFICATE": "Attestato",
         "CORRECTION": {
             "CORRECTION": "Correzione",
             "RESPONDED": "Hai risposto",
             "SUCCESS": "Ci sei riuscito",
             "FAILURE": "Hai sbagliato",
-            "TRUE": "Questa è una buona risposta !",
-            "FALSE": "Questo non è vero !",
+            "TRUE": "Questa è una buona risposta!",
+            "FALSE": "Questo non è vero!",
             "CORRECT": "Risposta corretta : ",
             "FORGOTTEN": "Hai dimenticato",
             "OMISSION": {
@@ -287,12 +291,12 @@
     "CERTIFICATE_MODAL": {
         "HEADER": "Congratulazioni",
         "SCORE_REACHED": "Hai raggiunto il punteggio richiesto per ottenere l'attestato",
-        "MSG": "Ottieni subito il certificato nella pagina dei punteggi o continua ad aumentare il tuo punteggio.",
-        "GET": "Ottieni il certificato",
+        "MSG": "Ottieni subito l'attestato nella pagina dei punteggi o continua ad aumentare il tuo punteggio.",
+        "GET": "Ottieni l'attestato",
         "CONTINUE": "Continua"
     },
     "BADGE": {
-        "NEW_BADGE_UNLOCKED": "Nuova ricompensa ottenuta !",
+        "NEW_BADGE_UNLOCKED": "Nuova ricompensa ottenuta!",
         "VERBS": {
         },
         "PASSIVE_VERBS": {
