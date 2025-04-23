@@ -198,7 +198,7 @@ export class LibraryService {
                 path: `../Library/NoCloud/epocs/${epocId}/content.json`,
                 directory: Directory.Data,
                 encoding: Encoding.UTF8
-            })).pipe(map(file => JSON.parse(file.data)));
+            })).pipe(map(file => JSON.parse(file.data as string)));
         } else {
             const rootDirectory = Capacitor.isNativePlatform() && this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/';
             const url = Capacitor.convertFileSrc(`${rootDirectory}epocs/${epocId}/content.json`)

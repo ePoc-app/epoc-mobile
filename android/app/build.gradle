@@ -15,6 +15,7 @@ def getVersionCode = { ->
 }
 
 android {
+    namespace "fr.inria.epoc"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "fr.inria.epoc"

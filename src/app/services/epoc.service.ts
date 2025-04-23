@@ -67,7 +67,7 @@ export class EpocService {
           directory: Directory.Data,
           encoding: Encoding.UTF8
         }).then((result) => {
-          const epoc = JSON.parse(result.data);
+          const epoc = JSON.parse(result.data as string);
           if (epoc.id !== id) epoc.id = id; // Fix id when local epocs are imported
           this.epoc = this.initCourseContent(epoc as Epoc);
         });

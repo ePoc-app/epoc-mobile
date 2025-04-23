@@ -98,7 +98,7 @@ export class LocalEpocsService {
                 directory: Directory.Data,
                 encoding: Encoding.UTF8
             })).pipe(map(file => {
-                const epoc = (JSON.parse(file.data) as Epoc);
+                const epoc = (JSON.parse(file.data as string) as Epoc);
                 epoc.id = epocId;
                 return {
                     epoc,
