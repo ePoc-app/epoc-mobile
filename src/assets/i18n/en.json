@@ -142,6 +142,7 @@
     },
 
     "FLOATING_MENU": {
+        "MAIN_MENU": "Main menu",
         "HOME": "Home",
         "TOC": "Table of Contents",
         "CERTIFICATE": "Score & certificate",

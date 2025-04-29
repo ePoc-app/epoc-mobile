@@ -218,7 +218,7 @@ export class LocalEpocsService {
                 }
             },
             {
-                text: this.translate.instant('FLOATING_MENU.CERTIFICATE'),
+                text: this.translate.instant('FLOATING_MENU.SCORE_DETAILS'),
                 icon: 'star-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/score/' + epoc.id);
@@ -238,10 +238,12 @@ export class LocalEpocsService {
         ];
         const actionSheet = await this.actionSheetController.create({
             header: epoc.title,
+            subHeader: this.translate.instant('FLOATING_MENU.MAIN_MENU'),
             cssClass: 'custom-action-sheet',
             mode: 'ios',
             buttons
         });
+        document.documentElement.style.setProperty('--thumbnail-url', `url(${epoc.image})`);
         await actionSheet.present();
     }
 

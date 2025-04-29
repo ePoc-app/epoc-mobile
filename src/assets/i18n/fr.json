@@ -142,8 +142,9 @@
     },
 
     "FLOATING_MENU": {
-        "HOME": "Accueil",
-        "TOC": "Table de matières",
+        "MAIN_MENU": "Menu principal",
+        "HOME": "Bibliothèque d'ePocs",
+        "TOC": "Table des matières",
         "CERTIFICATE": "Score & attestation",
         "LICENSE": "Licence",
         "UPDATE": "Mettre à jour",

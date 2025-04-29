@@ -219,9 +219,10 @@ export class EpocService {
       cssClass: 'custom-action-sheet',
       mode: 'ios',
       header: this.epoc.title,
-      subHeader: chapter && chapter.title ? `${chapterIndex  + 1}. ${chapter.title}` : '',
+      subHeader: chapter && chapter.title ? `${chapterIndex  + 1}. ${chapter.title}` : this.translate.instant('FLOATING_MENU.MAIN_MENU'),
       buttons
     });
+    document.documentElement.style.setProperty('--thumbnail-url', `url(${this.rootFolder + this.epoc.image})`);
     await actionSheet.present();
   }
 }

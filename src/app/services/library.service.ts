@@ -263,7 +263,7 @@ export class LibraryService {
                 }
             },
             {
-                text: this.translate.instant('FLOATING_MENU.CERTIFICATE'),
+                text: this.translate.instant('FLOATING_MENU.SCORE_DETAILS'),
                 icon: 'star-outline',
                 handler: () => {
                     this.router.navigateByUrl('/epoc/score/' + epoc.id);
@@ -305,9 +305,11 @@ export class LibraryService {
         const actionSheet = await this.actionSheetController.create({
             header: epoc.title,
             cssClass: 'custom-action-sheet',
+            subHeader: this.translate.instant('FLOATING_MENU.MAIN_MENU'),
             mode: 'ios',
             buttons
         });
+        document.documentElement.style.setProperty('--thumbnail-url', `url(${epoc.image})`);
         await actionSheet.present();
     }
 

@@ -15,10 +15,10 @@
         "EPOC_DESCRIPTION": "ePoc (Electronic Pocket Open Course) è un'applicazione di formazione digitale per dispositivi mobili. È stata sviluppata all'interno di <a href=\"https://learninglab.inria.fr\" target=\"_blank\" title=\"sito web di Inria Learning Lab \" class=\"about-page-link\">Inria Learning Lab",
         "PERSONAL_DATA_DESCRIPTION": "Non vengono raccolti dati personali.",
         "ANALYTICS": "Analytics",
-        "ANALYTICS_DESCRIPTION_1": "Utilizziamo Matomo, un software gratuito e open source per la misurazione delle statistiche, raccomandato dalla CNIL."
+        "ANALYTICS_DESCRIPTION_1": "Utilizziamo Matomo, un software gratuito e open source per la misurazione delle statistiche, raccomandato dalla CNIL.",
         "ANALYTICS_DESCRIPTION_2": "Queste analisi vengono utilizzate esclusivamente per scopi di ricerca interna su come possiamo migliorare il servizio che offriamo a tutti i nostri utenti",
-        "ANALYTICS_DESCRIPTION_3": "Ci consentono semplicemente di valutare come interagisci con la nostra applicazione in qualità di <b>utente anonimo</b> (i dati raccolti non ti identificano personalmente)."
-        "ANALYTICS_DESCRIPTION_4": "Puoi opporti a questa raccolta nelle impostazioni dell'applicazione. Questo proteggerà la tua privacy, ma impedirà anche al proprietario di venire a conoscenza delle tue azioni e di creare un'esperienza migliore per te e per gli altri utenti."
+        "ANALYTICS_DESCRIPTION_3": "Ci consentono semplicemente di valutare come interagisci con la nostra applicazione in qualità di <b>utente anonimo</b> (i dati raccolti non ti identificano personalmente).",
+        "ANALYTICS_DESCRIPTION_4": "Puoi opporti a questa raccolta nelle impostazioni dell'applicazione. Questo proteggerà la tua privacy, ma impedirà anche al proprietario di venire a conoscenza delle tue azioni e di creare un'esperienza migliore per te e per gli altri utenti.",
         "CONTACT": "Contatto",
         "CONTACT_ILL": "Hai una domanda? Puoi contattarci al seguente indirizzo : ",
         "CONTACT_DPO": "Data Protection Officer : ",
@@ -70,14 +70,15 @@
         },
         "DELETE_DATA_MODAL": {
             "INFO": "Ne sei sicuro? ",
-            "MESSAGE": "Questa azione eliminerà i dati degli esercizi dall'applicazione <br/><small>(attestati, quiz, preferenze, ecc.)</small>"
-        "THROW_ERROR": "Si è generato un errore",
-        "DEVELOPER": "Sviluppatore",
-        "EPOC_LIBRARIES": "Librerie ePocs",
-        "ADDING_LIBRARY": "Aggiunta di una libreria",
-        "CONFIRM_DELETE_LIBRARY": "Eliminare libreria?",
-        "ADD_LIBRARY": "Aggiungi una libreria",
-        "LIBRARY_NAME": "Nome della libreria"
+            "MESSAGE": "Questa azione eliminerà i dati degli esercizi dall'applicazione <br/><small>(attestati, quiz, preferenze, ecc.)</small>",
+            "THROW_ERROR": "Si è generato un errore",
+            "DEVELOPER": "Sviluppatore",
+            "EPOC_LIBRARIES": "Librerie ePocs",
+            "ADDING_LIBRARY": "Aggiunta di una libreria",
+            "CONFIRM_DELETE_LIBRARY": "Eliminare libreria?",
+            "ADD_LIBRARY": "Aggiungi una libreria",
+            "LIBRARY_NAME": "Nome della libreria"
+        }
     },
     "OVERVIEW_PAGE": {
         "PRESENTATION": "Presentazione del corso",
@@ -140,6 +141,7 @@
     },
 
     "FLOATING_MENU": {
+        "MAIN_MENU": "Main menu",
         "HOME": "Home",
         "TOC": "Tavola dei contenuti",
         "CERTIFICATE": "Punteggio & attestato",
