@@ -1,4 +1,7 @@
 export const languages = new Map ([
     ['fr', 'Français'],
-    ['en', 'English']
+    ['en', 'English'],
+    ['it', 'Italiano'],
+    ['es', 'Español'],
+    ['de', 'Deutsch']
 ])
