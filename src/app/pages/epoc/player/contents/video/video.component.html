@@ -6,7 +6,7 @@
     <h4>{{'PLAYER.VIDEO.SUMMARY' | translate}}</h4>
 
     <div class="video-summary">
-      <html-content [html]="content.summary" *ngIf="content.summary && content.summary.length > 0"></html-content>
+      <html-content [html]="content.summary | srcConvert" *ngIf="content.summary && content.summary.length > 0"></html-content>
       <p *ngIf="!content.summary || content.summary.length <= 0">{{'PLAYER.VIDEO.NO_SUMMARY' | translate}}</p>
     </div>
   </ng-container>
