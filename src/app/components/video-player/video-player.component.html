@@ -24,21 +24,14 @@
       </div>
     </ng-container>
   </div>
-
-  <ng-container *ngIf="src && controls.show">
-    <ion-item class="hidden-select" *ngIf="controls.subtitles && subtitles && subtitles.length >0">
-      <ion-label>Sous-titres</ion-label>
-      <ion-select #tracks [value]="trackSelected" (ionChange)='changeSubtitles($event)'>
-        <ion-select-option value="none">Aucun</ion-select-option>
-        <ion-select-option [value]="sub.lang" *ngFor="let sub of subtitles">{{sub.label}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-
+  <ng-container *ngIf="src">
     <div class="video-actions">
-      <div class="video-actions-left" *ngIf="controls.subtitles">
-        <button class="video-action" (click)="captions()" >
-          <ion-icon name="logo-closed-captioning"></ion-icon>
-        </button>
+      <div class="video-actions-left">
+        <ng-container  *ngIf="controls.subtitles && subtitles && subtitles.length >0">
+          <button class="video-action" (click)="captions()" >
+            <ion-icon name="logo-closed-captioning"></ion-icon>
+          </button>
+        </ng-container>
       </div>
       <div class="video-actions-center" *ngIf="controls.playbutton">
         <button class="video-action" aria-label="-10s" (click)="jump(-10)">-10</button>
@@ -68,4 +61,34 @@
       <ion-spinner *ngIf="playing"></ion-spinner>
     </div>
   </div>
+  <ng-container *ngIf="src">
+    <div class="video-actions">
+      <div class="video-actions-left">
+        <ng-container  *ngIf="controls.subtitles && subtitles && subtitles.length >0">
+          <button class="video-action" (click)="captions()" >
+            <ion-icon name="logo-closed-captioning"></ion-icon>
+          </button>
+        </ng-container>
+      </div>
+      <div class="video-actions-center" *ngIf="controls.playbutton">
+        <button class="video-action" aria-label="Lancer la lecture" (click)="playAndroid()">
+          <ion-icon [name]="playing ? 'pause':'play'"></ion-icon>
+        </button>
+      </div>
+      <div class="video-actions-right" *ngIf="controls.fullscreen">
+        <button class="video-action" aria-label="Plein écran" (click)="playAndroid()">
+          <ion-icon  name="expand"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
 </div>
+
+
+<ion-item class="hidden-select" *ngIf="controls.subtitles && subtitles && subtitles.length >0">
+  <ion-label>Sous-titres</ion-label>
+  <ion-select #tracks [value]="trackSelected" (ionChange)='changeSubtitles($event)'>
+    <ion-select-option value="none">Aucun</ion-select-option>
+    <ion-select-option [value]="sub.lang" *ngFor="let sub of subtitles">{{sub.label}}</ion-select-option>
+  </ion-select>
+</ion-item>

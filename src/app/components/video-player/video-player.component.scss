@@ -90,10 +90,6 @@
     background:none;
   }
 
-  .hidden-select{
-    display: none;
-  }
-
   .video-actions{
     display: flex;
     font-size: 25px;
@@ -190,4 +186,8 @@
       }
     }
   }
+}
+
+.hidden-select{
+  display: none;
 }

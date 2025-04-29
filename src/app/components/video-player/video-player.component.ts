@@ -87,9 +87,8 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
         } else {
             url = this.src;
         }
-        const subindex = this.subtitles ? this.subtitles.findIndex(s => s.lang.indexOf('fr') !== -1) : -1;
-        const subtitle = subindex >= 0 ? this.subtitles[subindex].src : '';
-        const language = subindex >= 0 ? this.subtitles[subindex].lang : '';
+        const subtitle = this.trackSelected !== 'none' ? this.subtitles.find(s => s.lang === this.trackSelected).src : '';
+        const language = this.trackSelected !== 'none' ? this.trackSelected : '';
         this.videoPlayer.initPlayer({
             mode: 'fullscreen',
             url,
@@ -236,6 +235,7 @@ export class VideoPlayerComponent implements OnInit, AfterViewInit {
     }
 
     changeSubtitles($event) {
+        if (this.isAndroid) return;
         if ($event.detail.value === 'none') {
             for (const track of this.video.textTracks as unknown as any[]) {
                 track.mode = 'disabled';
