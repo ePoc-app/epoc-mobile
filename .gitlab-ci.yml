@@ -11,7 +11,7 @@ build:
     - apt-get -y install zip
   script:
   - export NG_CLI_ANALYTICS=ci
-  - npm i
+  - npm ci
   - npm run build-preview # build preview for editor
   - cd dist && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd - # zip editor preview
   artifacts:
