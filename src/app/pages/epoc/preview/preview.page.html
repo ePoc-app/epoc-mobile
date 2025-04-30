@@ -69,7 +69,7 @@
     </app-card>
   </div>
   <ng-container *ngFor="let chapter of chapters; let i = index">
-    <div class="separator">{{chapterLabel}} {{i + 1}}. {{chapter.title}}</div>
+    <div class="separator">{{chapter.title}}</div>
     <div class="preview-content">
       <chapter-info [chapter]="chapter"></chapter-info>
     </div>
@@ -94,8 +94,8 @@
       </ng-container>
     </ng-container>
     <div class="preview-content">
-      <common-content [title]="'PLAYER.MODULE_END.FINISH' | translate:{chapter: chapterLabel}"  [subtitle]="'PLAYER.MODULE_END.CONGRATS' | translate" icon="assets/icon/modulecheck.svg">
-        <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="chapters[i+1]" [chapterLabel]="chapterLabel"></chapter-end>
+      <common-content [title]="'PLAYER.MODULE_END.FINISH' | translate"  [subtitle]="'PLAYER.MODULE_END.CONGRATS' | translate" icon="assets/icon/modulecheck.svg">
+        <chapter-end [epoc]="epoc" [chapter]="chapter" [nextChapter]="chapters[i+1]"></chapter-end>
       </common-content>
     </div>
   </ng-container>

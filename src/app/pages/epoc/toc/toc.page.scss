@@ -60,9 +60,11 @@
     flex:1;
     &-label{
       font-weight: bold;
+      line-height: 1.2;
     }
     &-title{
       margin-right: 1rem;
+      line-height: 1.2;
     }
     &-details{
       color:var(--ion-color-inria);

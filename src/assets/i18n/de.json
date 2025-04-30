@@ -175,13 +175,14 @@
             "REDO": "Bewertung wiederholen"
         },
         "CHAPTER_END": {
-            "NEXT": "nächstes {{chapter}}",
-            "MSG": "Glückwunsch, Sie haben das Ende des Kurses erreicht.<br/>Besuchen Sie die Punktzahlenseite, um das Zertifikat zu erhalten<br/>Oder kehren Sie zum Inhaltsverzeichnis zurück, um ein <span>{{chapter}}</span> erneut abzuspielen.",
+            "NEXT": "Nächstes",
+            "FOLLOWING_NEXT": "Als Nächstes:",
+            "MSG": "Glückwunsch, Sie haben das Ende des Kurses erreicht.<br/>Besuchen Sie die Punktzahlenseite, um das Zertifikat zu erhalten<br/>Oder kehren Sie zum Inhaltsverzeichnis zurück.",
             "SCORE": "Punktzahlenseite",
             "REVIEW": "Ihre Meinung abgeben"
         },
         "MODULE_END": {
-            "FINISH": "Sie haben dieses {{chapter}} abgeschlossen",
+            "FINISH": "Sie haben abgeschlossen",
             "CONGRATS": "Herzlichen Glückwunsch"
         },
         "VIDEO": {

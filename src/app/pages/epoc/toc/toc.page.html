@@ -29,16 +29,16 @@
                     <div class="toc-chapter-info">
                         <div class="toc-chapter-info-title" [routerLink]="chapter.resumeLink">
                             <div class="toc-chapter-info-label">
-                                {{epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre'}} {{index + 1}}
+                                {{chapter.title}}
                             </div>
-                            {{chapter.title}}
+                            {{chapter.subtitle}}
                         </div>
                         <div class="toc-chapter-info-details" (click)="toggleDetails(chapter)">
                             <ng-container *ngIf="chapter.opened">{{'TOC_PAGE.VIEW_LESS' | translate}}</ng-container>
                             <ng-container *ngIf="!chapter.opened">{{'TOC_PAGE.VIEW_MORE' | translate}}</ng-container>
                         </div>
                     </div>
-                    <div role="link" [attr.aria-label]="'Allez à' + (epoc.parameters.chapterParameter ? epoc.parameters.chapterParameter : 'Chapitre') + (index+1)" class="toc-chapter-open" [routerLink]="chapter.resumeLink">
+                    <div role="link" [attr.aria-label]="'TOC_PAGE.NEXT_CHAPTER' | translate" class="toc-chapter-open" [routerLink]="chapter.resumeLink">
                         <ion-icon aria-hidden="true" name="chevron-forward-outline" color="inria"></ion-icon>
                     </div>
                 </div>

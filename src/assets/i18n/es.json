@@ -175,13 +175,14 @@
       "REDO": "Rehacer la evaluación"
     },
     "CHAPTER_END": {
-      "NEXT": "siguiente {{chapter}}",
-      "MSG": "Enhorabuena, has llegado al final del curso.<br/>Para obtener el certificado, visita la página de puntuaciones<br/>O vuelve a la tabla de contenidos para reproducir un <span>{{chapter}}</span>.",
+      "NEXT": "Siguiente",
+      "FOLLOWING_NEXT": "A continuación:",
+      "MSG": "Enhorabuena, has llegado al final del curso.<br/>Para obtener el certificado, visita la página de puntuaciones<br/>O vuelve a la tabla de contenidos.",
       "SCORE": "Página de puntuaciones",
       "REVIEW": "Dar tu opinión"
     },
     "MODULE_END": {
-      "FINISH": "Has completado este {{chapter}}",
+      "FINISH": "Has terminado",
       "CONGRATS": "Enhorabuena"
     },
     "VIDEO": {

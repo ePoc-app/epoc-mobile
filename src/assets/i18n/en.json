@@ -177,13 +177,14 @@
             "REDO": "Redo the assessment"
         },
         "CHAPTER_END": {
-            "NEXT": "next {{chapter}}",
-            "MSG": "Congratulation, you have reached the end of the course.<br/>To get the certificate, visit the scores page<br/>Or return to the table of contents to replay a <span>{{chapter}}</span>.",
+            "NEXT": "Next",
+            "FOLLOWING_NEXT": "Following next:",
+            "MSG": "Congratulation, you have reached the end of the course.<br/>To get the certificate, visit the scores page<br/>Or return to the table of contents.",
             "SCORE": "Scores page",
             "REVIEW": "Give your opinion"
         },
         "MODULE_END": {
-            "FINISH": "You have completed this {{chapter}}",
+            "FINISH": "You have finished",
             "CONGRATS": "Congratulations"
         },
         "VIDEO": {

@@ -177,13 +177,14 @@
             "REDO": "Refaire l'évaluation"
         },
         "CHAPTER_END": {
-            "NEXT": "{{chapter}} suivant",
-            "MSG": "Bravo, vous avez atteint la fin de la formation.<br/>Pour obtenir l'attestation, consultez la page des scores<br/>Ou retournez à la table des matières pour rejouer un <span>{{chapter}}</span>.",
+            "NEXT": "Suivant",
+            "FOLLOWING_NEXT": "À suivre :",
+            "MSG": "Bravo, vous avez atteint la fin de cet ePoc.<br/>Pour obtenir l'attestation, consultez la page des scores<br/>Ou retournez à la table des matières.",
             "SCORE": "Page des scores",
             "REVIEW": "Donner votre avis"
         },
         "MODULE_END": {
-            "FINISH": "Vous avez terminé ce {{chapter}}",
+            "FINISH": "Vous avez terminé",
             "CONGRATS": "Félicitations"
         },
         "VIDEO": {

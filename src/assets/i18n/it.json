@@ -176,13 +176,14 @@
             "REDO": "Ripeti la valutazione"
         },
         "CHAPTER_END": {
-            "NEXT": "prossimo {{chapter}}",
-            "MSG": "Congratulazioni, hai raggiunto la fine del corso.<br/>Per ottenere l'attestato, visita la pagina dei punteggi<br/>Oppure torna all'indice per riprodurre un <span>{{chapter}}</span>.",
+            "NEXT": "Prossimo",
+            "FOLLOWING_NEXT": "In seguito:",
+            "MSG": "Congratulazioni, hai raggiunto la fine del corso.<br/>Per ottenere l'attestato, visita la pagina dei punteggi<br/>Oppure torna all'indice.",
             "SCORE": "Pagina dei risultati",
             "REVIEW": "Esprimi la tua opinione"
         },
         "MODULE_END": {
-            "FINISH": "Hai completato questo {{chapter}}",
+            "FINISH": "Hai terminato",
             "CONGRATS": "Congratulazioni"
         },
         "VIDEO": {

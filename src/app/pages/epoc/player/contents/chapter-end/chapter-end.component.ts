@@ -13,7 +13,6 @@ export class ChapterEndComponent implements OnInit {
   @Input() epoc : Epoc;
   @Input() chapter : Chapter;
   @Input() nextChapter : Chapter;
-  @Input() chapterLabel : string;
 
   constructor() { }
 

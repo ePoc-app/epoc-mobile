@@ -17,7 +17,6 @@ export class EpocPreviewPage implements OnInit {
     epoc$: Observable<Epoc>;
     epoc: Epoc;
     chapters: Chapter[];
-    chapterLabel: string;
     selectedTab = 0;
 
     iconFromType = {
@@ -54,7 +53,6 @@ export class EpocPreviewPage implements OnInit {
         this.epoc$.subscribe(epoc => {
             this.epoc = epoc;
             this.chapters = Object.values(this.epoc.chapters);
-            this.chapterLabel = epoc.parameters?.chapterParameter?.toLowerCase() || 'chapitre';
         });
     }
 
