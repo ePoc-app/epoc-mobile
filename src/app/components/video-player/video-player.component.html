@@ -24,7 +24,7 @@
       </div>
     </ng-container>
   </div>
-  <ng-container *ngIf="src">
+  <ng-container *ngIf="src && controls.show">
     <div class="video-actions">
       <div class="video-actions-left">
         <ng-container  *ngIf="controls.subtitles && subtitles && subtitles.length >0">
@@ -61,7 +61,7 @@
       <ion-spinner *ngIf="playing"></ion-spinner>
     </div>
   </div>
-  <ng-container *ngIf="src">
+  <ng-container *ngIf="src && controls.show">
     <div class="video-actions">
       <div class="video-actions-left">
         <ng-container  *ngIf="controls.subtitles && subtitles && subtitles.length >0">
