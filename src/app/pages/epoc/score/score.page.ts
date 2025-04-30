@@ -43,7 +43,7 @@ export class EpocScorePage implements OnInit {
 
     user: User;
     loading: boolean;
-    certificateEnabled = false;
+    certificateUnlocked = false;
 
     settings: Settings;
 
@@ -97,7 +97,7 @@ export class EpocScorePage implements OnInit {
                 if (!this.reading) this.readingStore.addReading(this.epoc.id);
                 if (this.badgeMode) {
                     this.unlockedBadges = this.reading.badges;
-                    this.certificateEnabled = epoc.certificateBadgeCount <= this.unlockedBadges.length
+                    this.certificateUnlocked = epoc.certificateBadgeCount <= this.unlockedBadges.length
                 } else {
                     this.setAssessmentsData();
                 }
@@ -134,7 +134,7 @@ export class EpocScorePage implements OnInit {
             this.assessmentData.totalScore += scoreTotal;
         });
 
-        this.certificateEnabled = this.assessmentData.totalUserScore >= this.epoc.certificateScore;
+        this.certificateUnlocked = this.assessmentData.totalUserScore >= this.epoc.certificateScore;
     }
 
     getScore(content) {
@@ -154,7 +154,7 @@ export class EpocScorePage implements OnInit {
 
     async getCertificate() {
         if (!this.loading) {
-            if (this.settings.devMode || this.certificateEnabled) {
+            if (this.settings.devMode || this.certificateUnlocked) {
                 if (!this.user) {
                     this.setUser().then();
                 } else {

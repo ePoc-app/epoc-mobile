@@ -29,28 +29,30 @@
                         [maxLabel]="assessmentData.totalScore"></score-progress>
       </div>
     </div>
-    <div class="certificate" *ngIf="!certificateEnabled">
-      <h5>{{'PLAYER.SCORE.CONTINUE' | translate}}</h5>
-      <p [translate]="'PLAYER.SCORE.REMAINING'" [translateParams]="{remaining: epoc.certificateScore - assessmentData.totalUserScore}"></p>
-      <ion-button size="medium" expand="block" color="medium" fill="outline" (click)="getCertificate()">
-        <ion-icon name="download-outline" slot="start"></ion-icon>
-        <span>{{'PLAYER.SCORE.GET_CERTIFICATE' | translate}}</span>
-      </ion-button>
-    </div>
-    <div class="certificate success" *ngIf="certificateEnabled">
-      <ion-icon class="badge" src="/assets/icon/badge.svg"></ion-icon>
-      <h5>{{'PLAYER.SCORE.CONGRATS' | translate}}</h5>
-      <p>{{'PLAYER.SCORE.CERTIFICATE_WIN' | translate}}</p>
-      <ion-button size="medium" expand="block" (click)="getCertificate()">
-        <ion-icon name="download-outline" slot="start"></ion-icon>
-        <span>{{'PLAYER.SCORE.GET_CERTIFICATE' | translate}}</span>
-      </ion-button>
-    </div>
+    <ng-container *ngIf="!epoc.certificateDisabled">
+      <div class="certificate" *ngIf="!certificateUnlocked">
+        <h5>{{'PLAYER.SCORE.CONTINUE' | translate}}</h5>
+        <p [translate]="'PLAYER.SCORE.REMAINING'" [translateParams]="{remaining: epoc.certificateScore - assessmentData.totalUserScore}"></p>
+        <ion-button size="medium" expand="block" color="medium" fill="outline" (click)="getCertificate()">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          <span>{{'PLAYER.SCORE.GET_CERTIFICATE' | translate}}</span>
+        </ion-button>
+      </div>
+      <div class="certificate success" *ngIf="certificateUnlocked">
+        <ion-icon class="badge" src="/assets/icon/badge.svg"></ion-icon>
+        <h5>{{'PLAYER.SCORE.CONGRATS' | translate}}</h5>
+        <p>{{'PLAYER.SCORE.CERTIFICATE_WIN' | translate}}</p>
+        <ion-button size="medium" expand="block" (click)="getCertificate()">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          <span>{{'PLAYER.SCORE.GET_CERTIFICATE' | translate}}</span>
+        </ion-button>
+      </div>
+    </ng-container>
     <div class="short-access">
       <h4 class="short-access-label">{{'PLAYER.SCORE.PTS_RECAP' | translate}}</h4>
       <ng-container *ngFor="let assessment of assessments">
         <div class="short-access-item" [routerLink]="'/epoc/play/'+epoc.id+'/'+assessment.chapterId+'/content/'+assessment.id">
-          <ion-label>{{assessment.title}}</ion-label>
+          <ion-label>{{assessment.title}}<span>{{epoc.chapters[assessment.chapterId].title}}</span></ion-label>
           <ion-note [color]="assessment.score !== null ? assessment.score < assessment.scoreTotal ? 'inria-certificate':'inria-correct':'inria-icon'" *ngIf="assessment.scoreTotal > 0">
             {{assessment.score ? assessment.score : 0}}/{{assessment.scoreTotal}}
           </ion-note>
@@ -60,7 +62,7 @@
     </div>
   </div>
   <div class="wrapper" *ngIf="epoc && badgeMode">
-    <div class="certificate flex" *ngIf="!certificateEnabled">
+    <div class="certificate flex" *ngIf="!certificateUnlocked">
       <div class="certificate-text">
         <h6>{{'PLAYER.SCORE.CONTINUE' | translate}}</h6>
         <p [translate]="'PLAYER.SCORE.BADGE_REMAINING'" [translateParams]="{remaining: epoc.certificateBadgeCount - unlockedBadges.length}"></p>
@@ -69,7 +71,7 @@
         <badge icon="cert-grey" grey="true" nobg="true"></badge>
       </div>
     </div>
-    <div class="certificate flex success" *ngIf="certificateEnabled">
+    <div class="certificate flex success" *ngIf="certificateUnlocked">
       <div class="certificate-text">
         <h6>{{'PLAYER.SCORE.CONGRATS' | translate}}</h6>
         <p>{{'PLAYER.SCORE.CERTIFICATE_WIN' | translate}}</p>
