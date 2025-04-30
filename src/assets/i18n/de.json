@@ -4,24 +4,24 @@
         "CONTINUE": "Fortsetzen",
         "DOWNLOADING": "Wird heruntergeladen",
         "DISCOVER": "Entdecken",
-        "OPEN_ZIP": "Zip öffnen",
+        "OPEN_ZIP": "ZIP wird geöffnet",
         "OPEN": "Öffnen",
-        "ADD_EPOC": "Füge deinen ePoc hinzu",
-        "IMPORT": "Importieren"
+        "ADD_EPOC": "Fügen Sie Ihr ePoc hinzu",
+        "IMPORT": "Import von"
     },
     "ABOUT_PAGE": {
         "ABOUT": "Über",
         "EPOC_APPLICATION": "Die ePoc-Anwendung",
-        "EPOC_DESCRIPTION": "ePoc (Electronic Pocket Open Course) ist eine digitale Schulungsanwendung für Mobilgeräte. Sie wurde innerhalb des <a href=\"https://learninglab.inria.fr\" target=\"_blank\" title=\"Website des Inria Learning Lab\" class=\"about-page-link\">Inria Learning Lab</a> entwickelt.",
+        "EPOC_DESCRIPTION": "ePoc (Electronic Pocket Open Course) ist eine digitale Schulungsanwendung für Mobilgeräte. Sie wurde innerhalb des <a href=\"https://learninglab.inria.fr\" target=\"_blank\" title=\"Inria Learning Lab Website\" class=\"about-page-link\">Inria Learning Lab</a> entwickelt.",
         "PERSONAL_DATA": "Persönliche Daten",
-        "PERSONAL_DATA_DESCRIPTION": "Es werden keine personenbezogenen Daten erfasst.",
-        "ANALYTICS": "Analytik",
-        "ANALYTICS_DESCRIPTION_1": "Wir verwenden Matomo, eine freie und Open-Source-Software zur Messung von Statistiken, empfohlen von der CNIL.",
-        "ANALYTICS_DESCRIPTION_2": "Diese Analysen werden ausschließlich für interne Forschungszwecke verwendet, um herauszufinden, wie wir den Service, den wir all unseren Benutzern bieten, verbessern können.",
-        "ANALYTICS_DESCRIPTION_3": "Sie ermöglichen uns einfach zu bewerten, wie Sie als <b>anonymer Benutzer</b> mit unserer Anwendung interagieren (die gesammelten Daten identifizieren Sie nicht persönlich).",
-        "ANALYTICS_DESCRIPTION_4": "Sie können dieser Erhebung in den Anwendungseinstellungen widersprechen. Dies schützt Ihre Privatsphäre, verhindert jedoch auch, dass der Eigentümer aus Ihren Aktionen lernt und eine bessere Erfahrung für Sie und andere Benutzer schafft.",
+        "PERSONAL_DATA_DESCRIPTION": "Es werden keine personenbezogenen Daten erhoben.",
+        "ANALYTICS": "Analysen",
+        "ANALYTICS_DESCRIPTION_1": "Wir verwenden Matomo, eine kostenlose und quelloffene Software zur Messung von Statistiken, die von der CNIL empfohlen wird.",
+        "ANALYTICS_DESCRIPTION_2": "Diese Analysen werden ausschließlich für interne Forschungszwecke verwendet, um herauszufinden, wie wir den Service, den wir all unseren Benutzern anbieten, verbessern können.",
+        "ANALYTICS_DESCRIPTION_3": "Sie ermöglichen es uns lediglich zu bewerten, wie Sie als <b>anonymer Benutzer</b> mit unserer Anwendung interagieren (die gesammelten Daten identifizieren Sie nicht persönlich).",
+        "ANALYTICS_DESCRIPTION_4": "Sie können dieser Erhebung in den Anwendungseinstellungen widersprechen. Dies schützt Ihre Privatsphäre, verhindert jedoch auch, dass der Besitzer etwas über Ihre Aktionen erfährt und eine bessere Erfahrung für Sie und andere Benutzer schafft.",
         "CONTACT": "Kontakt",
-        "CONTACT_ILL": "Haben Sie eine Frage? Sie können uns unter folgender Adresse kontaktieren:",
+        "CONTACT_ILL": "Sie haben eine Frage? Sie können uns unter folgender Adresse kontaktieren:",
         "CONTACT_DPO": "Datenschutzbeauftragter:",
         "PRIVACY_POLICY_ABOUT": "Um mehr über unsere Datenschutzrichtlinie zu erfahren:",
         "PRIVACY_POLICY": "Datenschutzrichtlinie"
@@ -29,7 +29,7 @@
     "SETTINGS_PAGE": {
         "SETTINGS": "Einstellungen",
         "DISPLAY": "Anzeige",
-        "DEBUG": "Fehlerbehebung",
+        "DEBUG": "Debuggen",
         "DEBUG_ERROR": "Testfehler ausgeben",
         "LANGUAGE": "Sprache",
         "THEME": "Erscheinungsbild",
@@ -50,15 +50,17 @@
         "APP_INFO": "Anwendungsinformationen",
         "VERSION": "Version",
         "BUILD_VERSION": "Build-Version",
-        "DATA_COLLECTION": "Erfassung anonymer Statistiken",
+        "DATA_COLLECTION": "Anonyme Statistiksammlung",
         "EPOC_DATA": "ePoc-Daten",
         "DEV_MODE": "Entwicklermodus",
-        "OPEN_EPOC": "Anderen ePoc öffnen",
+        "OPEN_EPOC": "Ein anderes ePoc öffnen",
         "LIBRARY": "Bibliothek",
+        "RESET_USER": "Benutzer ändern",
+        "RESET_USER_WARNING": "Achtung, dies löscht Ihren Fortschritt",
         "DELETE_DATA": "Daten löschen",
-        "DATA_EXAMPLE": "Zertifikate, Quizze, Einstellungen usw.",
+        "DATA_EXAMPLE": "Zertifikate, Quizze, Präferenzen usw.",
         "SET_USER": {
-            "INFO": "Füllen Sie Ihre Informationen aus",
+            "INFO": "Geben Sie Ihre Informationen ein",
             "MESSAGE": "Diese Informationen werden zur Ausstellung von Zertifikaten verwendet",
             "LASTNAME_PLACEHOLDER": "Nachname",
             "FIRSTNAME_PLACEHOLDER": "Vorname"
@@ -71,7 +73,7 @@
         },
         "DELETE_DATA_MODAL": {
             "INFO": "Sind Sie sicher?",
-            "MESSAGE": "Diese Aktion löscht die Übungsdaten der Anwendung <br/><small>(Zertifikate, Quizze, Einstellungen usw.)</small>"
+            "MESSAGE": "Diese Aktion löscht die Übungsdaten aus der Anwendung <br/><small>(Zertifikate, Quizze, Präferenzen usw.)</small>"
         },
         "THROW_ERROR": "Ein Fehler wurde ausgegeben",
         "DEVELOPER": "Entwickler",
@@ -80,5 +82,251 @@
         "CONFIRM_DELETE_LIBRARY": "Bibliothek löschen?",
         "ADD_LIBRARY": "Bibliothek hinzufügen",
         "LIBRARY_NAME": "Bibliotheksname"
-    }
+    },
+    "OVERVIEW_PAGE": {
+        "PRESENTATION": "Kurspräsentation",
+        "ACTIVITIES": {
+            "singular": "Bewertung",
+            "plural": "Bewertungen"
+        },
+        "CHAPTERS": {
+            "singular": "Modul",
+            "plural": "Module"
+        },
+        "MIN_MODULE": "Min/Modul",
+        "OBJECTIVES": {
+            "singular": "Ziel",
+            "plural": "Ziele"
+        },
+        "PREREQUISITES": "Voraussetzungen",
+        "RESUME": "Zusammenfassung",
+        "AUTHORS": {
+            "singular": "Autor",
+            "plural": "Autoren"
+        },
+        "PICTURE_ALT": "Bild von",
+        "GO": "Los geht's!",
+        "CONTINUE": "Fortsetzen",
+        "DOWNLOAD": "Herunterladen",
+        "DOWNLOADING": "Wird heruntergeladen",
+        "OPENING": "Wird geöffnet"
+    },
+    "TOC_PAGE": {
+        "HEADER": "Inhaltsverzeichnis",
+        "VIEW_MORE": "Mehr anzeigen",
+        "VIEW_LESS": "Weniger anzeigen"
+    },
+    "LICENSE_MODAL": {
+        "HEADER": "Lizenz",
+        "MESSAGE": "Nutzungsbedingungen für den ePoc-Inhalt <strong>\"{{epoc}}\"</strong>:<br/><br/>Sofern nicht anders angegeben, werden die Ressourcen in diesem ePoc unter der <a href=\"{{licenseUrl}}\" title=\"Lizenz-Link\" target=\"_blank\">{{licenseName}}</a>-Lizenz verbreitet. <br/><br/>Wenn Sie ePoc-Inhalte verwenden, hier ist die Angabe, die je nach Verwendung hinzugefügt werden muss:<br/>Credit: ePoc <strong>\"{{epoc}}\"</strong>, veröffentlicht unter der {{licenseName}}-Lizenz in der Anwendung <a href=\"https://epoc.inria.fr/\" title=\"Link zur ePoc-Seite\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    },
+    "COMMENT_MODAL": {
+        "HEADER": "Einen Kommentar hinterlassen",
+        "MESSAGE": "Welchen Dienst möchten Sie kommentieren?"
+    },
+    "ZRR": {
+        "LOGIN_PAGE": {
+            "HEADER": "Willkommen",
+            "ZRR_MSG": "In der ePoc-Schulung: Sperrgebiet (ZRR)",
+            "MSG": "Um loszulegen, melden Sie sich bitte an",
+            "SPAN_CAS": "Verbindung zu CAS Inria",
+            "SPAN_EXT": "Externe Verbindung",
+            "ACCESS": "Zugang anfordern",
+            "WELCOME": "Willkommen",
+            "ERROR_RECUP": "Problem beim Abrufen des Profils",
+            "ERROR_AUTH": "Authentifizierungsproblem"
+        },
+        "LOGIN_MODAL": {
+            "HEADER": "Authentifizierung",
+            "EMAIL_PLACEHOLDER": "name@gmail.com",
+            "ERROR": "Falsche E-Mail-Adresse oder falsches Passwort"
+        }
+    },
+    "FLOATING_MENU": {
+        "MAIN_MENU": "Hauptmenü",
+        "HOME": "Startseite",
+        "TOC": "Inhaltsverzeichnis",
+        "CERTIFICATE": "Punktzahl & Zertifikat",
+        "LICENSE": "Lizenz",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen",
+        "RESET": "Zurücksetzen",
+        "SCORE_DETAILS": "Punktedetails",
+        "SETTINGS": "Einstellungen",
+        "IMPORT_FILE": "Aus Datei importieren",
+        "IMPORT_LINK": "Aus Link importieren",
+        "IMPORT_QR": "Aus QR-Code importieren",
+        "ERROR": "Ein Fehler ist aufgetreten",
+        "ERROR_SSL": "Kann nicht von unsicherer Quelle herunterladen (URL verwendet kein https)"
+    },
+    "PLAYER": {
+        "VIDEOS": {
+            "singular": "Video",
+            "plural": "Videos"
+        },
+        "ASSESSMENT_COMPONENT": {
+            "GRADED": "Benotet",
+            "NOT_GRADED": "Nicht benotet",
+            "QUESTIONS": {
+                "singular": "Frage",
+                "plural": "Fragen"
+            },
+            "START": "Bewertung starten",
+            "REDO": "Bewertung wiederholen"
+        },
+        "CHAPTER_END": {
+            "NEXT": "nächstes {{chapter}}",
+            "MSG": "Glückwunsch, Sie haben das Ende des Kurses erreicht.<br/>Besuchen Sie die Punktzahlenseite, um das Zertifikat zu erhalten<br/>Oder kehren Sie zum Inhaltsverzeichnis zurück, um ein <span>{{chapter}}</span> erneut abzuspielen.",
+            "SCORE": "Punktzahlenseite",
+            "REVIEW": "Ihre Meinung abgeben"
+        },
+        "MODULE_END": {
+            "FINISH": "Sie haben dieses {{chapter}} abgeschlossen",
+            "CONGRATS": "Herzlichen Glückwunsch"
+        },
+        "VIDEO": {
+            "SUMMARY": "Zusammenfassung",
+            "NO_SUMMARY": "Keine Zusammenfassung."
+        },
+        "TRANSCRIPT": {
+            "TRANSCRIPT": "Transkript",
+            "CLOSE": "Schließen"
+        },
+        "SCORE": {
+            "HEADER": "Mein Zertifikat",
+            "TOTAL_SCORE": "Ihre Gesamtpunktzahl",
+            "PTS": "Punkte",
+            "CONTINUE": "Weitermachen!",
+            "REMAINING": "Sammeln Sie {{remaining}} Punkte und erhalten Sie Ihr Zertifikat",
+            "BADGE_REMAINING": "Sammeln Sie {{remaining}} Abzeichen und erhalten Sie Ihr Zertifikat",
+            "GET_CERTIFICATE": "Zertifikat erhalten",
+            "CONGRATS": "Herzlichen Glückwunsch",
+            "CERTIFICATE_WIN": "Sie haben die Punktzahl erreicht, um das Zertifikat zu erhalten",
+            "PTS_RECAP": "Punkteübersicht",
+            "FAIL_MODAL": {
+                "HEADER": "Nicht verfügbar",
+                "MSG": "Sie haben die erforderliche Punktzahl ({{score}} Punkte) für das Zertifikat noch nicht erreicht."
+            },
+            "CERTIFICATE_PDF": {
+                "COMPLETION_CERTIFICATE": "ABSCHLUSSZEUGNIS",
+                "AUTHORS": "Autor(en)",
+                "EPOC_EDITION": "ePoc-Ausgabe",
+                "DELIVERED_TO": "Zertifikat ausgestellt an:",
+                "DELIVERED_THE": "Ausgestellt am",
+                "ERROR": "Fehler",
+                "ERROR_PROMPT": "Beim {{type}} des Zertifikats ist ein Fehler aufgetreten",
+                "ERROR_TYPE": {
+                    "OPEN": "Öffnen",
+                    "RECUP": "Abrufen",
+                    "SAVE": "Speichern"
+                },
+                "WAITING": "Bitte warten...",
+                "DOWNLOAD_FINISH": "Download abgeschlossen",
+                "CERTIFICATE_OBTENTION": "Sie haben das Zertifikat erhalten"
+            }
+        }
+    },
+    "QUESTION": {
+        "PREVIEW": {
+            "RESPONSES": "Die Antworten",
+            "EXPLANATION": "Erklärung"
+        },
+        "ASSESSMENT_PAGE": {
+            "SCORE": "Sie erhalten",
+            "NOT_GRADED": "Bewertung nicht benotet",
+            "TOTAL_SCORE": "Gesamtpunktzahl:",
+            "RESTART_ACTIVITY": "Bewertung neu starten",
+            "CONTINUE_COURSE": "Kurs fortsetzen"
+        },
+        "QUIT_MODAL": {
+            "HEADER": "Möchten Sie diese Bewertung wirklich verlassen?",
+            "MSG": "Sie verlieren Ihren Fortschritt und müssen diese Bewertung von vorne beginnen",
+            "STAY": "Nein, Bewertung fortsetzen",
+            "QUIT": "Ja, verlassen"
+        },
+        "SIMPLE_QUESTION": {
+            "VALIDATE": "Meine Antworten bestätigen",
+            "FINISH": "Ich bin fertig"
+        },
+        "DRAG_DROP_INSTRUCTION": "Klicken oder ziehen Sie das <span class='label'>Label</span> in die richtige <span class='cat'>Kategorie</span> unten:",
+        "DROPDOWN_INSTRUCTION": "Wählen Sie eine Antwort aus",
+        "SWIPE": {
+            "INSTRUCTION": "Ziehen Sie die Karte nach links oder rechts in die entsprechende Kategorie",
+            "FINISH": "Es ist vorbei!"
+        },
+        "CERTIFICATE": "Zertifikat",
+        "CORRECTION": {
+            "CORRECTION": "Korrektur",
+            "RESPONDED": "Sie haben geantwortet",
+            "SUCCESS": "Sie haben bestanden",
+            "FAILURE": "Sie sind durchgefallen",
+            "TRUE": "Das ist eine gute Antwort!",
+            "FALSE": "Das ist nicht wahr!",
+            "CORRECT": "Richtige Antwort:",
+            "FORGOTTEN": "Sie haben vergessen",
+            "OMISSION": {
+                "singular": "Auslassung",
+                "plural": "Auslassungen"
+            },
+            "WAS_TRUE": "Das war eine gute Antwort!",
+            "CORRECT_ANSWERS": {
+                "singular": "richtige Antwort",
+                "plural": "richtige Antworten"
+            },
+            "WRONG_ANSWERS": {
+                "singular": "falsche Antwort",
+                "plural": "falsche Antworten"
+            },
+            "CORRECT_RANKING": "Hier ist die richtige Reihenfolge",
+            "POSITION": "Position"
+        },
+        "VALIDATE": "Bestätigen",
+        "NEXT": "Nächste",
+        "EXPLANATIONS": "Erklärungen",
+        "RESPONSES": "Antworten"
+    },
+    "DEBUG_REPORT": "Bericht",
+    "CERTIFICATE_MODAL": {
+        "HEADER": "Herzlichen Glückwunsch",
+        "SCORE_REACHED": "Sie haben die erforderliche Punktzahl erreicht, um das Zertifikat zu erhalten",
+        "MSG": "Erhalten Sie das Zertifikat jetzt auf der Punktzahlenseite oder setzen Sie das Sammeln von Punkten fort.",
+        "GET": "Zertifikat erhalten",
+        "CONTINUE": "Fortsetzen"
+    },
+    "BADGE": {
+        "NEW_BADGE_UNLOCKED": "Neue Belohnung erhalten!",
+        "VERBS": {},
+        "PASSIVE_VERBS": {
+            "started": "Haben angefangen",
+            "completed": "Haben abgeschlossen",
+            "passed": "Haben bestanden",
+            "failed": "Sind durchgefallen",
+            "viewed": "Haben angesehen",
+            "read": "Haben gelesen",
+            "played": "Haben gespielt",
+            "watched": "Haben zugesehen",
+            "listened": "Haben zugehört",
+            "attempted": "Haben versucht",
+            "scored": "Haben {{scored}} bei"
+        },
+        "ENTITY_TYPES": {
+            "video": "das Video",
+            "chapter": "das Kapitel",
+            "page": "die Seite",
+            "html": "den Text",
+            "audio": "das Audio",
+            "assessment": "die Bewertung",
+            "question": "die Frage",
+            "choice": "die Frage",
+            "drag-and-drop": "die Frage",
+            "reorder": "die Frage",
+            "swipe": "die Frage",
+            "dropdown-list": "die Frage"
+        }
+    },
+    "LOADING": "Wird geladen",
+    "CANCEL": "Abbrechen",
+    "CONFIRM": "Bestätigen",
+    "CLOSE": "Schließen",
+    "OK": "OK"
 }

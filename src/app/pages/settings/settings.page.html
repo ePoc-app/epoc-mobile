@@ -96,6 +96,10 @@
           <ion-label role="button">{{"SETTINGS_PAGE.DEFINE_USER" | translate}}</ion-label>
         </ion-item>
       </ng-container>
+      <div role="button" class="big-button" (click)="resetUser()">
+        <div class="big-button-label"><ion-icon aria-hidden="true" name="create-outline"></ion-icon>{{"SETTINGS_PAGE.RESET_USER" | translate}}</div>
+        <div class="big-button-sublabel">{{"SETTINGS_PAGE.RESET_USER_WARNING" | translate}}</div>
+      </div>
     </ion-list>
     <ion-list *ngIf="info && info.version">
       <ion-list-header>

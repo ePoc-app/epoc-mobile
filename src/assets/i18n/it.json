@@ -54,6 +54,8 @@
         "DEV_MODE": "Modalità sviluppatore",
         "OPEN_EPOC": "Apri un altro ePoc",
         "LIBRARY": "Libreria",
+        "RESET_USER": "Cambia utente",
+        "RESET_USER_WARNING": "Attenzione, questo eliminerà i tuoi progressi",
         "DELETE_DATA": "Elimina dati",
         "DATA_EXAMPLE": "Attestati, quiz, preferenze, ecc.",
         "SET_USER": {

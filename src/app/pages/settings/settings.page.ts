@@ -184,6 +184,30 @@ export class SettingsPage implements OnInit {
         await alert.present();
     }
 
+    async resetUser() {
+        const alert = await this.alertController.create({
+            header: this.translate.instant('SETTINGS_PAGE.DELETE_DATA_MODAL.INFO'),
+            message: this.translate.instant('SETTINGS_PAGE.DELETE_DATA_MODAL.MESSAGE'),
+            buttons: [
+                {
+                    text: this.translate.instant('CANCEL'),
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: this.translate.instant('CONFIRM'),
+                    handler: async () => {
+                        this.readingStore.resetAll();
+                        this.auth.setUser(null);
+                        this.user = null;
+                        await this.setUser();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
     logout() {
         this.auth.setUser(null).then(() => {
             this.router.navigateByUrl('/login');
