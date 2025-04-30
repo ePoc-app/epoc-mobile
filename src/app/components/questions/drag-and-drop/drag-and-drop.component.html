@@ -1,22 +1,25 @@
-<div class="responses" [ngClass]="{'dragging': isDragging}" *ngIf="responses.length > 0">
-  <div class="response-item">
-    <span>{{this.responses[0].label}}</span>
-    <ion-icon src="/assets/icon/slider.svg"></ion-icon>
-    <div class="response-item-overlay" #dropItem></div>
-  </div>
-</div>
 <div class="drop-zones">
-  <ion-range class="progress-indicator" disabled="true" mode="md" step="1" min="0" *ngIf="!disabled"
-             [max]="question.responses.length" [value]="question.responses.length - responses.length" snaps="true"></ion-range>
   <p class="drop-zones-instruction" *ngIf="!disabled">
     <ng-container *ngIf="question.statement">
       <span class="custom" *ngIf="!disabled" [innerHTML]="question.statement | nbsp | srcConvert | safe:'html'"></span>
     </ng-container>
     <ng-container *ngIf="!question.statement">
       <ion-icon src="/assets/icon/glisser2.svg"></ion-icon>
-      <span>{{'QUESTION.DRAG_DROP_INSTRUCTION' | translate}}</span>
+      <div [innerHTML]="'QUESTION.DRAG_DROP_INSTRUCTION' | translate"></div>
     </ng-container>
   </p>
+
+  <ion-range class="progress-indicator" disabled="true" mode="md" step="1" min="0" *ngIf="!disabled"
+             [max]="question.responses.length" [value]="question.responses.length - responses.length" snaps="true"></ion-range>
+
+  <div class="responses" [ngClass]="{'dragging': isDragging}" *ngIf="responses.length > 0">
+    <div class="response-item">
+      <span>{{this.responses[0].label}}</span>
+      <ion-icon src="/assets/icon/slider.svg"></ion-icon>
+      <div class="response-item-overlay" #dropItem></div>
+    </div>
+  </div>
+
   <div class="drop-zone" [ngClass]="{'open': zone.isOpen && answer[zoneIndex].length > 0}" (click)="addResponse(zoneIndex)" *ngFor="let zone of dropZones; let zoneIndex = index;" #dropZonesElems>
     <div class="zone-header">
       <div class="zone-label">{{zone.label}}</div>

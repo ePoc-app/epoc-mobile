@@ -246,7 +246,7 @@
       "VALIDATE": "Confirmar mis respuestas",
       "FINISH": "He terminado"
     },
-    "DRAG_DROP_INSTRUCTION": "Haz clic o arrastra la etiqueta a la categoría correcta a continuación:",
+    "DRAG_DROP_INSTRUCTION": "Haz clic o arrastra la <span class='label'>etiqueta</span> a la <span class='cat'>categoría</span> correcta a continuación:",
     "DROPDOWN_INSTRUCTION": "Selecciona una respuesta",
     "SWIPE": {
       "INSTRUCTION": "Arrastra la tarjeta a la izquierda o a la derecha en la categoría apropiada",

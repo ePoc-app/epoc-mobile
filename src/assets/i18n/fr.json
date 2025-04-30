@@ -248,7 +248,7 @@
             "VALIDATE": "Valider mes réponses",
             "FINISH": "J'ai terminé"
         },
-        "DRAG_DROP_INSTRUCTION": "Cliquez ou glissez l'étiquette dans la bonne catégorie ci-dessous :",
+        "DRAG_DROP_INSTRUCTION": "Cliquez ou glissez <span class='label'>l'étiquette</span> dans la bonne <span class='cat'>catégorie</span> ci-dessous :",
         "DROPDOWN_INSTRUCTION": "Sélectionnez une réponse",
         "SWIPE": {
             "INSTRUCTION": "Glissez la carte à gauche ou à droite dans la catégorie convenable",

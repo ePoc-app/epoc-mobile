@@ -248,7 +248,7 @@
             "VALIDATE": "Confirm my answers",
             "FINISH": "I finished"
         },
-        "DRAG_DROP_INSTRUCTION": "Click or drag the label to the correct category below :",
+        "DRAG_DROP_INSTRUCTION": "Click or drag the <span class='label'>label</span> to the correct <span class='cat'>category</span> below :",
         "DROPDOWN_INSTRUCTION": "Select an answer",
         "SWIPE": {
             "INSTRUCTION": "Drag the card to the left or right into the appropriate category",
