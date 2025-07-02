@@ -1,4 +1,4 @@
-import {ErrorHandler, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouteReuseStrategy} from '@angular/router';
@@ -20,7 +20,6 @@ import {AuthGuardService} from './services/auth-guard.service';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {HTTP} from '@awesome-cordova-plugins/http/ngx';
 import {FileTransfer} from '@awesome-cordova-plugins/file-transfer/ngx';
-import * as Sentry from '@sentry/angular-ivy';
 import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
 import {NgxMatomoRouterModule} from '@ngx-matomo/router';
 import {environment as env} from 'src/environments/environment';
@@ -33,19 +32,6 @@ export class MyHammerConfig extends HammerGestureConfig {
         press: { time: 1000 }
     }
 }
-
-Sentry.init(
-    {
-        dsn: env.sentry,
-        // To set your release and dist versions
-        release: 'fr.inria.epoc@dev',
-        dist: '1',
-        // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-        // We recommend adjusting this value in production.
-        tracesSampleRate: 1.0,
-        integrations: []
-    }
-);
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,7 +68,6 @@ export function createTranslateLoader(http: HttpClient) {
         HammerModule
     ],
     providers: [
-        { provide: ErrorHandler, useValue: Sentry.createErrorHandler() },
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},
         File,

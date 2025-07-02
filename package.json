@@ -67,7 +67,6 @@
     "@ngx-matomo/tracker": "^3.2.1",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
-    "@sentry/angular-ivy": "^7.71.0",
     "@types/jasmine": "~4.0.3",
     "@types/jasminewd2": "^2.0.10",
     "@types/katex": "^0.16.7",
