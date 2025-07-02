@@ -14,8 +14,6 @@ import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import {Drivers} from '@ionic/storage';
 import {IonicStorageModule} from '@ionic/storage-angular';
 import {PipesModule} from './pipes/pipes.module';
-import {LoginComponent} from './login/login.component';
-import {LoginCallbackComponent} from './login/login-callback.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {HTTP} from '@awesome-cordova-plugins/http/ngx';
@@ -38,7 +36,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, LoginCallbackComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

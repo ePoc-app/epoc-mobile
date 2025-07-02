@@ -75,10 +75,6 @@
                 {
                   "replace": "src/environments/secrets.ts",
                   "with": "src/environments/secrets.prod.ts"
-                },
-                {
-                  "replace": "src/environments/libraries.ts",
-                  "with": "src/environments/libraries.prod.ts"
                 }
               ],
               "optimization": true,
@@ -149,10 +145,6 @@
                 {
                   "replace": "src/environments/secrets.ts",
                   "with": "src/environments/secrets.prod.ts"
-                },
-                {
-                  "replace": "src/environments/libraries.ts",
-                  "with": "src/environments/libraries.prod.ts"
                 }
               ]
             }

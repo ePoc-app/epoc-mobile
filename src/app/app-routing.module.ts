@@ -1,9 +1,5 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './login/login.component';
-import {AuthGuardService} from './services/auth-guard.service';
-import {LoginCallbackComponent} from './login/login-callback.component';
-import {mode} from 'src/environments/environment.mode';
 
 const routesDefault: Routes = [
     {
@@ -25,43 +21,9 @@ const routesDefault: Routes = [
     {path: '**', redirectTo: '/library'}
 ];
 
-const routesInria: Routes = [
-    {
-        path: 'library',
-        canActivate: [AuthGuardService],
-        loadChildren: () => import('./pages/library/library.module').then(m => m.LibraryModule)
-    },
-    {
-        path: 'epoc',
-        canActivate: [AuthGuardService],
-        loadChildren: () => import('./pages/epoc/epoc.module').then(m => m.EpocModule)
-    },
-    {
-        path: 'about',
-        loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'login/:error',
-        component: LoginComponent
-    },
-    {
-        path: 'callback',
-        component: LoginCallbackComponent
-    },
-    {
-        path: 'settings',
-        loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
-    },
-    {path: '**', redirectTo: '/library'}
-];
-
 @NgModule({
     imports: [
-        RouterModule.forRoot(mode === 'inria' ? routesInria : routesDefault, {preloadingStrategy: PreloadAllModules})
+        RouterModule.forRoot(routesDefault, {preloadingStrategy: PreloadAllModules})
     ],
     exports: [RouterModule]
 })

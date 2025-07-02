@@ -6,10 +6,9 @@ import {ReadingStoreService} from 'src/app/services/reading-store.service';
 import {AuthService} from 'src/app/services/auth.service';
 import {Router} from '@angular/router';
 import {User} from 'src/app/classes/user';
-import {mode} from 'src/environments/environment.mode';
 import {environment as env} from 'src/environments/environment';
 import {App, AppInfo} from '@capacitor/app';
-import {LibraryService} from '../../services/library.service';
+import {LibraryService} from 'src/app/services/library.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
 import {languages} from 'src/environments/languages';
@@ -24,9 +23,7 @@ export class SettingsPage implements OnInit {
     settings: Settings;
     info: AppInfo;
     user: User;
-    mode = mode;
     private devModeCount = 0;
-    libraryUrl = env.mode[mode].libraryUrl;
     langs = languages;
 
     libraryPromptButtons = [{
@@ -74,7 +71,6 @@ export class SettingsPage implements OnInit {
         this.settingsStore.settings$.subscribe(settings => {
             if (settings) {
                 this.settings = settings;
-                this.libraryUrl = env.mode[mode][settings.libraryMode];
             }
         });
     }
@@ -146,10 +142,6 @@ export class SettingsPage implements OnInit {
     }
 
     async setUser(){
-        if (this.mode === 'inria') {
-            this.router.navigateByUrl('/login');
-            return;
-        }
         const alert = await this.alertController.create({
             header: this.translate.instant('SETTINGS_PAGE.SET_USER.INFO'),
             message: this.translate.instant('SETTINGS_PAGE.SET_USER.MESSAGE'),
