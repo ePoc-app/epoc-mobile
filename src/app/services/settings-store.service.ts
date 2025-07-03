@@ -18,7 +18,6 @@ export class SettingsStoreService {
         lineHeight: 1.5,
         lang: languages.has(navigator.language.substring(0,2)) ? navigator.language.substring(0,2) : 'en',
         theme: 'light',
-        libraryMode: 'libraryUrl',
         customLibrairies: [],
         devMode:false,
         isUserOptIn: true

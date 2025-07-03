@@ -1,3 +1,5 @@
+import {uri} from '@epoc/epoc-types/dist/v2';
+
 export class Settings {
     debug:boolean;
     font: string;
@@ -5,8 +7,7 @@ export class Settings {
     lineHeight: number;
     lang: string;
     theme: 'auto' | 'dark' | 'light';
-    libraryMode: 'libraryUrl'|'libraryQlfUrl';
-    customLibrairies: {name: string, url: string}[];
+    customLibrairies: uri[];
     devMode: boolean;
     isUserOptIn: boolean;
 }

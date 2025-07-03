@@ -51,7 +51,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.libraryService.library$.subscribe(data => {
+      this.libraryService.officialCollections$.subscribe(data => {
         if (data && data.length) SplashScreen.hide();
       })
       this.settingsStoreService.settings$.subscribe((settings) => {

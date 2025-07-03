@@ -36,7 +36,7 @@ export class EpocPreviewPage implements OnInit {
     }
 
     ngOnInit() {
-        this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
+        // this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data; });
         this.route.paramMap.subscribe((params) => {
             if (params.get('id')){
                 this.epocId = this.route.snapshot.paramMap.get('id')

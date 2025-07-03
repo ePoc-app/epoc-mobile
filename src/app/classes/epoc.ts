@@ -1,9 +1,10 @@
-import {uid} from '@epoc/epoc-types/src/v1';
+import {uid} from '@epoc/epoc-types/dist/v1';
 import {Epoc as EpocType, EpocMetadata} from '@epoc/epoc-types/dist/v1';
 import {Rule} from '@epoc/epoc-types/dist/v2/rule';
-import {Chapter as ChapterType} from '@epoc/epoc-types/src/v1/epoc';
+import {Chapter as ChapterType} from '@epoc/epoc-types/dist/v1/epoc';
 import {Content} from './contents/content'
 import {Assessment, Question, SimpleQuestion} from './contents/assessment';
+import {ePocCollection} from '@epoc/epoc-types/dist/v1/collection';
 
 export {EpocMetadata} from '@epoc/epoc-types/dist/v1'
 
@@ -22,6 +23,15 @@ export interface Epoc extends EpocType {
     certificateBadgeCount: number;
 }
 
+export interface EpocLibraryState {
+    downloading?: boolean,
+    unzipping?: boolean,
+    downloaded?: boolean,
+    opened?: boolean,
+    updateAvailable?: boolean
+}
+
+
 export interface EpocLibrary extends EpocMetadata {
     downloading: boolean;
     downloaded: boolean;
@@ -33,6 +43,9 @@ export interface EpocLibrary extends EpocMetadata {
     lastModified: string;
     lang: string;
     translation: '';
+}
+export interface EpocCollection extends ePocCollection{
+    ePocs: Record<uid, EpocLibrary>;
 }
 
 export interface Chapter extends ChapterType {

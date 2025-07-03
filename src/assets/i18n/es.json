@@ -77,6 +77,8 @@
     },
     "THROW_ERROR": "Se ha emitido un error",
     "DEVELOPER": "Desarrollador",
+    "OFFICIAL_COLLECTIONS": "Colecciones oficiales",
+    "CUSTOM_COLLECTIONS": "Colecciones personalizadas",
     "EPOC_LIBRARIES": "Bibliotecas de ePocs",
     "ADDING_LIBRARY": "Añadir una biblioteca",
     "CONFIRM_DELETE_LIBRARY": "¿Eliminar biblioteca?",

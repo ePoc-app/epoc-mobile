@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, forkJoin, from, Observable, ReplaySubject, timer} from 'rxjs';
-import {filter, map, startWith} from 'rxjs/operators';
-import {Chapter, CustomLibrary, Epoc, EpocLibrary, EpocMetadata} from 'src/app/classes/epoc';
+import {forkJoin, from, mergeMap, Observable, ReplaySubject, throwError, timer} from 'rxjs';
+import {catchError, filter, map, startWith} from 'rxjs/operators';
+import {Epoc, EpocCollection, EpocMetadata, EpocLibraryState} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
 import {environment as env} from 'src/environments/environment';
-import {mode} from 'src/environments/environment.mode';
 import {Capacitor} from '@capacitor/core';
 import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
 import {SettingsStoreService} from './settings-store.service';
@@ -19,27 +18,25 @@ import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Settings} from 'src/app/classes/settings';
 import {uid} from '@epoc/epoc-types/src/v1';
-import {hash} from 'src/app/utils/uid';
-import {lineBreakRegex} from 'mermaid/dist/diagrams/common/common';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LibraryService {
     settings: Settings;
+    private officialCollectionsUrl = env.officialCollectionsUrl;
 
-    private _library : EpocLibrary[];
-    private librarySubject$ = new ReplaySubject<EpocLibrary[]>(1);
-    library$ = this.librarySubject$.asObservable()
+    private _officialCollections : Record<uid, EpocCollection> = {};
+    private officialCollectionsSubject$ = new ReplaySubject<Record<uid, EpocCollection>>(1);
+    officialCollections$: Observable<Record<uid, EpocCollection>> = this.officialCollectionsSubject$.asObservable();
 
-    private customLibrariesSubject = new BehaviorSubject<Record<uid, CustomLibrary>>({});
-    customLibraries$: Observable<Record<uid, CustomLibrary>> = this.customLibrariesSubject.asObservable();
+    private _customCollections : Record<uid, EpocCollection> = {};
+    private customCollectionsSubject$ = new ReplaySubject<Record<uid, EpocCollection>>(1);
+    customCollections$: Observable<Record<uid, EpocCollection>> = this.customCollectionsSubject$.asObservable();
 
     private _epocProgresses : {[EpocId: string] : number} = {};
     private epocProgressesSubject$ = new ReplaySubject<{[EpocId: string] : number}>(1);
     epocProgresses$ = this.epocProgressesSubject$.asObservable();
-    private libraryUrl = env.mode[mode].libraryUrl;
-    private cachedLibrary: EpocLibrary[] = JSON.parse(localStorage.getItem('library')) || [];
 
     private readings: Reading[];
 
@@ -56,61 +53,54 @@ export class LibraryService {
         public appService: AppService,
         public translate: TranslateService
     ) {
+        this.fetchOfficialCollections();
+
         this.settingsStore.settings$.subscribe(settings => {
             if (!settings) return;
             this.settings = settings;
-            this.libraryUrl = env.mode[mode][settings.libraryMode];
-            this.fetchLibrary();
-            this.fetchCustomLibraries();
+            this.fetchCustomCollections();
         });
         this.readingStore.readings$.subscribe(readings => this.readings = readings)
     }
 
-    get library(): EpocLibrary[] {
-        return this._library;
+    get officialCollections(): Record<uid, EpocCollection> {
+        return this._officialCollections;
     }
 
-    set library(value: EpocLibrary[]) {
-        this._library = value;
-        this.librarySubject$.next(value);
+    set officialCollections(value: Record<uid, EpocCollection>) {
+        this._officialCollections = value;
+        this.officialCollectionsSubject$.next(value);
     }
 
-    updateEpocLibraryState(epocId, {
+    get customCollections(): Record<uid, EpocCollection> {
+        return this._customCollections;
+    }
+
+    set customCollections(value: Record<uid, EpocCollection>) {
+        this._customCollections = value;
+        this.customCollectionsSubject$.next(value);
+    }
+
+    updateEpocCollectionState(epocId, {
         downloading = false,
         unzipping = false,
         downloaded = false,
         opened,
         updateAvailable = false
-    }:{
-        downloading?: boolean,
-        unzipping?: boolean,
-        downloaded?: boolean,
-        opened?: boolean,
-        updateAvailable?: boolean
-    }, libraryId?: string){
-        if (libraryId) {
-            const customLibrairies = this.customLibrariesSubject.value;
-            const epocIndex = customLibrairies[libraryId].epocs.findIndex(item => item.id === epocId);
-            if (epocIndex === -1) return;
-            const epoc = customLibrairies[libraryId].epocs[epocIndex];
-            epoc.downloading = downloading;
-            epoc.downloaded = downloaded;
-            epoc.unzipping = unzipping;
-            epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
-            epoc.updateAvailable = updateAvailable;
-            this.customLibrariesSubject.next(customLibrairies);
-        } else {
-            const epocIndex = this._library.findIndex(item => item.id === epocId);
-            if (epocIndex === -1) return;
-            const epoc = this._library[epocIndex];
-            epoc.downloading = downloading;
-            epoc.downloaded = downloaded;
-            epoc.unzipping = unzipping;
-            epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
-            epoc.updateAvailable = updateAvailable
-            this._library[epocIndex] = epoc;
-            this.librarySubject$.next(this._library);
+    }:EpocLibraryState, collectionId: string, custom? : boolean) {
+        const collectionToUpdate = custom ? this._customCollections : this._officialCollections;
+        const collectionToUpdateSubject$ = custom ? this.customCollectionsSubject$ : this.officialCollectionsSubject$;
+        const epoc = collectionToUpdate[collectionId]?.ePocs[epocId];
+        if (!epoc) {
+            console.warn(`ePoc with id ${epocId} not found in collection ${collectionId}`);
+            return;
         }
+        epoc.downloading = downloading;
+        epoc.downloaded = downloaded;
+        epoc.unzipping = unzipping;
+        epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
+        epoc.updateAvailable = updateAvailable;
+        collectionToUpdateSubject$.next(collectionToUpdate);
     }
 
     addEpocProgress(epocId) {
@@ -122,74 +112,104 @@ export class LibraryService {
         this.epocProgressesSubject$.next(this._epocProgresses);
     }
 
-    fetchCustomLibraries(): void {
-        const epocObservables = this.settings.customLibrairies.map(library =>
-            this.http.get<EpocLibrary[]>(library.url).pipe(
-                map(epocs => {
-                    return {
-                        ...library,
-                        epocs: epocs.map(epoc => {
-                            epoc.id = hash(library.url) + '-' + epoc.id; // prefix ePoc id by library id
-                            epoc.downloading = false;
-                            epoc.downloaded = false;
-                            epoc.unzipping = false;
-                            epoc.opened = false;
-                            return epoc;
-                        })
-                    }
+    fetchCustomCollections(): void {
+        const cachedCustomCollections: Record<uid, EpocCollection> = JSON.parse(localStorage.getItem('customCollections')) || {};
+
+        const customCollectionsArray$ = this.settings.customLibrairies.map(epocCollectionUrl =>
+            this.http.get<EpocCollection>(epocCollectionUrl).pipe(
+                map(epocCollection => {
+                    // Iterate over each ePoc in the ePocs Record and add the new properties
+                    Object.keys(epocCollection.ePocs).forEach((id) => {
+                        epocCollection.ePocs[id] = {
+                            ...epocCollection.ePocs[id],
+                            downloading: false,
+                            downloaded: false,
+                            unzipping: false,
+                            opened: false,
+                        };
+                    });
+                    return epocCollection;
                 })
             )
         );
 
-        forkJoin(epocObservables).subscribe(libraries => {
-            const customLibraries: Record<string, CustomLibrary> = {};
-            libraries.forEach((library, index) => {
-                const libraryId = hash(library.url);
-                customLibraries[hash(library.url)] = library;
-                library.epocs.forEach(epoc => {
+        forkJoin(customCollectionsArray$).subscribe(customCollectionsArray => {
+            const customCollections: Record<string, EpocCollection> = {};
+            customCollectionsArray.forEach((epocCollection) => {
+                customCollections[epocCollection.id] = epocCollection;
+                Object.values(epocCollection.ePocs).forEach(epoc => {
                     this.readEpocContent(epoc.id).subscribe((localEpoc) => {
                         const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
                         const updateAvailable = new Date(epoc.lastModified) > downloadDate;
-                        this.updateEpocLibraryState(epoc.id, {downloaded: true, updateAvailable}, libraryId);
+                        this.updateEpocCollectionState(epoc.id, {downloaded: true, updateAvailable}, epocCollection.id, true);
                     })
                 })
             });
-            this.customLibrariesSubject.next(customLibraries);
+            this.customCollectionsSubject$.next(customCollections);
         });
     }
 
-    fetchLibrary(): void {
-        this.http.get<EpocLibrary[]>(this.libraryUrl).pipe(filter(data => {
-            if (!Array.isArray(data) || !data[0].id) return false; // cache only if valid
-            localStorage.setItem('library', JSON.stringify(data)) // cache using localStorage
-            return true;
-        })).pipe(startWith(this.cachedLibrary)).subscribe((data: EpocLibrary[]) => this.library = data.map(item => {
-            item.downloading = false;
-            item.downloaded = false;
-            item.unzipping = false;
-            item.opened = false;
-            return item;
-        }), (e) => console.warn('Error fetching library', e), () => {
-            this.library.forEach(epoc => {
-                this.readEpocContent(epoc.id).subscribe((localEpoc) => {
-                    const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
-                    const updateAvailable = new Date(epoc.lastModified) > downloadDate;
-                    this.updateEpocLibraryState(epoc.id, {downloaded: true, updateAvailable});
-                })
-            })
+    fetchOfficialCollections(): void {
+        const cachedOfficialCollections: Record<uid, EpocCollection> = JSON.parse(localStorage.getItem('officialCollections')) || {};
 
-            if (this.readings) {
-                this.library.forEach(epoc => {
-                    this.updateEpocLibraryState(
-                        epoc.id,
-                        {
-                            downloaded: epoc.downloaded,
-                            opened: this.readings.findIndex(reading => reading.epocId === epoc.id) !== -1
-                        }
-                    );
-                })
+        // Observable for fetching and updating collections
+        const fetchAndUpdate$ = this.http.get<string[]>(this.officialCollectionsUrl).pipe(
+            mergeMap((collectionUrls: string[]) => {
+                return forkJoin(collectionUrls.map(url => this.http.get<EpocCollection>(url).pipe(
+                    catchError(error => {
+                        console.error('Error fetching collection:', error);
+                        return throwError(() => error);
+                    })
+                )));
+            }),
+            map((epocCollections: EpocCollection[]) => {
+                return epocCollections.map(epocCollection => {
+                    Object.keys(epocCollection.ePocs).forEach((id) => {
+                        epocCollection.ePocs[id] = {
+                            ...epocCollection.ePocs[id],
+                            downloading: false,
+                            downloaded: false,
+                            unzipping: false,
+                            opened: false,
+                        };
+                    });
+                    return epocCollection;
+                });
+            }),
+            map((epocCollections: EpocCollection[]) => {
+                // Convert the array of collections into a record
+                const epocCollectionsRecord = epocCollections.reduce((acc, collection) => {
+                    acc[collection.id] = collection;
+                    return acc;
+                }, {} as Record<string, EpocCollection>);
+
+                localStorage.setItem('officialCollections', JSON.stringify(epocCollections));
+                return epocCollectionsRecord;
+            })
+        );
+
+        // Use startWith to provide initial values from cache
+        fetchAndUpdate$.pipe(
+            startWith(cachedOfficialCollections),
+        ).subscribe({
+            next: (epocCollections: Record<uid, EpocCollection>) => {
+                const officialCollections: Record<string, EpocCollection> = {};
+                Object.values(epocCollections).forEach((epocCollection) => {
+                    officialCollections[epocCollection.id] = epocCollection;
+                    Object.values(epocCollection.ePocs).forEach(epoc => {
+                        this.readEpocContent(epoc.id).subscribe((localEpoc) => {
+                            const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
+                            const updateAvailable = new Date(epoc.lastModified) > downloadDate;
+                            this.updateEpocCollectionState(epoc.id, {downloaded: true, updateAvailable}, epocCollection.id);
+                        })
+                    })
+                });
+                this.customCollectionsSubject$.next(epocCollections);
+            },
+            error: (error) => {
+                console.error('Error fetching collections:', error);
             }
-        }); // return data starting with previous cached request
+        });
     }
 
     readEpocContent(epocId): Observable<Epoc> {
@@ -206,31 +226,31 @@ export class LibraryService {
         }
     }
 
-    downloadEpoc(epoc: EpocMetadata, libraryId?: string): Observable<number> {
+    downloadEpoc(epoc: EpocMetadata, libraryId: string): Observable<number> {
         const download = this.fileService.download(epoc.download, `epocs/${epoc.id}.zip`);
-        this.updateEpocLibraryState(epoc.id, {downloading: true}, libraryId);
+        this.updateEpocCollectionState(epoc.id, {downloading: true}, libraryId);
         this.addEpocProgress(epoc.id);
         download.subscribe((progress) => {
             this.updateEpocProgress(epoc.id, progress);
         }, () => {
-            this.updateEpocLibraryState(epoc.id, {});
+            this.updateEpocCollectionState(epoc.id, {}, libraryId);
         }, () => {
             this.unzipEpoc(epoc.id, libraryId);
         });
-        this.tracker.trackEvent('Library', 'Download', `Download ${epoc.id}`);
+        this.tracker.trackEvent('Library', 'Download', `Download ${libraryId} ${epoc.id}`);
         return download;
     }
 
     unzipEpoc(epocId: string, libraryId?: string): Observable<number> {
         const unzip = this.fileService.unzip(`epocs/${epocId}.zip`, `epocs/${epocId}`);
-        this.updateEpocLibraryState(epocId, {unzipping: true}, libraryId);
+        this.updateEpocCollectionState(epocId, {unzipping: true}, libraryId);
         this.addEpocProgress(epocId);
         unzip.subscribe((progress) => {
             this.updateEpocProgress(epocId, progress);
         }, () => {
-            this.updateEpocLibraryState(epocId, {}, libraryId);
+            this.updateEpocCollectionState(epocId, {}, libraryId);
         }, () => {
-            this.updateEpocLibraryState(epocId, {downloaded: true}, libraryId);
+            this.updateEpocCollectionState(epocId, {downloaded: true}, libraryId);
             this.fileService.deleteZip(`epocs/${epocId}.zip`);
         });
         return unzip;
@@ -239,18 +259,8 @@ export class LibraryService {
     deleteEpoc(epoc: EpocMetadata, libraryId?: string): Observable<any> {
         this.tracker.trackEvent('Library', 'Delete', `Delete ${epoc.id}`);
         const rm = this.fileService.deleteFolder(`epocs/${epoc.id}`);
-        rm.subscribe(() => {}, () => {}, () => { this.updateEpocLibraryState(epoc.id, {}, libraryId); });
+        rm.subscribe(() => {}, () => {}, () => { this.updateEpocCollectionState(epoc.id, {}, libraryId); });
         return rm;
-    }
-
-    deleteAll(): Observable<any> {
-        this.tracker.trackEvent('Library', 'Delete', `Delete all`);
-        const deletions$ = [];
-        this.library.forEach(item => {
-            if(!item.downloaded) return;
-            deletions$.push(this.deleteEpoc(item));
-        })
-        return forkJoin([timer(100), ...deletions$]);
     }
 
     async epocLibraryMenu(epoc, libraryId?: string){
@@ -326,7 +336,7 @@ export class LibraryService {
                     text: 'Confirmer',
                     handler: () => {
                         this.readingStore.removeReading(epoc.id);
-                        this.updateEpocLibraryState(epoc.id,{
+                        this.updateEpocCollectionState(epoc.id,{
                             downloaded: epoc.downloaded,
                             opened: false
                         }, libraryId);

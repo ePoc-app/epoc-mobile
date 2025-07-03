@@ -35,15 +35,15 @@ export class EpocOverviewPage implements OnInit {
                 if (this.epoc) this.rootFolder = this.epoc.rootFolder;
             });
         } else if (this.route.snapshot.paramMap.get('libraryId') && this.route.snapshot.paramMap.get('id')) {
-            this.libraryService.customLibraries$.subscribe((data: Record<string, CustomLibrary>) => {
-                this.library = data[this.route.snapshot.paramMap.get('libraryId')].epocs;
-                this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
-            });
+            // this.libraryService.customLibraries$.subscribe((data: Record<string, CustomLibrary>) => {
+            //     this.library = data[this.route.snapshot.paramMap.get('libraryId')].epocs;
+            //     this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
+            // });
         } else {
-            this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
-                this.library = data;
-                this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
-            });
+            // this.libraryService.library$.subscribe((data: EpocLibrary[]) => {
+            //     this.library = data;
+            //     this.epoc = this.library.find(epoc => epoc.id === this.route.snapshot.paramMap.get('id'))
+            // });
         }
         this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
             this.epocProgresses = epocProgresses;

@@ -75,6 +75,8 @@
             "MESSAGE": "Questa azione eliminerà i dati degli esercizi dall'applicazione <br/><small>(attestati, quiz, preferenze, ecc.)</small>",
             "THROW_ERROR": "Si è generato un errore",
             "DEVELOPER": "Sviluppatore",
+            "OFFICIAL_COLLECTIONS": "Collezioni ufficiali",
+            "CUSTOM_COLLECTIONS": "Collezioni personalizzate",
             "EPOC_LIBRARIES": "Librerie ePocs",
             "ADDING_LIBRARY": "Aggiunta di una libreria",
             "CONFIRM_DELETE_LIBRARY": "Eliminare libreria?",

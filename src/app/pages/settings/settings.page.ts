@@ -34,14 +34,12 @@ export class SettingsPage implements OnInit {
         text: this.translate.instant('CONFIRM'),
         handler: (data) => {
             if(!data[0] || !data[1]) return;
-            this.settings.customLibrairies.push({name:data[0], url:data[1]});
+            // todo : check if url is reachable, is a valid epoc library and not duplicate
+            this.settings.customLibrairies.push(data[0]);
             this.settingsChanged();
         }
     }];
     libraryPromptInputs = [
-        {
-            placeholder: this.translate.instant('SETTINGS_PAGE.LIBRARY_NAME')
-        },
         {
             placeholder: 'URL'
         }
@@ -59,7 +57,7 @@ export class SettingsPage implements OnInit {
     constructor(
         private settingsStore: SettingsStoreService,
         private readingStore: ReadingStoreService,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         public alertController: AlertController,
         public toastController: ToastController,
         private router: Router,
@@ -211,14 +209,8 @@ export class SettingsPage implements OnInit {
         throw new Error(`Test Thrown Error`);
     }
 
-    libraryChanged(event) {
-        this.settings.libraryMode = event.detail.value;
-        this.settingsChanged()
-    }
-
     disableDevMode($event) {
         if ($event) return;
-        this.settings.libraryMode = 'libraryUrl';
         this.settingsChanged()
     }
 
@@ -271,8 +263,11 @@ export class SettingsPage implements OnInit {
         this.devModeCount = 0;
     }
 
-    deleteLibrary(event: any, libraryIndex: number) {
-        if (event.detail.role === 'confirm') {
+    deleteCollection(event: any, collectionId: string) {
+        if (event.detail.role === 'confirm') {;
+            const libraryIndex = this.settings.customLibrairies.findIndex(
+                url =>  url === this.libraryService.customCollections[collectionId].url
+            );
             this.settings.customLibrairies.splice(libraryIndex, 1)
             this.settingsChanged();
         }

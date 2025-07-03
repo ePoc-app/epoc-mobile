@@ -124,30 +124,28 @@
       <ion-item>
         <ion-toggle [(ngModel)]="settings.devMode" (ngModelChange)="disableDevMode($event)">{{"SETTINGS_PAGE.DEV_MODE" | translate}}</ion-toggle>
       </ion-item>
-      <ion-item>
-        <ion-select [label]="'SETTINGS_PAGE.LIBRARY' | translate" [value]="settings.libraryMode" (ionChange)="libraryChanged($event)">
-          <ion-select-option value="libraryUrl">Prod</ion-select-option>
-          <ion-select-option value="libraryQlfUrl">Qlf</ion-select-option>
-        </ion-select>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>
+        {{"SETTINGS_PAGE.OFFICIAL_COLLECTIONS" | translate}}
+      </ion-list-header>
+      <ion-item *ngFor="let collectionItem of libraryService.officialCollections | keyvalue">
+        <ion-label>
+          <p style="white-space: normal">{{collectionItem.value.title}}</p>
+        </ion-label>
+
       </ion-item>
     </ion-list>
-    <ion-list *ngIf="settings.devMode">
+    <ion-list>
       <ion-list-header>
-        {{"SETTINGS_PAGE.EPOC_LIBRARIES" | translate}}
+        {{"SETTINGS_PAGE.CUSTOM_COLLECTIONS" | translate}}
       </ion-list-header>
-      <ion-item>
+      <ion-item *ngFor="let collectionItem of libraryService.customCollections | keyvalue">
         <ion-label>
-          <ion-text>Inria</ion-text>
-          <p style="white-space: normal">{{libraryUrl}}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item *ngFor="let library of settings.customLibrairies; index as libraryIndex">
-        <ion-label>
-          <ion-text>{{library.name}}</ion-text>
-          <p style="white-space: normal">{{library.url}}</p>
+          <p style="white-space: normal">{{collectionItem.value.title}}</p>
         </ion-label>
         <ion-icon id="present-confirm" name="close-circle" color="inria" slot="end"></ion-icon>
-        <ion-alert trigger="present-confirm" [header]="'SETTINGS_PAGE.CONFIRM_DELETE_LIBRARY' | translate" [buttons]="libraryDeleteButtons" (didDismiss)="deleteLibrary($event, libraryIndex)"></ion-alert>
+        <ion-alert trigger="present-confirm" [header]="'SETTINGS_PAGE.CONFIRM_DELETE_LIBRARY' | translate" [buttons]="libraryDeleteButtons" (didDismiss)="deleteCollection($event, collectionItem.key)"></ion-alert>
       </ion-item>
       <ion-item id="present-library-prompt">
         <ion-label role="button">{{"SETTINGS_PAGE.ADD_LIBRARY" | translate}}</ion-label>

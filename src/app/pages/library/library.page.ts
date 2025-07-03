@@ -18,12 +18,6 @@ export class LibraryPage implements OnInit {
   @ViewChild('file', {static: false}) fileRef: ElementRef;
   swiperModules = [IonicSlides];
 
-  library: EpocLibrary[] | undefined;
-  customLibraries: Record<string, CustomLibrary> | undefined;
-  localEpocs: EpocLibrary[] | undefined;
-  onboarding: OnboardingItem[];
-  epocProgresses : {[EpocId: string] : number} = {};
-
   onboardingOptions = {
     slidesPerView: 1,
     spaceBetween: 16,
@@ -41,19 +35,7 @@ export class LibraryPage implements OnInit {
       public localEpocsService: LocalEpocsService
   ) {}
 
-  ngOnInit() {
-    this.localEpocsService.fetchLocalEpocs();
-    this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data;});
-    this.libraryService.customLibraries$.subscribe((data: Record<string, CustomLibrary>) => { this.customLibraries = data });
-    this.localEpocsService.localEpocs$.subscribe((data: EpocLibrary[]) => { this.localEpocs = data; });
-    this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
-      this.epocProgresses = epocProgresses;
-      this.ref.detectChanges();
-    });
-    this.onboardingService.onboarding$.subscribe((data => {
-      this.onboarding = data;
-    }))
-  }
+  ngOnInit() {}
 
   downloadEpoc(epoc: EpocLibrary, libraryId?: string) {
     this.libraryService.downloadEpoc(epoc, libraryId);
@@ -65,9 +47,9 @@ export class LibraryPage implements OnInit {
 
   doRefresh(event) {
     const startTime = performance.now();
-    this.libraryService.fetchLibrary();
+    this.libraryService.fetchCustomCollections();
     this.localEpocsService.fetchLocalEpocs();
-    this.libraryService.library$.subscribe(() => {
+    this.libraryService.officialCollections$.subscribe(() => {
       const endTime = performance.now();
       const delay = Math.max(0, 500 - (endTime - startTime)); // minimum delay of 500ms
       setTimeout(() => {
@@ -76,8 +58,8 @@ export class LibraryPage implements OnInit {
     });
   }
 
-  openEpocMenu(epoc, libraryId?: string){
-    this.libraryService.epocLibraryMenu(epoc, libraryId);
+  async openEpocMenu(epoc, libraryId?: string){
+    await this.libraryService.epocLibraryMenu(epoc, libraryId);
   }
   async openAddMenu() {
     const buttons = [
