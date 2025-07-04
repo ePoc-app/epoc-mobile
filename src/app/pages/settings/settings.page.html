@@ -131,9 +131,13 @@
       </ion-list-header>
       <ion-item *ngFor="let collectionItem of libraryService.officialCollections | keyvalue">
         <ion-label>
-          <p style="white-space: normal">{{collectionItem.value.title}}</p>
+          <ion-text>{{collectionItem.value.title}}</ion-text>
+          <p style="white-space: normal">{{collectionItem.value.url}}</p>
         </ion-label>
-
+      </ion-item>
+      <ion-item [href]="'mailto:ill-epoc-contact@inria.fr?subject='+('SETTINGS_PAGE.BECOME_PARTNER'|translate)" [title]="'SETTINGS_PAGE.BECOME_PARTNER'|translate" target="_blank">
+        <ion-label role="button">{{"SETTINGS_PAGE.BECOME_PARTNER" | translate}}</ion-label>
+        <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
     </ion-list>
     <ion-list>
@@ -142,7 +146,8 @@
       </ion-list-header>
       <ion-item *ngFor="let collectionItem of libraryService.customCollections | keyvalue">
         <ion-label>
-          <p style="white-space: normal">{{collectionItem.value.title}}</p>
+          <ion-text>{{collectionItem.value.title}}</ion-text>
+          <p style="white-space: normal">{{collectionItem.value.url}}</p>
         </ion-label>
         <ion-icon id="present-confirm" name="close-circle" color="inria" slot="end"></ion-icon>
         <ion-alert trigger="present-confirm" [header]="'SETTINGS_PAGE.CONFIRM_DELETE_LIBRARY' | translate" [buttons]="libraryDeleteButtons" (didDismiss)="deleteCollection($event, collectionItem.key)"></ion-alert>

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {forkJoin, from, mergeMap, Observable, ReplaySubject, throwError, timer} from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {BehaviorSubject, forkJoin, from, mergeMap, Observable, ReplaySubject, throwError, timer} from 'rxjs';
 import {catchError, filter, map, startWith} from 'rxjs/operators';
 import {Epoc, EpocCollection, EpocMetadata, EpocLibraryState} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
@@ -139,13 +139,14 @@ export class LibraryService {
                 customCollections[epocCollection.id] = epocCollection;
                 Object.values(epocCollection.ePocs).forEach(epoc => {
                     this.readEpocContent(epoc.id).subscribe((localEpoc) => {
+                        if (!localEpoc) return;
                         const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
                         const updateAvailable = new Date(epoc.lastModified) > downloadDate;
                         this.updateEpocCollectionState(epoc.id, {downloaded: true, updateAvailable}, epocCollection.id, true);
                     })
                 })
             });
-            this.customCollectionsSubject$.next(customCollections);
+            this._customCollections = customCollections;
         });
     }
 
@@ -183,7 +184,7 @@ export class LibraryService {
                     return acc;
                 }, {} as Record<string, EpocCollection>);
 
-                localStorage.setItem('officialCollections', JSON.stringify(epocCollections));
+                localStorage.setItem('officialCollections', JSON.stringify(epocCollectionsRecord));
                 return epocCollectionsRecord;
             })
         );
@@ -198,13 +199,14 @@ export class LibraryService {
                     officialCollections[epocCollection.id] = epocCollection;
                     Object.values(epocCollection.ePocs).forEach(epoc => {
                         this.readEpocContent(epoc.id).subscribe((localEpoc) => {
+                            if (!localEpoc) return;
                             const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
                             const updateAvailable = new Date(epoc.lastModified) > downloadDate;
                             this.updateEpocCollectionState(epoc.id, {downloaded: true, updateAvailable}, epocCollection.id);
                         })
                     })
                 });
-                this.customCollectionsSubject$.next(epocCollections);
+                this._officialCollections = officialCollections;
             },
             error: (error) => {
                 console.error('Error fetching collections:', error);
@@ -222,7 +224,7 @@ export class LibraryService {
         } else {
             const rootDirectory = Capacitor.isNativePlatform() && this.file.dataDirectory ? this.file.dataDirectory : 'assets/demo/';
             const url = Capacitor.convertFileSrc(`${rootDirectory}epocs/${epocId}/content.json`)
-            return this.http.get<Epoc>(url)
+            return this.http.get<Epoc>(url).pipe(catchError(() => new BehaviorSubject(null).asObservable()));
         }
     }
 

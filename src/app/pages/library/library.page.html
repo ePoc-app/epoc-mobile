@@ -13,118 +13,123 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="libraryService.officialCollections$ | async as officialCollections">
+<ion-content>
   <ion-refresher slot="fixed" snapbackDuration="1000ms" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-<!--  <swiper-container [modules]="swiperModules" aria-hidden="true" class="onboarding" *ngIf="onboarding && onboarding.length" [slidesPerView]="onboardingOptions.slidesPerView" [spaceBetween]="onboardingOptions.spaceBetween" [pagination]="onboarding.length > 1 ? 'true' : ''">-->
-<!--    <swiper-slide class="onboarding-item" [ngClass]="item.image ? 'with-image':''" *ngFor="let item of onboarding">-->
-<!--      <div class="onboarding-item-image" *ngIf="item.image" [style]="'background-image:url('+item.image+')'"></div>-->
-<!--      <div class="onboarding-item-title">{{item.title}}</div>-->
-<!--      <div class="onboarding-item-text">{{item.text}}</div>-->
-<!--      <a [routerLink]="item.link.url" *ngIf="item.link">{{item.link.text}}</a>-->
-<!--      <div class="onboarding-item-close" (click)="removeMessage(item.id)">-->
-<!--        <ion-icon name="close-outline"></ion-icon>-->
-<!--      </div>-->
-<!--    </swiper-slide>-->
-<!--  </swiper-container>-->
-  <ng-container *ngFor="let collection of officialCollections | keyvalue">
-    <div class="library-items" tabindex="-1">
-      <div class="library-item" *ngFor="let epoc of collection.value.ePocs | keyvalue">
-        <div role="link" [attr.aria-label]="epoc.value.title" class="library-item-image" [routerLink]="'/library/'+epoc.value.id" [style]="'background-image:url('+epoc.value.image+')'"></div>
-        <h3 aria-hidden="true" class="library-item-title">{{epoc.value.title}}</h3>
-        <div class="library-item-toolbar" *ngIf="epoc.value.downloaded">
-          <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.value.id">
-            <span *ngIf="!epoc.value.opened">{{'LIBRARY_PAGE.DISCOVER' | translate}}</span>
-            <span *ngIf="epoc.value.opened">{{'LIBRARY_PAGE.CONTINUE' | translate}}</span>
-            <ion-icon aria-hidden="true" *ngIf="epoc.value.opened" name="arrow-forward-outline" slot="end"></ion-icon>
-          </ion-button>
-          <ion-button class="round" [ngClass]="{'update-available': epoc.value.updateAvailable}" color="inria-base-button" (click)="openEpocMenu(epoc)">
-            <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
-          </ion-button>
-        </div>
-        <div class="library-item-toolbar" *ngIf="!epoc.value.downloading && !epoc.value.downloaded && !epoc.value.unzipping">
-          <ion-button class="expanded" color="inria-base-button" (click)="downloadEpoc(epoc.value)">
-            <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>
-            <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOAD' | translate}}</span>
-          </ion-button>
-        </div>
-        <div class="library-item-toolbar" *ngIf="epoc.value.downloading">
-          <ion-button class="expanded" disabled="true" color="inria-base-button">
-            <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>
-            <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOADING' | translate}} <!--<ng-container *ngIf="epocProgresses[epoc.value.id]">({{epocProgresses[epoc.value.id]}}%)</ng-container>--></span>
-          </ion-button>
-        </div>
-        <div class="library-item-toolbar" *ngIf="epoc.value.unzipping">
-          <ion-button class="expanded" disabled="true" color="inria-base-button">
-            <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>
-            <span class="base-btn">{{'LIBRARY_PAGE.OPEN_ZIP' | translate}}<!--<ng-container *ngIf="epocProgresses[epoc.value.id]">({{epocProgresses[epoc.value.id]}}%)</ng-container>--></span>
-          </ion-button>
+  <swiper-container [modules]="swiperModules" aria-hidden="true" class="onboarding" *ngIf="onboarding && onboarding.length" [slidesPerView]="onboardingOptions.slidesPerView" [spaceBetween]="onboardingOptions.spaceBetween" [pagination]="onboarding.length > 1 ? 'true' : ''">
+    <swiper-slide class="onboarding-item" [ngClass]="item.image ? 'with-image':''" *ngFor="let item of onboarding">
+      <div class="onboarding-item-image" *ngIf="item.image" [style]="'background-image:url('+item.image+')'"></div>
+      <div class="onboarding-item-title">{{item.title}}</div>
+      <div class="onboarding-item-text">{{item.text}}</div>
+      <a [routerLink]="item.link.url" *ngIf="item.link">{{item.link.text}}</a>
+      <div class="onboarding-item-close" (click)="removeMessage(item.id)">
+        <ion-icon name="close-outline"></ion-icon>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  <ng-container *ngIf="libraryService.officialCollections$ | async as officialCollections">
+    <ng-container *ngFor="let collection of officialCollections | keyvalue">
+      <div class="library-separator"><span>{{collection.value.title}}</span></div>
+      <div class="library-items" tabindex="-1">
+        <div class="library-item" *ngFor="let epoc of collection.value.ePocs | keyvalue">
+          <div role="link" [attr.aria-label]="epoc.value.title" class="library-item-image" [routerLink]="'/library/'+epoc.value.id" [style]="'background-image:url('+epoc.value.image+')'"></div>
+          <h3 aria-hidden="true" class="library-item-title">{{epoc.value.title}}</h3>
+          <div class="library-item-toolbar" *ngIf="epoc.value.downloaded">
+            <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.value.id">
+              <span *ngIf="!epoc.value.opened">{{'LIBRARY_PAGE.DISCOVER' | translate}}</span>
+              <span *ngIf="epoc.value.opened">{{'LIBRARY_PAGE.CONTINUE' | translate}}</span>
+              <ion-icon aria-hidden="true" *ngIf="epoc.value.opened" name="arrow-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+            <ion-button class="round" [ngClass]="{'update-available': epoc.value.updateAvailable}" color="inria-base-button" (click)="openEpocMenu(epoc.value)">
+              <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
+            </ion-button>
+          </div>
+          <div class="library-item-toolbar" *ngIf="!epoc.value.downloading && !epoc.value.downloaded && !epoc.value.unzipping">
+            <ion-button class="expanded" color="inria-base-button" (click)="downloadEpoc(epoc.value)">
+              <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>
+              <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOAD' | translate}}</span>
+            </ion-button>
+          </div>
+          <div class="library-item-toolbar" *ngIf="epoc.value.downloading">
+            <ion-button class="expanded" disabled="true" color="inria-base-button">
+              <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>
+              <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOADING' | translate}} <!--<ng-container *ngIf="epocProgresses[epoc.value.id]">({{epocProgresses[epoc.value.id]}}%)</ng-container>--></span>
+            </ion-button>
+          </div>
+          <div class="library-item-toolbar" *ngIf="epoc.value.unzipping">
+            <ion-button class="expanded" disabled="true" color="inria-base-button">
+              <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>
+              <span class="base-btn">{{'LIBRARY_PAGE.OPEN_ZIP' | translate}}<!--<ng-container *ngIf="epocProgresses[epoc.value.id]">({{epocProgresses[epoc.value.id]}}%)</ng-container>--></span>
+            </ion-button>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
-<!--  <ng-container *ngFor="let library of customLibraries | keyvalue">-->
-<!--    <div class="library-separator"><span>{{library.value.name}}</span></div>-->
-<!--    <div class="library-items" tabindex="-1">-->
-<!--      <div class="library-item" *ngFor="let epoc of library.value.epocs">-->
-<!--        <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/' + library.key + '/' + epoc.id" [style]="'background-image:url('+epoc.image+')'"></div>-->
-<!--        <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>-->
-<!--        <div class="library-item-toolbar" *ngIf="epoc.downloaded">-->
-<!--          <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/' + epoc.id">-->
-<!--            <span *ngIf="!epoc.opened">{{'LIBRARY_PAGE.DISCOVER' | translate}}</span>-->
-<!--            <span *ngIf="epoc.opened">{{'LIBRARY_PAGE.CONTINUE' | translate}}</span>-->
-<!--            <ion-icon aria-hidden="true" *ngIf="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>-->
-<!--          </ion-button>-->
-<!--          <ion-button class="round" [ngClass]="{'update-available': epoc.updateAvailable}" color="inria-base-button" (click)="openEpocMenu(epoc, library.key)">-->
-<!--            <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>-->
-<!--          </ion-button>-->
-<!--        </div>-->
-<!--        <div class="library-item-toolbar" *ngIf="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">-->
-<!--          <ion-button class="expanded" color="inria-base-button" (click)="downloadEpoc(epoc, library.key)">-->
-<!--            <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>-->
-<!--            <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOAD' | translate}}</span>-->
-<!--          </ion-button>-->
-<!--        </div>-->
-<!--        <div class="library-item-toolbar" *ngIf="epoc.downloading">-->
-<!--          <ion-button class="expanded" disabled="true" color="inria-base-button">-->
-<!--            <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>-->
-<!--            <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOADING' | translate}} <ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>-->
-<!--          </ion-button>-->
-<!--        </div>-->
-<!--        <div class="library-item-toolbar" *ngIf="epoc.unzipping">-->
-<!--          <ion-button class="expanded" disabled="true" color="inria-base-button">-->
-<!--            <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>-->
-<!--            <span class="base-btn">{{'LIBRARY_PAGE.OPEN_ZIP' | translate}}<ng-container *ngIf="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</ng-container></span>-->
-<!--          </ion-button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </ng-container>-->
-<!--  <div class="library-separator"><span>Mes ePocs</span></div>-->
-<!--  <div class="library-items">-->
-<!--    <div class="library-item" *ngFor="let epoc of localEpocs">-->
-<!--      <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/'+epoc.dir" [style]="'background-image:url('+epoc.rootFolder+epoc.image+')'"></div>-->
-<!--      <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>-->
-<!--      <div class="library-item-toolbar">-->
-<!--        <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.id">-->
-<!--          <span>{{'LIBRARY_PAGE.OPEN' | translate}}</span>-->
-<!--        </ion-button>-->
-<!--        <ion-button class="round" [ngClass]="{'update-available': epoc.updateAvailable}" color="inria-base-button" (click)="localEpocsService.localEpocLibraryMenu(epoc)">-->
-<!--          <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>-->
-<!--        </ion-button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="library-item library-item-import" *ngFor="let item of localEpocsService.imports | keyvalue">-->
-<!--      <div class="library-item-image"></div>-->
-<!--      <h3 aria-hidden="true" class="library-item-title">{{item.value}}</h3>-->
-<!--    </div>-->
-<!--    <div class="library-item library-item-add" (click)="openAddMenu()">-->
-<!--      <div class="library-item-image">-->
-<!--        <ion-icon aria-hidden="true" src="/assets/icon/ajouter.svg" size="large"></ion-icon>-->
-<!--      </div>-->
-<!--      <h3 aria-hidden="true" class="library-item-title">{{'LIBRARY_PAGE.ADD_EPOC' | translate}}</h3>-->
-<!--    </div>-->
-<!--    <input type="file" accept="application/octet-stream,application/zip" hidden (change)="fileHandler($event)" #file>-->
-<!--  </div>-->
+  <ng-container *ngIf="libraryService.customCollections$ | async as customCollections">
+    <ng-container *ngFor="let collection of customCollections | keyvalue">
+      <div class="library-separator"><span>{{collection.value.title}}</span></div>
+      <div class="library-items" tabindex="-1">
+        <div class="library-item" *ngFor="let epoc of collection.value.ePocs | keyvalue">
+          <div role="link" [attr.aria-label]="epoc.value.title" class="library-item-image" [routerLink]="'/library/' + collection.key + '/' + epoc.value.id" [style]="'background-image:url('+epoc.value.image+')'"></div>
+          <h3 aria-hidden="true" class="library-item-title">{{epoc.value.title}}</h3>
+          <div class="library-item-toolbar" *ngIf="epoc.value.downloaded">
+            <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/' + epoc.value.id">
+              <span *ngIf="!epoc.value.opened">{{'LIBRARY_PAGE.DISCOVER' | translate}}</span>
+              <span *ngIf="epoc.value.opened">{{'LIBRARY_PAGE.CONTINUE' | translate}}</span>
+              <ion-icon aria-hidden="true" *ngIf="epoc.value.opened" name="arrow-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+            <ion-button class="round" [ngClass]="{'update-available': epoc.value.updateAvailable}" color="inria-base-button" (click)="openEpocMenu(epoc.value, collection.key)">
+              <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
+            </ion-button>
+          </div>
+          <div class="library-item-toolbar" *ngIf="!epoc.value.downloading && !epoc.value.downloaded && !epoc.value.unzipping">
+            <ion-button class="expanded" color="inria-base-button" (click)="downloadEpoc(epoc.value, collection.key)">
+              <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>
+              <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOAD' | translate}}</span>
+            </ion-button>
+          </div>
+          <div class="library-item-toolbar" *ngIf="epoc.value.downloading">
+            <ion-button class="expanded" disabled="true" color="inria-base-button">
+              <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>
+              <span class="base-btn">{{'LIBRARY_PAGE.DOWNLOADING' | translate}} <!--<ng-container *ngIf="epocProgresses[epoc.value.id]">({{epocProgresses[epoc.value.id]}}%)</ng-container>--></span>
+            </ion-button>
+          </div>
+          <div class="library-item-toolbar" *ngIf="epoc.value.unzipping">
+            <ion-button class="expanded" disabled="true" color="inria-base-button">
+              <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>
+              <span class="base-btn">{{'LIBRARY_PAGE.OPEN_ZIP' | translate}}<!--<ng-container *ngIf="epocProgresses[epoc.value.id]">({{epocProgresses[epoc.value.id]}}%)</ng-container>--></span>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="library-separator"><span>Mes ePocs</span></div>
+  <div class="library-items">
+    <div class="library-item" *ngFor="let epoc of localEpocs">
+      <div role="link" [attr.aria-label]="epoc.title" class="library-item-image" [routerLink]="'/library/'+epoc.dir" [style]="'background-image:url('+epoc.rootFolder+epoc.image+')'"></div>
+      <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
+      <div class="library-item-toolbar">
+        <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.id">
+          <span>{{'LIBRARY_PAGE.OPEN' | translate}}</span>
+        </ion-button>
+        <ion-button class="round" [ngClass]="{'update-available': epoc.updateAvailable}" color="inria-base-button" (click)="localEpocsService.localEpocLibraryMenu(epoc)">
+          <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
+        </ion-button>
+      </div>
+    </div>
+    <div class="library-item library-item-import" *ngFor="let item of localEpocsService.imports | keyvalue">
+      <div class="library-item-image"></div>
+      <h3 aria-hidden="true" class="library-item-title">{{item.value}}</h3>
+    </div>
+    <div class="library-item library-item-add" (click)="openAddMenu()">
+      <div class="library-item-image">
+        <ion-icon aria-hidden="true" src="/assets/icon/ajouter.svg" size="large"></ion-icon>
+      </div>
+      <h3 aria-hidden="true" class="library-item-title">{{'LIBRARY_PAGE.ADD_EPOC' | translate}}</h3>
+    </div>
+    <input type="file" accept="application/octet-stream,application/zip" hidden (change)="fileHandler($event)" #file>
+  </div>
 </ion-content>

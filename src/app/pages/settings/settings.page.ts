@@ -33,7 +33,7 @@ export class SettingsPage implements OnInit {
     }, {
         text: this.translate.instant('CONFIRM'),
         handler: (data) => {
-            if(!data[0] || !data[1]) return;
+            if(!data[0]) return;
             // todo : check if url is reachable, is a valid epoc library and not duplicate
             this.settings.customLibrairies.push(data[0]);
             this.settingsChanged();
@@ -264,12 +264,13 @@ export class SettingsPage implements OnInit {
     }
 
     deleteCollection(event: any, collectionId: string) {
-        if (event.detail.role === 'confirm') {;
+        if (event.detail.role === 'confirm') {
             const libraryIndex = this.settings.customLibrairies.findIndex(
                 url =>  url === this.libraryService.customCollections[collectionId].url
             );
-            this.settings.customLibrairies.splice(libraryIndex, 1)
+            this.settings.customLibrairies.splice(libraryIndex, 1);
             this.settingsChanged();
+            this.libraryService.fetchCustomCollections();
         }
     }
 }

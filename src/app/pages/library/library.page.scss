@@ -180,6 +180,10 @@
     flex-grow: 1;
     margin: 0 1rem;
   }
+
+  &:first-of-type{
+    margin-top: 1rem;
+  }
 }
 
 swiper-slide{

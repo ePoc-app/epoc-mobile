@@ -18,6 +18,9 @@ export class LibraryPage implements OnInit {
   @ViewChild('file', {static: false}) fileRef: ElementRef;
   swiperModules = [IonicSlides];
 
+  localEpocs: EpocLibrary[] | undefined;
+  onboarding: OnboardingItem[];
+
   onboardingOptions = {
     slidesPerView: 1,
     spaceBetween: 16,
@@ -35,7 +38,12 @@ export class LibraryPage implements OnInit {
       public localEpocsService: LocalEpocsService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.localEpocsService.fetchLocalEpocs();
+    this.onboardingService.onboarding$.subscribe((data => {
+      this.onboarding = data;
+    }))
+  }
 
   downloadEpoc(epoc: EpocLibrary, libraryId?: string) {
     this.libraryService.downloadEpoc(epoc, libraryId);
