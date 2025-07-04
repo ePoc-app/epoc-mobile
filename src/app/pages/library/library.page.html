@@ -33,7 +33,7 @@
       <div class="library-separator"><span>{{collection.value.title}}</span></div>
       <div class="library-items" tabindex="-1">
         <div class="library-item" *ngFor="let epoc of collection.value.ePocs | keyvalue">
-          <div role="link" [attr.aria-label]="epoc.value.title" class="library-item-image" [routerLink]="'/library/'+epoc.value.id" [style]="'background-image:url('+epoc.value.image+')'"></div>
+          <div role="link" [attr.aria-label]="epoc.value.title" class="library-item-image" [routerLink]="'/library/'+collection.value.id+'/'+epoc.value.id" [style]="'background-image:url('+epoc.value.image+')'"></div>
           <h3 aria-hidden="true" class="library-item-title">{{epoc.value.title}}</h3>
           <div class="library-item-toolbar" *ngIf="epoc.value.downloaded">
             <ion-button  class="expanded" color="inria" [routerLink]="'/epoc/toc/'+epoc.value.id">

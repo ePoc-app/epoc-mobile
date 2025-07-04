@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {BehaviorSubject, forkJoin, from, mergeMap, Observable, ReplaySubject, throwError, timer} from 'rxjs';
-import {catchError, filter, map, startWith} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, forkJoin, from, mergeMap, Observable, ReplaySubject, throwError} from 'rxjs';
+import {catchError, map, startWith} from 'rxjs/operators';
 import {Epoc, EpocCollection, EpocMetadata, EpocLibraryState} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
 import {environment as env} from 'src/environments/environment';
 import {Capacitor} from '@capacitor/core';
-import { Filesystem,Directory, Encoding } from '@capacitor/filesystem';
+import {Filesystem,Directory, Encoding} from '@capacitor/filesystem';
 import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
 import {Reading} from '../classes/reading';
@@ -115,6 +115,11 @@ export class LibraryService {
     fetchCustomCollections(): void {
         const cachedCustomCollections: Record<uid, EpocCollection> = JSON.parse(localStorage.getItem('customCollections')) || {};
 
+        if (this.settings.customLibrairies.length === 0) {
+            this.customCollections = {};
+            return;
+        }
+
         const customCollectionsArray$ = this.settings.customLibrairies.map(epocCollectionUrl =>
             this.http.get<EpocCollection>(epocCollectionUrl).pipe(
                 map(epocCollection => {
@@ -146,7 +151,7 @@ export class LibraryService {
                     })
                 })
             });
-            this._customCollections = customCollections;
+            this.customCollections = customCollections;
         });
     }
 
@@ -206,7 +211,7 @@ export class LibraryService {
                         })
                     })
                 });
-                this._officialCollections = officialCollections;
+                this.officialCollections = officialCollections;
             },
             error: (error) => {
                 console.error('Error fetching collections:', error);
@@ -263,6 +268,21 @@ export class LibraryService {
         const rm = this.fileService.deleteFolder(`epocs/${epoc.id}`);
         rm.subscribe(() => {}, () => {}, () => { this.updateEpocCollectionState(epoc.id, {}, libraryId); });
         return rm;
+    }
+
+    checkCustomCollectionUrl(url: string): Observable<string|null> {
+        // check if url is reachable and collection id not exist in custom collections and official collections
+        return this.http.get<EpocCollection>(url).pipe(
+            map((collection: EpocCollection) => {
+                if (!collection || !collection.id || !collection.ePocs) {
+                    return this.translate.instant('CUSTOM_COLLECTION.ERROR_INVALID');
+                }
+                if (this.customCollections[collection.id] || this.officialCollections[collection.id]) {
+                    return this.translate.instant('CUSTOM_COLLECTION.ERROR_DUPLICATE');
+                }
+                return null;
+            })
+        );
     }
 
     async epocLibraryMenu(epoc, libraryId?: string){

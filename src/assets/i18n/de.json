@@ -9,6 +9,12 @@
         "ADD_EPOC": "Fügen Sie Ihr ePoc hinzu",
         "IMPORT": "Import von"
     },
+    "CUSTOM_COLLECTION": {
+        "SUCCESS": "Erfolgreich importiert",
+        "ERROR_UNREACHABLE": "Fehler: Die Sammlung ist nicht erreichbar",
+        "ERROR_INVALID": "Fehler: Ungültige Sammlung",
+        "ERROR_DUPLICATE": "Fehler: Diese Sammlung ist bereits in Ihrer Bibliothek"
+    },
     "ABOUT_PAGE": {
         "ABOUT": "Über",
         "EPOC_APPLICATION": "Die ePoc-Anwendung",

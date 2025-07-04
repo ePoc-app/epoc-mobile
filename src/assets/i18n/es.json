@@ -9,6 +9,12 @@
     "ADD_EPOC": "Añade tu ePoc",
     "IMPORT": "Importar"
   },
+  "CUSTOM_COLLECTION": {
+    "SUCCESS": "Colección importada con éxito",
+    "ERROR_UNREACHABLE": "Error: no se puede alcanzar la colección",
+    "ERROR_INVALID": "Error: colección inválida",
+    "ERROR_DUPLICATE": "Error: colección ya existe"
+  },
   "ABOUT_PAGE": {
     "ABOUT": "Acerca de",
     "EPOC_APPLICATION": "La aplicación ePoc",

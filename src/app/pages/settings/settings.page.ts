@@ -12,6 +12,8 @@ import {LibraryService} from 'src/app/services/library.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
 import {languages} from 'src/environments/languages';
+import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
     selector: 'app-settings',
@@ -34,9 +36,19 @@ export class SettingsPage implements OnInit {
         text: this.translate.instant('CONFIRM'),
         handler: (data) => {
             if(!data[0]) return;
-            // todo : check if url is reachable, is a valid epoc library and not duplicate
-            this.settings.customLibrairies.push(data[0]);
-            this.settingsChanged();
+            this.libraryService.checkCustomCollectionUrl(data[0]).pipe(
+                catchError(() => {
+                    return of(this.translate.instant('CUSTOM_COLLECTION.ERROR_UNREACHABLE'));
+                })
+            ).subscribe(async (error) => {
+                if (error) {
+                    await this.presentToast(error, 'danger');
+                    return;
+                }
+                await this.presentToast(this.translate.instant('CUSTOM_COLLECTION.SUCCESS'), 'success');
+                this.settings.customLibrairies.push(data[0]);
+                this.settingsChanged();
+            });
         }
     }];
     libraryPromptInputs = [
@@ -131,10 +143,11 @@ export class SettingsPage implements OnInit {
         await alert.present();
     }
 
-    async presentToast(message) {
+    async presentToast(message, color?) {
         const toast = await this.toastController.create({
             message,
-            duration: 2000
+            duration: 2000,
+            color
         });
         toast.present();
     }
@@ -269,8 +282,8 @@ export class SettingsPage implements OnInit {
                 url =>  url === this.libraryService.customCollections[collectionId].url
             );
             this.settings.customLibrairies.splice(libraryIndex, 1);
+            this.settings.customLibrairies = [...this.settings.customLibrairies];
             this.settingsChanged();
-            this.libraryService.fetchCustomCollections();
         }
     }
 }

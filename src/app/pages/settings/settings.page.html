@@ -144,14 +144,16 @@
       <ion-list-header>
         {{"SETTINGS_PAGE.CUSTOM_COLLECTIONS" | translate}}
       </ion-list-header>
-      <ion-item *ngFor="let collectionItem of libraryService.customCollections | keyvalue">
-        <ion-label>
-          <ion-text>{{collectionItem.value.title}}</ion-text>
-          <p style="white-space: normal">{{collectionItem.value.url}}</p>
-        </ion-label>
-        <ion-icon id="present-confirm" name="close-circle" color="inria" slot="end"></ion-icon>
-        <ion-alert trigger="present-confirm" [header]="'SETTINGS_PAGE.CONFIRM_DELETE_LIBRARY' | translate" [buttons]="libraryDeleteButtons" (didDismiss)="deleteCollection($event, collectionItem.key)"></ion-alert>
-      </ion-item>
+      <ng-container *ngIf="libraryService.customCollections$ | async as customCollections">
+        <ion-item *ngFor="let collectionItem of customCollections | keyvalue">
+          <ion-label>
+            <ion-text>{{collectionItem.value.title}}</ion-text>
+            <p style="white-space: normal">{{collectionItem.value.url}}</p>
+          </ion-label>
+          <ion-icon id="present-confirm" name="close-circle" color="inria" slot="end"></ion-icon>
+          <ion-alert trigger="present-confirm" [header]="'SETTINGS_PAGE.CONFIRM_DELETE_LIBRARY' | translate" [buttons]="libraryDeleteButtons" (didDismiss)="deleteCollection($event, collectionItem.key)"></ion-alert>
+        </ion-item>
+      </ng-container>
       <ion-item id="present-library-prompt">
         <ion-label role="button">{{"SETTINGS_PAGE.ADD_LIBRARY" | translate}}</ion-label>
         <ion-icon name="add-circle" slot="end"></ion-icon>
