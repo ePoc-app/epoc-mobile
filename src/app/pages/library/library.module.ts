@@ -1,16 +1,17 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { LibraryPageRoutingModule } from './library-routing.module';
+import {LibraryPageRoutingModule} from './library-routing.module';
 
-import { LibraryPage } from './library.page';
+import {LibraryPage} from './library.page';
 import {EpocOverviewPage} from './overview/overview.page';
 import {EpocQrPage} from './qr/qr.page';
-import {PipesModule} from '../../pipes/pipes.module';
-import {SharedModule} from '../../components/shared.module';
+import {PipesModule} from 'src/app/pipes/pipes.module';
+import {SharedModule} from 'src/app/components/shared.module';
+import {LibraryDetailsPage} from 'src/app/pages/library/details/details.page';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import {SharedModule} from '../../components/shared.module';
     PipesModule,
     SharedModule,
   ],
-  declarations: [LibraryPage, EpocOverviewPage, EpocQrPage],
+  declarations: [LibraryPage, EpocOverviewPage, EpocQrPage, LibraryDetailsPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LibraryModule {}

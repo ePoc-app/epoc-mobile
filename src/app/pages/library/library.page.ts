@@ -1,12 +1,12 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
-import {CustomLibrary, EpocLibrary} from 'src/app/classes/epoc';
-import {OnboardingService} from '../../services/onboarding.service';
-import {OnboardingItem} from '../../classes/onboarding';
+import {EpocLibrary} from 'src/app/classes/epoc';
+import {OnboardingService} from 'src/app/services/onboarding.service';
+import {OnboardingItem} from 'src/app/classes/onboarding';
 import {AppService} from 'src/app/services/app.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ActionSheetController, AlertController, IonicSlides} from '@ionic/angular';
-import {LocalEpocsService} from '../../services/localEpocs.service';
+import {LocalEpocsService} from 'src/app/services/localEpocs.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -39,7 +39,6 @@ export class LibraryPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.localEpocsService.fetchLocalEpocs();
     this.onboardingService.onboarding$.subscribe((data => {
       this.onboarding = data;
     }))
@@ -144,6 +143,4 @@ export class LibraryPage implements OnInit {
       content.focus();
     }
   }
-
-  protected readonly Object = Object;
 }
