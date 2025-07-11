@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>{{collection.title}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button aria-label="About">
+      <ion-button aria-label="About" (click)="libraryService.openAboutPublisher(collection.publisher)">
         <ion-icon aria-hidden="true" name="information-circle-outline" color="inria-icon"></ion-icon>
       </ion-button>
     </ion-buttons>

@@ -10,7 +10,7 @@ import {Filesystem,Directory, Encoding} from '@capacitor/filesystem';
 import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
 import {Reading} from '../classes/reading';
-import {ActionSheetController, AlertController} from '@ionic/angular';
+import {ActionSheetController, AlertController, IonicSafeString} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {MatomoTracker} from '@ngx-matomo/tracker';
@@ -18,6 +18,7 @@ import {AppService} from './app.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Settings} from 'src/app/classes/settings';
 import {uid} from '@epoc/epoc-types/src/v1';
+import {Publisher} from '@epoc/epoc-types/dist/v1/publisher';
 
 @Injectable({
     providedIn: 'root'
@@ -386,6 +387,24 @@ export class LibraryService {
                     }
                 }
             ]
+        });
+
+        await alert.present();
+    }
+
+    async openAboutPublisher(publisher: Publisher) {
+        const message = this.translate.instant('PUBLISHER_MODAL.MESSAGE', {
+            name: publisher.name,
+            description: publisher.description,
+            email: publisher.email,
+            website: publisher.website
+        });
+
+        const alert = await this.alertController.create({
+            header: this.translate.instant('PUBLISHER_MODAL.ABOUT'),
+            cssClass: 'alert-alignleft',
+            message: new IonicSafeString(message),
+            buttons: [this.translate.instant('OK')],
         });
 
         await alert.present();

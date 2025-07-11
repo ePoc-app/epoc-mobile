@@ -7,7 +7,8 @@
     "OPEN_ZIP": "Abrir zip",
     "OPEN": "Abrir",
     "ADD_EPOC": "Añade tu ePoc",
-    "IMPORT": "Importar"
+    "IMPORT": "Importar",
+    "VIEW_ALL": "Ver todo"
   },
   "CUSTOM_COLLECTION": {
     "SUCCESS": "Colección importada con éxito",
@@ -124,6 +125,10 @@
     "HEADER": "Tabla de contenidos",
     "VIEW_MORE": "Ver más",
     "VIEW_LESS": "Ver menos"
+  },
+  "PUBLISHER_MODAL": {
+    "ABOUT": "Acerca de publicador",
+    "MESSAGE": "<br/><br/><strong>Nombre :</strong> {{name}}<br/><br/><strong>Descripción :</strong> {{description}}<br/><br/><strong>Email :</strong> <a href='mailto:{{email}}' title='{{name}}' target='_blank'>{{email}}</a><br/><br/><strong>Sitio web :</strong> <a href='{{website}}' title='{{name}}' target='_blank'>{{website}}</a><br/><br/>"
   },
   "LICENSE_MODAL": {
     "HEADER": "Licencia",
@@ -305,7 +310,6 @@
   },
   "BADGE": {
     "NEW_BADGE_UNLOCKED": "¡Nueva recompensa obtenida!",
-    "VERBS": {},
     "PASSIVE_VERBS": {
       "started": "Han comenzado",
       "completed": "Han completado",
