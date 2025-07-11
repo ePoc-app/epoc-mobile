@@ -30,11 +30,12 @@
   </swiper-container>
   <ng-container *ngIf="libraryService.officialCollections$ | async as officialCollections">
     <ng-container *ngFor="let collection of officialCollections | keyvalue">
-      <div class="library-header">
-        <span>{{collection.value.title}}</span>
-        <a [routerLink]="collection.value.id">{{'LIBRARY_PAGE.VIEW_ALL' | translate}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
-      </div>
+      <div class="library-line-separator"></div>
       <div class="library-items" tabindex="-1">
+        <div class="library-header">
+          <span>{{collection.value.title}}</span>
+          <a [routerLink]="collection.value.id">{{'LIBRARY_PAGE.VIEW_ALL' | translate}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
+        </div>
         <div class="library-item" *ngFor="let epoc of collection.value.ePocs | keyvalue | slice:0:4">
           <div role="link" [attr.aria-label]="epoc.value.title" class="library-item-image" [routerLink]="'/library/'+collection.value.id+'/'+epoc.value.id" [style]="'background-image:url('+epoc.value.image+')'"></div>
           <h3 aria-hidden="true" class="library-item-title">{{epoc.value.title}}</h3>
@@ -67,16 +68,20 @@
             </ion-button>
           </div>
         </div>
+        <div class="library-footer" *ngIf="(collection.value.ePocs | keyvalue).length > 4">
+          <a [routerLink]="collection.value.id">{{'LIBRARY_PAGE.VIEW_ALL' | translate}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
+        </div>
       </div>
     </ng-container>
   </ng-container>
   <ng-container *ngIf="libraryService.customCollections$ | async as customCollections">
     <ng-container *ngFor="let collection of customCollections | keyvalue | slice:0:4">
-      <div class="library-header">
-        <span>{{collection.value.title}}</span>
-        <a [routerLink]="collection.value.id">{{'LIBRARY_PAGE.VIEW_ALL' | translate}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
-      </div>
+      <div class="library-line-separator"></div>
       <div class="library-items" tabindex="-1">
+        <div class="library-header">
+          <span>{{collection.value.title}}</span>
+          <a [routerLink]="collection.value.id">{{'LIBRARY_PAGE.VIEW_ALL' | translate}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
+        </div>
         <div class="library-item" *ngFor="let epoc of collection.value.ePocs | keyvalue">
           <div role="link" [attr.aria-label]="epoc.value.title" class="library-item-image" [routerLink]="'/library/' + collection.key + '/' + epoc.value.id" [style]="'background-image:url('+epoc.value.image+')'"></div>
           <h3 aria-hidden="true" class="library-item-title">{{epoc.value.title}}</h3>
@@ -108,6 +113,9 @@
               <span class="base-btn">{{'LIBRARY_PAGE.OPEN_ZIP' | translate}}<!--<ng-container *ngIf="epocProgresses[epoc.value.id]">({{epocProgresses[epoc.value.id]}}%)</ng-container>--></span>
             </ion-button>
           </div>
+        </div>
+        <div class="library-footer" *ngIf="(collection.value.ePocs | keyvalue).length > 4">
+          <a [routerLink]="collection.value.id">{{'LIBRARY_PAGE.VIEW_ALL' | translate}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
         </div>
       </div>
     </ng-container>
