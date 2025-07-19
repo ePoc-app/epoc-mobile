@@ -207,12 +207,12 @@
             "PTS_RECAP": "Riepilogo dei punti",
             "FAIL_MODAL": {
                 "HEADER": "Non disponibile",
-                "MSG": "Non hai ancora raggiunto il punteggio richiesto ({{score}} punti) per ottenere il attestato."
+                "MSG": "Non hai ancora raggiunto il punteggio richiesto ({{score}} punti) per ottenere l'attestato."
             },
             "CERTIFICATE_PDF": {
                 "COMPLETION_CERTIFICATE": "ATTESTATO DI COMPLETAMENTO",
                 "AUTHORS": "Autore(i)",
-                "EPOC_EDITION": "Edizioe di ePoc",
+                "EPOC_EDITION": "Edizione di ePoc",
                 "DELIVERED_TO": "Attestato consegnato a:",
                 "DELIVERED_THE": "Consegnato il",
                 "ERROR": "Errore",
@@ -284,7 +284,7 @@
         },
 
         "VALIDATE": "Valida",
-        "NEXT": "Prissimo",
+        "NEXT": "Prossimo",
         "EXPLANATIONS": "Spiegazioni",
         "RESPONSES": "Risposte"
     },
