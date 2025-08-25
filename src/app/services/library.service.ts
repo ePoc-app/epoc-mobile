@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, forkJoin, from, mergeMap, Observable, ReplaySubject, throwError} from 'rxjs';
+import {BehaviorSubject, forkJoin, from, mergeMap, Observable, of, ReplaySubject, throwError} from 'rxjs';
 import {catchError, map, startWith} from 'rxjs/operators';
 import {Epoc, EpocCollection, EpocMetadata, EpocLibraryState} from 'src/app/classes/epoc';
 import {FileService} from './file.service';
@@ -10,7 +10,7 @@ import {Filesystem,Directory, Encoding} from '@capacitor/filesystem';
 import {SettingsStoreService} from './settings-store.service';
 import {ReadingStoreService} from './reading-store.service';
 import {Reading} from '../classes/reading';
-import {ActionSheetController, AlertController, IonicSafeString} from '@ionic/angular';
+import {ActionSheetController, AlertController, IonicSafeString, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {MatomoTracker} from '@ngx-matomo/tracker';
@@ -52,7 +52,8 @@ export class LibraryService {
         public alertController: AlertController,
         private readonly tracker: MatomoTracker,
         public appService: AppService,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public toastController: ToastController
     ) {
         this.fetchOfficialCollections();
 
@@ -134,6 +135,7 @@ export class LibraryService {
                             opened: false,
                         };
                     });
+                    epocCollection.url = epocCollectionUrl;
                     return epocCollection;
                 })
             )
@@ -344,6 +346,31 @@ export class LibraryService {
         });
         document.documentElement.style.setProperty('--thumbnail-url', `url(${epoc.image})`);
         await actionSheet.present();
+    }
+
+    async presentToast(message, color?) {
+        const toast = await this.toastController.create({
+            message,
+            duration: 2000,
+            color
+        });
+        toast.present();
+    }
+
+    addCustomCollection(url: string) {
+        this.checkCustomCollectionUrl(url).pipe(
+            catchError(() => {
+                return of(this.translate.instant('CUSTOM_COLLECTION.ERROR_UNREACHABLE'));
+            })
+        ).subscribe(async (error) => {
+            if (error) {
+                await this.presentToast(error, 'danger');
+                return;
+            }
+            await this.presentToast(this.translate.instant('CUSTOM_COLLECTION.SUCCESS'), 'success');
+            this.settings.customLibrairies.push(url);
+            this.settingsStore.updateSettings(this.settings);
+        });
     }
 
     async confirmReset(epoc, libraryId?: string) {

@@ -260,6 +260,12 @@ ion-range.progress-indicator{
     background: none;
     text-align: left;
   }
+
+  &.import-action-sheet .action-sheet-title{
+    &::before {
+      display: none;
+    }
+  }
   .action-sheet-sub-title{
     padding: 0;
     font-size: 0.875rem;
@@ -309,6 +315,37 @@ ion-range.progress-indicator{
         height:auto;
         contain: content;
       }
+    }
+  }
+
+  .separator{
+    display: flex;
+    background: var(--ion-color-background);
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    padding: 0;
+
+    &:after, &:before {
+      content: '';
+      position: relative;
+      top:auto;
+      left:auto;
+      right: auto;
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--ion-color-specs);
+      opacity: 0.5;
+    }
+
+    span {
+      display: block;
+      width: auto;
+      flex-shrink: 1;
+      text-align: center;
+      color: var(--ion-color-specs);
+      font-size: 0.875rem;
     }
   }
 }

@@ -286,4 +286,6 @@ export class SettingsPage implements OnInit {
             this.settingsChanged();
         }
     }
+
+    protected readonly JSON = JSON;
 }

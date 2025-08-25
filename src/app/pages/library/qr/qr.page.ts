@@ -3,7 +3,9 @@ import {BarcodeScanner, SupportedFormat } from '@capacitor-community/barcode-sca
 import { AlertController } from '@ionic/angular';
 import {Router} from '@angular/router';
 import {LocalEpocsService} from 'src/app/services/localEpocs.service';
+import {LibraryService} from 'src/app/services/library.service';
 import {Capacitor} from '@capacitor/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-epoc-qr',
@@ -18,7 +20,9 @@ export class EpocQrPage {
   constructor(
       private alertController: AlertController,
       private router: Router,
-      public localEpocsService: LocalEpocsService
+      public translate: TranslateService,
+      public localEpocsService: LocalEpocsService,
+      public libraryService: LibraryService,
   ) { }
 
   async ionViewDidEnter() {
@@ -32,7 +36,7 @@ export class EpocQrPage {
 
   async didUserGrantPermission() {
     const status = await BarcodeScanner.checkPermission({ force: true });
-
+    console.log(status)
     if (status.granted) {
       return true;
     }
@@ -67,8 +71,8 @@ export class EpocQrPage {
   async startScan() {
     this.scanning = true;
     const allowed = await this.didUserGrantPermission();
-    if (!allowed) this.router.navigateByUrl('library');
-
+    // if (!allowed) this.router.navigateByUrl('library');
+    console.log(allowed)
     await BarcodeScanner.hideBackground();
     document.body.classList.add('qr-scan');
 
@@ -103,21 +107,22 @@ export class EpocQrPage {
 
   async confirmOpen(url) {
     const alert = await this.alertController.create({
-      header: 'Confirmation',
-      subHeader: `Importation de l'ePoc ${url}`,
+      header: this.translate.instant('CONFIRM'),
+      subHeader: `${this.translate.instant('LIBRARY_PAGE.IMPORT')} ${url} ?`,
       buttons: [
         {
-          text: 'Annuler',
+          text: this.translate.instant('CANCEL'),
           role: 'cancel',
           handler: () => {
             this.startScan();
           },
         },
         {
-          text: 'Confirmer',
+          text: this.translate.instant('CONFIRM'),
           role: 'confirm',
           handler: () => {
-            this.localEpocsService.downloadLocalEpoc(url);
+            if (url.endsWith('.json')) this.libraryService.addCustomCollection(url);
+            else this.localEpocsService.downloadLocalEpoc(url);
             this.router.navigate(['/library']);
           },
         },

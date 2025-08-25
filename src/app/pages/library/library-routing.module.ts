@@ -12,12 +12,12 @@ const routes: Routes = [
     component: LibraryPage
   },
   {
-    path: ':libraryId',
-    component: LibraryDetailsPage
-  },
-  {
     path: 'qr',
     component: EpocQrPage
+  },
+  {
+    path: ':libraryId',
+    component: LibraryDetailsPage
   },
   {
     path: 'local-epocs/:dir',
