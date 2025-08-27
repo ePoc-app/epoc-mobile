@@ -12,7 +12,7 @@ import {EpocBookmarksPage} from './bookmarks/bookmarks.page';
 import {PlayerModule} from './player/player.module';
 import {EpocPreviewPage} from './preview/preview.page';
 import {EpocPreviewEditorPage} from './preview-editor/preview-editor.page';
-import { EpocOrphanPlayerPage } from './player/orphan-player.page';
+import {EpocOrphanPlayerPage} from './player/orphan-player.page';
 
 @NgModule({
     imports: [

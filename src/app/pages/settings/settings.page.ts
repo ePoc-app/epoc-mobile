@@ -12,6 +12,8 @@ import {LibraryService} from 'src/app/services/library.service';
 import {MatomoTracker} from '@ngx-matomo/tracker';
 import {TranslateService} from '@ngx-translate/core';
 import {languages} from 'src/environments/languages';
+import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
     selector: 'app-settings',
@@ -33,15 +35,23 @@ export class SettingsPage implements OnInit {
     }, {
         text: this.translate.instant('CONFIRM'),
         handler: (data) => {
-            if(!data[0] || !data[1]) return;
-            this.settings.customLibrairies.push({name:data[0], url:data[1]});
-            this.settingsChanged();
+            if(!data[0]) return;
+            this.libraryService.checkCustomCollectionUrl(data[0]).pipe(
+                catchError(() => {
+                    return of(this.translate.instant('CUSTOM_COLLECTION.ERROR_UNREACHABLE'));
+                })
+            ).subscribe(async (error) => {
+                if (error) {
+                    await this.presentToast(error, 'danger');
+                    return;
+                }
+                await this.presentToast(this.translate.instant('CUSTOM_COLLECTION.SUCCESS'), 'success');
+                this.settings.customLibrairies.push(data[0]);
+                this.settingsChanged();
+            });
         }
     }];
     libraryPromptInputs = [
-        {
-            placeholder: this.translate.instant('SETTINGS_PAGE.LIBRARY_NAME')
-        },
         {
             placeholder: 'URL'
         }
@@ -59,7 +69,7 @@ export class SettingsPage implements OnInit {
     constructor(
         private settingsStore: SettingsStoreService,
         private readingStore: ReadingStoreService,
-        private libraryService: LibraryService,
+        public libraryService: LibraryService,
         public alertController: AlertController,
         public toastController: ToastController,
         private router: Router,
@@ -133,10 +143,11 @@ export class SettingsPage implements OnInit {
         await alert.present();
     }
 
-    async presentToast(message) {
+    async presentToast(message, color?) {
         const toast = await this.toastController.create({
             message,
-            duration: 2000
+            duration: 2000,
+            color
         });
         toast.present();
     }
@@ -211,14 +222,8 @@ export class SettingsPage implements OnInit {
         throw new Error(`Test Thrown Error`);
     }
 
-    libraryChanged(event) {
-        this.settings.libraryMode = event.detail.value;
-        this.settingsChanged()
-    }
-
     disableDevMode($event) {
         if ($event) return;
-        this.settings.libraryMode = 'libraryUrl';
         this.settingsChanged()
     }
 
@@ -271,10 +276,16 @@ export class SettingsPage implements OnInit {
         this.devModeCount = 0;
     }
 
-    deleteLibrary(event: any, libraryIndex: number) {
+    deleteCollection(event: any, collectionId: string) {
         if (event.detail.role === 'confirm') {
-            this.settings.customLibrairies.splice(libraryIndex, 1)
+            const libraryIndex = this.settings.customLibrairies.findIndex(
+                url =>  url === this.libraryService.customCollections[collectionId].url
+            );
+            this.settings.customLibrairies.splice(libraryIndex, 1);
+            this.settings.customLibrairies = [...this.settings.customLibrairies];
             this.settingsChanged();
         }
     }
+
+    protected readonly JSON = JSON;
 }

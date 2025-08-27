@@ -1,0 +1,20 @@
+ion-title{
+  text-transform: none;
+}
+
+.publisher-logo {
+  position: relative;
+  width: 100%;
+  height: 180px;
+
+  .logo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}

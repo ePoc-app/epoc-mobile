@@ -7,7 +7,14 @@
     "OPEN_ZIP": "Abrir zip",
     "OPEN": "Abrir",
     "ADD_EPOC": "Añade tu ePoc",
-    "IMPORT": "Importar"
+    "IMPORT": "Importar",
+    "VIEW_ALL": "Ver todo"
+  },
+  "CUSTOM_COLLECTION": {
+    "SUCCESS": "Colección importada con éxito",
+    "ERROR_UNREACHABLE": "Error: no se puede alcanzar la colección",
+    "ERROR_INVALID": "Error: colección inválida",
+    "ERROR_DUPLICATE": "Error: colección ya existe"
   },
   "ABOUT_PAGE": {
     "ABOUT": "Acerca de",
@@ -77,10 +84,13 @@
     },
     "THROW_ERROR": "Se ha emitido un error",
     "DEVELOPER": "Desarrollador",
+    "OFFICIAL_COLLECTIONS": "Colecciones oficiales",
+    "CUSTOM_COLLECTIONS": "Colecciones personalizadas",
     "EPOC_LIBRARIES": "Bibliotecas de ePocs",
     "ADDING_LIBRARY": "Añadir una biblioteca",
     "CONFIRM_DELETE_LIBRARY": "¿Eliminar biblioteca?",
     "ADD_LIBRARY": "Añadir una biblioteca",
+    "BECOME_PARTNER": "Conviértete en socio",
     "LIBRARY_NAME": "Nombre de la biblioteca"
   },
   "OVERVIEW_PAGE": {
@@ -115,6 +125,10 @@
     "HEADER": "Tabla de contenidos",
     "VIEW_MORE": "Ver más",
     "VIEW_LESS": "Ver menos"
+  },
+  "PUBLISHER_MODAL": {
+    "ABOUT": "Acerca de publicador",
+    "MESSAGE": "<br/><br/><strong>Nombre :</strong> {{name}}<br/><br/><strong>Descripción :</strong> {{description}}<br/><br/><strong>Email :</strong> <a href='mailto:{{email}}' title='{{name}}' target='_blank'>{{email}}</a><br/><br/><strong>Sitio web :</strong> <a href='{{website}}' title='{{name}}' target='_blank'>{{website}}</a><br/><br/>"
   },
   "LICENSE_MODAL": {
     "HEADER": "Licencia",
@@ -153,9 +167,13 @@
     "RESET": "Restablecer",
     "SCORE_DETAILS": "Detalles de la puntuación",
     "SETTINGS": "Configuración",
-    "IMPORT_FILE": "Importar desde archivo",
-    "IMPORT_LINK": "Importar desde enlace",
-    "IMPORT_QR": "Importar desde código QR",
+    "IMPORT": "Añadir",
+    "IMPORT_SUBHEADER": "Añadir un ePoc o una colección",
+    "IMPORT_FILE": "Añadir desde un archivo",
+    "IMPORT_LINK": "Añadir desde un enlace",
+    "IMPORT_QR": "Añadir desde un código QR",
+    "IMPORT_FROM_LINK": "Introduce el enlace del ePoc o de la colección que deseas añadir",
+    "COLLECTION": "Colección",
     "ERROR": "Ha ocurrido un error",
     "ERROR_SSL": "No se puede descargar desde una fuente no segura (la URL no usa https)"
   },
@@ -296,7 +314,6 @@
   },
   "BADGE": {
     "NEW_BADGE_UNLOCKED": "¡Nueva recompensa obtenida!",
-    "VERBS": {},
     "PASSIVE_VERBS": {
       "started": "Han comenzado",
       "completed": "Han completado",

@@ -1,13 +1,15 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {LibraryService} from 'src/app/services/library.service';
-import {CustomLibrary, EpocLibrary} from 'src/app/classes/epoc';
-import {OnboardingService} from '../../services/onboarding.service';
-import {OnboardingItem} from '../../classes/onboarding';
+import {EpocCollection, EpocLibrary} from 'src/app/classes/epoc';
+import {OnboardingService} from 'src/app/services/onboarding.service';
+import {OnboardingItem} from 'src/app/classes/onboarding';
 import {AppService} from 'src/app/services/app.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ActionSheetController, AlertController, IonicSlides} from '@ionic/angular';
-import {LocalEpocsService} from '../../services/localEpocs.service';
+import {LocalEpocsService} from 'src/app/services/localEpocs.service';
 import {Router} from '@angular/router';
+import {combineLatest} from 'rxjs';
+import {uid} from '@epoc/epoc-types/src/v1';
 
 @Component({
   selector: 'app-library',
@@ -18,11 +20,9 @@ export class LibraryPage implements OnInit {
   @ViewChild('file', {static: false}) fileRef: ElementRef;
   swiperModules = [IonicSlides];
 
-  library: EpocLibrary[] | undefined;
-  customLibraries: Record<string, CustomLibrary> | undefined;
+  collections: Record<uid, EpocCollection>;
   localEpocs: EpocLibrary[] | undefined;
   onboarding: OnboardingItem[];
-  epocProgresses : {[EpocId: string] : number} = {};
 
   onboardingOptions = {
     slidesPerView: 1,
@@ -42,21 +42,16 @@ export class LibraryPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.localEpocsService.fetchLocalEpocs();
-    this.libraryService.library$.subscribe((data: EpocLibrary[]) => { this.library = data;});
-    this.libraryService.customLibraries$.subscribe((data: Record<string, CustomLibrary>) => { this.customLibraries = data });
-    this.localEpocsService.localEpocs$.subscribe((data: EpocLibrary[]) => { this.localEpocs = data; });
-    this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
-      this.epocProgresses = epocProgresses;
-      this.ref.detectChanges();
+    combineLatest([
+      this.libraryService.officialCollections$,
+      this.libraryService.customCollections$
+    ]).subscribe(([officialCollections, customCollections]) => {
+      this.collections = {...customCollections, ...officialCollections};
     });
+
     this.onboardingService.onboarding$.subscribe((data => {
       this.onboarding = data;
     }))
-  }
-
-  downloadEpoc(epoc: EpocLibrary, libraryId?: string) {
-    this.libraryService.downloadEpoc(epoc, libraryId);
   }
 
   removeMessage(id) {
@@ -65,9 +60,9 @@ export class LibraryPage implements OnInit {
 
   doRefresh(event) {
     const startTime = performance.now();
-    this.libraryService.fetchLibrary();
+    this.libraryService.fetchCustomCollections();
     this.localEpocsService.fetchLocalEpocs();
-    this.libraryService.library$.subscribe(() => {
+    this.libraryService.officialCollections$.subscribe(() => {
       const endTime = performance.now();
       const delay = Math.max(0, 500 - (endTime - startTime)); // minimum delay of 500ms
       setTimeout(() => {
@@ -75,12 +70,12 @@ export class LibraryPage implements OnInit {
       }, delay);
     });
   }
-
-  openEpocMenu(epoc, libraryId?: string){
-    this.libraryService.epocLibraryMenu(epoc, libraryId);
-  }
   async openAddMenu() {
     const buttons = [
+      {
+        text: 'ePoc',
+        cssClass: 'separator'
+      },
       {
         text: this.translate.instant('FLOATING_MENU.IMPORT_FILE'),
         icon: '/assets/icon/importer.svg',
@@ -103,13 +98,32 @@ export class LibraryPage implements OnInit {
         }
       },
       {
+        text: this.translate.instant('FLOATING_MENU.COLLECTION'),
+        cssClass: 'separator'
+      },
+      {
+        text: this.translate.instant('FLOATING_MENU.IMPORT_LINK'),
+        icon: '/assets/icon/lien.svg',
+        handler: () => {
+          this.linkInputAlert();
+        }
+      },
+      {
+        text: this.translate.instant('FLOATING_MENU.IMPORT_QR'),
+        icon: '/assets/icon/qr.svg',
+        handler: () => {
+          this.router.navigateByUrl('/library/qr')
+        }
+      },
+      {
         text: 'Fermer',
         role: 'cancel'
       }
     ];
     const actionSheet = await this.actionSheetController.create({
-      header: '',
-      cssClass: 'custom-action-sheet',
+      header: this.translate.instant('FLOATING_MENU.IMPORT'),
+      subHeader: this.translate.instant('FLOATING_MENU.IMPORT_SUBHEADER'),
+      cssClass: 'custom-action-sheet import-action-sheet',
       mode: 'ios',
       buttons
     });
@@ -124,16 +138,17 @@ export class LibraryPage implements OnInit {
 
   async linkInputAlert() {
     const alert = await this.alertController.create({
-      header: 'Saisissez le lien du fichier ePoc que vous souhaitez importer',
+      header: this.translate.instant('FLOATING_MENU.IMPORT_FROM_LINK'),
       buttons: [
         {
-          text: 'Annuler',
+          text: this.translate.instant('CANCEL'),
           role: 'cancel'
         },
         {
-          text: 'Importer',
+          text: this.translate.instant('CONFIRM'),
           handler: (e) => {
-            this.localEpocsService.downloadLocalEpoc(e.link);
+            if (e.link.endsWith('.json')) this.libraryService.addCustomCollection(e.link);
+            else this.localEpocsService.downloadLocalEpoc(e.link);
           }
         }
       ],
@@ -154,6 +169,4 @@ export class LibraryPage implements OnInit {
       content.focus();
     }
   }
-
-  protected readonly Object = Object;
 }
