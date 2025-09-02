@@ -1,8 +1,8 @@
 {
   "name": "epoc-mobile",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "author": "Inria Learning Lab",
-  "homepage": "https://learninglab.inria.fr",
+  "homepage": "https://epoc.inria.fr",
   "scripts": {
     "dev": "ionic serve --external --configuration=dev",
     "dev-preview": "ionic serve --external --configuration=preview",
