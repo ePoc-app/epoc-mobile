@@ -49,6 +49,9 @@ export class LibraryPage implements OnInit {
       this.collections = {...customCollections, ...officialCollections};
     });
 
+    this.localEpocsService.fetchLocalEpocs();
+    this.localEpocsService.localEpocs$.subscribe((data: EpocLibrary[]) => { this.localEpocs = data; });
+
     this.onboardingService.onboarding$.subscribe((data => {
       this.onboarding = data;
     }))
