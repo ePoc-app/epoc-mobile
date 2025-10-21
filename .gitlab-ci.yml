@@ -7,7 +7,7 @@ stages:
 build:
   stage: build
   before_script:
-    - apt-get update -qy
+    - apt-get update -qy || true
     - apt-get -y install zip
   script:
   - export NG_CLI_ANALYTICS=ci
