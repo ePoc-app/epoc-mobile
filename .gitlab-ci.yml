@@ -1,4 +1,4 @@
-image: node:18
+image: node:18-alpine
 
 stages:
   - build
@@ -7,8 +7,7 @@ stages:
 build:
   stage: build
   before_script:
-    - apt-get update -qy || true
-    - apt-get -y install zip
+    - apk add --no-cache zip
   script:
   - export NG_CLI_ANALYTICS=ci
   - npm ci
