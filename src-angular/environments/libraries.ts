@@ -1,0 +1,1 @@
+export const officialCollectionsUrls =  'https://learninglab.gitlabpages.inria.fr/epoc/epocs/collection-list.json';

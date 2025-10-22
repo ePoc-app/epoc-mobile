@@ -32,7 +32,7 @@ npm-debug.log*
 .angular
 
 /resources
-src/assets/demo/
-src/environments/secrets.prod.ts
+src-angular/assets/demo/
+src-angular/environments/secrets.prod.ts
 
 ios/DerivedData/
