@@ -29,10 +29,10 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @import "@/theme/_colors.scss";
-          @import "@/theme/_fonts.scss";
-          @import "@/theme/_utils.scss";
-          @import "@/theme/global.scss";
+          @import "@/style/_colors.scss";
+          @import "@/style/_fonts.scss";
+          @import "@/style/_utils.scss";
+          @import "@/style/global.scss";
         `
       }
     }
