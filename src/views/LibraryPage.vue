@@ -1,8 +1,21 @@
+<script setup lang="ts">
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+</script>
+
 <template>
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <div aria-hidden="true" class="logo" slot="start">
+          <div class="epoc-logo"></div>
+          <div class="by-inria"></div>
+        </div>
+        <ion-button role="button" class="icon-btn" slot="end" routerLink="/settings" routerDirection="forward">
+          <ion-icon aria-label="Paramètre" slot="icon-only" name="settings-outline" color="inria-icon"></ion-icon>
+        </ion-button>
+        <ion-button role="button" class="icon-btn" slot="end" routerLink="/about" routerDirection="forward">
+          <ion-icon aria-label="Informations" slot="icon-only" name="information-circle-outline" color="inria-icon"></ion-icon>
+        </ion-button>
       </ion-toolbar>
     </ion-header>
 
@@ -20,10 +33,6 @@
     </ion-content>
   </ion-page>
 </template>
-
-<script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-</script>
 
 <style scoped>
 #container {
