@@ -19,11 +19,11 @@
     "@awesome-cordova-plugins/file-transfer": "^6.4.0",
     "@awesome-cordova-plugins/http": "^6.4.0",
     "@awesome-cordova-plugins/in-app-browser": "^6.4.0",
-    "@capacitor/barcode-scanner": "^2.2.0",
     "@capacitor-community/file-opener": "^7.0.1",
     "@capacitor/android": "^7.4.3",
     "@capacitor/app": "^7.1.0",
     "@capacitor/assets": "^3.0.5",
+    "@capacitor/barcode-scanner": "^2.2.0",
     "@capacitor/browser": "^7.0.2",
     "@capacitor/cli": "^7.4.3",
     "@capacitor/core": "^7.4.3",
@@ -79,5 +79,9 @@
   "overrides": {
     "rollup": "4.44.0"
   },
-  "description": "Lecteur mobile d'ePoc (Electronic Pocket Open Course)"
+  "description": "Lecteur mobile d'ePoc (Electronic Pocket Open Course)",
+  "devDependencies": {
+    "sass": "^1.93.2",
+    "sass-loader": "^16.0.6"
+  }
 }
