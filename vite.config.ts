@@ -24,5 +24,17 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom'
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @import "@/theme/_colors.scss";
+          @import "@/theme/_fonts.scss";
+          @import "@/theme/_utils.scss";
+          @import "@/theme/global.scss";
+        `
+      }
+    }
   }
 })
