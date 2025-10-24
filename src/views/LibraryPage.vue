@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
+  import { settingsOutline, informationCircleOutline } from 'ionicons/icons';
 </script>
 
 <template>
@@ -11,10 +12,10 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue
           <div class="by-inria"></div>
         </div>
         <ion-button role="button" class="icon-btn" slot="end" routerLink="/settings" routerDirection="forward">
-          <ion-icon aria-label="Paramètre" slot="icon-only" name="settings-outline" color="inria-icon"></ion-icon>
+          <ion-icon aria-label="Paramètre" slot="icon-only" :icon="settingsOutline" color="inria-icon"></ion-icon>
         </ion-button>
         <ion-button role="button" class="icon-btn" slot="end" routerLink="/about" routerDirection="forward">
-          <ion-icon aria-label="Informations" slot="icon-only" name="information-circle-outline" color="inria-icon"></ion-icon>
+          <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
         </ion-button>
       </ion-toolbar>
     </ion-header>
