@@ -29,7 +29,7 @@
 
       <div id="container">
         <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <p class="test_library">Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
       </div>
     </ion-content>
   </ion-page>
@@ -37,6 +37,7 @@
 
 <style scoped lang="scss">
 p {
-  color: $inria-red
+  // TODO if this section stay empty, find a way to remove it properly
+  // for now if no style, the imported global style is not imported either.
 }
 </style>

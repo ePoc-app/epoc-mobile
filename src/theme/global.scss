@@ -1,3 +1,8 @@
+@use "sass:meta";
+@use '_colors' as color;
+@use '_utils' as utils;
+
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -10,24 +15,27 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import "~@ionic/vue/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/vue/css/normalize.css";
+@import "~@ionic/vue/css/structure.css";
+@import "~@ionic/vue/css/typography.css";
+@import '~@ionic/vue/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import "~@ionic/vue/css/padding.css";
+@import "~@ionic/vue/css/float-elements.css";
+@import "~@ionic/vue/css/text-alignment.css";
+@import "~@ionic/vue/css/text-transformation.css";
+@import "~@ionic/vue/css/flex-utils.css";
 
-@import '_colors';
-@import '_utils';
-@import '_fonts';
+//@import '_utils';
+@include meta.load-css('_fonts');
+
+.test_library {
+  color: color.$inria-spe;
+}
 
 body{
   color: var(--ion-color-text);
@@ -61,10 +69,10 @@ ion-toolbar {
 
   .logo {
     text-align: left;
-
     .epoc-logo{
       width: 100px;
       height:30.5px;
+      //background: url("../assets/img/ePoc.svg") no-repeat;
       background: var(--epoc-logo) no-repeat;
     }
 
@@ -425,7 +433,7 @@ video {
 
   @for $i from 1 through 6 {
     h#{7 - $i} {
-      font-size: pow(1.1, $i) * 1em;
+      font-size: utils.pow(1.1, $i) * 1em;
       font-weight: 700;
       line-height: 1;
       color:var(--ion-color-text);

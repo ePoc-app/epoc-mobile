@@ -18,7 +18,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['src-angular/**'],
+      external: ['src/**'],
     },
   },
   test: {
@@ -29,10 +29,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @import "@/style/_colors.scss";
-          @import "@/style/_fonts.scss";
-          @import "@/style/_utils.scss";
-          @import "@/style/global.scss";
+          @use "@/theme/global.scss";
         `
       }
     }
