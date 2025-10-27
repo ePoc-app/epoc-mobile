@@ -1,5 +1,5 @@
 @use "sass:meta";
-@use '_colors' as color;
+@use '_colors' as colors;
 @use '_utils' as utils;
 
 
@@ -33,10 +33,6 @@
 //@import '_utils';
 @include meta.load-css('_fonts');
 
-.test_library {
-  color: color.$inria-spe;
-}
-
 body{
   color: var(--ion-color-text);
   line-height: 1.6;
@@ -45,7 +41,9 @@ body{
   --epoc-border-radius: .8rem;
   --epoc-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.334316), 0px 9px 11px rgba(0, 0, 0, 0.160737);
 }
-
+  .test_library {
+    color: colors.$inria-spe;
+  }
 
 ion-toolbar {
   padding: 0 1rem;
