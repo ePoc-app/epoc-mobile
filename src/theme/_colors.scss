@@ -1,3 +1,4 @@
+@use "sass:color";
 $inria-red : #e63312;
 $inria-blue : #384257;
 $inria-grey : #6477A0;
@@ -38,32 +39,33 @@ $inria-lightblue: #A6B1C9;
     
     
     --ion-color-inria-icon: #{$inria-blue};
-    --ion-color-inria-icon-rgb: #{red($inria-blue)}, #{green($inria-blue)}, #{blue($inria-blue)};
+    
+    --ion-color-inria-icon-rgb: #{color.channel($inria-blue, "red", $space: rgb)}, #{color.channel($inria-blue, "green", $space: rgb)}, #{color.channel($inria-blue, "blue", $space: rgb)};
     --ion-color-inria-icon-contrast: #fff;
     --ion-color-inria-icon-contrast-rgb: 255,255,255;
-    --ion-color-inria-icon-shade: #{darken($inria-blue, 10%)};
-    --ion-color-inria-icon-tint: #{lighten($inria-blue, 10%)};
+    --ion-color-inria-icon-shade: #{color.adjust($inria-blue, $lightness: -10%)};
+    --ion-color-inria-icon-tint: #{color.adjust($inria-blue, $lightness: 10%)};
 
     --ion-color-inria-base-button: #{$inria-light};
-    --ion-color-inria-base-button-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};
+    --ion-color-inria-base-button-rgb: #{color.channel($inria-light, "red", $space: rgb)}, #{color.channel($inria-light, "green", $space: rgb)}, #{color.channel($inria-light, "blue", $space: rgb)};
     --ion-color-inria-base-button-contrast: #{$inria-grey};
     --ion-color-inria-base-button-contrast-rgb: #{$inria-grey};
-    --ion-color-inria-base-button-shade: #{darken($inria-light, 10%)};
-    --ion-color-inria-base-button-tint: #{lighten($inria-light, 10%)};
+    --ion-color-inria-base-button-shade: #{color.adjust($inria-light, $lightness: -10%)};
+    --ion-color-inria-base-button-tint: #{color.adjust($inria-light, $lightness: 10%)};
 
     --ion-color-inria-contrast-button: #{$inria-light};
-    --ion-color-inria-contrast-button-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};
+    --ion-color-inria-contrast-button-rgb: #{color.channel($inria-light, "red", $space: rgb)}, #{color.channel($inria-light, "green", $space: rgb)}, #{color.channel($inria-light, "blue", $space: rgb)};
     --ion-color-inria-contrast-button-contrast: #{$inria-grey};
     --ion-color-inria-contrast-button-contrast-rgb: #{$inria-grey};
-    --ion-color-inria-contrast-button-shade: #{darken($inria-light, 10%)};
-    --ion-color-inria-contrast-button-tint: #{lighten($inria-light, 10%)};
+    --ion-color-inria-contrast-button-shade: #{color.adjust($inria-light, $lightness: -10%)};
+    --ion-color-inria-contrast-button-tint: #{color.adjust($inria-light, $lightness: 10%)};
 
     --ion-color-outline-button: #{$inria-red};
-    --ion-color-outline-button-rgb: #{red($inria-red)}, #{green($inria-red)}, #{blue($inria-blue)};
+    --ion-color-outline-button-rgb: #{color.channel($inria-red, "red", $space: rgb)}, #{color.channel($inria-red, "green", $space: rgb)}, #{color.channel($inria-blue, "blue", $space: rgb)};
     --ion-color-outline-button-contrast: #fff;
     --ion-color-outline-button-contrast-rgb: 255, 255, 255;
-    --ion-color-outline-button-shade: #{darken($inria-red, 10%)};
-    --ion-color-outline-button-tint: #{lighten($inria-red, 10%)};
+    --ion-color-outline-button-shade: #{color.adjust($inria-red, $lightness: -10%)};
+    --ion-color-outline-button-tint: #{color.adjust($inria-red, $lightness: 10%)};
 
     ///////////////////////Unique variables ///////////////////////
     --ion-color-unique-1: var(--ion-color-inria-lightgrey);
@@ -105,32 +107,32 @@ $inria-lightblue: #A6B1C9;
 
     
     --ion-color-inria-icon: #{$inria-light};
-    --ion-color-inria-icon-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};
+    --ion-color-inria-icon-rgb: #{color.channel($inria-light, "red", $space: rgb)}, #{color.channel($inria-light, "green", $space: rgb)}, #{color.channel($inria-light, "blue", $space: rgb)};
     --ion-color-inria-icon-contrast: #{$inria-grey};
     --ion-color-inria-icon-contrast-rgb: #{$inria-grey};
-    --ion-color-inria-icon-shade: #{darken($inria-light, 10%)};
-    --ion-color-inria-icon-tint: #{lighten($inria-light, 10%)};
+    --ion-color-inria-icon-shade: #{color.adjust($inria-light, $lightness: -10%)};
+    --ion-color-inria-icon-tint: #{color.adjust($inria-light, $lightness: 10%)};
 
     --ion-color-inria-base-button: #{$inria-dark};
-    --ion-color-inria-base-button-rgb: #{red($inria-dark)}, #{green($inria-dark)}, #{blue($inria-dark)};
+    --ion-color-inria-base-button-rgb: #{color.channel($inria-dark, "red", $space: rgb)}, #{color.channel($inria-dark, "green", $space: rgb)}, #{color.channel($inria-dark, "blue", $space: rgb)};
     --ion-color-inria-base-button-contrast: #{$inria-grey};
     --ion-color-inria-base-button-contrast-rgb: #{$inria-grey};
-    --ion-color-inria-base-button-shade: #{darken($inria-dark, 10%)};
-    --ion-color-inria-base-button-tint: #{lighten($inria-dark, 10%)};
+    --ion-color-inria-base-button-shade: #{color.adjust($inria-dark, $lightness: -10%)};
+    --ion-color-inria-base-button-tint: #{color.adjust($inria-dark, $lightness: 10%)};
 
     --ion-color-inria-contrast-button: #{$inria-blue};
-    --ion-color-inria-contrast-button-rgb: #{red($inria-blue)}, #{green($inria-blue)}, #{blue($inria-blue)};
+    --ion-color-inria-contrast-button-rgb: #{color.channel($inria-blue, "red", $space: rgb)}, #{color.channel($inria-blue, "green", $space: rgb)}, #{color.channel($inria-blue, "blue", $space: rgb)};
     --ion-color-inria-contrast-button-contrast: #fff;
     --ion-color-inria-contrast-button-contrast-rgb: 255,255,255;
-    --ion-color-inria-contrast-button-shade: #{darken($inria-blue, 10%)};
-    --ion-color-inria-contrast-button-tint: #{lighten($inria-blue, 10%)};
+    --ion-color-inria-contrast-button-shade: #{color.adjust($inria-blue, $lightness: -10%)};
+    --ion-color-inria-contrast-button-tint: #{color.adjust($inria-blue, $lightness: 10%)};
 
     --ion-color-outline-button: #{$inria-lightblue};
-    --ion-color-outline-button-rgb: #{red($inria-lightblue)}, #{green($inria-lightblue)}, #{blue($inria-lightblue)};
+    --ion-color-outline-button-rgb: #{color.channel($inria-lightblue, "red", $space: rgb)}, #{color.channel($inria-lightblue, "green", $space: rgb)}, #{color.channel($inria-lightblue, "blue", $space: rgb)};
     --ion-color-outline-button-contrast: #fff;
     --ion-color-outline-button-contrast-rgb: 255, 255, 255;
-    --ion-color-outline-button-shade: #{darken($inria-lightblue, 10%)};
-    --ion-color-contrast-button-tint: #{lighten($inria-lightblue, 10%)};
+    --ion-color-outline-button-shade: #{color.adjust($inria-lightblue, $lightness: -10%)};
+    --ion-color-contrast-button-tint: #{color.adjust($inria-lightblue, $lightness: 10%)};
 
 
     ///////////////////////Uniques variables ///////////////////////
@@ -155,88 +157,88 @@ $inria-lightblue: #A6B1C9;
 
 :root {
   --ion-color-inria: #{$inria-red};
-  --ion-color-inria-rgb: #{red($inria-red)}, #{green($inria-red)}, #{blue($inria-red)};
+  --ion-color-inria-rgb: #{color.channel($inria-red, "red", $space: rgb)}, #{color.channel($inria-red, "green", $space: rgb)}, #{color.channel($inria-red, "blue", $space: rgb)};
   --ion-color-inria-contrast: #fff;
   --ion-color-inria-contrast-rgb: 255,255,255;
   --ion-color-inria-shade: darken(#{$inria-red}, 10%);
-  --ion-color-inria-tint: #{lighten($inria-red, 10%)};
+  --ion-color-inria-tint: #{color.adjust($inria-red, $lightness: 10%)};
 
   --ion-color-inria-blue: #{$inria-blue};
-  --ion-color-inria-blue-rgb: #{red($inria-blue)}, #{green($inria-blue)}, #{blue($inria-blue)};
+  --ion-color-inria-blue-rgb: #{color.channel($inria-blue, "red", $space: rgb)}, #{color.channel($inria-blue, "green", $space: rgb)}, #{color.channel($inria-blue, "blue", $space: rgb)};
   --ion-color-inria-blue-contrast: #fff;
   --ion-color-inria-blue-contrast-rgb: 255,255,255;
-  --ion-color-inria-blue-shade: #{darken($inria-blue, 10%)};
-  --ion-color-inria-blue-tint: #{lighten($inria-blue, 10%)};
+  --ion-color-inria-blue-shade: #{color.adjust($inria-blue, $lightness: -10%)};
+  --ion-color-inria-blue-tint: #{color.adjust($inria-blue, $lightness: 10%)};
 
   --ion-color-inria-grey: #{$inria-grey};
-  --ion-color-inria-grey-rgb: #{red($inria-grey)}, #{green($inria-grey)}, #{blue($inria-grey)};
+  --ion-color-inria-grey-rgb: #{color.channel($inria-grey, "red", $space: rgb)}, #{color.channel($inria-grey, "green", $space: rgb)}, #{color.channel($inria-grey, "blue", $space: rgb)};
   --ion-color-inria-grey-contrast: #fff;
   --ion-color-inria-grey-contrast-rgb: 255,255,255;
-  --ion-color-inria-grey-shade: #{darken($inria-grey, 10%)};
-  --ion-color-inria-grey-tint: #{lighten($inria-grey, 10%)};
+  --ion-color-inria-grey-shade: #{color.adjust($inria-grey, $lightness: -10%)};
+  --ion-color-inria-grey-tint: #{color.adjust($inria-grey, $lightness: 10%)};
 
   --ion-color-inria-light: #{$inria-light};
-  --ion-color-inria-light-rgb: #{red($inria-light)}, #{green($inria-light)}, #{blue($inria-light)};
+  --ion-color-inria-light-rgb: #{color.channel($inria-light, "red", $space: rgb)}, #{color.channel($inria-light, "green", $space: rgb)}, #{color.channel($inria-light, "blue", $space: rgb)};
   --ion-color-inria-light-contrast: #{$inria-grey};
   --ion-color-inria-light-contrast-rgb: #{$inria-grey};
-  --ion-color-inria-light-shade: #{darken($inria-light, 10%)};
-  --ion-color-inria-light-tint: #{lighten($inria-light, 10%)};
+  --ion-color-inria-light-shade: #{color.adjust($inria-light, $lightness: -10%)};
+  --ion-color-inria-light-tint: #{color.adjust($inria-light, $lightness: 10%)};
 
   --ion-color-inria-dark: #{$inria-dark};
-  --ion-color-inria-dark-rgb: #{red($inria-dark)}, #{green($inria-dark)}, #{blue($inria-dark)};
+  --ion-color-inria-dark-rgb: #{color.channel($inria-dark, "red", $space: rgb)}, #{color.channel($inria-dark, "green", $space: rgb)}, #{color.channel($inria-dark, "blue", $space: rgb)};
   --ion-color-inria-dark-contrast: #{$inria-grey};
   --ion-color-inria-dark-contrast-rgb: #{$inria-grey};
-  --ion-color-inria-dark-shade: #{darken($inria-dark, 10%)};
-  --ion-color-inria-dark-tint: #{lighten($inria-dark, 10%)};
+  --ion-color-inria-dark-shade: #{color.adjust($inria-dark, $lightness: -10%)};
+  --ion-color-inria-dark-tint: #{color.adjust($inria-dark, $lightness: 10%)};
 
   --ion-color-inria-spe: #{$inria-spe};
-  --ion-color-inria-spe-rgb: #{red($inria-spe)}, #{green($inria-spe)}, #{blue($inria-spe)};
+  --ion-color-inria-spe-rgb: #{color.channel($inria-spe, "red", $space: rgb)}, #{color.channel($inria-spe, "green", $space: rgb)}, #{color.channel($inria-spe, "blue", $space: rgb)};
   --ion-color-inria-spe-contrast: #fff;
   --ion-color-inria-spe-contrast-rgb: 255,255,255;
-  --ion-color-inria-spe-shade: #{darken($inria-spe, 10%)};
-  --ion-color-inria-spe-tint: #{lighten($inria-spe, 10%)};
+  --ion-color-inria-spe-shade: #{color.adjust($inria-spe, $lightness: -10%)};
+  --ion-color-inria-spe-tint: #{color.adjust($inria-spe, $lightness: 10%)};
 
   --ion-color-inria-correct: #{$inria-correct};
-  --ion-color-inria-correct-rgb: #{red($inria-correct)}, #{green($inria-correct)}, #{blue($inria-correct)};
+  --ion-color-inria-correct-rgb: #{color.channel($inria-correct, "red", $space: rgb)}, #{color.channel($inria-correct, "green", $space: rgb)}, #{color.channel($inria-correct, "blue", $space: rgb)};
   --ion-color-inria-correct-contrast: #FFF;
   --ion-color-inria-correct-contrast-rgb: 255, 255, 255;
   --ion-color-inria-correct-shade: #{$inria-correct-shade};
   --ion-color-inria-correct-tint: #{$inria-correct-tint};
 
   --ion-color-inria-incorrect: #{$inria-incorrect};
-  --ion-color-inria-incorrect-rgb : #{red($inria-incorrect)}, #{green($inria-incorrect)}, #{blue($inria-incorrect)};
+  --ion-color-inria-incorrect-rgb : #{color.channel($inria-incorrect, "red", $space: rgb)}, #{color.channel($inria-incorrect, "green", $space: rgb)}, #{color.channel($inria-incorrect, "blue", $space: rgb)};
   --ion-color-inria-incorrect-contrast: #FFF;
   --ion-color-inria-incorrect-contrast-rgb: 255, 255, 255;
-  --ion-color-inria-incorrect-shade: #{darken($inria-incorrect, 10%)};
-  --ion-color-inria-incorrect-tint: #{lighten($inria-incorrect, 10%)};
+  --ion-color-inria-incorrect-shade: #{color.adjust($inria-incorrect, $lightness: -10%)};
+  --ion-color-inria-incorrect-tint: #{color.adjust($inria-incorrect, $lightness: 10%)};
 
   --ion-color-inria-lightgrey: #{$inria-lightgrey};
-  --ion-color-inria-lightgrey-rgb : #{red($inria-lightgrey)}, #{green($inria-lightgrey)}, #{blue($inria-lightgrey)};
+  --ion-color-inria-lightgrey-rgb : #{color.channel($inria-lightgrey, "red", $space: rgb)}, #{color.channel($inria-lightgrey, "green", $space: rgb)}, #{color.channel($inria-lightgrey, "blue", $space: rgb)};
   --ion-color-inria-lightgrey-contrast: #FFF;
   --ion-color-inria-lightgrey-contrast-rgb: 255, 255, 255;
-  --ion-color-inria-lightgrey-shade: #{darken($inria-lightgrey, 10%)};
-  --ion-color-inria-lightgrey-tint: #{lighten($inria-lightgrey, 10%)};
+  --ion-color-inria-lightgrey-shade: #{color.adjust($inria-lightgrey, $lightness: -10%)};
+  --ion-color-inria-lightgrey-tint: #{color.adjust($inria-lightgrey, $lightness: 10%)};
 
   --ion-color-inria-darkgrey: #{$inria-darkgrey};
-  --ion-color-inria-darkgrey-rgb : #{red($inria-darkgrey)}, #{green($inria-darkgrey)}, #{blue($inria-darkgrey)};
+  --ion-color-inria-darkgrey-rgb : #{color.channel($inria-darkgrey, "red", $space: rgb)}, #{color.channel($inria-darkgrey, "green", $space: rgb)}, #{color.channel($inria-darkgrey, "blue", $space: rgb)};
   --ion-color-inria-darkgrey-contrast: #FFF;
   --ion-color-inria-darkgrey-contrast-rgb: 255, 255, 255;
-  --ion-color-inria-darkgrey-shade: #{darken($inria-darkgrey, 10%)};
-  --ion-color-inria-darkgrey-tint: #{darken($inria-darkgrey, 10%)};
+  --ion-color-inria-darkgrey-shade: #{color.adjust($inria-darkgrey, $lightness: -10%)};
+  --ion-color-inria-darkgrey-tint: #{color.adjust($inria-darkgrey, $lightness: -10%)};
 
   --ion-color-inria-certificate: #{$inria-certificate};
-  --ion-color-inria-certificate-rgb : #{red($inria-certificate)}, #{green($inria-certificate)}, #{blue($inria-certificate)};
+  --ion-color-inria-certificate-rgb : #{color.channel($inria-certificate, "red", $space: rgb)}, #{color.channel($inria-certificate, "green", $space: rgb)}, #{color.channel($inria-certificate, "blue", $space: rgb)};
   --ion-color-inria-certificate-contrast: #FFF;
   --ion-color-inria-certificate-contrast-rgb: 255, 255, 255;
-  --ion-color-inria-certificate-shade: #{darken($inria-certificate, 10%)};
-  --ion-color-inria-certificate-tint: #{lighten($inria-certificate, 10%)};
+  --ion-color-inria-certificate-shade: #{color.adjust($inria-certificate, $lightness: -10%)};
+  --ion-color-inria-certificate-tint: #{color.adjust($inria-certificate, $lightness: 10%)};
 
   --ion-color-inria-black: #{$inria-black};
-  --ion-color-inria-black-rgb : #{red($inria-black)}, #{green($inria-black)}, #{blue($inria-black)};
+  --ion-color-inria-black-rgb : #{color.channel($inria-black, "red", $space: rgb)}, #{color.channel($inria-black, "green", $space: rgb)}, #{color.channel($inria-black, "blue", $space: rgb)};
   --ion-color-inria-black-contrast: #FFF;
   --ion-color-inria-black-contrast-rgb: 255, 255, 255;
-  --ion-color-inria-black-shade: #{darken($inria-black, 10%)};
-  --ion-color-inria-black-tint: #{lighten($inria-black, 10%)};
+  --ion-color-inria-black-shade: #{color.adjust($inria-black, $lightness: -10%)};
+  --ion-color-inria-black-tint: #{color.adjust($inria-black, $lightness: 10%)};
 
   --vjs-theme-forest--primary: #364357 !important;
   --vjs-theme-forest--secondary: #81cbcb!important;

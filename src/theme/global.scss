@@ -1,3 +1,6 @@
+@use "sass:meta";
+@use '_colors';
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -25,9 +28,21 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import '_colors';
-@import '_utils';
-@import '_fonts';
+//@import '_utils';
+@include meta.load-css('_fonts');
+
+@function pow($number, $exponent) {
+  $value: 1;
+
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $value: $value * $number;
+    }
+  }
+
+  @return $value;
+}
+
 
 body{
   color: var(--ion-color-text);
@@ -61,10 +76,10 @@ ion-toolbar {
 
   .logo {
     text-align: left;
-
     .epoc-logo{
       width: 100px;
       height:30.5px;
+      //background: url("../assets/img/ePoc.svg") no-repeat;
       background: var(--epoc-logo) no-repeat;
     }
 
