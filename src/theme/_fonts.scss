@@ -1,109 +1,109 @@
 
 @font-face {
   font-family: 'Inria Sans';
-  src: url("../assets/font/inria/InriaSans-Light.eot");
-  src: url("../assets/font/inria/InriaSans-Light.eot?#iefix") format("embedded-opentype"), url("../assets/font/inria/InriaSans-Light.woff2") format("woff2"), url("../assets/font/inria/InriaSans-Light.woff") format("woff"), url("../assets/font/inria/InriaSans-Light.svg") format("svg");
+  src: url("@/assets/font/inria/InriaSans-Light.eot");
+  src: url("@/assets/font/inria/InriaSans-Light.eot?#iefix") format("embedded-opentype"), url("@/assets/font/inria/InriaSans-Light.woff2") format("woff2"), url("@/assets/font/inria/InriaSans-Light.woff") format("woff"), url("@/assets/font/inria/InriaSans-Light.svg") format("svg");
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
   font-family: 'Inria Sans';
-  src: url("../assets/font/inria/InriaSans-LightItalic.eot");
-  src: url("../assets/font/inria/InriaSans-LightItalic.eot?#iefix") format("embedded-opentype"), url("../assets/font/inria/InriaSans-LightItalic.woff2") format("woff2"), url("../assets/font/inria/InriaSans-LightItalic.woff") format("woff"), url("../assets/font/inria/InriaSans-LightItalic.svg") format("svg");
+  src: url("@/assets/font/inria/InriaSans-LightItalic.eot");
+  src: url("@/assets/font/inria/InriaSans-LightItalic.eot?#iefix") format("embedded-opentype"), url("@/assets/font/inria/InriaSans-LightItalic.woff2") format("woff2"), url("@/assets/font/inria/InriaSans-LightItalic.woff") format("woff"), url("@/assets/font/inria/InriaSans-LightItalic.svg") format("svg");
   font-weight: 300;
   font-style: italic;
 }
 @font-face {
   font-family: 'Inria Sans';
-  src: url("../assets/font/inria/InriaSans-Italic.eot");
-  src: url("../assets/font/inria/InriaSans-Italic.eot?#iefix") format("embedded-opentype"), url("../assets/font/inria/InriaSans-Italic.woff2") format("woff2"), url("../assets/font/inria/InriaSans-Italic.woff") format("woff"), url("../assets/font/inria/InriaSans-Italic.svg") format("svg");
+  src: url("@/assets/font/inria/InriaSans-Italic.eot");
+  src: url("@/assets/font/inria/InriaSans-Italic.eot?#iefix") format("embedded-opentype"), url("@/assets/font/inria/InriaSans-Italic.woff2") format("woff2"), url("@/assets/font/inria/InriaSans-Italic.woff") format("woff"), url("@/assets/font/inria/InriaSans-Italic.svg") format("svg");
   font-weight: 400;
   font-style: italic;
 }
 @font-face {
   font-family: 'Inria Sans';
-  src: url("../assets/font/inria/InriaSans-Regular.eot");
-  src: url("../assets/font/inria/InriaSans-Regular.eot?#iefix") format("embedded-opentype"), url("../assets/font/inria/InriaSans-Regular.woff2") format("woff2"), url("../assets/font/inria/InriaSans-Regular.woff") format("woff"), url("../assets/font/inria/InriaSans-Regular.svg") format("svg");
+  src: url("@/assets/font/inria/InriaSans-Regular.eot");
+  src: url("@/assets/font/inria/InriaSans-Regular.eot?#iefix") format("embedded-opentype"), url("@/assets/font/inria/InriaSans-Regular.woff2") format("woff2"), url("@/assets/font/inria/InriaSans-Regular.woff") format("woff"), url("@/assets/font/inria/InriaSans-Regular.svg") format("svg");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: 'Inria Sans';
-  src: url("../assets/font/inria/InriaSans-Bold.eot");
-  src: url("../assets/font/inria/InriaSans-Bold.eot?#iefix") format("embedded-opentype"), url("../assets/font/inria/InriaSans-Bold.woff2") format("woff2"), url("../assets/font/inria/InriaSans-Bold.woff") format("woff"), url("../assets/font/inria/InriaSans-Bold.svg") format("svg");
+  src: url("@/assets/font/inria/InriaSans-Bold.eot");
+  src: url("@/assets/font/inria/InriaSans-Bold.eot?#iefix") format("embedded-opentype"), url("@/assets/font/inria/InriaSans-Bold.woff2") format("woff2"), url("@/assets/font/inria/InriaSans-Bold.woff") format("woff"), url("@/assets/font/inria/InriaSans-Bold.svg") format("svg");
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: 'Inria Sans';
-  src: url("../assets/font/inria/InriaSans-BoldItalic.eot");
-  src: url("../assets/font/inria/InriaSans-BoldItalic.eot?#iefix") format("embedded-opentype"), url("../assets/font/inria/InriaSans-BoldItalic.woff2") format("woff2"), url("../assets/font/inria/InriaSans-BoldItalic.woff") format("woff"), url("../assets/font/inria/InriaSans-BoldItalic.svg") format("svg");
+  src: url("@/assets/font/inria/InriaSans-BoldItalic.eot");
+  src: url("@/assets/font/inria/InriaSans-BoldItalic.eot?#iefix") format("embedded-opentype"), url("@/assets/font/inria/InriaSans-BoldItalic.woff2") format("woff2"), url("@/assets/font/inria/InriaSans-BoldItalic.woff") format("woff"), url("@/assets/font/inria/InriaSans-BoldItalic.svg") format("svg");
   font-weight: 700;
   font-style: italic;
 }
 
 @font-face {
   font-family:'Inria Serif';
-  src:	url('../assets/font/inria/InriaSerif-Light.eot');
-  src:	url('../assets/font/inria/InriaSerif-Light.eot?#iefix') format('embedded-opentype'),
-  url('../assets/font/inria/InriaSerif-Light.woff2') format('woff2'),
-  url('../assets/font/inria/InriaSerif-Light.woff') format('woff'),
-  url('../assets/font/inria/InriaSerif-Light.svg') format('svg');
+  src:	url('@/assets/font/inria/InriaSerif-Light.eot');
+  src:	url('@/assets/font/inria/InriaSerif-Light.eot?#iefix') format('embedded-opentype'),
+  url('@/assets/font/inria/InriaSerif-Light.woff2') format('woff2'),
+  url('@/assets/font/inria/InriaSerif-Light.woff') format('woff'),
+  url('@/assets/font/inria/InriaSerif-Light.svg') format('svg');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family:'Inria Serif';
-  src:	url('../assets/font/inria/InriaSerif-LightItalic.eot');
-  src:	url('../assets/font/inria/InriaSerif-LightItalic.eot?#iefix') format('embedded-opentype'),
-  url('../assets/font/inria/InriaSerif-LightItalic.woff2') format('woff2'),
-  url('../assets/font/inria/InriaSerif-LightItalic.woff') format('woff'),
-  url('../assets/font/inria/InriaSerif-LightItalic.svg') format('svg');
+  src:	url('@/assets/font/inria/InriaSerif-LightItalic.eot');
+  src:	url('@/assets/font/inria/InriaSerif-LightItalic.eot?#iefix') format('embedded-opentype'),
+  url('@/assets/font/inria/InriaSerif-LightItalic.woff2') format('woff2'),
+  url('@/assets/font/inria/InriaSerif-LightItalic.woff') format('woff'),
+  url('@/assets/font/inria/InriaSerif-LightItalic.svg') format('svg');
   font-weight: 300;
   font-style: italic;
 }
 
 @font-face {
   font-family:'Inria Serif';
-  src:	url('../assets/font/inria/InriaSerif-Italic.eot');
-  src:	url('../assets/font/inria/InriaSerif-Italic.eot?#iefix') format('embedded-opentype'),
-  url('../assets/font/inria/InriaSerif-Italic.woff2') format('woff2'),
-  url('../assets/font/inria/InriaSerif-Italic.woff') format('woff'),
-  url('../assets/font/inria/InriaSerif-Italic.svg') format('svg');
+  src:	url('@/assets/font/inria/InriaSerif-Italic.eot');
+  src:	url('@/assets/font/inria/InriaSerif-Italic.eot?#iefix') format('embedded-opentype'),
+  url('@/assets/font/inria/InriaSerif-Italic.woff2') format('woff2'),
+  url('@/assets/font/inria/InriaSerif-Italic.woff') format('woff'),
+  url('@/assets/font/inria/InriaSerif-Italic.svg') format('svg');
   font-weight: 400;
   font-style: italic;
 }
 
 @font-face {
   font-family:'Inria Serif';
-  src:	url('../assets/font/inria/InriaSerif-Regular.eot');
-  src:	url('../assets/font/inria/InriaSerif-Regular.eot?#iefix') format('embedded-opentype'),
-  url('../assets/font/inria/InriaSerif-Regular.woff2') format('woff2'),
-  url('../assets/font/inria/InriaSerif-Regular.woff') format('woff'),
-  url('../assets/font/inria/InriaSerif-Regular.svg') format('svg');
+  src:	url('@/assets/font/inria/InriaSerif-Regular.eot');
+  src:	url('@/assets/font/inria/InriaSerif-Regular.eot?#iefix') format('embedded-opentype'),
+  url('@/assets/font/inria/InriaSerif-Regular.woff2') format('woff2'),
+  url('@/assets/font/inria/InriaSerif-Regular.woff') format('woff'),
+  url('@/assets/font/inria/InriaSerif-Regular.svg') format('svg');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family:'Inria Serif';
-  src:	url('../assets/font/inria/InriaSerif-Bold.eot');
-  src:	url('../assets/font/inria/InriaSerif-Bold.eot?#iefix') format('embedded-opentype'),
-  url('../assets/font/inria/InriaSerif-Bold.woff2') format('woff2'),
-  url('../assets/font/inria/InriaSerif-Bold.woff') format('woff'),
-  url('../assets/font/inria/InriaSerif-Bold.svg') format('svg');
+  src:	url('@/assets/font/inria/InriaSerif-Bold.eot');
+  src:	url('@/assets/font/inria/InriaSerif-Bold.eot?#iefix') format('embedded-opentype'),
+  url('@/assets/font/inria/InriaSerif-Bold.woff2') format('woff2'),
+  url('@/assets/font/inria/InriaSerif-Bold.woff') format('woff'),
+  url('@/assets/font/inria/InriaSerif-Bold.svg') format('svg');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family:'Inria Serif';
-  src:	url('../assets/font/inria/InriaSerif-BoldItalic.eot');
-  src:	url('../assets/font/inria/InriaSerif-BoldItalic.eot?#iefix') format('embedded-opentype'),
-  url('../assets/font/inria/InriaSerif-BoldItalic.woff2') format('woff2'),
-  url('../assets/font/inria/InriaSerif-BoldItalic.woff') format('woff'),
-  url('../assets/font/inria/InriaSerif-BoldItalic.svg') format('svg');
+  src:	url('@/assets/font/inria/InriaSerif-BoldItalic.eot');
+  src:	url('@/assets/font/inria/InriaSerif-BoldItalic.eot?#iefix') format('embedded-opentype'),
+  url('@/assets/font/inria/InriaSerif-BoldItalic.woff2') format('woff2'),
+  url('@/assets/font/inria/InriaSerif-BoldItalic.woff') format('woff'),
+  url('@/assets/font/inria/InriaSerif-BoldItalic.svg') format('svg');
   font-weight: 700;
   font-style: italic;
 }
@@ -111,19 +111,19 @@
 
 @font-face {
   font-family: 'open-dyslexic';
-  src: url('../assets/font/open-dyslexic/otf/OpenDyslexic-Regular.otf') format('opentype');
-  src:   url('../assets/font/open-dyslexic/woff/OpenDyslexic-Regular.woff') format('woff'),
-  url('../assets/font/open-dyslexic/ttf/OpenDyslexic-Regular.ttf') format('truetype'),
-  url('../assets/font/open-dyslexic/svg/OpenDyslexic-Regular.svg#opendyslexicregular') format('svg');
+  src: url('@/assets/font/open-dyslexic/otf/OpenDyslexic-Regular.otf') format('opentype');
+  src:   url('@/assets/font/open-dyslexic/woff/OpenDyslexic-Regular.woff') format('woff'),
+  url('@/assets/font/open-dyslexic/ttf/OpenDyslexic-Regular.ttf') format('truetype'),
+  url('@/assets/font/open-dyslexic/svg/OpenDyslexic-Regular.svg#opendyslexicregular') format('svg');
 }
 
 @font-face {
   font-family: 'feather';
-  src:  url('../assets/font/ill-icon/feather.eot?2t6bn1');
-  src:  url('../assets/font/ill-icon/feather.eot?2t6bn1#iefix') format('embedded-opentype'),
-  url('../assets/font/ill-icon/feather.ttf?2t6bn1') format('truetype'),
-  url('../assets/font/ill-icon/feather.woff?2t6bn1') format('woff'),
-  url('../assets/font/ill-icon/feather.svg?2t6bn1#feather') format('svg');
+  src:  url('@/assets/font/ill-icon/feather.eot?2t6bn1');
+  src:  url('@/assets/font/ill-icon/feather.eot?2t6bn1#iefix') format('embedded-opentype'),
+  url('@/assets/font/ill-icon/feather.ttf?2t6bn1') format('truetype'),
+  url('@/assets/font/ill-icon/feather.woff?2t6bn1') format('woff'),
+  url('@/assets/font/ill-icon/feather.svg?2t6bn1#feather') format('svg');
   font-weight: normal;
   font-style: normal;
 }
