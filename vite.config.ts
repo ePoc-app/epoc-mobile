@@ -18,11 +18,20 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['src-angular/**'],
+      external: ['src/**'],
     },
   },
   test: {
     globals: true,
     environment: 'jsdom'
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @use "@/theme/global.scss";
+        `
+      }
+    }
   }
 })

@@ -36,3 +36,6 @@ src-angular/assets/demo/
 src-angular/environments/secrets.prod.ts
 
 ios/DerivedData/
+*.nix
+
+*.yml
