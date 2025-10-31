@@ -4,7 +4,7 @@
     "capacitor": {},
     "cordova": {}
   },
-  "type": "angular",
+  "type": "vue-vite",
   "hooks": {
     "serve:before": "./scripts/build-before.js",
     "build:before": "./scripts/build-before.js"
