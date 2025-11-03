@@ -4,6 +4,7 @@
   import {useLibraryStore} from '@/stores/libraryStore';
 
   const libraryStore = useLibraryStore();
+
 </script>
 
 <template>
@@ -31,25 +32,64 @@
       </ion-header>
 
       <div id="container">
-        <strong>Ready to create an app? {{$t('LIBRARY_PAGE.DOWNLOAD')}}</strong>
-        <p class="test_library">Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-
-        <ul>
-          <li v-for="collection in libraryStore.officialCollections" :key="collection.id">
-            {{ collection.id }}
-            <ul>
-              <li v-for="epoc in collection.ePocs" :key="epoc.id">
-                {{ epoc.title }} : <a :href="epoc.download" target="_blank">{{ epoc.download }}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <div v-for="collection in libraryStore.officialCollections" :key="collection.id">
+          <div class="library-line-separator"></div>
+          <div class="library-items" tabindex="-1">
+            <div class="library-header">
+              <span>{{collection.title}}</span>
+              <a :routerLink="collection.id">{{$t('LIBRARY_PAGE.VIEW_ALL')}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
+            </div>
+            <div class="library-item" v-for="epoc in collection.ePocs" :key="epoc.id">
+              <div role="link" :aria-label="epoc.title" class="library-item-image" :routerLink="'/library/'+collection.id+'/'+epoc.id" :style="'background-image:url('+epoc.image+')'"></div>
+              <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
+              <div class="library-item-toolbar" v-if="epoc.downloaded">
+                <ion-button  class="expanded" color="inria" :routerLink="'/epoc/toc/'+epoc.id">
+                  <span v-if="epoc.opened">{{$t('LIBRARY_PAGE.CONTINUE')}}</span>
+                  <ion-icon aria-hidden="true" v-if="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>
+                  <span v-if="!epoc.opened">{{$t('LIBRARY_PAGE.DISCOVER')}}</span>
+                </ion-button>
+                <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="libraryStore.epocLibraryMenu(epoc, collection.id)">
+                  <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
+                </ion-button>                
+              </div>
+              <div class="library-item-toolbar" v-if="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">
+                <ion-button class="expanded" color="inria-base-button" v-on:click="libraryStore.downloadEpoc(epoc, collection.id)">
+                  <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>
+                  <span class="base-btn">{{$t('LIBRARY_PAGE.DOWNLOAD')}}</span>
+                </ion-button>
+              </div>
+              <div class="library-item-toolbar" v-if="epoc.downloading">
+                <ion-button class="expanded" disabled="true" color="inria-base-button">
+                  <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>
+                  <span class="base-btn">
+                    {{$t('LIBRARY_PAGE.DOWNLOADING')}} 
+                    <!--<template v-if="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</template>-->
+                  </span>
+                </ion-button>
+              </div>
+              <div class="library-item-toolbar" v-if="epoc.unzipping">
+                <ion-button class="expanded" disabled="true" color="inria-base-button">
+                  <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>
+                  <span class="base-btn">
+                    {{$t('LIBRARY_PAGE.OPEN_ZIP')}}
+                    <!--<template v-if="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</template>-->
+                  </span>
+                </ion-button>
+              </div>
+            </div>
+            <div class="library-footer" v-if="Object.keys(collection.ePocs).length > 4">
+              <a :routerLink="collection.id">{{$t('LIBRARY_PAGE.VIEW_ALL')}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+        </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <style scoped lang="scss">
+@use "library_page.scss";
+
 p {
   // TODO if this section stay empty, find a way to remove it properly
   // for now if no style, the imported global style is not imported either.
