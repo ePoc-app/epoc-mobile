@@ -34,6 +34,7 @@
     "@capacitor/status-bar": "^7.0.3",
     "@epoc/capacitor-zip": "^0.1.1",
     "@epoc/epoc-types": "^2.0.0-beta.23",
+    "@ionic/cli": "^7.2.1",
     "@ionic/storage": "^3.0.6",
     "@ionic/vue": "^8.0.0",
     "@ionic/vue-router": "^8.0.0",
