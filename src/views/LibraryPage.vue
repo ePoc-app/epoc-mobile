@@ -1,6 +1,9 @@
 <script setup lang="ts">
   import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
   import { settingsOutline, informationCircleOutline } from 'ionicons/icons';
+  import {useLibraryStore} from '@/stores/libraryStore';
+
+  const libraryStore = useLibraryStore();
 </script>
 
 <template>
@@ -30,6 +33,17 @@
       <div id="container">
         <strong>Ready to create an app?</strong>
         <p class="test_library">Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+        <ul>
+          <li v-for="collection in libraryStore.officialCollections" :key="collection.id">
+            {{ collection.id }}
+            <ul>
+              <li v-for="epoc in collection.ePocs" :key="epoc.id">
+                {{ epoc.title }} : <a :href="epoc.download" target="_blank">{{ epoc.download }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </ion-content>
   </ion-page>
