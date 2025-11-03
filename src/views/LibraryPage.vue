@@ -39,7 +39,7 @@
               <span>{{collection.title}}</span>
               <a :routerLink="collection.id">{{$t('LIBRARY_PAGE.VIEW_ALL')}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
             </div>
-            <div class="library-item" v-for="epoc in collection.ePocs" :key="epoc.id">
+            <div class="library-item" v-for="epoc in Object.values(collection.ePocs).slice(0,4)" :key="epoc.id">
               <div role="link" :aria-label="epoc.title" class="library-item-image" :routerLink="'/library/'+collection.id+'/'+epoc.id" :style="'background-image:url('+epoc.image+')'"></div>
               <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
               <div class="library-item-toolbar" v-if="epoc.downloaded">
