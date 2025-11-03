@@ -33,7 +33,3 @@ function loadTheme(theme: string) {
 loadTheme("auto")
 
 </script>
-
-<script setup >
-
-</script>

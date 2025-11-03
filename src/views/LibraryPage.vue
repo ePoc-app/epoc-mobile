@@ -31,7 +31,7 @@
       </ion-header>
 
       <div id="container">
-        <strong>Ready to create an app?</strong>
+        <strong>Ready to create an app? {{$t('LIBRARY_PAGE.DOWNLOAD')}}</strong>
         <p class="test_library">Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
 
         <ul>
