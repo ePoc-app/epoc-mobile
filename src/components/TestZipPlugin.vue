@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { ref } from 'vue';
-import { Zip } from '@epoc/capacitor-zip';
-import { Filesystem, Directory } from '@capacitor/filesystem';
-import { FileTransfer } from '@capacitor/file-transfer';
-import { Capacitor } from '@capacitor/core';
+import {ref} from 'vue';
+import {Zip} from '@epoc/capacitor-zip';
+import {Directory, Filesystem} from '@capacitor/filesystem';
+import {FileTransfer} from '@capacitor/file-transfer';
+import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
 
 // États réactifs
 const isDownloading = ref<boolean>(false);
 const isExtracting = ref<boolean>(false);
 const statusMessage = ref<string>('');
+const videos = ref<string[]>([]);
+const { convertFileSrc } = useConvertFileSrc();
 
 // Fonction pour télécharger et extraire le ZIP
 const downloadAndExtractZip = async (): Promise<void> => {
@@ -19,8 +20,8 @@ const downloadAndExtractZip = async (): Promise<void> => {
     statusMessage.value = 'Téléchargement du fichier ZIP en cours...';
 
     // URL du fichier ZIP
-    const zipUrl: string = 'https://scorm.com/wp-content/assets/golf_examples/PIFS/ContentPackagingSingleSCO_SCORM12.zip';
-    const zipFileName: string = 'example.zip';
+    const zipUrl: string = 'https://corsproxy.io/?url=https://files.inria.fr/LearningLab_public/epocs-prod/E001DB/E001DB.zip';
+    const zipFileName: string = 'E001DB.zip';
 
     // 1. Télécharger le fichier ZIP s'il n'existe pas déjà
     const savedZipFile = await Filesystem.getUri({
@@ -56,9 +57,12 @@ const downloadAndExtractZip = async (): Promise<void> => {
       destination: extractPath.uri
     });
 
-    const ls = await Filesystem.readdir({path:'', directory: Directory.Data});
+    const ls = await Filesystem.readdir({path:'E001DB/videos', directory: Directory.Data});
 
-    console.log('Résultat de l\'extraction :', extractResult, ls);
+
+    videos.value = await Promise.all(ls.files.map(async file => {
+      return await convertFileSrc(file.uri);
+    }));
 
     if (extractResult.success) {
       statusMessage.value = 'Fichier ZIP extrait avec succès !';
@@ -76,8 +80,23 @@ const downloadAndExtractZip = async (): Promise<void> => {
 </script>
 
 <template>
-  <ion-button @click="downloadAndExtractZip" :disabled="isDownloading || isExtracting">
-    {{ isDownloading ? 'Downloading...' : isExtracting ? 'Extracting...' : 'Download and Extract ZIP' }}
-  </ion-button>
-  <p>{{ statusMessage }}</p>
+  <div>
+    <ion-button @click="downloadAndExtractZip" :disabled="isDownloading || isExtracting">
+      {{ isDownloading ? 'Downloading...' : isExtracting ? 'Extracting...' : 'Download and Extract ZIP' }}
+    </ion-button>
+    <p>{{ statusMessage }}</p>
+    <video v-for="video in videos" :src="video" controls />
+  </div>
 </template>
+
+<style>
+div {
+  text-align: center;
+  margin-top: 20px;
+}
+video {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+</style>
