@@ -9,11 +9,11 @@
   const libraryStore = {
     downloadEpoc: (epoc, collection_id) => {},
     epocLibraryMenu: (epoc, collection_id)  => {},
-
     officialCollections:{
       "inria" : inria_collection
     },
   }
+  const collection = libraryStore.officialCollections.inria
 </script>
 
 <template>
@@ -39,16 +39,14 @@
           <ion-title size="large">Blank</ion-title>
         </ion-toolbar>
       </ion-header>
-
+      DETAILS
       <div id="container">
-        <div v-for="collection in libraryStore.officialCollections" :key="collection.id">
           <div class="library-line-separator"></div>
           <div class="library-items" tabindex="-1">
             <div class="library-header">
               <span>{{collection.title}}</span>
-              <a :routerLink="collection.id">{{$t('LIBRARY_PAGE.VIEW_ALL')}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
             </div>
-            <div class="library-item" v-for="epoc in Object.values(collection.ePocs).slice(0,4)" :key="epoc.id">
+            <div class="library-item" v-for="epoc in collection.ePocs" :key="epoc.id">
               <div role="link" :aria-label="epoc.title" class="library-item-image" :routerLink="'/library/'+collection.id+'/'+epoc.id" :style="'background-image:url('+epoc.image+')'"></div>
               <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
               <div class="library-item-toolbar" v-if="epoc.downloaded">
@@ -86,10 +84,6 @@
                 </ion-button>
               </div>
             </div>
-            <div class="library-footer" v-if="Object.keys(collection.ePocs).length > 4">
-              <a :routerLink="collection.id">{{$t('LIBRARY_PAGE.VIEW_ALL')}} <ion-icon name="chevron-forward-outline"></ion-icon></a>
-            </div>
-          </div>
         </div>
       </div>
     </ion-content>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import LibraryPage from '../views/LibraryPage.vue'
+import LibraryPage from '@/views/library/LibraryPage.vue'
+import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,6 +12,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/home',
     name: 'Library',
     component: LibraryPage
+  },
+  {
+    path: '/:collection_id',
+    name: 'CollectionDetail',
+    component: CollectionDetailPage
+  },
   }
 ]
 
