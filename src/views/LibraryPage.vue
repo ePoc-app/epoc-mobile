@@ -2,9 +2,18 @@
   import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
   import { settingsOutline, informationCircleOutline } from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
+  import { RouterLink } from 'vue-router';
+  import inria_collection from '@/assets/inria_collection.json'
 
-  const libraryStore = useLibraryStore();
+//  const libraryStore = useLibraryStore();
+  const libraryStore = {
+    downloadEpoc: (epoc, collection_id) => {},
+    epocLibraryMenu: (epoc, collection_id)  => {},
 
+    officialCollections:{
+      "inria" : inria_collection
+    },
+  }
 </script>
 
 <template>

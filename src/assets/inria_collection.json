@@ -1,0 +1,258 @@
+{
+        "id": "fr.inria.learninglab.epocs",
+        "title": "ePocs Inria",
+        "description": "Des formations courtes et ludiques sur le numérique, proposées par des experts scientifiques.",
+        "publisher": {
+            "id": "fr.inria.learninglab",
+            "name": "Inria Learning Lab",
+            "description": "Spécialisés dans la production et la diffusion de formations en ligne sur le numérique, destinées au grand public, aux étudiants, aux professionnels, ainsi qu'aux enseignants et formateurs.",
+            "logo": "https://learninglab.inria.fr/files/2020/04/LearningLab-logo2020.png",
+            "email": "ill-epoc-contact@inria.fr",
+            "website": "https://learninglab.inria.fr"
+        },
+        "licence": {
+            "name": "Creative Commons Attribution 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        "url": "https://learninglab.gitlabpages.inria.fr/epoc/epocs/collection-ill.json",
+        "tags": [
+            "numérique",
+            "données",
+            "vie privée",
+            "ia",
+            "environnement",
+            "smartphone",
+            "iot",
+            "technologie"
+        ],
+        "ePocs": {
+            "E006PE": {
+            "id": "E006PE",
+            "download": "https://files.inria.fr/LearningLab_public/epocs-prod/E006PE/E006PE.zip",
+            "title": "B.A.-BA des data",
+            "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E006PE/images/mini-vignette-epoc.png",
+            "teaser": "https://files.inria.fr/LearningLab_public/epocs-prod/E006PE/videos/INRIA_Octobre.mp4",
+            "thumbnail": "https://files.inria.fr/LearningLab_public/epocs-prod/E006PE/images/vignette-epoc-home.png",
+            "authors": {
+                "esxetg": {
+                "name": "Laurent Romary",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E006PE/images/laurent-romary.jpg",
+                "description": "<p>Chercheur Inria en informatique linguistique et en humanit&eacute;s num&eacute;riques. <span>Relecture et validation scientifique de la formation.</span></p>"
+                },
+                "88aeuf": {
+                "name": "Pauline Eysseric",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E006PE/images/photo-Pauline.png",
+                "description": "<p>Ing&eacute;nieure P&eacute;dagogique Inria. Conception et sc&eacute;narisation de la formation.</p>"
+                },
+                "idzhcp": {
+                "name": "Aurélie Laguarrigue",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E006PE/images/aurelie.jpg",
+                "description": "<p>Ing&eacute;nieure P&eacute;dagogique Inria.</p>"
+                }
+            },
+            "summary": "<p>Ce parcours se destine &agrave; toutes celles et ceux qui s'interrogent sur le fonctionnement de l'informatique. Dans cet ePoc on vous propose de comprendre quelques fondamentaux sur les donn&eacute;es. &Agrave; la fin de cette courte formation, vous saurez ce que l'informatique a chang&eacute; dans le codage, le stockage et l'&eacute;change de l'information. Vous saurez pourquoi les ordinateurs encodent l'information en binaire et vous aurez quelques cl&eacute;s pour comprendre et manipuler ce syst&egrave;me binaire.</p>",
+            "objectives": [
+                "Décrire simplement comment la machine encode les données",
+                "Comprendre et utiliser le système binaire",
+                "Expliquer brièvement comment on stocke et transmet les données"
+            ],
+            "chaptersCount": 8,
+            "assessmentsCount": 21,
+            "lastModified": "2023-09-22 14:40:38",
+            "opened": false,
+            "unziping": false,
+            "downloaded": false,
+            "downloading": false,
+            "updateAvailable": false,
+            "unzipping": false
+            },
+            "E007MM": {
+            "id": "E007MM",
+            "download": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/E007MM.zip",
+            "title": "Le smartphone et la planète",
+            "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/Intro/31A58EA4-6CEA-44C2-8EF9-DA796B1979F7.jpeg",
+            "teaser": "",
+            "thumbnail": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/Intro/E4493DE7-C039-4A79-89E3-119FBCC1C878.jpeg",
+            "authors": {
+                "mjucp2": {
+                "name": "Madeline Montigny",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/Inria-0347-393.jpg",
+                "description": "<p>Ing&eacute;nieure P&eacute;dagogique, Inria Learning Lab</p>\n<p>Conception et sc&eacute;narisation de la formation</p>"
+                },
+                "xeathp": {
+                "name": "Frédéric Bordage",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/FredericBordage.jpg",
+                "description": "<p>Sp&eacute;cialiste du num&eacute;rique responsable, fondateur du collectif <a href=\"https://www.greenit.fr\">GreenIT.</a></p>\n<p>Relecture et validation scientifique de la formation</p>"
+                },
+                "o4022f": {
+                "name": "Servane Mouton",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/ServaneMoutonAvatar.jpg",
+                "description": "<p>Neurologue, Neuville-sur-Saone</p>\n<p>Relecture et validation scientifique des contenus sur les questions d'attention&nbsp;</p>"
+                },
+                "hu640r": {
+                "name": "Martine Olivi",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/MartineOlivi-carre.jpg",
+                "description": "<p><span>Docteur en Math&eacute;matique, Martine Olivi est charg&eacute;e de recherche &agrave; Inria et participe au GDS&nbsp;<a href=\"http://www.ecoinfo.cnrs.fr/\">EcoInfo</a>.</span></p>\n<p>Relecture et validation scientifique de la formation</p>"
+                },
+                "qlk76p": {
+                "name": "Laurence Farhi",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/LaurenceFarhi.jpeg",
+                "description": "<p>Ing&eacute;nieure p&eacute;dagogique, Inria Learning Lab</p>"
+                },
+                "imflt9": {
+                "name": "Aurelie Lagarrigue",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E007MM/images/aurelie.jpg",
+                "description": "<p>Ing&eacute;nieure p&eacute;dagogique, Inria Learning Lab</p>"
+                },
+                "afmn2l": {
+                "name": "Donovann Bonnet",
+                "image": "",
+                "description": "<p>Illustrateur et desssinateur de bandes dessin&eacute;es</p>\n<p>R&eacute;alisation des illustrations de la formation</p>"
+                }
+            },
+            "summary": "<p style=\"text-align: left;\">Une formation courte sur mobile <span style=\"font-weight: 400;\">pour comprendre les impacts environnementaux du smartphone.</span></p>",
+            "objectives": [
+                "Décrire les impacts du smartphone sur l’environnement",
+                "Interroger ses propres usages du smartphone",
+                "Adopter de nouvelles pratiques visant à réduire ses impacts environnementaux"
+            ],
+            "chaptersCount": 5,
+            "assessmentsCount": 52,
+            "lastModified": "2022-11-25 11:54:54",
+            "opened": false,
+            "unziping": false,
+            "downloaded": false,
+            "downloading": false,
+            "updateAvailable": false,
+            "unzipping": false
+            },
+            "E002VR": {
+            "id": "E002VR",
+            "download": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/E002VR.zip",
+            "title": "Smartphone et vie privée",
+            "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/images/vp-poster.png",
+            "teaser": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/videos/E002VR-C0-S1-CARRE-v3.mp4",
+            "thumbnail": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/images/vp-poster.png",
+            "authors": {
+                "cudjef": {
+                "name": "Vincent Roca",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/images/vincent-rond.png",
+                "description": "Chercheur, responsable de l'équipe-projet Inria  \"Privatics\". Ses recherches portent sur les questions de respect de la vie privée dans le monde numérique, en particulier dans le contexte de l'usage des smartphones."
+                },
+                "o8wgf5": {
+                "name": "Marie Collin",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/images/marie.jpg",
+                "description": "<p><span>Ing&eacute;nieure p&eacute;dagogique, Inria Learning Lab</span></p>"
+                },
+                "7g6idf": {
+                "name": "Marie-Hélène Comte",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/images/marie-helene.jpg",
+                "description": "<p><span>Ing&eacute;nieure p&eacute;dagogique, Inria Learning Lab</span></p>"
+                },
+                "h1ei9f": {
+                "name": "Tatiana Khomenko",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E002VR/images/tatiana.jpg",
+                "description": "<p><span>Ing&eacute;nieure p&eacute;dagogique, Inria Learning Lab</span></p>"
+                }
+            },
+            "summary": "<p>Ce parcours est dédié à la question du respect de la vie privée lorsque l'on utilise nos assistants personnels, smartphone ou tablette.</p><p>Nous aborderons les notions suivantes : </p><ul><li>écosystème autour des applications pour smartphones,</li><li>problèmes de perte de contrôle de ses données personnelles</li>\n<li>contrôle de l'utilisateur,</li>\n<li>gratuité et contrepartie,</li></ul> ainsi que les questions qui vont avec. <b>Pour valider le parcours, il faut obtenir un score de 90 points</b>en répondant correctement aux questions notées. Vous n'avez que 2 essais pour valider votre réponse. <p>IMPORTANT ! </p><p>Les questions \"Selon vous\" ne sont pas notées</p>",
+            "objectives": [
+                "S'informer sur l’écosystème autour des applications pour smartphones",
+                "Découvrir les problèmes de fond du modèle économique",
+                "Comparer la politique de confidentialité sur IOS et Android",
+                "Avoir un regard critique"
+            ],
+            "chaptersCount": 8,
+            "assessmentsCount": 27,
+            "lastModified": "2022-11-09 16:48:35",
+            "opened": false,
+            "unziping": false,
+            "downloaded": false,
+            "downloading": false,
+            "updateAvailable": false,
+            "unzipping": false
+            },
+            "E003VR": {
+            "id": "E003VR",
+            "download": "https://files.inria.fr/LearningLab_public/epocs-prod/E003VR/E003VR.zip",
+            "title": "Internet des objets et vie privée",
+            "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E003VR/images/IOT.png",
+            "teaser": "https://files.inria.fr/LearningLab_public/epocs-prod/E003VR/videos/E003VR-C0-S1.mp4",
+            "thumbnail": "https://files.inria.fr/LearningLab_public/epocs-prod/E003VR/images/IOT.png",
+            "authors": {
+                "p03v2h": {
+                "name": "Vincent Roca",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E003VR/images/vincent-rond.png",
+                "description": "Vincent Roca est chercheur à l'Inria, l'institut public de recherche français en sciences et technologies du numérique. Depuis 2013, Vincent fai parti de l'équipe Inria Privatics qui se focalise sur le respect de la vie privée. "
+                },
+                "yxewiu": {
+                "name": "Marie-Hélène Comte",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E003VR/images/marie-helene.jpg",
+                "description": "<p><span>Ing&eacute;nieure p&eacute;dagogique, Inria Learning Lab</span></p>"
+                },
+                "jzcmso": {
+                "name": "Tatiana Khomenko",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E003VR/images/tatiana.jpg",
+                "description": "<p><span>Ing&eacute;nieure p&eacute;dagogique, Inria Learning Lab</span></p>"
+                }
+            },
+            "summary": "<p>Ce parcours sera d&eacute;di&eacute; &agrave; la question du respect de la vie priv&eacute;e dans le domaine de la maison intelligente.</p>\n<p>Pour valider le parcours il faut obtenir <strong>un score de 90 points</strong> en r&eacute;pondant correctement &agrave; 9 questions not&eacute;es. Vous n'avez que deux essais pour r&eacute;pondre.</p>\n<p><strong>Les questions \"Selon vous\" ne sont pas not&eacute;es.</strong></p>\n<p><strong>IMPORTANT !</strong> On n'abordera pas dans ce parcours tout ce qui rel&egrave;ve des compteurs connect&eacute;s, des v&eacute;hicules autonomes, de la ville intelligente qui s'ins&egrave;rent dans d'autres logiques.</p>",
+            "objectives": [
+                "Faire connaissance avec la maison intelligente : l'une des facettes de l'Internet des objets",
+                "Identifier les implications en matière de vie privée de cette maison intelligente"
+            ],
+            "chaptersCount": 7,
+            "assessmentsCount": 17,
+            "lastModified": "2022-11-09 16:46:33",
+            "opened": false,
+            "unziping": false,
+            "downloaded": false,
+            "downloading": false,
+            "updateAvailable": false,
+            "unzipping": false
+            },
+            "E009LL": {
+            "id": "E009LL",
+            "download": "https://files.inria.fr/LearningLab_public/epocs-prod/E009LL/E009LL.zip",
+            "title": "C'est quoi l'IA ?",
+            "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E009LL/assets/image_couv_vf.png",
+            "teaser": "https://files.inria.fr/LearningLab_public/epocs-prod/E009LL/assets/E009LL_BA.mp4",
+            "thumbnail": "https://files.inria.fr/LearningLab_public/epocs-prod/E009LL/assets/image_couv_vf.png",
+            "authors": [
+                {
+                "name": "Frédéric Alexandre",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E009LL/assets/FredericAlexandre.jpg",
+                "title": "Directeur de recherche, Inria",
+                "description": "<p>Fr&eacute;d&eacute;ric Alexandre est directeur de recherche &agrave; l'Inria et travaille &agrave; l'interface entre neurosciences cognitives et intelligence artificielle. Il est responsable de l'&eacute;quipe Mnemosyne, &eacute;quipe de mod&eacute;lisation localis&eacute;e sur le Neurocampus de Bordeaux.</p>\n<p>Relecture et validation scientifique de la formation</p>"
+                },
+                {
+                "name": "Sherazade Djeballah",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E009LL/assets/Sherazade_DJEBALLAH.jpg",
+                "title": "Ingénieure Pédagogique, Inria Learning Lab",
+                "description": "<p>Conception et sc&eacute;narisation de la formation</p>"
+                },
+                {
+                "name": "Madeline Montigny",
+                "image": "https://files.inria.fr/LearningLab_public/epocs-prod/E009LL/assets/Inria_MadelineMontigny_compressed.jpg",
+                "title": "Ingénieure Pédagogique, Inria Learning Lab",
+                "description": "<p>Conception et sc&eacute;narisation de la formation</p>"
+                }
+            ],
+            "summary": "<p>Ce parcours d&eacute;couverte s'adresse &agrave; toutes celles et tous ceux qui souhaitent comprendre les principes de l'intelligence artificielle (IA) par rapport &agrave; l'intelligence biologique, o&ugrave; trouve-t-on de l'IA et ses principales approches.&nbsp;</p>\n<p>Cette formation est accessible sans pr&eacute;requis.</p>\n<p>&nbsp;</p>",
+            "objectives": [
+                "Donner un premier niveau de compréhension de ce qu'est l'IA et de son fonctionnement",
+                "Interroger les notions d'intelligence biologique et d'intelligence artificielle",
+                "Identifier les usages courants de l'intelligence artificielle dans la vie quotidienne"
+            ],
+            "chaptersCount": 4,
+            "assessmentsCount": 6,
+            "lastModified": "2024-11-18T07:56:46.892Z",
+            "opened": false,
+            "unziping": false,
+            "downloaded": false,
+            "downloading": false,
+            "updateAvailable": false,
+            "unzipping": false
+            }
+        }
+    }
