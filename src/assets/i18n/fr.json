@@ -346,5 +346,6 @@
   "CANCEL": "Annuler",
   "CONFIRM": "Confirmer",
   "CLOSE": "Fermer",
-  "OK": "OK"
+  "OK": "OK",
+  "RETURN" : "Retour"
 }

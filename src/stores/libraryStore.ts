@@ -15,7 +15,9 @@ export const useLibraryStore = defineStore('library', () => {
     const readingStore = useReadingStore();
     const router = useRouter();
 
-    const officialCollectionsUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/official-collections.json';
+    //const officialCollectionsUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/official-collections.json';
+    const officialCollectionsUrl = 'https://epoc.inria.fr/official-collections.json';
+
     const officialCollections = ref<Record<string, EpocCollection>>({});
     const customCollections = ref<Record<string, EpocCollection>>({});
     const epocProgresses = ref<Record<string, number>>({});

@@ -1,16 +1,28 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import LibraryPage from '../views/LibraryPage.vue'
+import LibraryPage from '@/views/library/LibraryPage.vue'
+import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue'
+import WIPPage from '@/views/WIPPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/library'
   },
   {
-    path: '/home',
+    path: '/library',
     name: 'Library',
     component: LibraryPage
+  },
+  {
+    path: '/:collection_id',
+    name: 'CollectionDetail',
+    component: CollectionDetailPage
+  },
+  {
+    path: '/wip/:any',
+    name: 'WIP',
+    component: WIPPage
   }
 ]
 

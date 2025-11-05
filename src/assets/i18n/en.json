@@ -346,5 +346,7 @@
   "CANCEL": "Cancel",
   "CONFIRM": "Confirm",
   "CLOSE": "Close",
-  "OK": "OK"
+  "OK": "OK",
+  "RETURN" : "Return"
+
 }
