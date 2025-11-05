@@ -64,7 +64,9 @@
             "downloaded": false,
             "downloading": false,
             "updateAvailable": false,
-            "unzipping": false
+            "unzipping": false,
+            "dir": "",
+            "rootFolder": ""
             },
             "E007MM": {
             "id": "E007MM",

@@ -347,6 +347,9 @@
   "CONFIRM": "Confirm",
   "CLOSE": "Close",
   "OK": "OK",
-  "RETURN" : "Return"
-
+  "RETURN" : "Return",
+  
+  "MISSING": {
+    "MY_EPOCS" : "My ePocs"
+  }
 }
