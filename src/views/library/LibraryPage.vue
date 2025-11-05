@@ -115,7 +115,7 @@
               </ion-button>
             </RouterLink>
             <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="localEpocsService.localEpocLibraryMenu(epoc)">
-              <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
+              <span :aria-label="$t('MISSING.CHAPTER_OPTIONS')" class="ellipsis base-btn">...</span>
             </ion-button>
           </div>
         </div>

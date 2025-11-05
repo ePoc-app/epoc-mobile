@@ -350,6 +350,7 @@
   "RETURN" : "Return",
   
   "MISSING": {
-    "MY_EPOCS" : "My ePocs"
+    "MY_EPOCS" : "My ePocs",
+    "CHAPTER_OPTIONS": "Chapter's options"
   }
 }
