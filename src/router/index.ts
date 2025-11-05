@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import LibraryPage from '@/views/library/LibraryPage.vue'
 import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue'
+import WIPPage from '@/views/WIPPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,10 @@ const routes: Array<RouteRecordRaw> = [
     name: 'CollectionDetail',
     component: CollectionDetailPage
   },
+  {
+    path: '/wip/:any',
+    name: 'WIP',
+    component: WIPPage
   }
 ]
 

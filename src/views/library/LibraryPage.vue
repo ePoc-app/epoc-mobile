@@ -16,12 +16,16 @@
           <div class="epoc-logo"></div>
           <div class="by-inria"></div>
         </div>
-        <ion-button role="button" class="icon-btn" slot="end" routerLink="/settings" routerDirection="forward">
-          <ion-icon aria-label="Paramètre" slot="icon-only" :icon="settingsOutline" color="inria-icon"></ion-icon>
-        </ion-button>
-        <ion-button role="button" class="icon-btn" slot="end" routerLink="/about" routerDirection="forward">
-          <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
-        </ion-button>
+        <RouterLink :to="{ name: 'WIP', params: {any: '/settings'}}" class="icon-btn" slot="end">
+          <ion-button role="button">
+            <ion-icon aria-label="Paramètre" slot="icon-only" :icon="settingsOutline" color="inria-icon"></ion-icon>
+          </ion-button>
+        </RouterLink>
+        <RouterLink :to="{ name: 'WIP', params: {any: '/about'}}" class="icon-btn" slot="end">
+          <ion-button role="button">
+            <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
+          </ion-button>
+        </RouterLink>
       </ion-toolbar>
     </ion-header>
 
