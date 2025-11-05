@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
-  import { settingsOutline, informationCircleOutline } from 'ionicons/icons';
+  import { IonContent, IonButton, IonHeader, IonPage, IonBackButton, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
+  import { informationCircleOutline, cloudDownloadOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
   import { RouterLink, useRoute } from 'vue-router';
 
@@ -13,18 +13,20 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <div aria-hidden="true" class="logo" slot="start">
-          <div class="epoc-logo"></div>
-          <div class="by-inria"></div>
-        </div>
-        <ion-button role="button" class="icon-btn" slot="end" routerLink="/settings" routerDirection="forward">
-          <ion-icon aria-label="Paramètre" slot="icon-only" :icon="settingsOutline" color="inria-icon"></ion-icon>
-        </ion-button>
-        <ion-button role="button" class="icon-btn" slot="end" routerLink="/about" routerDirection="forward">
-          <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
-        </ion-button>
+        <RouterLink to="library" slot="start">
+          <ion-button role="button" class="icon-btn">
+            <ion-back-button :aria-label="$t('RETURN')" text="" color="inria-icon"></ion-back-button>
+          </ion-button>
+        </RouterLink>
+        <ion-title>{{collection.title}}</ion-title>
+        <RouterLink :to="{ name: 'WIP', params: {any: '/about'}}" slot="end">
+          <ion-button role="button" class="icon-btn">
+            <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
+          </ion-button>
+        </RouterLink>
       </ion-toolbar>
     </ion-header>
+
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
@@ -39,13 +41,13 @@
       <div id="container">
           <div class="library-line-separator"></div>
           <div class="library-items" tabindex="-1">
-            <div class="library-item" v-for="epoc in collection.ePocs" :key="epoc.id">
+            <div class="library-item" v-for="epoc in Object.values(collection.ePocs)" :key="epoc.id">
               <div role="link" :aria-label="epoc.title" class="library-item-image" :routerLink="'/library/'+collection.id+'/'+epoc.id" :style="'background-image:url('+epoc.image+')'"></div>
               <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
               <div class="library-item-toolbar" v-if="epoc.downloaded">
                 <ion-button  class="expanded" color="inria" :routerLink="'/epoc/toc/'+epoc.id">
                   <span v-if="epoc.opened">{{$t('LIBRARY_PAGE.CONTINUE')}}</span>
-                  <ion-icon aria-hidden="true" v-if="epoc.opened" name="arrow-forward-outline" slot="end"></ion-icon>
+                  <ion-icon aria-hidden="true" v-if="epoc.opened" :icon="arrowForwardOutline" slot="end"></ion-icon>
                   <span v-if="!epoc.opened">{{$t('LIBRARY_PAGE.DISCOVER')}}</span>
                 </ion-button>
                 <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="libraryStore.epocLibraryMenu(epoc, collection.id)">
@@ -54,13 +56,13 @@
               </div>
               <div class="library-item-toolbar" v-if="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">
                 <ion-button class="expanded" color="inria-base-button" v-on:click="libraryStore.downloadEpoc(epoc, collection.id)">
-                  <ion-icon aria-hidden="true" name="cloud-download-outline" slot="start"></ion-icon>
+                  <ion-icon aria-hidden="true" :icon="cloudDownloadOutline" slot="start"></ion-icon>
                   <span class="base-btn">{{$t('LIBRARY_PAGE.DOWNLOAD')}}</span>
                 </ion-button>
               </div>
               <div class="library-item-toolbar" v-if="epoc.downloading">
-                <ion-button class="expanded" disabled="true" color="inria-base-button">
-                  <ion-icon aria-hidden="true" name="sync-outline" class="spin" slot="start"></ion-icon>
+                <ion-button class="expanded" :disabled="true" color="inria-base-button">
+                  <ion-icon aria-hidden="true" :icon="syncOutline" class="spin" slot="start"></ion-icon>
                   <span class="base-btn">
                     {{$t('LIBRARY_PAGE.DOWNLOADING')}} 
                     <!--<template v-if="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</template>-->
@@ -68,8 +70,8 @@
                 </ion-button>
               </div>
               <div class="library-item-toolbar" v-if="epoc.unzipping">
-                <ion-button class="expanded" disabled="true" color="inria-base-button">
-                  <ion-icon aria-hidden="true" name="cog-outline" class="spin" slot="start"></ion-icon>
+                <ion-button class="expanded" :disabled="true" color="inria-base-button">
+                  <ion-icon aria-hidden="true" :icon="cogOutline" class="spin" slot="start"></ion-icon>
                   <span class="base-btn">
                     {{$t('LIBRARY_PAGE.OPEN_ZIP')}}
                     <!--<template v-if="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</template>-->
@@ -86,8 +88,11 @@
 <style scoped lang="scss">
 @use "@/theme/library.scss";
 
-ion-title{
-  text-transform: none;
+ion-toolbar {
+  .title-default {
+    text-transform: none;
+    text-align: center;
+  }
 }
 
 .publisher-logo {

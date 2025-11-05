@@ -7,10 +7,10 @@ import WIPPage from '@/views/WIPPage.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/library'
   },
   {
-    path: '/home',
+    path: '/library',
     name: 'Library',
     component: LibraryPage
   },
