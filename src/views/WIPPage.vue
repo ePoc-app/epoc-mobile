@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
+  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonBackButton, IonButton } from '@ionic/vue';
   import { settingsOutline, informationCircleOutline } from 'ionicons/icons';
 
 </script>
@@ -12,12 +12,16 @@
           <div class="epoc-logo"></div>
           <div class="by-inria"></div>
         </div>
-        <ion-button role="button" class="icon-btn" slot="end" routerLink="/settings" routerDirection="forward">
-          <ion-icon aria-label="Paramètre" slot="icon-only" :icon="settingsOutline" color="inria-icon"></ion-icon>
-        </ion-button>
-        <ion-button role="button" class="icon-btn" slot="end" routerLink="/about" routerDirection="forward">
-          <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
-        </ion-button>
+        <RouterLink to="library" slot="end">
+          <ion-button role="button" class="icon-btn">
+            <ion-back-button :aria-label="$t('RETURN')" text="" color="inria-icon"></ion-back-button>
+          </ion-button>
+        </RouterLink>
+        <RouterLink :to="{ name: 'WIP', params: {any: '/about'}}" slot="end">
+          <ion-button role="button" class="icon-btn">
+            <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
+          </ion-button>
+        </RouterLink>
       </ion-toolbar>
     </ion-header>
 
