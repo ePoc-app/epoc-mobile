@@ -9,13 +9,17 @@ import {useSettingsStore} from './settingsStore';
 import {useReadingStore} from './readingStore';
 import type {Epoc, EpocCollection, EpocLibraryState, EpocMetadata, Publisher} from '@/types/epoc';
 import type {Reading} from '@/types/reading';
-import { ComposerTranslation } from 'vue-i18n';
+import {download, unzip} from '@/utils/file';
+import {ComposerTranslation, useI18n} from 'vue-i18n';
+import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
     const settingsStore = useSettingsStore();
     const readingStore = useReadingStore();
     const router = useRouter();
+    const { t } = useI18n();
+    const {convertFileSrc} = useConvertFileSrc();
 
     //const officialCollectionsUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/official-collections.json';
     const officialCollectionsUrl = 'https://epoc.inria.fr/official-collections.json';
@@ -33,7 +37,7 @@ export const useLibraryStore = defineStore('library', () => {
     // --- Actions ---
     async function fetchOfficialCollections() {
         try {
-            const cachedOfficialCollections = JSON.parse(localStorage.getItem('officialCollections') || '{}');
+            officialCollections.value = JSON.parse(localStorage.getItem('officialCollections') || '{}');
             const response = await fetch(officialCollectionsUrl);
             if (!response.ok) throw new Error('Failed to fetch official collections');
             const collectionUrls: string[] = await response.json();
@@ -124,19 +128,18 @@ export const useLibraryStore = defineStore('library', () => {
 
     async function readEpocContent(epocId: string): Promise<Epoc | null> {
         try {
-            if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'ios') {
-                const file = await Filesystem.readFile({
-                    path: `../Library/NoCloud/epocs/${epocId}/content.json`,
-                    directory: Directory.Data,
-                    encoding: Encoding.UTF8,
-                });
-                return JSON.parse(file.data);
+            const file = await Filesystem.readFile({
+                path: `epocs/${epocId}/content.json`,
+                directory: Directory.LibraryNoCloud,
+                encoding: Encoding.UTF8,
+            });
+
+            if (Capacitor.isNativePlatform()) {
+                const result = await (typeof file.data === 'string' ? Promise.resolve(file.data) : file.data.text());
+                return JSON.parse(result);
             } else {
-                const rootDirectory = Capacitor.isNativePlatform() ? Capacitor.getPlatform() === 'android' ? Filesystem.Directory.Data : 'assets/demo/' : 'assets/demo/';
-                const url = Capacitor.convertFileSrc(`${rootDirectory}epocs/${epocId}/content.json`);
-                const response = await fetch(url);
-                if (!response.ok) return null;
-                return await response.json();
+                const result = atob(await (typeof file.data === 'string' ? Promise.resolve(file.data) : file.data.text()));
+                return JSON.parse(result);
             }
         } catch (error) {
             return null;
@@ -144,8 +147,13 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     function updateEpocCollectionState(
-        epocId: string,
-        state: EpocLibraryState,
+        epocId: string, {
+            downloading = false,
+            unzipping = false,
+            downloaded = false,
+            opened,
+            updateAvailable = false
+        }:EpocLibraryState,
         collectionId: string,
         custom: boolean = false
     ) {
@@ -155,11 +163,11 @@ export const useLibraryStore = defineStore('library', () => {
             console.warn(`ePoc with id ${epocId} not found in collection ${collectionId}`);
             return;
         }
-        epoc.downloading = state.downloading ?? epoc.downloading;
-        epoc.downloaded = state.downloaded ?? epoc.downloaded;
-        epoc.unzipping = state.unzipping ?? epoc.unzipping;
-        epoc.opened = state.opened ?? epoc.opened;
-        epoc.updateAvailable = state.updateAvailable ?? epoc.updateAvailable;
+        epoc.downloading = downloading;
+        epoc.downloaded = downloaded;
+        epoc.unzipping = unzipping;
+        epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
+        epoc.updateAvailable = updateAvailable;
         if (custom) {
             customCollections.value = { ...customCollections.value };
         } else {
@@ -173,27 +181,28 @@ export const useLibraryStore = defineStore('library', () => {
 
     async function downloadEpoc(epoc: EpocMetadata, libraryId: string) {
         updateEpocCollectionState(epoc.id, { downloading: true }, libraryId);
-        updateEpocProgress(epoc.id, 0);
-        // Implement your download logic here using fetch
-        // Example:
         try {
-            const response = await fetch(epoc.download);
-            if (!response.ok) throw new Error('Download failed');
-            const blob = await response.blob();
-            // Save the blob to the filesystem using Capacitor or other methods
-            // Update progress as needed
-            // After download, call unzipEpoc
+            await download(epoc.download, `${epoc.id}.zip`, (progress) => {
+                updateEpocProgress(epoc.id, progress.bytes/progress.contentLength);
+            });
         } catch (error) {
-            console.error('Download error:', error);
-            updateEpocCollectionState(epoc.id, {}, libraryId);
+            console.error('Error downloading ePoc:', error);
+            updateEpocCollectionState(epoc.id, { downloading: false }, libraryId);
+            await presentToast(t('LIBRARY.DOWNLOAD_ERROR'), 'danger');
+            return;
         }
+        unzipEpoc(epoc.id, libraryId);
     }
 
-    async function unzipEpoc(epocId: string, libraryId?: string) {
+    async function unzipEpoc(epocId: string, libraryId: string) {
         updateEpocCollectionState(epocId, { unzipping: true }, libraryId);
-        updateEpocProgress(epocId, 0);
-        // Implement your unzip logic here
-        // After unzip, update state
+        try {
+            await unzip(`${epocId}.zip`, `epocs/${epocId}`);
+        } catch (error) {
+            console.error('Error unzipping ePoc:', error);
+            updateEpocCollectionState(epocId, { unzipping: false }, libraryId);
+            return;
+        }
         updateEpocCollectionState(epocId, { downloaded: true }, libraryId);
     }
 

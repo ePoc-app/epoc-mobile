@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import {Zip} from '@epoc/capacitor-zip';
-import {Directory, Filesystem} from '@capacitor/filesystem';
+import {Directory, Encoding, Filesystem} from '@capacitor/filesystem';
 import {FileTransfer} from '@capacitor/file-transfer';
 import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
 
@@ -28,6 +28,16 @@ const downloadAndExtractZip = async (): Promise<void> => {
       directory: Directory.Data,
       path: zipFileName
     });
+
+    for (const dir of Object.values(Directory)) {
+      console.log('Création de fichier de test dans le répertoire :', dir);
+      await Filesystem.appendFile({
+        directory: dir,
+        data: `TEST in ${dir}`,
+        path: `test-${dir}.txt`,
+        encoding: Encoding.UTF8
+      })
+    }
 
     console.log('Téléchargement du fichier ZIP depuis :', zipUrl);
     // Then use the FileTransfer plugin to download
