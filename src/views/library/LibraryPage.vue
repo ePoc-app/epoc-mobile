@@ -3,9 +3,18 @@
   import { settingsOutline, informationCircleOutline, cloudDownloadOutline, chevronForwardOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
   import { RouterLink } from 'vue-router';
-
-  const libraryStore = useLibraryStore();
+  import inria_collection from '@/assets/inria_collection.json'
   
+  const libraryStore = useLibraryStore();
+  const collectionId = 'fr.inria.learninglab.epocs'
+  const localEpocs = Object.values(inria_collection.ePocs).slice(0,1)
+
+  const localEpocsService = {
+    imports : [{value : "HARD CODED"}],
+    localEpocLibraryMenu: (epoc) => {console.log("TODO")}
+  }
+  const openAddMenu = () => {console.log("TODO")}
+  const fileHandler = (E006PEevent) => {console.log("TODO")}
 </script>
 
 <template>
@@ -91,6 +100,37 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="library-separator"><span>{{$t('MISSING.MY_EPOCS')}}</span></div>
+      <div class="library-items">
+        <div class="library-item" v-for="epoc of localEpocs">
+          <RouterLink :to="{ name: 'WIP', params: {any: '/library/'+ epoc.dir}}">
+            <div role="link" :aria-label="epoc.title" class="library-item-image" :style="'background-image:url('+epoc.rootFolder+epoc.image+')'"></div>
+          </RouterLink>
+          <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
+          <div class="library-item-toolbar">
+            <RouterLink :to="{ name: 'WIP', params: {any: '/epoc/toc'+ epoc.id}}">
+              <ion-button  class="expanded" color="inria">
+                <span>{{$t('LIBRARY_PAGE.OPEN')}}</span>
+              </ion-button>
+            </RouterLink>
+            <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="localEpocsService.localEpocLibraryMenu(epoc)">
+              <span :aria-label="$t('MISSING.CHAPTER_OPTIONS')" class="ellipsis base-btn">...</span>
+            </ion-button>
+          </div>
+        </div>
+        <div class="library-item library-item-import" v-for="item of localEpocsService.imports">
+          <div class="library-item-image"></div>
+          <h3 aria-hidden="true" class="library-item-title">{{item.value}}</h3>
+        </div>
+        <div class="library-item library-item-add" v-on:click="openAddMenu()">
+          <div class="library-item-image">
+            <ion-icon aria-hidden="true" src="/src/assets/icon/ajouter.svg" size="large"></ion-icon>
+          </div>
+          <h3 aria-hidden="true" class="library-item-title">{{$t('LIBRARY_PAGE.ADD_EPOC')}}</h3>
+        </div>
+        <!--<input type="file" accept="application/octet-stream,application/zip" hidden v-on:change="fileHandler($event)" #file>-->
+        <input type="file" accept="application/octet-stream,application/zip" hidden v-on:change="fileHandler($event)">
       </div>
     </ion-content>
   </ion-page>
