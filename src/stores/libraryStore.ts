@@ -3,6 +3,7 @@ import {computed, ref} from 'vue';
 import {Directory, Encoding, Filesystem} from '@capacitor/filesystem';
 import {Capacitor} from '@capacitor/core';
 import {actionSheetController, alertController, toastController} from '@ionic/vue';
+import {listCircleOutline, refreshOutline, starOutline, trash, receiptOutline, cloudDownloadOutline} from 'ionicons/icons';
 import {useRouter} from 'vue-router';
 import {useSettingsStore} from './settingsStore';
 import {useReadingStore} from './readingStore';
@@ -222,17 +223,17 @@ export const useLibraryStore = defineStore('library', () => {
         const buttons = [
             {
                 text: t('FLOATING_MENU.TOC'),
-                icon: 'list-circle-outline',
+                icon: listCircleOutline,
                 handler: () => router.push(`/epoc/toc/${epoc.id}`),
             },
             {
                 text: t('FLOATING_MENU.SCORE_DETAILS'),
-                icon: 'star-outline',
+                icon: starOutline,
                 handler: () => router.push(`/epoc/score/${epoc.id}`),
             },
             {
                 text: t('FLOATING_MENU.LICENSE'),
-                icon: 'receipt-outline',
+                icon: receiptOutline,
                 handler: () => {
                     // Implement your license display logic
                 },
@@ -241,7 +242,7 @@ export const useLibraryStore = defineStore('library', () => {
                 ? [
                     {
                         text: t('FLOATING_MENU.UPDATE'),
-                        icon: 'cloud-download-outline',
+                        icon: cloudDownloadOutline,
                         handler: () => {
                             deleteEpoc(epoc, libraryId);
                             downloadEpoc(epoc, libraryId);
@@ -253,14 +254,14 @@ export const useLibraryStore = defineStore('library', () => {
                 ? [
                     {
                         text: t('FLOATING_MENU.RESET'),
-                        icon: 'refresh-outline',
+                        icon: refreshOutline,
                         handler: () => confirmReset(epoc, libraryId),
                     },
                 ]
                 : []),
             {
                 text: t('FLOATING_MENU.DELETE'),
-                icon: 'trash',
+                icon: trash,
                 handler: () => confirmDelete(epoc, libraryId),
             },
             {
