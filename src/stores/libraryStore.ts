@@ -8,6 +8,7 @@ import {useSettingsStore} from './settingsStore';
 import {useReadingStore} from './readingStore';
 import type {Epoc, EpocCollection, EpocLibraryState, EpocMetadata, Publisher} from '@/types/epoc';
 import type {Reading} from '@/types/reading';
+import { ComposerTranslation } from 'vue-i18n';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
@@ -217,20 +218,20 @@ export const useLibraryStore = defineStore('library', () => {
         }
     }
 
-    async function epocLibraryMenu(epoc: EpocMetadata, libraryId?: string) {
+    async function epocLibraryMenu(t: ComposerTranslation, epoc: EpocMetadata, libraryId?: string) {
         const buttons = [
             {
-                text: 'FLOATING_MENU.TOC',
+                text: t('FLOATING_MENU.TOC'),
                 icon: 'list-circle-outline',
                 handler: () => router.push(`/epoc/toc/${epoc.id}`),
             },
             {
-                text: 'FLOATING_MENU.SCORE_DETAILS',
+                text: t('FLOATING_MENU.SCORE_DETAILS'),
                 icon: 'star-outline',
                 handler: () => router.push(`/epoc/score/${epoc.id}`),
             },
             {
-                text: 'FLOATING_MENU.LICENSE',
+                text: t('FLOATING_MENU.LICENSE'),
                 icon: 'receipt-outline',
                 handler: () => {
                     // Implement your license display logic
@@ -239,7 +240,7 @@ export const useLibraryStore = defineStore('library', () => {
             ...(epoc.updateAvailable
                 ? [
                     {
-                        text: 'FLOATING_MENU.UPDATE',
+                        text: t('FLOATING_MENU.UPDATE'),
                         icon: 'cloud-download-outline',
                         handler: () => {
                             deleteEpoc(epoc, libraryId);
@@ -251,26 +252,26 @@ export const useLibraryStore = defineStore('library', () => {
             ...(epoc.opened
                 ? [
                     {
-                        text: 'FLOATING_MENU.RESET',
+                        text: t('FLOATING_MENU.RESET'),
                         icon: 'refresh-outline',
                         handler: () => confirmReset(epoc, libraryId),
                     },
                 ]
                 : []),
             {
-                text: 'FLOATING_MENU.DELETE',
+                text: t('FLOATING_MENU.DELETE'),
                 icon: 'trash',
                 handler: () => confirmDelete(epoc, libraryId),
             },
             {
-                text: 'Fermer',
+                text: t('CLOSE'),
                 role: 'cancel',
             },
         ];
         const actionSheet = await actionSheetController.create({
             header: epoc.title,
             cssClass: 'custom-action-sheet',
-            subHeader: 'FLOATING_MENU.MAIN_MENU',
+            subHeader: t('FLOATING_MENU.MAIN_MENU'),
             mode: 'ios',
             buttons,
         });
