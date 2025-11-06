@@ -29,11 +29,6 @@
 
 
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
       <div class="publisher-logo">
         <div class="logo" v-if="collection.publisher.logo" :style="'background-image:url('+collection.publisher.logo+')'"></div>
         <div class="publisher-name" v-else>{{collection.publisher.name}}</div>
