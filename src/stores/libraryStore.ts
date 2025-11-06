@@ -3,11 +3,13 @@ import {computed, ref} from 'vue';
 import {Directory, Encoding, Filesystem} from '@capacitor/filesystem';
 import {Capacitor} from '@capacitor/core';
 import {actionSheetController, alertController, toastController} from '@ionic/vue';
+import {listCircleOutline, refreshOutline, starOutline, trash, receiptOutline, cloudDownloadOutline} from 'ionicons/icons';
 import {useRouter} from 'vue-router';
 import {useSettingsStore} from './settingsStore';
 import {useReadingStore} from './readingStore';
 import type {Epoc, EpocCollection, EpocLibraryState, EpocMetadata, Publisher} from '@/types/epoc';
 import type {Reading} from '@/types/reading';
+import { ComposerTranslation } from 'vue-i18n';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
@@ -217,21 +219,21 @@ export const useLibraryStore = defineStore('library', () => {
         }
     }
 
-    async function epocLibraryMenu(epoc: EpocMetadata, libraryId?: string) {
+    async function epocLibraryMenu(t: ComposerTranslation, epoc: EpocMetadata, libraryId?: string) {
         const buttons = [
             {
-                text: 'FLOATING_MENU.TOC',
-                icon: 'list-circle-outline',
+                text: t('FLOATING_MENU.TOC'),
+                icon: listCircleOutline,
                 handler: () => router.push(`/epoc/toc/${epoc.id}`),
             },
             {
-                text: 'FLOATING_MENU.SCORE_DETAILS',
-                icon: 'star-outline',
+                text: t('FLOATING_MENU.SCORE_DETAILS'),
+                icon: starOutline,
                 handler: () => router.push(`/epoc/score/${epoc.id}`),
             },
             {
-                text: 'FLOATING_MENU.LICENSE',
-                icon: 'receipt-outline',
+                text: t('FLOATING_MENU.LICENSE'),
+                icon: receiptOutline,
                 handler: () => {
                     // Implement your license display logic
                 },
@@ -239,8 +241,8 @@ export const useLibraryStore = defineStore('library', () => {
             ...(epoc.updateAvailable
                 ? [
                     {
-                        text: 'FLOATING_MENU.UPDATE',
-                        icon: 'cloud-download-outline',
+                        text: t('FLOATING_MENU.UPDATE'),
+                        icon: cloudDownloadOutline,
                         handler: () => {
                             deleteEpoc(epoc, libraryId);
                             downloadEpoc(epoc, libraryId);
@@ -251,26 +253,26 @@ export const useLibraryStore = defineStore('library', () => {
             ...(epoc.opened
                 ? [
                     {
-                        text: 'FLOATING_MENU.RESET',
-                        icon: 'refresh-outline',
+                        text: t('FLOATING_MENU.RESET'),
+                        icon: refreshOutline,
                         handler: () => confirmReset(epoc, libraryId),
                     },
                 ]
                 : []),
             {
-                text: 'FLOATING_MENU.DELETE',
-                icon: 'trash',
+                text: t('FLOATING_MENU.DELETE'),
+                icon: trash,
                 handler: () => confirmDelete(epoc, libraryId),
             },
             {
-                text: 'Fermer',
+                text: t('CLOSE'),
                 role: 'cancel',
             },
         ];
         const actionSheet = await actionSheetController.create({
             header: epoc.title,
             cssClass: 'custom-action-sheet',
-            subHeader: 'FLOATING_MENU.MAIN_MENU',
+            subHeader: t('FLOATING_MENU.MAIN_MENU'),
             mode: 'ios',
             buttons,
         });
