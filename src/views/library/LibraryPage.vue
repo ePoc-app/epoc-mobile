@@ -31,7 +31,7 @@
       },
       {
         text: t('FLOATING_MENU.IMPORT_FILE'),
-        icon: '/assets/icon/importer.svg',
+        icon: 'src/assets/icon/importer.svg',
         handler: () => {
           alert("TODO : import File" )
           //this.fileRef.nativeElement.click();
@@ -39,14 +39,14 @@
       },
       {
         text: t('FLOATING_MENU.IMPORT_LINK'),
-        icon: '/assets/icon/lien.svg',
+        icon: 'src/assets/icon/lien.svg',
         handler: () => {
           linkInputAlert();
         }
       },
       {
         text: t('FLOATING_MENU.IMPORT_QR'),
-        icon: '/assets/icon/qr.svg',
+        icon: 'src/assets/icon/qr.svg',
         handler: () => {
           router.push({ name: 'WIP', params: { any: '/library/qr' } })
         }
@@ -57,14 +57,14 @@
       },
       {
         text: t('FLOATING_MENU.IMPORT_LINK'),
-        icon: '/assets/icon/lien.svg',
+        icon: 'src/assets/icon/lien.svg',
         handler: () => {
           linkInputAlert();
         }
       },
       {
         text: t('FLOATING_MENU.IMPORT_QR'),
-        icon: '/assets/icon/qr.svg',
+        icon: 'src/assets/icon/qr.svg',
         handler: () => {
           router.push({ name: 'WIP', params: { any: '/library/qr' } })
         }
