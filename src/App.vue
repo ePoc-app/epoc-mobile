@@ -1,13 +1,9 @@
-<template>
-  <ion-app>
-    <ion-router-outlet />
-  </ion-app>
-</template>
-
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet, isPlatform } from '@ionic/vue';
 import {StatusBar, Style} from '@capacitor/status-bar';
+import {register} from 'swiper/element/bundle'
 
+register()
 function getTheme() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
@@ -33,3 +29,8 @@ function loadTheme(theme: string) {
 loadTheme("auto")
 
 </script>
+<template>
+  <ion-app>
+    <ion-router-outlet />
+  </ion-app>
+</template>
