@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { actionSheetController, alertController, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
-  import { settingsOutline, informationCircleOutline, cloudDownloadOutline, chevronForwardOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
+  import { actionSheetController, alertController, IonContent, IonHeader, IonPage, IonRefresher, IonRefresherContent, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
+  import { settingsOutline, closeOutline, informationCircleOutline, cloudDownloadOutline, chevronForwardOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
   import { RouterLink, useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n'
@@ -20,7 +20,37 @@
   }
 
   const fileHandler = (E006PEevent) => {console.log("TODO")}
-
+  const doRefresh = (event) => {alert(event)}
+  
+  const onboarding = [
+     {
+      id: 'a',
+      link: {
+        url: '',
+        text: ''
+      },
+      text: 'texte de onboarding 1',
+      title: 'Bienvenue',
+      image: 'src/assets/img/activity.jpg'
+    },
+    {
+      id: 'b',
+      link: {
+        url: '',
+        text: ''
+      },
+      text: 'texte de onboarding 2',
+      title: 'Faites comme chez vous',
+      image: 'https://ucopia.visiteurs.inrialpes.fr/101/portal/resources/_images/header.png'
+    }
+  ]
+  const onboardingOptions = {
+    slidesPerView: 1 ,
+    spaceBetween: 10
+  }
+  const removeMessage = (id: string) => {
+    alert(id)
+  }
   ///////////////////////////////
 
   const openAddMenu = async () => {
@@ -135,12 +165,24 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
+      <ion-refresher slot="fixed" snapbackDuration="1000ms" v-on:ionRefresh="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <swiper-container v-if="onboarding && onboarding.length"
+        modules="swiperModules" aria-hidden="true" class="onboarding" 
+        :slidesPerView="onboardingOptions.slidesPerView" :spaceBetween="onboardingOptions.spaceBetween" 
+        :pagination="onboarding.length > 1 ? 'true' : ''"
+      >
+        <swiper-slide v-for="item in onboarding" class="onboarding-item" :class="item.image ? 'with-image':''">
+          <div class="onboarding-item-image" v-if="item.image" :style="'background-image:url('+item.image+')'"></div>
+          <div class="onboarding-item-title">{{item.title}}</div>
+          <div class="onboarding-item-text">{{item.text}}</div>
+          <RouterLink :to="item.link.url" v-if="item.link">{{item.link.text}}</RouterLink>
+          <div class="onboarding-item-close" v-on:click="removeMessage(item.id)">
+            <ion-icon :icon="closeOutline"></ion-icon>
+          </div>
+        </swiper-slide>
+      </swiper-container>
       <div id="container">
         <div v-for="collection in libraryStore.officialCollections" :key="collection.id">
           <div class="library-line-separator"></div>

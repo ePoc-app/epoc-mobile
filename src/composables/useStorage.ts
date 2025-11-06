@@ -31,11 +31,6 @@ export function useStorage() {
         return storageInstance?.get(key);
     }
 
-    // Initialize on composable creation
-    onMounted(() => {
-        init();
-    });
-
     return {
         setValue,
         getValue,

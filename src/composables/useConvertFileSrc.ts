@@ -70,8 +70,7 @@ export function useConvertFileSrc() {
 
             if (Capacitor.getPlatform() !== 'web') {
                 // Native: Use Capacitor's convertFileSrc
-                const { convertFileSrc } = await import('@capacitor/filesystem');
-                return convertFileSrc(filePath);
+                return Capacitor.convertFileSrc(filePath);
             } else {
                 // Web: Read the file and create an object URL
                 const result = await Filesystem.readFile({
