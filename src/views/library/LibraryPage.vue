@@ -150,7 +150,7 @@
               <RouterLink :to="collection.id">{{$t('LIBRARY_PAGE.VIEW_ALL')}} <ion-icon :icon="chevronForwardOutline"></ion-icon></RouterLink>
             </div>
             <div class="library-item" v-for="epoc in Object.values(collection.ePocs).slice(0,4)" :key="epoc.id">
-              <RouterLink :to="{ name: 'WIP', params: {any: '/library/'+collection.id + '/' + epoc.id}}">
+              <RouterLink :to="{ name: 'EpocOverviewPage', params: {libraryId: collection.id, id: epoc.id}}">
                 <div :aria-label="epoc.title" class="library-item-image" :style="'background-image:url('+epoc.image+')'"></div>
               </RouterLink>
               <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
