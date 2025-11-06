@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { actionSheetController, alertController, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
+  import { actionSheetController, alertController, IonContent, IonHeader, IonPage, IonRefresher, IonRefresherContent, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
   import { settingsOutline, closeOutline, informationCircleOutline, cloudDownloadOutline, chevronForwardOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
   import { RouterLink, useRouter } from 'vue-router';
@@ -20,6 +20,7 @@
   }
 
   const fileHandler = (E006PEevent) => {console.log("TODO")}
+  const doRefresh = (event) => {alert(event)}
   
   const onboarding = [
      {
@@ -164,6 +165,9 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
+      <ion-refresher slot="fixed" snapbackDuration="1000ms" v-on:ionRefresh="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <swiper-container v-if="onboarding && onboarding.length"
         modules="swiperModules" aria-hidden="true" class="onboarding" 
         :slidesPerView="onboardingOptions.slidesPerView" :spaceBetween="onboardingOptions.spaceBetween" 
