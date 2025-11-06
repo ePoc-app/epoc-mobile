@@ -1,8 +1,9 @@
 import {Injectable}  from '@angular/core';
 import {ReplaySubject} from 'rxjs';
-import {OnboardingItem} from '../classes/onboarding';
+import {OnboardingItem} from 'src/app/classes/onboarding';
 import {HttpClient} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,8 @@ export class OnboardingService {
   onboarding$ = this.onboardingSubject$.asObservable();
 
   private removedOnboarding = JSON.parse(localStorage.getItem('removedOnboarding')) || [];
+  private onboardingUrls = environment.onboardingUrls;
 
-  private onboardingUrls = {
-    fr : 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/onboarding.json',
-    en : 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/onboarding-en.json'
-  };
   constructor(
     private http: HttpClient,
     public translate: TranslateService
