@@ -1,20 +1,116 @@
 <script setup lang="ts">
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
+  import { actionSheetController, alertController, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
   import { settingsOutline, informationCircleOutline, cloudDownloadOutline, chevronForwardOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
-  import { RouterLink } from 'vue-router';
-  import inria_collection from '@/assets/inria_collection.json'
-  
+  import { RouterLink, useRouter } from 'vue-router';
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n() 
+  const router = useRouter()
   const libraryStore = useLibraryStore();
-  const collectionId = 'fr.inria.learninglab.epocs'
+
+  /////// WIP SECTION ///////////
+  import inria_collection from '@/assets/inria_collection.json'
   const localEpocs = Object.values(inria_collection.ePocs).slice(0,1)
 
   const localEpocsService = {
     imports : [{value : "HARD CODED"}],
-    localEpocLibraryMenu: (epoc) => {console.log("TODO")}
+    localEpocLibraryMenu: (epoc) => {libraryStore.epocLibraryMenu(t, epoc)},
+    downloadLocalEpoc: (link) => {alert("TODO : download" + link )}
   }
-  const openAddMenu = () => {console.log("TODO")}
+
   const fileHandler = (E006PEevent) => {console.log("TODO")}
+
+  ///////////////////////////////
+
+  const openAddMenu = async () => {
+    const buttons = [
+      {
+        text: 'ePoc',
+        cssClass: 'separator'
+      },
+      {
+        text: t('FLOATING_MENU.IMPORT_FILE'),
+        icon: 'src/assets/icon/importer.svg',
+        handler: () => {
+          alert("TODO : import File" )
+          //this.fileRef.nativeElement.click();
+        }
+      },
+      {
+        text: t('FLOATING_MENU.IMPORT_LINK'),
+        icon: 'src/assets/icon/lien.svg',
+        handler: () => {
+          linkInputAlert();
+        }
+      },
+      {
+        text: t('FLOATING_MENU.IMPORT_QR'),
+        icon: 'src/assets/icon/qr.svg',
+        handler: () => {
+          router.push({ name: 'WIP', params: { any: '/library/qr' } })
+        }
+      },
+      {
+        text: t('FLOATING_MENU.COLLECTION'),
+        cssClass: 'separator'
+      },
+      {
+        text: t('FLOATING_MENU.IMPORT_LINK'),
+        icon: 'src/assets/icon/lien.svg',
+        handler: () => {
+          linkInputAlert();
+        }
+      },
+      {
+        text: t('FLOATING_MENU.IMPORT_QR'),
+        icon: 'src/assets/icon/qr.svg',
+        handler: () => {
+          router.push({ name: 'WIP', params: { any: '/library/qr' } })
+        }
+      },
+      {
+        text: t('CLOSE'),
+        role: 'cancel'
+      }
+    ];
+    const actionSheet = await actionSheetController.create({
+      header: t('FLOATING_MENU.IMPORT'),
+      subHeader: t('FLOATING_MENU.IMPORT_SUBHEADER'),
+      cssClass: 'custom-action-sheet import-action-sheet',
+      mode: 'ios',
+      buttons
+    });
+    await actionSheet.present();
+  }
+
+  const linkInputAlert = async () => {
+    const alert = await alertController.create({
+      header: t('FLOATING_MENU.IMPORT_FROM_LINK'),
+      buttons: [
+        {
+          text: t('CANCEL'),
+          role: 'cancel'
+        },
+        {
+          text: t('CONFIRM'),
+          handler: (e) => {
+            if (e.link.endsWith('.json')) libraryStore.addCustomCollection(e.link);
+            else localEpocsService.downloadLocalEpoc(e.link);
+          }
+        }
+      ],
+      inputs: [
+        {
+          name: 'link',
+          placeholder: 'Saisissez le lien',
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+
 </script>
 
 <template>
