@@ -15,7 +15,7 @@
 
   const localEpocsService = {
     imports : [{value : "HARD CODED"}],
-    localEpocLibraryMenu: (epoc) => {alert("TODO" + epoc)},
+    localEpocLibraryMenu: (epoc) => {libraryStore.epocLibraryMenu(epoc)},
     downloadLocalEpoc: (link) => {alert("TODO : download" + link )}
   }
 
