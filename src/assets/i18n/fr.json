@@ -351,6 +351,7 @@
 
   "MISSING": {
     "MY_EPOCS" : "Mes ePocs",
-    "CHAPTER_OPTIONS": "Option du chapitre"
+    "CHAPTER_OPTIONS": "Option du chapitre",
+    "OPTIONS" : "Options"
   }
 }
