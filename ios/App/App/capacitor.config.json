@@ -1,1 +1,19 @@
-{}
+{
+	"appId": "fr.inria.epoc",
+	"appName": "ePoc",
+	"webDir": "dist",
+	"packageClassList": [
+		"AppPlugin",
+		"CapacitorBarcodeScannerPlugin",
+		"CAPBrowserPlugin",
+		"DevicePlugin",
+		"FileTransferPlugin",
+		"FilesystemPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"ScreenReaderPlugin",
+		"SplashScreenPlugin",
+		"StatusBarPlugin",
+		"ZipPlugin"
+	]
+}
