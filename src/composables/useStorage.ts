@@ -1,6 +1,7 @@
 // src/composables/useStorage.ts
 import { ref, onMounted } from 'vue';
 import { Drivers, Storage } from '@ionic/storage';
+import CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 let storageInstance: Storage | null = null;
 
@@ -14,9 +15,9 @@ export function useStorage() {
         }
         const storage = new Storage({
             name: '__epocdb',
-            // todo : CordovaSQLiteDriver removed ? => check if the mobile apps are using it first
-            driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
+            driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage]
         });
+        await storage.defineDriver(CordovaSQLiteDriver);
         storageInstance = await storage.create();
         isReady.value = true;
     }
