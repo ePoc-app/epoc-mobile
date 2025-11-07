@@ -104,16 +104,10 @@
       "plural": "Módulos"
     },
     "MIN_MODULE": "min/módulo",
-    "OBJECTIVES": {
-      "singular": "Objetivo",
-      "plural": "Objetivos"
-    },
+    "OBJECTIVES": "Objetivo | Objetivos",
     "PREREQUISITES": "Prerrequisitos",
     "RESUME": "Resumen",
-    "AUTHORS": {
-      "singular": "Autor",
-      "plural": "Autores"
-    },
+    "AUTHORS": "Autor | Autores",
     "PICTURE_ALT": "Imagen de",
     "GO": "¡Vamos!",
     "CONTINUE": "Continuar",
@@ -178,17 +172,11 @@
     "ERROR_SSL": "No se puede descargar desde una fuente no segura (la URL no usa https)"
   },
   "PLAYER": {
-    "VIDEOS": {
-      "singular": "Video",
-      "plural": "Videos"
-    },
+    "VIDEOS": "Video | Videos",
     "ASSESSMENT_COMPONENT": {
       "GRADED": "Calificado",
       "NOT_GRADED": "No calificado",
-      "QUESTIONS": {
-        "singular": "Pregunta",
-        "plural": "Preguntas"
-      },
+      "QUESTIONS": "Pregunta | Preguntas",
       "START": "Comenzar la evaluación",
       "REDO": "Rehacer la evaluación"
     },
