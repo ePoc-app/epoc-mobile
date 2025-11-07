@@ -1,36 +1,45 @@
 <script setup lang="ts">
-  import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonIcon, IonBackButton, IonButton } from '@ionic/vue';
-  import { settingsOutline, informationCircleOutline } from 'ionicons/icons';
+  import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton } from '@ionic/vue';
+  import { informationCircleOutline } from 'ionicons/icons';
   import { useRoute } from 'vue-router';
   import { useLibraryStore } from '@/stores/libraryStore';
-  const route = useRoute()
-  const collectionId = route.params.libraryId 
-  const epocId = route.params.id
-  
-  if (this.route.snapshot.paramMap.get('dir')) {
-            this.localEpocsService.localEpocs$.subscribe((data: EpocLibrary[]) => {
-                const dir = `local-epocs/${this.route.snapshot.paramMap.get('dir')}`;
-                this.epoc = data.find(epoc => epoc.dir === dir);
-                if (this.epoc) this.rootFolder = this.epoc.rootFolder;
-            });
-        } else {
-            combineLatest([
-                this.libraryService.officialCollections$,
-                this.libraryService.customCollections$
-            ]).subscribe(([officialCollections, customCollections]) => {
-                const collections = { ...customCollections, ...officialCollections };
-                const collection = collections[this.route.snapshot.paramMap.get('libraryId')];
-                const ePocId = this.route.snapshot.paramMap.get('id');
-                if (collection && collection.ePocs[ePocId]) {
-                    this.epoc = collection.ePocs[ePocId];
-                }
-            });
-        }
-        this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
-            this.epocProgresses = epocProgresses;
-            this.ref.detectChanges();
-        });
+  import { EpocLibrary } from '@/types/epoc';
 
+  const route = useRoute()
+  const libraryStore = useLibraryStore()
+
+  // WIP SECTION //////
+  const getLocalEpoc = (dir: string) => {
+    return getEpocFromCollection(dir, "not implemented yet");
+  }
+  //////
+
+  const getEpoc = () : EpocLibrary | undefined => {
+    let epoc = undefined;
+    if (route.params.dir) {
+      epoc = getLocalEpoc(route.params.dir.toString())
+    } else {
+      const collectionId = route.params.libraryId.toString()
+      const epocId = route.params.id.toString()
+      epoc = getEpocFromCollection(collectionId, epocId)
+    }
+    return epoc
+  };
+
+  const getEpocFromCollection = (collectionId : string, epocId: string) : EpocLibrary | undefined =>  {
+    const collections = { ...libraryStore.customCollections, ...libraryStore.officialCollections };
+    const collection = collections[collectionId];
+    if (collection && collection.ePocs[epocId]) {
+        return collection.ePocs[epocId];
+    }
+  };
+
+  const epoc: EpocLibrary | undefined = getEpoc()
+
+
+  // this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
+  // this.epocProgresses = epocProgresses;
+  // this.ref.detectChanges();
 
 </script>
 
@@ -57,7 +66,7 @@
 
     <ion-content :fullscreen="true">
       <div id="container">
-       WORK IN PROGRESS : {{$route.params.id}}
+       WORK IN PROGRESS : {{epoc}}
       </div>
     </ion-content>
   </ion-page>
