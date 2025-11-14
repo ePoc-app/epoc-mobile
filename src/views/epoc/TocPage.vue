@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonButtons, IonIcon, IonBackButton, IonButton } from '@ionic/vue';
   import { RouterLink, useRoute } from 'vue-router';
-  import { gitBranchOutline, bulbOutline, checkboxOutline, playOutline, musicalNotesOutline, documentTextOutline, checkmarkOutline, timeOutline, arrowForwardOutline } from 'ionicons/icons';
+  import { informationCircleOutline } from 'ionicons/icons';
   import { useEpocStore } from '@/stores/epocStore';
   import {Epoc} from '@/types/epoc';
   import { ref } from 'vue';
@@ -9,96 +9,101 @@
   import { onBeforeMount } from 'vue'; 
 
   const route = useRoute();
-  const id = route.params.id.toString();
   const epocStore = useEpocStore();
-  const epoc = ref<Epoc>() 
-  const contentInitialized = ref(false)
+  const epoc = epocStore.epoc;
 
-  onBeforeMount(() => {
-    epocStore.getEpocById(id).then( (value: Epoc) => {
-      epoc.value = value
-      console.log(value)
-    })
-  })
+  onBeforeMount(async () => {
+    const id = route.params.id.toString()
+    await epocStore.getEpocById(id)
+  });
+
+  const displayMenu = () => {
+    epocStore.epocMainMenu;
+  };
   
-  // WIP SECTION //////
-    
-  //////
-
+  // WIP //
+  /////////
 
 </script>
 
 <template>
   <ion-page>
     <ion-header :translucent="true">
-        <ion-toolbar>
-          <ion-buttons slot="start">
-              <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
-          </ion-buttons>
-          <ion-title>{{$t('TOC_PAGE.HEADER')}}</ion-title>
-          <ion-buttons slot="end">
-              <ion-button (click)="displayMenu()">
-                  <ion-icon slot="icon-only" name="menu-outline" color="inria-icon"></ion-icon>
-              </ion-button>
-          </ion-buttons>
-      </ion-toolbar>
+      <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
+            </ion-buttons>
+            <ion-title>{{$t('TOC_PAGE.HEADER')}}</ion-title>
+            <ion-buttons slot="end">
+                <ion-button v-on:click="displayMenu()">
+                    <ion-icon slot="icon-only" name="menu-outline" color="inria-icon"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-toolbar>
     </ion-header>
-
-    {{epoc}}
-
-    <ion-content v-if="contentInitialized">
-      <div v-if="epoc != undefined" class="wrapper">
-        <div class="toc-header">
-          <img aria-hidden="true" alt="ePoc Image" :src="epoc +  epoc.image">
-          <div class="toc-header-title">{{epoc.title}}</div>
-        </div>
-        <div class="toc-content" tabindex="-1">
-          <div class="toc-chapter" v-for="chapter of denormalize(epoc.chapters)">
-            <div class="toc-chapter-summary">
-                <div class="toc-chapter-progress" :class="{'done':chapter.done}">
-                    <ion-icon aria-hidden="true" :icon="checkmarkOutline" v-if="chapter.done"></ion-icon>
-                    <ion-icon aria-hidden="true" :icon="arrowForwardOutline" v-if="!chapter.done && chapter.chapterOpened"></ion-icon>
-                    <ion-icon aria-hidden="true" :icon="timeOutline" v-if="!chapter.done && !chapter.chapterOpened"></ion-icon>
-                </div>
-                <div class="toc-chapter-info">
-                    <RouterLink class="toc-chapter-info-title" :to="{ name: 'WIP', params: {any: '/' + chapter.resumeLink}}">
-                        <div class="toc-chapter-info-label">
-                            {{chapter.title}}
+    <ion-content>
+        <div class="wrapper">
+            <div class="toc-header">
+                <img aria-hidden="true" alt="ePoc Image" :src="epoc.rootFolder +  epoc.image">
+                <div class="toc-header-title">{{epoc.title}}</div>
+            </div>
+            <div class="toc-content" tabindex="-1">
+                <div class="toc-chapter" v-for="chapter of denormalize(epoc.chapters)">
+                    <div class="toc-chapter-summary">
+                        <div class="toc-chapter-progress" :class="{'done':chapter.done}">
+                            <ion-icon aria-hidden="true" name="checkmark-outline" v-if="chapter.done"></ion-icon>
+                            <ion-icon aria-hidden="true" name="arrow-forward-outline" v-if="!chapter.done && chapter.chapterOpened"></ion-icon>
+                            <ion-icon aria-hidden="true" name="time-outline" v-if="!chapter.done && !chapter.chapterOpened"></ion-icon>
                         </div>
-                        {{chapter.subtitle}}
-                    </RouterLink>
-                    <div class="toc-chapter-info-details" (click)="toggleDetails(chapter)">
-                        <template v-if="chapter.opened">{{$t('TOC_PAGE.VIEW_LESS')}}</template>
-                        <template v-if="!chapter.opened">{{$t('TOC_PAGE.VIEW_MORE')}}</template>
+                        <div class="toc-chapter-info">
+                            <div class="toc-chapter-info-title" [routerLink]="chapter.resumeLink">
+                                <div class="toc-chapter-info-label">
+                                    {{chapter.title}}
+                                </div>
+                                {{chapter.subtitle}}
+                            </div>
+                            <div class="toc-chapter-info-details" (click)="toggleDetails(chapter)">
+                                <ng-container v-if="chapter.opened">{{$t('TOC_PAGE.VIEW_LESS')}}</ng-container>
+                                <ng-container v-if="!chapter.opened">{{$t('TOC_PAGE.VIEW_MORE')}}</ng-container>
+                            </div>
+                        </div>
+                        <div role="link" :aria-label="$t('TOC_PAGE.NEXT_CHAPTER')" class="toc-chapter-open" [routerLink]="chapter.resumeLink">
+                            <ion-icon aria-hidden="true" name="chevron-forward-outline" color="inria"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="toc-chapter-details" v-if="chapter.opened">
+                        <ng-container v-for="content of denormalize(chapter.contents, epoc.contents)">
+                            <ng-container v-if="!content.hidden">
+                                <div class="toc-chapter-details-item" :class="{'viewed':content.viewed}" [routerLink]="'/epoc/play/'+epoc.id+'/'+chapter.id+'/content/'+content.id">
+                                    <div aria-hidden="true" class="toc-chapter-details-item-icon">
+                                        <ion-icon v-if="content.type === 'html'" name="document-text-outline" slot="start"></ion-icon>
+                                        <ion-icon v-if="content.type === 'video'" name="play-outline" slot="start"></ion-icon>
+                                        <ion-icon v-if="content.type === 'audio'" name="musical-notes-outline" slot="start"></ion-icon>
+                                        <ion-icon v-if="content.type === 'assessment'" name="checkbox-outline" slot="start"></ion-icon>
+                                        <ion-icon v-if="content.type === 'simple-question' && !+epoc.questions[content.question].score"
+                                                  name="bulb-outline" slot="start"></ion-icon>
+                                        <ion-icon v-if="content.type === 'simple-question' && +epoc.questions[content.question].score"
+                                                  name="checkbox-outline" slot="start"></ion-icon>
+                                        <ion-icon v-if="content.type === 'choice'" name="git-branch-outline" slot="start"></ion-icon>
+                                    </div>
+                                    <div>{{content.title}}</div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
                     </div>
                 </div>
-                <RouterLink :to="{ name: 'WIP', params: {any: '/' + chapter.resumeLink}}" :aria-label="$t('MISSING.NEXT_CHAPTER')" class="toc-chapter-open">
-                    <ion-icon aria-hidden="true" name="chevron-forward-outline" color="inria"></ion-icon>
-                </RouterLink>
             </div>
-            <div class="toc-chapter-details" v-if="chapter.opened">
-              <template v-for="content of denormalize(chapter.contents, epoc.contents)">
-                <template v-if="!content.hidden">
-                  <RouterLink :to="{ name: 'WIP', params: {any: '/epoc/play/'+epoc.id+'/'+chapter.id+'/content/'+ content.id}}" class="toc-chapter-details-item" :class="{'viewed':content.viewed}">
-                    <div aria-hidden="true" class="toc-chapter-details-item-icon">
-                      <ion-icon v-if="content.type === 'html'" :icon="documentTextOutline" slot="start"></ion-icon>
-                      <ion-icon v-if="content.type === 'video'" :icon="playOutline" slot="start"></ion-icon>
-                      <ion-icon v-if="content.type === 'audio'" :icon="musicalNotesOutline" slot="start"></ion-icon>
-                      <ion-icon v-if="content.type === 'assessment'" :icon="checkboxOutline" slot="start"></ion-icon>
-                      <ion-icon v-if="content.type === 'simple-question' && !+epoc.questions[content.question].score"
-                                :icon="bulbOutline" slot="start"></ion-icon>
-                      <ion-icon v-if="content.type === 'simple-question' && +epoc.questions[content.question].score"
-                                :icon="checkboxOutline" slot="start"></ion-icon>
-                      <ion-icon v-if="content.type === 'choice'" :icon="gitBranchOutline" slot="start"></ion-icon>
-                    </div>
-                    <div>{{content.title}}</div>
-                  </RouterLink>
-                </template>
-              </template>
-            </div>
-          </div>
         </div>
+    </ion-content>
+
+    <ion-content>
+      <div v-if="epocStore.epoc">
+        epoc.title : {{epocStore.epoc.title}} <br/>
+        epoc.id : {{epocStore.epoc.id}} <br/>
+        epoc.description : {{epocStore.epoc.description}} <br/>
+        epoc.author : {{epocStore.epoc.authors}} <br/>
       </div>
+    
     </ion-content>
   </ion-page>
 </template>
