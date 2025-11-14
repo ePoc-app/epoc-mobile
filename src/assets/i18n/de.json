@@ -95,25 +95,13 @@
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Kurspräsentation",
-    "ACTIVITIES": {
-      "singular": "Bewertung",
-      "plural": "Bewertungen"
-    },
-    "CHAPTERS": {
-      "singular": "Modul",
-      "plural": "Module"
-    },
+    "ACTIVITIES": "Bewertung | Bewertungen",
+    "CHAPTERS": "Modul | Module",
     "MIN_MODULE": "Min/Modul",
-    "OBJECTIVES": {
-      "singular": "Ziel",
-      "plural": "Ziele"
-    },
+    "OBJECTIVES": "Ziel | Ziele",
     "PREREQUISITES": "Voraussetzungen",
     "RESUME": "Zusammenfassung",
-    "AUTHORS": {
-      "singular": "Autor",
-      "plural": "Autoren"
-    },
+    "AUTHORS": "Autor | Autoren",
     "PICTURE_ALT": "Bild von",
     "GO": "Los geht's!",
     "CONTINUE": "Fortsetzen",
@@ -178,17 +166,11 @@
     "ERROR_SSL": "Kann nicht von unsicherer Quelle herunterladen (URL verwendet kein https)"
   },
   "PLAYER": {
-    "VIDEOS": {
-      "singular": "Video",
-      "plural": "Videos"
-    },
+    "VIDEOS": "Video | Videos",
     "ASSESSMENT_COMPONENT": {
       "GRADED": "Benotet",
       "NOT_GRADED": "Nicht benotet",
-      "QUESTIONS": {
-        "singular": "Frage",
-        "plural": "Fragen"
-      },
+      "QUESTIONS": "Frage | Fragen",
       "START": "Bewertung starten",
       "REDO": "Bewertung wiederholen"
     },
@@ -283,10 +265,7 @@
       "FALSE": "Das ist nicht wahr!",
       "CORRECT": "Richtige Antwort:",
       "FORGOTTEN": "Sie haben vergessen",
-      "OMISSION": {
-        "singular": "Auslassung",
-        "plural": "Auslassungen"
-      },
+      "OMISSION": "Auslassung | Auslassungen",
       "WAS_TRUE": "Das war eine gute Antwort!",
       "CORRECT_ANSWERS": {
         "singular": "richtige Antwort",

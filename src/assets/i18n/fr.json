@@ -99,21 +99,12 @@
       "singular": "Évaluation",
       "plural": "Évaluations"
     },
-    "CHAPTERS": {
-      "singular": "Module",
-      "plural": "Modules"
-    },
+    "CHAPTERS": "Module | Modules",
     "MIN_MODULE": "min/module",
-    "OBJECTIVES": {
-      "singular": "Objectif",
-      "plural": "Objectifs"
-    },
+    "OBJECTIVES": "Objectif | Objectifs",
     "PREREQUISITES": "Prérequis",
     "RESUME": "Résumé",
-    "AUTHORS": {
-      "singular": "Auteur",
-      "plural": "Auteurs"
-    },
+    "AUTHORS": "Auteur | Auteurs",
     "PICTURE_ALT": "Photo de ",
     "GO": "C'est parti !",
     "CONTINUE": "Continuer",
@@ -178,17 +169,11 @@
     "ERROR_SSL": "Téléchargement impossible depuis une source non fiable (l'url n'utilise pas https)"
   },
   "PLAYER": {
-    "VIDEOS": {
-      "singular": "Video",
-      "plural": "Videos"
-    },
+    "VIDEOS": "Video | Videos",
     "ASSESSMENT_COMPONENT": {
       "GRADED": "Noté",
       "NOT_GRADED": "Non noté",
-      "QUESTIONS": {
-        "singular": "Question",
-        "plural": "Questions"
-      },
+      "QUESTIONS": "Question | Questions",
       "START": "Commencer l'évaluation",
       "REDO": "Refaire l'évaluation"
     },
@@ -283,10 +268,7 @@
       "FALSE": "C'est faux !",
       "CORRECT": "Bonne réponse : ",
       "FORGOTTEN": "Vous avez oublié",
-      "OMISSION": {
-        "singular": "oubli",
-        "plural": "oublis"
-      },
+      "OMISSION": "oubli | oublis",
       "WAS_TRUE": "C'était une bonne réponse !",
       "CORRECT_ANSWERS": {
         "singular": "bonne réponse",
@@ -351,6 +333,7 @@
 
   "MISSING": {
     "MY_EPOCS" : "Mes ePocs",
-    "CHAPTER_OPTIONS": "Option du chapitre"
+    "CHAPTER_OPTIONS": "Option du chapitre",
+    "OPTIONS" : "Options"
   }
 }
