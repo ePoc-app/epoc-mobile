@@ -95,25 +95,13 @@
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Course presentation",
-    "ACTIVITIES": {
-      "singular": "Assessment",
-      "plural": "Assessments"
-    },
-    "CHAPTERS": {
-      "singular": "Module",
-      "plural": "Modules"
-    },
+    "ACTIVITIES": "Assessment | Assessments",
+    "CHAPTERS": "Module | Modules",
     "MIN_MODULE": "min/module",
-    "OBJECTIVES": {
-      "singular": "Objective",
-      "plural": "Objectives"
-    },
+    "OBJECTIVES": "Objective | Objectives",
     "PREREQUISITES": "Prerequisites",
     "RESUME": "Summary",
-    "AUTHORS": {
-      "singular": "Author",
-      "plural": "Authors"
-    },
+    "AUTHORS": "Author | Authors",
     "PICTURE_ALT": "Picture of ",
     "GO": "Let's go !",
     "CONTINUE": "Continue",
@@ -178,17 +166,11 @@
     "ERROR_SSL": "Cannot download from unsafe source (url does not use https)"
   },
   "PLAYER": {
-    "VIDEOS": {
-      "singular": "Video",
-      "plural": "Videos"
-    },
+    "VIDEOS": "Video | Videos",
     "ASSESSMENT_COMPONENT": {
       "GRADED": "Graded",
       "NOT_GRADED": "Not graded",
-      "QUESTIONS": {
-        "singular": "Question",
-        "plural": "Questions"
-      },
+      "QUESTIONS": "Question | Questions",
       "START": "Start the assessment",
       "REDO": "Redo the assessment"
     },
@@ -283,10 +265,7 @@
       "FALSE": "This is not true !",
       "CORRECT": "Correct answer : ",
       "FORGOTTEN": "You forgot",
-      "OMISSION": {
-        "singular": "omission",
-        "plural": "omissions"
-      },
+      "OMISSION": "omission | omissions",
       "WAS_TRUE": "It was a good answer !",
       "CORRECT_ANSWERS": {
         "singular": "correct answer",
@@ -351,6 +330,7 @@
   
   "MISSING": {
     "MY_EPOCS" : "My ePocs",
-    "CHAPTER_OPTIONS": "Chapter's options"
+    "CHAPTER_OPTIONS": "Chapter's options",
+    "OPTIONS" : "Options"
   }
 }

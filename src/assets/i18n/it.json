@@ -95,25 +95,13 @@
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Presentazione del corso",
-    "ACTIVITIES": {
-      "singular": "Valutazione",
-      "plural": "Valutazioni"
-    },
-    "CHAPTERS": {
-      "singular": "Modulo",
-      "plural": "Moduli"
-    },
+    "ACTIVITIES": "Valutazione | Valutazioni",
+    "CHAPTERS": "Modulo | Moduli",
     "MIN_MODULE": "min/modulo",
-    "OBJECTIVES": {
-      "singular": "Obiettivo",
-      "plural": "Obiettivi"
-    },
+    "OBJECTIVES": "Obiettivo | Obiettivi",
     "PREREQUISITES": "Prerequisiti",
     "RESUME": "Sommario",
-    "AUTHORS": {
-      "singular": "Autore",
-      "plural": "Autori"
-    },
+    "AUTHORS": "Autore | Autori",
     "PICTURE_ALT": "Foto di ",
     "GO": "Iniziamo!",
     "CONTINUE": "Continua",
@@ -178,17 +166,11 @@
     "ERROR_SSL": "Impossibile scaricare da una fonte non sicura (l'URL non utilizza https)"
   },
   "PLAYER": {
-    "VIDEOS": {
-      "singular": "Video",
-      "plural": "Video"
-    },
+    "VIDEOS": "Video | Video",
     "ASSESSMENT_COMPONENT": {
       "GRADED": "Valutato",
       "NOT_GRADED": "Non valutato",
-      "QUESTIONS": {
-        "singular": "Domanda",
-        "plural": "Domande"
-      },
+      "QUESTIONS": "Domanda | Domande",
       "START": "Inizia la valutazione",
       "REDO": "Ripeti la valutazione"
     },
@@ -283,10 +265,7 @@
       "FALSE": "Questo non è vero!",
       "CORRECT": "Risposta corretta : ",
       "FORGOTTEN": "Hai dimenticato",
-      "OMISSION": {
-        "singular": "omissione",
-        "plural": "omissioni"
-      },
+      "OMISSION": "omissione | omissioni",
       "WAS_TRUE": "È stata una buona risposta!",
       "CORRECT_ANSWERS": {
         "singular": "risposta corretta",
