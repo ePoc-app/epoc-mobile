@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton } from '@ionic/vue';
   import { useRoute } from 'vue-router';
-  import { ellipsisHorizontal } from 'ionicons/icons';
+  import { ellipsisHorizontal, checkmarkOutline, arrowForwardOutline,readerOutline, cubeOutline, timeOutline} from 'ionicons/icons';
   import { useLibraryStore } from '@/stores/libraryStore';
   import { EpocLibrary } from '@/types/epoc';
   import { useI18n } from 'vue-i18n';
@@ -88,17 +88,17 @@
 
         <div class="epoc-specs">
           <div class="epoc-spec">
-            <div class="epoc-spec-icon"><ion-icon aria-hidden="true" name="reader-outline"></ion-icon></div>
+            <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="readerOutline"></ion-icon></div>
             <div class="epoc-spec-value">
               {{epoc.chaptersCount}} {{t('OVERVIEW_PAGE.CHAPTERS', epoc.chaptersCount)}}
             </div>
           </div>
           <div class="epoc-spec">
-            <div class="epoc-spec-icon"><ion-icon aria-hidden="true" name="cube-outline"></ion-icon></div>
+            <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="cubeOutline"></ion-icon></div>
             <div class="epoc-spec-value">{{epoc.assessmentsCount}} {{t('OVERVIEW_PAGE.ACTIVITIES', epoc.assessmentsCount)}}</div>
           </div>
           <div class="epoc-spec">
-            <div class="epoc-spec-icon"><ion-icon aria-hidden="true" name="time-outline"></ion-icon></div>
+            <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="timeOutline"></ion-icon></div>
             <div role="img" aria-roledescription="Temps" aria-label="10 min par module" class="epoc-spec-value">{{epoc.chapterDuration || 10}} {{t('OVERVIEW_PAGE.MIN_MODULE')}}</div>
           </div>
         </div>
@@ -120,13 +120,13 @@
         <div class="tabs">
           <div class="tab" v-if="selectedTab === 0">
             <div class="course-objective" v-for="objective of epoc.objectives">
-              <div class="course-objective-icon"><ion-icon aria-hidden="true" name="checkmark-outline"></ion-icon></div>
+              <div class="course-objective-icon"><ion-icon aria-hidden="true" :icon="checkmarkOutline"></ion-icon></div>
               <ion-text>{{objective}}</ion-text>
             </div>
           </div>
           <div class="tab" v-if="selectedTab === 3">
             <div class="course-prerequisites" v-for="prerequisite of epoc.prerequisites">
-              <div class="course-prerequisites-icon"><ion-icon aria-hidden="true" name="arrow-forward-outline"></ion-icon></div>
+              <div class="course-prerequisites-icon"><ion-icon aria-hidden="true" :icon="arrowForwardOutline"></ion-icon></div>
               <ion-text>{{prerequisite}}</ion-text>
             </div>
           </div>
@@ -136,7 +136,7 @@
           <div class="tab" v-if="selectedTab === 2">
             <div class="epoc-author" v-for="author of epoc.authors">
               <div class="epoc-author-name">
-                <img :alt="t('OVERVIEW_PAGE.PICTURE_ALT') + author.name" v-if="author.image" :src="epoc.rootFolder + author.image || 'url'"/>
+                <img :alt="t('OVERVIEW_PAGE.PICTURE_ALT') + author.name" v-if="author.image" :src="(epoc.rootFolder || '') + author.image"/>
                 <div>
                   {{author.name}}
                   <div class="epoc-author-title">{{author.title}}</div>
