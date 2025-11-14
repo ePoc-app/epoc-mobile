@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import LibraryPage from '@/views/library/LibraryPage.vue'
 import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue'
 import WIPPage from '@/views/WIPPage.vue'
+import TestPage from '@/views/TestPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/:collection_id',
     name: 'CollectionDetail',
     component: CollectionDetailPage
+  },
+  {
+    path: '/test/:id',
+    name: 'TEST',
+    component: TestPage
   },
   {
     path: '/wip/:any',
