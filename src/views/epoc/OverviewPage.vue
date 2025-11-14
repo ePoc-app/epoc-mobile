@@ -22,6 +22,12 @@
     alert("openMenu")
   } 
 
+  // this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
+  // this.epocProgresses = epocProgresses;
+  // this.ref.detectChanges();
+
+  // TODO Handle Video 
+
   //////
 
   const getEpoc = () : EpocLibrary | undefined => {
@@ -50,9 +56,7 @@
 
   const epoc: EpocLibrary | undefined = getEpoc()
 
-  // this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
-  // this.epocProgresses = epocProgresses;
-  // this.ref.detectChanges();
+  
 </script>
 
 <template>
