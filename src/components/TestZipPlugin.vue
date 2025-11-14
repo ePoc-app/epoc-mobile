@@ -20,7 +20,7 @@ const downloadAndExtractZip = async (): Promise<void> => {
     statusMessage.value = 'Téléchargement du fichier ZIP en cours...';
 
     // URL du fichier ZIP
-    const zipUrl: string = 'https://corsproxy.io/?url=https://files.inria.fr/LearningLab_public/epocs-prod/E001DB/E001DB.zip';
+    const zipUrl: string = 'https://epoc.inria.fr/dl/E001DB/E001DB.zip';
     const zipFileName: string = 'E001DB.zip';
 
     // 1. Télécharger le fichier ZIP s'il n'existe pas déjà
@@ -31,12 +31,16 @@ const downloadAndExtractZip = async (): Promise<void> => {
 
     for (const dir of Object.values(Directory)) {
       console.log('Création de fichier de test dans le répertoire :', dir);
-      await Filesystem.appendFile({
-        directory: dir,
-        data: `TEST in ${dir}`,
-        path: `test-${dir}.txt`,
-        encoding: Encoding.UTF8
-      })
+      try {
+        await Filesystem.appendFile({
+          directory: dir,
+          data: `TEST in ${dir}`,
+          path: `test-${dir}.txt`,
+          encoding: Encoding.UTF8
+        });
+      } catch (error) {
+        console.log(`Error appending file in directory ${dir}:`, error);
+      }
     }
 
     console.log('Téléchargement du fichier ZIP depuis :', zipUrl);

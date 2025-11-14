@@ -197,7 +197,7 @@
               </RouterLink>
               <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
               <div class="library-item-toolbar" v-if="epoc.downloaded">
-                <RouterLink :to="{ name: 'WIP', params: {any: '/epoc/toc'+ epoc.id}}">
+                <RouterLink :to="{ name: 'TEST', params: {id: epoc.id}}">
                   <ion-button  class="expanded" color="inria">
                     <span v-if="epoc.opened">{{$t('LIBRARY_PAGE.CONTINUE')}}</span>
                     <ion-icon aria-hidden="true" v-if="epoc.opened" :icon="arrowForwardOutline" slot="end"></ion-icon>

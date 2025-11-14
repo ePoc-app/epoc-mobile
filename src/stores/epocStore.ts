@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { actionSheetController, alertController } from '@ionic/vue';
 import { useRouter } from 'vue-router';
@@ -11,70 +10,28 @@ export const useEpocStore = defineStore('epoc', () => {
     // --- State ---
     const router = useRouter();
     const initialized = ref(false);
-    const storedRootFolder = localStorage.getItem('rootFolder') || '';
-    const rootFolder = ref(Capacitor.convertFileSrc(storedRootFolder));
     const _epoc = ref<Epoc | null>(null);
 
     // --- Getters ---
     const getEpoc = computed(() => _epoc.value);
 
     // --- Actions ---
-    function setRootFolder(folder: string) {
-        localStorage.setItem('rootFolder', folder);
-        rootFolder.value = Capacitor.convertFileSrc(folder);
-    }
 
     async function getEpocById(id: string): Promise<Epoc> {
         if (_epoc.value && _epoc.value.id === id) return _epoc.value;
-        const dir = await findEpocDir(id);
-        if (!dir) throw new Error('Epoc directory not found');
-        setRootFolder(`${Capacitor.getPlatform() === 'android' || Capacitor.getPlatform() === 'ios' ? Directory.Data : 'assets/demo/'}${dir}/${id}/`);
         try {
-            const response = await fetch(`${rootFolder.value}content.json`);
-            if (!response.ok) throw new Error('Failed to fetch epoc content');
-            const epoc: Epoc = await response.json();
-            if (epoc.id !== id) epoc.id = id; // Fix id when local epocs are imported
-            _epoc.value = initCourseContent(epoc);
-            return _epoc.value;
-        } catch (error) {
-            // Backup support for iOS livereload (dev environment)
             const result = await Filesystem.readFile({
-                path: `../Library/NoCloud/${dir}/${id}/content.json`,
-                directory: Directory.Data,
+                path: `epocs/${id}/content.json`,
+                directory: Directory.LibraryNoCloud,
                 encoding: Encoding.UTF8,
             });
-            let epoc: Epoc = JSON.parse(result.data as string);
+            let epoc: Epoc = JSON.parse(atob(result.data as string));
             if (epoc.id !== id) epoc.id = id; // Fix id when local epocs are imported
             _epoc.value = initCourseContent(epoc);
             return _epoc.value;
-        }
-    }
-
-    /**
-     * Find in which directory the epoc is stored
-     */
-    async function findEpocDir(id: string): Promise<string | null> {
-        if (!Capacitor.isNativePlatform()) return 'epocs';
-        try {
-            const { files } = await Filesystem.readdir({
-                path: '',
-                directory: Directory.Data,
-            });
-            for (const dir of files) {
-                if (dir.type === 'directory') {
-                    try {
-                        await Filesystem.stat({
-                            path: `${dir.name}/${id}/content.json`,
-                            directory: Directory.Data,
-                        });
-                        return dir.name;
-                    } catch {}
-                }
-            }
         } catch (error) {
-            console.error('Error finding epoc directory:', error);
+            console.log('Error reading ePoc content:', error);
         }
-        return null;
     }
 
     /**
@@ -117,6 +74,8 @@ export const useEpocStore = defineStore('epoc', () => {
             chapter.time = chapter.duration ? chapter.duration : chapter.time;
             chapter.assessmentCount = chapter.assessments.length;
         }
+
+        console.log('Initialized ePoc:', epoc);
         // If you have a pluginService, call it here
         // pluginService.init(this.rootFolder, epoc);
         return epoc;
@@ -216,12 +175,9 @@ export const useEpocStore = defineStore('epoc', () => {
     return {
         // State
         initialized,
-        rootFolder,
         epoc: getEpoc,
         // Actions
-        setRootFolder,
         getEpocById,
-        findEpocDir,
         initCourseContent,
         calcScoreTotal,
         calcScore,
