@@ -5,6 +5,7 @@ import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue'
 import EpocOverviewPage from '@/views/epoc/OverviewPage.vue';
 import WIPPage from '@/views/WIPPage.vue'
 import TestPage from '@/views/TestPage.vue';
+import TocPage from '@/views/epoc/TocPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -35,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/:libraryId/:id',
     name: 'EpocOverviewPage',
     component: EpocOverviewPage
+  },
+  {
+    path: '/epoc/toc/:id',
+    name: 'TocPage',
+    component: TocPage
   }
 ]
 
