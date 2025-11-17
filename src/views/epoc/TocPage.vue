@@ -169,6 +169,8 @@
     }
     &-title{
       line-height: 1.2;
+      text-decoration: none;
+      color: var(--ion-color-text);
     }
     &-details{
       color:var(--ion-color-inria);
