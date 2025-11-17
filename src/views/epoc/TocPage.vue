@@ -51,7 +51,7 @@
                 <div class="toc-header-title">{{epocStore.epoc.title}}</div>
             </div>
             <div class="toc-content" tabindex="-1">
-                <div class="toc-chapter" v-for="chapter of denormalize(epocStore.epoc.chapters)">
+                <div class="toc-chapter" v-for="(chapter, index) of denormalize(epocStore.epoc.chapters)">
                     <div class="toc-chapter-summary">
                         <div class="toc-chapter-progress" :class="{'done':chapter.done}">
                             <ion-icon aria-hidden="true" :icon="checkmarkOutline" v-if="chapter.done"></ion-icon>
@@ -61,7 +61,7 @@
                         <div class="toc-chapter-info">
                             <RouterLink :to="{ name: 'WIP', params: {any: chapter.resumeLink}}" class="toc-chapter-info-title">
                                 <div class="toc-chapter-info-label">
-                                    {{chapter.title}}
+                                    {{index + 1}}. {{chapter.title}}
                                 </div>
                                 {{chapter.subtitle}}
                             </RouterLink>
@@ -195,6 +195,8 @@
       margin-top: .5rem;
       border-radius: 8px;
       background: var(--ion-color-contrast-2);
+      text-decoration: none;
+      color: var(--ion-color-text);
 
       &.viewed{
         background: var(--ion-color-correct-background);
