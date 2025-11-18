@@ -329,11 +329,12 @@
   "CONFIRM": "Confirmer",
   "CLOSE": "Fermer",
   "OK": "OK",
-  "RETURN" : "Retour",
 
   "MISSING": {
     "MY_EPOCS" : "Mes ePocs",
     "CHAPTER_OPTIONS": "Option du chapitre",
-    "OPTIONS" : "Options"
+    "OPTIONS" : "Options",
+    "RETURN" : "Retour",
+    "NEXT_CHAPTER" : "Prochain chapitre"
   }
 }
