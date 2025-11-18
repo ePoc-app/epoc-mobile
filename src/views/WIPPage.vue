@@ -14,7 +14,7 @@
         </div>
         <RouterLink to="library" slot="end">
           <ion-button role="button" class="icon-btn">
-            <ion-back-button :aria-label="$t('RETURN')" text="" color="inria-icon"></ion-back-button>
+            <ion-back-button :aria-label="$t('MISSING.RETURN')" text="" color="inria-icon"></ion-back-button>
           </ion-button>
         </RouterLink>
         <RouterLink :to="{ name: 'WIP', params: {any: '/about'}}" slot="end">

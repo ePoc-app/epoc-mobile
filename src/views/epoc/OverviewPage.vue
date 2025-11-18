@@ -65,7 +65,7 @@
       <ion-toolbar>
         <RouterLink to="library" slot="start">
           <ion-button role="button" class="icon-btn">
-            <ion-back-button :aria-label="$t('RETURN')" text="" color="inria-icon"></ion-back-button>
+            <ion-back-button :aria-label="$t('MISSING.RETURN')" text="" color="inria-icon"></ion-back-button>
           </ion-button>
         </RouterLink>
         <ion-title>{{t('OVERVIEW_PAGE.PRESENTATION')}}</ion-title>
