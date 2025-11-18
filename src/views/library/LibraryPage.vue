@@ -31,7 +31,7 @@
       },
       text: 'texte de onboarding 1',
       title: 'Bienvenue',
-      image: 'src/assets/img/activity.jpg'
+      image: '/assets/img/activity.jpg'
     },
     {
       id: 'b',
@@ -61,7 +61,7 @@
       },
       {
         text: t('FLOATING_MENU.IMPORT_FILE'),
-        icon: 'src/assets/icon/importer.svg',
+        icon: '/assets/icon/importer.svg',
         handler: () => {
           alert("TODO : import File" )
           //this.fileRef.nativeElement.click();
@@ -69,14 +69,14 @@
       },
       {
         text: t('FLOATING_MENU.IMPORT_LINK'),
-        icon: 'src/assets/icon/lien.svg',
+        icon: '/assets/icon/lien.svg',
         handler: () => {
           linkInputAlert();
         }
       },
       {
         text: t('FLOATING_MENU.IMPORT_QR'),
-        icon: 'src/assets/icon/qr.svg',
+        icon: '/assets/icon/qr.svg',
         handler: () => {
           router.push({ name: 'WIP', params: { any: '/library/qr' } })
         }
@@ -87,14 +87,14 @@
       },
       {
         text: t('FLOATING_MENU.IMPORT_LINK'),
-        icon: 'src/assets/icon/lien.svg',
+        icon: '/assets/icon/lien.svg',
         handler: () => {
           linkInputAlert();
         }
       },
       {
         text: t('FLOATING_MENU.IMPORT_QR'),
-        icon: 'src/assets/icon/qr.svg',
+        icon: '/assets/icon/qr.svg',
         handler: () => {
           router.push({ name: 'WIP', params: { any: '/library/qr' } })
         }
@@ -263,7 +263,7 @@
         </div>
         <div class="library-item library-item-add" v-on:click="openAddMenu()">
           <div class="library-item-image">
-            <ion-icon aria-hidden="true" src="/src/assets/icon/ajouter.svg" size="large"></ion-icon>
+            <ion-icon aria-hidden="true" src="/assets/icon/ajouter.svg" size="large"></ion-icon>
           </div>
           <h3 aria-hidden="true" class="library-item-title">{{$t('LIBRARY_PAGE.ADD_EPOC')}}</h3>
         </div>
