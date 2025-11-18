@@ -38,7 +38,6 @@ export interface EpocLibrary extends EpocMetadata {
     unzipping: boolean;
     opened: boolean;
     dir: string;
-    rootFolder: string;
     updateAvailable: boolean;
     lastModified: string;
     lang: string;

@@ -6,6 +6,7 @@
   import { EpocLibrary } from '@/types/epoc';
   import { useI18n } from 'vue-i18n';
   import { ref } from 'vue';
+  import VideoPlayer from '@/components/VideoPlayer.vue';
 
   const { t } = useI18n();
 
@@ -84,8 +85,7 @@
         </div>
 
         <div class="epoc-trailer">
-          <video-player :src="epoc.teaser ? epoc.rootFolder + epoc.teaser : ''"
-                        :poster="epoc.rootFolder + epoc.thumbnail"
+          <video-player :src="epoc.teaser ? epoc.teaser : ''" :poster="epoc.thumbnail"
                         :controls="{show:false, timeline: true, overlay: true}">
           </video-player>
         </div>
