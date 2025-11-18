@@ -20,8 +20,8 @@ $inria-lightblue: #A6B1C9;
 }
 
 [color-scheme="light"] {
-    --epoc-logo: url("@/assets/img/ePoc.svg");
-    --by-inria: url("@/assets/img/ePoc-by-Inria-seul.svg");
+    --epoc-logo: url("/assets/img/ePoc.svg");
+    --by-inria: url("/assets/img/ePoc-by-Inria-seul.svg");
     --ion-color-content: white;
     --ion-color-background: white;
     --ion-color-shadow: rgba(218,222,234,0.51);
@@ -88,8 +88,8 @@ $inria-lightblue: #A6B1C9;
 }
 
 [color-scheme="dark"] {
-  --epoc-logo: url("@/assets/img/ePoc-white.svg");
-  --by-inria: url("@/assets/img/ePoc-by-Inria-seul-white.svg");
+  --epoc-logo: url("/assets/img/ePoc-white.svg");
+  --by-inria: url("/assets/img/ePoc-by-Inria-seul-white.svg");
     --ion-color-content: var(--ion-color-inria-dark);
     --ion-color-background: var(--ion-color-inria-black);
     --ion-color-shadow: rgba(218,222,234,0);
