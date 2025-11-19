@@ -1,8 +1,9 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
+import {reactive} from 'vue';
 
 // Map base directories to Capacitor Directory enum
-const BASE_DIR_MAP: Record<string, Directory> = Object.fromEntries(Object.values(Directory).map(v => [`/${v}`, v]));
+const BASE_DIR_MAP: Record<string, Directory> = Object.fromEntries(Object.values(Directory).map(v => [`/${v}`, v]).sort((a, b) => b[0].length - a[0].length));
 
 
 // MIME types for common extensions, including subtitles
@@ -56,7 +57,13 @@ const getMimeType = (filename: string): string => {
  * @returns Promise<string> The URL for the file.
  */
 export function useConvertFileSrc() {
-    const convertFileSrc = async (filePath: string): Promise<string> => {
+    const fileUrls = reactive<Record<string, string>>({});
+
+    const convertFileSrc = (filePath: string): string => {
+        if (fileUrls[filePath] || Object.prototype.hasOwnProperty.call(fileUrls, filePath)) {
+            return fileUrls[filePath]; // Already converted or in progress
+        }
+
         try {
             // Extract the base directory (e.g., '/DATA') and the relative path
             const baseDir = Object.keys(BASE_DIR_MAP).find((dir) => filePath.startsWith(dir));
@@ -72,16 +79,22 @@ export function useConvertFileSrc() {
                 // Native: Use Capacitor's convertFileSrc
                 return Capacitor.convertFileSrc(filePath);
             } else {
-                // Web: Read the file and create an object URL
-                const result = await Filesystem.readFile({
-                    path: relativePath,
-                    directory: capacitorDir,
-                });
-
-                const mimeType = getMimeType(relativePath);
-                const base64Data = result.data;
-                const blob = await (await fetch(`data:${mimeType};base64,${base64Data}`)).blob();
-                return URL.createObjectURL(blob);
+                fileUrls[filePath] = 'loading'; // Mark as loading
+                (async () => {
+                    try {
+                        const result = await Filesystem.readFile({
+                            path: relativePath,
+                            directory: capacitorDir,
+                        });
+                        const mimeType = getMimeType(relativePath);
+                        const base64Data = result.data;
+                        const blob = await (await fetch(`data:${mimeType};base64,${base64Data}`)).blob();
+                        fileUrls[filePath] = URL.createObjectURL(blob);
+                    } catch (err) {
+                        console.error('Error converting file path to URL:', err);
+                    }
+                })();
+                return fileUrls[filePath]; // Return 'loading' initially
             }
         } catch (err) {
             console.error('Error converting file path to URL:', err);

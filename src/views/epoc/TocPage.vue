@@ -6,10 +6,12 @@
   import {Epoc} from '@/types/epoc';
   import { ref } from 'vue';
   import { denormalize } from '@/utils/transform';
-  import { onBeforeMount } from 'vue'; 
+  import { onBeforeMount } from 'vue';
+  import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
 
   const route = useRoute();
   const epocStore = useEpocStore();
+  const { convertFileSrc } = useConvertFileSrc();
 
   onBeforeMount(async () => {
     const id = route.params.id.toString();
@@ -47,7 +49,7 @@
     <ion-content>
         <div v-if="epocStore.epoc" class="wrapper">
             <div class="toc-header">
-                <img aria-hidden="true" alt="ePoc Image" :src="epocStore.rootFolder +  epocStore.epoc.image">
+                <img aria-hidden="true" alt="ePoc Image" :src="convertFileSrc(epocStore.rootFolder + epocStore.epoc.image)">
                 <div class="toc-header-title">{{epocStore.epoc.title}}</div>
             </div>
             <div class="toc-content" tabindex="-1">
