@@ -14,7 +14,7 @@ export const useEpocStore = defineStore('epoc', () => {
 
     // --- Getters ---
     const getEpoc = computed(() => _epoc.value);
-    const getRootFolder = computed(() => Directory.LibraryNoCloud + "/epocs/" + _epoc.id + "/")
+    const getRootFolder = computed(() => `/${Directory.LibraryNoCloud}/epocs/${_epoc.value.id}/`);
 
     // --- Actions ---
 
