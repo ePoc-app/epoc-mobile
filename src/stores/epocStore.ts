@@ -5,16 +5,18 @@ import { actionSheetController, alertController } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import type { Epoc, Chapter, Content } from '@/types/epoc/v1';
 import { uid } from '@epoc/epoc-types/dist/v1';
+import {Capacitor} from '@capacitor/core';
 
 export const useEpocStore = defineStore('epoc', () => {
     // --- State ---
     const router = useRouter();
     const initialized = ref(false);
     const _epoc = ref<Epoc | null>(null);
+    const _rootFolder = ref<string>('');
 
     // --- Getters ---
     const getEpoc = computed(() => _epoc.value);
-    const getRootFolder = computed(() => `/${Directory.LibraryNoCloud}/epocs/${_epoc.value.id}/`);
+    const getRootFolder = computed(() => _rootFolder.value);
 
     // --- Actions ---
 
@@ -26,9 +28,36 @@ export const useEpocStore = defineStore('epoc', () => {
                 directory: Directory.LibraryNoCloud,
                 encoding: Encoding.UTF8,
             });
-            let epoc: Epoc = JSON.parse(atob(result.data as string));
+
+            let epoc: Epoc;
+            const str = result.data as string;
+            const isBase64 = /^[A-Za-z0-9+/]+={0,2}$/.test(str);
+            if (isBase64) {
+                // Decode Base64 to UTF-8
+                const binaryString = atob(str);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                const utf8String = new TextDecoder('utf-8').decode(bytes);
+                epoc = JSON.parse(utf8String);
+            } else {
+                epoc = JSON.parse(str);
+            }
             if (epoc.id !== id) epoc.id = id; // Fix id when local epocs are imported
             _epoc.value = initCourseContent(epoc);
+
+            // Set ePoc root folder
+            if (Capacitor.getPlatform() === 'web') {
+                _rootFolder.value = `/${Directory.LibraryNoCloud}/epocs/${_epoc.value.id}/`;
+            } else {
+                const uriResult = await Filesystem.getUri({
+                    path: `epocs/${_epoc.value.id}/`,
+                    directory: Directory.LibraryNoCloud,
+                });
+                _rootFolder.value = uriResult.uri;
+            }
+
             return _epoc.value;
         } catch (error) {
             console.log('Error reading ePoc content:', error);
@@ -76,7 +105,7 @@ export const useEpocStore = defineStore('epoc', () => {
             chapter.assessmentCount = chapter.assessments.length;
         }
 
-        console.log('Initialized ePoc:', epoc);
+        // todo
         // If you have a pluginService, call it here
         // pluginService.init(this.rootFolder, epoc);
         return epoc;

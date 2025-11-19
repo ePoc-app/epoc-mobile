@@ -65,20 +65,20 @@ export function useConvertFileSrc() {
         }
 
         try {
-            // Extract the base directory (e.g., '/DATA') and the relative path
-            const baseDir = Object.keys(BASE_DIR_MAP).find((dir) => filePath.startsWith(dir));
-
-            if (!baseDir) {
-                throw new Error(`Unsupported base directory in path: ${filePath}`);
-            }
-
-            const relativePath = filePath.slice(baseDir.length).replace(/^\/+/, '');
-            const capacitorDir = BASE_DIR_MAP[baseDir];
-
             if (Capacitor.getPlatform() !== 'web') {
                 // Native: Use Capacitor's convertFileSrc
                 return Capacitor.convertFileSrc(filePath);
             } else {
+                // Extract the base directory (e.g., '/DATA') and the relative path
+                const baseDir = Object.keys(BASE_DIR_MAP).find((dir) => filePath.startsWith(dir));
+
+                if (!baseDir) {
+                    throw new Error(`Unsupported base directory in path: ${filePath}`);
+                }
+
+                const relativePath = filePath.slice(baseDir.length).replace(/^\/+/, '');
+                const capacitorDir = BASE_DIR_MAP[baseDir];
+
                 fileUrls[filePath] = 'loading'; // Mark as loading
                 (async () => {
                     try {
