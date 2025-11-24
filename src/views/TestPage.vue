@@ -1,19 +1,45 @@
 <script setup lang="ts">
-  import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton } from '@ionic/vue';
-  import {informationCircleOutline } from 'ionicons/icons';
-  import {useEpocStore} from '@/stores/epocStore';
-  import {useRoute} from 'vue-router';
-  import {onMounted} from 'vue';
+import {IonBackButton, IonButton, IonContent, IonHeader, IonIcon, IonPage, IonToolbar} from '@ionic/vue';
+import {informationCircleOutline} from 'ionicons/icons';
+import {useEpocStore} from '@/stores/epocStore';
+import {useRoute} from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {Directory, Filesystem} from '@capacitor/filesystem';
+import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
+import FlipCard from '@/components/FlipCard.vue';
 
-  const epocStore = useEpocStore();
+const flipCardRef = ref<InstanceType<typeof FlipCard> | null>(null);
+
+const epocStore = useEpocStore();
   const route = useRoute();
   const epoc = epocStore.epoc;
+  const files = ref<string[]>([]);
+  const { convertFileSrc } = useConvertFileSrc();
 
   console.log(route.params.id);
 
   onMounted(async () => {
     await epocStore.getEpocById(route.params.id);
+    const result = await Filesystem.readdir({
+      path: '/epocs/E006PE/images',
+      directory: Directory.LibraryNoCloud
+    })
+
+    for (const file of result.files) {
+      if (file.type !== 'file' || !file.uri.endsWith('.png')) {
+        continue;
+      }
+      files.value.push(file.uri);
+    }
+
+    console.log('Files in epoc directory:', files.value);
   });
+
+const flip = (): void => {
+  if (flipCardRef.value) {
+    flipCardRef.value.flip();
+  }
+};
 
 </script>
 
@@ -39,12 +65,20 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <div v-if="epocStore.epoc">
-        epoc.title : {{epocStore.epoc.title}} <br/>
-        epoc.id : {{epocStore.epoc.id}} <br/>
-        epoc.description : {{epocStore.epoc.description}} <br/>
-        epoc.author : {{epocStore.epoc.authors}} <br/>
-      </div>
+
+      <FlipCard ref="flipCardRef" :init-flipped="true" @click="flip">
+        <template #front>
+          <div v-for="(file, index) in files" :key="index" style="margin-bottom: 16px;">
+            <img :src="convertFileSrc(file)" alt="Image" style="width: 100%; height: auto;" />
+          </div>
+        </template>
+        <template #back>
+          <div style="padding: 16px;">
+            <h2>Description</h2>
+            <p>{{ epoc?.description }}</p>
+          </div>
+        </template>
+      </FlipCard>
       
     </ion-content>
   </ion-page>
