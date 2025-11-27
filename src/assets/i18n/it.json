@@ -112,7 +112,8 @@
   "TOC_PAGE": {
     "HEADER": "Tabella dei contenuti",
     "VIEW_MORE": "Visualizza altro",
-    "VIEW_LESS": "Visualizza meno"
+    "VIEW_LESS": "Visualizza meno",
+    "NEXT_CHAPTER": "Capitolo successivo"
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "Informazioni sull'editore",
@@ -267,14 +268,8 @@
       "FORGOTTEN": "Hai dimenticato",
       "OMISSION": "omissione | omissioni",
       "WAS_TRUE": "È stata una buona risposta!",
-      "CORRECT_ANSWERS": {
-        "singular": "risposta corretta",
-        "plural": "risposte corrette"
-      },
-      "WRONG_ANSWERS": {
-        "singular": "risposta sbagliata",
-        "plural": "risposte sbagliate"
-      },
+      "CORRECT_ANSWERS": "risposta corretta | risposte corrette",
+      "WRONG_ANSWERS": "risposta sbagliata | risposte sbagliate",
       "CORRECT_RANKING": "Ecco la classifica corretta",
       "POSITION": "Posizione"
     },

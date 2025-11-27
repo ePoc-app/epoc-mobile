@@ -112,7 +112,8 @@
   "TOC_PAGE": {
     "HEADER": "Inhaltsverzeichnis",
     "VIEW_MORE": "Mehr anzeigen",
-    "VIEW_LESS": "Weniger anzeigen"
+    "VIEW_LESS": "Weniger anzeigen",
+    "NEXT_CHAPTER": "Nächstes kapitel"
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "Über den Herausgeber",
@@ -267,14 +268,8 @@
       "FORGOTTEN": "Sie haben vergessen",
       "OMISSION": "Auslassung | Auslassungen",
       "WAS_TRUE": "Das war eine gute Antwort!",
-      "CORRECT_ANSWERS": {
-        "singular": "richtige Antwort",
-        "plural": "richtige Antworten"
-      },
-      "WRONG_ANSWERS": {
-        "singular": "falsche Antwort",
-        "plural": "falsche Antworten"
-      },
+      "CORRECT_ANSWERS": "richtige Antwort | richtige Antworten",
+      "WRONG_ANSWERS": "falsche Antwort | falsche Antworten",
       "CORRECT_RANKING": "Hier ist die richtige Reihenfolge",
       "POSITION": "Position"
     },
