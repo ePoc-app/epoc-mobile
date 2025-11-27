@@ -59,6 +59,8 @@ export interface Chapter extends ChapterType {
     chapterOpened?: boolean;
     assessmentDone?: boolean;
     resumeLink?:string;
+    title?:string;
+    objectives?:any // TODO WIP Chapter did not have title or objective but it was required in the Chapter Info Cmpt
 }
 
 
