@@ -61,7 +61,7 @@
                             <ion-icon aria-hidden="true" :icon="timeOutline" v-if="!chapter.done && !chapter.chapterOpened"></ion-icon>
                         </div>
                         <div class="toc-chapter-info">
-                            <RouterLink :to="{ name: 'WIP', params: {any: chapter.resumeLink}}" class="toc-chapter-info-title">
+                            <RouterLink :to="chapter.resumeLink" class="toc-chapter-info-title">
                                 <div class="toc-chapter-info-label">
                                     {{index + 1}}. {{chapter.title}}
                                 </div>
@@ -72,7 +72,7 @@
                                 <template v-if="!chapter.opened">{{$t('TOC_PAGE.VIEW_MORE')}}</template>
                             </div>
                         </div>
-                        <RouterLink :to="{ name: 'WIP', params: {any: chapter.resumeLink}}" class="toc-chapter-open" :aria-label="$t('TOC_PAGE.NEXT_CHAPTER')">
+                        <RouterLink :to="chapter.resumeLink" class="toc-chapter-open" :aria-label="$t('TOC_PAGE.NEXT_CHAPTER')">
                             <ion-icon aria-hidden="true" :icon="chevronForwardOutline" color="inria"></ion-icon>
                         </RouterLink>
 

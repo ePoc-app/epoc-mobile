@@ -95,14 +95,8 @@
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Presentación del curso",
-    "ACTIVITIES": {
-      "singular": "Evaluación",
-      "plural": "Evaluaciones"
-    },
-    "CHAPTERS": {
-      "singular": "Módulo",
-      "plural": "Módulos"
-    },
+    "ACTIVITIES": "Evaluación | Evaluaciones",
+    "CHAPTERS":"Módulo | Módulos",
     "MIN_MODULE": "min/módulo",
     "OBJECTIVES": "Objetivo | Objetivos",
     "PREREQUISITES": "Prerrequisitos",
@@ -118,7 +112,8 @@
   "TOC_PAGE": {
     "HEADER": "Tabla de contenidos",
     "VIEW_MORE": "Ver más",
-    "VIEW_LESS": "Ver menos"
+    "VIEW_LESS": "Ver menos",
+    "NEXT_CHAPTER": "Siguiente capítulo"
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "Acerca de publicador",
@@ -271,19 +266,10 @@
       "FALSE": "¡Eso no es cierto!",
       "CORRECT": "Respuesta correcta:",
       "FORGOTTEN": "Olvidaste",
-      "OMISSION": {
-        "singular": "omisión",
-        "plural": "omisiones"
-      },
+      "OMISSION":"omisión | omisiones",
       "WAS_TRUE": "¡Era una buena respuesta!",
-      "CORRECT_ANSWERS": {
-        "singular": "respuesta correcta",
-        "plural": "respuestas correctas"
-      },
-      "WRONG_ANSWERS": {
-        "singular": "respuesta incorrecta",
-        "plural": "respuestas incorrectas"
-      },
+      "CORRECT_ANSWERS": "respuesta correcta | respuestas correctas",
+      "WRONG_ANSWERS": "respuesta incorrecta | respuestas incorrectas",
       "CORRECT_RANKING": "Aquí está el ranking correcto",
       "POSITION": "Posición"
     },

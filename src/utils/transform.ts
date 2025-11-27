@@ -19,4 +19,13 @@
     return [];
   }
 
-  export { denormalize }
+  const srcConvert = (value: string, rootFolder:string): string => {
+    const regex = /src=['"](?!http)([^'"]*)['"]/g;
+    return value.replace(/assets\/demo\//g, '').replace(regex, `src='${rootFolder}$1'`);
+  }
+
+  const removeSecableSpace = (value: string | undefined): string | undefined => {
+    return value ? value.replace(/\s([?:;!])/g, '\xa0$1') : value;
+  }
+
+  export { denormalize, srcConvert, removeSecableSpace }

@@ -3,10 +3,11 @@
   import { informationCircleOutline, cloudDownloadOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
   import { RouterLink, useRoute } from 'vue-router';
+import { EpocCollection } from '@/types/epoc';
 
   const libraryStore = useLibraryStore();
   const collectionId : string = useRoute().params.collection_id.toString()
-  const collection = libraryStore.officialCollections[collectionId]
+  const collection: EpocCollection = libraryStore.officialCollections[collectionId]
 </script>
 
 <template>
