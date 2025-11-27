@@ -4,6 +4,11 @@
   import {useLibraryStore} from '@/stores/libraryStore';
   import { RouterLink, useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n'
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+  import {Pagination} from 'swiper/modules'
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+
 
   const { t } = useI18n() 
   const router = useRouter()
@@ -168,10 +173,11 @@
       <ion-refresher slot="fixed" snapbackDuration="1000ms" v-on:ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <swiper-container v-if="onboarding && onboarding.length"
-        modules="swiperModules" aria-hidden="true" class="onboarding" 
+      <swiper v-if="onboarding && onboarding.length"
+        aria-hidden="true" class="onboarding" 
         :slidesPerView="onboardingOptions.slidesPerView" :spaceBetween="onboardingOptions.spaceBetween" 
-        :pagination="onboarding.length > 1 ? 'true' : ''"
+        :pagination="onboarding.length > 1"
+        :module="[Pagination]"
       >
         <swiper-slide v-for="item in onboarding" class="onboarding-item" :class="item.image ? 'with-image':''">
           <div class="onboarding-item-image" v-if="item.image" :style="'background-image:url('+item.image+')'"></div>
@@ -182,7 +188,7 @@
             <ion-icon :icon="closeOutline"></ion-icon>
           </div>
         </swiper-slide>
-      </swiper-container>
+      </swiper>
       <div id="container">
         <div v-for="collection in libraryStore.officialCollections" :key="collection.id">
           <div class="library-line-separator"></div>
