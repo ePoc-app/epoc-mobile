@@ -22,7 +22,7 @@ export const useSettingsStore = defineStore('settings', () => {
         isUserOptIn: true,
     };
 
-    const settings = ref<Settings>({ ...defaultSettings });
+    const settings = ref<Settings>(defaultSettings);
     const settingsFetched = ref(false);
 
     // --- Getters ---
@@ -34,7 +34,7 @@ export const useSettingsStore = defineStore('settings', () => {
         const storedSettings = await storageService.getValue('settings');
         settings.value = storedSettings
             ? { ...defaultSettings, ...JSON.parse(storedSettings) }
-            : { ...defaultSettings };
+            : defaultSettings ;
         settingsFetched.value = true;
     }
 

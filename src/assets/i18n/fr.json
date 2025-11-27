@@ -95,10 +95,7 @@
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Présentation du cours",
-    "ACTIVITIES": {
-      "singular": "Évaluation",
-      "plural": "Évaluations"
-    },
+    "ACTIVITIES": "Évaluation | Évaluations",
     "CHAPTERS": "Module | Modules",
     "MIN_MODULE": "min/module",
     "OBJECTIVES": "Objectif | Objectifs",
@@ -115,7 +112,8 @@
   "TOC_PAGE": {
     "HEADER": "Table des matières",
     "VIEW_MORE": "Voir plus",
-    "VIEW_LESS": "Voir moins"
+    "VIEW_LESS": "Voir moins",
+    "NEXT_CHAPTER": "Chapitre suivant"
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "A propos de l'éditeur",
@@ -270,14 +268,8 @@
       "FORGOTTEN": "Vous avez oublié",
       "OMISSION": "oubli | oublis",
       "WAS_TRUE": "C'était une bonne réponse !",
-      "CORRECT_ANSWERS": {
-        "singular": "bonne réponse",
-        "plural": "bonnes réponses"
-      },
-      "WRONG_ANSWERS": {
-        "singular": "mauvaise réponse",
-        "plural": "mauvaises réponses"
-      },
+      "CORRECT_ANSWERS":"bonne réponse | bonnes réponses",
+      "WRONG_ANSWERS": "mauvaise réponse | mauvaises réponses",
       "CORRECT_RANKING": "Voici le bon classement",
       "POSITION": "Position "
     },

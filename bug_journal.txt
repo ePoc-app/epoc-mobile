@@ -26,3 +26,24 @@ I decided to prioritize other things for now
 
 --------------
 
+### Search Replace regexp
+
+*what happened* : replace translation quickly : 
+
+regexp : '(.*)' \| translate
+replace by : $t('$1')
+
+exemple : {{'FLOATING_MENU.TOC' | translate}}
+devient : {{$t('FLOATING_MENU.TOC')}}
+
+
+--------------
+
+### Explicit title
+
+*what happened* :
+*why* :
+*what did i do to fix it* :
+*did it came back again* : not for now
+
+--------------

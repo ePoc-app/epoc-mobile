@@ -6,6 +6,7 @@ import EpocOverviewPage from '@/views/epoc/OverviewPage.vue';
 import WIPPage from '@/views/WIPPage.vue'
 import TestPage from '@/views/TestPage.vue';
 import TocPage from '@/views/epoc/TocPage.vue';
+import PlayerPage from '@/views/epoc/PlayerPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -41,6 +42,21 @@ const routes: Array<RouteRecordRaw> = [
     path: '/epoc/toc/:id',
     name: 'TocPage',
     component: TocPage
+  },
+  {
+    path: '/epoc/play/:epoc_id/:chapter_id',
+    name: 'Player',
+    component: PlayerPage
+  },
+  {
+    path: '/epoc/play/:epoc_id/:chapter_id/content/:content_id/:next',
+    name: 'PlayerContent',
+    component: PlayerPage
+  },
+  {
+    path: '/epoc/play/:epoc_id/content/:content_id',
+    name: 'OrphanPlayer',
+    component: WIPPage
   }
 ]
 

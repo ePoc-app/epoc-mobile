@@ -112,7 +112,8 @@
   "TOC_PAGE": {
     "HEADER": "Table of contents",
     "VIEW_MORE": "View more",
-    "VIEW_LESS": "View less"
+    "VIEW_LESS": "View less",
+    "NEXT_CHAPTER": "Next chapter"
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "About the publisher",
@@ -267,14 +268,8 @@
       "FORGOTTEN": "You forgot",
       "OMISSION": "omission | omissions",
       "WAS_TRUE": "It was a good answer !",
-      "CORRECT_ANSWERS": {
-        "singular": "correct answer",
-        "plural": "correct answers"
-      },
-      "WRONG_ANSWERS": {
-        "singular": "wrong answer",
-        "plural": "wrong answers"
-      },
+      "CORRECT_ANSWERS": "correct answer | correct answers",
+      "WRONG_ANSWERS": "wrong answer | wrong answers",
       "CORRECT_RANKING": "Here is the correct ranking",
       "POSITION": "Position"
     },

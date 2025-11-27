@@ -198,7 +198,7 @@ export const useEpocStore = defineStore('epoc', () => {
             subHeader: chapter && chapter.title ? chapter.title : 'Menu principal',
             buttons,
         });
-        document.documentElement.style.setProperty('--thumbnail-url', `url(${rootFolder.value + _epoc.value!.image})`);
+        document.documentElement.style.setProperty('--thumbnail-url', `url(${_rootFolder.value + _epoc.value!.image})`);
         await actionSheet.present();
     }
 
