@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import LibraryPage from '@/views/library/LibraryPage.vue'
+import AboutPage from '@/views/AboutPage.vue';
+import SettingsPage from '@/views/SettingsPage.vue';
 import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue'
 import EpocOverviewPage from '@/views/epoc/OverviewPage.vue';
 import WIPPage from '@/views/WIPPage.vue'
@@ -17,6 +19,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/library',
     name: 'Library',
     component: LibraryPage
+  },
+  {
+    path: '/settings',
+    name: 'SettingsPage',
+    component: SettingsPage
+  },
+  {
+    path: '/about',
+    name: 'AboutPage',
+    component: AboutPage
   },
   {
     path: '/:collection_id',

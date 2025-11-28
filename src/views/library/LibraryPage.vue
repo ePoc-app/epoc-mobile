@@ -156,12 +156,12 @@
           <div class="epoc-logo"></div>
           <div class="by-inria"></div>
         </div>
-        <RouterLink :to="{ name: 'WIP', params: {any: '/settings'}}" slot="end">
+        <RouterLink to="/settings" slot="end">
           <ion-button role="button" class="icon-btn">
             <ion-icon aria-label="Paramètre" slot="icon-only" :icon="settingsOutline" color="inria-icon"></ion-icon>
           </ion-button>
         </RouterLink>
-        <RouterLink :to="{ name: 'WIP', params: {any: '/about'}}" slot="end">
+        <RouterLink to="/about" slot="end">
           <ion-button role="button" class="icon-btn">
             <ion-icon aria-label="Informations" slot="icon-only" :icon="informationCircleOutline" color="inria-icon"></ion-icon>
           </ion-button>
