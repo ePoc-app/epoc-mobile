@@ -23,8 +23,10 @@ import AppDebug from './content/AppDebug.vue';
 import CommonContent from './content/CommonContent.vue';
 import CertificateModal from '@/components/CertificateModal.vue';
 import { appService } from '@/utils/appService';
+import HtmlContent from './content/HtmlContent.vue';
+import VideoContent from './content/VideoContent.vue';
+import { documentTextOutline, cubeOutline, playCircleOutline, micOutline, helpOutline, gitBranchOutline} from 'ionicons/icons'; 
 
- 
   //Store
   const epocStore = useEpocStore()
   const readingStore = useReadingStore()
@@ -34,12 +36,12 @@ import { appService } from '@/utils/appService';
 
   // # Const
   const iconFromType = {
-      html: 'document-text-outline',
-      assessment: 'cube-outline',
-      video: 'play-circle-outline',
-      audio: 'mic-outline',
-      'simple-question': 'help-outline',
-      choice: 'git-branch-outline'
+      html: documentTextOutline,
+      assessment: cubeOutline,
+      video: playCircleOutline,
+      audio: micOutline,
+      'simple-question': helpOutline,
+      choice: gitBranchOutline
   };
   let readerSlides = ref<SwiperObject>() //undefined; // will be set only once on mounted 
 
@@ -186,8 +188,7 @@ import { appService } from '@/utils/appService';
 
   const hideControls = () => {
     if(!appService.screenReaderDetected) {
-      console.log("dont show")
-        showControls.value = false;
+      showControls.value = false;
     }
   }
 
@@ -262,6 +263,15 @@ import { appService } from '@/utils/appService';
         readingStore.updateCertificateShown(epoc.value.id, true);
     }
   }
+
+  /*
+                    <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
+                    <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
+                    <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
+                    <assessment-content v-if="content.type === 'assessment'" [inputContent]="content"></assessment-content>
+                  </common-content>
+   */
+
 </script>
 
 <template>
@@ -271,16 +281,30 @@ import { appService } from '@/utils/appService';
       <template v-else="dataInitialized">
         <div class="reader" slot="fixed" :style="readerStyles" tabindex="-1">
           <swiper @swiper="setSwiperRef" 
-            v-on:tap="toggleControls($event)" @slidechangetransitionend="updateFocus()" 
-            @slidermove="hideControls()" @slidechangetransitionstart="onSlideChange()" 
+            v-on:tap="toggleControls($event)" @slide-change-transition-end="updateFocus()" 
+            @slider-move="hideControls()" @slide-change-transition-start="onSlideChange()" 
             class="reader-slider">
             <swiper-slide>
-              <app-debug :epocId="epocId" :chapterId="chapterId" contentId="debut" :settings="settings"></app-debug>
+              <app-debug :epocId="epocId" :chapterId="chapterId" contentId="debut"></app-debug>
               <chapter-info :chapter="chapter"></chapter-info>
             </swiper-slide>
-  
+            <template v-for="(content, index) in chapter.initializedContents">
+              <template v-if="!content.conditional || ( content.conditional && reading?.flags.indexOf(content.id) !== -1 )">
+                <swiper-slide>
+                  <app-debug :epocId="epocId" :chapterId="chapterId" :contentId="content.id"></app-debug>
+                  {{index}} {{content.type}}
+                  <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
+                    <html-content v-if="content.type === 'html'" :html="srcConvert(content.html, epocStore.rootFolder)" @go-to="goTo($event)"></html-content>
+                    <video-content v-if="content.type === 'video'" :content="content" @timeline-dragging="onDrag($event)"></video-content>
+                  </common-content>
+                  <simple-question v-if="content.type === 'simple-question'" :aria-hidden="index + 1 !== currentPage" 
+                    :epocId="epocId" :content="content" :question="epoc.questions[content.question]" @dragging="onDrag($event)">
+                  </simple-question>
+                </swiper-slide>
+              </template>
+            </template>
             <swiper-slide>
-              <app-debug :epocId="epocId" :chapterId="chapterId" contentId="fin" :settings="settings"></app-debug>
+              <app-debug :epocId="epocId" :chapterId="chapterId" contentId="fin"></app-debug>
                 <common-content :title="$t('PLAYER.MODULE_END.FINISH')" :subtitle="$t('PLAYER.MODULE_END.CONGRATS')" icon="assets/icon/modulecheck.svg">
                   <chapter-end :epoc="epoc" :chapter="chapter" :nextChapter="nextChapter"></chapter-end>
                 </common-content>
