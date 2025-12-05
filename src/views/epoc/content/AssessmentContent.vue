@@ -22,8 +22,10 @@ const props = defineProps({
 const { epoc } = storeToRefs(epocStore)
 const { readings } = storeToRefs(readingStore)
 
-const reading = computed(() => readings.value.find(question => question.epocId === epoc.value.id))
-const userAssessment = computed(() => reading.value?.assessments.find(assessment => assessment.id === props.content.id ))
+const userAssessment = computed(() => {
+  const reading = readings.value.find(question => question.epocId === epoc.value.id)
+  return reading?.assessments.find(assessment => assessment.id === props.content.id )
+})
 const isGraded = computed(() => (props.content.scoreTotal || -1) > 0)
 const questionNumber = computed(() => props.content.questions?.length || 0)
 
