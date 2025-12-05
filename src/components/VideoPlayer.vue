@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { IonIcon, IonSelect, IonSelectOption, IonItem, IonLabel, toastController, createGesture } from '@ionic/vue';
 import { ref, onMounted, onUnmounted, PropType } from 'vue';
+import { logoClosedCaptioning, pause, play as playIcon, expand } from 'ionicons/icons';
 import { useVideoPlayerStore } from '@/stores/videoPlayerStore';
 
 const props = defineProps({
@@ -266,7 +267,7 @@ onUnmounted(() => {
             class="video-action"
             @click="captions"
         >
-          <ion-icon name="logo-closed-captioning"></ion-icon>
+          <ion-icon :icon="logoClosedCaptioning"></ion-icon>
         </button>
       </div>
       <div v-if="controls.playbutton" class="video-actions-center">
@@ -274,7 +275,7 @@ onUnmounted(() => {
           -10
         </button>
         <button class="video-action" aria-label="Lancer la lecture" @click="play">
-          <ion-icon :name="playing ? 'pause' : 'play'"></ion-icon>
+          <ion-icon :icon="playing ? pause : playIcon"></ion-icon>
         </button>
         <button class="video-action" aria-label="+10s" @click="jump(10)">
           +10
@@ -282,7 +283,7 @@ onUnmounted(() => {
       </div>
       <div v-if="controls.fullscreen" class="video-actions-right">
         <button class="video-action" aria-label="Plein écran" @click="fullscreen">
-          <ion-icon name="expand"></ion-icon>
+          <ion-icon :icon="expand"></ion-icon>
         </button>
       </div>
     </div>
