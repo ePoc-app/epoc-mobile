@@ -26,6 +26,7 @@ import { appService } from '@/utils/appService';
 import HtmlContent from './content/HtmlContent.vue';
 import VideoContent from './content/VideoContent.vue';
 import { documentTextOutline, cubeOutline, playCircleOutline, micOutline, helpOutline, gitBranchOutline} from 'ionicons/icons'; 
+import AssessmentContent from './content/AssessmentContent.vue';
 
   //Store
   const epocStore = useEpocStore()
@@ -268,7 +269,6 @@ import { documentTextOutline, cubeOutline, playCircleOutline, micOutline, helpOu
                     <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
                     <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
                     <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
-                    <assessment-content v-if="content.type === 'assessment'" [inputContent]="content"></assessment-content>
                   </common-content>
    */
 
@@ -292,10 +292,11 @@ import { documentTextOutline, cubeOutline, playCircleOutline, micOutline, helpOu
               <template v-if="!content.conditional || ( content.conditional && reading?.flags.indexOf(content.id) !== -1 )">
                 <swiper-slide>
                   <app-debug :epocId="epocId" :chapterId="chapterId" :contentId="content.id"></app-debug>
-                  {{index}} {{content.type}}
+                  {{content.type}}
                   <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
                     <html-content v-if="content.type === 'html'" :html="srcConvert(content.html, epocStore.rootFolder)" @go-to="goTo($event)"></html-content>
                     <video-content v-if="content.type === 'video'" :content="content" @timeline-dragging="onDrag($event)"></video-content>
+                    <assessment-content v-if="content.type === 'assessment'" :content="content"></assessment-content>
                   </common-content>
                   <simple-question v-if="content.type === 'simple-question'" :aria-hidden="index + 1 !== currentPage" 
                     :epocId="epocId" :content="content" :question="epoc.questions[content.question]" @dragging="onDrag($event)">
