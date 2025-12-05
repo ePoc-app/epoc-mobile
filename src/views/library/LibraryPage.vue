@@ -14,7 +14,7 @@
   const router = useRouter()
   const libraryStore = useLibraryStore();
 
-  /////// WIP SECTION ///////////
+  /////// TODO SECTION ///////////
   import inria_collection from '@/assets/inria_collection.json'
   const localEpocs = Object.values(inria_collection.ePocs).slice(0,1)
 
