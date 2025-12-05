@@ -60,7 +60,7 @@ export interface Chapter extends ChapterType {
     assessmentDone?: boolean;
     resumeLink?:string;
     title?:string;
-    objectives?:any // TODO WIP Chapter did not have title or objective but it was required in the Chapter Info Cmpt
+    objectives?:any // TODO TODO Chapter did not have title or objective but it was required in the Chapter Info Cmpt
 }
 
 

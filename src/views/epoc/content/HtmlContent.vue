@@ -34,7 +34,7 @@ onIonViewDidEnter( async () => {
 });
 
 onIonViewDidLeave(() => {
-  /* WIP Why ??
+  /* TODO Why ??
     if (event.target && event.target.nodeName === 'A' && event.target.hasAttribute('linkto')) {
       const [chapterId, content, contentId] = event.target.getAttribute('linkto').split('/')
       if (chapterId === chapterId && contentId) {

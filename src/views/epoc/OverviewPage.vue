@@ -14,7 +14,7 @@
   const libraryStore = useLibraryStore();
   const selectedTab = ref(0);
 
-  // WIP SECTION //////
+  // TODO SECTION //////
   const getLocalEpoc = (dir: string) => {
     return getEpocFromCollection(dir, "not implemented yet");
   }

@@ -26,7 +26,7 @@
     chapter.opened = !chapter.opened;
   }
   
-  // WIP //
+  // TODO //
   /////////
 
 </script>
