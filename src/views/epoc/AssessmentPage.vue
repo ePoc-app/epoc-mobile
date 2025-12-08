@@ -9,8 +9,11 @@ import { useSettingsStore } from '@/stores/settingsStore';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
-import { onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
+import { alertController, onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 import { useI18n } from 'vue-i18n';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Swiper as SwiperObject } from 'swiper/types';
+import { denormalize } from '@/utils/transform';
 const { t } = useI18n();
 
 
@@ -30,13 +33,16 @@ const epocId = ref<string>(route.params.epoc_id.toString())
 const assessmentId = ref<string>(route.params.assessmentId.toString())
 
 const userScore = ref(0);
-const userResponses = ref([]);
+const userResponses = ref<string[]>([]);
 const assessmentData = ref<AssessmentData>(emptyAssessmentData);
-const currentQuestionUserResponse = ref(null);
+const currentQuestionUserResponse = ref<string>();
 const correctionShown = ref(false);
 const currentQuestion = ref(0);
 const isEnd = ref(false);
 const certificateShown = ref(false)
+const questionSlides = ref<SwiperObject>() //undefined; // will be set only once on mounted 
+//@ViewChildren(CommonQuestionComponent) questionsElement:QueryList<CommonQuestionComponent>;
+
 
 
 // Computed
@@ -62,31 +68,40 @@ onIonViewDidEnter(() => {
   // @ts-ignore
   const allowTouch = !!window.isPreviewWindow;
   setTimeout(() => {
-      questionSlides.nativeElement.swiper.allowTouchMove = allowTouch;
+    if  (questionSlides.value) {
+      questionSlides.value.allowTouchMove = allowTouch;
+    }
   }, 100);
 })
 
 // Methods
 
+// called only once, automatically done by the swiper event 
+const setSwiperRef = (swiper : SwiperObject) => {
+    questionSlides.value = swiper
+}
+
+
 const retry = () => {
   userScore.value = 0;
   userResponses.value = [];
   assessmentData.value = emptyAssessmentData;
-  currentQuestionUserResponse.value = null;
+  currentQuestionUserResponse.value = undefined;
   correctionShown.value = false;
   currentQuestion.value = 0;
-  questionSlides?.nativeElement.swiper.slideTo(0);
+  questionSlides.value?.slideTo(0);
   isEnd.value = false;
 }
 
-const onUserHasResponded = (userResponses) => {
+const onUserHasResponded = (userResponses: any) => {
     currentQuestionUserResponse.value = userResponses;
-    this.ref.detectChanges();
+// TODO should be automatic, to remove if no use found    this.ref.detectChanges();
 }
 
 const checkAnswer = () => {
     const question = (questions.value) ? questions.value[currentQuestion.value] : undefined
-    if (question) {
+    const response = currentQuestionUserResponse.value
+    if (question && response) {
         const userSucceeded = epocStore.isUserResponsesCorrect(
             question.correctResponse,
             currentQuestionUserResponse.value
@@ -95,7 +110,7 @@ const checkAnswer = () => {
         correctionShown.value = true;
         questionsElement.value.toArray()[currentQuestion.value].showCorrection();
         userScore.value += score;
-        userResponses.value.push(currentQuestionUserResponse.value);
+        userResponses.value.push(response);
         // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestion.value}`, score);
         if (assessment.value && assessment.value.questions ) {
             readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestion.value], 'attempted', true);
@@ -106,7 +121,7 @@ const checkAnswer = () => {
 }
 
 const nextQuestion = () => {
-    currentQuestionUserResponse.value = null;
+    currentQuestionUserResponse.value = undefined;
     correctionShown.value = false;
     currentQuestion.value++;
     if (currentQuestion.value >= questions.value.length) {
@@ -116,7 +131,7 @@ const nextQuestion = () => {
         readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'completed', true);
         readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'scored', userScore.value);
     }
-    questionSlides.nativeElement.swiper.slideNext();
+    questionSlides.value?.slideNext();
     setTimeout(() => {
         updateFocus();
     }, 1000);
@@ -140,7 +155,7 @@ const setAssessmentsData = () => {
         assessmentData.value.totalScore += assessment.scoreTotal || 0
     });
     if (assessmentData.value.totalUserScore + assessmentData.value?.userScore >= epoc.value.certificateScore 
-        && reading.value.badges.length >= epoc.value.certificateBadgeCount) {
+        && reading.value?.badges.length || 0 >= epoc.value.certificateBadgeCount) {
         setTimeout(() => {
             showCertificateCard();
         }, 1500);
@@ -170,9 +185,10 @@ const presentAlertConfirm = async () => {
             {
                 text: t('QUESTION.QUIT_MODAL.QUIT'),
                 handler: () => {
-                    this.navCtrl.navigateBack(
-                        '/epoc/play/' + epoc.value.id + '/' + assessment.value.chapterId + '/content/' + assessment.valueId
-                    );
+                    router.back()
+                    // navigateBack(
+                    //    '/epoc/play/' + epoc.value.id + '/' + assessment.value.chapterId + '/content/' + assessment.valueId
+                    //);
                 },
             }
         ],
@@ -197,11 +213,12 @@ const updateFocus = () => {
 <template>
 <ion-content :scrollY="false" v-if="assessment">
     <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
-        <swiper-container [modules]="swiperModules" class="slider assessment-swiper" #questionSlides allow-touch-move="false">
-            <template v-for="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
+        <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false
+            <template v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
                 <swiper-slide>
-                    <common-question [attr.aria-hidden]="questionIndex !== currentQuestion" closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
-                         [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" v-if="!isEnd">
+                    <common-question :aria-hidden="questionIndex !== currentQuestion" closable="true" 
+                        :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length" :contentId="assessment.id"
+                         :epocId="epocId" :question="question" @userHasResponded="onUserHasResponded($event)" @close="back()" v-if="!isEnd">
                     </common-question>
                 </swiper-slide>
             </template>
@@ -223,11 +240,11 @@ const updateFocus = () => {
                             </div>
                         </div>
                         <div aria-hidden="true" class="score-chart">
-                            <score-progress [progress]="assessmentData.totalUserScore / assessmentData.totalScore * 100"
-                                            [delta]="assessmentData.userScore / assessmentData.totalScore * 100"
-                                            [threshold]="epoc.certificateScore / assessmentData.totalScore * 100"
-                                            [minLabel]="'0'"
-                                            [maxLabel]="assessmentData.totalScore"></score-progress>
+                            <score-progress :progress="assessmentData.totalUserScore / assessmentData.totalScore * 100"
+                                            :delta="assessmentData.userScore / assessmentData.totalScore * 100"
+                                            :threshold="epoc.certificateScore / assessmentData.totalScore * 100"
+                                            :minLabel="'0'"
+                                            :maxLabel="assessmentData.totalScore"></score-progress>
                         </div>
                     </div>
                     <ion-button size="large" expand="block" color="outline-button" fill="outline" (click)="retry()">
@@ -235,7 +252,7 @@ const updateFocus = () => {
                     </ion-button>
                 </app-card>
             </swiper-slide>
-        </swiper-container>
+        </swiper>
     </div>
     <certificate-modal :epocId="epocId" :certificateShown="certificateShown"></certificate-modal>
 </ion-content>

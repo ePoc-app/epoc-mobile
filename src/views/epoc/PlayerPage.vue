@@ -138,9 +138,7 @@ import AssessmentContent from './content/AssessmentContent.vue';
 
   // called only once, automatically done by the swiper event 
   const setSwiperRef = (swiper : SwiperObject) => {
-    if (!readerSlides.value){
-      readerSlides.value = swiper
-    }
+    readerSlides.value = swiper
   }
 
   const prevPage = () => {
