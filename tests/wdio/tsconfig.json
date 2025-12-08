@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "module": "commonjs",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "types": [
+      "node",
+      "mocha",
+      "@wdio/globals/types",
+      "expect-webdriverio",
+      "@wdio/appium-service"
+    ]
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}

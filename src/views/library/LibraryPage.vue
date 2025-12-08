@@ -46,7 +46,7 @@
       },
       text: 'texte de onboarding 2',
       title: 'Faites comme chez vous',
-      image: 'https://ucopia.visiteurs.inrialpes.fr/101/portal/resources/_images/header.png'
+      image: ''
     }
   ]
   const onboardingOptions = {
