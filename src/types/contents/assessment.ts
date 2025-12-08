@@ -13,6 +13,18 @@ export interface Assessment extends AssessmentType {
     chapterId?: uid;
 }
 
+export interface AssessmentData {
+    userScore: number,
+    totalUserScore: number,
+    totalScore: number
+}
+
+export const emptyAssessmentData = {
+        userScore: 0,
+        totalUserScore: 0,
+        totalScore: 0
+    }
+
 export interface SimpleQuestion extends SimpleQuestionType {
     // initialized at runtime
     id?: string;

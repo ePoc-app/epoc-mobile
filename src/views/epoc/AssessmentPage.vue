@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import {ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
-import {Location} from '@angular/common';
-import {AlertController, IonicSlides, NavController} from '@ionic/angular';
-import {Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
-import {ReadingStoreService} from 'src/app/services/reading-store.service';
-import {Reading} from 'src/app/classes/reading';
-import {Assessment, Question, SimpleQuestion} from 'src/app/classes/contents/assessment';
-import {CommonQuestionComponent} from 'src/app/components/questions/common-question/common-question.component';
+
+import { Assessment, AssessmentData, SimpleQuestion, emptyAssessmentData } from '@/types/contents/assessment';
 import { useEpocStore } from '@/stores/epocStore';
 import { appService } from '@/utils/appService';
 import { Epoc } from '@/types/epoc';
@@ -18,7 +10,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 
 //Store
@@ -35,21 +28,32 @@ const { readings } = storeToRefs(readingStore)
 
 const epocId = ref<string>(route.params.epoc_id.toString())
 const assessmentId = ref<string>(route.params.assessmentId.toString())
-const reading = computed(() => readings.value.find(question => question.epocId === epoc.value.id))
-const assessments = computed(() => epoc.value.assessments)
-const assessment = computed(() => epoc.value.contents[assessmentId.value] as Assessment)
 
-const questions = computed(() => assessment.value.questions.map(questionId => epoc.value.questions[questionId]))
-const scoreMax = computed(() => epocStore.calcScoreTotal(epoc.value, assessment.value.questions);
+const userScore = ref(0);
+const userResponses = ref([]);
+const assessmentData = ref<AssessmentData>(emptyAssessmentData);
+const currentQuestionUserResponse = ref(null);
+const correctionShown = ref(false);
+const currentQuestion = ref(0);
+const isEnd = ref(false);
+const certificateShown = ref(false)
+
+
+// Computed
+const reading = computed(() => readings.value.find(question => question.epocId === epoc.value.id))
+const assessments = computed(() : (Assessment|SimpleQuestion)[] => epoc.value.assessments)
+const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value.contents[assessmentId.value])
+
+const questions = computed(() => assessment.value?.questions?.map(questionId => epoc.value.questions[questionId]) || [])
+const scoreMax = computed(() => epocStore.calcScoreTotal(epoc.value, assessment.value.questions || []))
 
 // setup process
 if (!reading) readingStore.addReading(epocId.value);
 readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'started', true);
 
-
 // Lifecycle
 
-onIonViewWillEnter(() {
+onIonViewWillEnter(() => {
   retry();
 })
 
@@ -64,86 +68,89 @@ onIonViewDidEnter(() => {
 
 // Methods
 
-
 const retry = () => {
-  this.userScore = 0;
-  this.userResponses = [];
-  this.assessmentData = null;
-  this.currentQuestionUserResponse = null;
-  this.correctionShown = false;
-  this.currentQuestion = 0;
-  this.questionSlides?.nativeElement.swiper.slideTo(0);
-  this.isEnd = false;
+  userScore.value = 0;
+  userResponses.value = [];
+  assessmentData.value = emptyAssessmentData;
+  currentQuestionUserResponse.value = null;
+  correctionShown.value = false;
+  currentQuestion.value = 0;
+  questionSlides?.nativeElement.swiper.slideTo(0);
+  isEnd.value = false;
 }
 
-
-onUserHasResponded(userResponses) {
-    this.currentQuestionUserResponse = userResponses;
+const onUserHasResponded = (userResponses) => {
+    currentQuestionUserResponse.value = userResponses;
     this.ref.detectChanges();
 }
 
-checkAnswer() {
-    const question = this.questions[this.currentQuestion];
-    const userSucceeded = this.epocService.isUserResponsesCorrect(
-        question.correctResponse,
-        this.currentQuestionUserResponse
-    );
-    const score = userSucceeded ? +question.score : 0;
-    this.correctionShown = true;
-    this.questionsElement.toArray()[this.currentQuestion].showCorrection();
-    this.userScore += score;
-    this.userResponses.push(this.currentQuestionUserResponse);
-    this.tracker.trackEvent('Assessments', 'Answered', `Answered ${this.epocId} ${this.assessmentId} ${this.currentQuestion}`, score);
-    this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'attempted', true);
-    this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'scored', score);
-    this.readingStore.saveStatement(this.epocId, 'questions', this.assessment.questions[this.currentQuestion], 'passed', userSucceeded);
+const checkAnswer = () => {
+    const question = (questions.value) ? questions.value[currentQuestion.value] : undefined
+    if (question) {
+        const userSucceeded = epocStore.isUserResponsesCorrect(
+            question.correctResponse,
+            currentQuestionUserResponse.value
+        );
+        const score = userSucceeded ? +question.score : 0;
+        correctionShown.value = true;
+        questionsElement.value.toArray()[currentQuestion.value].showCorrection();
+        userScore.value += score;
+        userResponses.value.push(currentQuestionUserResponse.value);
+        // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestion.value}`, score);
+        if (assessment.value && assessment.value.questions ) {
+            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestion.value], 'attempted', true);
+            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestion.value], 'scored', score);
+            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestion.value], 'passed', userSucceeded);
+        }
+    }
 }
 
-nextQuestion() {
-    this.currentQuestionUserResponse = null;
-    this.correctionShown = false;
-    this.currentQuestion++;
-    if (this.currentQuestion >= this.questions.length) {
-        this.setAssessmentsData();
-        this.readingStore.saveResponses(this.epocId, this.assessmentId, this.userScore, this.userResponses);
-        this.isEnd = true;
-        this.readingStore.saveStatement(this.epocId, 'contents', this.assessmentId, 'completed', true);
-        this.readingStore.saveStatement(this.epocId, 'contents', this.assessmentId, 'scored', this.userScore);
+const nextQuestion = () => {
+    currentQuestionUserResponse.value = null;
+    correctionShown.value = false;
+    currentQuestion.value++;
+    if (currentQuestion.value >= questions.value.length) {
+        setAssessmentsData();
+        readingStore.saveResponses(epocId.value, assessmentId.value, userScore.value, userResponses.value);
+        isEnd.value = true;
+        readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'completed', true);
+        readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'scored', userScore.value);
     }
-    this.questionSlides.nativeElement.swiper.slideNext();
+    questionSlides.nativeElement.swiper.slideNext();
     setTimeout(() => {
-        this.updateFocus();
+        updateFocus();
     }, 1000);
 }
 
-setAssessmentsData() {
-    this.tracker.trackEvent('Assessments', 'Done', `Answered ${this.epocId} ${this.assessmentId}`, this.userScore);
-    this.assessmentData = {
-        userScore: this.userScore,
+const setAssessmentsData = () => {
+    // TODO Tracker this.tracker.trackEvent('Assessments', 'Done', `Answered ${epocId.value} ${assessment.valueId}`, this.userScore);
+    assessmentData.value = {
+        userScore: userScore.value,
         totalUserScore: 0,
         totalScore: 0
     };
 
-    this.assessments.forEach((assessment) => {
-        if (assessment.id !== this.assessmentId) {
-            const userAssessment = this.reading.assessments.find(a => assessment.id === a.id);
+    assessments.value.forEach((assessment : Assessment | SimpleQuestion) => {
+        if (assessment.id !== assessmentId.value) {
+            const userAssessment = reading.value?.assessments.find(a => assessment.id === a.id);
             if (userAssessment && userAssessment.score > 0) {
-                this.assessmentData.totalUserScore += userAssessment.score;
+                assessmentData.value.totalUserScore += userAssessment.score;
             }
         }
-        this.assessmentData.totalScore += assessment.scoreTotal;
+        assessmentData.value.totalScore += assessment.scoreTotal || 0
     });
-    if (this.assessmentData.totalUserScore + this.assessmentData.userScore >= this.epoc.certificateScore && this.reading.badges.length >= this.epoc.certificateBadgeCount) {
+    if (assessmentData.value.totalUserScore + assessmentData.value?.userScore >= epoc.value.certificateScore 
+        && reading.value.badges.length >= epoc.value.certificateBadgeCount) {
         setTimeout(() => {
-            this.showCertificateCard();
+            showCertificateCard();
         }, 1500);
     }
 }
 
-showCertificateCard() {
-    if (!this.reading.certificateShown) {
-        this.certificateShown = true;
-        this.readingStore.updateCertificateShown(this.epoc.id, true);
+const showCertificateCard = () => {
+    if (!reading.value?.certificateShown) {
+        certificateShown.value = true;
+        readingStore.updateCertificateShown(epoc.value.id, true);
     }
 }
 
@@ -151,20 +158,20 @@ const back = () => {
   presentAlertConfirm()
 }
 
-async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-        header: this.translate.instant('QUESTION.QUIT_MODAL.HEADER'),
-        message: this.translate.instant('QUESTION.QUIT_MODAL.MSG'),
+const presentAlertConfirm = async () => {
+    const alert = await alertController.create({
+        header: t('QUESTION.QUIT_MODAL.HEADER'),
+        message: t('QUESTION.QUIT_MODAL.MSG'),
         buttons: [
             {
-                text: this.translate.instant('QUESTION.QUIT_MODAL.STAY'),
+                text: t('QUESTION.QUIT_MODAL.STAY'),
                 role: 'cancel'
             },
             {
-                text: this.translate.instant('QUESTION.QUIT_MODAL.QUIT'),
+                text: t('QUESTION.QUIT_MODAL.QUIT'),
                 handler: () => {
                     this.navCtrl.navigateBack(
-                        '/epoc/play/' + this.epoc.id + '/' + this.assessment.chapterId + '/content/' + this.assessmentId
+                        '/epoc/play/' + epoc.value.id + '/' + assessment.value.chapterId + '/content/' + assessment.valueId
                     );
                 },
             }
@@ -188,10 +195,10 @@ const updateFocus = () => {
 </script>
 
 <template>
-<ion-content [scrollY]="false" v-if="assessment">
+<ion-content :scrollY="false" v-if="assessment">
     <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
         <swiper-container [modules]="swiperModules" class="slider assessment-swiper" #questionSlides allow-touch-move="false">
-            <template *v-for="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
+            <template v-for="let question of assessment.questions | denormalize:epoc.questions; let questionIndex = index;">
                 <swiper-slide>
                     <common-question [attr.aria-hidden]="questionIndex !== currentQuestion" closable="true" [subtitle]="'Question '+(questionIndex+1)+'/'+assessment.questions.length" [contentId]="assessment.id"
                          [epocId]="epocId" [question]="question" (userHasResponded)="onUserHasResponded($event)" (close)="back()" v-if="!isEnd">
@@ -230,11 +237,11 @@ const updateFocus = () => {
             </swiper-slide>
         </swiper-container>
     </div>
-    <certificate-modal [epocId]="epocId" [certificateShown]="certificateShown"></certificate-modal>
+    <certificate-modal :epocId="epocId" :certificateShown="certificateShown"></certificate-modal>
 </ion-content>
 
 <ion-footer v-if="!isEnd">
-    <ion-button size="large" expand="block" color="inria" [disabled]="!currentQuestionUserResponse" (click)="checkAnswer();" v-if="!correctionShown">
+    <ion-button size="large" expand="block" color="inria" :disabled="!currentQuestionUserResponse" v-on:click="checkAnswer();" v-if="!correctionShown">
         <span>{{$t('QUESTION.VALIDATE')}}</span>
     </ion-button>
     <div class="next-buttons">
