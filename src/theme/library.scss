@@ -1,7 +1,7 @@
 .onboarding{
   padding: 1rem 1rem 0 1rem;
 
-  &::part(container){
+  .swiper {
     overflow: visible;
   }
 }
@@ -240,7 +240,7 @@
   }
 }
 
-swiper-slide{
+.swiper-slide{
   background-color: var(--ion-color-content);
   box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
   

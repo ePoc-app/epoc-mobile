@@ -1,16 +1,17 @@
 <script setup lang="ts">
-  import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton } from '@ionic/vue';
-  import { useRoute } from 'vue-router';
-  import { ellipsisHorizontal, checkmarkOutline, arrowForwardOutline,readerOutline, cubeOutline, timeOutline} from 'ionicons/icons';
+  import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton, IonFooter } from '@ionic/vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { ellipsisHorizontal, checkmarkOutline, arrowForwardOutline,readerOutline, cubeOutline, timeOutline, cloudDownloadOutline, syncOutline, cogOutline} from 'ionicons/icons';
   import { useLibraryStore } from '@/stores/libraryStore';
   import { EpocLibrary } from '@/types/epoc';
   import { useI18n } from 'vue-i18n';
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import VideoPlayer from '@/components/VideoPlayer.vue';
 
   const { t } = useI18n();
 
   const route = useRoute();
+  const router = useRouter();
   const libraryStore = useLibraryStore();
   const selectedTab = ref(0);
 
@@ -20,7 +21,15 @@
   }
 
   const openEpocMenu = (epoc: EpocLibrary) => {
-    alert("openMenu")
+    const collectionId = route.params.libraryId?.toString();
+    libraryStore.epocLibraryMenu(epoc, collectionId);
+  }
+
+  const downloadEpoc = (epoc: EpocLibrary) => {
+    const collectionId = route.params.libraryId?.toString();
+    if (collectionId) {
+      libraryStore.downloadEpoc(epoc, collectionId);
+    }
   } 
 
   // this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
@@ -35,7 +44,7 @@
     let epoc = undefined;
     if (route.params.dir) {
       epoc = getLocalEpoc(route.params.dir.toString())
-    } else {
+    } else if (route.params.libraryId && route.params.id) {
       const collectionId = route.params.libraryId.toString()
       const epocId = route.params.id.toString()
       epoc = getEpocFromCollection(collectionId, epocId)
@@ -55,7 +64,7 @@
     selectedTab.value = index;
   }
 
-  const epoc: EpocLibrary | undefined = getEpoc()
+  const epoc = computed<EpocLibrary | undefined>(() => getEpoc())
 
   
 </script>
@@ -64,11 +73,13 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <RouterLink to="library" slot="start">
-          <ion-button role="button" class="icon-btn">
-            <ion-back-button :aria-label="$t('MISSING.RETURN')" text="" color="inria-icon"></ion-back-button>
-          </ion-button>
-        </RouterLink>
+        <ion-back-button 
+          slot="start" 
+          :aria-label="$t('MISSING.RETURN')" 
+          text="" 
+          color="inria-icon"
+          default-href="/library"
+        ></ion-back-button>
         <ion-title>{{t('OVERVIEW_PAGE.PRESENTATION')}}</ion-title>
         <ion-buttons v-if="epoc && epoc.downloaded" slot="end">
           <ion-button :aria-label="t('MISSING.OPTIONS')" v-on:click="openEpocMenu(epoc)">
@@ -152,6 +163,34 @@
         </div>
       </div>
     </ion-content>
+    
+    <ion-footer mode="ios" v-if="epoc">
+      <ion-toolbar>
+        <ion-button role="button" class="start-course" size="large" expand="block" color="inria" strong v-if="epoc.downloaded"
+          @click="router.push(`/epoc/toc/${epoc.id}`)">
+          <span v-if="!epoc.opened">{{ $t('OVERVIEW_PAGE.GO') }}</span>
+          <span v-if="epoc.opened">{{ $t('OVERVIEW_PAGE.CONTINUE') }}</span>
+          <ion-icon v-if="epoc.opened" :icon="arrowForwardOutline" slot="end"></ion-icon>
+        </ion-button>
+        <ion-button class="expanded" color="inria-contrast-button" size="large" expand="block"
+          @click="downloadEpoc(epoc)" v-if="!epoc.downloading && !epoc.downloaded && !epoc.unzipping">
+          <ion-icon :icon="cloudDownloadOutline" slot="start"></ion-icon>
+          <span>{{ $t('OVERVIEW_PAGE.DOWNLOAD') }}</span>
+        </ion-button>
+        <ion-button class="expanded" size="large" expand="block" :disabled="true" color="inria-contrast-button"
+          v-if="epoc.downloading">
+          <ion-icon :icon="syncOutline" class="spin" slot="start"></ion-icon>
+          <span>{{ $t('OVERVIEW_PAGE.DOWNLOADING') }} <template
+              v-if="libraryStore.epocProgresses[epoc.id]">({{ libraryStore.epocProgresses[epoc.id] }}%)</template></span>
+        </ion-button>
+        <ion-button class="expanded" size="large" expand="block" :disabled="true" color="inria-contrast-button"
+          v-if="epoc.unzipping">
+          <ion-icon :icon="cogOutline" class="spin" slot="start"></ion-icon>
+          <span>{{ $t('OVERVIEW_PAGE.OPENING') }} <template
+              v-if="libraryStore.epocProgresses[epoc.id]">({{ libraryStore.epocProgresses[epoc.id] }}%)</template></span>
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
   </ion-page>
 </template>
 
@@ -221,14 +260,17 @@
   }
 }
 
-ion-footer ion-toolbar{
+ion-footer ion-toolbar, ion-footer.footer-toolbar-padding ion-toolbar:last-of-type{
   padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom, 0)) 1rem;
   box-shadow: 0 -6px 14px 0 var(--ion-color-shadow);
+  display: flex;
+  justify-content: center;
+}
 
-  ion-button{
-    max-width: 25rem;
-    margin:auto;
-  }
+
+.footer-toolbar ion-button{
+  max-width: 25rem;
+  margin: auto;
 }
 
 </style>
