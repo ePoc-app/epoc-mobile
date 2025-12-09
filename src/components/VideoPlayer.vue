@@ -256,7 +256,7 @@ onUnmounted(() => {
           ></div>
         </div>
         <div v-if="controls.overlay" class="video-overlay-controls">
-          <ion-icon name="scan-outline" @click="fullscreen"></ion-icon>
+          <ion-icon :icon="expand" @click="fullscreen"></ion-icon>
         </div>
       </div>
     </div>

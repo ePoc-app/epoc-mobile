@@ -10,7 +10,7 @@ import {useReadingStore} from './readingStore';
 import type {Epoc, EpocCollection, EpocLibraryState, EpocMetadata, Publisher} from '@/types/epoc';
 import type {Reading} from '@/types/reading';
 import {download, unzip} from '@/utils/file';
-import {ComposerTranslation, useI18n} from 'vue-i18n';
+import {useI18n} from 'vue-i18n';
 import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
 
 export const useLibraryStore = defineStore('library', () => {
@@ -228,7 +228,7 @@ export const useLibraryStore = defineStore('library', () => {
         }
     }
 
-    async function epocLibraryMenu(t: ComposerTranslation, epoc: EpocMetadata, libraryId?: string) {
+    async function epocLibraryMenu(epoc: EpocMetadata, libraryId?: string) {
         const buttons = [
             {
                 text: t('FLOATING_MENU.TOC'),

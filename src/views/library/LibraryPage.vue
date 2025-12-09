@@ -2,6 +2,8 @@
   import { actionSheetController, alertController, IonContent, IonHeader, IonPage, IonRefresher, IonRefresherContent, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
   import { settingsOutline, closeOutline, informationCircleOutline, cloudDownloadOutline, chevronForwardOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
   import {useLibraryStore} from '@/stores/libraryStore';
+  import { useOnboardingStore } from '@/stores/onboardingStore';
+  import { storeToRefs } from 'pinia';
   import { RouterLink, useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n'
   import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -13,6 +15,8 @@
   const { t } = useI18n() 
   const router = useRouter()
   const libraryStore = useLibraryStore();
+  const onboardingStore = useOnboardingStore();
+  const { getOnboarding } = storeToRefs(onboardingStore);
 
   /////// TODO SECTION ///////////
   import inria_collection from '@/assets/inria_collection.json'
@@ -20,41 +24,19 @@
 
   const localEpocsService = {
     imports : [{value : "HARD CODED"}],
-    localEpocLibraryMenu: (epoc) => {libraryStore.epocLibraryMenu(t, epoc)},
+    localEpocLibraryMenu: (epoc) => {libraryStore.epocLibraryMenu(epoc)},
     downloadLocalEpoc: (link) => {alert("TODO : download" + link )}
   }
 
   const fileHandler = (E006PEevent) => {console.log("TODO")}
   const doRefresh = (event) => {alert(event)}
   
-  const onboarding = [
-     {
-      id: 'a',
-      link: {
-        url: '',
-        text: ''
-      },
-      text: 'texte de onboarding 1',
-      title: 'Bienvenue',
-      image: '/assets/img/activity.jpg'
-    },
-    {
-      id: 'b',
-      link: {
-        url: '',
-        text: ''
-      },
-      text: 'texte de onboarding 2',
-      title: 'Faites comme chez vous',
-      image: ''
-    }
-  ]
   const onboardingOptions = {
-    slidesPerView: 1 ,
-    spaceBetween: 10
+    slidesPerView: 1,
+    spaceBetween: 16,
   }
   const removeMessage = (id: string) => {
-    alert(id)
+    onboardingStore.removeOnboarding(id);
   }
   ///////////////////////////////
 
@@ -173,22 +155,30 @@
       <ion-refresher slot="fixed" snapbackDuration="1000ms" v-on:ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <swiper v-if="onboarding && onboarding.length"
-        aria-hidden="true" class="onboarding" 
-        :slidesPerView="onboardingOptions.slidesPerView" :spaceBetween="onboardingOptions.spaceBetween" 
-        :pagination="onboarding.length > 1"
-        :module="[Pagination]"
-      >
-        <swiper-slide v-for="item in onboarding" class="onboarding-item" :class="item.image ? 'with-image':''">
-          <div class="onboarding-item-image" v-if="item.image" :style="'background-image:url('+item.image+')'"></div>
-          <div class="onboarding-item-title">{{item.title}}</div>
-          <div class="onboarding-item-text">{{item.text}}</div>
-          <RouterLink :to="item.link.url" v-if="item.link">{{item.link.text}}</RouterLink>
-          <div class="onboarding-item-close" v-on:click="removeMessage(item.id)">
-            <ion-icon :icon="closeOutline"></ion-icon>
-          </div>
-        </swiper-slide>
-      </swiper>
+      <div class="onboarding" v-if="getOnboarding && getOnboarding.length">
+        <swiper
+          aria-hidden="true"
+          :slidesPerView="onboardingOptions.slidesPerView"
+          :spaceBetween="onboardingOptions.spaceBetween"
+          :pagination="getOnboarding.length > 1 ? { clickable: true } : undefined"
+          :modules="[Pagination]"
+        >
+          <swiper-slide
+            v-for="item in getOnboarding"
+            :key="item.id"
+            class="onboarding-item"
+            :class="item.image ? 'with-image':''"
+          >
+            <div class="onboarding-item-image" v-if="item.image" :style="'background-image:url('+item.image+')'"></div>
+            <div class="onboarding-item-title">{{item.title}}</div>
+            <div class="onboarding-item-text">{{item.text}}</div>
+            <RouterLink :to="item.link.url" v-if="item.link">{{item.link.text}}</RouterLink>
+            <div class="onboarding-item-close" v-on:click="removeMessage(item.id)">
+              <ion-icon :icon="closeOutline"></ion-icon>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
       <div id="container">
         <div v-for="collection in libraryStore.officialCollections" :key="collection.id">
           <div class="library-line-separator"></div>
@@ -203,13 +193,11 @@
               </RouterLink>
               <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
               <div class="library-item-toolbar" v-if="epoc.downloaded">
-                <RouterLink :to="{ name: 'TocPage', params: {id:epoc.id}}">
-                  <ion-button  class="expanded" color="inria">
-                    <span v-if="epoc.opened">{{$t('LIBRARY_PAGE.CONTINUE')}}</span>
-                    <ion-icon aria-hidden="true" v-if="epoc.opened" :icon="arrowForwardOutline" slot="end"></ion-icon>
-                    <span v-if="!epoc.opened">{{$t('LIBRARY_PAGE.DISCOVER')}}</span>
-                  </ion-button>
-                </RouterLink>
+                <ion-button class="expanded" color="inria" v-on:click="router.push({ name: 'TocPage', params: {id:epoc.id}})">
+                  <span v-if="epoc.opened">{{$t('LIBRARY_PAGE.CONTINUE')}}</span>
+                  <ion-icon aria-hidden="true" v-if="epoc.opened" :icon="arrowForwardOutline" slot="end"></ion-icon>
+                  <span v-if="!epoc.opened">{{$t('LIBRARY_PAGE.DISCOVER')}}</span>
+                </ion-button>
                 <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="libraryStore.epocLibraryMenu(epoc, collection.id)">
                   <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
                 </ion-button>                
@@ -247,23 +235,21 @@
       </div>
       <div class="library-separator"><span>{{$t('MISSING.MY_EPOCS')}}</span></div>
       <div class="library-items">
-        <div class="library-item" v-for="epoc of localEpocs">
+        <div class="library-item" v-for="epoc of localEpocs" :key="epoc.id">
           <RouterLink :to="{ name: 'WIP', params: {any: '/library/'+ epoc.dir}}">
             <div role="link" :aria-label="epoc.title" class="library-item-image" :style="'background-image:url('+epoc.rootFolder+epoc.image+')'"></div>
           </RouterLink>
           <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
           <div class="library-item-toolbar">
-            <RouterLink :to="{ name: 'TocPage', params: {id:epoc.id}}">
-              <ion-button  class="expanded" color="inria">
-                <span>{{$t('LIBRARY_PAGE.OPEN')}}</span>
-              </ion-button>
-            </RouterLink>
+            <ion-button class="expanded" color="inria" v-on:click="router.push({ name: 'TocPage', params: {id:epoc.id}})">
+              <span>{{$t('LIBRARY_PAGE.OPEN')}}</span>
+            </ion-button>
             <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="localEpocsService.localEpocLibraryMenu(epoc)">
               <span :aria-label="$t('MISSING.CHAPTER_OPTIONS')" class="ellipsis base-btn">...</span>
             </ion-button>
           </div>
         </div>
-        <div class="library-item library-item-import" v-for="item of localEpocsService.imports">
+        <div class="library-item library-item-import" v-for="item of localEpocsService.imports" :key="item.value">
           <div class="library-item-image"></div>
           <h3 aria-hidden="true" class="library-item-title">{{item.value}}</h3>
         </div>
