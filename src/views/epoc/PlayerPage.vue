@@ -82,12 +82,20 @@ const certificateShown = ref(false);
 const showControls = ref(true);
 
 const nextChapterIndex = ref();
-const nextChapterId = ref<uid>();
 
 // # computed
 const chapterIndex = computed<number>(() => Object.keys(epoc.value?.chapters || []).indexOf(chapterId.value));
 const chapter = computed<Chapter>(() => epoc.value?.chapters[chapterId.value]);
-const nextChapter = computed<Chapter>(() => epoc.value?.chapters[nextChapterId.value]);
+const nextChapterId = computed<uid | undefined>(() => {
+    const keys = Object.keys(epoc.value?.chapters || {});
+    return chapterIndex.value >= 0 && chapterIndex.value < keys.length - 1 ? keys[chapterIndex.value + 1] : undefined;
+});
+
+const nextChapter = computed<Chapter | undefined>(() => {
+    const chapter = epoc.value?.chapters[nextChapterId.value];
+    return chapter ? { ...chapter, id: nextChapterId.value } : undefined;
+});
+
 const assessments = computed(() => epoc.value?.assessments || []);
 const readerStyles = computed(() =>
     settings.value
@@ -111,10 +119,6 @@ watch(
     () => chapterIndex,
     (newChapterIndex) => {
         nextChapterIndex.value = newChapterIndex.value + 1;
-        nextChapterId.value =
-            newChapterIndex.value <= Object.entries(epoc.value.chapters).length
-                ? Object.keys(epoc.value.chapters)[newChapterIndex.value + 1]
-                : undefined;
     }
 );
 watch(
@@ -318,7 +322,7 @@ const showCertificateCard = () => {
     <ion-page>
         <ion-content>
             <ion-spinner v-if="!dataInitialized"></ion-spinner>
-            <template v-else="dataInitialized">
+            <template v-else-if="dataInitialized">
                 <div class="reader" slot="fixed" :style="readerStyles" tabindex="-1">
                     <swiper
                         @swiper="setSwiperRef"
@@ -332,7 +336,7 @@ const showCertificateCard = () => {
                             <app-debug :epocId="epocId" :chapterId="chapterId" contentId="debut"></app-debug>
                             <chapter-info :chapter="chapter"></chapter-info>
                         </swiper-slide>
-                        <template v-for="(content, index) in chapter.initializedContents">
+                        <template v-for="(content, index) in chapter.initializedContents" :key="index">
                             <template
                                 v-if="
                                     !content.conditional ||
@@ -391,7 +395,7 @@ const showCertificateCard = () => {
                 <div aria-hidden="true" class="reader-progress" slot="fixed">
                     <ion-progress-bar color="inria" :value="progress"></ion-progress-bar>
                 </div>
-                <template slot="fixed" style="position: relative">
+                <template slot="fixed">
                     <certificate-modal :epocId="epocId" :certificateShown="certificateShown"></certificate-modal>
                 </template>
                 <div class="reader-actions" :class="{ showing: showControls }" slot="fixed">
