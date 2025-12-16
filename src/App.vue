@@ -3,7 +3,8 @@ import { IonApp, IonRouterOutlet, isPlatform } from "@ionic/vue";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { register } from "swiper/element/bundle";
 import { useSettingsStore } from "./stores/settingsStore";
-import { watch, onMounted } from "vue";
+import { watch, onMounted, nextTick } from "vue";
+import { useI18n } from "vue-i18n";
 
 const settingsStore = useSettingsStore();
 
@@ -38,14 +39,25 @@ function loadTheme(theme: "light" | "dark" | "auto") {
     applyStatusBarStyle(resolvedTheme);
 }
 
-onMounted(() => {
+const { locale } = useI18n();
+
+onMounted(async () => {
+    await nextTick();
     loadTheme(settingsStore.settings.theme);
+    locale.value = settingsStore.settings.lang;
 });
 
 watch(
     () => settingsStore.settings.theme,
     (newTheme) => {
         loadTheme(newTheme);
+    }
+);
+
+watch(
+    () => settingsStore.settings.lang,
+    (newLang) => {
+        locale.value = newLang;
     }
 );
 </script>
