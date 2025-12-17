@@ -112,19 +112,18 @@ const toggleDetails = (chapter) => {
                             </RouterLink>
                         </div>
                         <div class="toc-chapter-details" v-if="chapter.opened">
-                            <template v-for="content of denormalize(chapter.contents, epocStore.epoc.contents)">
+                            <template
+                                v-for="content of denormalize(chapter.contents, epocStore.epoc.contents)"
+                                :key="content.id"
+                            >
                                 <template v-if="!content.hidden">
                                     <RouterLink
                                         :to="{
-                                            name: 'WIP',
+                                            name: 'PlayerContent',
                                             params: {
-                                                any:
-                                                    '/epoc/play/' +
-                                                    epocStore.epoc.id +
-                                                    '/' +
-                                                    chapter.id +
-                                                    '/content/' +
-                                                    content.id,
+                                                epoc_id: epocStore.epoc.id,
+                                                chapter_id: chapter.id,
+                                                content_id: content.id,
                                             },
                                         }"
                                         class="toc-chapter-details-item"

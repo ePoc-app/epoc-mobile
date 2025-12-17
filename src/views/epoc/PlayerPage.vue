@@ -143,6 +143,18 @@ watch(
 
 // # Lifecycle
 
+onIonViewDidEnter(() => {
+    const contentId = route.params.content_id?.toString();
+
+    if (contentId) {
+        setTimeout(() => {
+            goTo(contentId, 0);
+        }, 0);
+    }
+
+    updateFocus();
+});
+
 onIonViewWillEnter(() => {
     epocStore.getEpocById(epocId.value).then((newEpoc) => initDataFromEpoc(newEpoc));
 });
@@ -190,7 +202,7 @@ const nextPage = () => {
 const goTo = (contentId: uid, time?: number) => {
     // Go to the next content after contentId
     const pageIndex = contentsFilteredConditional.value?.findIndex((content) => content.id === contentId) || 0;
-    const index = next ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
+    const index = next.value ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
 
     countPages();
     readerSlides.value?.slideTo(index, time);
@@ -203,6 +215,7 @@ const onSlideChange = () => {
     const index = readerSlides.value?.activeIndex || 0;
     currentPage.value = index;
     countPages();
+    console.log('slide changed', index);
     updateCurrentContent(index);
     progress.value = index / pagesCount.value;
 };
@@ -246,10 +259,10 @@ const updateCurrentContent = (index: number) => {
         (c) => !c.conditional || (c.conditional && reading.value?.flags.indexOf(c.id) !== -1)
     )[index - 1];
     if (content) {
-        router.push({
-            name: 'Player',
-            params: { epocId: epocId.value, chapterId: chapterId.value, contentId: content.id },
-        });
+        // Change the url without triggering watchers
+        const newUrl = `/epoc/play/${epocId.value}/${chapterId.value}/content/${content.id}`;
+        window.history.replaceState({}, '', newUrl);
+
         readingStore.saveChapterProgress(epocId.value, chapterId.value, content.id);
         // tracker.trackPageView(); TODO Matomo Tracker
         readingStore.saveStatement(epocId.value, 'pages', content.id, 'viewed', true);
