@@ -5,9 +5,12 @@ import { actionSheetController, alertController } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import type { Epoc, Chapter, Content } from '@/types/epoc/v1';
 import { uid } from '@epoc/epoc-types/dist/v1';
-import {Capacitor} from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
+import { useI18n } from 'vue-i18n';
 
 export const useEpocStore = defineStore('epoc', () => {
+    const { t } = useI18n();
+
     // --- State ---
     const router = useRouter();
     const initialized = ref(false);
@@ -88,8 +91,10 @@ export const useEpocStore = defineStore('epoc', () => {
                     if (currentContent.scoreTotal > 0) {
                         epoc.assessments.push(currentContent);
                     }
-                } else if (currentContent.type === 'simple-question' &&
-                    Number(epoc.questions[currentContent.question].score) > 0) {
+                } else if (
+                    currentContent.type === 'simple-question' &&
+                    Number(epoc.questions[currentContent.question].score) > 0
+                ) {
                     currentContent.scoreTotal = calcScoreTotal(epoc, [currentContent.question]);
                     currentContent.questions = [currentContent.question];
                     currentContent.chapterId = chapterId;
@@ -135,7 +140,10 @@ export const useEpocStore = defineStore('epoc', () => {
             correction = correction as Array<any>;
             if (correction.length > 0 && correction[0].values) {
                 return correction.every((group, index) => {
-                    return JSON.stringify(group.values.sort()) === JSON.stringify(userResponses[index].map((r: any) => r.value).sort());
+                    return (
+                        JSON.stringify(group.values.sort()) ===
+                        JSON.stringify(userResponses[index].map((r: any) => r.value).sort())
+                    );
                 });
             } else {
                 return JSON.stringify(correction.sort()) === JSON.stringify(userResponses.sort());
@@ -148,7 +156,7 @@ export const useEpocStore = defineStore('epoc', () => {
 
         const buttons = [
             {
-                text: 'Accueil',
+                text: t('FLOATING_MENU.HOME'),
                 icon: 'home-outline',
                 handler: () => {
                     router.push('/home/' + _epoc.value!.id);
@@ -156,38 +164,38 @@ export const useEpocStore = defineStore('epoc', () => {
             },
             ...(!router.currentRoute.value.path.includes('/epoc/toc/' + _epoc.value!.id)
                 ? [
-                    {
-                        text: 'Table des matières',
-                        icon: 'list-circle-outline',
-                        handler: () => {
-                            router.push('/epoc/toc/' + _epoc.value!.id);
-                        },
-                    },
-                ]
+                      {
+                          text: t('FLOATING_MENU.TOC'),
+                          icon: 'list-circle-outline',
+                          handler: () => {
+                              router.push('/epoc/toc/' + _epoc.value!.id);
+                          },
+                      },
+                  ]
                 : []),
             {
-                text: 'Détails du score',
+                text: t('FLOATING_MENU.SCORE_DETAILS'),
                 icon: 'star-outline',
                 handler: () => {
                     router.push('/epoc/score/' + _epoc.value!.id);
                 },
             },
             {
-                text: 'Licence',
+                text: t('FLOATING_MENU.LICENSE'),
                 icon: 'receipt-outline',
                 handler: () => {
                     // Implement your license display logic
                 },
             },
             {
-                text: 'Paramètres',
+                text: t('FLOATING_MENU.SETTINGS'),
                 icon: 'settings-outline',
                 handler: () => {
                     router.push('/settings');
                 },
             },
             {
-                text: 'Fermer',
+                text: t('CLOSE'),
                 role: 'cancel',
             },
         ];
