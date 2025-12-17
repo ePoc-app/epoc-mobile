@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { uid } from "@epoc/epoc-types/src/v1";
+import { uid } from '@epoc/epoc-types/src/v1';
 import {
     IonContent,
     IonIcon,
@@ -8,31 +8,31 @@ import {
     onIonViewWillLeave,
     IonSpinner,
     onIonViewDidEnter,
-} from "@ionic/vue";
-import { computed, ref, useTemplateRef, watch } from "vue";
-import { useEpocStore } from "@/stores/epocStore";
-import { useReadingStore } from "@/stores/readingStore";
-import { useSettingsStore } from "@/stores/settingsStore";
-import { useRoute, useRouter } from "vue-router";
-import { onIonViewWillEnter } from "@ionic/vue";
-import { storeToRefs } from "pinia";
-import { Chapter, Epoc } from "@/types/epoc";
-import { Reading, UserAssessment } from "@/types/reading";
-import { Settings } from "@/types/settings";
-import { Assessment, SimpleQuestion } from "@epoc/epoc-types/dist/v2";
-import { Content } from "@/types/contents/content";
-import { srcConvert } from "@/utils/transform";
-import { menu } from "ionicons/icons";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Swiper as SwiperObject } from "swiper/types";
-import ChapterInfo from "@/views/epoc/content/ChapterInfo.vue";
-import ChapterEnd from "./content/ChapterEnd.vue";
-import AppDebug from "./content/AppDebug.vue";
-import CommonContent from "./content/CommonContent.vue";
-import CertificateModal from "@/components/CertificateModal.vue";
-import { appService } from "@/utils/appService";
-import HtmlContent from "./content/HtmlContent.vue";
-import VideoContent from "./content/VideoContent.vue";
+} from '@ionic/vue';
+import { computed, ref, useTemplateRef, watch } from 'vue';
+import { useEpocStore } from '@/stores/epocStore';
+import { useReadingStore } from '@/stores/readingStore';
+import { useSettingsStore } from '@/stores/settingsStore';
+import { useRoute, useRouter } from 'vue-router';
+import { onIonViewWillEnter } from '@ionic/vue';
+import { storeToRefs } from 'pinia';
+import { Chapter, Epoc } from '@/types/epoc';
+import { Reading, UserAssessment } from '@/types/reading';
+import { Settings } from '@/types/settings';
+import { Assessment, SimpleQuestion } from '@epoc/epoc-types/dist/v2';
+import { Content } from '@/types/contents/content';
+import { srcConvert } from '@/utils/transform';
+import { menu } from 'ionicons/icons';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Swiper as SwiperObject } from 'swiper/types';
+import ChapterInfo from '@/views/epoc/content/ChapterInfo.vue';
+import ChapterEnd from './content/ChapterEnd.vue';
+import AppDebug from './content/AppDebug.vue';
+import CommonContent from './content/CommonContent.vue';
+import CertificateModal from '@/components/CertificateModal.vue';
+import { appService } from '@/utils/appService';
+import HtmlContent from './content/HtmlContent.vue';
+import VideoContent from './content/VideoContent.vue';
 import {
     documentTextOutline,
     cubeOutline,
@@ -40,7 +40,7 @@ import {
     micOutline,
     helpOutline,
     gitBranchOutline,
-} from "ionicons/icons";
+} from 'ionicons/icons';
 
 //Store
 const epocStore = useEpocStore();
@@ -55,7 +55,7 @@ const iconFromType = {
     assessment: cubeOutline,
     video: playCircleOutline,
     audio: micOutline,
-    "simple-question": helpOutline,
+    'simple-question': helpOutline,
     choice: gitBranchOutline,
 };
 let readerSlides = ref<SwiperObject>(); //undefined; // will be set only once on mounted
@@ -100,14 +100,14 @@ const assessments = computed(() => epoc.value?.assessments || []);
 const readerStyles = computed(() =>
     settings.value
         ? {
-              "font-family": settings.value.font,
-              "font-size": settings.value.fontSize + "px",
-              "line-height": settings.value.lineHeight,
+              'font-family': settings.value.font,
+              'font-size': settings.value.fontSize + 'px',
+              'line-height': settings.value.lineHeight,
           }
         : {
-              "font-family": "Inria Sans",
-              "font-size": "16px",
-              "line-height": 1.4,
+              'font-family': 'Inria Sans',
+              'font-size': '16px',
+              'line-height': 1.4,
           }
 );
 
@@ -158,7 +158,7 @@ onIonViewWillLeave(() => {
 // # Methods
 
 const initDataFromEpoc = (epoc: Epoc) => {
-    readingStore.saveStatement(epocId.value, "chapters", chapterId.value, "started", true);
+    readingStore.saveStatement(epocId.value, 'chapters', chapterId.value, 'started', true);
     reading.value = readings.value.find((item: Reading) => item.epocId === epocId.value);
     if (!reading.value) readingStore.addReading(epocId.value);
     contentsFilteredConditional.value = chapter.value?.initializedContents.filter((content) => {
@@ -209,7 +209,7 @@ const onSlideChange = () => {
 
 // /!\ this event is binded from videplayer and dragable element
 const onDrag = (event: DragEvent) => {
-    if (event === "dragstart") {
+    if (event === 'dragstart') {
         readerSlides.value?.disable();
     } else {
         readerSlides.value?.enable();
@@ -231,7 +231,7 @@ const hideControls = () => {
 
 const toggleControls = ($event: Event) => {
     if (
-        ["ion-icon", "button", "ion-button", "ion-icon", "ion-checkbox", "ion-radio", "span"].includes(
+        ['ion-icon', 'button', 'ion-button', 'ion-icon', 'ion-checkbox', 'ion-radio', 'span'].includes(
             ($event.target as HTMLElement).tagName.toLowerCase()
         )
     )
@@ -247,21 +247,21 @@ const updateCurrentContent = (index: number) => {
     )[index - 1];
     if (content) {
         router.push({
-            name: "Player",
+            name: 'Player',
             params: { epocId: epocId.value, chapterId: chapterId.value, contentId: content.id },
         });
         readingStore.saveChapterProgress(epocId.value, chapterId.value, content.id);
         // tracker.trackPageView(); TODO Matomo Tracker
-        readingStore.saveStatement(epocId.value, "pages", content.id, "viewed", true);
-        if (content.type === "html") {
-            readingStore.saveStatement(epocId.value, "contents", content.id, "read", true);
+        readingStore.saveStatement(epocId.value, 'pages', content.id, 'viewed', true);
+        if (content.type === 'html') {
+            readingStore.saveStatement(epocId.value, 'contents', content.id, 'read', true);
         }
     }
 };
 
 const updateFocus = () => {
     if (appService.screenReaderDetected) {
-        (document.querySelector("app-epoc-player.ion-page:not(.ion-page-hidden) .reader") as HTMLElement).focus();
+        (document.querySelector('app-epoc-player.ion-page:not(.ion-page-hidden) .reader') as HTMLElement).focus();
     }
 };
 
@@ -270,7 +270,7 @@ const displayMenu = () => {
 };
 
 const stopAllMedia = () => {
-    const medias = Array.from(document.querySelectorAll("audio,video")) as HTMLMediaElement[];
+    const medias = Array.from(document.querySelectorAll('audio,video')) as HTMLMediaElement[];
     medias.forEach((media) => {
         media.pause();
     });

@@ -1,80 +1,80 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import LibraryPage from '@/views/library/LibraryPage.vue'
+import LibraryPage from '@/views/library/LibraryPage.vue';
 import AboutPage from '@/views/AboutPage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
-import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue'
+import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue';
 import EpocOverviewPage from '@/views/epoc/OverviewPage.vue';
-import WIPPage from '@/views/WIPPage.vue'
+import WIPPage from '@/views/WIPPage.vue';
 import TestPage from '@/views/TestPage.vue';
 import TocPage from '@/views/epoc/TocPage.vue';
 import PlayerPage from '@/views/epoc/PlayerPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/library'
-  },
-  {
-    path: '/library',
-    name: 'Library',
-    component: LibraryPage
-  },
-  {
-    path: '/settings',
-    name: 'SettingsPage',
-    component: SettingsPage
-  },
-  {
-    path: '/about',
-    name: 'AboutPage',
-    component: AboutPage
-  },
-  {
-    path: '/:collection_id',
-    name: 'CollectionDetail',
-    component: CollectionDetailPage
-  },
-  {
-    path: '/test/:id',
-    name: 'TEST',
-    component: TestPage
-  },
-  {
-    path: '/wip/:any',
-    name: 'WIP',
-    component: WIPPage
-  },
-  {
-    path: '/:libraryId/:id',
-    name: 'EpocOverviewPage',
-    component: EpocOverviewPage
-  },
-  {
-    path: '/epoc/toc/:id',
-    name: 'TocPage',
-    component: TocPage
-  },
-  {
-    path: '/epoc/play/:epoc_id/:chapter_id',
-    name: 'Player',
-    component: PlayerPage
-  },
-  {
-    path: '/epoc/play/:epoc_id/:chapter_id/content/:content_id/:next',
-    name: 'PlayerContent',
-    component: PlayerPage
-  },
-  {
-    path: '/epoc/play/:epoc_id/content/:content_id',
-    name: 'OrphanPlayer',
-    component: WIPPage
-  }
-]
+    {
+        path: '/',
+        redirect: '/library',
+    },
+    {
+        path: '/library',
+        name: 'Library',
+        component: LibraryPage,
+    },
+    {
+        path: '/settings',
+        name: 'SettingsPage',
+        component: SettingsPage,
+    },
+    {
+        path: '/about',
+        name: 'AboutPage',
+        component: AboutPage,
+    },
+    {
+        path: '/:collection_id',
+        name: 'CollectionDetail',
+        component: CollectionDetailPage,
+    },
+    {
+        path: '/test/:id',
+        name: 'TEST',
+        component: TestPage,
+    },
+    {
+        path: '/wip/:any',
+        name: 'WIP',
+        component: WIPPage,
+    },
+    {
+        path: '/:libraryId/:id',
+        name: 'EpocOverviewPage',
+        component: EpocOverviewPage,
+    },
+    {
+        path: '/epoc/toc/:id',
+        name: 'TocPage',
+        component: TocPage,
+    },
+    {
+        path: '/epoc/play/:epoc_id/:chapter_id',
+        name: 'Player',
+        component: PlayerPage,
+    },
+    {
+        path: '/epoc/play/:epoc_id/:chapter_id/content/:content_id',
+        name: 'PlayerContent',
+        component: PlayerPage,
+    },
+    {
+        path: '/epoc/play/:epoc_id/content/:content_id',
+        name: 'OrphanPlayer',
+        component: WIPPage,
+    },
+];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes,
+});
 
-export default router
+export default router;
