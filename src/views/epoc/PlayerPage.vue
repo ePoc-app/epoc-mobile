@@ -41,6 +41,7 @@ import {
     helpOutline,
     gitBranchOutline,
 } from 'ionicons/icons';
+import { until } from '@vueuse/core';
 
 //Store
 const epocStore = useEpocStore();
@@ -143,13 +144,12 @@ watch(
 
 // # Lifecycle
 
-onIonViewDidEnter(() => {
+onIonViewDidEnter(async () => {
     const contentId = route.params.content_id?.toString();
 
     if (contentId) {
-        setTimeout(() => {
-            goTo(contentId, 0);
-        }, 0);
+        await until(dataInitialized).toBeTruthy();
+        goTo(contentId, 0);
     }
 
     updateFocus();
@@ -157,10 +157,6 @@ onIonViewDidEnter(() => {
 
 onIonViewWillEnter(() => {
     epocStore.getEpocById(epocId.value).then((newEpoc) => initDataFromEpoc(newEpoc));
-});
-
-onIonViewDidEnter(() => {
-    updateFocus();
 });
 
 onIonViewWillLeave(() => {
