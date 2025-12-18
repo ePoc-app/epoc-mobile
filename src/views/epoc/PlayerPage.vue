@@ -242,10 +242,10 @@ const hideControls = () => {
     }
 };
 
-const toggleControls = ($event: Event) => {
+const toggleControls = (_swiper: SwiperObject, event: Event) => {
     if (
         ['ion-icon', 'button', 'ion-button', 'ion-icon', 'ion-checkbox', 'ion-radio', 'span'].includes(
-            ($event.target as HTMLElement).tagName.toLowerCase()
+            (event.target as HTMLElement).tagName.toLowerCase()
         )
     )
         return;
@@ -339,7 +339,7 @@ const showCertificateCard = () => {
                 <div class="reader" slot="fixed" :style="readerStyles" tabindex="-1">
                     <swiper
                         @swiper="setSwiperRef"
-                        v-on:tap="toggleControls($event)"
+                        v-on:tap="toggleControls"
                         @slide-change-transition-end="updateFocus()"
                         @slider-move="hideControls()"
                         @slide-change-transition-start="onSlideChange()"
