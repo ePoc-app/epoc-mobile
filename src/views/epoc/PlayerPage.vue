@@ -125,14 +125,18 @@ watch(
 watch(
     () => route.params.epoc_id,
     (newId) => {
-        epocId.value = newId.toString();
-        epocStore.getEpocById(epocId.value);
+        if (newId) {
+            epocId.value = newId.toString();
+            epocStore.getEpocById(epocId.value);
+        }
     }
 );
 watch(
     () => route.params.chapter_id,
     (newId) => {
-        chapterId.value = newId.toString();
+        if (newId) {
+            chapterId.value = newId.toString();
+        }
     }
 );
 watch(
