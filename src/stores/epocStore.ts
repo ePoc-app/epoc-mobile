@@ -7,6 +7,7 @@ import type { Epoc, Chapter, Content } from '@/types/epoc/v1';
 import { uid } from '@epoc/epoc-types/dist/v1';
 import { Capacitor } from '@capacitor/core';
 import { useI18n } from 'vue-i18n';
+import { homeOutline, listCircleOutline, starOutline, receiptOutline, settingsOutline } from 'ionicons/icons';
 
 export const useEpocStore = defineStore('epoc', () => {
     const { t } = useI18n();
@@ -157,7 +158,7 @@ export const useEpocStore = defineStore('epoc', () => {
         const buttons = [
             {
                 text: t('FLOATING_MENU.HOME'),
-                icon: 'home-outline',
+                icon: homeOutline,
                 handler: () => {
                     router.push('/home/' + _epoc.value!.id);
                 },
@@ -166,7 +167,7 @@ export const useEpocStore = defineStore('epoc', () => {
                 ? [
                       {
                           text: t('FLOATING_MENU.TOC'),
-                          icon: 'list-circle-outline',
+                          icon: listCircleOutline,
                           handler: () => {
                               router.push('/epoc/toc/' + _epoc.value!.id);
                           },
@@ -175,21 +176,21 @@ export const useEpocStore = defineStore('epoc', () => {
                 : []),
             {
                 text: t('FLOATING_MENU.SCORE_DETAILS'),
-                icon: 'star-outline',
+                icon: starOutline,
                 handler: () => {
                     router.push('/epoc/score/' + _epoc.value!.id);
                 },
             },
             {
                 text: t('FLOATING_MENU.LICENSE'),
-                icon: 'receipt-outline',
+                icon: receiptOutline,
                 handler: () => {
                     // Implement your license display logic
                 },
             },
             {
                 text: t('FLOATING_MENU.SETTINGS'),
-                icon: 'settings-outline',
+                icon: settingsOutline,
                 handler: () => {
                     router.push('/settings');
                 },
