@@ -2,7 +2,7 @@
 import { IonIcon, IonSelect, IonSelectOption, IonItem, IonLabel, toastController, createGesture } from '@ionic/vue';
 import { ref, onMounted, onUnmounted, PropType } from 'vue';
 import { logoClosedCaptioning, pause, play as playIcon, expand } from 'ionicons/icons';
-import { useVideoPlayerStore } from '@/stores/videoPlayerStore';
+import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 
 const props = defineProps({
   src: String,
@@ -32,7 +32,7 @@ const props = defineProps({
 });
 
 // Store Pinia
-const videoPlayerStore = useVideoPlayerStore();
+const videoPlayerStore = useMediaPlayerStore();
 
 // Générer un ID unique pour ce lecteur
 const playerId = `video-player-${Math.random().toString(36).substring(2, 9)}`;
@@ -215,7 +215,7 @@ onUnmounted(() => {
         @click="play"
     >
       <video
-          v-if="src"
+          v-if="src && src !== 'loading'"
           ref="videoRef"
           disablePictureInPicture
           playsinline

@@ -4,9 +4,6 @@ import { FileTransfer, ProgressStatus } from '@capacitor/file-transfer';
 
 export const readdir = async (path: string): Promise<FileInfo[]> => {
     try {
-        await new Promise<void>((resolve) => {
-            document.addEventListener('deviceready' as any, resolve, { once: true });
-        });
         return (await Filesystem.readdir({ path, directory: Directory.LibraryNoCloud })).files;
     } catch (error) {
         console.error('Error listing directory:', error);
@@ -15,6 +12,14 @@ export const readdir = async (path: string): Promise<FileInfo[]> => {
 };
 
 export const listDirMetadata = readdir;
+
+export const mkdir = async (path: string): Promise<void> => {
+    try {
+        await Filesystem.mkdir({ directory: Directory.LibraryNoCloud, path, recursive: true });
+    } catch (error) {
+        // Ignore if folder already exists
+    }
+}
 
 export const download = async (
     url: string,
@@ -68,9 +73,22 @@ export const unzip = async (filename: string, dir: string): Promise<void> => {
             source: fileUri.uri,
             destination: extractPath.uri,
         });
-        // await deleteZip(filename);
+        await deleteZip(filename);
     } catch (error) {
         console.error('Error unzipping file:', error);
         throw error;
     }
 };
+
+export const mv = async (from: string, to: string): Promise<void> => {
+    try {
+        await Filesystem.rename({
+            directory: Directory.LibraryNoCloud,
+            from,
+            to,
+        });
+    } catch (error) {
+        console.error('Error moving file or folder:', error);
+        throw error;
+    }
+}
