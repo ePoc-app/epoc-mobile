@@ -92,3 +92,12 @@ export const mv = async (from: string, to: string): Promise<void> => {
         throw error;
     }
 }
+
+export const pathExists = async (path: string): Promise<boolean> => {
+    try {
+        await Filesystem.stat({ directory: Directory.LibraryNoCloud, path });
+        return true;
+    } catch {
+        return false;
+    }
+}

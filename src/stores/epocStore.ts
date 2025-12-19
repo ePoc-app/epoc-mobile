@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { actionSheetController, alertController } from '@ionic/vue';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { actionSheetController } from '@ionic/vue';
 import { useRouter } from 'vue-router';
-import type { Epoc, Chapter, Content } from '@/types/epoc/v1';
 import { uid } from '@epoc/epoc-types/dist/v1';
 import { Capacitor } from '@capacitor/core';
 import { useI18n } from 'vue-i18n';
 import { homeOutline, listCircleOutline, starOutline, receiptOutline, settingsOutline } from 'ionicons/icons';
+import { readEpocContent } from '@/utils/epocService';
+import { Epoc } from '@/types/epoc';
 
 export const useEpocStore = defineStore('epoc', () => {
     const { t } = useI18n();
@@ -27,40 +28,17 @@ export const useEpocStore = defineStore('epoc', () => {
     async function getEpocById(id: string): Promise<Epoc> {
         if (_epoc.value && _epoc.value.id === id) return _epoc.value;
         try {
-            const result = await Filesystem.readFile({
-                path: `epocs/${id}/content.json`,
-                directory: Directory.LibraryNoCloud,
-                encoding: Encoding.UTF8,
-            });
+            const epoc = await readEpocContent(id.startsWith('local-') ? 'local-epocs' : 'epocs', id);
 
-            let epoc: Epoc;
-            const str = result.data as string;
-            const isBase64 = /^[A-Za-z0-9+/]+={0,2}$/.test(str);
-            if (isBase64) {
-                // Decode Base64 to UTF-8
-                const binaryString = atob(str);
-                const bytes = new Uint8Array(binaryString.length);
-                for (let i = 0; i < binaryString.length; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                }
-                const utf8String = new TextDecoder('utf-8').decode(bytes);
-                epoc = JSON.parse(utf8String);
-            } else {
-                epoc = JSON.parse(str);
+            if (!epoc) {
+                throw new Error('ePoc not found');
             }
-            if (epoc.id !== id) epoc.id = id; // Fix id when local epocs are imported
+
             _epoc.value = initCourseContent(epoc);
 
-            // Set ePoc root folder
-            if (Capacitor.getPlatform() === 'web') {
-                _rootFolder.value = `/${Directory.LibraryNoCloud}/epocs/${_epoc.value.id}/`;
-            } else {
-                const uriResult = await Filesystem.getUri({
-                    path: `epocs/${_epoc.value.id}/`,
-                    directory: Directory.LibraryNoCloud,
-                });
-                _rootFolder.value = uriResult.uri;
-            }
+            _rootFolder.value = `${epoc.dir}/`;
+
+            console.log(epoc.dir);
 
             return _epoc.value;
         } catch (error) {
@@ -160,7 +138,7 @@ export const useEpocStore = defineStore('epoc', () => {
                 text: t('FLOATING_MENU.HOME'),
                 icon: homeOutline,
                 handler: () => {
-                    router.push('/home/' + _epoc.value!.id);
+                    router.push('/library');
                 },
             },
             ...(!router.currentRoute.value.path.includes('/epoc/toc/' + _epoc.value!.id)

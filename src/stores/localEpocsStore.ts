@@ -5,10 +5,11 @@ import { useI18n } from 'vue-i18n';
 import { actionSheetController, alertController, toastController } from '@ionic/vue';
 import { useSettingsStore } from './settingsStore';
 import { useReadingStore } from './readingStore';
-import {deleteFolder, download, mkdir, mv, readdir, unzip} from '@/utils/file';
+import { deleteFolder, download, mkdir, mv, pathExists, readdir, unzip } from '@/utils/file';
 import { EpocLibrary } from '@/types/epoc';
-import {readEpocContent} from '@/utils/epocService';
-import {trackEvent} from '@/utils/matomo';
+import { readEpocContent } from '@/utils/epocService';
+import { trackEvent } from '@/utils/matomo';
+import { listCircleOutline, starOutline, trash } from 'ionicons/icons';
 
 export const useLocalEpocsStore = defineStore('localEpocs', () => {
     // --- State ---
@@ -50,7 +51,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
             const files = await readdir('local-epocs');
             const dirs = files.filter((f: any) => f.type === 'directory')
             .sort((fileA: any, fileB: any) => {
-                return new Date(fileA.metadata.modificationTime) > new Date(fileB.metadata.modificationTime) ? 1 : -1;
+                return new Date(fileA.metadata?.modificationTime) > new Date(fileB.metadata?.modificationTime) ? 1 : -1;
             });
 
             const epocContents = await Promise.all(
@@ -133,27 +134,58 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
 
     const unzipLocalEpoc = async (tempId: string) => {
         imports.value[tempId] = t('LIBRARY_PAGE.OPEN_ZIP');
-
         try {
-            await unzip(`local-epocs/${tempId}.zip`, `local-epocs/${tempId}`);
+            await unzip(`local-epocs/${tempId}.zip`, `temp/${tempId}`);
+
+            const epoc = await readEpocContent('temp', tempId);
+
+            if (epoc) {
+                const dirExist = await pathExists(`local-epocs/${epoc.id}`);
+
+                // If directory with same epoc id exists, ask for confirmation to replace
+                if (!dirExist) {
+                    await mv(`temp/${tempId}`, `local-epocs/${epoc.id}`);
+                } else {
+                    const alert = await alertController.create({
+                        header: 'Confirmation',
+                        message: `Cet ePoc existe déjà "${epoc.id} : ${epoc.title}"`,
+                        buttons: [
+                            {
+                                text: 'Annuler',
+                                role: 'cancel',
+                                cssClass: 'secondary',
+                                handler: async () => {
+                                    await deleteFolder(`temp/${tempId}`);
+                                }
+                            }, {
+                                text: 'Confirmer',
+                                handler: async () => {
+                                    await deleteFolder(`local-epocs/${epoc.id}`);
+                                    await mv(`temp/${tempId}`, `local-epocs/${epoc.id}`);
+                                }
+                            }
+                        ]
+                    });
+
+                    await alert.present();
+                }
+            }
 
             const newImports = { ...imports.value };
             delete newImports[tempId];
             imports.value = newImports;
 
-            const epoc = await readEpocContent('local-epocs', tempId);
-
-            if (epoc) {
-                await mv(`local-epocs/${tempId}`, `local-epocs/${epoc.id}`);
-            }
-
             await fetchLocalEpocs();
         } catch (error) {
+            console.error(error);
+            showToast(t('FLOATING_MENU.ERROR'), 'danger');
         }
     };
 
-    const deleteEpoc = async (dir: string) => {
-        await deleteFolder(dir);
+    const deleteEpoc = async (epoc: EpocLibrary) => {
+        localEpocs.value = localEpocs.value.filter(e => e.id !== epoc.id);
+        router.push('/library');
+        await deleteFolder(`local-epocs/${epoc.id}`);
         await fetchLocalEpocs();
     };
 
@@ -173,21 +205,21 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
         const buttons = [
             {
                 text: t('FLOATING_MENU.TOC'),
-                icon: 'list-circle-outline',
+                icon: listCircleOutline,
                 handler: () => {
                     router.push('/epoc/toc/' + epoc.id);
                 }
             },
             {
                 text: t('FLOATING_MENU.SCORE_DETAILS'),
-                icon: 'star-outline',
+                icon: starOutline,
                 handler: () => {
                     router.push('/epoc/score/' + epoc.id);
                 }
             },
             {
                 text: t('FLOATING_MENU.DELETE'),
-                icon: 'trash',
+                icon: trash,
                 handler: () => {
                     confirmDelete(epoc);
                 }
@@ -206,15 +238,13 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
             buttons
         });
 
-        // Setting CSS variable on document root (careful with this in SPA, might want to scope it)
-        document.documentElement.style.setProperty('--thumbnail-url', `url(${epoc.image})`);
         await actionSheet.present();
     };
 
     const confirmDelete = async (epoc: EpocLibrary) => {
         const alert = await alertController.create({
             header: 'Confirmation',
-            message: `Merci de confimer la suppresion de l'ePoc <b>"${epoc.title}"</b>`,
+            message: `Merci de confimer la suppresion de l'ePoc "${epoc.title}"`,
             buttons: [
                 {
                     text: 'Annuler',
@@ -223,7 +253,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                 }, {
                     text: 'Confirmer',
                     handler: () => {
-                        deleteEpoc(epoc.dir);
+                        deleteEpoc(epoc);
                     }
                 }
             ]

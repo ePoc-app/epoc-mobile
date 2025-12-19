@@ -17,14 +17,28 @@ export const readEpocContent = async (dir: string, epocId: string): Promise<Epoc
             path: `${dir}/${epocId}`
         });
 
-        let rawData = await (typeof file.data === 'string' ? Promise.resolve(file.data) : file.data.text())
-
-        if (!Capacitor.isNativePlatform()) {
-            rawData = atob(rawData);
+        let epoc: EpocLibrary;
+        const rawData = await (typeof file.data === 'string' ? Promise.resolve(file.data) : file.data.text())
+        const isBase64 = /^[A-Za-z0-9+/]+={0,2}$/.test(rawData);
+        if (isBase64) {
+            // Decode Base64 to UTF-8
+            const binaryString = atob(rawData);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            const utf8String = new TextDecoder('utf-8').decode(bytes);
+            epoc = JSON.parse(utf8String);
+        } else {
+            epoc = JSON.parse(rawData);
         }
 
-        const epoc = JSON.parse(rawData) as EpocLibrary;
         epoc.dir = ePocBaseUri.uri;
+
+        if (dir === 'local-epocs' || dir === 'temp') {
+            epoc.id = `local-${epoc.id}`;
+        }
+
         return epoc;
     } catch (error) {
         return null;

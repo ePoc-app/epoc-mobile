@@ -57,7 +57,7 @@ const toggleDetails = (chapter) => {
         <ion-header :translucent="true">
             <ion-toolbar>
                 <ion-buttons slot="start">
-                    <ion-back-button text="" defaultHref="/home" color="inria-icon"></ion-back-button>
+                    <ion-back-button text="" defaultHref="/library" color="inria-icon"></ion-back-button>
                 </ion-buttons>
                 <ion-title>{{ $t('TOC_PAGE.HEADER') }}</ion-title>
                 <ion-buttons slot="end">

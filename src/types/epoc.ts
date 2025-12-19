@@ -15,6 +15,7 @@ export interface CustomLibrary {
 }
 
 export interface Epoc extends EpocType {
+    dir: string;
     assessments: (Assessment|SimpleQuestion)[]
     chapters:  Record<uid, Chapter>;
     contents: Record<uid, Content>;

@@ -147,11 +147,10 @@
 
     ion-icon{
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width:30%;
-      height:30%;
-      transform: translate(-50%,-50%);
+      top: calc(50% - 25px);
+      left: calc(50% - 25px);
+      width:50px;
+      height:50px;
     }
   }
 
