@@ -242,6 +242,12 @@
             </ion-button>
           </div>
         </div>
+        <div class="library-item library-item-import" v-for="item of localEpocsStore.imports" :key="item">
+          <div class="library-item-image">
+            <ion-icon aria-hidden="true" :icon="syncOutline" class="spin" slot="start"></ion-icon>
+          </div>
+          <h3 aria-hidden="true" class="library-item-title">{{item}}</h3>
+        </div>
         <div class="library-item library-item-add" v-on:click="openAddMenu()">
           <div class="library-item-image">
             <ion-icon aria-hidden="true" src="/assets/icon/ajouter.svg" size="large"></ion-icon>

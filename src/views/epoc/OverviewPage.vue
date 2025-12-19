@@ -18,36 +18,23 @@
   const localEpocStore = useLocalEpocsStore();
   const { convertFileSrc } = useConvertFileSrc();
   const selectedTab = ref(0);
-  const getLocalEpoc = (id: string) => {
-    return localEpocStore.localEpocs.find(epoc => epoc.id === id);
-  }
 
-
-  // TODO SECTION //////
   const openEpocMenu = (epoc: EpocLibrary) => {
-    const collectionId = route.params.libraryId?.toString();
-    libraryStore.epocLibraryMenu(epoc, collectionId);
+    if (route.params.libraryId === 'local-epocs') {
+      localEpocStore.localEpocLibraryMenu(epoc);
+    } else {
+      libraryStore.epocLibraryMenu(route.params.libraryId.toString(), epoc.id);
+    }
   }
 
   const downloadEpoc = (epoc: EpocLibrary) => {
-    const collectionId = route.params.libraryId?.toString();
-    if (collectionId) {
-      libraryStore.downloadEpoc(epoc, collectionId);
-    }
-  } 
-
-  // this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
-  // this.epocProgresses = epocProgresses;
-  // this.ref.detectChanges();
-
-  // TODO Handle Video 
-
-  //////
+    libraryStore.downloadEpocFromCollection(route.params.libraryId.toString(), epoc.id)
+  }
 
   const getEpoc = () : EpocLibrary | undefined => {
     let epoc = undefined;
     if (route.params.libraryId === 'local-epocs') {
-      epoc = getLocalEpoc(route.params.id)
+      epoc = localEpocStore.localEpocs.find(epoc => epoc.id === route.params.id);
     } else if (route.params.libraryId && route.params.id) {
       const collectionId = route.params.libraryId.toString()
       const epocId = route.params.id.toString()
@@ -72,8 +59,6 @@
     if (path.startsWith('file://') || path.startsWith('http://') || path.startsWith('https://')) {
       return path;
     } else {
-      console.log('Converting path to url:', path);
-      console.log(convertFileSrc(`${epoc.value.dir}/${path}`));
       return convertFileSrc(`${epoc.value.dir}/${path}`);
     }
   }
