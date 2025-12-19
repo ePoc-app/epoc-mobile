@@ -99,16 +99,18 @@ const renderMermaid = async () => {
 </template>
 
 <style lang="scss">
+@use "sass:color";
+
 .html-content{
   $inria-red : #e63312;
-  $inria-red-bg : lighten($inria-red, 48%);
+  $inria-red-bg : color.adjust($inria-red, $lightness: 48%);
   $inria-blue : #40455a;
-  $inria-blue-border : lighten($inria-blue, 50%);
-  $inria-blue-bg : lighten($inria-blue, 64%);
+  $inria-blue-border : color.adjust($inria-blue, $lightness: 50%);
+  $inria-blue-bg : color.adjust($inria-blue, $lightness: 64%);
   $inria-grey : #eeeff3;
 
   user-select: text;
-  
+
   @function pow($number, $exponent) {
     $value: 1;
 
