@@ -1,13 +1,15 @@
 <script setup lang="ts">
   import { actionSheetController, alertController, IonContent, IonHeader, IonPage, IonRefresher, IonRefresherContent, IonToolbar, IonIcon, IonButton } from '@ionic/vue';
   import { settingsOutline, closeOutline, informationCircleOutline, cloudDownloadOutline, chevronForwardOutline,arrowForwardOutline, cogOutline, syncOutline} from 'ionicons/icons';
-  import {useLibraryStore} from '@/stores/libraryStore';
+  import { useLibraryStore } from '@/stores/libraryStore';
+  import { useLocalEpocsStore } from '@/stores/localEpocsStore';
   import { useOnboardingStore } from '@/stores/onboardingStore';
+  import { useConvertFileSrc } from '@/composables/useConvertFileSrc';
   import { storeToRefs } from 'pinia';
   import { RouterLink, useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n'
   import { Swiper, SwiperSlide } from 'swiper/vue';
-  import {Pagination} from 'swiper/modules'
+  import { Pagination } from 'swiper/modules'
   import 'swiper/css';
   import 'swiper/css/pagination';
 
@@ -15,18 +17,10 @@
   const { t } = useI18n() 
   const router = useRouter()
   const libraryStore = useLibraryStore();
+  const localEpocsStore = useLocalEpocsStore();
   const onboardingStore = useOnboardingStore();
+  const { convertFileSrc } = useConvertFileSrc();
   const { getOnboarding } = storeToRefs(onboardingStore);
-
-  /////// TODO SECTION ///////////
-  import inria_collection from '@/assets/inria_collection.json'
-  const localEpocs = Object.values(inria_collection.ePocs).slice(0,1)
-
-  const localEpocsService = {
-    imports : [{value : "HARD CODED"}],
-    localEpocLibraryMenu: (epoc) => {libraryStore.epocLibraryMenu(epoc)},
-    downloadLocalEpoc: (link) => {alert("TODO : download" + link )}
-  }
 
   const fileHandler = (E006PEevent) => {console.log("TODO")}
   const doRefresh = (event) => {alert(event)}
@@ -38,7 +32,6 @@
   const removeMessage = (id: string) => {
     onboardingStore.removeOnboarding(id);
   }
-  ///////////////////////////////
 
   const openAddMenu = async () => {
     const buttons = [
@@ -113,7 +106,7 @@
           text: t('CONFIRM'),
           handler: (e) => {
             if (e.link.endsWith('.json')) libraryStore.addCustomCollection(e.link);
-            else localEpocsService.downloadLocalEpoc(e.link);
+            else localEpocsStore.downloadLocalEpoc(e.link);
           }
         }
       ],
@@ -235,23 +228,19 @@
       </div>
       <div class="library-separator"><span>{{$t('MISSING.MY_EPOCS')}}</span></div>
       <div class="library-items">
-        <div class="library-item" v-for="epoc of localEpocs" :key="epoc.id">
-          <RouterLink :to="{ name: 'WIP', params: {any: '/library/'+ epoc.dir}}">
-            <div role="link" :aria-label="epoc.title" class="library-item-image" :style="'background-image:url('+epoc.rootFolder+epoc.image+')'"></div>
+        <div class="library-item" v-for="epoc of localEpocsStore.localEpocs" :key="epoc.id">
+          <RouterLink :to="{ name: 'EpocOverviewPage', params: {libraryId: 'local-epocs', id: epoc.id}}">
+            <div role="link" :aria-label="epoc.title" class="library-item-image" :style="`background-image:url(${convertFileSrc(`${epoc.dir}/${epoc.image}`)})`"></div>
           </RouterLink>
           <h3 aria-hidden="true" class="library-item-title">{{epoc.title}}</h3>
           <div class="library-item-toolbar">
             <ion-button class="expanded" color="inria" v-on:click="router.push({ name: 'TocPage', params: {id:epoc.id}})">
               <span>{{$t('LIBRARY_PAGE.OPEN')}}</span>
             </ion-button>
-            <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="localEpocsService.localEpocLibraryMenu(epoc)">
+            <ion-button class="round" :class="{'update-available': epoc.updateAvailable}" color="inria-base-button" v-on:click="localEpocsStore.localEpocLibraryMenu(epoc)">
               <span :aria-label="$t('MISSING.CHAPTER_OPTIONS')" class="ellipsis base-btn">...</span>
             </ion-button>
           </div>
-        </div>
-        <div class="library-item library-item-import" v-for="item of localEpocsService.imports" :key="item.value">
-          <div class="library-item-image"></div>
-          <h3 aria-hidden="true" class="library-item-title">{{item.value}}</h3>
         </div>
         <div class="library-item library-item-add" v-on:click="openAddMenu()">
           <div class="library-item-image">
