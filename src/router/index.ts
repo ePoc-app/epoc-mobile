@@ -9,6 +9,7 @@ import WIPPage from '@/views/WIPPage.vue';
 import TestPage from '@/views/TestPage.vue';
 import TocPage from '@/views/epoc/TocPage.vue';
 import PlayerPage from '@/views/epoc/PlayerPage.vue';
+import AssessmentPage from '@/views/epoc/AssessmentPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -70,6 +71,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'OrphanPlayer',
         component: WIPPage,
     },
+    {
+        path: '/epoc/assessment/:epoc_id/:assessment_id',
+        name: 'AssessmentPage',
+        component: AssessmentPage,
+    },
+
 ];
 
 const router = createRouter({
