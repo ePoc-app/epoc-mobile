@@ -14,8 +14,10 @@ import { useI18n } from 'vue-i18n';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Swiper as SwiperObject } from 'swiper/types';
 import { denormalize } from '@/utils/transform';
+import { useTemplateRefsList } from '@vueuse/core';
+import CommonQuestion from '@/components/questions/CommonQuestion.vue';
 const { t } = useI18n();
-
+type CommonQuestionType = InstanceType<typeof CommonQuestion>
 
 //Store
 const epocStore = useEpocStore()
@@ -33,6 +35,8 @@ const { epoc } = storeToRefs(epocStore)
 const { settings } = storeToRefs(settingsStore)
 const { readings } = storeToRefs(readingStore)
 
+const questionsElement = useTemplateRefsList<CommonQuestionType>()
+
 const userScore = ref(0);
 const userResponses = ref<string[]>([]);
 const assessmentData = ref<AssessmentData>(emptyAssessmentData);
@@ -42,7 +46,6 @@ const currentQuestion = ref(0);
 const isEnd = ref(false);
 const certificateShown = ref(false)
 const questionSlides = ref<SwiperObject>() //undefined; // will be set only once on mounted 
-//@ViewChildren(CommonQuestionComponent) questionsElement:QueryList<CommonQuestionComponent>;
 
 
 
@@ -223,6 +226,7 @@ const updateFocus = () => {
                          :epocId="epocId" :question="question" 
                          @userHasResponded="onUserHasResponded($event)" videos youtube,
                          @close="back()" 
+                         :ref="questionsElement.set"
                          v-if="!isEnd">
                     </common-question>
                 </swiper-slide>
