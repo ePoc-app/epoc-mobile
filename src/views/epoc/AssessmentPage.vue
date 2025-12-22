@@ -24,13 +24,14 @@ const settingsStore = useSettingsStore()
 const router = useRouter();
 const route = useRoute();
 
+// params
+const epocId = ref<string>(route.params.epoc_id.toString())
+const assessmentId = ref<string>(route.params.assessment_id.toString())
+
 // # ref
 const { epoc } = storeToRefs(epocStore)
 const { settings } = storeToRefs(settingsStore)
 const { readings } = storeToRefs(readingStore)
-
-const epocId = ref<string>(route.params.epoc_id.toString())
-const assessmentId = ref<string>(route.params.assessmentId.toString())
 
 const userScore = ref(0);
 const userResponses = ref<string[]>([]);
@@ -186,6 +187,7 @@ const presentAlertConfirm = async () => {
                 text: t('QUESTION.QUIT_MODAL.QUIT'),
                 handler: () => {
                     router.back()
+                    // TODO test in situ
                     // navigateBack(
                     //    '/epoc/play/' + epoc.value.id + '/' + assessment.value.chapterId + '/content/' + assessment.valueId
                     //);
@@ -213,12 +215,15 @@ const updateFocus = () => {
 <template>
 <ion-content :scrollY="false" v-if="assessment">
     <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
-        <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false
+        <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
             <template v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
                 <swiper-slide>
                     <common-question :aria-hidden="questionIndex !== currentQuestion" closable="true" 
                         :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length" :contentId="assessment.id"
-                         :epocId="epocId" :question="question" @userHasResponded="onUserHasResponded($event)" @close="back()" v-if="!isEnd">
+                         :epocId="epocId" :question="question" 
+                         @userHasResponded="onUserHasResponded($event)" videos youtube,
+                         @close="back()" 
+                         v-if="!isEnd">
                     </common-question>
                 </swiper-slide>
             </template>
@@ -244,7 +249,8 @@ const updateFocus = () => {
                                             :delta="assessmentData.userScore / assessmentData.totalScore * 100"
                                             :threshold="epoc.certificateScore / assessmentData.totalScore * 100"
                                             :minLabel="'0'"
-                                            :maxLabel="assessmentData.totalScore"></score-progress>
+                                            :maxLabel="assessmentData.totalScore">
+                            </score-progress>
                         </div>
                     </div>
                     <ion-button size="large" expand="block" color="outline-button" fill="outline" (click)="retry()">

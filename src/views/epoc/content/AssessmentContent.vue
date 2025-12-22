@@ -7,9 +7,11 @@ import { computed, PropType } from 'vue';
 import { storeToRefs } from 'pinia';
 import { school, help } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 const epocStore = useEpocStore()
 const readingStore = useReadingStore()
+const router = useRouter()
 const {t} = useI18n()
 // PROPS
 const props = defineProps({
@@ -45,7 +47,8 @@ const questionNumber = computed(() => props.content.questions?.length || 0)
 </div>
 <p>{{content.summary}}</p>
 <div>
-  <ion-button expand="block" size="large" fill="outline" color="outline-button" router-link="['/epoc/assessment', epocId, content.id]">
+  <ion-button expand="block" size="large" fill="outline" color="outline-button" 
+    v-on:click="router.push({ name: 'AssessmentPage', params: {epoc_id:epoc.id, assessment_id: content.id}})">
     <span v-if="!userAssessment">
       {{t('PLAYER.ASSESSMENT_COMPONENT.START')}}
     </span>
