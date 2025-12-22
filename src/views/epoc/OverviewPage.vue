@@ -7,43 +7,34 @@
   import { useI18n } from 'vue-i18n';
   import { ref, computed } from 'vue';
   import VideoPlayer from '@/components/VideoPlayer.vue';
+  import {useLocalEpocsStore} from '@/stores/localEpocsStore';
+  import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
 
   const { t } = useI18n();
 
   const route = useRoute();
   const router = useRouter();
   const libraryStore = useLibraryStore();
+  const localEpocStore = useLocalEpocsStore();
+  const { convertFileSrc } = useConvertFileSrc();
   const selectedTab = ref(0);
 
-  // TODO SECTION //////
-  const getLocalEpoc = (dir: string) => {
-    return getEpocFromCollection(dir, "not implemented yet");
-  }
-
   const openEpocMenu = (epoc: EpocLibrary) => {
-    const collectionId = route.params.libraryId?.toString();
-    libraryStore.epocLibraryMenu(epoc, collectionId);
+    if (route.params.libraryId === 'local-epocs') {
+      localEpocStore.localEpocLibraryMenu(epoc);
+    } else {
+      libraryStore.epocLibraryMenu(route.params.libraryId.toString(), epoc.id);
+    }
   }
 
   const downloadEpoc = (epoc: EpocLibrary) => {
-    const collectionId = route.params.libraryId?.toString();
-    if (collectionId) {
-      libraryStore.downloadEpoc(epoc, collectionId);
-    }
-  } 
-
-  // this.libraryService.epocProgresses$.subscribe((epocProgresses) => {
-  // this.epocProgresses = epocProgresses;
-  // this.ref.detectChanges();
-
-  // TODO Handle Video 
-
-  //////
+    libraryStore.downloadEpocFromCollection(route.params.libraryId.toString(), epoc.id)
+  }
 
   const getEpoc = () : EpocLibrary | undefined => {
     let epoc = undefined;
-    if (route.params.dir) {
-      epoc = getLocalEpoc(route.params.dir.toString())
+    if (route.params.libraryId === 'local-epocs') {
+      epoc = localEpocStore.localEpocs.find(epoc => epoc.id === route.params.id);
     } else if (route.params.libraryId && route.params.id) {
       const collectionId = route.params.libraryId.toString()
       const epocId = route.params.id.toString()
@@ -64,9 +55,15 @@
     selectedTab.value = index;
   }
 
-  const epoc = computed<EpocLibrary | undefined>(() => getEpoc())
+  const pathToUrl = (path) => {
+    if (path.startsWith('file://') || path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    } else {
+      return convertFileSrc(`${epoc.value.dir}/${path}`);
+    }
+  }
 
-  
+  const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
 </script>
 
 <template>
@@ -96,9 +93,10 @@
         </div>
 
         <div class="epoc-trailer">
-          <video-player :src="epoc.teaser ? epoc.teaser : ''" :poster="epoc.thumbnail"
+          <video-player v-if="epoc.teaser" :src="pathToUrl(epoc.teaser)" :poster="pathToUrl(epoc.thumbnail)"
                         :controls="{show:false, timeline: true, overlay: true}">
           </video-player>
+          <img v-else :alt="'Cover image : '+epoc.title" :src="pathToUrl(epoc.thumbnail)"/>
         </div>
 
         <div class="epoc-specs">
@@ -151,7 +149,7 @@
           <div class="tab" v-if="selectedTab === 2">
             <div class="epoc-author" v-for="author of epoc.authors">
               <div class="epoc-author-name">
-                <img :alt="t('OVERVIEW_PAGE.PICTURE_ALT') + author.name" v-if="author.image" :src="(epoc.rootFolder || '') + author.image"/>
+                <img :alt="t('OVERVIEW_PAGE.PICTURE_ALT') + author.name" v-if="author.image" :src="pathToUrl(author.image)"/>
                 <div>
                   {{author.name}}
                   <div class="epoc-author-title">{{author.title}}</div>
@@ -229,6 +227,18 @@
   border-bottom: 1px solid var(--ion-color-inria-light);
   // hack to fix overflow hidden safari
   -webkit-mask-image: -webkit-radial-gradient(white, black);
+  background: var(--ion-color-inria-blue);
+
+  img, .video-player {
+    display: flex;
+    min-height: 210px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    color: white;
+  }
 }
 
 

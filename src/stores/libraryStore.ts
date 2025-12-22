@@ -1,17 +1,16 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
-import {Directory, Encoding, Filesystem} from '@capacitor/filesystem';
-import {Capacitor} from '@capacitor/core';
 import {actionSheetController, alertController, toastController} from '@ionic/vue';
 import {listCircleOutline, refreshOutline, starOutline, trash, receiptOutline, cloudDownloadOutline} from 'ionicons/icons';
 import {useRouter} from 'vue-router';
 import {useSettingsStore} from './settingsStore';
 import {useReadingStore} from './readingStore';
-import type {Epoc, EpocCollection, EpocLibraryState, EpocMetadata, Publisher} from '@/types/epoc';
+import type {EpocCollection, EpocLibraryState, EpocMetadata, Publisher} from '@/types/epoc';
 import type {Reading} from '@/types/reading';
 import {download, unzip} from '@/utils/file';
 import {useI18n} from 'vue-i18n';
 import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
+import {readEpocContent} from '@/utils/epocService';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
@@ -67,7 +66,7 @@ export const useLibraryStore = defineStore('library', () => {
             // Check local content for each epoc
             for (const collection of Object.values(collectionsRecord)) {
                 for (const epoc of Object.values(collection.ePocs)) {
-                    const localEpoc = await readEpocContent(epoc.id);
+                    const localEpoc = await readEpocContent('epocs', epoc.id);
                     if (localEpoc) {
                         const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
                         const updateAvailable = new Date(epoc.lastModified) > downloadDate;
@@ -123,26 +122,6 @@ export const useLibraryStore = defineStore('library', () => {
             }
         } catch (error) {
             console.error('Error fetching custom collections:', error);
-        }
-    }
-
-    async function readEpocContent(epocId: string): Promise<Epoc | null> {
-        try {
-            const file = await Filesystem.readFile({
-                path: `epocs/${epocId}/content.json`,
-                directory: Directory.LibraryNoCloud,
-                encoding: Encoding.UTF8,
-            });
-
-            if (Capacitor.isNativePlatform()) {
-                const result = await (typeof file.data === 'string' ? Promise.resolve(file.data) : file.data.text());
-                return JSON.parse(result);
-            } else {
-                const result = atob(await (typeof file.data === 'string' ? Promise.resolve(file.data) : file.data.text()));
-                return JSON.parse(result);
-            }
-        } catch (error) {
-            return null;
         }
     }
 
@@ -365,7 +344,7 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     // --- Initialization ---
-    fetchOfficialCollections();
+    fetchOfficialCollections().then();
     settingsStore.$subscribe((_, state) => {
         if (state.settings) {
             fetchCustomCollections();
@@ -387,7 +366,6 @@ export const useLibraryStore = defineStore('library', () => {
         // Actions
         fetchOfficialCollections,
         fetchCustomCollections,
-        readEpocContent,
         updateEpocCollectionState,
         updateEpocProgress,
         downloadEpoc,

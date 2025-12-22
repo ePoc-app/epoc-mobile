@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 
-export const useVideoPlayerStore = defineStore('videoPlayer', () => {
+export const useMediaPlayerStore = defineStore('mediaPlayer', () => {
     // État global
     const players = ref<Map<string, { duration: number; isPlaying: boolean; currentTime: number }>>(new Map());
     const activePlayerId = ref<string | null>(null);

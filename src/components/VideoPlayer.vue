@@ -2,7 +2,7 @@
 import { IonIcon, IonSelect, IonSelectOption, IonItem, IonLabel, toastController, createGesture } from '@ionic/vue';
 import { ref, onMounted, onUnmounted, PropType } from 'vue';
 import { logoClosedCaptioning, pause, play as playIcon, expand } from 'ionicons/icons';
-import { useVideoPlayerStore } from '@/stores/videoPlayerStore';
+import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 
 const props = defineProps({
   src: String,
@@ -32,13 +32,13 @@ const props = defineProps({
 });
 
 // Store Pinia
-const videoPlayerStore = useVideoPlayerStore();
+const videoPlayerStore = useMediaPlayerStore();
 
 // Générer un ID unique pour ce lecteur
 const playerId = `video-player-${Math.random().toString(36).substring(2, 9)}`;
 
 // Références
-const videoRef = ref<HTMLVideoElement | null>(null);
+const video = ref<HTMLVideoElement | null>(null);
 const trackSelectRef = ref<typeof IonSelect | null>(null);
 const timelineProgress = ref<HTMLElement | null>(null);
 const timelineCursorRef = ref<HTMLElement | null>(null);
@@ -48,7 +48,7 @@ const hasPlayed = ref(false);
 const playing = ref(false);
 const trackSelected = ref('none');
 const progress = ref(0);
-const video = ref<HTMLVideoElement | null>(null);
+
 
 // Méthodes
 const play = () => {
@@ -122,10 +122,10 @@ const presentToast = async (text: string) => {
 
 // Cycle de vie
 onMounted(() => {
-  if (!videoRef.value) return;
-  video.value = videoRef.value;
+  if (!video.value) return;
 
   video.value.addEventListener('error', () => {
+    if (video.value.src.endsWith('loading')) return;
     presentToast('Error loading video');
   });
 
@@ -215,8 +215,7 @@ onUnmounted(() => {
         @click="play"
     >
       <video
-          v-if="src"
-          ref="videoRef"
+          ref="video"
           disablePictureInPicture
           playsinline
           preload="metadata"
