@@ -323,12 +323,12 @@ const showCertificateCard = () => {
     }
 };
 
-/*
-                    <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
-                    <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
-                    <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
-                  </common-content>
-   */
+/* TODO
+    <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
+        <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
+        <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
+    </common-content>
+*/
 </script>
 
 <template>
@@ -380,6 +380,10 @@ const showCertificateCard = () => {
                                             :content="content"
                                             @timeline-dragging="onDrag($event)"
                                         ></video-content>
+                                        <assessment-content 
+                                            v-if="content.type === 'assessment'" 
+                                            :content="content">
+                                        </assessment-content>
                                     </common-content>
                                     <simple-question
                                         v-if="content.type === 'simple-question'"
