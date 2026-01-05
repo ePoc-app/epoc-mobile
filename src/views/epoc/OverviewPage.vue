@@ -33,7 +33,7 @@ const openEpocMenu = (epoc: EpocLibrary) => {
     if (route.params.libraryId === 'local-epocs') {
         localEpocStore.localEpocLibraryMenu(epoc);
     } else {
-        libraryStore.epocLibraryMenu(route.params.libraryId.toString(), epoc.id);
+        libraryStore.epocLibraryMenu(epoc, route.params.libraryId.toString());
     }
 };
 
