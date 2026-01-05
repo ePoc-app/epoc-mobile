@@ -41,7 +41,7 @@ onBeforeMount(async () => {
 });
 
 const displayMenu = () => {
-    epocStore.epocMainMenu;
+    epocStore.epocMainMenu();
 };
 
 const toggleDetails = (chapter) => {
