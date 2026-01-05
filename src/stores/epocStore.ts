@@ -8,7 +8,8 @@ import { Capacitor } from '@capacitor/core';
 import { useI18n } from 'vue-i18n';
 import { homeOutline, listCircleOutline, starOutline, receiptOutline, settingsOutline } from 'ionicons/icons';
 import { readEpocContent } from '@/utils/epocService';
-import { Epoc } from '@/types/epoc';
+import { Epoc, Chapter } from '@/types/epoc';
+import { displayLicence } from '@/utils/app';
 
 export const useEpocStore = defineStore('epoc', () => {
     const { t } = useI18n();
@@ -162,8 +163,10 @@ export const useEpocStore = defineStore('epoc', () => {
             {
                 text: t('FLOATING_MENU.LICENSE'),
                 icon: receiptOutline,
-                handler: () => {
-                    // Implement your license display logic
+                handler: async () => {
+                    if (!_epoc.value) return;
+
+                    await displayLicence(_epoc.value);
                 },
             },
             {
