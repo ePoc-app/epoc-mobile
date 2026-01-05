@@ -1,11 +1,11 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import { createI18n } from 'vue-i18n'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { i18n } from '@/i18n';
+import App from './App.vue';
 import router from './router';
 
 import { IonicVue } from '@ionic/vue';
-import {useStorage} from '@/composables/useStorage';
+import { useStorage } from '@/composables/useStorage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -23,13 +23,6 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
-import localeDE from '@/assets/i18n/de.json'
-import localeEN from '@/assets/i18n/en.json'
-import localeES from '@/assets/i18n/es.json'
-import localeFR from '@/assets/i18n/fr.json'
-import localeIT from '@/assets/i18n/it.json'
-
-
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -44,29 +37,17 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.scss';
 
-const pinia = createPinia()
-const messages = {
-  de: localeDE,
-  en: localeEN,
-  es: localeES,
-  fr: localeFR,
-  it: localeIT
-}
-
-const i18n = createI18n({
-  legacy: false, // to use composition instead of option https://vue-i18n.intlify.dev/guide/advanced/composition
-  locale: 'fr', 
-  fallbackLocale: 'en', 
-  messages, 
-})
+const pinia = createPinia();
 
 const app = createApp(App)
-  .use(IonicVue)
-  .use(router)
-  .use(pinia)
-  .use(i18n);
+    .use(IonicVue, {
+        innerHTMLTemplatesEnabled: true,
+    })
+    .use(router)
+    .use(pinia)
+    .use(i18n);
 
 router.isReady().then(() => {
-  app.mount('#app');
-  useStorage();
+    app.mount('#app');
+    useStorage();
 });

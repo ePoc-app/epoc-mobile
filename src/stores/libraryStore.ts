@@ -1,16 +1,24 @@
-import {defineStore} from 'pinia';
-import {computed, ref} from 'vue';
-import {actionSheetController, alertController, toastController} from '@ionic/vue';
-import {listCircleOutline, refreshOutline, starOutline, trash, receiptOutline, cloudDownloadOutline} from 'ionicons/icons';
-import {useRouter} from 'vue-router';
-import {useSettingsStore} from './settingsStore';
-import {useReadingStore} from './readingStore';
-import type {EpocCollection, EpocLibraryState, EpocMetadata, Publisher} from '@/types/epoc';
-import type {Reading} from '@/types/reading';
-import {download, unzip} from '@/utils/file';
-import {useI18n} from 'vue-i18n';
-import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
-import {readEpocContent} from '@/utils/epocService';
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
+import { actionSheetController, alertController, toastController } from '@ionic/vue';
+import {
+    listCircleOutline,
+    refreshOutline,
+    starOutline,
+    trash,
+    receiptOutline,
+    cloudDownloadOutline,
+} from 'ionicons/icons';
+import { useRouter } from 'vue-router';
+import { useSettingsStore } from './settingsStore';
+import { useReadingStore } from './readingStore';
+import type { EpocCollection, EpocLibraryState, EpocMetadata, Publisher } from '@/types/epoc';
+import type { Reading } from '@/types/reading';
+import { download, unzip } from '@/utils/file';
+import { useI18n } from 'vue-i18n';
+import { useConvertFileSrc } from '@/composables';
+import { readEpocContent } from '@/utils/epocService';
+import { displayLicence } from '@/utils/app';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
@@ -18,7 +26,7 @@ export const useLibraryStore = defineStore('library', () => {
     const readingStore = useReadingStore();
     const router = useRouter();
     const { t } = useI18n();
-    const {convertFileSrc} = useConvertFileSrc();
+    const { convertFileSrc } = useConvertFileSrc();
 
     //const officialCollectionsUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/official-collections.json';
     const officialCollectionsUrl = 'https://epoc.inria.fr/official-collections.json';
@@ -68,7 +76,9 @@ export const useLibraryStore = defineStore('library', () => {
                 for (const epoc of Object.values(collection.ePocs)) {
                     const localEpoc = await readEpocContent('epocs', epoc.id);
                     if (localEpoc) {
-                        const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
+                        const downloadDate = localEpoc.lastModif
+                            ? new Date(localEpoc.lastModif.replace(/-/g, '/'))
+                            : new Date();
                         const updateAvailable = new Date(epoc.lastModified) > downloadDate;
                         updateEpocCollectionState(epoc.id, { downloaded: true, updateAvailable }, collection.id);
                     }
@@ -114,7 +124,9 @@ export const useLibraryStore = defineStore('library', () => {
                 for (const epoc of Object.values(collection.ePocs)) {
                     const localEpoc = await readEpocContent(epoc.id);
                     if (localEpoc) {
-                        const downloadDate = localEpoc.lastModif ? new Date(localEpoc.lastModif.replace(/-/g, '/')) : new Date();
+                        const downloadDate = localEpoc.lastModif
+                            ? new Date(localEpoc.lastModif.replace(/-/g, '/'))
+                            : new Date();
                         const updateAvailable = new Date(epoc.lastModified) > downloadDate;
                         updateEpocCollectionState(epoc.id, { downloaded: true, updateAvailable }, collection.id, true);
                     }
@@ -126,13 +138,14 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     function updateEpocCollectionState(
-        epocId: string, {
+        epocId: string,
+        {
             downloading = false,
             unzipping = false,
             downloaded = false,
             opened,
-            updateAvailable = false
-        }:EpocLibraryState,
+            updateAvailable = false,
+        }: EpocLibraryState,
         collectionId: string,
         custom: boolean = false
     ) {
@@ -145,7 +158,7 @@ export const useLibraryStore = defineStore('library', () => {
         epoc.downloading = downloading;
         epoc.downloaded = downloaded;
         epoc.unzipping = unzipping;
-        epoc.opened = typeof opened !== 'undefined' ? opened:epoc.opened;
+        epoc.opened = typeof opened !== 'undefined' ? opened : epoc.opened;
         epoc.updateAvailable = updateAvailable;
         if (custom) {
             customCollections.value = { ...customCollections.value };
@@ -162,7 +175,7 @@ export const useLibraryStore = defineStore('library', () => {
         updateEpocCollectionState(epoc.id, { downloading: true }, libraryId);
         try {
             await download(epoc.download, `${epoc.id}.zip`, (progress) => {
-                updateEpocProgress(epoc.id, progress.bytes/progress.contentLength);
+                updateEpocProgress(epoc.id, progress.bytes / progress.contentLength);
             });
         } catch (error) {
             console.error('Error downloading ePoc:', error);
@@ -222,30 +235,30 @@ export const useLibraryStore = defineStore('library', () => {
             {
                 text: t('FLOATING_MENU.LICENSE'),
                 icon: receiptOutline,
-                handler: () => {
-                    // Implement your license display logic
+                handler: async () => {
+                    await displayLicence(epoc);
                 },
             },
             ...(epoc.updateAvailable
                 ? [
-                    {
-                        text: t('FLOATING_MENU.UPDATE'),
-                        icon: cloudDownloadOutline,
-                        handler: () => {
-                            deleteEpoc(epoc, libraryId);
-                            downloadEpoc(epoc, libraryId);
-                        },
-                    },
-                ]
+                      {
+                          text: t('FLOATING_MENU.UPDATE'),
+                          icon: cloudDownloadOutline,
+                          handler: () => {
+                              deleteEpoc(epoc, libraryId);
+                              downloadEpoc(epoc, libraryId);
+                          },
+                      },
+                  ]
                 : []),
             ...(epoc.opened
                 ? [
-                    {
-                        text: t('FLOATING_MENU.RESET'),
-                        icon: refreshOutline,
-                        handler: () => confirmReset(epoc, libraryId),
-                    },
-                ]
+                      {
+                          text: t('FLOATING_MENU.RESET'),
+                          icon: refreshOutline,
+                          handler: () => confirmReset(epoc, libraryId),
+                      },
+                  ]
                 : []),
             {
                 text: t('FLOATING_MENU.DELETE'),
