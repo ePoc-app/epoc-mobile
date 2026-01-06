@@ -21,6 +21,7 @@ import {
     IonTitle,
     IonToggle,
     IonToolbar,
+    toastController,
 } from '@ionic/vue';
 import { addCircle, bugOutline, closeCircle, createOutline, mailOutline, trashOutline } from 'ionicons/icons';
 import { useLibraryStore } from '@/stores/libraryStore';
@@ -156,9 +157,21 @@ function disableDevMode(event: any) {
     settingsChanged();
 }
 
-// TODO
 function deleteCollection(event: any, key: string) {
-    console.log('deleteCollection', event, key);
+    if (event.detail.role === 'cancel') return;
+
+    const libraryIndex = settingsStore.settings.customLibrairies.findIndex(
+        (url) => url === libraryStore.customCollections[key].url
+    );
+
+    if (libraryIndex !== -1) {
+        settingsStore.updateSettings({
+            customLibrairies: [
+                ...settingsStore.settings.customLibrairies.slice(0, libraryIndex),
+                ...settingsStore.settings.customLibrairies.slice(libraryIndex + 1),
+            ],
+        });
+    }
 }
 
 async function deleteData() {
@@ -185,7 +198,6 @@ async function deleteData() {
     await alert.present();
 }
 
-// TODO
 const libraryPromptButtons = [
     {
         text: t('CANCEL'),
@@ -194,8 +206,16 @@ const libraryPromptButtons = [
     },
     {
         text: t('CONFIRM'),
-        handler: (data: any) => {
-            console.log('Library prompt data:', data);
+        handler: async (data: any) => {
+            if (!data[0]) return;
+            const error = await libraryStore.checkCustomCollectionUrl(data[0]);
+
+            if (error) {
+                return presentToast(t(error), 'danger');
+            }
+
+            await presentToast(t('CUSTOM_COLLECTION.SUCCESS'), 'success');
+            settingsStore.updateSettings({ customLibrairies: [...settingsStore.settings.customLibrairies, data[0]] });
         },
     },
 ];
@@ -205,6 +225,28 @@ const libraryPromptInputs = [
         placeholder: 'URL',
     },
 ];
+
+const libraryDeleteButtons = [
+    {
+        text: t('CANCEL'),
+        role: 'cancel',
+        cssClass: 'secondary',
+    },
+    {
+        text: t('CONFIRM'),
+        role: 'confirm',
+    },
+];
+
+async function presentToast(message: string, color?: string) {
+    const toast = await toastController.create({
+        message,
+        duration: 2000,
+        color,
+    });
+
+    toast.present();
+}
 </script>
 
 <template>
@@ -403,13 +445,13 @@ const libraryPromptInputs = [
                                 <ion-text>{{ collectionItem.title }}</ion-text>
                                 <p style="white-space: normal">{{ collectionItem.url }}</p>
                             </ion-label>
-                            <ion-icon
-                                :icon="closeCircle"
-                                color="inria"
-                                slot="end"
-                                @click="deleteCollection($event, 'WIP')"
-                            ></ion-icon>
-                            <!-- TODO: replace 'WIP' with collection ID -->
+                            <ion-icon id="present-confirm" :icon="closeCircle" color="inria" slot="end"></ion-icon>
+                            <ion-alert
+                                trigger="present-confirm"
+                                :header="t('SETTINGS_PAGE.CONFIRM_DELETE_LIBRARY')"
+                                :buttons="libraryDeleteButtons"
+                                @did-dismiss="deleteCollection($event, collectionItem.id)"
+                            />
                         </ion-item>
                     </template>
                     <ion-item id="present-library-prompt">
