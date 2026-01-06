@@ -161,9 +161,28 @@ function deleteCollection(event: any, key: string) {
     console.log('deleteCollection', event, key);
 }
 
-// TODO
-function deleteData() {
-    console.log('deleteData');
+async function deleteData() {
+    const alert = await alertController.create({
+        header: t('SETTINGS_PAGE.DELETE_DATA_MODAL.INFO'),
+        message: t('SETTINGS_PAGE.DELETE_DATA_MODAL.MESSAGE'),
+        buttons: [
+            {
+                text: t('CANCEL'),
+                role: 'cancel',
+                cssClass: 'secondary',
+            },
+            {
+                text: t('CONFIRM'),
+                handler: async () => {
+                    readingStore.resetAll();
+                    settingsStore.resetSettings();
+                    await setUser(null);
+                },
+            },
+        ],
+    });
+
+    await alert.present();
 }
 
 // TODO
