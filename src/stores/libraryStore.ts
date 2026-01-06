@@ -37,9 +37,10 @@ export const useLibraryStore = defineStore('library', () => {
     const readings = ref<Reading[]>([]);
 
     // --- Getters ---
-    const getOfficialCollections = computed(() => officialCollections.value);
-    const getCustomCollections = computed(() => customCollections.value);
-    const getEpocProgresses = computed(() => epocProgresses.value);
+    const collections = computed<Record<string, EpocCollection>>(() => ({
+        ...officialCollections.value,
+        ...customCollections.value,
+    }));
 
     // --- Actions ---
     async function fetchOfficialCollections() {
@@ -373,9 +374,7 @@ export const useLibraryStore = defineStore('library', () => {
         customCollections,
         epocProgresses,
         // Getters
-        getOfficialCollections,
-        getCustomCollections,
-        getEpocProgresses,
+        collections,
         // Actions
         fetchOfficialCollections,
         fetchCustomCollections,

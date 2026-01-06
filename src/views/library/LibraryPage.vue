@@ -209,7 +209,7 @@ const linkInputAlert = async () => {
                 </swiper>
             </div>
             <div id="container">
-                <div v-for="collection in libraryStore.officialCollections" :key="collection.id">
+                <div v-for="collection in libraryStore.collections" :key="collection.id">
                     <div class="library-line-separator"></div>
                     <div class="library-items" tabindex="-1">
                         <div class="library-header">
