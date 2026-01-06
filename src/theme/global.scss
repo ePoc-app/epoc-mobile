@@ -799,3 +799,8 @@ iframe.plugin{
   top: calc(var(--ion-safe-area-top) + 15px);
   right: calc(var(--ion-safe-area-right) + 10px);
 }
+
+
+ion-icon {
+  color: inherit;
+}
