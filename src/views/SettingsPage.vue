@@ -410,7 +410,7 @@ async function presentToast(message: string, color?: string) {
                     <ion-list-header>
                         {{ $t('SETTINGS_PAGE.OFFICIAL_COLLECTIONS') }}
                     </ion-list-header>
-                    <ion-item v-for="(collectionItem, key) in libraryStore.getOfficialCollections" :key="key">
+                    <ion-item v-for="(collectionItem, key) in libraryStore.officialCollections" :key="key">
                         <ion-label>
                             <ion-text>{{ collectionItem.title }}</ion-text>
                             <p style="white-space: normal">{{ collectionItem.url }}</p>
@@ -434,13 +434,13 @@ async function presentToast(message: string, color?: string) {
                     </ion-list-header>
                     <template
                         v-if="
-                            libraryStore.getCustomCollections &&
-                            (Array.isArray(libraryStore.getCustomCollections)
-                                ? libraryStore.getCustomCollections.length > 0
-                                : Object.keys(libraryStore.getCustomCollections).length > 0)
+                            libraryStore.customCollections &&
+                            (Array.isArray(libraryStore.customCollections)
+                                ? libraryStore.customCollections.length > 0
+                                : Object.keys(libraryStore.customCollections).length > 0)
                         "
                     >
-                        <ion-item v-for="(collectionItem, key) in libraryStore.getCustomCollections" :key="key">
+                        <ion-item v-for="(collectionItem, key) in libraryStore.customCollections" :key="key">
                             <ion-label>
                                 <ion-text>{{ collectionItem.title }}</ion-text>
                                 <p style="white-space: normal">{{ collectionItem.url }}</p>
