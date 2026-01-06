@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+    alertController,
     IonAlert,
     IonBackButton,
     IonButton,
@@ -21,25 +22,22 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/vue';
-import {
-    addCircle,
-    bugOutline,
-    closeCircle,
-    createOutline,
-    logOutOutline,
-    mailOutline,
-    trashOutline,
-} from 'ionicons/icons';
+import { addCircle, bugOutline, closeCircle, createOutline, mailOutline, trashOutline } from 'ionicons/icons';
 import { useLibraryStore } from '@/stores/libraryStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useReadingStore } from '@/stores/readingStore';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
 import { App, type AppInfo } from '@capacitor/app';
 import { languages } from '@/utils/languages';
+import { useUser, type User } from '@/composables';
 
 const libraryStore = useLibraryStore();
 const settingsStore = useSettingsStore();
+const readingStore = useReadingStore();
 const { t } = useI18n();
+
+const { user, setUser, getUser } = useUser();
 
 const settings = computed(() => settingsStore.settings);
 const langs = languages;
@@ -60,13 +58,7 @@ App.getInfo()
     })
     .catch(() => {});
 
-// TODO
-const user = ref({
-    email: '',
-    firstname: '',
-    lastname: '',
-    username: '',
-});
+getUser();
 
 function resetDevModeCount() {
     devModeCount.value = 0;
@@ -88,19 +80,65 @@ function getStyle() {
     };
 }
 
-// TODO
-function logout() {
-    console.log('logout');
+async function handleSetUser() {
+    const alert = await alertController.create({
+        header: t('SETTINGS_PAGE.SET_USER.INFO'),
+        message: t('SETTINGS_PAGE.SET_USER.MESSAGE'),
+        inputs: [
+            {
+                name: 'lastname',
+                type: 'text',
+                placeholder: t('SETTINGS_PAGE.SET_USER.LASTNAME_PLACEHOLDER'),
+            },
+            {
+                name: 'firstname',
+                type: 'text',
+                placeholder: t('SETTINGS_PAGE.SET_USER.FIRSTNAME_PLACEHOLDER'),
+            },
+        ],
+        buttons: [
+            {
+                text: t('CANCEL'),
+                role: 'cancel',
+                cssClass: 'secondary',
+            },
+            {
+                text: t('CONFIRM'),
+                handler: async (data: User) => {
+                    if (!data.firstname?.trim() || !data.lastname?.trim()) {
+                        return false;
+                    }
+
+                    await setUser(data);
+                },
+            },
+        ],
+    });
+
+    await alert.present();
 }
 
-// TODO
-function setUser() {
-    console.log('setUser');
-}
+async function resetUser() {
+    const alert = await alertController.create({
+        header: t('SETTINGS_PAGE.DELETE_DATA_MODAL.INFO'),
+        message: t('SETTINGS_PAGE.DELETE_DATA_MODAL.MESSAGE'),
+        buttons: [
+            {
+                text: t('CANCEL'),
+                role: 'cancel',
+                cssClass: 'secondary',
+            },
+            {
+                text: t('CONFIRM'),
+                handler: async () => {
+                    readingStore.resetAll();
+                    await setUser(null);
+                },
+            },
+        ],
+    });
 
-// TODO
-function resetUser() {
-    console.log('resetUser');
+    await alert.present();
 }
 
 // TODO
@@ -259,22 +297,15 @@ const libraryPromptInputs = [
                         {{ $t('SETTINGS_PAGE.USER') }}
                     </ion-list-header>
                     <template v-if="user && user.firstname">
-                        <ion-item v-if="user.email">
-                            <ion-label>{{ $t('SETTINGS_PAGE.USER') }} : {{ user.email }}</ion-label>
-                            <ion-icon color="inria-icon" slot="end" :icon="logOutOutline" @click="logout()"></ion-icon>
-                        </ion-item>
                         <ion-item>
                             <ion-label>{{ $t('SETTINGS_PAGE.NAME') }} : {{ user.lastname }}</ion-label>
                         </ion-item>
                         <ion-item>
                             <ion-label>{{ $t('SETTINGS_PAGE.FIRSTNAME') }} : {{ user.firstname }}</ion-label>
                         </ion-item>
-                        <ion-item v-if="user.username">
-                            <ion-label>{{ $t('SETTINGS_PAGE.USERNAME') }} : {{ user.username }}</ion-label>
-                        </ion-item>
                     </template>
                     <template v-if="!user || !user.firstname">
-                        <ion-item @click="setUser()" detail>
+                        <ion-item @click="handleSetUser()" detail>
                             <ion-label role="button">{{ $t('SETTINGS_PAGE.DEFINE_USER') }}</ion-label>
                         </ion-item>
                     </template>
