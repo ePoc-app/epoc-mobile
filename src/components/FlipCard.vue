@@ -28,6 +28,7 @@ defineExpose({
   flip,
   showFront,
   showBack,
+  flipped
 });
 </script>
 

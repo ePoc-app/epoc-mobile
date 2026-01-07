@@ -12,7 +12,10 @@
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "lint": "eslint .",
-    "resources": "rm -rf resources/* && cp -R resources-common/* resources/ && npx capacitor-assets generate"
+    "resources": "rm -rf resources/* && cp -R resources-common/* resources/ && npx capacitor-assets generate",
+    "wdio:local": "wdio run ./tests/wdio/wdio.conf.local.ts",
+    "wdio:appium-android": "wdio run ./tests/wdio/wdio.conf.appium-android.ts",
+    "wdio:bs-android": "wdio run ./tests/wdio/wdio.conf.bs-android.ts"
   },
   "private": true,
   "dependencies": {
@@ -39,12 +42,13 @@
     "@ionic/vue": "^8.0.0",
     "@ionic/vue-router": "^8.0.0",
     "@types/katex": "^0.16.7",
-    "@types/node": "^18.19.130",
     "@vitejs/plugin-legacy": "^5.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/test-utils": "^2.3.0",
     "@vueuse/core": "^14.1.0",
+    "@wdio/cli": "^9",
+    "chai": "^4.3.6",
     "cordova-sqlite-storage": "^7.0.0",
     "cypress": "^13.5.0",
     "eslint": "^8.35.0",
@@ -65,10 +69,11 @@
     "vite": "~5.2.0",
     "vitest": "^0.34.6",
     "vtt.js": "^0.13.0",
-    "vue": "^3.3.0",
+    "vue": "^3.5.0",
     "vue-i18n": "^11.1.12",
     "vue-router": "^4.2.0",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^2.1.10",
+    "webdriverio": "^9"
   },
   "overrides": {
     "rollup": "4.44.0"

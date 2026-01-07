@@ -13,7 +13,6 @@ const prop = defineProps({
     required: true
   }
 })
-
 </script>
 
 

@@ -65,7 +65,7 @@ export const useReadingStore = defineStore('reading', () => {
         }
     }
 
-    function saveResponses(epocId: string, assessmentId: string, score: number, responses: any) {
+    function saveResponses(epocId: string, assessmentId: string, score: number, responses: string[]) {
         const index = readings.value.findIndex((reading) => reading.epocId === epocId);
         if (index === -1) return;
         const assessmentIndex = readings.value[index].assessments.findIndex(

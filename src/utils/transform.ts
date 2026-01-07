@@ -24,8 +24,11 @@
     return value.replace(/assets\/demo\//g, '').replace(regex, `src='${rootFolder}$1'`);
   }
 
-  const removeSecableSpace = (value: string | undefined): string | undefined => {
-    return value ? value.replace(/\s([?:;!])/g, '\xa0$1') : value;
+  const removeSecableSpace = (value: string ): string  => {
+    if (value) {
+      return value.replace(/\s([?:;!])/g, '\xa0$1');
+    }
+    return value
   }
 
   export { denormalize, srcConvert, removeSecableSpace }

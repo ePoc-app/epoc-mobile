@@ -42,6 +42,7 @@ import {
     gitBranchOutline,
 } from 'ionicons/icons';
 import { until } from '@vueuse/core';
+import AssessmentContent from './content/AssessmentContent.vue';
 
 //Store
 const epocStore = useEpocStore();
@@ -184,12 +185,12 @@ const initDataFromEpoc = (epoc: Epoc) => {
 
 // ## Swiper related :
 
-// called only once, automatically done by the swiper event
-const setSwiperRef = (swiper: SwiperObject) => {
-    if (!readerSlides.value) {
-        readerSlides.value = swiper;
-    }
-};
+  // ## Swiper related : 
+
+  // called only once, automatically done by the swiper event 
+  const setSwiperRef = (swiper : SwiperObject) => {
+    readerSlides.value = swiper
+  }
 
 const prevPage = () => {
     readerSlides.value?.slidePrev();
@@ -322,13 +323,12 @@ const showCertificateCard = () => {
     }
 };
 
-/*
-                    <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
-                    <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
-                    <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
-                    <assessment-content v-if="content.type === 'assessment'" [inputContent]="content"></assessment-content>
-                  </common-content>
-   */
+/* TODO
+    <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
+        <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
+        <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
+    </common-content>
+*/
 </script>
 
 <template>
@@ -380,6 +380,10 @@ const showCertificateCard = () => {
                                             :content="content"
                                             @timeline-dragging="onDrag($event)"
                                         ></video-content>
+                                        <assessment-content 
+                                            v-if="content.type === 'assessment'" 
+                                            :content="content">
+                                        </assessment-content>
                                     </common-content>
                                     <simple-question
                                         v-if="content.type === 'simple-question'"

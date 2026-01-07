@@ -21,7 +21,7 @@ export const useEpocStore = defineStore('epoc', () => {
     const _rootFolder = ref<string>('');
 
     // --- Getters ---
-    const getEpoc = computed(() => _epoc.value);
+    const getEpoc = computed<Epoc>(() => _epoc.value);
     const getRootFolder = computed(() => _rootFolder.value);
 
     // --- Actions ---
