@@ -2,7 +2,9 @@
 
 import { Assessment, AssessmentData, SimpleQuestion, emptyAssessmentData } from '@/types/contents/assessment';
 import { useEpocStore } from '@/stores/epocStore';
+import { IonIcon, IonButton, IonContent, IonFooter } from '@ionic/vue';
 import { appService } from '@/utils/appService';
+import CertificateModal from '@/components/CertificateModal.vue';
 import { Epoc } from '@/types/epoc';
 import { useReadingStore } from '@/stores/readingStore';
 import { useSettingsStore } from '@/stores/settingsStore';
@@ -15,9 +17,11 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Swiper as SwiperObject } from 'swiper/types';
 import { denormalize } from '@/utils/transform';
 import { useTemplateRefsList } from '@vueuse/core';
+import Card from '@/components/Card.vue';
 import CommonQuestion from '@/components/questions/CommonQuestion.vue';
 const { t } = useI18n();
 type CommonQuestionType = InstanceType<typeof CommonQuestion>
+// TODO IL FAUT TRADUIRE LE SIMPLE CHOICE POUR RENDRE FONCTIONNEL LE COMMON QUESTION
 
 //Store
 const epocStore = useEpocStore()
@@ -221,7 +225,7 @@ const updateFocus = () => {
         <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
             <template v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
                 <swiper-slide>
-                    <common-question :aria-hidden="questionIndex !== currentQuestion" closable="true" 
+                    <common-question :aria-hidden="questionIndex !== currentQuestion" :closable=true 
                         :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length" :contentId="assessment.id"
                          :epocId="epocId" :question="question" 
                          @userHasResponded="onUserHasResponded($event)" videos youtube,
@@ -232,7 +236,7 @@ const updateFocus = () => {
                 </swiper-slide>
             </template>
             <swiper-slide class="assessment-end">
-                <app-card v-if="assessmentData">
+                <card v-if="assessmentData">
                     <div class="title-container">
                         <div class="title-icon">
                             <ion-icon aria-hidden="true" name="star-outline"></ion-icon>
@@ -260,7 +264,7 @@ const updateFocus = () => {
                     <ion-button size="large" expand="block" color="outline-button" fill="outline" (click)="retry()">
                         <span>{{$t('QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY')}}</span>
                     </ion-button>
-                </app-card>
+                </card>
             </swiper-slide>
         </swiper>
     </div>
