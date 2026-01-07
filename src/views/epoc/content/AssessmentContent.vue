@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia';
 import { school, help } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import { IonIcon, IonButton } from '@ionic/vue';
 
 const epocStore = useEpocStore()
 const readingStore = useReadingStore()
