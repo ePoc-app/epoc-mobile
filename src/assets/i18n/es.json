@@ -117,11 +117,11 @@
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "Acerca de publicador",
-    "MESSAGE": "<br/><br/><strong>Nombre :</strong> {{name}}<br/><br/><strong>Descripción :</strong> {{description}}<br/><br/><strong>Email :</strong> <a href='mailto:{{email}}' title='{{name}}' target='_blank'>{{email}}</a><br/><br/><strong>Sitio web :</strong> <a href='{{website}}' title='{{name}}' target='_blank'>{{website}}</a><br/><br/>"
+    "MESSAGE": "<br/><br/><strong>Nombre :</strong> {name}<br/><br/><strong>Descripción :</strong> {description}<br/><br/><strong>Email :</strong> <a href='mailto:{email}' title='{name}' target='_blank'>{email}</a><br/><br/><strong>Sitio web :</strong> <a href='{website}' title='{name}' target='_blank'>{website}</a><br/><br/>"
   },
   "LICENSE_MODAL": {
     "HEADER": "Licencia",
-    "MESSAGE": "Condiciones de uso para el contenido de ePoc <strong>{{epoc}}</strong>:<br/><br/>Salvo que se indique lo contrario, los recursos de este ePoc se distribuyen bajo la licencia <a href=\"{{licenseUrl}}\" title=\"Enlace a la licencia\" target=\"_blank\">{{licenseName}}</a>. <br/><br/>Si estás utilizando contenido de ePoc, aquí tienes la atribución que debes añadir según el uso:<br/>Crédito: ePoc <strong>{{epoc}}</strong>, publicado bajo la licencia {{licenseName}} en la aplicación <a href=\"https://epoc.inria.fr/\" title=\"Enlace al sitio de ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE": "Condiciones de uso para el contenido de ePoc <strong>{epoc}</strong>:<br/><br/>Salvo que se indique lo contrario, los recursos de este ePoc se distribuyen bajo la licencia <a href=\"{licenseUrl}\" title=\"Enlace a la licencia\" target=\"_blank\">{licenseName}</a>. <br/><br/>Si estás utilizando contenido de ePoc, aquí tienes la atribución que debes añadir según el uso:<br/>Crédito: ePoc <strong>{epoc}</strong>, publicado bajo la licencia {licenseName} en la aplicación <a href=\"https://epoc.inria.fr/\" title=\"Enlace al sitio de ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>"
   },
   "COMMENT_MODAL": {
     "HEADER": "Dejar un comentario",
@@ -199,15 +199,15 @@
       "TOTAL_SCORE": "Tu puntuación total",
       "PTS": "puntos",
       "CONTINUE": "¡Continuar!",
-      "REMAINING": "Gana {{remaining}} puntos y obtén tu certificado",
-      "BADGE_REMAINING": "Gana {{remaining}} insignias y obtén tu certificado",
+      "REMAINING": "Gana {remaining} puntos y obtén tu certificado",
+      "BADGE_REMAINING": "Gana {remaining} insignias y obtén tu certificado",
       "GET_CERTIFICATE": "Obtener el certificado",
       "CONGRATS": "Enhorabuena",
       "CERTIFICATE_WIN": "Has alcanzado la puntuación para obtener el certificado",
       "PTS_RECAP": "Resumen de puntos",
       "FAIL_MODAL": {
         "HEADER": "No disponible",
-        "MSG": "Aún no has alcanzado la puntuación requerida ({{score}} pts) para obtener el certificado."
+        "MSG": "Aún no has alcanzado la puntuación requerida ({score} pts) para obtener el certificado."
       },
       "CERTIFICATE_PDF": {
         "COMPLETION_CERTIFICATE": "CERTIFICADO DE FINALIZACIÓN",
@@ -216,7 +216,7 @@
         "DELIVERED_TO": "Certificado entregado a:",
         "DELIVERED_THE": "Entregado el",
         "ERROR": "Error",
-        "ERROR_PROMPT": "Se produjo un error al {{type}} el certificado",
+        "ERROR_PROMPT": "Se produjo un error al {type} el certificado",
         "ERROR_TYPE": {
           "OPEN": "abrir",
           "RECUP": "recuperar",
@@ -299,7 +299,7 @@
       "watched": "Han visto",
       "listened": "Han escuchado",
       "attempted": "Han intentado",
-      "scored": "Han obtenido {{scored}} en"
+      "scored": "Han obtenido {scored} en"
     },
     "ENTITY_TYPES": {
       "video": "el video",

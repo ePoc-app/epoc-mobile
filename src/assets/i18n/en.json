@@ -117,11 +117,11 @@
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "About the publisher",
-    "MESSAGE": "<br/><br/><strong>Name :</strong> {{name}}<br/><br/><strong>Description :</strong> {{description}}<br/><br/><strong>Email :</strong> <a href='mailto:{{email}}' title='{{name}}' target='_blank'>{{email}}</a><br/><br/><strong>Website :</strong> <a href='{{website}}' title='{{name}}' target='_blank'>{{website}}</a><br/><br/>"
+    "MESSAGE": "<br/><br/><strong>Name :</strong> {name}<br/><br/><strong>Description :</strong> {description}<br/><br/><strong>Email :</strong> <a href='mailto:{email}' title='{name}' target='_blank'>{email}</a><br/><br/><strong>Website :</strong> <a href='{website}' title='{name}' target='_blank'>{website}</a><br/><br/>"
   },
   "LICENSE_MODAL": {
     "HEADER": "License",
-    "MESSAGE": "Conditions of use for ePoc content <strong>\"{{epoc}}\"</strong>:<br/><br/>Unless otherwise stated, the resources in this ePoc are distributed under the <a href=\"{{licenseUrl}}\" title=\"License link\" target=\"_blank\">{{licenseName}}</a> license. <br/><br/>If you are using ePoc content, here is the attribution to be added depending on the use:<br/>Credit: ePoc <strong>\"{{epoc}}\"</strong>, published under the {{licenseName}} license in the application <a href=\"https://epoc.inria.fr/\" title=\"Link to ePoc site\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE": "Conditions of use for ePoc content <strong>\"{epoc}\"</strong>:<br/><br/>Unless otherwise stated, the resources in this ePoc are distributed under the <a href=\"{licenseUrl}\" title=\"License link\" target=\"_blank\">{licenseName}</a> license. <br/><br/>If you are using ePoc content, here is the attribution to be added depending on the use:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, published under the {licenseName} license in the application <a href=\"https://epoc.inria.fr/\" title=\"Link to ePoc site\" target=\"_blank\">https://epoc.inria.fr/</a>"
   },
   "COMMENT_MODAL": {
     "HEADER": "Leave a comment",
@@ -199,15 +199,15 @@
       "TOTAL_SCORE": "Your total score",
       "PTS": "points",
       "CONTINUE": "Continue !",
-      "REMAINING": "Earn {{remaining}} points and get your certificate",
-      "BADGE_REMAINING": "Earn {{remaining}} badges and get your certificate",
+      "REMAINING": "Earn {remaining} points and get your certificate",
+      "BADGE_REMAINING": "Earn {remaining} badges and get your certificate",
       "GET_CERTIFICATE": "Get the certificate",
       "CONGRATS": "Congratulations",
       "CERTIFICATE_WIN": "You have reached the score to obtain the certificate",
       "PTS_RECAP": "Summary of points",
       "FAIL_MODAL": {
         "HEADER": "Not available",
-        "MSG": "You have not yet reached the required score ({{score}} pts) to obtain the certificate."
+        "MSG": "You have not yet reached the required score ({score} pts) to obtain the certificate."
       },
       "CERTIFICATE_PDF": {
         "COMPLETION_CERTIFICATE": "CERTIFICATE OF COMPLETION",
@@ -216,7 +216,7 @@
         "DELIVERED_TO": "Certificate delivered to :",
         "DELIVERED_THE": "Delivered on",
         "ERROR": "Error",
-        "ERROR_PROMPT": "An error occured while {{type}} the certificate",
+        "ERROR_PROMPT": "An error occured while {type} the certificate",
         "ERROR_TYPE": {
           "OPEN": "opening",
           "RECUP": "retrieving",
@@ -299,7 +299,7 @@
       "watched": "Have watched",
       "listened": "Have listened",
       "attempted": "Have attempted",
-      "scored": "Have scored {{scored}} at"
+      "scored": "Have scored {scored} at"
     },
     "ENTITY_TYPES": {
       "video": "the video",

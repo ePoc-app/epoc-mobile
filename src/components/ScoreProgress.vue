@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-// Props
 const props = defineProps({
     progress: { type: Number, required: true },
     delta: { type: Number, required: true },
-    treshold: { type: Number, required: true },
+    threshold: { type: Number, required: true },
     minLabel: { type: Number, required: true },
     maxLabel: { type: Number, required: true },
 });
 
-let currentDelta = ref<Number>(0);
-let thresholdPoints = computed(Math.round((props.threshold / 100) * props.maxLabel));
+const currentDelta = ref(0);
+const thresholdPoints = computed(() => Math.round((props.threshold / 100) * props.maxLabel));
 
 setTimeout(() => {
     currentDelta.value = props.delta;
@@ -38,7 +37,7 @@ setTimeout(() => {
     </div>
 </template>
 
-<style>
+<style scoped lang="scss">
 .progress-container {
     position: relative;
     padding: 1rem 1rem 2rem 1rem;
