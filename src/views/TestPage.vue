@@ -5,8 +5,8 @@ import {useEpocStore} from '@/stores/epocStore';
 import {useRoute} from 'vue-router';
 import {onMounted, ref} from 'vue';
 import {Directory, Filesystem} from '@capacitor/filesystem';
-import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
 import FlipCard from '@/components/FlipCard.vue';
+import {Capacitor} from '@capacitor/core';
 
 const flipCardRef = ref<InstanceType<typeof FlipCard> | null>(null);
 
@@ -14,7 +14,6 @@ const epocStore = useEpocStore();
   const route = useRoute();
   const epoc = epocStore.epoc;
   const files = ref<string[]>([]);
-  const { convertFileSrc } = useConvertFileSrc();
 
   console.log(route.params.id);
 
@@ -69,7 +68,7 @@ const flip = (): void => {
       <FlipCard ref="flipCardRef" :init-flipped="true" @click="flip">
         <template #front>
           <div v-for="(file, index) in files" :key="index" style="margin-bottom: 16px;">
-            <img :src="convertFileSrc(file)" alt="Image" style="width: 100%; height: auto;" />
+            <img :src="Capacitor.convertFileSrc(file)" alt="Image" style="width: 100%; height: auto;" />
           </div>
         </template>
         <template #back>

@@ -3,14 +3,13 @@ import {ref} from 'vue';
 import {Zip} from '@epoc/capacitor-zip';
 import {Directory, Encoding, Filesystem} from '@capacitor/filesystem';
 import {FileTransfer} from '@capacitor/file-transfer';
-import {useConvertFileSrc} from '@/composables/useConvertFileSrc';
+import {Capacitor} from '@capacitor/core';
 
 // États réactifs
 const isDownloading = ref<boolean>(false);
 const isExtracting = ref<boolean>(false);
 const statusMessage = ref<string>('');
 const videos = ref<string[]>([]);
-const { convertFileSrc } = useConvertFileSrc();
 
 // Fonction pour télécharger et extraire le ZIP
 const downloadAndExtractZip = async (): Promise<void> => {
@@ -74,9 +73,7 @@ const downloadAndExtractZip = async (): Promise<void> => {
     const ls = await Filesystem.readdir({path:'E001DB/videos', directory: Directory.Data});
 
 
-    videos.value = await Promise.all(ls.files.map(async file => {
-      return await convertFileSrc(file.uri);
-    }));
+    videos.value = ls.files.map(file => Capacitor.convertFileSrc(file.uri));
 
     if (extractResult.success) {
       statusMessage.value = 'Fichier ZIP extrait avec succès !';

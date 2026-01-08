@@ -18,7 +18,7 @@ import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
 import VideoPlayer from '@/components/VideoPlayer.vue';
 import { useLocalEpocsStore } from '@/stores/localEpocsStore';
-import { useConvertFileSrc } from '@/composables/useConvertFileSrc';
+import {Capacitor} from '@capacitor/core';
 
 const { t } = useI18n();
 
@@ -26,7 +26,6 @@ const route = useRoute();
 const router = useRouter();
 const libraryStore = useLibraryStore();
 const localEpocStore = useLocalEpocsStore();
-const { convertFileSrc } = useConvertFileSrc();
 const selectedTab = ref(0);
 
 const openEpocMenu = (epoc: EpocLibrary) => {
@@ -69,7 +68,7 @@ const pathToUrl = (path) => {
     if (path.startsWith('file://') || path.startsWith('http://') || path.startsWith('https://')) {
         return path;
     } else {
-        return convertFileSrc(`${epoc.value.dir}/${path}`);
+        return Capacitor.convertFileSrc(`${epoc.value.dir}/${path}`);
     }
 };
 

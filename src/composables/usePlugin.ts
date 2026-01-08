@@ -9,6 +9,7 @@ export function usePlugin() {
 
     // --- Core Logic ---
     function init(rootFolderValue: string, epoc: Epoc) {
+        console.log('Initializing plugins with root folder:', rootFolderValue);
         if (!epoc.plugins) return;
         rootFolder.value = rootFolderValue;
         // Clear old wrapper and plugins
@@ -96,7 +97,7 @@ export function usePlugin() {
     }
 
     async function embed(html: string): Promise<string> {
-        await allPluginLoaded.value;
+        console.log('Embedding plugins into HTML content', html);
         const shortcodes = html.match(/\[#[^\]]+\]/gm);
         if (!shortcodes) return html;
         for (const shortcode of shortcodes) {
@@ -139,9 +140,7 @@ export function usePlugin() {
       <script src="${document.baseURI}assets/js/plugin-api-embed.js"></script>
     `;
         if (plugin.config.template.endsWith('.html')) {
-            const rootUrl = rootFolder.value.startsWith('assets/demo')
-                ? `${document.baseURI}${rootFolder.value}`
-                : `${rootFolder.value}`;
+            const rootUrl = `${rootFolder.value}`;
             const templateUrl = `${rootUrl}${plugin.src.split('/')[0]}/${plugin.config.template}#${uid}-${uidEmbed}`;
             const templateString = await (await fetch(templateUrl)).text();
             const parser = new DOMParser();

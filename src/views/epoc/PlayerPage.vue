@@ -362,7 +362,6 @@ const showCertificateCard = () => {
                                         :chapterId="chapterId"
                                         :contentId="content.id"
                                     ></app-debug>
-                                    {{ index }} {{ content.type }}
                                     <common-content
                                         :aria-hidden="index + 1 !== currentPage"
                                         :title="content.title"

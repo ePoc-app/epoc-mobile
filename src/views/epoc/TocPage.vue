@@ -25,15 +25,12 @@ import {
     chevronForwardOutline,
 } from 'ionicons/icons';
 import { useEpocStore } from '@/stores/epocStore';
-import { Epoc } from '@/types/epoc';
-import { ref } from 'vue';
 import { denormalize } from '@/utils/transform';
 import { onBeforeMount } from 'vue';
-import { useConvertFileSrc } from '@/composables/useConvertFileSrc';
+import { Capacitor } from '@capacitor/core';
 
 const route = useRoute();
 const epocStore = useEpocStore();
-const { convertFileSrc } = useConvertFileSrc();
 
 onBeforeMount(async () => {
     const id = route.params.id.toString();
@@ -73,7 +70,7 @@ const toggleDetails = (chapter) => {
                     <img
                         aria-hidden="true"
                         alt="ePoc Image"
-                        :src="convertFileSrc(epocStore.rootFolder + epocStore.epoc.image)"
+                        :src="Capacitor.convertFileSrc(epocStore.rootFolder + epocStore.epoc.image)"
                     />
                     <div class="toc-header-title">{{ epocStore.epoc.title }}</div>
                 </div>

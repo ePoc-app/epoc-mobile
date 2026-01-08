@@ -4,6 +4,7 @@ import { i18n } from '@/i18n';
 import App from './App.vue';
 import router from './router';
 
+import { Capacitor } from '@capacitor/core';
 import { IonicVue } from '@ionic/vue';
 import { useStorage } from '@/composables/useStorage';
 
@@ -36,6 +37,15 @@ import '@ionic/vue/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.scss';
+
+if ('serviceWorker' in navigator && Capacitor.getPlatform() === 'web') {
+    try {
+        const registration = await navigator.serviceWorker.register('/sw.js');
+        console.log('ServiceWorker registered:', registration)
+    } catch (error) {
+        console.error('ServiceWorker registration failed:', error);
+    }
+}
 
 const pinia = createPinia();
 

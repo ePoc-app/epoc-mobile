@@ -2,6 +2,56 @@ import { Zip } from '@epoc/capacitor-zip';
 import { Directory, Filesystem, FileInfo } from '@capacitor/filesystem';
 import { FileTransfer, ProgressStatus } from '@capacitor/file-transfer';
 
+
+
+// Map base directories to Capacitor Directory enum
+export const BASE_DIR_MAP: Record<string, Directory> = Object.fromEntries(Object.values(Directory).map(v => [`/${v}`, v]).sort((a, b) => b[0].length - a[0].length));
+
+
+// MIME types for common extensions, including subtitles
+export const MIME_TYPES: Record<string, string> = {
+    // Images
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    gif: 'image/gif',
+    webp: 'image/webp',
+    svg: 'image/svg+xml',
+    // Videos
+    mp4: 'video/mp4',
+    webm: 'video/webm',
+    ogv: 'video/ogv',
+    // Audio
+    mp3: 'audio/mpeg',
+    wav: 'audio/wav',
+    ogg: 'audio/ogg',
+    // Documents
+    html: 'text/html',
+    pdf: 'application/pdf',
+    json: 'application/json',
+    txt: 'text/plain',
+    csv: 'text/csv',
+    // Archives
+    zip: 'application/zip',
+    // Subtitles
+    srt: 'text/srt',
+    vtt: 'text/vtt',
+    ass: 'text/x-ssa',
+    ssa: 'text/x-ssa',
+    // Other
+    wasm: 'application/wasm',
+};
+
+/**
+ * Get the MIME type from a file extension.
+ * @param filename The filename or path.
+ * @returns The MIME type as a string.
+ */
+export const getMimeType = (filename: string): string => {
+    const extension = filename.split('.').pop()?.toLowerCase();
+    return extension ? MIME_TYPES[extension] || 'application/octet-stream' : 'application/octet-stream';
+};
+
 export const readdir = async (path: string): Promise<FileInfo[]> => {
     try {
         return (await Filesystem.readdir({ path, directory: Directory.LibraryNoCloud })).files;

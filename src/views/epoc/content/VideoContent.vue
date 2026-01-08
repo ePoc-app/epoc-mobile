@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import { Video } from '@/types/contents/video';
 import { ContentRuntime } from '@/types/contents/content';
-import { computed, PropType, ref } from 'vue';
+import { PropType, ref } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import { useReadingStore } from '@/stores/readingStore';
 import { srcConvert } from '@/utils/transform';
 import HtmlContent from './HtmlContent.vue';
 import VideoPlayer from '@/components/VideoPlayer.vue';
-import { useConvertFileSrc } from '@/composables/useConvertFileSrc';
+import { Capacitor } from '@capacitor/core';
 
 const epocStore = useEpocStore()
 const readingStore = useReadingStore()
-
-const { convertFileSrc } = useConvertFileSrc();
 
 // PROPS
 const props = defineProps({
@@ -53,17 +51,12 @@ const playPause = (playing: boolean) => {
   }
 }
 
-const convertPath = (path:string) : string  => {
-  // must be done directly in the template and not be replaced by computed value because the value can change during the life of the component
-  return convertFileSrc(epocStore.rootFolder + path)
-}
-
 </script>
 
 <template>
   <template v-if="content">
    <video-player 
-      :src="convertPath(content.source)" :poster="convertPath(content.poster)"
+      :src="Capacitor.convertFileSrc(epocStore.rootFolder + content.source)" :poster="Capacitor.convertFileSrc(epocStore.rootFolder + content.poster)"
       :subtitles="content.subtitles" :title="content.title"
       @timelineDragging="forwardEvent($event)" @videoData="setVideoData($event)" @playPause="playPause($event)">
     </video-player>
