@@ -10,6 +10,7 @@ import TestPage from '@/views/TestPage.vue';
 import TocPage from '@/views/epoc/TocPage.vue';
 import PlayerPage from '@/views/epoc/PlayerPage.vue';
 import AssessmentPage from '@/views/epoc/AssessmentPage.vue';
+import ScorePage from '@/views/epoc/ScorePage.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -76,7 +77,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'AssessmentPage',
         component: AssessmentPage,
     },
-
+    {
+        path: '/epoc/score/:epoc_id',
+        name: 'ScorePage',
+        component: ScorePage,
+    },
 ];
 
 const router = createRouter({

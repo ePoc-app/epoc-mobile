@@ -117,11 +117,11 @@
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "Informazioni sull'editore",
-    "MESSAGE": "<br/><br/><strong>Nome :</strong> {{name}}<br/><br/><strong>Descrizione :</strong> {{description}}<br/><br/><strong>Email :</strong> <a href='mailto:{{email}}' title='{{name}}' target='_blank'>{{email}}</a><br/><br/><strong>Sito web :</strong> <a href='{{website}}' title='{{name}}' target='_blank'>{{website}}</a><br/><br/>"
+    "MESSAGE": "<br/><br/><strong>Nome :</strong> {name}<br/><br/><strong>Descrizione :</strong> {description}<br/><br/><strong>Email :</strong> <a href='mailto:{email}' title='{name}' target='_blank'>{email}</a><br/><br/><strong>Sito web :</strong> <a href='{website}' title='{name}' target='_blank'>{website}</a><br/><br/>"
   },
   "LICENSE_MODAL": {
     "HEADER": "Licenza",
-    "MESSAGE": "Condizioni d'uso per i contenuti ePoc <strong>\"{{epoc}}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza <a href=\"{{licenseUrl}}\" title=\"Link alla licenza\" target=\"_blank\">{{licenseName}}</a>. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{{epoc}}\"</strong>, pubblicato con licenza {{licenseName}} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE": "Condizioni d'uso per i contenuti ePoc <strong>\"{epoc}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza <a href=\"{licenseUrl}\" title=\"Link alla licenza\" target=\"_blank\">{licenseName}</a>. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{epoc}\"</strong>, pubblicato con licenza {licenseName} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>"
   },
   "COMMENT_MODAL": {
     "HEADER": "Lascia un commento",
@@ -199,15 +199,15 @@
       "TOTAL_SCORE": "Il tuo punteggio totale",
       "PTS": "punti",
       "CONTINUE": "Continua!",
-      "REMAINING": "Guadagna {{remaining}} punti e ottieni il tuo attestato",
-      "BADGE_REMAINING": "Guadagna ancora {{remaining}} e ottieni il tuo attestato",
+      "REMAINING": "Guadagna {remaining} punti e ottieni il tuo attestato",
+      "BADGE_REMAINING": "Guadagna ancora {remaining} e ottieni il tuo attestato",
       "GET_CERTIFICATE": "Ottieni il attestato",
       "CONGRATS": "Congratulazioni",
       "CERTIFICATE_WIN": "Hai raggiunto il punteggio per ottenere l'attestato",
       "PTS_RECAP": "Riepilogo dei punti",
       "FAIL_MODAL": {
         "HEADER": "Non disponibile",
-        "MSG": "Non hai ancora raggiunto il punteggio richiesto ({{score}} punti) per ottenere il attestato."
+        "MSG": "Non hai ancora raggiunto il punteggio richiesto ({score} punti) per ottenere il attestato."
       },
       "CERTIFICATE_PDF": {
         "COMPLETION_CERTIFICATE": "ATTESTATO DI COMPLETAMENTO",
@@ -216,7 +216,7 @@
         "DELIVERED_TO": "Attestato consegnato a:",
         "DELIVERED_THE": "Consegnato il",
         "ERROR": "Errore",
-        "ERROR_PROMPT": "Si è verificato un errore durante {{type}} l'attestato",
+        "ERROR_PROMPT": "Si è verificato un errore durante {type} l'attestato",
         "ERROR_TYPE": {
           "OPEN": "apertura in corso",
           "RECUP": "recupero in corso",
@@ -299,7 +299,7 @@
       "watched": "guardato",
       "listened": "ascoltato",
       "attempted": "tentato",
-      "scored": "totalizzato {{scored}} a"
+      "scored": "totalizzato {scored} a"
     },
     "ENTITY_TYPES": {
       "video": "video",

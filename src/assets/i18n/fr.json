@@ -117,7 +117,7 @@
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "A propos de l'éditeur",
-    "MESSAGE": "<br/><br/><strong>Nom :</strong> {{name}}<br/><br/><strong>Description :</strong> {{description}}<br/><br/><strong>Email :</strong> <a href='mailto:{{email}}' title='{{name}}' target='_blank'>{{email}}</a><br/><br/><strong>Site web :</strong> <a href='{{website}}' title='{{name}}' target='_blank'>{{website}}</a><br/><br/>"
+    "MESSAGE": "<br/><br/><strong>Nom :</strong> {name}<br/><br/><strong>Description :</strong> {description}<br/><br/><strong>Email :</strong> <a href='mailto:{email}' title='{name}' target='_blank'>{email}</a><br/><br/><strong>Site web :</strong> <a href='{website}' title='{name}' target='_blank'>{website}</a><br/><br/>"
   },
   "LICENSE_MODAL": {
     "HEADER": "Licence",
@@ -199,15 +199,15 @@
       "TOTAL_SCORE": "Votre score total",
       "PTS": "points",
       "CONTINUE": "Continuez !",
-      "REMAINING": "Gagnez {{remaining}} points et obtenez votre attestation",
-      "BADGE_REMAINING": "Gagnez encore {{remaining}} badges pour obtenir votre attestation",
+      "REMAINING": "Gagnez {remaining} points et obtenez votre attestation",
+      "BADGE_REMAINING": "Gagnez encore {remaining} badges pour obtenir votre attestation",
       "GET_CERTIFICATE": "Obtenir l'attestation",
       "CONGRATS": "Félicitations !",
       "CERTIFICATE_WIN": "Vous avez atteint le score pour obtenir l'attestation",
       "PTS_RECAP": "Récapitulatif des points",
       "FAIL_MODAL": {
         "HEADER": "Non disponible",
-        "MSG": "Vous n'avez pas encore atteint le score nécessaire ({{score}} pts) pour obtenir l'attestation."
+        "MSG": "Vous n'avez pas encore atteint le score nécessaire ({score} pts) pour obtenir l'attestation."
       },
       "CERTIFICATE_PDF": {
         "COMPLETION_CERTIFICATE": "ATTESTATION DE SUIVI",
@@ -216,7 +216,7 @@
         "DELIVERED_TO": "Attestation délivrée à :",
         "DELIVERED_THE": "Délivrée le",
         "ERROR": "Erreur",
-        "ERROR_PROMPT": "Une erreur s'est produite lors de {{type}} de l'attestation",
+        "ERROR_PROMPT": "Une erreur s'est produite lors de {type} de l'attestation",
         "ERROR_TYPE": {
           "OPEN": "l'ouverture",
           "RECUP": "la récupération",
@@ -299,7 +299,7 @@
       "watched": "Avoir regardé",
       "listened": "Avoir écouté",
       "attempted": "Avoir tenté",
-      "scored": "Avoir obtenu un score de {{scored}} à"
+      "scored": "Avoir obtenu un score de {scored} à"
     },
     "ENTITY_TYPES": {
       "video": "la vidéo",

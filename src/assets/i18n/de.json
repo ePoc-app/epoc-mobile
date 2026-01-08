@@ -117,11 +117,11 @@
   },
   "PUBLISHER_MODAL": {
     "ABOUT": "Über den Herausgeber",
-    "MESSAGE": "<br/><br/><strong>Name :</strong> {{name}}<br/><br/><strong>Beschreibung :</strong> {{description}}<br/><br/><strong>Email :</strong> <a href='mailto:{{email}}' title='{{name}}' target='_blank'>{{email}}</a><br/><br/><strong>Webseite :</strong> <a href='{{website}}' title='{{name}}' target='_blank'>{{website}}</a><br/><br/>"
+    "MESSAGE": "<br/><br/><strong>Name :</strong> {name}<br/><br/><strong>Beschreibung :</strong> {description}<br/><br/><strong>Email :</strong> <a href='mailto:{email}' title='{name}' target='_blank'>{email}</a><br/><br/><strong>Webseite :</strong> <a href='{website}' title='{name}' target='_blank'>{website}</a><br/><br/>"
   },
   "LICENSE_MODAL": {
     "HEADER": "Lizenz",
-    "MESSAGE": "Nutzungsbedingungen für den ePoc-Inhalt <strong>\"{{epoc}}\"</strong>:<br/><br/>Sofern nicht anders angegeben, werden die Ressourcen in diesem ePoc unter der <a href=\"{{licenseUrl}}\" title=\"Lizenz-Link\" target=\"_blank\">{{licenseName}}</a>-Lizenz verbreitet. <br/><br/>Wenn Sie ePoc-Inhalte verwenden, hier ist die Angabe, die je nach Verwendung hinzugefügt werden muss:<br/>Credit: ePoc <strong>\"{{epoc}}\"</strong>, veröffentlicht unter der {{licenseName}}-Lizenz in der Anwendung <a href=\"https://epoc.inria.fr/\" title=\"Link zur ePoc-Seite\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE": "Nutzungsbedingungen für den ePoc-Inhalt <strong>\"{epoc}\"</strong>:<br/><br/>Sofern nicht anders angegeben, werden die Ressourcen in diesem ePoc unter der <a href=\"{licenseUrl}\" title=\"Lizenz-Link\" target=\"_blank\">{licenseName}</a>-Lizenz verbreitet. <br/><br/>Wenn Sie ePoc-Inhalte verwenden, hier ist die Angabe, die je nach Verwendung hinzugefügt werden muss:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, veröffentlicht unter der {licenseName}-Lizenz in der Anwendung <a href=\"https://epoc.inria.fr/\" title=\"Link zur ePoc-Seite\" target=\"_blank\">https://epoc.inria.fr/</a>"
   },
   "COMMENT_MODAL": {
     "HEADER": "Einen Kommentar hinterlassen",
@@ -199,15 +199,15 @@
       "TOTAL_SCORE": "Ihre Gesamtpunktzahl",
       "PTS": "Punkte",
       "CONTINUE": "Weitermachen!",
-      "REMAINING": "Sammeln Sie {{remaining}} Punkte und erhalten Sie Ihr Zertifikat",
-      "BADGE_REMAINING": "Sammeln Sie {{remaining}} Abzeichen und erhalten Sie Ihr Zertifikat",
+      "REMAINING": "Sammeln Sie {remaining} Punkte und erhalten Sie Ihr Zertifikat",
+      "BADGE_REMAINING": "Sammeln Sie {remaining} Abzeichen und erhalten Sie Ihr Zertifikat",
       "GET_CERTIFICATE": "Zertifikat erhalten",
       "CONGRATS": "Herzlichen Glückwunsch",
       "CERTIFICATE_WIN": "Sie haben die Punktzahl erreicht, um das Zertifikat zu erhalten",
       "PTS_RECAP": "Punkteübersicht",
       "FAIL_MODAL": {
         "HEADER": "Nicht verfügbar",
-        "MSG": "Sie haben die erforderliche Punktzahl ({{score}} Punkte) für das Zertifikat noch nicht erreicht."
+        "MSG": "Sie haben die erforderliche Punktzahl ({score} Punkte) für das Zertifikat noch nicht erreicht."
       },
       "CERTIFICATE_PDF": {
         "COMPLETION_CERTIFICATE": "ABSCHLUSSZEUGNIS",
@@ -216,7 +216,7 @@
         "DELIVERED_TO": "Zertifikat ausgestellt an:",
         "DELIVERED_THE": "Ausgestellt am",
         "ERROR": "Fehler",
-        "ERROR_PROMPT": "Beim {{type}} des Zertifikats ist ein Fehler aufgetreten",
+        "ERROR_PROMPT": "Beim {type} des Zertifikats ist ein Fehler aufgetreten",
         "ERROR_TYPE": {
           "OPEN": "Öffnen",
           "RECUP": "Abrufen",
@@ -299,7 +299,7 @@
       "watched": "Haben zugesehen",
       "listened": "Haben zugehört",
       "attempted": "Haben versucht",
-      "scored": "Haben {{scored}} bei"
+      "scored": "Haben {scored} bei"
     },
     "ENTITY_TYPES": {
       "video": "das Video",
