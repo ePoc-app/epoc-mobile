@@ -24,7 +24,6 @@ import {
 import { useLibraryStore } from '@/stores/libraryStore';
 import { useLocalEpocsStore } from '@/stores/localEpocsStore';
 import { useOnboardingStore } from '@/stores/onboardingStore';
-import { useConvertFileSrc } from '@/composables/useConvertFileSrc';
 import { storeToRefs } from 'pinia';
 import { RouterLink, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -32,13 +31,13 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import {Capacitor} from '@capacitor/core';
 
 const { t } = useI18n();
 const router = useRouter();
 const libraryStore = useLibraryStore();
 const localEpocsStore = useLocalEpocsStore();
 const onboardingStore = useOnboardingStore();
-const { convertFileSrc } = useConvertFileSrc();
 const { getOnboarding } = storeToRefs(onboardingStore);
 
 const fileHandler = (E006PEevent) => {
@@ -317,7 +316,7 @@ const linkInputAlert = async () => {
                             role="link"
                             :aria-label="epoc.title"
                             class="library-item-image"
-                            :style="`background-image:url(${convertFileSrc(`${epoc.dir}/${epoc.image}`)})`"
+                            :style="`background-image:url(${Capacitor.convertFileSrc(`${epoc.dir}/${epoc.image}`)})`"
                         ></div>
                     </RouterLink>
                     <h3 aria-hidden="true" class="library-item-title">{{ epoc.title }}</h3>

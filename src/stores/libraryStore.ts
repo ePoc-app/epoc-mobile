@@ -16,7 +16,6 @@ import type { EpocCollection, EpocLibraryState, EpocMetadata, Publisher } from '
 import type { Reading } from '@/types/reading';
 import { download, unzip } from '@/utils/file';
 import { useI18n } from 'vue-i18n';
-import { useConvertFileSrc } from '@/composables';
 import { readEpocContent } from '@/utils/epocService';
 import { displayLicence } from '@/utils/app';
 
@@ -26,7 +25,6 @@ export const useLibraryStore = defineStore('library', () => {
     const readingStore = useReadingStore();
     const router = useRouter();
     const { t } = useI18n();
-    const { convertFileSrc } = useConvertFileSrc();
 
     //const officialCollectionsUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/official-collections.json';
     const officialCollectionsUrl = 'https://epoc.inria.fr/official-collections.json';
