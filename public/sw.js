@@ -1,8 +1,8 @@
-// Name of your IndexedDB database and object store
+// Nom de la base de données IndexedDB et du magasin d'objets
 const DB_NAME = "Disc";
 const STORE_NAME = "FileStorage";
 
-// MIME types for common extensions, including subtitles
+// Types MIME pour les extensions courantes
 const MIME_TYPES = {
     // Images
     jpg: 'image/jpeg',
@@ -11,7 +11,7 @@ const MIME_TYPES = {
     gif: 'image/gif',
     webp: 'image/webp',
     svg: 'image/svg+xml',
-    // Videos
+    // Vidéos
     mp4: 'video/mp4',
     webm: 'video/webm',
     ogv: 'video/ogv',
@@ -22,33 +22,31 @@ const MIME_TYPES = {
     // Documents
     html: 'text/html',
     css: 'text/css',
-    js: 'text/js',
-    pdf: 'application/pdf',
+    js: 'application/javascript',
     json: 'application/json',
+    pdf: 'application/pdf',
     txt: 'text/plain',
     csv: 'text/csv',
     // Archives
     zip: 'application/zip',
-    // Subtitles
+    // Sous-titres
     srt: 'text/srt',
     vtt: 'text/vtt',
     ass: 'text/x-ssa',
     ssa: 'text/x-ssa',
-    // Other
+    // Autres
     wasm: 'application/wasm',
 };
 
 /**
- * Get the MIME type from a file extension.
- * @param filename The filename or path.
- * @returns The MIME type as a string.
+ * Récupère le type MIME à partir de l'extension du fichier.
  */
-function getMimeType (filename){
+function getMimeType(filename) {
     const extension = filename.split('.').pop()?.toLowerCase();
     return extension ? MIME_TYPES[extension] || 'application/octet-stream' : 'application/octet-stream';
-};
+}
 
-// Open or create the IndexedDB database
+// Ouvre ou crée la base de données IndexedDB
 async function openDB() {
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, 1);
@@ -60,14 +58,12 @@ async function openDB() {
             }
         };
 
-        request.onsuccess = () => {
-            return resolve(request.result);
-        }
+        request.onsuccess = () => resolve(request.result);
         request.onerror = (e) => reject(e);
     });
 }
 
-// Fetch the file from IndexedDB
+// Récupère un fichier depuis IndexedDB
 async function getFileFromDB(url) {
     const db = await openDB();
     return new Promise((resolve, reject) => {
@@ -80,7 +76,7 @@ async function getFileFromDB(url) {
     });
 }
 
-// Helper function to decode Base64 to Uint8Array
+// Décode une chaîne Base64 en Uint8Array
 function base64ToUint8Array(base64) {
     const binaryString = atob(base64);
     const bytes = new Uint8Array(binaryString.length);
@@ -90,7 +86,27 @@ function base64ToUint8Array(base64) {
     return bytes;
 }
 
-// Service Worker fetch event
+// Décode une chaîne Base64 en texte UTF-8
+function base64ToUtf8(base64) {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return new TextDecoder('utf-8').decode(bytes);
+}
+
+// Événements du Service Worker
+self.addEventListener('install', (event) => {
+    self.skipWaiting();
+    console.log('[SW] Installé et passe l\'attente');
+});
+
+self.addEventListener('activate', (event) => {
+    clients.claim();
+    console.log('[SW] Activé et prend le contrôle des clients');
+});
+
 self.addEventListener("fetch", (event) => {
     if (event.request.url.includes("/LIBRARY_NO_CLOUD/")) {
         event.respondWith(
@@ -98,50 +114,79 @@ self.addEventListener("fetch", (event) => {
                 try {
                     const url = new URL(event.request.url);
                     const path = url.pathname;
+                    console.log(`[SW] Récupération de : ${path}`);
+
                     const file = await getFileFromDB(path);
                     if (!file) {
-                        return new Response("File not found in IndexedDB", { status: 404 });
+                        console.log(`[SW] Fichier introuvable : ${path}`);
+                        return new Response("Fichier introuvable dans IndexedDB", { status: 404 });
                     }
 
                     const type = getMimeType(path);
+                    console.log(`[SW] Type MIME déterminé : ${type}`);
 
-                    // Decode Base64 content
-                    const decodedContent = base64ToUint8Array(file.content);
-
-                    // For video files, support range requests
-                    const rangeHeader = event.request.headers.get('Range');
-                    if (rangeHeader && type.startsWith('video/')) {
-                        const range = rangeHeader.replace(/bytes=/, "").split("-");
-                        const start = parseInt(range[0], 10);
-                        const end = range[1] ? parseInt(range[1], 10) : decodedContent.length - 1;
-                        const chunkSize = end - start + 1;
-                        const chunk = decodedContent.slice(start, end + 1);
-
-                        return new Response(chunk, {
-                            status: 206, // Partial Content
+                    // Pour les fichiers texte (JS, JSON, HTML, CSS, etc.), décoder en UTF-8
+                    if (type.startsWith('text/') || type === 'application/javascript' || type === 'application/json') {
+                        const utf8Content = base64ToUtf8(file.content);
+                        console.log(`[SW] Contenu UTF-8 décodé pour : ${path}`);
+                        console.log(utf8Content)
+                        return new Response(utf8Content, {
                             headers: {
                                 "Content-Type": type,
-                                "Content-Length": chunkSize.toString(),
-                                "Content-Range": `bytes ${start}-${end}/${decodedContent.length}`,
-                                "Accept-Ranges": "bytes",
                             },
                         });
-                    } else {
-                        // For non-video files or full requests
+                    }
+                    // Pour les vidéos, gérer les requêtes partielles (Range)
+                    else if (type.startsWith('video/')) {
+                        const rangeHeader = event.request.headers.get('Range');
+                        const decodedContent = base64ToUint8Array(file.content);
+
+                        if (rangeHeader) {
+                            const rangeMatch = rangeHeader.match(/bytes=(\d+)-(\d*)/);
+                            if (!rangeMatch) {
+                                return new Response("En-tête Range invalide", { status: 400 });
+                            }
+                            const start = parseInt(rangeMatch[1], 10);
+                            const end = rangeMatch[2] ? parseInt(rangeMatch[2], 10) : decodedContent.length - 1;
+                            const chunk = decodedContent.slice(start, end + 1);
+
+                            console.log(`[SW] Envoi de contenu partiel (${start}-${end}) pour : ${path}`);
+                            return new Response(chunk, {
+                                status: 206,
+                                headers: {
+                                    "Content-Type": type,
+                                    "Content-Length": chunk.length.toString(),
+                                    "Content-Range": `bytes ${start}-${end}/${decodedContent.length}`,
+                                    "Accept-Ranges": "bytes",
+                                },
+                            });
+                        } else {
+                            console.log(`[SW] Envoi de contenu complet pour : ${path}`);
+                            return new Response(decodedContent, {
+                                headers: {
+                                    "Content-Type": type,
+                                    "Content-Length": decodedContent.length.toString(),
+                                    "Accept-Ranges": "bytes",
+                                },
+                            });
+                        }
+                    }
+                    // Pour les autres fichiers binaires (images, etc.)
+                    else {
+                        const decodedContent = base64ToUint8Array(file.content);
+                        console.log(`[SW] Envoi de contenu binaire pour : ${path}`);
                         return new Response(decodedContent, {
                             headers: {
                                 "Content-Type": type,
                                 "Content-Length": decodedContent.length.toString(),
-                                "Accept-Ranges": "bytes",
                             },
                         });
                     }
                 } catch (e) {
-                    console.error("Error fetching file from IndexedDB:", e);
-                    return new Response("Error fetching file", { status: 500 });
+                    console.error("[SW] Erreur lors de la récupération du fichier :", e);
+                    return new Response("Erreur lors de la récupération du fichier", { status: 500 });
                 }
             })()
         );
     }
 });
-

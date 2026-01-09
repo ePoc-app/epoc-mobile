@@ -39,25 +39,29 @@ import '@ionic/vue/css/palettes/dark.system.css';
 import './theme/variables.scss';
 
 if ('serviceWorker' in navigator && Capacitor.getPlatform() === 'web') {
-    try {
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        console.log('ServiceWorker registered:', registration)
-    } catch (error) {
+    const registration = navigator.serviceWorker.register('/sw.js').then((registration) => {
+        console.log('ServiceWorker registered:', registration);
+        init();
+    }).catch((error) => {
         console.error('ServiceWorker registration failed:', error);
-    }
+    });
+} else {
+    init();
 }
 
-const pinia = createPinia();
+function init() {
+    const pinia = createPinia();
 
-const app = createApp(App)
-    .use(IonicVue, {
-        innerHTMLTemplatesEnabled: true,
-    })
-    .use(router)
-    .use(pinia)
-    .use(i18n);
+    const app = createApp(App)
+        .use(IonicVue, {
+            innerHTMLTemplatesEnabled: true,
+        })
+        .use(router)
+        .use(pinia)
+        .use(i18n);
 
-router.isReady().then(() => {
-    app.mount('#app');
-    useStorage();
-});
+    router.isReady().then(() => {
+        app.mount('#app');
+        useStorage();
+    });
+}

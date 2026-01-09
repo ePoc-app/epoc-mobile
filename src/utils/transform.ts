@@ -2,7 +2,7 @@
   const denormalize = (value: any, record?: any): any[] => {
     // map array of ids with corresponding object values
     if (value && record) {
-      return value.map(itemId => {
+      return value.map((itemId: string) => {
         const item = record[itemId];
         item.id = itemId;
         return item;
@@ -21,7 +21,7 @@
 
   const srcConvert = (value: string, rootFolder:string): string => {
     const regex = /src=['"](?!http)([^'"]*)['"]/g;
-    return value.replace(/assets\/demo\//g, '').replace(regex, `src='${rootFolder}$1'`);
+    return value.replace(regex, `src='${rootFolder}$1'`);
   }
 
   const removeSecableSpace = (value: string ): string  => {

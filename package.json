@@ -7,7 +7,7 @@
     "dev": "ionic serve",
     "android": "npm run resources && ionic cap run android; node scripts/fix-config.js",
     "android-dev": "npm run resources && ionic cap run android --livereload-url=http://localhost:8100; node scripts/fix-config.js",
-    "ios": "npm run resources && ionic cap run ios; node scripts/fix-config.js",
+    "ios": "npm run resources && ionic cap run ios --target=567E5142-F6EB-4585-ABFD-B9E7CB71E9A7; node scripts/fix-config.js",
     "ios-dev": "npm run resources && ionic cap run ios --livereload-url=http://localhost:8100; node scripts/fix-config.js",
     "test:e2e": "cypress run",
     "test:unit": "vitest",

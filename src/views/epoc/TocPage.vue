@@ -27,7 +27,6 @@ import {
 import { useEpocStore } from '@/stores/epocStore';
 import { denormalize } from '@/utils/pipes';
 import { onBeforeMount } from 'vue';
-import { Capacitor } from '@capacitor/core';
 
 const route = useRoute();
 const epocStore = useEpocStore();
@@ -67,10 +66,10 @@ const toggleDetails = (chapter) => {
         <ion-content>
             <div v-if="epocStore.epoc" class="wrapper">
                 <div class="toc-header">
-                    <img
+                    <img v-if="epocStore.epoc.image"
                         aria-hidden="true"
                         alt="ePoc Image"
-                        :src="Capacitor.convertFileSrc(epocStore.rootFolder + epocStore.epoc.image)"
+                        :src="epocStore.rootFolder + epocStore.epoc.image"
                     />
                     <div class="toc-header-title">{{ epocStore.epoc.title }}</div>
                 </div>

@@ -177,7 +177,7 @@ export const useReadingStore = defineStore('reading', () => {
 
     function checkBadges(reading: Reading) {
         const epoc = epocService.epoc;
-        if (!epoc.badges) return;
+        if (!epoc || !epoc.badges) return;
         for (const [badgeId, badge] of Object.entries(epoc.badges)) {
             if (jsonLogic.apply(badge.rule, reading.statements) && !reading.badges.includes(badgeId)) {
                 presentBadge(badge as Badge);
