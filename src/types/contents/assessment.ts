@@ -2,7 +2,7 @@ import {uid} from '@epoc/epoc-types/dist/v1';
 import {Assessment as AssessmentType, SimpleQuestion as SimpleQuestionType} from '@epoc/epoc-types/dist/v1/content'
 import {Question} from '@epoc/epoc-types/dist/v1/question';
 
-export {Question, MultipleChoiceQuestion, SimpleChoiceQuestion, ReorderQuestion, DragAndDropquestion} from '@epoc/epoc-types/dist/v1/question';
+export type {Question, MultipleChoiceQuestion, SimpleChoiceQuestion, ReorderQuestion, DragAndDropquestion} from '@epoc/epoc-types/dist/v1/question';
 
 
 export interface Assessment extends AssessmentType {

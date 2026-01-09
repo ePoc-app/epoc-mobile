@@ -1,12 +1,10 @@
-import {uid} from '@epoc/epoc-types/dist/v1';
-import {Epoc as EpocType, EpocMetadata} from '@epoc/epoc-types/dist/v1';
-import {Rule} from '@epoc/epoc-types/dist/v2/rule';
-import {Chapter as ChapterType} from '@epoc/epoc-types/dist/v1/epoc/';
-import {Content} from './contents/content'
-import {Assessment, Question, SimpleQuestion} from './contents/assessment';
-import {ePocCollection} from '@epoc/epoc-types/dist/v1/collection';
+import type {Epoc as EpocType, Chapter as ChapterType, EpocMetadata, uid} from '@epoc/epoc-types/dist/v1';
+import type {Rule} from '@epoc/epoc-types/dist/v2/rule';
+import type {Content} from './contents/content'
+import type {Assessment, Question, SimpleQuestion} from './contents/assessment';
+import type {ePocCollection} from '@epoc/epoc-types/dist/v1/collection';
 
-export {EpocMetadata} from '@epoc/epoc-types/dist/v1'
+export type {EpocMetadata} from '@epoc/epoc-types/dist/v1'
 
 export interface CustomLibrary {
     name: string;
@@ -60,8 +58,6 @@ export interface Chapter extends ChapterType {
     chapterOpened?: boolean;
     assessmentDone?: boolean;
     resumeLink?:string;
-    title?:string;
-    objectives?:any // TODO TODO Chapter did not have title or objective but it was required in the Chapter Info Cmpt
 }
 
 
