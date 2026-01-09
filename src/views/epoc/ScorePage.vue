@@ -9,16 +9,32 @@ import {
     IonIcon,
     IonBackButton,
     IonButton,
+    alertController,
+    loadingController,
 } from '@ionic/vue';
-import { ref, reactive, onBeforeMount, computed } from 'vue';
+import { ref, reactive, onBeforeMount, computed, Ref } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import ScoreProgress from '@/components/ScoreProgress.vue';
 import { useRoute } from 'vue-router';
 import { chevronForwardOutline, downloadOutline, starOutline } from 'ionicons/icons';
-import Badge from '@/components/Badge.vue';
+import BadgeComponent from '@/components/Badge.vue';
+import type { Badge } from '@/types/epoc';
+import { useI18n } from 'vue-i18n';
+import { useSettingsStore } from '@/stores/settingsStore';
+import { useUser } from '@/composables';
+import { handleSetUser } from '@/utils/user';
+import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import jsPDF from 'jspdf';
+import { generatePdf } from '@/utils/pdf';
+
+const { t } = useI18n();
 
 const epocStore = useEpocStore();
+const settingsStore = useSettingsStore();
 const route = useRoute();
+
+const { user } = useUser();
 
 onBeforeMount(async () => {
     const id = route.params.epoc_id.toString();
@@ -35,15 +51,138 @@ const assessmentData = reactive({
     successStore: 0,
     attemptedScore: 0,
     todoScore: 0,
-    totalUserScore: 5,
+    totalUserScore: 19,
     totalScore: 20,
 });
 
-// TODO
-async function getCertificate() {}
+const badgeModal: Ref<Badge | undefined> = ref();
+const showBadgeModal = ref(false);
+function showBadgeDetail(badge: Badge) {
+    badgeModal.value = badge;
+    showBadgeModal.value = true;
+}
 
-// TODO
-function showBadgeDetail(badge: any) {}
+const loading = ref(false);
+async function getCertificate() {
+    if (loading.value) {
+        presentFail(
+            t('PLAYER.SCORE.FAIL_MODAL.HEADER'),
+            t('PLAYER.SCORE.FAIL_MODAL.MSG', { score: epocStore.epoc.certificateScore })
+        );
+
+        return;
+    }
+
+    if (settingsStore.settings.devMode || certificateUnlocked.value) {
+        if (!user.value) {
+            const userData = await handleSetUser();
+            if (!userData) return;
+        }
+
+        await presentLoading();
+        downloadPdf(await generatePdf(epocStore.epoc, epocStore.rootFolder, unlockedBadges.value));
+    }
+}
+
+function downloadPdf(doc: jsPDF) {
+    const fileName = `attestation-${epocStore.epoc.id}.pdf`;
+
+    if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === 'android') {
+        // Save the PDF to the device
+        const output = doc.output('datauristring');
+        Filesystem.writeFile({
+            path: fileName,
+            data: output,
+            directory: Directory.Data,
+        })
+            .then(() => {
+                Filesystem.getUri({
+                    directory: Directory.Data,
+                    path: fileName,
+                })
+                    .then((getUriResult) => {
+                        try {
+                            // TODO
+                            //     const path = getUriResult.uri;
+                            //     const fileOpenerOptions: FileOpenerOptions = {
+                            //         filePath: path,
+                            //         contentType: 'application/pdf',
+                            //         openWithDefault: true,
+                            //     };
+                            //     FileOpener.open(fileOpenerOptions)
+                            //         .then(() => {
+                            //             dismissLoading();
+                            //         })
+                            //         .catch(() => {
+                            //             dismissLoading().then(() => {
+                            //                 presentFail(
+                            //                     t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                            //                     t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
+                            //                         type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN'),
+                            //                     })
+                            //                 );
+                            //             });
+                            //         });
+                        } catch (e) {
+                            dismissLoading().then(() => {
+                                presentFail(
+                                    t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                                    t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
+                                        type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN'),
+                                    })
+                                );
+                            });
+                        }
+                    })
+                    .catch(() => {
+                        dismissLoading().then(() => {
+                            presentFail(
+                                t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                                t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
+                                    type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.RECUP'),
+                                })
+                            );
+                        });
+                    });
+            })
+            .catch(() => {
+                dismissLoading().then(() => {
+                    presentFail(
+                        t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                        t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
+                            type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.SAVE'),
+                        })
+                    );
+                });
+            });
+    } else {
+        doc.output('dataurlnewwindow');
+        dismissLoading();
+    }
+}
+
+async function presentFail(header: string, message: string) {
+    const alert = await alertController.create({
+        header,
+        message,
+        buttons: [t('OK')],
+    });
+
+    await alert.present();
+}
+async function presentLoading() {
+    loading.value = true;
+    const loadingAlert = await loadingController.create({
+        message: t('PLAYER.SCORE.CERTIFICATE_PDF.WAITING'),
+    });
+
+    await loadingAlert.present();
+}
+
+async function dismissLoading() {
+    loading.value = false;
+    await loadingController.dismiss();
+}
 </script>
 
 <template>
@@ -80,7 +219,7 @@ function showBadgeDetail(badge: any) {}
                 </div>
 
                 <template v-if="!epocStore.epoc.certificateDisabled">
-                    <div class="certificate">
+                    <div v-if="!certificateUnlocked" class="certificate">
                         <h5>{{ $t('PLAYER.SCORE.CONTINUE') }}</h5>
                         <p>
                             {{
@@ -94,15 +233,25 @@ function showBadgeDetail(badge: any) {}
                             <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
                         </ion-button>
                     </div>
+
+                    <div v-else class="certificate success">
+                        <ion-icon class="badge" src="/assets/icon/badge.svg" />
+                        <h5>{{ $t('PLAYER.SCORE.CONGRATS') }}</h5>
+                        <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
+                        <ion-button expand="block" @click="getCertificate">
+                            <ion-icon :icon="downloadOutline" slot="start" />
+                            <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
+                        </ion-button>
+                    </div>
                 </template>
 
                 <div class="short-access">
                     <h4 class="short-access-label">{{ $t('PLAYER.SCORE.PTS_RECAP') }}</h4>
-                    <div
-                        class="short-access-item"
-                        :router-link="`/epoc/play/${epocStore.epoc.id}/${assessment.chapterId}/content/${assessment.id}`"
+                    <RouterLink
                         v-for="(assessment, index) of epocStore.epoc.assessments"
                         :key="index"
+                        :to="`/epoc/play/${epocStore.epoc.id}/${assessment.chapterId}/content/${assessment.id}`"
+                        class="short-access-item"
                     >
                         <ion-label>
                             {{ assessment.title }}
@@ -121,7 +270,7 @@ function showBadgeDetail(badge: any) {}
                             {{ assessment.score ? assessment.score : 0 }}/{{ assessment.scoreTotal }}
                         </ion-note>
                         <ion-icon :icon="chevronForwardOutline" />
-                    </div>
+                    </RouterLink>
                 </div>
             </div>
             <div v-if="epocStore.epoc && badgeMode" class="wrapper">
@@ -137,7 +286,7 @@ function showBadgeDetail(badge: any) {}
                         </p>
                     </div>
                     <div class="certificate-badge">
-                        <Badge icon="cert-grey" grey nobg />
+                        <BadgeComponent icon="cert-grey" grey nobg />
                     </div>
                 </div>
 
@@ -147,14 +296,14 @@ function showBadgeDetail(badge: any) {}
                         <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
                     </div>
                     <div class="certificate-badge">
-                        <Badge icon="cert" nobg />
+                        <BadgeComponent icon="cert" nobg />
                     </div>
                     <ion-button expand="block" @click="getCertificate">
                         <ion-icon :icon="downloadOutline" slot="start" />
                         <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
                     </ion-button>
                 </div>
-                <!-- <div class="badge-list">
+                <div class="badge-list">
                     <div
                         v-for="(badge, index) of epocStore.epoc.badges"
                         :key="index"
@@ -162,12 +311,16 @@ function showBadgeDetail(badge: any) {}
                         :class="{ unlocked: unlockedBadges.includes(badge.id) }"
                         @click="showBadgeDetail(badge)"
                     >
-                        <Badge :title="badge.title" :icon="badge.icon" :locked="!unlockedBadges.includes(badge.id)" />
+                        <BadgeComponent
+                            :title="badge.title"
+                            :icon="badge.icon"
+                            :locked="!unlockedBadges.includes(badge.id)"
+                        />
                     </div>
-                </div> -->
+                </div>
             </div>
         </ion-content>
-        <!-- <BadgeModal v-if="badgeModal" :show-modal="showBadgeModal" :badge="badgeModal" :epoc="epoc" /> -->
+        <BadgeModal v-if="badgeModal" :show-modal="showBadgeModal" :badge="badgeModal" :epoc="epocStore.epoc" />
     </ion-page>
 </template>
 
@@ -314,6 +467,9 @@ function showBadgeDetail(badge: any) {}
         border-radius: 0.5rem;
         font-weight: bold;
         background: var(--ion-color-item);
+        text-decoration: none;
+        color: inherit;
+
         span {
             display: block;
             max-width: 100%;

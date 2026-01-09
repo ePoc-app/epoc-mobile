@@ -31,7 +31,8 @@ import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
 import { App, type AppInfo } from '@capacitor/app';
 import { languages } from '@/utils/languages';
-import { useUser, type User } from '@/composables';
+import { useUser } from '@/composables';
+import { handleSetUser } from '@/utils/user';
 
 const libraryStore = useLibraryStore();
 const settingsStore = useSettingsStore();
@@ -79,44 +80,6 @@ function getStyle() {
         'font-size': settings.value.fontSize + 'px',
         'line-height': settings.value.lineHeight,
     };
-}
-
-async function handleSetUser() {
-    const alert = await alertController.create({
-        header: t('SETTINGS_PAGE.SET_USER.INFO'),
-        message: t('SETTINGS_PAGE.SET_USER.MESSAGE'),
-        inputs: [
-            {
-                name: 'lastname',
-                type: 'text',
-                placeholder: t('SETTINGS_PAGE.SET_USER.LASTNAME_PLACEHOLDER'),
-            },
-            {
-                name: 'firstname',
-                type: 'text',
-                placeholder: t('SETTINGS_PAGE.SET_USER.FIRSTNAME_PLACEHOLDER'),
-            },
-        ],
-        buttons: [
-            {
-                text: t('CANCEL'),
-                role: 'cancel',
-                cssClass: 'secondary',
-            },
-            {
-                text: t('CONFIRM'),
-                handler: async (data: User) => {
-                    if (!data.firstname?.trim() || !data.lastname?.trim()) {
-                        return false;
-                    }
-
-                    await setUser(data);
-                },
-            },
-        ],
-    });
-
-    await alert.present();
 }
 
 async function resetUser() {
