@@ -27,6 +27,8 @@ PODS:
     - Capacitor
   - CapacitorStatusBar (7.0.3):
     - Capacitor
+  - CordovaPlugins (7.4.4):
+    - CapacitorCordova
   - EpocCapacitorZip (0.1.1):
     - Capacitor
     - SSZipArchive (~> 2.4.2)
@@ -49,6 +51,7 @@ DEPENDENCIES:
   - "CapacitorScreenReader (from `../../node_modules/@capacitor/screen-reader`)"
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - "EpocCapacitorZip (from `../../node_modules/@epoc/capacitor-zip`)"
 
 SPEC REPOS:
@@ -85,6 +88,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
+  CordovaPlugins:
+    :path: "../capacitor-cordova-ios-plugins"
   EpocCapacitorZip:
     :path: "../../node_modules/@epoc/capacitor-zip"
 
@@ -102,12 +107,13 @@ SPEC CHECKSUMS:
   CapacitorScreenReader: 5d2b8326d8a13666ac08ddddaf35af086384ed80
   CapacitorSplashScreen: d06ae8804808e9f649a08e7bb7f283c77b688084
   CapacitorStatusBar: 7d8fcbd6768db014bd721d75e246590b014928e8
+  CordovaPlugins: 2ce67ef2b09c9be5dca0c6208b7569674c07083e
   EpocCapacitorZip: 64c2c5bf16772a73bae663ce6dc5958260d7c905
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   IONFileTransferLib: b268561ab0ba7f386eea228c4986b55ba0146ca9
   OSBarcodeLib: 57987d2eb1f916f701f4554e20e349b3cb83f023
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
 
-PODFILE CHECKSUM: bea79521a368da6b4bb49eb30261f6a82c68c601
+PODFILE CHECKSUM: a982053f21f1560d052b685aede5a2042b716d1c
 
 COCOAPODS: 1.16.2

@@ -7,7 +7,6 @@ import { useReadingStore } from '@/stores/readingStore';
 import { srcConvert } from '@/utils/transform';
 import HtmlContent from './HtmlContent.vue';
 import VideoPlayer from '@/components/VideoPlayer.vue';
-import { Capacitor } from '@capacitor/core';
 
 const epocStore = useEpocStore()
 const readingStore = useReadingStore()
@@ -56,7 +55,7 @@ const playPause = (playing: boolean) => {
 <template>
   <template v-if="content">
    <video-player 
-      :src="Capacitor.convertFileSrc(epocStore.rootFolder + content.source)" :poster="Capacitor.convertFileSrc(epocStore.rootFolder + content.poster)"
+      :src="epocStore.rootFolder + content.source" :poster="epocStore.rootFolder + content.poster"
       :subtitles="content.subtitles" :title="content.title"
       @timelineDragging="forwardEvent($event)" @videoData="setVideoData($event)" @playPause="playPause($event)">
     </video-player>

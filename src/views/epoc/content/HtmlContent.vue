@@ -27,20 +27,7 @@ const epocId = ref<string>(route.params.epoc_id.toString())
 const chapterId = ref<string>(route.params.chapter_id.toString())
 
 const pluggedHtml = computed(() => {
-  let processedHtml;
-  // processedHtml = await plugin.embed(props.html);
-
-  // Expression régulière pour détecter les attributs src/href avec des URLs locales
-  const urlRegex = /(src|href)=['"](\/LIBRARY_NO_CLOUD[^'"]+)['"]/g;
-
-  // Fonction pour remplacer chaque URL locale
-  processedHtml = props.html.replace(urlRegex, (match, attribute, filePath) => {
-    const convertedUrl = Capacitor.convertFileSrc(filePath);
-    // Si l'URL est en cours de chargement, on retourne une valeur temporaire
-    return `${attribute}="${convertedUrl}"`;
-  });
-
-  return props.html//processedHtml;
+  return plugin.embed(props.html);
 });
 
 
