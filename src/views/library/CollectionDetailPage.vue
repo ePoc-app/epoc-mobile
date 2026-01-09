@@ -55,12 +55,10 @@ const collection: EpocCollection = libraryStore.officialCollections[collectionId
             <div id="container">
                 <div class="library-line-separator"></div>
                 <div class="library-items" tabindex="-1">
-                    <div
-                        class="library-item"
-                        v-for="epoc in Object.values(collection.ePocs).slice(0, 4)"
-                        :key="epoc.id"
-                    >
-                        <RouterLink :to="{ name: 'WIP', params: { any: '/library/' + collection.id + '/' + epoc.id } }">
+                    <div class="library-item" v-for="epoc in Object.values(collection.ePocs)" :key="epoc.id">
+                        <RouterLink
+                            :to="{ name: 'EpocOverviewPage', params: { libraryId: collection.id, id: epoc.id } }"
+                        >
                             <div
                                 :aria-label="epoc.title"
                                 class="library-item-image"
@@ -69,7 +67,7 @@ const collection: EpocCollection = libraryStore.officialCollections[collectionId
                         </RouterLink>
                         <h3 aria-hidden="true" class="library-item-title">{{ epoc.title }}</h3>
                         <div class="library-item-toolbar" v-if="epoc.downloaded">
-                            <RouterLink :to="{ name: 'WIP', params: { any: '/epoc/toc' + epoc.id } }">
+                            <RouterLink :to="{ name: 'TocPage', params: { id: epoc.id } }">
                                 <ion-button class="expanded" color="inria">
                                     <span v-if="epoc.opened">{{ $t('LIBRARY_PAGE.CONTINUE') }}</span>
                                     <ion-icon

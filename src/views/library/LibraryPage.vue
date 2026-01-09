@@ -31,7 +31,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {Capacitor} from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
 
 const { t } = useI18n();
 const router = useRouter();

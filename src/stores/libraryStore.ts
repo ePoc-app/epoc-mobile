@@ -83,6 +83,7 @@ export const useLibraryStore = defineStore('library', () => {
                     }
                 }
             }
+            console.log('collections', collections[0]);
         } catch (error) {
             console.error('Error fetching official collections:', error);
         }
