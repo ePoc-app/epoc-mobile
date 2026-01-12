@@ -5,7 +5,7 @@ import { PropType, ref } from 'vue';
 
 const props = defineProps({
   question: {
-    type : Object as PropType<SimpleChoiceQuestion>,
+    type : Object as PropType<Question>,
     required: true
   },
   disabled: {
@@ -19,14 +19,14 @@ const props = defineProps({
 })
 
 const emits = defineEmits<{
-  userResponse: [answer: String];
+  userResponse: [answer: String[]];
 }>()
 
 const selectedAnswer = ref<String>(props.userPreviousResponse[0]);
 
 const selectAnswer = (answer: String) => {
   selectedAnswer.value = answer;
-  emits('userResponse', selectedAnswer.value)
+  emits('userResponse', [selectedAnswer.value])
 }
 </script>
 
@@ -61,8 +61,6 @@ ion-radio{
   --color: var(--ion-color-inria-lightgrey);
   --color-checked: var(--ion-color-inria-spe);
   background: white;
-  width: 1.5rem;
-  height: 1.5rem;
   border-radius: 1.5rem;
 
   & + ion-label{

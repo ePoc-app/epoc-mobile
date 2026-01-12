@@ -3,7 +3,7 @@
 </script>
 
 <template>
-DROPDOWN LIST
+CORRECTION GENERIC
 </template>
 
 <style>

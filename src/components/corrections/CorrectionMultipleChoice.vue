@@ -3,7 +3,7 @@
 </script>
 
 <template>
-DROPDOWN LIST
+CORRECTION MultipleChoice
 </template>
 
 <style>
