@@ -32,7 +32,7 @@ import { storeToRefs } from 'pinia';
 import type { Reading } from '@/types/reading';
 import type { uid } from '@epoc/epoc-types/dist/v1';
 import { denormalize } from '@/utils/pipes';
-// import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
+import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
 
 const { t } = useI18n();
 
@@ -120,27 +120,26 @@ function downloadPdf(doc: jsPDF) {
                 })
                     .then((getUriResult) => {
                         try {
-                            // TODO
-                            // const path = getUriResult.uri;
-                            // const fileOpenerOptions: FileOpenerOptions = {
-                            //     filePath: path,
-                            //     contentType: 'application/pdf',
-                            //     openWithDefault: true,
-                            // };
-                            // FileOpener.open(fileOpenerOptions)
-                            //     .then(() => {
-                            //         dismissLoading();
-                            //     })
-                            //     .catch(() => {
-                            //         dismissLoading().then(() => {
-                            //             presentFail(
-                            //                 t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
-                            //                 t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
-                            //                     type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN'),
-                            //                 })
-                            //             );
-                            //         });
-                            //     });
+                            const path = getUriResult.uri;
+                            const fileOpenerOptions: FileOpenerOptions = {
+                                filePath: path,
+                                contentType: 'application/pdf',
+                                openWithDefault: true,
+                            };
+                            FileOpener.open(fileOpenerOptions)
+                                .then(() => {
+                                    dismissLoading();
+                                })
+                                .catch(() => {
+                                    dismissLoading().then(() => {
+                                        presentFail(
+                                            t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                                            t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
+                                                type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN'),
+                                            })
+                                        );
+                                    });
+                                });
                         } catch (e) {
                             dismissLoading().then(() => {
                                 presentFail(
@@ -375,7 +374,6 @@ const denormalizedBadges = computed(() => denormalize(epoc.value.badges));
                 </div>
 
                 <div v-else class="certificate flex success">
-                    <pre>reading :{{ reading }}</pre>
                     <div class="certificate-text">
                         <h6>{{ $t('PLAYER.SCORE.CONGRATS') }}</h6>
                         <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>

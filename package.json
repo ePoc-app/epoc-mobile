@@ -35,6 +35,7 @@
     "@capacitor/screen-reader": "^7.0.2",
     "@capacitor/splash-screen": "^7.0.3",
     "@capacitor/status-bar": "^7.0.3",
+    "@capacitor-community/file-opener": "^7.0.1",
     "@epoc/capacitor-zip": "^0.1.1",
     "@epoc/epoc-types": "^2.0.0-beta.23",
     "@ionic/cli": "^7.2.1",
