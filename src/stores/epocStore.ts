@@ -39,8 +39,6 @@ export const useEpocStore = defineStore('epoc', () => {
 
             _rootFolder.value = `${epoc.dir}/`;
 
-            console.log(epoc.dir);
-
             return _epoc.value;
         } catch (error) {
             console.log('Error reading ePoc content:', error);
