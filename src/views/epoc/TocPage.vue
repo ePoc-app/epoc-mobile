@@ -25,7 +25,7 @@ import {
     chevronForwardOutline,
 } from 'ionicons/icons';
 import { useEpocStore } from '@/stores/epocStore';
-import { denormalize } from '@/utils/transform';
+import { denormalize } from '@/utils/pipes';
 import { onBeforeMount } from 'vue';
 import { Capacitor } from '@capacitor/core';
 

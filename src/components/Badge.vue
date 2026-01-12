@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useEpocStore } from '@/stores/epocStore';
 import { computed } from 'vue';
-import { safe } from '@/utils/safe';
+import { safe } from '@/utils/pipes';
 
 const props = defineProps<{
     title?: string;

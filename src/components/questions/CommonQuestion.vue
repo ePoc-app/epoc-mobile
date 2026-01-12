@@ -3,7 +3,7 @@ import { Assessment, Question, SimpleQuestion } from '@/types/contents/assessmen
 import { computed, PropType, ref, useTemplateRef, watch } from 'vue';
 import { appService } from '@/utils/appService';
 import FlipCard from '../FlipCard.vue';
-import { removeSecableSpace, srcConvert } from '@/utils/transform';
+import { removeSecableSpace, srcConvert } from '@/utils/pipes';
 import { useEpocStore } from '@/stores/epocStore';
 import SimpleChoice from './SimpleChoice.vue';
 const epocStore = useEpocStore()

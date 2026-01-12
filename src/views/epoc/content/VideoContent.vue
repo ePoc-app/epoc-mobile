@@ -4,7 +4,7 @@ import { ContentRuntime } from '@/types/contents/content';
 import { PropType, ref } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import { useReadingStore } from '@/stores/readingStore';
-import { srcConvert } from '@/utils/transform';
+import { srcConvert } from '@/utils/pipes';
 import HtmlContent from './HtmlContent.vue';
 import VideoPlayer from '@/components/VideoPlayer.vue';
 import { Capacitor } from '@capacitor/core';

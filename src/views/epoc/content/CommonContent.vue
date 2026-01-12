@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IonIcon } from '@ionic/vue';
-import { removeSecableSpace } from '@/utils/transform';
+import { removeSecableSpace } from '@/utils/pipes';
 import Card from '@/components/Card.vue';
 
 defineProps({
