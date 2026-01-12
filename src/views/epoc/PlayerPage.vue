@@ -18,8 +18,6 @@ import { onIonViewWillEnter } from '@ionic/vue';
 import { storeToRefs } from 'pinia';
 import { Chapter, Epoc } from '@/types/epoc';
 import { Reading, UserAssessment } from '@/types/reading';
-import { Settings } from '@/types/settings';
-import { Assessment, SimpleQuestion } from '@epoc/epoc-types/dist/v2';
 import { Content } from '@/types/contents/content';
 import { srcConvert } from '@/utils/pipes';
 import { menu } from 'ionicons/icons';
@@ -43,6 +41,7 @@ import {
 } from 'ionicons/icons';
 import { until } from '@vueuse/core';
 import AssessmentContent from './content/AssessmentContent.vue';
+import SimpleQuestion from './content/SimpleQuestion.vue';
 
 //Store
 const epocStore = useEpocStore();
