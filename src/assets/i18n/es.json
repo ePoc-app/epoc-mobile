@@ -75,9 +75,7 @@
     },
     "DEV_MODE_MODAL": {
       "INFO": "Activación del modo desarrollador",
-      "MESSAGE": "Por favor, proporciona la contraseña",
-      "PASSWORD": "Contraseña",
-      "WRONG_PASSWORD": "Contraseña incorrecta"
+      "MESSAGE": "Advertencia, este modo puede afectar la funcionalidad de la aplicación"
     },
     "DELETE_DATA_MODAL": {
       "INFO": "¿Estás seguro?",
