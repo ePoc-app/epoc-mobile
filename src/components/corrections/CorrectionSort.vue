@@ -3,7 +3,7 @@
 </script>
 
 <template>
-DROPDOWN LIST
+CORRECTION SORT
 </template>
 
 <style>

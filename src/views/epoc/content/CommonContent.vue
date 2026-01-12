@@ -4,9 +4,9 @@ import { removeSecableSpace } from '@/utils/pipes';
 import Card from '@/components/Card.vue';
 
 defineProps({
-  title: String,
-  subtitle: String,
-  icon: String,
+  title: {type: String, required:true},
+  subtitle: {type: String, required:true},
+  icon: {type: String, required:true},
 })
 
 </script>

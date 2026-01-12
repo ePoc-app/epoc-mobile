@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton, IonFooter } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton, IonFooter, IonTitle, IonButtons, IonText } from '@ionic/vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
     ellipsisHorizontal,
