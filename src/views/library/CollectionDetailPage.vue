@@ -8,12 +8,13 @@ import {
     syncOutline,
 } from 'ionicons/icons';
 import { useLibraryStore } from '@/stores/libraryStore';
-import { RouterLink, useRoute } from 'vue-router';
-import { EpocCollection } from '@/types/epoc';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { computed } from 'vue';
 
 const libraryStore = useLibraryStore();
-const collectionId: string = useRoute().params.collection_id.toString();
-const collection: EpocCollection = libraryStore.officialCollections[collectionId];
+const route = useRoute();
+const router = useRouter();
+const collection = computed(() => libraryStore.officialCollections[route.params.collection_id.toString()]);
 </script>
 
 <template>
@@ -67,18 +68,20 @@ const collection: EpocCollection = libraryStore.officialCollections[collectionId
                         </RouterLink>
                         <h3 aria-hidden="true" class="library-item-title">{{ epoc.title }}</h3>
                         <div class="library-item-toolbar" v-if="epoc.downloaded">
-                            <RouterLink :to="{ name: 'TocPage', params: { id: epoc.id } }">
-                                <ion-button class="expanded" color="inria">
-                                    <span v-if="epoc.opened">{{ $t('LIBRARY_PAGE.CONTINUE') }}</span>
-                                    <ion-icon
-                                        aria-hidden="true"
-                                        v-if="epoc.opened"
-                                        :icon="arrowForwardOutline"
-                                        slot="end"
-                                    ></ion-icon>
-                                    <span v-if="!epoc.opened">{{ $t('LIBRARY_PAGE.DISCOVER') }}</span>
-                                </ion-button>
-                            </RouterLink>
+                            <ion-button
+                                class="expanded"
+                                color="inria"
+                                @click="router.push({ name: 'TocPage', params: { id: epoc.id } })"
+                            >
+                                <span v-if="epoc.opened">{{ $t('LIBRARY_PAGE.CONTINUE') }}</span>
+                                <ion-icon
+                                    aria-hidden="true"
+                                    v-if="epoc.opened"
+                                    :icon="arrowForwardOutline"
+                                    slot="end"
+                                ></ion-icon>
+                                <span v-if="!epoc.opened">{{ $t('LIBRARY_PAGE.DISCOVER') }}</span>
+                            </ion-button>
                             <ion-button
                                 class="round"
                                 :class="{ 'update-available': epoc.updateAvailable }"
