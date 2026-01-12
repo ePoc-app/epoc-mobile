@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 
 const props = defineProps({
     progress: { type: Number, required: true },
-    delta: { type: Number, required: true },
+    delta: { type: Number, required: false },
     threshold: { type: Number, required: true },
     minLabel: { type: Number, required: true },
     maxLabel: { type: Number, required: true },
@@ -13,7 +13,9 @@ const currentDelta = ref(0);
 const thresholdPoints = computed(() => Math.round((props.threshold / 100) * props.maxLabel));
 
 setTimeout(() => {
-    currentDelta.value = props.delta;
+    if (props.delta !== undefined) {
+        currentDelta.value = props.delta;
+    }
 }, 200);
 </script>
 
