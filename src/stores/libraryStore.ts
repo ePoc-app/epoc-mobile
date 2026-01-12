@@ -180,7 +180,7 @@ export const useLibraryStore = defineStore('library', () => {
         } catch (error) {
             console.error('Error downloading ePoc:', error);
             updateEpocCollectionState(epoc.id, { downloading: false }, libraryId);
-            await presentToast(t('LIBRARY.DOWNLOAD_ERROR'), 'danger');
+            await presentToast(t('LIBRARY_PAGE.DOWNLOAD_ERROR'), 'danger');
             return;
         }
         unzipEpoc(epoc.id, libraryId);
