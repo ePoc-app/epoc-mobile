@@ -1,46 +1,41 @@
 <script setup lang="ts">
-import { Assessment, Question, SimpleQuestion } from '@/types/contents/assessment';
-import { computed, PropType, ref, useTemplateRef, watch } from 'vue';
+import { Question } from '@/types/contents/assessment';
+import { onMounted, PropType, ref, useTemplateRef } from 'vue';
 import { appService } from '@/utils/appService';
 import FlipCard from '../FlipCard.vue';
 import { removeSecableSpace, srcConvert } from '@/utils/pipes';
 import { useEpocStore } from '@/stores/epocStore';
 import SimpleChoice from './SimpleChoice.vue';
+import { IonIcon } from '@ionic/vue';
+import HtmlContent from '@/views/epoc/content/HtmlContent.vue';
+import CorrectionSimpleChoice from '../corrections/CorrectionSimpleChoice.vue';
+import { UserAssessment } from '@/types/reading';
+import { checkmarkCircleOutline, closeOutline } from 'ionicons/icons';
+import MultipleChoice from './MultipleChoice.vue';
+import DragAndDrop from './DragAndDrop.vue';
+import DropdownList from './DropdownList.vue';
+import Reorder from './Reorder.vue';
+import Swipe from './Swipe.vue';
+import CorrectionMultipleChoice from '../corrections/CorrectionMultipleChoice.vue';
+import CorrectionReorder from '../corrections/CorrectionReorder.vue';
+import CorrectionSort from '../corrections/CorrectionSort.vue';
+import CustomQuestion from './CustomQuestion.vue';
+
 const epocStore = useEpocStore()
 
 const props = defineProps({
-  question: {
-    type : Object as PropType<(Question)>,
-    required: true
-  },
-  closable: {
-    type : Boolean,
-    required: true
-  },
-  contentId: {
-    type : String,
-    required: true
-  },
-  epocId: {
-    type : String,
-    required: true
-  },
-  title: {
-    type : String,
-    required: true
-  },
-  subtitle: {
-    type : String,
-    required: true
-  },
-  icon: {
-    type : String,
-    required: true
-  },
+  question: { type : Object as PropType<(Question)>, required: true},
+  closable: { type : Boolean },
+  contentId: { type : String, required: true },
+  epocId: { type : String, required: true },
+  userAssessment: {type: UserAssessment},
+  title: String ,
+  subtitle: String,
+  icon: String,
 })
 
 const emits = defineEmits<{
-  userHasResponded: [id: number]; // named tuple syntax
+  userHasResponded: [userResponses: string[]]; 
   questionAnswered: [value: boolean];
   dragging: [event: Event];
   close: [value: boolean];
@@ -48,21 +43,16 @@ const emits = defineEmits<{
 
 type FlipCardType = InstanceType<typeof FlipCard>
 const flipCardComponent = useTemplateRef<FlipCardType>('flip-card')
-const userAssessment = ref<(Assessment|SimpleQuestion)>()
-const questionDisabled = ref(userAssessment.value ? true : false);
-const userResponses = ref(userAssessment.value && Object.hasOwn(userAssessment.value, 'responses')  ? userAssessment.value['responses'] as String[] : undefined);
-const flipped = ref(userAssessment.value ? true : false);
+const questionDisabled = ref(props.userAssessment ? true : false);
+const userResponses = ref(props.userAssessment && Object.hasOwn(props.userAssessment, 'responses')  ? props.userAssessment.responses as String[] : []);
+const flipped = ref(props.userAssessment ? true : false);
 
-watch(userAssessment, (newUserAssessment) => {
-  if (userAssessment) {
-    emits('questionAnswered', true)
-  }
-  else {
-    emits('questionAnswered', true)
-  }
+onMounted(() => {
+  const answered = (props.userAssessment) ? true : false
+  emits('questionAnswered', answered)
 })
 
-const flip = (event?) => {
+const flip = (event?: any) => {
   if (event && (['SUMMARY'].indexOf(event.target.tagName) !== -1 || event.target.closest('a'))) return;
   if (questionDisabled.value) {
     flipCardComponent.value?.flip();
@@ -74,8 +64,9 @@ const flip = (event?) => {
   }, 600);
 }
 
-const updateUserResponse = (userResponse: Event) => {
-  //userResponses.value = userResponse;
+const updateUserResponse = (userResponse: string[]) => {
+  userResponses.value = userResponse;
+  emits('userHasResponded', userResponse)
 }
 
 const onDrag= (value: Event) => {
@@ -94,21 +85,30 @@ const updateFocus = () => {
     }
   }
 
+const showCorrection = () =>  {
+  questionDisabled.value = true;
+  emits('questionAnswered', true);
+  flip();
+}
+
+defineExpose({
+  showCorrection
+})
 </script>
 
 <template>
 <flip-card :initFlipped="flipped" v-on:click="flip($event)" ref="flip-card">
-  <template front>
+  <template v-slot:front>
     <div :aria-hidden="flipped">
       <div class="title-container">
         <div class="title-icon" v-if="icon">
           <ion-icon aria-hidden="true" :icon="icon"></ion-icon>
         </div>
         <h5 class="subtitle" v-if="subtitle">{{removeSecableSpace(subtitle)}}</h5>
-        <h4 class="title" v-if="title">{{removeSecableSpace(subtitle)}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
+        <h4 class="title" v-if="title">{{removeSecableSpace(title)}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
       </div>
       <div role="button" aria-label="Fermer" class="close" v-if="closable" v-on:click="back($event)">
-        <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
+        <ion-icon aria-hidden="true" :name="closeOutline"></ion-icon>
       </div>
       <div class="statement ion-text-center">
         <b>{{removeSecableSpace(question.label)}}</b>
@@ -116,31 +116,37 @@ const updateFocus = () => {
       </div>
       <div class="question">
         <simple-choice v-if="question.type === 'choice' && question.responses.length > 0" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></simple-choice>
+        <multiple-choice v-if="question.type === 'multiple-choice'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></multiple-choice>
+        <reorder v-if="question.type === 'reorder'" :question="question" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></reorder>
+        <drag-and-drop v-if="question.type === 'drag-and-drop'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @dragging="onDrag($event)" @userResponse="updateUserResponse($event)"></drag-and-drop>
+        <swipe v-if="question.type === 'swipe'" :question="question" :userPreviousResponse="userResponses"  :disabled="questionDisabled" @dragging="onDrag($event)" @userResponse="updateUserResponse($event)"></swipe>
+        <dropdown-list v-if="question.type === 'dropdown-list'" :question="question" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></dropdown-list>
+        <custom-question v-if="question.type === 'custom'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></custom-question>
       </div>
-      <ng-content></ng-content>
     </div>
+    <slot></slot>
   </template>
-  <template back>
+  <template v-slot:back>
     <div class="correction" v-if="flipped && question.responses.length > 0">
       <div class="title-container">
         <div class="title-icon">
-          <ion-icon aria-hidden="true" name="checkmark-circle-outline"></ion-icon>
+          <ion-icon aria-hidden="true" :icon="checkmarkCircleOutline"></ion-icon>
         </div>
         <h5 class="subtitle">{{$t('QUESTION.PREVIEW.RESPONSES')}}</h5>
       </div>
       <div :aria-hidden="!flipped" role="button" aria-label="Fermer" class="close" v-if="closable" v-on:click="back($event)">
-        <ion-icon aria-hidden="true" name="close-outline"></ion-icon>
+        <ion-icon aria-hidden="true" :icon="closeOutline"></ion-icon>
       </div>
       <div class="statement ion-text-center">
         <b>{{question.label}}</b>
       </div>
-      <template>
+      <div>
         <correction-simple-choice v-if="question.type == 'choice'" :question="question" :userResponses="userResponses"></correction-simple-choice>
         <correction-multiple-choice v-else-if="question.type == 'multiple-choice'" :question="question" :userResponses="userResponses"></correction-multiple-choice>
         <correction-reorder v-else-if="question.type =='reorder'" :question="question" :userResponses="userResponses"></correction-reorder>
         <correction-sort v-else-if="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type)" :question="question" :userResponses="userResponses"></correction-sort>
         <correction-generic v-else :question="question" :userResponses="userResponses"></correction-generic>
-      </template>
+      </div>
       <div class="explanation" v-if="question.feedback">
         <h4>{{$t('QUESTION.PREVIEW.EXPLANATION')}}</h4>
         <html-content :html="srcConvert(question.feedback, epocStore.rootFolder)"></html-content>
@@ -241,16 +247,7 @@ const updateFocus = () => {
      margin: .5rem 0 1rem 0;
      font-size: 1.3rem;
      font-weight: bold;
-
-     &:after{
-       content:'';
-       display: block;
-       width: 80px;
-       height:4px;
-       margin: 10px auto;
-       border-radius: 2px;
-       background: var(--ion-color-inria);
-     }
+     border-bottom: 0;
    }
  }
 
