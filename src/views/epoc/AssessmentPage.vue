@@ -231,7 +231,7 @@ const updateFocus = () => {
         <ion-content :scrollY="false" v-if="assessment">
             <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
                 <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
-                    <template v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
+                    <div v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
                         <swiper-slide>
                             <common-question :aria-hidden="questionIndex !== currentQuestion" :closable=true 
                                 :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length" 
@@ -243,7 +243,7 @@ const updateFocus = () => {
                                 v-if="!isEnd">
                             </common-question>
                         </swiper-slide>
-                    </template>
+                    </div>
                     <swiper-slide class="assessment-end">
                         <card v-if="assessmentData">
                             <div class="title-container">
