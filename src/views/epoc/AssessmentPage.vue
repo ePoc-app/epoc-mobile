@@ -2,7 +2,7 @@
 
 import { Assessment, AssessmentData, SimpleQuestion, emptyAssessmentData } from '@/types/contents/assessment';
 import { useEpocStore } from '@/stores/epocStore';
-import { IonIcon, IonButton, IonContent, IonFooter } from '@ionic/vue';
+import { IonIcon, IonButton, IonContent, IonFooter, IonPage } from '@ionic/vue';
 import { appService } from '@/utils/appService';
 import CertificateModal from '@/components/CertificateModal.vue';
 import { Epoc } from '@/types/epoc';
@@ -19,6 +19,8 @@ import { denormalize } from '@/utils/pipes';
 import { useTemplateRefsList } from '@vueuse/core';
 import Card from '@/components/Card.vue';
 import CommonQuestion from '@/components/questions/CommonQuestion.vue';
+import ScoreProgress from '@/components/ScoreProgress.vue';
+
 const { t } = useI18n();
 type CommonQuestionType = InstanceType<typeof CommonQuestion>
 // TODO IL FAUT TRADUIRE LE SIMPLE CHOICE POUR RENDRE FONCTIONNEL LE COMMON QUESTION
@@ -31,8 +33,8 @@ const router = useRouter();
 const route = useRoute();
 
 // params
-const epocId = ref<string>(route.params.epoc_id.toString())
-const assessmentId = ref<string>(route.params.assessment_id.toString())
+const epocId = ref<string>(route.params.epocId.toString())
+const assessmentId = ref<string>(route.params.assessmentId.toString())
 
 // # ref
 const { epoc } = storeToRefs(epocStore)
@@ -56,7 +58,7 @@ const questionSlides = ref<SwiperObject>() //undefined; // will be set only once
 // Computed
 const reading = computed(() => readings.value.find(question => question.epocId === epoc.value.id))
 const assessments = computed(() : (Assessment|SimpleQuestion)[] => epoc.value.assessments)
-const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value.contents[assessmentId.value])
+const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value.contents[assessmentId.value] as Assessment)
 
 const questions = computed(() => assessment.value?.questions?.map(questionId => epoc.value.questions[questionId]) || [])
 const scoreMax = computed(() => epocStore.calcScoreTotal(epoc.value, assessment.value.questions || []))
