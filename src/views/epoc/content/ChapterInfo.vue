@@ -54,7 +54,7 @@ const prop = defineProps({
   </card>
 </template>
 
-<style>
+<style lang="scss" scoped>
 :host{
   display: flex;
   flex-direction: column;
