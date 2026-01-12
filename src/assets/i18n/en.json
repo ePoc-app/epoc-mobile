@@ -75,9 +75,7 @@
     },
     "DEV_MODE_MODAL": {
       "INFO": "Activation of developer mode",
-      "MESSAGE": "Please provide the password",
-      "PASSWORD": "Password",
-      "WRONG_PASSWORD": "Wrong password"
+      "MESSAGE": "Warning, this mode can disrupt the application's functionality"
     },
     "DELETE_DATA_MODAL": {
       "INFO": "Are you sure ? ",

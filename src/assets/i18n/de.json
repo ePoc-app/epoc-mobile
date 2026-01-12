@@ -75,9 +75,7 @@
     },
     "DEV_MODE_MODAL": {
       "INFO": "Aktivierung des Entwicklermodus",
-      "MESSAGE": "Bitte geben Sie das Passwort ein",
-      "PASSWORD": "Passwort",
-      "WRONG_PASSWORD": "Falsches Passwort"
+      "MESSAGE": "Warnung, dieser Modus kann die Funktionalität der Anwendung beeinträchtigen"
     },
     "DELETE_DATA_MODAL": {
       "INFO": "Sind Sie sicher?",
