@@ -105,14 +105,39 @@ async function resetUser() {
     await alert.present();
 }
 
-// TODO
 function setDevMode(event: Event) {
     event.stopPropagation();
     devModeCount.value++;
     if (devModeCount.value >= 10) {
-        console.log('Dev mode');
-        resetDevModeCount();
+        confirmDevMode();
     }
+}
+
+async function confirmDevMode() {
+    resetDevModeCount();
+
+    const alert = await alertController.create({
+        header: t('SETTINGS_PAGE.DEV_MODE_MODAL.INFO'),
+        message: t('SETTINGS_PAGE.DEV_MODE_MODAL.MESSAGE'),
+        buttons: [
+            {
+                text: t('CANCEL'),
+                role: 'cancel',
+                cssClass: 'secondary',
+            },
+            {
+                text: t('CONFIRM'),
+                handler: () => {
+                    settingsStore.updateSettings({
+                        ...settingsStore.settings,
+                        devMode: true,
+                    });
+                },
+            },
+        ],
+    });
+
+    await alert.present();
 }
 
 function disableDevMode(event: any) {

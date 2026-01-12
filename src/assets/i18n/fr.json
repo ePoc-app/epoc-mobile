@@ -1,5 +1,5 @@
 {
-  "LIBRARY_PAGE": {
+  "ETTIBRARY_PAGE": {
     "DOWNLOAD": "Télécharger",
     "CONTINUE": "Continuer",
     "DOWNLOADING": "Téléchargement",
@@ -75,9 +75,7 @@
     },
     "DEV_MODE_MODAL": {
       "INFO": "Activation du mode développeur",
-      "MESSAGE": "Veuillez fournir le mot de passe",
-      "PASSWORD": "Mot de passe",
-      "WRONG_PASSWORD": "Mot de passe erroné"
+      "MESSAGE": "Attention, ce mode peut perturber le fonctionnement de l'application"
     },
     "DELETE_DATA_MODAL": {
       "INFO": "Êtes vous sûr ? ",
