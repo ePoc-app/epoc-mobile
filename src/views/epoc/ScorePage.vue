@@ -292,7 +292,6 @@ watch(
                     <div class="score-chart">
                         <ScoreProgress
                             :progress="(assessmentData.totalUserScore / assessmentData.totalScore) * 100"
-                            :delta="(assessmentData.userScore / assessmentData.totalScore) * 100"
                             :threshold="(epoc.certificateScore / assessmentData.totalScore) * 100"
                             :min-label="0"
                             :max-label="assessmentData.totalScore"
