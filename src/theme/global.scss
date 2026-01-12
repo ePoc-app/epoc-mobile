@@ -213,9 +213,10 @@ ion-range.progress-indicator{
   display: none;
 }
 
-.custom-action-sheet{
+.sc-ion-action-sheet-ios-h.custom-action-sheet{
   .action-sheet-wrapper{
     margin-bottom:0;
+    padding-bottom: 0;
   }
   .action-sheet-container{
     padding: 0;
