@@ -47,7 +47,7 @@ const questionsElement = useTemplateRefsList<CommonQuestionType>()
 const userScore = ref(0);
 const userResponses = ref<string[]>([]);
 const assessmentData = ref<AssessmentData>(emptyAssessmentData);
-const currentQuestionUserResponse = ref<string>();
+const currentQuestionUserResponse = ref<string[]>();
 const correctionShown = ref(false);
 const currentQuestion = ref(0);
 const isEnd = ref(false);
@@ -104,9 +104,8 @@ const retry = () => {
   isEnd.value = false;
 }
 
-const onUserHasResponded = (userResponses: any) => {
+const onUserHasResponded = (userResponses: string[]) => {
     currentQuestionUserResponse.value = userResponses;
-// TODO should be automatic, to remove if no use found    this.ref.detectChanges();
 }
 
 const checkAnswer = () => {
@@ -231,19 +230,19 @@ const updateFocus = () => {
         <ion-content :scrollY="false" v-if="assessment">
             <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
                 <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
-                    <div v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
-                        <swiper-slide>
-                            <common-question :aria-hidden="questionIndex !== currentQuestion" :closable=true 
-                                :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length" 
-                                :contentId="assessment.id"
-                                :epocId="epocId" :question="question" 
-                                @userHasResponded="onUserHasResponded($event)",
-                                @close="back()" 
-                                :ref="questionsElement.set"
-                                v-if="!isEnd">
-                            </common-question>
-                        </swiper-slide>
-                    </div>
+                    <swiper-slide v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
+                        <common-question
+                            :question="question" 
+                            :closable=true 
+                            :contentId="assessment.id"
+                            :epocId="epocId"
+                            :aria-hidden="questionIndex !== currentQuestion" 
+                            :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length"
+                            @close="back"
+                            @userHasResponded="onUserHasResponded"
+                        >
+                        </common-question>
+                    </swiper-slide>
                     <swiper-slide class="assessment-end">
                         <card v-if="assessmentData">
                             <div class="title-container">
