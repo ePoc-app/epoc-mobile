@@ -12,7 +12,7 @@ import {
     alertController,
     loadingController,
 } from '@ionic/vue';
-import { ref, reactive, onBeforeMount, computed, Ref } from 'vue';
+import { ref, reactive, onBeforeMount, computed, Ref, watch } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import ScoreProgress from '@/components/ScoreProgress.vue';
 import { useRoute } from 'vue-router';
@@ -27,11 +27,21 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import jsPDF from 'jspdf';
 import { generatePdf } from '@/utils/pdf';
+import { useReadingStore } from '@/stores/readingStore';
+import { storeToRefs } from 'pinia';
+import type { Reading } from '@/types/reading';
+import type { uid } from '@epoc/epoc-types/dist/v1';
+// import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
 
 const { t } = useI18n();
 
 const epocStore = useEpocStore();
 const settingsStore = useSettingsStore();
+const readingStore = useReadingStore();
+
+const { epoc } = storeToRefs(epocStore);
+const { readings } = storeToRefs(readingStore);
+
 const route = useRoute();
 
 const { user } = useUser();
@@ -41,18 +51,25 @@ onBeforeMount(async () => {
     await epocStore.getEpocById(id);
 });
 
-const badgeMode = computed(() => (epocStore.epoc.badges ? Object.keys(epocStore.epoc.badges).length > 0 : false));
-const certificateUnlocked = computed(() => assessmentData.totalUserScore >= epocStore.epoc.certificateScore);
-// TODO
-const unlockedBadges = ref([]);
+const reading: Ref<Reading | undefined> = ref();
+const badgeMode = computed(() => (epoc.value.badges ? Object.keys(epoc.value.badges).length > 0 : false));
 
-// TODO
+const certificateUnlocked = computed(() => {
+    if (!epoc.value) return false;
+
+    return badgeMode.value
+        ? reading.value?.badges
+            ? reading.value.badges.length >= epoc.value.certificateBadgeCount
+            : false
+        : assessmentData.totalUserScore >= epoc.value.certificateScore;
+});
+
 const assessmentData = reactive({
     successStore: 0,
     attemptedScore: 0,
     todoScore: 0,
-    totalUserScore: 19,
-    totalScore: 20,
+    totalUserScore: 0,
+    totalScore: 0,
 });
 
 const badgeModal: Ref<Badge | undefined> = ref();
@@ -67,7 +84,7 @@ async function getCertificate() {
     if (loading.value) {
         presentFail(
             t('PLAYER.SCORE.FAIL_MODAL.HEADER'),
-            t('PLAYER.SCORE.FAIL_MODAL.MSG', { score: epocStore.epoc.certificateScore })
+            t('PLAYER.SCORE.FAIL_MODAL.MSG', { score: epoc.value.certificateScore })
         );
 
         return;
@@ -80,12 +97,12 @@ async function getCertificate() {
         }
 
         await presentLoading();
-        downloadPdf(await generatePdf(epocStore.epoc, epocStore.rootFolder, unlockedBadges.value));
+        downloadPdf(await generatePdf(epoc.value, epocStore.rootFolder, unlockedBadges.value));
     }
 }
 
 function downloadPdf(doc: jsPDF) {
-    const fileName = `attestation-${epocStore.epoc.id}.pdf`;
+    const fileName = `attestation-${epoc.value.id}.pdf`;
 
     if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === 'android') {
         // Save the PDF to the device
@@ -103,26 +120,26 @@ function downloadPdf(doc: jsPDF) {
                     .then((getUriResult) => {
                         try {
                             // TODO
-                            //     const path = getUriResult.uri;
-                            //     const fileOpenerOptions: FileOpenerOptions = {
-                            //         filePath: path,
-                            //         contentType: 'application/pdf',
-                            //         openWithDefault: true,
-                            //     };
-                            //     FileOpener.open(fileOpenerOptions)
-                            //         .then(() => {
-                            //             dismissLoading();
-                            //         })
-                            //         .catch(() => {
-                            //             dismissLoading().then(() => {
-                            //                 presentFail(
-                            //                     t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
-                            //                     t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
-                            //                         type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN'),
-                            //                     })
-                            //                 );
-                            //             });
+                            // const path = getUriResult.uri;
+                            // const fileOpenerOptions: FileOpenerOptions = {
+                            //     filePath: path,
+                            //     contentType: 'application/pdf',
+                            //     openWithDefault: true,
+                            // };
+                            // FileOpener.open(fileOpenerOptions)
+                            //     .then(() => {
+                            //         dismissLoading();
+                            //     })
+                            //     .catch(() => {
+                            //         dismissLoading().then(() => {
+                            //             presentFail(
+                            //                 t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                            //                 t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
+                            //                     type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN'),
+                            //                 })
+                            //             );
                             //         });
+                            //     });
                         } catch (e) {
                             dismissLoading().then(() => {
                                 presentFail(
@@ -183,6 +200,71 @@ async function dismissLoading() {
     loading.value = false;
     await loadingController.dismiss();
 }
+
+function setAssessmentsData() {
+    assessmentData.successStore = 0;
+    assessmentData.attemptedScore = 0;
+    assessmentData.todoScore = 0;
+    assessmentData.totalUserScore = 0;
+    assessmentData.totalScore = 0;
+
+    epoc.value.assessments.forEach((assessment) => {
+        if (!assessment.questions) {
+            return;
+        }
+
+        const userAssessment = reading.value?.assessments.find((a) => assessment.id === a.id);
+        const scoreTotal = epocStore.calcScoreTotal(epoc.value, assessment.questions);
+
+        assessment.score = getScore(assessment) ?? 0;
+        assessment.scoreTotal = getScoreTotal(assessment);
+
+        if (userAssessment && userAssessment.score > 0) {
+            assessmentData.totalUserScore += userAssessment.score;
+            assessmentData.successStore += userAssessment.score;
+
+            if (userAssessment.score < scoreTotal) {
+                assessmentData.attemptedScore += scoreTotal - userAssessment.score;
+            }
+        } else {
+            assessmentData.todoScore += scoreTotal;
+        }
+
+        assessmentData.totalScore += scoreTotal;
+    });
+}
+
+function getScore(content: any) {
+    return reading.value?.assessments?.find((assessment) => assessment.id === content.id)?.score ?? null;
+}
+
+function getScoreTotal(content: any) {
+    return epocStore.calcScoreTotal(epoc.value, content.questions);
+}
+
+const unlockedBadges: Ref<uid[]> = ref([]);
+
+watch(
+    [epoc, readings],
+    ([epocValue, readingsValue]) => {
+        if (!epocValue) return;
+
+        if (epocValue && readingsValue) {
+            reading.value = readingsValue.find((item) => item.epocId === route.params.id);
+        }
+
+        if (!reading.value) {
+            readingStore.addReading(epocValue.id);
+        }
+
+        if (badgeMode.value) {
+            unlockedBadges.value = reading.value ? reading.value.badges : [];
+        } else {
+            setAssessmentsData();
+        }
+    },
+    { immediate: true }
+);
 </script>
 
 <template>
@@ -197,7 +279,7 @@ async function dismissLoading() {
         </ion-header>
 
         <ion-content>
-            <div class="wrapper" v-if="epocStore.epoc && !badgeMode && assessmentData">
+            <div class="wrapper" v-if="epoc && !badgeMode && assessmentData">
                 <div class="title-container">
                     <div class="title-icon">
                         <ion-icon :icon="starOutline" />
@@ -211,20 +293,20 @@ async function dismissLoading() {
                         <ScoreProgress
                             :progress="(assessmentData.totalUserScore / assessmentData.totalScore) * 100"
                             :delta="(assessmentData.userScore / assessmentData.totalScore) * 100"
-                            :threshold="(epocStore.epoc.certificateScore / assessmentData.totalScore) * 100"
+                            :threshold="(epoc.certificateScore / assessmentData.totalScore) * 100"
                             :min-label="0"
                             :max-label="assessmentData.totalScore"
                         />
                     </div>
                 </div>
 
-                <template v-if="!epocStore.epoc.certificateDisabled">
+                <template v-if="!epoc.certificateDisabled">
                     <div v-if="!certificateUnlocked" class="certificate">
                         <h5>{{ $t('PLAYER.SCORE.CONTINUE') }}</h5>
                         <p>
                             {{
                                 $t('PLAYER.SCORE.REMAINING', {
-                                    remaining: epocStore.epoc.certificateScore - assessmentData.totalUserScore,
+                                    remaining: epoc.certificateScore - assessmentData.totalUserScore,
                                 })
                             }}
                         </p>
@@ -248,14 +330,14 @@ async function dismissLoading() {
                 <div class="short-access">
                     <h4 class="short-access-label">{{ $t('PLAYER.SCORE.PTS_RECAP') }}</h4>
                     <RouterLink
-                        v-for="(assessment, index) of epocStore.epoc.assessments"
+                        v-for="(assessment, index) of epoc.assessments"
                         :key="index"
-                        :to="`/epoc/play/${epocStore.epoc.id}/${assessment.chapterId}/content/${assessment.id}`"
+                        :to="`/epoc/play/${epoc.id}/${assessment.chapterId}/content/${assessment.id}`"
                         class="short-access-item"
                     >
                         <ion-label>
                             {{ assessment.title }}
-                            <span>{{ epocStore.epoc.chapters[assessment.chapterId!].title }}</span>
+                            <span>{{ epoc.chapters[assessment.chapterId!].title }}</span>
                         </ion-label>
                         <ion-note
                             :color="
@@ -273,14 +355,14 @@ async function dismissLoading() {
                     </RouterLink>
                 </div>
             </div>
-            <div v-if="epocStore.epoc && badgeMode" class="wrapper">
+            <div v-if="epoc && badgeMode" class="wrapper">
                 <div v-if="!certificateUnlocked" class="certificate flex">
                     <div class="certificate-text">
                         <h6>{{ $t('PLAYER.SCORE.CONTINUE') }}</h6>
                         <p>
                             {{
                                 $t('PLAYER.SCORE.BADGE_REMAINING', {
-                                    remaining: epocStore.epoc.certificateBadgeCount - unlockedBadges.length,
+                                    remaining: epoc.certificateBadgeCount - unlockedBadges.length,
                                 })
                             }}
                         </p>
@@ -291,6 +373,7 @@ async function dismissLoading() {
                 </div>
 
                 <div v-else class="certificate flex success">
+                    <pre>reading :{{ reading }}</pre>
                     <div class="certificate-text">
                         <h6>{{ $t('PLAYER.SCORE.CONGRATS') }}</h6>
                         <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
@@ -305,22 +388,22 @@ async function dismissLoading() {
                 </div>
                 <div class="badge-list">
                     <div
-                        v-for="(badge, index) of epocStore.epoc.badges"
+                        v-for="(badge, index) of epoc.badges"
                         :key="index"
                         class="badge-item"
-                        :class="{ unlocked: unlockedBadges.includes(badge.id) }"
+                        :class="{ unlocked: unlockedBadges.includes(badge.id!) }"
                         @click="showBadgeDetail(badge)"
                     >
                         <BadgeComponent
                             :title="badge.title"
                             :icon="badge.icon"
-                            :locked="!unlockedBadges.includes(badge.id)"
+                            :locked="!unlockedBadges.includes(badge.id!)"
                         />
                     </div>
                 </div>
             </div>
         </ion-content>
-        <BadgeModal v-if="badgeModal" :show-modal="showBadgeModal" :badge="badgeModal" :epoc="epocStore.epoc" />
+        <BadgeModal v-if="badgeModal" :show-modal="showBadgeModal" :badge="badgeModal" :epoc="epoc" />
     </ion-page>
 </template>
 

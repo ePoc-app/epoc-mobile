@@ -2,9 +2,8 @@ import { jsPDF } from 'jspdf';
 import { i18n } from '@/i18n';
 import { useUser } from '@/composables';
 import { trackEvent } from './matomo';
-import type { Badge, Epoc } from '@/types/epoc';
-import { Capacitor } from '@capacitor/core';
-import { Directory, Filesystem } from '@capacitor/filesystem';
+import type { Epoc } from '@/types/epoc';
+import { uid } from '@epoc/epoc-types/dist/v1';
 
 const colors = {
     darkblue: '#384257',
@@ -13,7 +12,7 @@ const colors = {
     lightblue: '#edf3f8',
 };
 
-export async function generatePdf(epoc: Epoc, rootFolder: string, unlockedBadges: Badge[]): Promise<jsPDF> {
+export async function generatePdf(epoc: Epoc, rootFolder: string, unlockedBadges: uid[]): Promise<jsPDF> {
     const { user } = useUser();
 
     const password = Math.random().toString(36).substring(2, 12);
@@ -147,7 +146,7 @@ function svgToPNG(url: string, width: number): Promise<string | null> {
 async function insertBadges(
     epoc: Epoc,
     rootFolder: string,
-    unlockedBadges: Badge[],
+    unlockedBadges: uid[],
     doc: jsPDF,
     posY: number
 ): Promise<number> {
@@ -174,18 +173,18 @@ async function insertBadges(
 
         if (unlockedBadges.includes(key)) {
             const bg = await svgToPNG(prefix + 'shape.svg', 500);
-            doc.addImage(bg, 'PNG', x, y, w, h);
+            if (bg) doc.addImage(bg, 'PNG', x, y, w, h);
             try {
                 const icon = await svgToPNG(url, 500);
-                doc.addImage(icon, 'PNG', x + 6, y + 6, size, size);
+                if (icon) doc.addImage(icon, 'PNG', x + 6, y + 6, size, size);
             } catch (e) {
                 console.log(url);
             }
             const fg = await svgToPNG(prefix + 'shadow-grey.svg', 500);
-            doc.addImage(fg, 'PNG', x, y, w, h);
+            if (fg) doc.addImage(fg, 'PNG', x, y, w, h);
         } else {
             const bg = await svgToPNG(prefix + 'locked.svg', 500);
-            doc.addImage(bg, 'PNG', x, y, w, h);
+            if (bg) doc.addImage(bg, 'PNG', x, y, w, h);
         }
 
         doc.setFontSize(8);
