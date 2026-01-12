@@ -26,7 +26,7 @@ const epocStore = useEpocStore()
 const props = defineProps({
   question: { type : Object as PropType<(Question)>, required: true},
   closable: { type : Boolean },
-  contentId: { type : String, required: true },
+  contentId: { type : String }, // TODO not used aywhere ?
   epocId: { type : String, required: true },
   userAssessment: {type: UserAssessment},
   title: String ,
@@ -108,7 +108,7 @@ defineExpose({
         <h4 class="title" v-if="title">{{removeSecableSpace(title)}} {{+question.score ? '(' + question.score + 'pts)' : ''}}</h4>
       </div>
       <div role="button" aria-label="Fermer" class="close" v-if="closable" v-on:click="back($event)">
-        <ion-icon aria-hidden="true" :name="closeOutline"></ion-icon>
+        <ion-icon aria-hidden="true" :icon="closeOutline"></ion-icon>
       </div>
       <div class="statement ion-text-center">
         <b>{{removeSecableSpace(question.label)}}</b>

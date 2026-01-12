@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { IonIcon } from '@ionic/vue';
 
 const props = defineProps({
     progress: { type: Number, required: true },

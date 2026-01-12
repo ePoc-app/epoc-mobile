@@ -49,7 +49,7 @@ const questionNumber = computed(() => props.content.questions?.length || 0)
 <p>{{content.summary}}</p>
 <div>
   <ion-button expand="block" size="large" fill="outline" color="outline-button" 
-    v-on:click="router.push({ name: 'AssessmentPage', params: {epoc_id:epoc.id, assessment_id: content.id}})">
+    :router-link="{ name: 'AssessmentPage', params: {epocId:epoc.id, assessmentId: content.id}}">
     <span v-if="!userAssessment">
       {{t('PLAYER.ASSESSMENT_COMPONENT.START')}}
     </span>

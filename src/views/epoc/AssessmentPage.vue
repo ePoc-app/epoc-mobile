@@ -2,7 +2,7 @@
 
 import { Assessment, AssessmentData, SimpleQuestion, emptyAssessmentData } from '@/types/contents/assessment';
 import { useEpocStore } from '@/stores/epocStore';
-import { IonIcon, IonButton, IonContent, IonFooter } from '@ionic/vue';
+import { IonIcon, IonButton, IonContent, IonFooter, IonPage } from '@ionic/vue';
 import { appService } from '@/utils/appService';
 import CertificateModal from '@/components/CertificateModal.vue';
 import { Epoc } from '@/types/epoc';
@@ -19,6 +19,9 @@ import { denormalize } from '@/utils/pipes';
 import { useTemplateRefsList } from '@vueuse/core';
 import Card from '@/components/Card.vue';
 import CommonQuestion from '@/components/questions/CommonQuestion.vue';
+import ScoreProgress from '@/components/ScoreProgress.vue';
+import { starOutline } from 'ionicons/icons';
+
 const { t } = useI18n();
 type CommonQuestionType = InstanceType<typeof CommonQuestion>
 // TODO IL FAUT TRADUIRE LE SIMPLE CHOICE POUR RENDRE FONCTIONNEL LE COMMON QUESTION
@@ -31,8 +34,8 @@ const router = useRouter();
 const route = useRoute();
 
 // params
-const epocId = ref<string>(route.params.epoc_id.toString())
-const assessmentId = ref<string>(route.params.assessment_id.toString())
+const epocId = ref<string>(route.params.epocId.toString())
+const assessmentId = ref<string>(route.params.assessmentId.toString())
 
 // # ref
 const { epoc } = storeToRefs(epocStore)
@@ -44,7 +47,7 @@ const questionsElement = useTemplateRefsList<CommonQuestionType>()
 const userScore = ref(0);
 const userResponses = ref<string[]>([]);
 const assessmentData = ref<AssessmentData>(emptyAssessmentData);
-const currentQuestionUserResponse = ref<string>();
+const currentQuestionUserResponse = ref<string[]>();
 const correctionShown = ref(false);
 const currentQuestion = ref(0);
 const isEnd = ref(false);
@@ -56,7 +59,7 @@ const questionSlides = ref<SwiperObject>() //undefined; // will be set only once
 // Computed
 const reading = computed(() => readings.value.find(question => question.epocId === epoc.value.id))
 const assessments = computed(() : (Assessment|SimpleQuestion)[] => epoc.value.assessments)
-const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value.contents[assessmentId.value])
+const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value.contents[assessmentId.value] as Assessment)
 
 const questions = computed(() => assessment.value?.questions?.map(questionId => epoc.value.questions[questionId]) || [])
 const scoreMax = computed(() => epocStore.calcScoreTotal(epoc.value, assessment.value.questions || []))
@@ -101,9 +104,8 @@ const retry = () => {
   isEnd.value = false;
 }
 
-const onUserHasResponded = (userResponses: any) => {
+const onUserHasResponded = (userResponses: string[]) => {
     currentQuestionUserResponse.value = userResponses;
-// TODO should be automatic, to remove if no use found    this.ref.detectChanges();
 }
 
 const checkAnswer = () => {
@@ -116,7 +118,7 @@ const checkAnswer = () => {
         );
         const score = userSucceeded ? +question.score : 0;
         correctionShown.value = true;
-        questionsElement.value.toArray()[currentQuestion.value].showCorrection();
+        questionsElement.value[currentQuestion.value].showCorrection();
         userScore.value += score;
         userResponses.value.push(response);
         // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestion.value}`, score);
@@ -217,77 +219,83 @@ const updateFocus = () => {
     }
 }
 
+// TO DO Check the use of videos youtube
+// @userHasResponded="onUserHasResponded($event)" videos youtube,
+
+
 </script>
 
 <template>
-<ion-content :scrollY="false" v-if="assessment">
-    <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
-        <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
-            <template v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
-                <swiper-slide>
-                    <common-question :aria-hidden="questionIndex !== currentQuestion" :closable=true 
-                        :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length" :contentId="assessment.id"
-                         :epocId="epocId" :question="question" 
-                         @userHasResponded="onUserHasResponded($event)" videos youtube,
-                         @close="back()" 
-                         :ref="questionsElement.set"
-                         v-if="!isEnd">
-                    </common-question>
-                </swiper-slide>
-            </template>
-            <swiper-slide class="assessment-end">
-                <card v-if="assessmentData">
-                    <div class="title-container">
-                        <div class="title-icon">
-                            <ion-icon aria-hidden="true" name="star-outline"></ion-icon>
-                        </div>
-                        <h5 class="title" v-if="scoreMax > 0">{{$t('QUESTION.ASSESSMENT_PAGE.SCORE')}}</h5>
-                        <h5 class="title" v-if="scoreMax <= 0">{{$t('QUESTION.ASSESSMENT_PAGE.NOT_GRADED')}}</h5>
-                    </div>
-                    <div class="score" v-if="scoreMax > 0">
-                        <div class="score-points">
-                            <div class="score-points-assessment">{{assessmentData.userScore}} pts</div>
-                            <div class="score-points-total">
-                                <b>{{$t('QUESTION.ASSESSMENT_PAGE.TOTAL_SCORE')}}</b>
-                                {{assessmentData.totalUserScore + assessmentData.userScore}} / {{assessmentData.totalScore}}
+    <ion-page>
+        <ion-content :scrollY="false" v-if="assessment">
+            <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
+                <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
+                    <swiper-slide v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
+                        <common-question
+                            :question="question" 
+                            :closable=true 
+                            :contentId="assessment.id"
+                            :epocId="epocId"
+                            :aria-hidden="questionIndex !== currentQuestion" 
+                            :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length"
+                            @close="back"
+                            @userHasResponded="onUserHasResponded"
+                        >
+                        </common-question>
+                    </swiper-slide>
+                    <swiper-slide class="assessment-end">
+                        <card v-if="assessmentData">
+                            <div class="title-container">
+                                <div class="title-icon">
+                                    <ion-icon aria-hidden="true" :icon="starOutline"></ion-icon>
+                                </div>
+                                <h5 class="title" v-if="scoreMax > 0">{{$t('QUESTION.ASSESSMENT_PAGE.SCORE')}}</h5>
+                                <h5 class="title" v-if="scoreMax <= 0">{{$t('QUESTION.ASSESSMENT_PAGE.NOT_GRADED')}}</h5>
                             </div>
-                        </div>
-                        <div aria-hidden="true" class="score-chart">
-                            <score-progress :progress="assessmentData.totalUserScore / assessmentData.totalScore * 100"
-                                            :delta="assessmentData.userScore / assessmentData.totalScore * 100"
-                                            :threshold="epoc.certificateScore / assessmentData.totalScore * 100"
-                                            :minLabel="'0'"
-                                            :maxLabel="assessmentData.totalScore">
-                            </score-progress>
-                        </div>
-                    </div>
-                    <ion-button size="large" expand="block" color="outline-button" fill="outline" (click)="retry()">
-                        <span>{{$t('QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY')}}</span>
-                    </ion-button>
-                </card>
-            </swiper-slide>
-        </swiper>
-    </div>
-    <certificate-modal :epocId="epocId" :certificateShown="certificateShown"></certificate-modal>
-</ion-content>
+                            <div class="score" v-if="scoreMax > 0">
+                                <div class="score-points">
+                                    <div class="score-points-assessment">{{assessmentData.userScore}} pts</div>
+                                    <div class="score-points-total">
+                                        <b>{{$t('QUESTION.ASSESSMENT_PAGE.TOTAL_SCORE')}}</b>
+                                        {{assessmentData.totalUserScore + assessmentData.userScore}} / {{assessmentData.totalScore}}
+                                    </div>
+                                </div>
+                                <div aria-hidden="true" class="score-chart">
+                                    <score-progress :progress="assessmentData.totalUserScore / assessmentData.totalScore * 100"
+                                                    :delta="assessmentData.userScore / assessmentData.totalScore * 100"
+                                                    :threshold="epoc.certificateScore / assessmentData.totalScore * 100"
+                                                    :minLabel="0"
+                                                    :maxLabel="assessmentData.totalScore">
+                                    </score-progress>
+                                </div>
+                            </div>
+                            <ion-button size="large" expand="block" color="outline-button" fill="outline" v-on:click="retry">
+                                <span>{{$t('QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY')}}</span>
+                            </ion-button>
+                        </card>
+                    </swiper-slide>
+                </swiper>
+            </div>
+            <certificate-modal :epocId="epocId" :certificateShown="certificateShown"></certificate-modal>
+        </ion-content>
 
-<ion-footer v-if="!isEnd">
-    <ion-button size="large" expand="block" color="inria" :disabled="!currentQuestionUserResponse" v-on:click="checkAnswer();" v-if="!correctionShown">
-        <span>{{$t('QUESTION.VALIDATE')}}</span>
-    </ion-button>
-    <div class="next-buttons">
-        <ion-button role="button" color="inria-grey" size="large" expand="block" (click)="nextQuestion()" v-if="correctionShown">
-            <span>{{$t('QUESTION.NEXT')}}</span>
-            <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
-        </ion-button>
-    </div>
-</ion-footer>
-<ion-footer v-if="isEnd">
-    <ion-button role="button" size="large" expand="block" color="inria" (click)="resume()">
-        <span>{{$t('QUESTION.ASSESSMENT_PAGE.CONTINUE_COURSE')}}</span>
-    </ion-button>
-</ion-footer>
-
+        <ion-footer v-if="!isEnd">
+            <ion-button size="large" expand="block" color="inria" :disabled="!currentQuestionUserResponse" v-on:click="checkAnswer();" v-if="!correctionShown">
+                <span>{{$t('QUESTION.VALIDATE')}}</span>
+            </ion-button>
+            <div class="next-buttons">
+                <ion-button role="button" color="inria-grey" size="large" expand="block" v-on:click="nextQuestion()" v-if="correctionShown">
+                    <span>{{$t('QUESTION.NEXT')}}</span>
+                    <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
+                </ion-button>
+            </div>
+        </ion-footer>
+        <ion-footer v-if="isEnd">
+            <ion-button role="button" size="large" expand="block" color="inria" v-on:click="resume">
+                <span>{{$t('QUESTION.ASSESSMENT_PAGE.CONTINUE_COURSE')}}</span>
+            </ion-button>
+        </ion-footer>
+    </ion-page>
 </template>
 
 <style scoped lang="scss">
