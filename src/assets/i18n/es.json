@@ -8,7 +8,8 @@
     "OPEN": "Abrir",
     "ADD_EPOC": "Añade tu ePoc",
     "IMPORT": "Importar",
-    "VIEW_ALL": "Ver todo"
+    "VIEW_ALL": "Ver todo",
+    "DOWNLOAD_ERROR": "Error al descargar la ePoc"
   },
   "CUSTOM_COLLECTION": {
     "SUCCESS": "Colección importada con éxito",
