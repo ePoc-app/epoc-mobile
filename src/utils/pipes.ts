@@ -1,4 +1,4 @@
-export function denormalize(value: any, record?: any): any {
+export function denormalize(value: any, record?: any): any[] {
     // map array of ids with corresponding object values
     if (value && record) {
         return value.map((itemId) => {

@@ -118,7 +118,7 @@ const checkAnswer = () => {
         );
         const score = userSucceeded ? +question.score : 0;
         correctionShown.value = true;
-        questionsElement.value.toArray()[currentQuestion.value].showCorrection();
+        questionsElement.value[currentQuestion.value].showCorrection();
         userScore.value += score;
         userResponses.value.push(response);
         // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestion.value}`, score);
@@ -258,7 +258,7 @@ const updateFocus = () => {
                             <score-progress :progress="assessmentData.totalUserScore / assessmentData.totalScore * 100"
                                             :delta="assessmentData.userScore / assessmentData.totalScore * 100"
                                             :threshold="epoc.certificateScore / assessmentData.totalScore * 100"
-                                            :minLabel="'0'"
+                                            :minLabel="0"
                                             :maxLabel="assessmentData.totalScore">
                             </score-progress>
                         </div>

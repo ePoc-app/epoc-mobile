@@ -26,7 +26,7 @@ const epocStore = useEpocStore()
 const props = defineProps({
   question: { type : Object as PropType<(Question)>, required: true},
   closable: { type : Boolean },
-  contentId: { type : String, required: true },
+  contentId: { type : String }, // TODO not used aywhere ?
   epocId: { type : String, required: true },
   userAssessment: {type: UserAssessment},
   title: String ,
