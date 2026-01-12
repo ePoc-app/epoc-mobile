@@ -21,7 +21,7 @@ import { Reading, UserAssessment } from '@/types/reading';
 import { Settings } from '@/types/settings';
 import { Assessment, SimpleQuestion } from '@epoc/epoc-types/dist/v2';
 import { Content } from '@/types/contents/content';
-import { srcConvert } from '@/utils/transform';
+import { srcConvert } from '@/utils/pipes';
 import { menu } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Swiper as SwiperObject } from 'swiper/types';

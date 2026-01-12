@@ -31,6 +31,7 @@ import { useReadingStore } from '@/stores/readingStore';
 import { storeToRefs } from 'pinia';
 import type { Reading } from '@/types/reading';
 import type { uid } from '@epoc/epoc-types/dist/v1';
+import { denormalize } from '@/utils/pipes';
 // import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
 
 const { t } = useI18n();
@@ -265,6 +266,8 @@ watch(
     },
     { immediate: true }
 );
+
+const denormalizedBadges = computed(() => denormalize(epoc.value.badges));
 </script>
 
 <template>
@@ -387,7 +390,7 @@ watch(
                 </div>
                 <div class="badge-list">
                     <div
-                        v-for="(badge, index) of epoc.badges"
+                        v-for="(badge, index) of denormalizedBadges"
                         :key="index"
                         class="badge-item"
                         :class="{ unlocked: unlockedBadges.includes(badge.id!) }"
