@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonIcon,
-    IonBackButton,
-    IonButton,
-    alertController,
-    loadingController,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonIcon,
+  IonBackButton,
+  IonButton,
+  alertController,
+  loadingController, onIonViewWillEnter,
 } from '@ionic/vue';
-import { ref, reactive, onBeforeMount, computed, Ref, watch } from 'vue';
+import { ref, reactive, computed, Ref, watch } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import ScoreProgress from '@/components/ScoreProgress.vue';
 import { useRoute } from 'vue-router';
@@ -47,9 +47,8 @@ const route = useRoute();
 
 const { user } = useUser();
 
-onBeforeMount(async () => {
-    const id = route.params.epoc_id.toString();
-    await epocStore.getEpocById(id);
+onIonViewWillEnter(async () => {
+  await epocStore.getEpocById(route.params.epoc_id.toString());
 });
 
 const reading: Ref<Reading | undefined> = ref();
