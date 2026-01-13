@@ -25,7 +25,7 @@ export const useEpocStore = defineStore('epoc', () => {
 
     // --- Actions ---
 
-    async function getEpocById(id: string): Promise<Epoc> {
+    async function getEpocById(id: string): Promise<Epoc|null> {
         if (_epoc.value && _epoc.value.id === id) return _epoc.value;
 
         initialized.value = false;
@@ -34,10 +34,8 @@ export const useEpocStore = defineStore('epoc', () => {
             const epoc = await readEpocContent(id.startsWith('local-') ? 'local-epocs' : 'epocs', id);
 
             if (!epoc) {
-                throw new Error('ePoc not found');
+                return null;
             }
-
-            console.log('ePoc content loaded:', epoc.dir);
 
             _rootFolder.value = Capacitor.convertFileSrc(`${epoc.dir}/`);
 
@@ -48,6 +46,7 @@ export const useEpocStore = defineStore('epoc', () => {
             return _epoc.value;
         } catch (error) {
             console.log('Error reading ePoc content:', error);
+            return null;
         }
     }
 
