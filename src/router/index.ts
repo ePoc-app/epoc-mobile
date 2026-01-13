@@ -6,7 +6,6 @@ import SettingsPage from '@/views/SettingsPage.vue';
 import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue';
 import EpocOverviewPage from '@/views/epoc/OverviewPage.vue';
 import WIPPage from '@/views/WIPPage.vue';
-import TestPage from '@/views/TestPage.vue';
 import TocPage from '@/views/epoc/TocPage.vue';
 import PlayerPage from '@/views/epoc/PlayerPage.vue';
 import AssessmentPage from '@/views/epoc/AssessmentPage.vue';
@@ -36,11 +35,6 @@ const routes: Array<RouteRecordRaw> = [
         path: '/:collection_id',
         name: 'CollectionDetail',
         component: CollectionDetailPage,
-    },
-    {
-        path: '/test/:id',
-        name: 'TEST',
-        component: TestPage,
     },
     {
         path: '/wip/:any',

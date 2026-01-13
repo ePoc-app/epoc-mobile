@@ -1,47 +1,52 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
-import { Filesystem, Directory } from '@capacitor/filesystem';
+import { ref } from 'vue';
 import { actionSheetController } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import { uid } from '@epoc/epoc-types/dist/v1';
-import { Capacitor } from '@capacitor/core';
 import { useI18n } from 'vue-i18n';
 import { homeOutline, listCircleOutline, starOutline, receiptOutline, settingsOutline } from 'ionicons/icons';
 import { readEpocContent } from '@/utils/epocService';
 import { Epoc, Chapter } from '@/types/epoc';
 import { displayLicence } from '@/utils/app';
+import { usePlugin } from '@/composables';
+import { Content } from '@/types/contents/content';
+import { Capacitor } from '@capacitor/core';
 
 export const useEpocStore = defineStore('epoc', () => {
     const { t } = useI18n();
 
     // --- State ---
     const router = useRouter();
+    const pluginService = usePlugin();
     const initialized = ref(false);
     const _epoc = ref<Epoc | null>(null);
     const _rootFolder = ref<string>('');
 
-    // --- Getters ---
-    const getEpoc = computed<Epoc>(() => _epoc.value);
-    const getRootFolder = computed(() => _rootFolder.value);
 
     // --- Actions ---
 
-    async function getEpocById(id: string): Promise<Epoc> {
+    async function getEpocById(id: string): Promise<Epoc|null> {
         if (_epoc.value && _epoc.value.id === id) return _epoc.value;
+
+        initialized.value = false;
+
         try {
             const epoc = await readEpocContent(id.startsWith('local-') ? 'local-epocs' : 'epocs', id);
 
             if (!epoc) {
-                throw new Error('ePoc not found');
+                return null;
             }
+
+            _rootFolder.value = Capacitor.convertFileSrc(`${epoc.dir}/`);
 
             _epoc.value = initCourseContent(epoc);
 
-            _rootFolder.value = `${epoc.dir}/`;
+            initialized.value = true;
 
             return _epoc.value;
         } catch (error) {
             console.log('Error reading ePoc content:', error);
+            return null;
         }
     }
 
@@ -49,7 +54,6 @@ export const useEpocStore = defineStore('epoc', () => {
      * Initialize ePoc runtime properties
      */
     function initCourseContent(epoc: Epoc): Epoc {
-        initialized.value = true;
         epoc.assessments = [];
         // backward compatibility before epoc parameters existed
         epoc.parameters = epoc.parameters ? epoc.parameters : {};
@@ -88,9 +92,8 @@ export const useEpocStore = defineStore('epoc', () => {
             chapter.assessmentCount = chapter.assessments.length;
         }
 
-        // todo
-        // If you have a pluginService, call it here
-        // pluginService.init(this.rootFolder, epoc);
+        pluginService.init(_rootFolder.value, epoc);
+
         return epoc;
     }
 
@@ -193,8 +196,8 @@ export const useEpocStore = defineStore('epoc', () => {
     return {
         // State
         initialized,
-        epoc: getEpoc,
-        rootFolder: getRootFolder,
+        epoc: _epoc,
+        rootFolder: _rootFolder,
         // Actions
         getEpocById,
         initCourseContent,
