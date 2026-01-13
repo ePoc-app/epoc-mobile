@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonIcon,
-    IonBackButton,
-    IonButton,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonIcon,
+  IonBackButton,
+  IonButton, onIonViewWillEnter,
 } from '@ionic/vue';
 import { RouterLink, useRoute } from 'vue-router';
 import {
@@ -26,14 +26,12 @@ import {
 } from 'ionicons/icons';
 import { useEpocStore } from '@/stores/epocStore';
 import { denormalize } from '@/utils/pipes';
-import { onBeforeMount } from 'vue';
 
 const route = useRoute();
 const epocStore = useEpocStore();
 
-onBeforeMount(async () => {
-    const id = route.params.id.toString();
-    await epocStore.getEpocById(id);
+onIonViewWillEnter(async () => {
+  await epocStore.getEpocById(route.params.id.toString());
 });
 
 const displayMenu = () => {
