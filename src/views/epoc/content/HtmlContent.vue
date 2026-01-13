@@ -6,7 +6,6 @@ import { computed, ref, useTemplateRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { usePlugin } from '@/composables';
-import {Capacitor} from '@capacitor/core';
 
 const props = defineProps({
   html: {
@@ -27,7 +26,11 @@ const epocId = ref<string>(route.params.epoc_id.toString())
 const chapterId = ref<string>(route.params.chapter_id.toString())
 
 const pluggedHtml = computed(() => {
-  return plugin.embed(props.html);
+  if (plugin.allPluginLoaded.value) {
+    return plugin.embed(props.html);
+  } else {
+    return props.html;
+  }
 });
 
 

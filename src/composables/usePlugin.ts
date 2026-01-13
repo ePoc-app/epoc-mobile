@@ -1,18 +1,17 @@
-import { ref, onUnmounted } from 'vue';
+import {ref, onUnmounted} from 'vue';
 import type { PluginEntry } from '@/types/plugin';
 import type { Epoc } from '@/types/epoc';
+
+const plugins = ref<PluginEntry[]>([]);
+const rootFolder = ref<string>('');
+const allPluginLoaded = ref<boolean>(false);
+const activeListeners = new Set<{ handler: (e: MessageEvent) => void }>();
 
 /**
  * Composable to manage sandboxed plugins via iframes.
  * Handles plugin lifecycle, shortcode embedding, and cross-iframe communication.
  */
 export function usePlugin() {
-    const plugins = ref<PluginEntry[]>([]);
-    const rootFolder = ref<string>('');
-    const allPluginLoaded = ref<Promise<boolean[]>>();
-
-    // Keep track of event listeners for clean cleanup
-    const activeListeners = new Set<{ handler: (e: MessageEvent) => void }>();
 
     /**
      * Initializes plugins by creating hidden background iframes and pre-fetching templates.
@@ -21,7 +20,6 @@ export function usePlugin() {
      */
     function init(rootFolderValue: string, epoc: Epoc) {
         if (!epoc.plugins) return;
-        console.log(`Initializing ${epoc.plugins.length} plugins...`);
         rootFolder.value = rootFolderValue;
 
         // Cleanup previous instances
@@ -83,7 +81,6 @@ export function usePlugin() {
                             embeds: []
                         };
                         plugins.value.push(plugin);
-                        console.log(`Plugin loaded: ${uid}`, plugin);
                         resolve(true);
                     }
 
@@ -121,7 +118,9 @@ export function usePlugin() {
             });
         });
 
-        allPluginLoaded.value = Promise.all(pluginLoadingPromises);
+        Promise.all(pluginLoadingPromises).then(() => {
+            allPluginLoaded.value = true;
+        });
     }
 
     /**
@@ -129,7 +128,6 @@ export function usePlugin() {
      * Note: Requires init() to have finished (allPluginLoaded resolved).
      */
     function embed(html: string): string {
-        console.log('Embedding plugins into content...', html);
         const shortcodes = html.match(/\[#[^\]]+\]/gm);
         if (!shortcodes) return html;
 
@@ -137,8 +135,6 @@ export function usePlugin() {
         for (const shortcode of shortcodes) {
             const shortcodeMatch = shortcode.match(/\[#(\S+)[^\]]*]/);
             if (!shortcodeMatch) continue;
-
-            console.log(`Processing shortcode: ${shortcode}`);
 
             const shortcodeName = `[#${shortcodeMatch[1]}]`;
 
@@ -150,11 +146,8 @@ export function usePlugin() {
                 data[key] = value.replace(/"/g, '');
             });
 
-            console.log(plugins.value);
-
             const plugin = plugins.value.find((p) => p.config.shortcode === shortcodeName);
             if (plugin) {
-                console.log(`Embedding plugin ${plugin.uid} for shortcode ${shortcode}`);
                 const iframeHtml = createEmbeddedIframe(plugin, data);
                 processedHtml = processedHtml.replace(shortcode, iframeHtml);
             }
@@ -170,7 +163,7 @@ export function usePlugin() {
         const uidEmbed = (Math.random() + 1).toString(36).substring(3);
 
         const pluginEmbedHead = `
-            <link rel="stylesheet" href="/assets/css/plugin-embed.css">
+            <link rel="stylesheet" href="${document.baseURI}assets/css/plugin-embed.css">
             <script>
                 window.pluginId = '${plugin.uid}';
                 window.embedId = '${uidEmbed}';
