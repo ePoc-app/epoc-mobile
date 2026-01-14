@@ -6,7 +6,7 @@ import { SwipeQuestion } from '@/types/contents/assessment';
 import { clamp, shuffleArray, sleep } from '@/utils/utils';
 import { createGesture, createAnimation } from '@ionic/vue';
 import { removeSecableSpace, srcConvert } from '@/utils/transform';
-type CardType = {label:string, value:string}
+type CardType = {label:string, value:string, selectedSide?: string}
 
 const props = defineProps({
     question: { type : Object as PropType<(SwipeQuestion)>, required: true},
@@ -23,7 +23,6 @@ enum SIDE {
   Left = 'left',
   Right = 'right',
 }
-
 
 // ref
 const swipeCardComponents = useTemplateRef<HTMLDivElement[]>('swipe-cards')
@@ -52,45 +51,27 @@ const initSwipe = () => {
     swipeCardComponents.value?.forEach((card, index) => {
         const elem = card;
         const swipeCard = cardsRemaining.value[index];
-        const animation2Right = createAnimation()
-            .addElement(elem)
-            .duration(300)
-            .fromTo('transform', 'translateX(0)', `translateX(100vh) rotate(50deg)`);
-        const animation2Left = createAnimation()
-            .addElement(elem)
-            .duration(300)
-            .fromTo('transform', 'translateX(0)', `translateX(-100vh) rotate(-50deg)`);
         const gesture = createGesture({
             el: elem,
             threshold: 0,
             gestureName: 'swipe',
-            onStart: () => {
-                isDragging.value = true;
-                emits('dragging', 'dragstart');
-                elem.style.transition = 'none';
-            },
             onMove: ev => {
-                swipeCard.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
-                if (ev.deltaX > 0) {
-                    swipeCard.selectedSide = sides.value[0];
-                    animation2Right.progressStart()
-                } else if (ev.deltaX < 0) {
-                    swipeCard.selectedSide = sides.value[1];
-                    animation2Left.progressStart()
-                }
+                let translate = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
+                applyAnimation(translate)
+                swipeCard.selectedSide = (ev.deltaX > 0) ? sides.value[0] : sides.value[1];
             },
             onEnd: ev => {
                 isDragging.value = false;
                 emits('dragging','dragend');
                 if (ev.deltaX > threshold || ev.velocityX > thresholdVelocity) {
-                    startAnimation(SIDE.Right);
+                    applyAnimation(SIDE.Right);
                 } else if (ev.deltaX < -threshold || ev.velocityX < -thresholdVelocity) {
-                    startAnimation(SIDE.Left);
+                    applyAnimation(SIDE.Left);
                 } else {
-                    elem.style.transition = 'transform .3s ease-in-out';
-                    swipeCard.transform = 'none';
-                    swipeCard.selectedSide = undefined;
+                  swipeCard.selectedSide = undefined;
+                  elem.style.transition = 'transform .3s ease-in-out';
                 }
+
             },
         });
 
@@ -118,15 +99,20 @@ const removeFromAnswers= (card: CardType) => {
 
 const swipe = async (side : SIDE) => {
   if (currentCard.value) {
-    await startAnimation(side);
+    currentCard.value.selectedSide = side
+    await applyAnimationFromStart(side);
     selectSide(side);
   }
 }
 
-const startAnimation = async (animationState: SIDE) => {
-  console.log(currentSwipeCard.value)
-  if (currentSwipeCard.value) {
+const applyAnimationFromStart = async (animationState: SIDE) => {
     const translate = (animationState == SIDE.Left) ? `translateX(-100vh) rotate(-50deg)` : `translateX(100vh) rotate(50deg)`
+    await applyAnimation(translate)
+}
+
+
+const applyAnimation = async(translate:string) => {
+  if (currentSwipeCard.value) {
     let animation = createAnimation()
         .addElement(currentSwipeCard.value)
         .duration(300)
