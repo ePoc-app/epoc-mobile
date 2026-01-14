@@ -45,9 +45,9 @@ const { readings } = storeToRefs(readingStore)
 const questionsElements = useTemplateRefsList<CommonQuestionType>()
 
 const userScore = ref(0);
-const userResponses = ref<string[]>([]);
+const userResponses = ref<any[]>([]);
 const assessmentData = ref<AssessmentData>(emptyAssessmentData);
-const currentQuestionUserResponse = ref<string[]>();
+const currentQuestionUserResponse = ref<any[]>();
 const correctionShown = ref(false);
 const currentQuestionIndex= ref(0);
 const isEnd = ref(false);
@@ -57,12 +57,12 @@ const questionSlides = ref<SwiperObject>() //undefined; // will be set only once
 
 
 // Computed
-const reading = computed(() => readings.value.find(question => question.epocId === epoc.value.id))
-const assessments = computed(() : (Assessment|SimpleQuestion)[] => epoc.value.assessments)
-const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value.contents[assessmentId.value] as Assessment)
+const reading = computed(() => readings.value.find(question => question.epocId === epoc.value!.id))
+const assessments = computed(() : (Assessment|SimpleQuestion)[] => epoc.value!.assessments)
+const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value!.contents[assessmentId.value] as Assessment)
 
-const questions = computed(() => assessment.value?.questions?.map(questionId => epoc.value.questions[questionId]) || [])
-const scoreMax = computed(() => epocStore.calcScoreTotal(epoc.value, assessment.value.questions || []))
+const questions = computed(() => assessment.value?.questions?.map(questionId => epoc.value!.questions[questionId]) || [])
+const scoreMax = computed(() => epocStore.calcScoreTotal(epoc.value!, assessment.value.questions || []))
 
 // setup process
 if (!reading) readingStore.addReading(epocId.value);
@@ -105,6 +105,7 @@ const retry = () => {
 }
 
 const onUserHasResponded = (userResponses: string[]) => {
+    console.log('is received by assessmentPage')
     currentQuestionUserResponse.value = userResponses;
 }
 
@@ -164,8 +165,8 @@ const setAssessmentsData = () => {
         }
         assessmentData.value.totalScore += assessment.scoreTotal || 0
     });
-    if (assessmentData.value.totalUserScore + assessmentData.value?.userScore >= epoc.value.certificateScore 
-        && reading.value?.badges.length || 0 >= epoc.value.certificateBadgeCount) {
+    if (assessmentData.value.totalUserScore + assessmentData.value?.userScore >= epoc.value!.certificateScore 
+        && reading.value?.badges.length || 0 >= epoc.value!.certificateBadgeCount) {
         setTimeout(() => {
             showCertificateCard();
         }, 1500);
@@ -175,7 +176,7 @@ const setAssessmentsData = () => {
 const showCertificateCard = () => {
     if (!reading.value?.certificateShown) {
         certificateShown.value = true;
-        readingStore.updateCertificateShown(epoc.value.id, true);
+        readingStore.updateCertificateShown(epoc.value!.id, true);
     }
 }
 
@@ -236,7 +237,7 @@ const updateFocus = () => {
                             :closable=true 
                             :contentId="assessment.id"
                             :epocId="epocId"
-                            :aria-hidden="questionIndex !== currentQuestion" 
+                            :aria-hidden="questionIndex !== currentQuestionIndex" 
                             :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length"
                             @close="back"
                             @userHasResponded="onUserHasResponded"
@@ -264,7 +265,7 @@ const updateFocus = () => {
                                 <div aria-hidden="true" class="score-chart">
                                     <score-progress :progress="assessmentData.totalUserScore / assessmentData.totalScore * 100"
                                                     :delta="assessmentData.userScore / assessmentData.totalScore * 100"
-                                                    :threshold="epoc.certificateScore / assessmentData.totalScore * 100"
+                                                    :threshold="epoc!.certificateScore / assessmentData.totalScore * 100"
                                                     :minLabel="0"
                                                     :maxLabel="assessmentData.totalScore">
                                     </score-progress>
