@@ -10,7 +10,7 @@ import { useReadingStore } from '@/stores/readingStore';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, ref, useTemplateRef } from 'vue';
 import { alertController, onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 import { useI18n } from 'vue-i18n';
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -42,14 +42,14 @@ const { epoc } = storeToRefs(epocStore)
 const { settings } = storeToRefs(settingsStore)
 const { readings } = storeToRefs(readingStore)
 
-const questionsElement = useTemplateRefsList<CommonQuestionType>()
+const questionsElements = useTemplateRefsList<CommonQuestionType>()
 
 const userScore = ref(0);
 const userResponses = ref<string[]>([]);
 const assessmentData = ref<AssessmentData>(emptyAssessmentData);
 const currentQuestionUserResponse = ref<string[]>();
 const correctionShown = ref(false);
-const currentQuestion = ref(0);
+const currentQuestionIndex= ref(0);
 const isEnd = ref(false);
 const certificateShown = ref(false)
 const questionSlides = ref<SwiperObject>() //undefined; // will be set only once on mounted 
@@ -99,7 +99,7 @@ const retry = () => {
   assessmentData.value = emptyAssessmentData;
   currentQuestionUserResponse.value = undefined;
   correctionShown.value = false;
-  currentQuestion.value = 0;
+  currentQuestionIndex.value = 0;
   questionSlides.value?.slideTo(0);
   isEnd.value = false;
 }
@@ -109,7 +109,7 @@ const onUserHasResponded = (userResponses: string[]) => {
 }
 
 const checkAnswer = () => {
-    const question = (questions.value) ? questions.value[currentQuestion.value] : undefined
+    const question = (questions.value) ? questions.value[currentQuestionIndex.value] : undefined
     const response = currentQuestionUserResponse.value
     if (question && response) {
         const userSucceeded = epocStore.isUserResponsesCorrect(
@@ -118,14 +118,14 @@ const checkAnswer = () => {
         );
         const score = userSucceeded ? +question.score : 0;
         correctionShown.value = true;
-        questionsElement.value[currentQuestion.value].showCorrection();
+        questionsElements.value[currentQuestionIndex.value]?.showCorrection()
         userScore.value += score;
         userResponses.value.push(response);
-        // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestion.value}`, score);
+        // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestionIndex.value}`, score);
         if (assessment.value && assessment.value.questions ) {
-            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestion.value], 'attempted', true);
-            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestion.value], 'scored', score);
-            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestion.value], 'passed', userSucceeded);
+            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestionIndex.value], 'attempted', true);
+            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestionIndex.value], 'scored', score);
+            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestionIndex.value], 'passed', userSucceeded);
         }
     }
 }
@@ -133,8 +133,8 @@ const checkAnswer = () => {
 const nextQuestion = () => {
     currentQuestionUserResponse.value = undefined;
     correctionShown.value = false;
-    currentQuestion.value++;
-    if (currentQuestion.value >= questions.value.length) {
+    currentQuestionIndex.value++;
+    if (currentQuestionIndex.value >= questions.value.length) {
         setAssessmentsData();
         readingStore.saveResponses(epocId.value, assessmentId.value, userScore.value, userResponses.value);
         isEnd.value = true;
@@ -230,7 +230,7 @@ const updateFocus = () => {
         <ion-content :scrollY="false" v-if="assessment">
             <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
                 <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
-                    <swiper-slide v-for="(question, questionIndex) in denormalize(assessment.questions, epoc.questions)">
+                    <swiper-slide v-for="(question, questionIndex) in denormalize(assessment.questions, epoc?.questions)">
                         <common-question
                             :question="question" 
                             :closable=true 
@@ -240,6 +240,7 @@ const updateFocus = () => {
                             :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length"
                             @close="back"
                             @userHasResponded="onUserHasResponded"
+                            :ref="questionsElements.set"
                         >
                         </common-question>
                     </swiper-slide>
