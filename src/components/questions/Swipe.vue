@@ -3,7 +3,7 @@ import { Question } from '@/types/contents/assessment';
 import { computed, onMounted, PropType, ref, useTemplateRef } from 'vue';
 import { book } from 'ionicons/icons'; 
 import { SwipeQuestion } from '@/types/contents/assessment';
-import { clamp, shuffleArray } from '@/utils/utils';
+import { clamp, shuffleArray, sleep } from '@/utils/utils';
 import { createGesture, createAnimation } from '@ionic/vue';
 import { removeSecableSpace, srcConvert } from '@/utils/transform';
 type CardType = {label:string, value:string}
@@ -116,28 +116,23 @@ const removeFromAnswers= (card: CardType) => {
   }
 }
 
-const swipe = (side : SIDE) => {
+const swipe = async (side : SIDE) => {
   if (currentCard.value) {
-    startAnimation(side);
+    await startAnimation(side);
     selectSide(side);
   }
 }
 
-const startAnimation = (animationState: SIDE) => {
+const startAnimation = async (animationState: SIDE) => {
+  console.log(currentSwipeCard.value)
   if (currentSwipeCard.value) {
-    if (animationState == SIDE.Right) {
-        let animation2Right = createAnimation()
-            .addElement(currentSwipeCard.value)
-            .duration(300)
-            .fromTo('transform', 'translateX(0)', `translateX(100vh) rotate(50deg)`);
-        animation2Right.play()
-    } else if (animationState == SIDE.Left) {
-        let animation2Left = createAnimation()
-            .addElement(currentSwipeCard.value)
-            .duration(300)
-            .fromTo('transform', 'translateX(0)', `translateX(-100vh) rotate(-50deg)`);
-        animation2Left.play()
-    }
+    const translate = (animationState == SIDE.Left) ? `translateX(-100vh) rotate(-50deg)` : `translateX(100vh) rotate(50deg)`
+    let animation = createAnimation()
+        .addElement(currentSwipeCard.value)
+        .duration(300)
+        .fromTo('transform', 'translateX(0)', translate);
+    animation.play()
+    await sleep(300) // wait until animation is done
   }
 }
 
@@ -150,7 +145,6 @@ const selectSide = (side: SIDE) => {
     if (cardsRemaining.value.length === 0) {
         emits('userHasResponded',[answers.value[SIDE.Left], answers.value[SIDE.Right]]);
     }
-    console.log(answers)
 }
 </script>
 
