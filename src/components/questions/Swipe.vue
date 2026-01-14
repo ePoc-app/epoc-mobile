@@ -7,6 +7,10 @@ import { clamp, shuffleArray, sleep } from '@/utils/utils';
 import { createGesture, createAnimation } from '@ionic/vue';
 import { removeSecableSpace, srcConvert } from '@/utils/transform';
 type CardType = {label:string, value:string, selectedSide?: string}
+enum SIDE {
+  Left = 'left',
+  Right = 'right',
+}
 
 const props = defineProps({
     question: { type : Object as PropType<(SwipeQuestion)>, required: true},
@@ -18,11 +22,6 @@ const emits = defineEmits<{
   userHasResponded: [userResponses: any[]]; 
   dragging: [event: string]
 }>()
-
-enum SIDE {
-  Left = 'left',
-  Right = 'right',
-}
 
 // ref
 const swipeCardComponents = useTemplateRef<HTMLDivElement[]>('swipe-cards')
@@ -90,16 +89,14 @@ const undo = () => {
 }
 
 const removeFromAnswers= (card: CardType) => {
-  if (answers.value[SIDE.Left][answers.value[SIDE.Left].length] == card) {
-    answers.value[SIDE.Left].pop()
-  } else if (answers.value[SIDE.Right][answers.value[SIDE.Right].length] == card) {
-    answers.value[SIDE.Right].pop()
-  }
+  const selectedSide = (card.selectedSide == sides.value[0]) ? SIDE.Right : SIDE.Left;
+  answers.value[selectedSide].pop()
+  card.selectedSide = undefined
 }
 
 const swipe = async (side : SIDE) => {
   if (currentCard.value) {
-    currentCard.value.selectedSide = side
+    currentCard.value.selectedSide = (side == SIDE.Right) ? sides.value[0] : sides.value[1]
     applyCompleteAnimation(side)
     .then(()=> selectSide(side))
   }
