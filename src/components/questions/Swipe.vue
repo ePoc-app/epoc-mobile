@@ -38,12 +38,12 @@ const answersToTheRight = ref<Array<{label:string,value:string}>>([]);
 // Related to animation
 
 const animationState = ref<string>('initial');
-const undoDisabled: boolean;
+const undoDisabled= ref<boolean>(false)
 const isDragging = ref(false);
 
 onMounted(() => {
     initSwipe()
-};
+});
 
 const initSwipe = () => {
     const threshold = window.innerWidth / 3;
@@ -105,11 +105,6 @@ const startAnimation = (swipeCard: CardType, el: HTMLDivElement, animationState:
     }
 }
 
-export const getStep = (event: GestureDetail) => {
-      const delta = initialStep + event.deltaX;
-      return clamp(0, delta / MAX_TRANSLATE, 1);
-    };
-
 const animationDone = (event) => {
     if (['swipeRight','swipeLeft'].indexOf(event.toState) !== -1 && event.fromState === 'initial') {
         selectSide(event.toState);
@@ -161,7 +156,7 @@ const selectSide = (side: string) => {
 <template>
 <p class="swipe-instruction" v-if="!disabled">
   <ng-container v-if="question.statement">
-    <span class="custom" v-if="!disabled" :innerHTML="srcConvert(removeSecableSpace(question.statement)'"></span>
+    <span class="custom" v-if="!disabled" :innerHTML="removeSecableSpace(question.statement)"></span>
   </ng-container>
   <ng-container v-if="!question.statement">
     <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg"></ion-icon>
