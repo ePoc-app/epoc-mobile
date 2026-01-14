@@ -6,7 +6,9 @@ import { useStorage } from '@/composables/useStorage';
 import { usePlugin } from '@/composables/usePlugin';
 import { useEpocStore } from './epocStore';
 import * as jsonLogic from 'json-logic-js';
-import type { Reading, EntityTypes, Verb, Badge } from '@/types/reading';
+import type { Reading, EntityTypes, Verb } from '@/types/reading';
+import type { Badge } from '@/types/epoc';
+import { uid } from '@epoc/epoc-types/dist/v1';
 
 export const useReadingStore = defineStore('reading', () => {
     const storageService = useStorage();
@@ -90,9 +92,7 @@ export const useReadingStore = defineStore('reading', () => {
     function saveChapterProgress(epocId: string, chapterId: string, contentId?: string) {
         const index = readings.value.findIndex((reading) => reading.epocId === epocId);
         if (index === -1) return;
-        const chapterIndex = readings.value[index].chaptersProgress.findIndex(
-            (chapter) => chapter.id === chapterId
-        );
+        const chapterIndex = readings.value[index].chaptersProgress.findIndex((chapter) => chapter.id === chapterId);
         if (chapterIndex !== -1) {
             if (contentId && !readings.value[index].chaptersProgress[chapterIndex].contents.includes(contentId)) {
                 readings.value[index].chaptersProgress[chapterIndex].contents.push(contentId);
@@ -109,9 +109,7 @@ export const useReadingStore = defineStore('reading', () => {
     function saveChoices(epocId: string, choiceId: string, responses: any, flags: string[], flagsToRemove: string[]) {
         const index = readings.value.findIndex((reading) => reading.epocId === epocId);
         if (index === -1) return;
-        const choiceIndex = readings.value[index].choices.findIndex(
-            (choice) => choice.id === choiceId
-        );
+        const choiceIndex = readings.value[index].choices.findIndex((choice) => choice.id === choiceId);
         if (choiceIndex !== -1) {
             readings.value[index].choices[choiceIndex] = {
                 id: choiceId,
@@ -123,9 +121,7 @@ export const useReadingStore = defineStore('reading', () => {
                 responses,
             });
         }
-        readings.value[index].flags = readings.value[index].flags.filter(
-            (flag) => !flagsToRemove.includes(flag)
-        );
+        readings.value[index].flags = readings.value[index].flags.filter((flag) => !flagsToRemove.includes(flag));
         readings.value[index].flags = [...readings.value[index].flags, ...flags];
         saveReadings();
     }
@@ -142,11 +138,18 @@ export const useReadingStore = defineStore('reading', () => {
         }
     }
 
-    function saveStatement(epocId: string, entityType: EntityTypes, entityId: string, verb: Verb, value: string | number | boolean) {
-        const index = readings.value.findIndex((reading) => reading.epocId === epocId);
-        if (index === -1) return;
-        if (!readings.value[index].statements) {
-            readings.value[index].statements = {
+    function saveStatement(
+        epocId: string,
+        entityType: EntityTypes,
+        entityId: uid,
+        verb: Verb,
+        value: string | number | boolean
+    ) {
+        const reading = readings.value.find((r) => r.epocId === epocId);
+        if (!reading) return;
+
+        if (!reading.statements) {
+            reading.statements = {
                 global: {},
                 chapters: {},
                 pages: {},
@@ -154,15 +157,20 @@ export const useReadingStore = defineStore('reading', () => {
                 questions: {},
             };
         }
-        if (!readings.value[index].statements[entityType][entityId]) {
-            readings.value[index].statements[entityType][entityId] = {};
+
+        if (entityType === 'global') {
+            reading.statements.global[verb] = value;
+        } else {
+            if (!reading.statements[entityType][entityId]) {
+                reading.statements[entityType][entityId] = {};
+            }
         }
-        readings.value[index].statements[entityType][entityId][verb] = value;
-        if (!readings.value[index].badges) {
-            readings.value[index].badges = [];
-        }
-        checkBadges(readings.value[index]);
+
+        if (!reading.badges) reading.badges = [];
+
+        checkBadges(reading);
         saveReadings();
+
         pluginService.broadcastMessage({
             event: 'statement',
             statement: {

@@ -193,7 +193,7 @@ export function usePlugin() {
         ></iframe>`;
     }
 
-    function broadcastMessage (message: string) {
+    function broadcastMessage (message: any) {
         document.querySelectorAll('iframe').forEach(frame => {
             frame.contentWindow?.postMessage(message, '*')
         });
