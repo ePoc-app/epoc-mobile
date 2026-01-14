@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import { SimpleChoiceQuestion, Question } from '@/types/contents/assessment';
+import { SimpleChoiceQuestion, Question} from '@/types/contents/assessment';
 import { PropType, ref } from 'vue';
 
 const props = defineProps({
   question: {
-    type : Object as PropType<Question>,
+    type : Object as PropType<SimpleChoiceQuestion>,
     required: true
   },
   disabled: {
@@ -19,14 +19,14 @@ const props = defineProps({
 })
 
 const emits = defineEmits<{
-  userResponse: [answer: String[]];
+  userHasResponded: [answer: String[]];
 }>()
 
 const selectedAnswer = ref<String>(props.userPreviousResponse[0]);
 
 const selectAnswer = (answer: String) => {
   selectedAnswer.value = answer;
-  emits('userResponse', [selectedAnswer.value])
+  emits('userHasResponded', [selectedAnswer.value])
 }
 </script>
 

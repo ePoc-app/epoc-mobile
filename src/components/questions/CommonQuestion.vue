@@ -20,6 +20,8 @@ import CorrectionMultipleChoice from '../corrections/CorrectionMultipleChoice.vu
 import CorrectionReorder from '../corrections/CorrectionReorder.vue';
 import CorrectionSort from '../corrections/CorrectionSort.vue';
 import CustomQuestion from './CustomQuestion.vue';
+import { SwipeQuestion, SimpleChoiceQuestion } from '@/types/contents/assessment';
+
 
 const epocStore = useEpocStore()
 
@@ -35,7 +37,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits<{
-  userHasResponded: [userResponses: string[]]; 
+  userHasResponded: [userResponses: any[]]; 
   questionAnswered: [value: boolean];
   dragging: [event: Event];
   close: [value: boolean];
@@ -64,9 +66,11 @@ const flip = (event?: any) => {
   }, 600);
 }
 
-const updateUserResponse = (userResponse: string[]) => {
-  userResponses.value = userResponse;
-  emits('userHasResponded', userResponse)
+const updateUserResponse = (_userResponse: any[]) => {
+  console.log('is received by commonQuestion')
+  userResponses.value = _userResponse;
+  console.log(_userResponse)
+  emits('userHasResponded', _userResponse)
 }
 
 const onDrag= (value: Event) => {
@@ -115,13 +119,13 @@ defineExpose({
         <div v-if="question.statement && !['swipe', 'drag-and-drop'].includes(question.type)" :innerHTML="srcConvert(removeSecableSpace(question.statement), epocStore.rootFolder)"></div>
       </div>
       <div class="question">
-        <simple-choice v-if="question.type === 'choice' && question.responses.length > 0" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></simple-choice>
-        <multiple-choice v-if="question.type === 'multiple-choice'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></multiple-choice>
-        <reorder v-if="question.type === 'reorder'" :question="question" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></reorder>
-        <drag-and-drop v-if="question.type === 'drag-and-drop'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @dragging="onDrag($event)" @userResponse="updateUserResponse($event)"></drag-and-drop>
-        <swipe v-if="question.type === 'swipe'" :question="question" :userPreviousResponse="userResponses"  :disabled="questionDisabled" @dragging="onDrag($event)" @userResponse="updateUserResponse($event)"></swipe>
-        <dropdown-list v-if="question.type === 'dropdown-list'" :question="question" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></dropdown-list>
-        <custom-question v-if="question.type === 'custom'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @userResponse="updateUserResponse($event)"></custom-question>
+        <simple-choice v-if="question.type === 'choice' && question.responses.length > 0" :question="question as SimpleChoiceQuestion" :userPreviousResponse="userResponses" :disabled="questionDisabled"@userHasResponded="updateUserResponse"></simple-choice>
+        <multiple-choice v-if="question.type === 'multiple-choice'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled"@userHasResponded="updateUserResponse($event)"></multiple-choice>
+        <reorder v-if="question.type === 'reorder'" :question="question" :disabled="questionDisabled"@userHasResponded="updateUserResponse($event)"></reorder>
+        <drag-and-drop v-if="question.type === 'drag-and-drop'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @dragging="onDrag($event)"@userHasResponded="updateUserResponse($event)"></drag-and-drop>
+        <swipe v-if="question.type === 'swipe'" :question="question as SwipeQuestion" :userPreviousResponse="userResponses"  :disabled="questionDisabled" @userHasResponded="updateUserResponse"></swipe>
+        <dropdown-list v-if="question.type === 'dropdown-list'" :question="question" :disabled="questionDisabled"@userHasResponded="updateUserResponse($event)"></dropdown-list>
+        <custom-question v-if="question.type === 'custom'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled"@userHasResponded="updateUserResponse($event)"></custom-question>
       </div>
     </div>
     <slot></slot>
