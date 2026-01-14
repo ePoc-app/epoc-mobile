@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonToolbar,
-  IonTitle,
-  IonButtons,
-  IonIcon,
-  IonBackButton,
-  IonButton, onIonViewWillEnter,
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonIcon,
+    IonBackButton,
+    IonButton,
+    onIonViewDidEnter,
+    onIonViewWillEnter,
 } from '@ionic/vue';
 import { RouterLink, useRoute } from 'vue-router';
 import {
@@ -26,24 +28,134 @@ import {
 } from 'ionicons/icons';
 import { useEpocStore } from '@/stores/epocStore';
 import { denormalize } from '@/utils/pipes';
+import { watch, Ref, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useReadingStore } from '@/stores/readingStore';
+import { Reading } from '@/types/reading';
+import { appService } from '@/utils/appService';
+import type { Chapter } from '@/types/epoc';
+import type { Content } from '@/types/contents/content';
+import type { uid } from '@epoc/epoc-types/dist/v1';
 
 const route = useRoute();
 const epocStore = useEpocStore();
 
+const { epoc } = storeToRefs(epocStore);
+const { readings } = storeToRefs(useReadingStore());
+
+const reading: Ref<Reading | undefined> = ref();
+const contentInitialized = ref(true);
+
 onIonViewWillEnter(async () => {
-  await epocStore.getEpocById(route.params.id.toString());
+    await epocStore.getEpocById(route.params.id.toString());
 });
+
+onIonViewDidEnter(() => {
+    if (reading.value) {
+        setProgress();
+    }
+    contentInitialized.value = true;
+
+    if (appService.screenReaderDetected) {
+        (document.querySelector('.toc-content') as HTMLElement).focus();
+    }
+});
+
+watch(
+    [epoc, readings],
+    ([epocValue, readingsValue]) => {
+        if (!epocValue || !readingsValue) return;
+        reading.value = readingsValue.find((item) => (item.epocId = epocValue.id));
+        if (reading.value) {
+            setProgress();
+        }
+
+        contentInitialized.value = true;
+    },
+    { immediate: true }
+);
 
 const displayMenu = () => {
     epocStore.epocMainMenu();
 };
 
-const toggleDetails = (chapter) => {
+const toggleDetails = (chapter: any) => {
     chapter.opened = !chapter.opened;
 };
 
-// TODO //
-/////////
+function setProgress() {
+    if (!reading.value || !epoc.value) return;
+
+    for (const [chapterId, chapter] of Object.entries(epoc.value.chapters)) {
+        updateChapterAssessmentStatus(chapter);
+        updateChapterOpenedStatus(chapter, chapterId);
+
+        if (chapter.chapterOpened) {
+            updateChapterContentsProgress(chapter, chapterId);
+            chapter.done = chapter.assessmentDone && chapter.chapterOpened && chapter.allViewed;
+        }
+    }
+}
+
+function updateChapterAssessmentStatus(chapter: Chapter) {
+    chapter.assessmentDone =
+        chapter.assessments?.every((uid) => {
+            isAssessmentCompleted(uid);
+        }) ?? false;
+}
+
+function updateChapterOpenedStatus(chapter: Chapter, chapterId: string) {
+    const chapterIndex = findChapterProgressIndex(chapterId);
+    chapter.chapterOpened = chapterIndex !== -1;
+
+    return chapterIndex;
+}
+
+function updateChapterContentsProgress(chapter: Chapter, chapterId: string) {
+    const chapterIndex = findChapterProgressIndex(chapterId);
+    const readingChapter = reading.value!.chaptersProgress[chapterIndex];
+
+    chapter.allViewed = true;
+    let resumeLink: string | null = null;
+    let prevContentId: string | null = null;
+
+    chapter.initializedContents.forEach((content) => {
+        content.viewed = isContentViewed(content, readingChapter);
+
+        if (!content.viewed) {
+            chapter.allViewed = false;
+
+            if (!resumeLink) {
+                resumeLink = buildResumeLink(chapterId, prevContentId);
+                chapter.resumeLink = resumeLink;
+            }
+        }
+
+        prevContentId = content.id;
+    });
+}
+
+function isAssessmentCompleted(assessmentUid: string) {
+    return reading.value!.assessments.some((assessment) => assessment.id === assessmentUid);
+}
+
+function findChapterProgressIndex(chapterId: string) {
+    return reading.value!.chaptersProgress.findIndex((chapterProgress) => chapterProgress.id === chapterId);
+}
+
+function isContentViewed(content: Content, readingChapter: { id: uid; contents: uid[] }) {
+    if (content.type === 'assessment' || content.type === 'simple-question') {
+        return isAssessmentCompleted(content.id);
+    }
+
+    return readingChapter.contents.includes(content.id);
+}
+
+function buildResumeLink(chapterId: string, prevContentId: string | null) {
+    const contentPath = prevContentId ? `content/${prevContentId}` : '';
+
+    return `/epoc/play/${epoc.value!.id}/${chapterId}/${contentPath}`;
+}
 </script>
 
 <template>
@@ -61,10 +173,11 @@ const toggleDetails = (chapter) => {
                 </ion-buttons>
             </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content v-if="contentInitialized">
             <div v-if="epocStore.epoc" class="wrapper">
                 <div class="toc-header">
-                    <img v-if="epocStore.epoc.image"
+                    <img
+                        v-if="epocStore.epoc.image"
                         aria-hidden="true"
                         alt="ePoc Image"
                         :src="epocStore.rootFolder + epocStore.epoc.image"
@@ -72,7 +185,11 @@ const toggleDetails = (chapter) => {
                     <div class="toc-header-title">{{ epocStore.epoc.title }}</div>
                 </div>
                 <div class="toc-content" tabindex="-1">
-                    <div class="toc-chapter" v-for="(chapter, index) of denormalize(epocStore.epoc.chapters)">
+                    <div
+                        class="toc-chapter"
+                        v-for="(chapter, index) of denormalize(epocStore.epoc.chapters)"
+                        :key="index"
+                    >
                         <div class="toc-chapter-summary">
                             <div class="toc-chapter-progress" :class="{ done: chapter.done }">
                                 <ion-icon aria-hidden="true" :icon="checkmarkOutline" v-if="chapter.done"></ion-icon>
