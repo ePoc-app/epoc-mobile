@@ -56,22 +56,22 @@ const initSwipe = () => {
             threshold: 0,
             gestureName: 'swipe',
             onMove: ev => {
-                let translate = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`;
-                applyAnimation(translate)
+                applyAnimation(`translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`)
                 swipeCard.selectedSide = (ev.deltaX > 0) ? sides.value[0] : sides.value[1];
             },
             onEnd: ev => {
-                isDragging.value = false;
-                emits('dragging','dragend');
                 if (ev.deltaX > threshold || ev.velocityX > thresholdVelocity) {
-                    applyAnimation(SIDE.Right);
+                    applyCompleteAnimation(SIDE.Right)
+                    .then(() => selectSide(SIDE.Right)
+                    );
                 } else if (ev.deltaX < -threshold || ev.velocityX < -thresholdVelocity) {
-                    applyAnimation(SIDE.Left);
+                    applyCompleteAnimation(SIDE.Left)
+                    .then(() => selectSide(SIDE.Left))
                 } else {
                   swipeCard.selectedSide = undefined;
+                  applyAnimation(`translateX(0px) rotate(0deg)`)
                   elem.style.transition = 'transform .3s ease-in-out';
                 }
-
             },
         });
 
@@ -100,12 +100,12 @@ const removeFromAnswers= (card: CardType) => {
 const swipe = async (side : SIDE) => {
   if (currentCard.value) {
     currentCard.value.selectedSide = side
-    await applyAnimationFromStart(side);
-    selectSide(side);
+    applyCompleteAnimation(side)
+    .then(()=> selectSide(side))
   }
 }
 
-const applyAnimationFromStart = async (animationState: SIDE) => {
+const applyCompleteAnimation = async (animationState: SIDE) => {
     const translate = (animationState == SIDE.Left) ? `translateX(-100vh) rotate(-50deg)` : `translateX(100vh) rotate(50deg)`
     await applyAnimation(translate)
 }
@@ -116,7 +116,7 @@ const applyAnimation = async(translate:string) => {
     let animation = createAnimation()
         .addElement(currentSwipeCard.value)
         .duration(300)
-        .fromTo('transform', 'translateX(0)', translate);
+        .to('transform', translate);
     animation.play()
     await sleep(300) // wait until animation is done
   }
