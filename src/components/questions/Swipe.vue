@@ -6,7 +6,7 @@ import { SwipeQuestion } from '@/types/contents/assessment';
 import { clamp, shuffleArray } from '@/utils/utils';
 import { createGesture, createAnimation } from '@ionic/vue';
 import { removeSecableSpace, srcConvert } from '@/utils/transform';
-type CardType = {label:string, value:string, selectedSide?:string, animationState: string, transform: string}
+type CardType = {label:string, value:string}
 
 const props = defineProps({
     question: { type : Object as PropType<(SwipeQuestion)>, required: true},
@@ -20,8 +20,8 @@ const emits = defineEmits<{
 }>()
 
 enum SIDE {
-  Left,
-  Right,
+  Left = 'left',
+  Right = 'right',
 }
 
 
@@ -32,16 +32,15 @@ const cardsRemaining = ref<Array<CardType>>(shuffleArray(props.question.response
 const cardsSorted = ref<Array<CardType>>([]);
 
 // Sent to parent
-const answersToTheLeft = ref<Array<{label:string,value:string}>>([]);
-const answersToTheRight = ref<Array<{label:string,value:string}>>([]);
+const answers = ref<{left : CardType[], right: CardType[]}>({left: [], right: []})
 
 // Related to animation
 const step = ref<number>(0);
 const undoDisabled = ref<boolean>(false);
 const isDragging = ref(false);
 
-const currentQuestion = computed(() => (cardsRemaining.value.length > 0) ? cardsRemaining.value[cardsRemaining.value.length -1] : undefined)
-const currentSwipeCard = computed(() => swipeCardComponents.value?.find((swipeCard) => swipeCard.id == currentQuestion.value?.label))
+const currentCard = computed(() => (cardsRemaining.value.length > 0) ? cardsRemaining.value[cardsRemaining.value.length -1] : undefined)
+const currentSwipeCard = computed(() => swipeCardComponents.value?.find((swipeCard) => swipeCard.id == currentCard.value?.label))
 
 onMounted(() => {
     initSwipe()
@@ -99,6 +98,31 @@ const initSwipe = () => {
     })
 }
 
+const undo = () => {
+    if (cardsSorted.value.length > 0) {
+        const lastCardSorted = cardsSorted.value.pop() as CardType;
+        removeFromAnswers(lastCardSorted)
+        cardsRemaining.value.push(lastCardSorted!);
+        initSwipe();
+        emits('userHasResponded', []);
+    }
+}
+
+const removeFromAnswers= (card: CardType) => {
+  if (answers.value[SIDE.Left][answers.value[SIDE.Left].length] == card) {
+    answers.value[SIDE.Left].pop()
+  } else if (answers.value[SIDE.Right][answers.value[SIDE.Right].length] == card) {
+    answers.value[SIDE.Right].pop()
+  }
+}
+
+const swipe = (side : SIDE) => {
+  if (currentCard.value) {
+    startAnimation(side);
+    selectSide(side);
+  }
+}
+
 const startAnimation = (animationState: SIDE) => {
   if (currentSwipeCard.value) {
     if (animationState == SIDE.Right) {
@@ -117,49 +141,16 @@ const startAnimation = (animationState: SIDE) => {
   }
 }
 
-
-const undo = () => {
-    if (cardsSorted.value.length > 1) {
-        const lastCardSorted = cardsSorted.value.pop();
-        if(lastCardSorted!.animationState === 'swipeRight') {
-            answersToTheLeft.value.pop();
-        } else if (lastCardSorted!.animationState === 'swipeLeft') {
-            answersToTheRight.value.pop();
-        }
-        cardsRemaining.value.push(lastCardSorted!);
-        lastCardSorted!.animationState = 'initial';
-        lastCardSorted!.transform = 'none';
-        lastCardSorted!.selectedSide = undefined;
-        initSwipe();
-        emits('userHasResponded', []);
+const selectSide = (side: SIDE) => {
+    if (cardsRemaining.value.length > 0) {;
+      const sortedCard = cardsRemaining.value.pop();
+      cardsSorted.value.push(sortedCard!);
+      answers.value[side].push({label:sortedCard!.label,value:sortedCard!.value})
     }
-}
-
-const swipe = (side : SIDE) => {
-    const card = cardsRemaining.value[cardsRemaining.value.length-1]
-    if(side === SIDE.Right) {
-        card.selectedSide = sides.value[0];
-    } else if (side === SIDE.Left) {
-        card.selectedSide = sides.value[1];
-    }
-    startAnimation(side);
-    cardsRemaining.value.pop()
-
-}
-
-const selectSide = (side: string) => {
-    if (!cardsRemaining.value.length) return;
-    const sortedCard = cardsRemaining.value.pop();
-    cardsSorted.value.push(sortedCard!);
-    if(side === 'swipeRight') {
-        answersToTheLeft.value.push({label:sortedCard!.label,value:sortedCard!.value});
-    } else if (side === 'swipeLeft') {
-        answersToTheRight.value.push({label:sortedCard!.label,value:sortedCard!.value});
-    }
-
     if (cardsRemaining.value.length === 0) {
-        emits('userHasResponded',[answersToTheLeft, answersToTheRight]);
+        emits('userHasResponded',[answers.value[SIDE.Left], answers.value[SIDE.Right]]);
     }
+    console.log(answers)
 }
 </script>
 
