@@ -238,7 +238,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[
                         </common-question>
                     </swiper-slide>
                     <swiper-slide class="assessment-end">
-                        <card>
+                        <card v-if="isEnd">
                             <div class="title-container">
                                 <div class="title-icon">
                                     <ion-icon aria-hidden="true" :icon="starOutline"></ion-icon>
