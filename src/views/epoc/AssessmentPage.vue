@@ -48,8 +48,7 @@ const currentQuestionIndex= ref(0);
 const isEnd = ref(false);
 const certificateShown = ref(false)
 const questionSlides = ref<SwiperObject>() //undefined; will be set automatically on mounted by setSwiperRef 
-
-
+const trialNb = ref(0)
 
 // Computed
 const reading = computed(() => readings.value.find(question => question.epocId === epoc.value!.id))
@@ -95,6 +94,7 @@ const setSwiperRef = (swiper : SwiperObject) => {
 
 
 const retry = () => {
+  trialNb.value++ // trigger rerender of the questions
   userScore.value = 0;
   userResponses.value = [];
   currentQuestionUserResponse.value = undefined;
@@ -220,7 +220,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[
 
 <template>
     <ion-page>
-        <ion-content :scrollY="false" v-if="assessment">
+        <ion-content :scrollY="false" v-if="assessment" :key="trialNb">
             <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
                 <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
                     <swiper-slide v-for="(question, questionIndex) in denormalize(assessment.questions, epoc?.questions)">
