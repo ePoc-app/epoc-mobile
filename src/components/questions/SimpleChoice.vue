@@ -1,7 +1,8 @@
 <script setup lang="ts">
 
-import { SimpleChoiceQuestion, Question} from '@/types/contents/assessment';
+import { SimpleChoiceQuestion} from '@/types/contents/assessment';
 import { PropType, ref } from 'vue';
+import { IonRadioGroup, IonRadio, IonLabel, IonItem } from '@ionic/vue';
 
 const props = defineProps({
   question: {

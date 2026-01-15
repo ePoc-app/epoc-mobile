@@ -5,12 +5,11 @@ import { useEpocStore } from '@/stores/epocStore';
 import { IonIcon, IonButton, IonContent, IonFooter, IonPage } from '@ionic/vue';
 import { appService } from '@/utils/appService';
 import CertificateModal from '@/components/CertificateModal.vue';
-import { Epoc } from '@/types/epoc';
 import { useReadingStore } from '@/stores/readingStore';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { computed, ref, useTemplateRef } from 'vue';
+import { computed, ref } from 'vue';
 import { alertController, onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 import { useI18n } from 'vue-i18n';
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -20,7 +19,7 @@ import { useTemplateRefsList } from '@vueuse/core';
 import Card from '@/components/Card.vue';
 import CommonQuestion from '@/components/questions/CommonQuestion.vue';
 import ScoreProgress from '@/components/ScoreProgress.vue';
-import { starOutline } from 'ionicons/icons';
+import { starOutline, arrowForwardOutline } from 'ionicons/icons';
 
 const { t } = useI18n();
 type CommonQuestionType = InstanceType<typeof CommonQuestion>
@@ -287,7 +286,7 @@ const updateFocus = () => {
             <div class="next-buttons">
                 <ion-button role="button" color="inria-grey" size="large" expand="block" v-on:click="nextQuestion()" v-if="correctionShown">
                     <span>{{$t('QUESTION.NEXT')}}</span>
-                    <ion-icon aria-hidden="true" name="arrow-forward-outline" slot="end"></ion-icon>
+                    <ion-icon aria-hidden="true" :icon="arrowForwardOutline" slot="end"></ion-icon>
                 </ion-button>
             </div>
         </ion-footer>
