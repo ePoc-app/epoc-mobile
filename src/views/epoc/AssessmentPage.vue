@@ -6,7 +6,6 @@ import { IonIcon, IonButton, IonContent, IonFooter, IonPage } from '@ionic/vue';
 import { appService } from '@/utils/appService';
 import CertificateModal from '@/components/CertificateModal.vue';
 import { useReadingStore } from '@/stores/readingStore';
-import { useSettingsStore } from '@/stores/settingsStore';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
@@ -27,7 +26,6 @@ type CommonQuestionType = InstanceType<typeof CommonQuestion>
 //Store
 const epocStore = useEpocStore()
 const readingStore = useReadingStore()
-const settingsStore = useSettingsStore()       
 const router = useRouter();
 const route = useRoute();
 
