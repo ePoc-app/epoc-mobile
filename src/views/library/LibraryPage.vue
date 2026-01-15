@@ -33,6 +33,7 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Capacitor } from '@capacitor/core';
+import { useTemplateRef } from 'vue';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -41,9 +42,20 @@ const localEpocsStore = useLocalEpocsStore();
 const onboardingStore = useOnboardingStore();
 const { getOnboarding } = storeToRefs(onboardingStore);
 
-const fileHandler = (E006PEevent) => {
-    console.log('TODO');
+const inputRef = useTemplateRef('file');
+const fileHandler = (event: Event) => {
+  if (event.target === null || (event.target as HTMLInputElement).files === null) return;
+  const file = (event.target as HTMLInputElement).files?.[0];
+
+  if (!file) return;
+
+  localEpocsStore.importFile(file);
+
+  if (inputRef.value) {
+    inputRef.value.value = '';
+  }
 };
+
 const doRefresh = async (event: RefresherCustomEvent) => {
     const startTime = Date.now();
     await libraryStore.refreshAll();
@@ -74,8 +86,9 @@ const openAddMenu = async () => {
             text: t('FLOATING_MENU.IMPORT_FILE'),
             icon: '/assets/icon/importer.svg',
             handler: () => {
-                alert('TODO : import File');
-                //this.fileRef.nativeElement.click();
+                if (inputRef.value) {
+                    inputRef.value.click();
+                }
             },
         },
         {
@@ -360,12 +373,7 @@ const linkInputAlert = async () => {
                     <h3 aria-hidden="true" class="library-item-title">{{ $t('LIBRARY_PAGE.ADD_EPOC') }}</h3>
                 </div>
                 <!--<input type="file" accept="application/octet-stream,application/zip" hidden v-on:change="fileHandler($event)" #file>-->
-                <input
-                    type="file"
-                    accept="application/octet-stream,application/zip"
-                    hidden
-                    v-on:change="fileHandler($event)"
-                />
+                <input ref="file" type="file" accept="application/octet-stream,application/zip,.epoc" hidden v-on:change="fileHandler($event)"/>
             </div>
         </ion-content>
     </ion-page>
