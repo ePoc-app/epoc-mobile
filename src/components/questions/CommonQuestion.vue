@@ -22,7 +22,6 @@ import CorrectionSort from '../corrections/CorrectionSort.vue';
 import CustomQuestion from './CustomQuestion.vue';
 import { SwipeQuestion, SimpleChoiceQuestion } from '@/types/contents/assessment';
 
-
 const epocStore = useEpocStore()
 
 const props = defineProps({
@@ -149,9 +148,9 @@ defineExpose({
         <correction-sort v-else-if="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type)" :question="question" :userResponses="userResponses"></correction-sort>
         <correction-generic v-else :question="question" :userResponses="userResponses"></correction-generic>
       </div>
-      <div class="explanation" v-if="question.feedback">
+      <div class="explanation" v-if="question.feedback || question.explanation">
         <h4>{{$t('QUESTION.PREVIEW.EXPLANATION')}}</h4>
-        <html-content :html="srcConvert(question.feedback, epocStore.rootFolder)"></html-content>
+        <html-content :html="srcConvert(question.feedback || question.explanation, epocStore.rootFolder)"></html-content>
       </div>
     </div>
   </template>
