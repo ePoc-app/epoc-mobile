@@ -67,7 +67,7 @@ const routes: Array<RouteRecordRaw> = [
         component: WIPPage,
     },
     {
-        path: '/epoc/:epocId/assessment/:assessmentId',
+        path: '/epoc/:epoc_id/assessment/:assessment_id',
         name: 'AssessmentPage',
         component: AssessmentPage,
     },
