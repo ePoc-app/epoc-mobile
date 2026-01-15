@@ -26,7 +26,6 @@ export const useLibraryStore = defineStore('library', () => {
     const router = useRouter();
     const { t } = useI18n();
 
-    //const officialCollectionsUrl = 'https://learninglab.gitlabpages.inria.fr/epoc/epocs/official-collections.json';
     const officialCollectionsUrl = 'https://epoc.inria.fr/official-collections.json';
 
     const officialCollections = ref<Record<string, EpocCollection>>({});
@@ -41,6 +40,11 @@ export const useLibraryStore = defineStore('library', () => {
     }));
 
     // --- Actions ---
+    async function refreshAll () {
+        await fetchOfficialCollections();
+        await fetchCustomCollections();
+    }
+
     async function fetchOfficialCollections() {
         try {
             officialCollections.value = JSON.parse(localStorage.getItem('officialCollections') || '{}');
@@ -83,7 +87,6 @@ export const useLibraryStore = defineStore('library', () => {
                     }
                 }
             }
-            console.log('collections', collections[0]);
         } catch (error) {
             console.error('Error fetching official collections:', error);
         }
@@ -375,6 +378,7 @@ export const useLibraryStore = defineStore('library', () => {
         // Getters
         collections,
         // Actions
+        refreshAll,
         fetchOfficialCollections,
         fetchCustomCollections,
         updateEpocCollectionState,

@@ -9,14 +9,14 @@ import {
     IonSpinner,
     onIonViewDidEnter,
 } from '@ionic/vue';
-import { computed, ref, useTemplateRef, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import { useReadingStore } from '@/stores/readingStore';
 import { useSettingsStore } from '@/stores/settingsStore';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { onIonViewWillEnter } from '@ionic/vue';
 import { storeToRefs } from 'pinia';
-import { Chapter, Epoc } from '@/types/epoc';
+import { Chapter } from '@/types/epoc';
 import { Reading, UserAssessment } from '@/types/reading';
 import { Content } from '@/types/contents/content';
 import { srcConvert } from '@/utils/pipes';
@@ -43,285 +43,270 @@ import { until } from '@vueuse/core';
 import AssessmentContent from './content/AssessmentContent.vue';
 import SimpleQuestion from './content/SimpleQuestion.vue';
 
-//Store
-const epocStore = useEpocStore();
-const readingStore = useReadingStore();
-const settingsStore = useSettingsStore();
-const router = useRouter();
-const route = useRoute();
-
-// # Const
-const iconFromType = {
+const CONTENT_TYPE_ICONS = {
     html: documentTextOutline,
     assessment: cubeOutline,
     video: playCircleOutline,
     audio: micOutline,
     'simple-question': helpOutline,
     choice: gitBranchOutline,
-};
-let readerSlides = ref<SwiperObject>(); //undefined; // will be set only once on mounted
+} as const;
 
-// # ref
+const INTERACTIVE_ELEMENTS = ['ion-icon', 'button', 'ion-button', 'ion-checkbox', 'ion-radio', 'span'];
+
+const epocStore = useEpocStore();
+const readingStore = useReadingStore();
+const settingsStore = useSettingsStore();
+const route = useRoute();
+
 const { epoc } = storeToRefs(epocStore);
 const { settings } = storeToRefs(settingsStore);
 const { readings } = storeToRefs(readingStore);
 
-const epocId = ref<string>(route.params.epoc_id.toString());
-const chapterId = ref<string>(route.params.chapter_id.toString());
-const contentId = ref<string>(route.params.content_id?.toString());
-const next = ref<string>(route.params.next?.toString());
+const epocId = computed(() => route.params.epoc_id.toString());
+const chapterId = computed(() => route.params.chapter_id.toString());
+const contentId = computed(() => route.params.content_id?.toString());
+const shouldNavigateToNext = computed(() => route.params.next?.toString());
 
+const swiperInstance = ref<SwiperObject>();
 const reading = ref<Reading>();
-const pagesCount = ref<number>(0);
+const pagesCount = ref(0);
 const dataInitialized = ref(false);
 const currentPage = ref(0);
-const progress = ref(0);
-const contentsFilteredConditional = ref<Content[]>();
-
-const assessmentData = ref();
 const certificateShown = ref(false);
 const showControls = ref(true);
 
-const nextChapterIndex = ref();
+const chapterIndex = computed(() => Object.keys(epoc.value?.chapters || []).indexOf(chapterId.value));
+const chapter = computed<Chapter | undefined>(() => epoc.value?.chapters[chapterId.value]);
 
-// # computed
-const chapterIndex = computed<number>(() => Object.keys(epoc.value?.chapters || []).indexOf(chapterId.value));
-const chapter = computed<Chapter>(() => epoc.value?.chapters[chapterId.value]);
 const nextChapterId = computed<uid | undefined>(() => {
     const keys = Object.keys(epoc.value?.chapters || {});
-    return chapterIndex.value >= 0 && chapterIndex.value < keys.length - 1 ? keys[chapterIndex.value + 1] : undefined;
+    const hasNextChapter = chapterIndex.value >= 0 && chapterIndex.value < keys.length - 1;
+
+    return hasNextChapter ? keys[chapterIndex.value + 1] : undefined;
+});
+const nextChapter = computed(() => {
+    if (!nextChapterId.value || !epoc.value?.chapters) return undefined;
+    const chapterData = epoc.value.chapters[nextChapterId.value];
+    return chapterData ? { ...chapterData, id: nextChapterId.value } : undefined;
 });
 
-const nextChapter = computed<Chapter | undefined>(() => {
-    const chapter = epoc.value?.chapters[nextChapterId.value];
-    return chapter ? { ...chapter, id: nextChapterId.value } : undefined;
+const filteredContents = computed<Content[]>(() => {
+    return (
+        chapter.value?.initializedContents.filter((content) => {
+            if (!content.conditional) return true;
+            return reading.value?.flags.includes(content.id);
+        }) || []
+    );
 });
+
+const progress = computed(() => (pagesCount.value > 0 ? currentPage.value / pagesCount.value : 0));
 
 const assessments = computed(() => epoc.value?.assessments || []);
-const readerStyles = computed(() =>
-    settings.value
-        ? {
-              'font-family': settings.value.font,
-              'font-size': settings.value.fontSize + 'px',
-              'line-height': settings.value.lineHeight,
-          }
-        : {
-              'font-family': 'Inria Sans',
-              'font-size': '16px',
-              'line-height': 1.4,
-          }
-);
 
-// # watcher
-watch(epoc, (newEpoc) => {
-    initDataFromEpoc(newEpoc);
-});
-watch(
-    () => chapterIndex,
-    (newChapterIndex) => {
-        nextChapterIndex.value = newChapterIndex.value + 1;
+const assessmentData = computed(() => {
+    if (!epoc.value || !reading.value) {
+        return { totalUserScore: 0, totalScore: 0 };
     }
-);
+
+    let totalUserScore = 0;
+    let totalScore = 0;
+
+    assessments.value.forEach((assessment) => {
+        if (!assessment.questions) return;
+
+        const userAssessment = reading.value?.assessments.find((a: UserAssessment) => assessment.id === a.id);
+        const scoreTotal = epocStore.calcScoreTotal(epoc.value!, assessment.questions);
+
+        if (userAssessment && userAssessment.score > 0) {
+            totalUserScore += userAssessment.score;
+        }
+        totalScore += scoreTotal;
+    });
+
+    return { totalUserScore, totalScore };
+});
+
+const readerStyles = computed(() => {
+    const defaultStyles = {
+        'font-family': 'Inria Sans',
+        'font-size': '16px',
+        'line-height': 1.4,
+    };
+
+    if (!settings.value) return defaultStyles;
+
+    return {
+        'font-family': settings.value.font,
+        'font-size': `${settings.value.fontSize}px`,
+        'line-height': settings.value.lineHeight,
+    };
+});
+
+const canNavigatePrevious = computed(() => currentPage.value > 0);
+const canNavigateNext = computed(() => currentPage.value <= filteredContents.value.length);
+
+watch(epoc, (newEpoc) => {
+    if (newEpoc) initializeData();
+});
+
 watch(
     () => route.params.epoc_id,
     (newId) => {
         if (newId) {
-            epocId.value = newId.toString();
-            epocStore.getEpocById(epocId.value);
+            epocStore.getEpocById(newId.toString());
         }
     }
 );
-watch(
-    () => route.params.chapter_id,
-    (newId) => {
-        if (newId) {
-            chapterId.value = newId.toString();
-        }
-    }
-);
-watch(
-    () => route.params.next,
-    (newNext) => {
-        next.value = newNext.toString();
-    }
-);
 
-// # Lifecycle
-
-onIonViewDidEnter(async () => {
-    const contentId = route.params.content_id?.toString();
-
-    if (contentId) {
-        await until(dataInitialized).toBeTruthy();
-        goTo(contentId, 0);
-    }
-
-    updateFocus();
+onIonViewWillEnter(async () => {
+    const newEpoc = await epocStore.getEpocById(epocId.value);
+    if (newEpoc) initializeData();
 });
 
-onIonViewWillEnter(() => {
-    epocStore.getEpocById(epocId.value).then((newEpoc) => initDataFromEpoc(newEpoc));
+onIonViewDidEnter(async () => {
+    if (contentId.value) {
+        await until(dataInitialized).toBeTruthy();
+        navigateToContent(contentId.value, 0);
+    }
+    updateScreenReaderFocus();
 });
 
 onIonViewWillLeave(() => {
     stopAllMedia();
 });
 
-// # Methods
-
-const initDataFromEpoc = (epoc: Epoc) => {
+function initializeData() {
     readingStore.saveStatement(epocId.value, 'chapters', chapterId.value, 'started', true);
-    reading.value = readings.value.find((item: Reading) => item.epocId === epocId.value);
-    if (!reading.value) readingStore.addReading(epocId.value);
-    contentsFilteredConditional.value = chapter.value?.initializedContents.filter((content) => {
-        // filter out conditional content
-        return !content.conditional || (content.conditional && reading.value?.flags.indexOf(content.id) !== -1);
-    });
+
+    reading.value = readings.value.find((item) => item.epocId === epocId.value);
+    if (!reading.value) {
+        readingStore.addReading(epocId.value);
+    }
+
     readingStore.saveChapterProgress(epocId.value, chapterId.value);
-    setAssessmentsData();
+    checkForCertificate();
     dataInitialized.value = true;
-};
+}
 
-// ## Swiper related :
+function checkForCertificate() {
+    if (!epoc.value || !reading.value) return;
 
-  // ## Swiper related : 
+    const meetsScoreRequirements = assessmentData.value.totalUserScore >= epoc.value.certificateScore;
+    const meetsBadgeRequirement = (reading.value.badges.length || 0) >= epoc.value.certificateBadgeCount;
 
-  // called only once, automatically done by the swiper event 
-  const setSwiperRef = (swiper : SwiperObject) => {
-    readerSlides.value = swiper
-  }
-
-const prevPage = () => {
-    readerSlides.value?.slidePrev();
-};
-
-const nextPage = () => {
-    readerSlides.value?.slideNext();
-};
-
-const goTo = (contentId: uid, time?: number) => {
-    // Go to the next content after contentId
-    const pageIndex = contentsFilteredConditional.value?.findIndex((content) => content.id === contentId) || 0;
-    const index = next.value ? pageIndex + 2 : pageIndex + 1; // If next: go to the next content after id
-
-    countPages();
-    readerSlides.value?.slideTo(index, time);
-    currentPage.value = index;
-    progress.value = pageIndex / pagesCount.value;
-};
-
-const onSlideChange = () => {
-    stopAllMedia();
-    const index = readerSlides.value?.activeIndex || 0;
-    currentPage.value = index;
-    countPages();
-    console.log('slide changed', index);
-    updateCurrentContent(index);
-    progress.value = index / pagesCount.value;
-};
-
-// /!\ this event is binded from videplayer and dragable element
-const onDrag = (event: DragEvent) => {
-    if (event === 'dragstart') {
-        readerSlides.value?.disable();
-    } else {
-        readerSlides.value?.enable();
-    }
-};
-
-const countPages = () => {
-    pagesCount.value = (contentsFilteredConditional.value?.length || -1) + 1;
-    readerSlides.value?.updateSlides();
-};
-
-///// ### Others methods
-
-const hideControls = () => {
-    if (!appService.screenReaderDetected) {
-        showControls.value = false;
-    }
-};
-
-const toggleControls = (_swiper: SwiperObject, event: Event) => {
-    if (
-        ['ion-icon', 'button', 'ion-button', 'ion-icon', 'ion-checkbox', 'ion-radio', 'span'].includes(
-            (event.target as HTMLElement).tagName.toLowerCase()
-        )
-    )
-        return;
-    if (!appService.screenReaderDetected) {
-        showControls.value = !showControls.value;
-    }
-};
-
-const updateCurrentContent = (index: number) => {
-    const content = chapter.value?.initializedContents.filter(
-        (c) => !c.conditional || (c.conditional && reading.value?.flags.indexOf(c.id) !== -1)
-    )[index - 1];
-    if (content) {
-        // Change the url without triggering watchers
-        const newUrl = `/epoc/play/${epocId.value}/${chapterId.value}/content/${content.id}`;
-        window.history.replaceState({}, '', newUrl);
-
-        readingStore.saveChapterProgress(epocId.value, chapterId.value, content.id);
-        // tracker.trackPageView(); TODO Matomo Tracker
-        readingStore.saveStatement(epocId.value, 'pages', content.id, 'viewed', true);
-        if (content.type === 'html') {
-            readingStore.saveStatement(epocId.value, 'contents', content.id, 'read', true);
-        }
-    }
-};
-
-const updateFocus = () => {
-    if (appService.screenReaderDetected) {
-        (document.querySelector('app-epoc-player.ion-page:not(.ion-page-hidden) .reader') as HTMLElement).focus();
-    }
-};
-
-const displayMenu = () => {
-    epocStore.epocMainMenu(chapterIndex.value, chapter.value);
-};
-
-const stopAllMedia = () => {
-    const medias = Array.from(document.querySelectorAll('audio,video')) as HTMLMediaElement[];
-    medias.forEach((media) => {
-        media.pause();
-    });
-};
-
-const setAssessmentsData = () => {
-    if (epoc.value) {
-        assessmentData.value = {
-            totalUserScore: 0,
-            totalScore: 0,
-        };
-
-        assessments.value.forEach((assessment) => {
-            const userAssessment = reading.value?.assessments.find((a: UserAssessment) => assessment.id === a.id);
-            const scoreTotal = epocStore.calcScoreTotal(epoc.value, assessment.questions);
-
-            if (userAssessment && userAssessment.score > 0) {
-                assessmentData.value.totalUserScore += userAssessment.score;
-            }
-            assessmentData.value.totalScore += scoreTotal;
-        });
-
-        if (
-            assessmentData.value.totalUserScore >= epoc.value.certificateScore &&
-            (reading.value?.badges.length || 0) >= epoc.value.certificateBadgeCount
-        ) {
-            showCertificateCard();
-        }
-    }
-};
-
-const showCertificateCard = () => {
-    if (!reading.value?.certificateShown) {
+    if (meetsScoreRequirements && meetsBadgeRequirement && !reading.value.certificateShown) {
         certificateShown.value = true;
         readingStore.updateCertificateShown(epoc.value.id, true);
     }
-};
+}
 
+function navigatePrevious() {
+    if (!canNavigateNext.value) return;
+    swiperInstance.value?.slidePrev();
+}
+
+function navigateNext() {
+    if (!canNavigateNext.value) return;
+    swiperInstance.value?.slideNext();
+}
+
+function navigateToContent(targetContentId: uid, duration?: number) {
+    const pageIndex = filteredContents.value.findIndex((content) => content.id === targetContentId);
+
+    if (pageIndex === -1) return;
+
+    // add 1 for the chapter info slide, add 1 more if navigating to next content
+    const targetIndex = shouldNavigateToNext.value ? pageIndex + 2 : pageIndex + 1;
+
+    updatePagesCount();
+    swiperInstance.value?.slideTo(targetIndex, duration);
+    currentPage.value = targetIndex;
+}
+
+function handleSlideChange() {
+    stopAllMedia();
+
+    const newIndex = swiperInstance.value?.activeIndex || 0;
+    currentPage.value = newIndex;
+
+    updatePagesCount();
+    updateCurrentContent(newIndex);
+}
+
+function updateCurrentContent(index: number) {
+    const contentIndex = index - 1;
+    const content = filteredContents.value[contentIndex];
+
+    if (!content) return;
+
+    // Update url without triggering navigation
+    const newUrl = `/epoc/play/${epocId.value}/${chapterId.value}/content/${content.id}`;
+    window.history.replaceState({}, '', newUrl);
+
+    readingStore.saveChapterProgress(epocId.value, chapterId.value, content.id);
+    readingStore.saveStatement(epocId.value, 'pages', content.id, 'viewed', true);
+
+    if (content.type === 'html') {
+        readingStore.saveStatement(epocId.value, 'contents', content.id, 'read', true);
+    }
+}
+
+function updatePagesCount() {
+    pagesCount.value = filteredContents.value.length + 1;
+    swiperInstance.value?.updateSlides();
+}
+
+function handleSwiper(swiper: SwiperObject) {
+    swiperInstance.value = swiper;
+}
+
+function toggleControls(_swiper: SwiperObject, event: Event) {
+    const target = event.target as HTMLElement;
+    const isInteractiveElement = INTERACTIVE_ELEMENTS.includes(target.tagName.toLowerCase());
+
+    if (isInteractiveElement || appService.screenReaderDetected) return;
+
+    showControls.value = !showControls.value;
+}
+
+function hideControls() {
+    if (!appService.screenReaderDetected) {
+        showControls.value = false;
+    }
+}
+
+function handleDragEvent(event: DragEvent) {
+    if (event === 'dragstart') {
+        swiperInstance.value?.disable();
+    } else {
+        swiperInstance.value?.enable();
+    }
+}
+
+function displayMenu() {
+    epocStore.epocMainMenu(chapterIndex.value, chapter.value);
+}
+
+function updateScreenReaderFocus() {
+    if (!appService.screenReaderDetected) return;
+
+    const readerElement = document.querySelector(
+        'app-epoc-player.ion-page:not(.ion-page-hidden) .reader'
+    ) as HTMLElement;
+
+    readerElement?.focus();
+}
+
+function stopAllMedia() {
+    const mediaElements = document.querySelectorAll('audio, video') as NodeListOf<HTMLMediaElement>;
+    mediaElements.forEach((media) => media.pause());
+}
+
+function shouldDisplayContent(content: Content): boolean {
+    if (!content.conditional) return true;
+    return reading.value?.flags.includes(content.id) || false;
+}
 /* TODO
     <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
         <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
@@ -333,109 +318,104 @@ const showCertificateCard = () => {
 <template>
     <ion-page>
         <ion-content>
-            <ion-spinner v-if="!dataInitialized"></ion-spinner>
-            <template v-else-if="dataInitialized">
+            <ion-spinner v-if="!dataInitialized || !chapter || !epoc" />
+
+            <template v-else>
                 <div class="reader" slot="fixed" :style="readerStyles" tabindex="-1">
                     <swiper
-                        @swiper="setSwiperRef"
-                        v-on:tap="toggleControls"
-                        @slide-change-transition-end="updateFocus()"
-                        @slider-move="hideControls()"
-                        @slide-change-transition-start="onSlideChange()"
                         class="reader-slider"
+                        @swiper="handleSwiper"
+                        @tap="toggleControls"
+                        @slide-change-transition-end="updateScreenReaderFocus"
+                        @slider-move="hideControls"
+                        @slide-change-transition-start="handleSlideChange"
                     >
                         <swiper-slide>
-                            <app-debug :epocId="epocId" :chapterId="chapterId" contentId="debut"></app-debug>
-                            <chapter-info :chapter="chapter"></chapter-info>
+                            <app-debug :epocId="epocId" :chapterId="chapterId" contentId="debut" />
+                            <chapter-info :chapter="chapter" />
                         </swiper-slide>
-                        <template v-for="(content, index) in chapter.initializedContents" :key="index">
-                            <template
-                                v-if="
-                                    !content.conditional ||
-                                    (content.conditional && reading?.flags.indexOf(content.id) !== -1)
-                                "
+
+                        <swiper-slide
+                            v-for="(content, index) in chapter.initializedContents"
+                            v-show="shouldDisplayContent"
+                            :key="content.id"
+                        >
+                            <app-debug :epocId="epocId" :chapterId="chapterId" :contentId="content.id" />
+
+                            <common-content
+                                v-if="content.type !== 'simple-question'"
+                                :aria-hidden="index + 1 !== currentPage"
+                                :title="content.title"
+                                :subtitle="content.subtitle || ''"
+                                :icon="CONTENT_TYPE_ICONS[content.type]"
                             >
-                                <swiper-slide>
-                                    <app-debug
-                                        :epocId="epocId"
-                                        :chapterId="chapterId"
-                                        :contentId="content.id"
-                                    ></app-debug>
-                                    <common-content
-                                        :aria-hidden="index + 1 !== currentPage"
-                                        :title="content.title"
-                                        :subtitle="content.subtitle"
-                                        :icon="iconFromType[content.type]"
-                                        v-if="content.type !== 'simple-question'"
-                                    >
-                                        <html-content
-                                            v-if="content.type === 'html'"
-                                            :html="srcConvert(content.html, epocStore.rootFolder)"
-                                            @go-to="goTo($event)"
-                                        ></html-content>
-                                        <video-content
-                                            v-if="content.type === 'video'"
-                                            :content="content"
-                                            @timeline-dragging="onDrag($event)"
-                                        ></video-content>
-                                        <assessment-content 
-                                            v-if="content.type === 'assessment'" 
-                                            :content="content">
-                                        </assessment-content>
-                                    </common-content>
-                                    <simple-question
-                                        v-if="content.type === 'simple-question'"
-                                        :aria-hidden="index + 1 !== currentPage"
-                                        :epocId="epocId"
-                                        :content="content"
-                                        :question="epoc.questions[content.question]"
-                                        @dragging="onDrag($event)"
-                                    >
-                                    </simple-question>
-                                </swiper-slide>
-                            </template>
-                        </template>
+                                <html-content
+                                    v-if="content.type === 'html'"
+                                    :html="srcConvert(content.html, epocStore.rootFolder)"
+                                    @go-to="navigateToContent"
+                                />
+                                <video-content
+                                    v-else-if="content.type === 'video'"
+                                    :content="content"
+                                    @timeline-dragging="handleDragEvent"
+                                />
+                                <assessment-content v-else-if="content.type === 'assessment'" :content="content" />
+                            </common-content>
+
+                            <simple-question
+                                v-else
+                                :aria-hidden="index + 1 !== currentPage"
+                                :epocId="epocId"
+                                :content="content"
+                                :question="epoc.questions[content.question]"
+                                @dragging="handleDragEvent"
+                            />
+                        </swiper-slide>
+
                         <swiper-slide>
-                            <app-debug :epocId="epocId" :chapterId="chapterId" contentId="fin"></app-debug>
+                            <app-debug :epocId="epocId" :chapterId="chapterId" contentId="fin" />
                             <common-content
                                 :title="$t('PLAYER.MODULE_END.FINISH')"
                                 :subtitle="$t('PLAYER.MODULE_END.CONGRATS')"
                                 icon="assets/icon/modulecheck.svg"
                             >
-                                <chapter-end :epoc="epoc" :chapter="chapter" :nextChapter="nextChapter"></chapter-end>
+                                <chapter-end :epoc="epoc" :chapter="chapter" :next-chapter="nextChapter!" />
                             </common-content>
                         </swiper-slide>
                     </swiper>
                 </div>
+
                 <div aria-hidden="true" class="reader-progress" slot="fixed">
-                    <ion-progress-bar color="inria" :value="progress"></ion-progress-bar>
+                    <ion-progress-bar color="inria" :value="progress" />
                 </div>
-                <template slot="fixed">
-                    <certificate-modal :epocId="epocId" :certificateShown="certificateShown"></certificate-modal>
-                </template>
+
+                <certificate-modal slot="fixed" :epocId="epocId" :certificateShown="certificateShown" />
+
                 <div class="reader-actions" :class="{ showing: showControls }" slot="fixed">
                     <div
-                        :aria-disabled="currentPage === 0"
+                        :aria-disabled="!canNavigatePrevious"
                         aria-label="Précédent"
                         role="button"
                         class="reader-action"
-                        :class="currentPage === 0 ? 'disabled' : ''"
-                        v-on:click="prevPage()"
+                        :class="{ disabled: !canNavigatePrevious }"
+                        @click="navigatePrevious"
                     >
-                        <ion-icon aria-hidden="true" src="/assets/icon/double-gauche.svg"></ion-icon>
+                        <ion-icon aria-hidden="true" src="/assets/icon/double-gauche.svg" />
                     </div>
-                    <div aria-label="Menu" role="button" class="reader-action small" v-on:click="displayMenu()">
-                        <ion-icon aria-hidden="true" :icon="menu"></ion-icon>
+
+                    <div aria-label="Menu" role="button" class="reader-action small" @click="displayMenu()">
+                        <ion-icon aria-hidden="true" :icon="menu" />
                     </div>
+
                     <div
-                        :aria-disabled="currentPage > (contentsFilteredConditional?.length || -1)"
+                        :aria-disabled="!canNavigateNext"
                         aria-label="Suivant"
                         role="button"
                         class="reader-action"
-                        :class="currentPage > (contentsFilteredConditional?.length || -1) ? 'disabled' : ''"
-                        v-on:click="nextPage()"
+                        :class="{ disabled: !canNavigateNext }"
+                        @click="navigateNext"
                     >
-                        <ion-icon aria-hidden="true" src="/assets/icon/double-droite.svg"></ion-icon>
+                        <ion-icon aria-hidden="true" src="/assets/icon/double-droite.svg" />
                     </div>
                 </div>
             </template>
