@@ -14,20 +14,20 @@ import { computed } from 'vue';
 const libraryStore = useLibraryStore();
 const route = useRoute();
 const router = useRouter();
-const collection = computed(() => libraryStore.officialCollections[route.params.collection_id.toString()]);
+const collection = computed(() => {
+    const collectionId = route.params.collection_id?.toString();
+
+    return collectionId ? libraryStore.officialCollections[collectionId] : undefined;
+});
 </script>
 
 <template>
-    <ion-page>
+    <ion-page v-if="collection">
         <ion-header :translucent="true">
             <ion-toolbar>
                 <RouterLink to="library" slot="start">
                     <ion-button role="button" class="icon-btn">
-                        <ion-back-button
-                            :aria-label="$t('MISSING.RETURN')"
-                            text=""
-                            color="inria-icon"
-                        ></ion-back-button>
+                        <ion-back-button :aria-label="$t('MISSING.RETURN')" text="" color="inria-icon" />
                     </ion-button>
                 </RouterLink>
                 <ion-title>{{ collection.title }}</ion-title>
@@ -38,7 +38,7 @@ const collection = computed(() => libraryStore.officialCollections[route.params.
                             slot="icon-only"
                             :icon="informationCircleOutline"
                             color="inria-icon"
-                        ></ion-icon>
+                        />
                     </ion-button>
                 </RouterLink>
             </ion-toolbar>
@@ -50,11 +50,12 @@ const collection = computed(() => libraryStore.officialCollections[route.params.
                     class="logo"
                     v-if="collection.publisher.logo"
                     :style="'background-image:url(' + collection.publisher.logo + ')'"
-                ></div>
+                />
                 <div class="publisher-name" v-else>{{ collection.publisher.name }}</div>
             </div>
+
             <div id="container">
-                <div class="library-line-separator"></div>
+                <div class="library-line-separator" />
                 <div class="library-items" tabindex="-1">
                     <div class="library-item" v-for="epoc in Object.values(collection.ePocs)" :key="epoc.id">
                         <RouterLink
@@ -64,9 +65,11 @@ const collection = computed(() => libraryStore.officialCollections[route.params.
                                 :aria-label="epoc.title"
                                 class="library-item-image"
                                 :style="'background-image:url(' + epoc.image + ')'"
-                            ></div>
+                            />
                         </RouterLink>
+
                         <h3 aria-hidden="true" class="library-item-title">{{ epoc.title }}</h3>
+
                         <div class="library-item-toolbar" v-if="epoc.downloaded">
                             <ion-button
                                 class="expanded"
@@ -79,18 +82,20 @@ const collection = computed(() => libraryStore.officialCollections[route.params.
                                     v-if="epoc.opened"
                                     :icon="arrowForwardOutline"
                                     slot="end"
-                                ></ion-icon>
+                                />
                                 <span v-if="!epoc.opened">{{ $t('LIBRARY_PAGE.DISCOVER') }}</span>
                             </ion-button>
+
                             <ion-button
                                 class="round"
                                 :class="{ 'update-available': epoc.updateAvailable }"
                                 color="inria-base-button"
-                                v-on:click="libraryStore.epocLibraryMenu(epoc, collection.id)"
+                                @click="libraryStore.epocLibraryMenu(epoc, collection.id)"
                             >
                                 <span aria-label="Option du chapitre" class="ellipsis base-btn">...</span>
                             </ion-button>
                         </div>
+
                         <div
                             class="library-item-toolbar"
                             v-if="!epoc.downloading && !epoc.downloaded && !epoc.unzipping"
@@ -98,24 +103,26 @@ const collection = computed(() => libraryStore.officialCollections[route.params.
                             <ion-button
                                 class="expanded"
                                 color="inria-base-button"
-                                v-on:click="libraryStore.downloadEpoc(epoc, collection.id)"
+                                @click="libraryStore.downloadEpoc(epoc, collection.id)"
                             >
-                                <ion-icon aria-hidden="true" :icon="cloudDownloadOutline" slot="start"></ion-icon>
+                                <ion-icon aria-hidden="true" :icon="cloudDownloadOutline" slot="start" />
                                 <span class="base-btn">{{ $t('LIBRARY_PAGE.DOWNLOAD') }}</span>
                             </ion-button>
                         </div>
+
                         <div class="library-item-toolbar" v-if="epoc.downloading">
                             <ion-button class="expanded" :disabled="true" color="inria-base-button">
-                                <ion-icon aria-hidden="true" :icon="syncOutline" class="spin" slot="start"></ion-icon>
+                                <ion-icon aria-hidden="true" :icon="syncOutline" class="spin" slot="start" />
                                 <span class="base-btn">
                                     {{ $t('LIBRARY_PAGE.DOWNLOADING') }}
                                     <!--<template v-if="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</template>-->
                                 </span>
                             </ion-button>
                         </div>
+
                         <div class="library-item-toolbar" v-if="epoc.unzipping">
                             <ion-button class="expanded" :disabled="true" color="inria-base-button">
-                                <ion-icon aria-hidden="true" :icon="cogOutline" class="spin" slot="start"></ion-icon>
+                                <ion-icon aria-hidden="true" :icon="cogOutline" class="spin" slot="start" />
                                 <span class="base-btn">
                                     {{ $t('LIBRARY_PAGE.OPEN_ZIP') }}
                                     <!--<template v-if="epocProgresses[epoc.id]">({{epocProgresses[epoc.id]}}%)</template>-->
