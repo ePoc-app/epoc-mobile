@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonToolbar,
-  IonTitle,
-  IonButtons,
-  IonIcon,
-  IonBackButton,
-  IonButton,
-  alertController,
-  loadingController, onIonViewWillEnter,
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonIcon,
+    IonBackButton,
+    IonButton,
+    alertController,
+    loadingController,
+    onIonViewWillEnter,
 } from '@ionic/vue';
 import { ref, reactive, computed, Ref, watch } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
@@ -32,7 +33,7 @@ import { storeToRefs } from 'pinia';
 import type { Reading } from '@/types/reading';
 import type { uid } from '@epoc/epoc-types/dist/v1';
 import { denormalize } from '@/utils/pipes';
-import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
+import { FileViewer } from '@capacitor/file-viewer';
 
 const { t } = useI18n();
 
@@ -48,7 +49,7 @@ const route = useRoute();
 const { user } = useUser();
 
 onIonViewWillEnter(async () => {
-  await epocStore.getEpocById(route.params.epoc_id.toString());
+    await epocStore.getEpocById(route.params.epoc_id.toString());
 });
 
 const reading: Ref<Reading | undefined> = ref();
@@ -119,24 +120,18 @@ function downloadPdf(doc: jsPDF) {
                 })
                     .then((getUriResult) => {
                         try {
-                            const path = getUriResult.uri;
-                            const fileOpenerOptions: FileOpenerOptions = {
-                                filePath: path,
-                                contentType: 'application/pdf',
-                                openWithDefault: true,
-                            };
-                            FileOpener.open(fileOpenerOptions)
+                            FileViewer.openDocumentFromLocalPath({
+                                path: getUriResult.uri,
+                            })
                                 .then(() => {
                                     dismissLoading();
                                 })
                                 .catch(() => {
                                     dismissLoading().then(() => {
-                                        presentFail(
-                                            t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
+                                        t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR'),
                                             t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_PROMPT', {
                                                 type: t('PLAYER.SCORE.CERTIFICATE_PDF.ERROR_TYPE.OPEN'),
-                                            })
-                                        );
+                                            });
                                     });
                                 });
                         } catch (e) {
