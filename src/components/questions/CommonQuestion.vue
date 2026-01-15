@@ -20,6 +20,7 @@ import CorrectionMultipleChoice from '../corrections/CorrectionMultipleChoice.vu
 import CorrectionReorder from '../corrections/CorrectionReorder.vue';
 import CorrectionSort from '../corrections/CorrectionSort.vue';
 import CustomQuestion from './CustomQuestion.vue';
+import CorrectionGeneric from '../corrections/CorrectionGeneric.vue';
 import { SwipeQuestion, SimpleChoiceQuestion } from '@/types/contents/assessment';
 
 const epocStore = useEpocStore()

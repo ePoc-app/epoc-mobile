@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { checkmarkOutline, closeOutline, chevronDownOutline } from 'ionicons/icons';
-import { Question, SwipeQuestion } from '@/types/contents/assessment';
+import { Question } from '@/types/contents/assessment';
 import { PropType } from 'vue';
+import { IonIcon, IonItem, IonLabel } from '@ionic/vue';
 
 const props = defineProps({
     question: { type : Object as PropType<(Question)>, required: true},

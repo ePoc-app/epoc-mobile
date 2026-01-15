@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Question } from '@/types/contents/assessment';
 import { computed, onMounted, PropType, ref, useTemplateRef } from 'vue';
-import { book } from 'ionicons/icons'; 
 import { SwipeQuestion } from '@/types/contents/assessment';
-import { clamp, shuffleArray, sleep } from '@/utils/utils';
+import { shuffleArray, sleep } from '@/utils/utils';
 import { createGesture, createAnimation } from '@ionic/vue';
-import { removeSecableSpace, srcConvert } from '@/utils/transform';
+import { removeSecableSpace } from '@/utils/transform';
+import { IonIcon, IonRange } from '@ionic/vue';
+
 type CardType = {label:string, value:string, selectedSide?: string}
 enum SIDE {
   Left = 'left',
@@ -32,9 +32,7 @@ const cardsSorted = ref<Array<CardType>>([]);
 const answers = ref<{left : CardType[], right: CardType[]}>({left: [], right: []})
 
 // Related to animation
-const step = ref<number>(0);
 const undoDisabled = ref<boolean>(false);
-const isDragging = ref(false);
 
 const currentCard = computed(() => (cardsRemaining.value.length > 0) ? cardsRemaining.value[cardsRemaining.value.length -1] : undefined)
 const currentSwipeCard = computed(() => swipeCardComponents.value?.find((swipeCard) => swipeCard.id == currentCard.value?.label))
@@ -156,8 +154,8 @@ const selectSide = (side: SIDE) => {
     </div>
   <div v-if="cardsRemaining.length <= 0">{{$t('QUESTION.SWIPE.FINISH')}}</div>
 </div>
-<ion-range class="progress-indicator" disabled="true" mode="md" step="1" min="0"
-           :max="question.responses.length" :value="question.responses.length - cardsRemaining.length" snaps="true"></ion-range>
+<ion-range class="progress-indicator" :disabled="true" mode="md" :step="1" :min="0"
+           :max="question.responses.length" :value="question.responses.length - cardsRemaining.length" :snaps="true"></ion-range>
 
 <div class="swipe-actions">
   <div :aria-hidden="cardsRemaining.length < 1" role="button" class="swipe-action" @click="swipe(SIDE.Left)" :class="{'hidden' : cardsRemaining.length <= 0 || undoDisabled}">
