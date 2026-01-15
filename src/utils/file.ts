@@ -52,6 +52,21 @@ export const getMimeType = (filename: string): string => {
     return extension ? MIME_TYPES[extension] || 'application/octet-stream' : 'application/octet-stream';
 };
 
+
+/**
+ * Convertit un ArrayBuffer en chaîne Base64.
+ * @param buffer - Données à encoder ArrayBuffer.
+ * @returns La chaîne encodée en Base64.
+ */
+export const  arrayBufferToBase64 = (buffer: ArrayBuffer) => {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+};
+
 export const readdir = async (path: string): Promise<FileInfo[]> => {
     try {
         return (await Filesystem.readdir({ path, directory: Directory.LibraryNoCloud })).files;
@@ -71,10 +86,23 @@ export const mkdir = async (path: string): Promise<void> => {
     }
 }
 
+export const write = async (data: string, filename: string): Promise<void> => {
+    try {
+        await Filesystem.appendFile({
+            path: filename,
+            data: data,
+            directory: Directory.LibraryNoCloud
+        });
+    } catch (error) {
+        console.error('Error downloading file:', error);
+        throw error;
+    }
+};
+
 export const download = async (
     url: string,
     filename: string,
-    onProgress: (progress: ProgressStatus) => void
+    onProgress?: (progress: ProgressStatus) => void
 ): Promise<void> => {
     try {
         const fileUri = await Filesystem.getUri({
@@ -85,7 +113,7 @@ export const download = async (
             url: url,
             path: fileUri.uri,
         });
-        await FileTransfer.addListener('progress', onProgress);
+        if (onProgress) await FileTransfer.addListener('progress', onProgress);
     } catch (error) {
         console.error('Error downloading file:', error);
         throw error;
@@ -110,6 +138,7 @@ export const deleteFolder = async (path: string): Promise<void> => {
 
 export const unzip = async (filename: string, dir: string): Promise<void> => {
     try {
+        console.log('Unzipping file:', filename);
         await deleteFolder(dir);
         const fileUri = await Filesystem.getUri({
             directory: Directory.LibraryNoCloud,
@@ -119,11 +148,13 @@ export const unzip = async (filename: string, dir: string): Promise<void> => {
             directory: Directory.LibraryNoCloud,
             path: dir,
         });
+        console.log('unzipping', fileUri.uri, 'to', extractPath.uri);
         await Zip.unzip({
             source: fileUri.uri,
             destination: extractPath.uri,
         });
-        await deleteZip(filename);
+        console.log('deleting zip file:', filename);
+        //await deleteZip(filename);
     } catch (error) {
         console.error('Error unzipping file:', error);
         throw error;

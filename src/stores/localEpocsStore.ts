@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { actionSheetController, alertController, toastController } from '@ionic/vue';
 import { useSettingsStore } from './settingsStore';
 import { useReadingStore } from './readingStore';
-import { deleteFolder, download, mkdir, mv, pathExists, readdir, unzip } from '@/utils/file';
+import {arrayBufferToBase64, deleteFolder, download, mkdir, mv, pathExists, readdir, unzip, write} from '@/utils/file';
 import { EpocLibrary } from '@/types/epoc';
 import { readEpocContent } from '@/utils/epocService';
 import { trackEvent } from '@/utils/matomo';
@@ -107,27 +107,20 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
     };
 
     const importFile = async (file: File) => {
-        const id = simpleHash(file.name);
-        imports.value = { ...imports.value, [id]: `${t('LIBRARY_PAGE.IMPORT')} ${file.name}` };
+        const tempId = (Math.random() + 1).toString(36).substring(3);
+        imports.value = { ...imports.value, [tempId]: `${t('LIBRARY_PAGE.IMPORT')} ${file.name}` };
         trackEvent('Local ePocs', 'Import from file', file.name);
 
         try {
             // Convert JS File object to Base64 for Capacitor Filesystem
-            const data = await blobToBase64(file);
-
-            await Filesystem.writeFile({
-                path: `local-epocs/${id}.zip`,
-                data: data,
-                directory: Directory.Data,
-                recursive: true
-            });
-
-            await unzipLocalEpoc(id);
+            const data = arrayBufferToBase64(await file.arrayBuffer());
+            await write(data, `local-epocs/${tempId}.zip`);
+            await unzipLocalEpoc(tempId);
         } catch (error) {
             console.error(error);
             showToast(t('FLOATING_MENU.ERROR'), 'danger');
             const newImports = { ...imports.value };
-            delete newImports[id];
+            delete newImports[tempId];
             imports.value = newImports;
         }
     };
@@ -138,6 +131,8 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
             await unzip(`local-epocs/${tempId}.zip`, `temp/${tempId}`);
 
             const epoc = await readEpocContent('temp', tempId);
+
+            console.log(epoc);
 
             if (epoc) {
                 const dirExist = await pathExists(`local-epocs/${epoc.id}`);
