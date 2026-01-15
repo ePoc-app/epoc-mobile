@@ -67,9 +67,7 @@ const flip = (event?: any) => {
 }
 
 const updateUserResponse = (_userResponse: any[]) => {
-  console.log('is received by commonQuestion')
   userResponses.value = _userResponse;
-  console.log(_userResponse)
   emits('userHasResponded', _userResponse)
 }
 
