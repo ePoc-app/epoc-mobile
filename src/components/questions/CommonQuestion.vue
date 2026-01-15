@@ -39,7 +39,6 @@ const props = defineProps({
 
 const emits = defineEmits<{
   userHasResponded: [userResponses: any[]]; 
-  questionAnswered: [value: boolean];
   dragging: [event: Event];
   close: [value: boolean];
 }>()
@@ -50,12 +49,8 @@ const questionDisabled = ref(props.userAssessment ? true : false);
 const userResponses = ref(props.userAssessment && Object.hasOwn(props.userAssessment, 'responses')  ? props.userAssessment.responses as String[] : []);
 const flipped = ref(props.userAssessment ? true : false);
 
-onMounted(() => {
-  const answered = (props.userAssessment) ? true : false
-  emits('questionAnswered', answered)
-})
-
 const flip = (event?: any) => {
+  // TODO Check usage of this line, is it dead code ?
   if (event && (['SUMMARY'].indexOf(event.target.tagName) !== -1 || event.target.closest('a'))) return;
   if (questionDisabled.value) {
     flipCardComponent.value?.flip();
@@ -82,6 +77,7 @@ const back = (event: Event) => {
     emits('close', true)
   }
 
+// TODO Check if this work as intended ?
 const updateFocus = () => {
     if(appService.screenReaderDetected) {
       (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
@@ -90,7 +86,6 @@ const updateFocus = () => {
 
 const showCorrection = () =>  {
   questionDisabled.value = true;
-  emits('questionAnswered', true);
   flip();
 }
 
