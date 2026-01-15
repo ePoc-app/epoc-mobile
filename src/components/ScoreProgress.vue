@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { IonIcon } from '@ionic/vue';
+import { sleep } from '@/utils/utils';
 
 const props = defineProps({
     progress: { type: Number, required: true },
@@ -13,11 +14,9 @@ const props = defineProps({
 const currentDelta = ref(0);
 const thresholdPoints = computed(() => Math.round((props.threshold / 100) * props.maxLabel));
 
-setTimeout(() => {
-    if (props.delta !== undefined) {
-        currentDelta.value = props.delta;
-    }
-}, 200);
+sleep(200).then(()=> {
+    currentDelta.value = (props.delta !== undefined) ? props.delta : 0;
+})
 </script>
 
 <template>
