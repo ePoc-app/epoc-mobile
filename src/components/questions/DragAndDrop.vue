@@ -6,5 +6,5 @@
 DRAG AND DROP
 </template>
 
-<style>
+<style scoped lang="scss">
 </style>

@@ -41,7 +41,7 @@ const selectAnswer = (answer: String) => {
 </ion-radio-group>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 ion-radio-group{
   display: block;
   margin-top: 2rem;

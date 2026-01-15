@@ -176,7 +176,7 @@ const selectSide = (side: SIDE) => {
 
 </template>
 
-<style>
+<style scoped lang="scss">
 .swipe-instruction{
   display: flex;
   align-items: center;

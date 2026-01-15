@@ -6,5 +6,7 @@
 CORRECTION MultipleChoice
 </template>
 
-<style>
+<style scoped lang="scss">
+@use '@/theme/correction.scss';
+
 </style>

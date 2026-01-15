@@ -6,5 +6,5 @@
 DROPDOWN LIST
 </template>
 
-<style>
+<style scoped lang="scss">
 </style>
