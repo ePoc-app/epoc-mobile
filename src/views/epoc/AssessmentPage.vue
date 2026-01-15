@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { Assessment, AssessmentData, SimpleQuestion, emptyAssessmentData } from '@/types/contents/assessment';
+import { Assessment, SimpleQuestion } from '@/types/contents/assessment';
 import { useEpocStore } from '@/stores/epocStore';
 import { IonIcon, IonButton, IonContent, IonFooter, IonPage } from '@ionic/vue';
 import { appService } from '@/utils/appService';
@@ -23,7 +23,6 @@ import { starOutline, arrowForwardOutline } from 'ionicons/icons';
 
 const { t } = useI18n();
 type CommonQuestionType = InstanceType<typeof CommonQuestion>
-// TODO IL FAUT TRADUIRE LE SIMPLE CHOICE POUR RENDRE FONCTIONNEL LE COMMON QUESTION
 
 //Store
 const epocStore = useEpocStore()
@@ -38,20 +37,17 @@ const assessmentId = ref<string>(route.params.assessment_id.toString())
 
 // # ref
 const { epoc } = storeToRefs(epocStore)
-const { settings } = storeToRefs(settingsStore)
 const { readings } = storeToRefs(readingStore)
 
 const questionsElements = useTemplateRefsList<CommonQuestionType>()
 
-const userScore = ref(0);
 const userResponses = ref<any[]>([]);
-const assessmentData = ref<AssessmentData>(emptyAssessmentData);
 const currentQuestionUserResponse = ref<any[]>();
 const correctionShown = ref(false);
 const currentQuestionIndex= ref(0);
 const isEnd = ref(false);
 const certificateShown = ref(false)
-const questionSlides = ref<SwiperObject>() //undefined; // will be set only once on mounted 
+const questionSlides = ref<SwiperObject>() //undefined; will be set automatically on mounted by setSwiperRef 
 
 
 
@@ -61,7 +57,13 @@ const assessments = computed(() : (Assessment|SimpleQuestion)[] => epoc.value!.a
 const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value!.contents[assessmentId.value] as Assessment)
 
 const questions = computed(() => assessment.value?.questions?.map(questionId => epoc.value!.questions[questionId]) || [])
-const scoreMax = computed(() => epocStore.calcScoreTotal(epoc.value!, assessment.value.questions || []))
+
+
+// Scoring 
+const userScore = ref(0);
+const maxScore = computed(() => epocStore.calcScoreTotal(epoc.value!, assessment.value.questions || []))
+const otherAssessmentsUserScore = computed(() => getTotalUserScoreForOtherAssessments(assessments.value))
+const allAssessmentsMaxScore = computed(() => getMaxScoreForAllAssessments(assessments.value))
 
 // setup process
 if (!reading) readingStore.addReading(epocId.value);
@@ -95,7 +97,6 @@ const setSwiperRef = (swiper : SwiperObject) => {
 const retry = () => {
   userScore.value = 0;
   userResponses.value = [];
-  assessmentData.value = emptyAssessmentData;
   currentQuestionUserResponse.value = undefined;
   correctionShown.value = false;
   currentQuestionIndex.value = 0;
@@ -115,6 +116,7 @@ const checkAnswer = () => {
             question.correctResponse,
             currentQuestionUserResponse.value
         );
+        
         const score = userSucceeded ? +question.score : 0;
         correctionShown.value = true;
         questionsElements.value[currentQuestionIndex.value]?.showCorrection()
@@ -134,9 +136,9 @@ const nextQuestion = () => {
     correctionShown.value = false;
     currentQuestionIndex.value++;
     if (currentQuestionIndex.value >= questions.value.length) {
-        setAssessmentsData();
-        readingStore.saveResponses(epocId.value, assessmentId.value, userScore.value, userResponses.value);
         isEnd.value = true;
+        checkCertificateCard();
+        readingStore.saveResponses(epocId.value, assessmentId.value, userScore.value, userResponses.value);
         readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'completed', true);
         readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'scored', userScore.value);
     }
@@ -146,35 +148,16 @@ const nextQuestion = () => {
     }, 1000);
 }
 
-const setAssessmentsData = () => {
-    // TODO Tracker this.tracker.trackEvent('Assessments', 'Done', `Answered ${epocId.value} ${assessment.valueId}`, this.userScore);
-    assessmentData.value = {
-        userScore: userScore.value,
-        totalUserScore: 0,
-        totalScore: 0
-    };
-
-    assessments.value.forEach((assessment : Assessment | SimpleQuestion) => {
-        if (assessment.id !== assessmentId.value) {
-            const userAssessment = reading.value?.assessments.find(a => assessment.id === a.id);
-            if (userAssessment && userAssessment.score > 0) {
-                assessmentData.value.totalUserScore += userAssessment.score;
+const checkCertificateCard = () => {  
+    if (otherAssessmentsUserScore.value + userScore.value >= epoc.value!.certificateScore) {
+        if (reading.value?.badges.length || 0 >= epoc.value!.certificateBadgeCount) {
+            if (!reading.value?.certificateShown) {
+            setTimeout(() => {
+                    certificateShown.value = true;
+                    readingStore.updateCertificateShown(epoc.value!.id, true);
+            }, 1500);
             }
         }
-        assessmentData.value.totalScore += assessment.scoreTotal || 0
-    });
-    if (assessmentData.value.totalUserScore + assessmentData.value?.userScore >= epoc.value!.certificateScore 
-        && reading.value?.badges.length || 0 >= epoc.value!.certificateBadgeCount) {
-        setTimeout(() => {
-            showCertificateCard();
-        }, 1500);
-    }
-}
-
-const showCertificateCard = () => {
-    if (!reading.value?.certificateShown) {
-        certificateShown.value = true;
-        readingStore.updateCertificateShown(epoc.value!.id, true);
     }
 }
 
@@ -193,13 +176,7 @@ const presentAlertConfirm = async () => {
             },
             {
                 text: t('QUESTION.QUIT_MODAL.QUIT'),
-                handler: () => {
-                    router.back()
-                    // TODO test in situ
-                    // navigateBack(
-                    //    '/epoc/play/' + epoc.value.id + '/' + assessment.value.chapterId + '/content/' + assessment.valueId
-                    //);
-                },
+                handler: () => { router.back()},
             }
         ],
     });
@@ -218,9 +195,26 @@ const updateFocus = () => {
     }
 }
 
-// TODO Check the use of videos youtube
-// @userHasResponded="onUserHasResponded($event)" videos youtube,
+const getTotalUserScoreForOtherAssessments = (assessments: (Assessment| SimpleQuestion)[]) : number => {
+    let userScore = 0 
+    assessments.forEach((assessment : Assessment | SimpleQuestion) => {
+        if (assessment.id !== assessmentId.value) {
+            const userAssessment = reading.value?.assessments.find(a => assessment.id === a.id);
+            if (userAssessment && userAssessment.score > 0) {
+                userScore += userAssessment.score;
+            }
+        }
+    })
+    return userScore
+}
 
+const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[]) : number => {
+    let maxScore = 0 
+    assessments.forEach((assessment : Assessment | SimpleQuestion) => {
+        maxScore += assessment.scoreTotal || 0
+    })
+    return maxScore
+}
 
 </script>
 
@@ -244,28 +238,28 @@ const updateFocus = () => {
                         </common-question>
                     </swiper-slide>
                     <swiper-slide class="assessment-end">
-                        <card v-if="assessmentData">
+                        <card>
                             <div class="title-container">
                                 <div class="title-icon">
                                     <ion-icon aria-hidden="true" :icon="starOutline"></ion-icon>
                                 </div>
-                                <h5 class="title" v-if="scoreMax > 0">{{$t('QUESTION.ASSESSMENT_PAGE.SCORE')}}</h5>
-                                <h5 class="title" v-if="scoreMax <= 0">{{$t('QUESTION.ASSESSMENT_PAGE.NOT_GRADED')}}</h5>
+                                <h5 class="title" v-if="maxScore > 0">{{$t('QUESTION.ASSESSMENT_PAGE.SCORE')}}</h5>
+                                <h5 class="title" v-if="maxScore <= 0">{{$t('QUESTION.ASSESSMENT_PAGE.NOT_GRADED')}}</h5>
                             </div>
-                            <div class="score" v-if="scoreMax > 0">
+                            <div class="score" v-if="maxScore > 0">
                                 <div class="score-points">
-                                    <div class="score-points-assessment">{{assessmentData.userScore}} pts</div>
+                                    <div class="score-points-assessment">{{userScore}} pts</div>
                                     <div class="score-points-total">
                                         <b>{{$t('QUESTION.ASSESSMENT_PAGE.TOTAL_SCORE')}}</b>
-                                        {{assessmentData.totalUserScore + assessmentData.userScore}} / {{assessmentData.totalScore}}
+                                        {{otherAssessmentsUserScore + userScore}} / {{allAssessmentsMaxScore}}
                                     </div>
                                 </div>
                                 <div aria-hidden="true" class="score-chart">
-                                    <score-progress :progress="assessmentData.totalUserScore / assessmentData.totalScore * 100"
-                                                    :delta="assessmentData.userScore / assessmentData.totalScore * 100"
-                                                    :threshold="epoc!.certificateScore / assessmentData.totalScore * 100"
+                                    <score-progress :progress="otherAssessmentsUserScore / allAssessmentsMaxScore * 100"
+                                                    :delta="userScore / allAssessmentsMaxScore * 100"
+                                                    :threshold="epoc!.certificateScore / allAssessmentsMaxScore * 100"
                                                     :minLabel="0"
-                                                    :maxLabel="assessmentData.totalScore">
+                                                    :maxLabel="allAssessmentsMaxScore">
                                     </score-progress>
                                 </div>
                             </div>
