@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import {
-    actionSheetController,
-    alertController,
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonRefresher,
-    IonRefresherContent,
-    IonToolbar,
-    IonIcon,
-    IonButton,
+  actionSheetController,
+  alertController,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonRefresher,
+  IonRefresherContent,
+  IonToolbar,
+  IonIcon,
+  IonButton,
+  RefresherCustomEvent,
 } from '@ionic/vue';
 import {
     settingsOutline,
@@ -43,8 +44,16 @@ const { getOnboarding } = storeToRefs(onboardingStore);
 const fileHandler = (E006PEevent) => {
     console.log('TODO');
 };
-const doRefresh = (event) => {
-    alert(event);
+const doRefresh = async (event: RefresherCustomEvent) => {
+    const startTime = Date.now();
+    await libraryStore.refreshAll();
+    await localEpocsStore.fetchLocalEpocs();
+    const elapsedTime = Date.now() - startTime;
+    if (elapsedTime < 1000) {
+      // Wait for the remaining time
+      await new Promise(resolve => setTimeout(resolve, 1000 - elapsedTime));
+    }
+    await event.target.complete();
 };
 
 const onboardingOptions = {
