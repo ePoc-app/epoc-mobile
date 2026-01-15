@@ -25,6 +25,7 @@ const emits = defineEmits<{
 // ref
 const swipeCardComponents = useTemplateRef<HTMLDivElement[]>('swipe-cards')
 const sides = ref<string[]>(props.question.correctResponse.map(response => response.label));
+// TODO : add a reset of selectedSide on reload of the component. As of now if you come back to the same question, the selected side is already set and appears on the screen. 
 const cardsRemaining = ref<Array<CardType>>(shuffleArray(props.question.responses));
 const cardsSorted = ref<Array<CardType>>([]);
 

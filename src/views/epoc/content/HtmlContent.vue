@@ -23,7 +23,7 @@ const route = useRoute()
 const plugin = usePlugin();
 const content = useTemplateRef('content')
 const epocId = ref<string>(route.params.epoc_id.toString())
-// TO DO - is not given when in AssessmentPage/CommonQuestion const chapterId = ref<string>(route.params.chapter_id.toString())
+// TODO - is not given when in AssessmentPage/CommonQuestion const chapterId = ref<string>(route.params.chapter_id.toString())
 
 const pluggedHtml = computed(() => {
   if (plugin.allPluginLoaded.value) {
