@@ -34,8 +34,8 @@ const router = useRouter();
 const route = useRoute();
 
 // params
-const epocId = ref<string>(route.params.epocId.toString())
-const assessmentId = ref<string>(route.params.assessmentId.toString())
+const epocId = ref<string>(route.params.epoc_id.toString())
+const assessmentId = ref<string>(route.params.assessment_id.toString())
 
 // # ref
 const { epoc } = storeToRefs(epocStore)
