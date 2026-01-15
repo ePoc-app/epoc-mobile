@@ -64,7 +64,7 @@ const { settings } = storeToRefs(settingsStore);
 const { readings } = storeToRefs(readingStore);
 
 const epocId = computed(() => route.params.epoc_id.toString());
-const chapterId = computed(() => route.params.chapter_id.toString());
+const chapterId = computed(() => route.params.chapter_id?.toString());
 const contentId = computed(() => route.params.content_id?.toString());
 const shouldNavigateToNext = computed(() => route.params.next?.toString());
 
