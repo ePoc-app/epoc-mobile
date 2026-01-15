@@ -214,6 +214,10 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[
     return maxScore
 }
 
+const goToStart = () => {
+    router.back()
+}
+
 </script>
 
 <template>
@@ -261,7 +265,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[
                                     </score-progress>
                                 </div>
                             </div>
-                            <ion-button size="large" expand="block" color="outline-button" fill="outline" v-on:click="retry">
+                            <ion-button size="large" expand="block" color="outline-button" fill="outline" v-on:click="goToStart">
                                 <span>{{$t('QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY')}}</span>
                             </ion-button>
                         </card>
