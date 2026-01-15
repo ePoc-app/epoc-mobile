@@ -162,13 +162,14 @@ watch(
 onIonViewWillEnter(async () => {
     const newEpoc = await epocStore.getEpocById(epocId.value);
     if (newEpoc) initializeData();
-});
 
-onIonViewDidEnter(async () => {
     if (contentId.value) {
         await until(dataInitialized).toBeTruthy();
         navigateToContent(contentId.value, 0);
     }
+});
+
+onIonViewDidEnter(async () => {
     updateScreenReaderFocus();
 });
 
