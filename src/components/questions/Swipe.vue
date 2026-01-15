@@ -20,7 +20,6 @@ const props = defineProps({
 
 const emits = defineEmits<{
   userHasResponded: [userResponses: any[]]; 
-  dragging: [event: string]
 }>()
 
 // ref
@@ -126,7 +125,7 @@ const selectSide = (side: SIDE) => {
       answers.value[side].push({label:sortedCard!.label,value:sortedCard!.value})
     }
     if (cardsRemaining.value.length === 0) {
-        emits('userHasResponded',[answers.value[SIDE.Left], answers.value[SIDE.Right]]);
+        emits('userHasResponded',[answers.value[SIDE.Right], answers.value[SIDE.Left]]);
     }
 }
 </script>
