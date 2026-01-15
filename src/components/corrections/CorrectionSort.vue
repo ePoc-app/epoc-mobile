@@ -16,14 +16,14 @@ const sortGroups = props.question.correctResponse.map((zone) => zone.label);
 
 const correction: CorrectionType = props.userResponses.map((group, groupIndex) => {
     return group.map((response : any) => {
-    const correct = props.question.correctResponse[groupIndex].values.indexOf(response.value) !== -1;
-    correct ? rightResponsesNb++ : wrongResponsesNb++;
-    return {
-        correct,
-        label: response.label,
-        correctResponse: props.question.correctResponse.find(correctGroup => correctGroup.values.indexOf(response.value) !== -1)?.label,
-        feedback: props?.question.responses.find(r => r.value === response.value)?.feedback
-    }
+        const correct = props.question.correctResponse[groupIndex].values.indexOf(response.value) !== -1;
+        correct ? rightResponsesNb++ : wrongResponsesNb++;
+        return {
+            correct,
+            label: response.label,
+            correctResponse: props.question.correctResponse.find(correctGroup => correctGroup.values.indexOf(response.value) !== -1)?.label,
+            feedback: props?.question.responses.find(r => r.value === response.value)?.feedback
+        }
     })
 });
 
