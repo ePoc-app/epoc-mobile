@@ -105,7 +105,6 @@ const retry = () => {
 }
 
 const onUserHasResponded = (userResponses: string[]) => {
-    console.log('is received by assessmentPage')
     currentQuestionUserResponse.value = userResponses;
 }
 
