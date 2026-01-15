@@ -22,6 +22,7 @@ import CorrectionSort from '../corrections/CorrectionSort.vue';
 import CustomQuestion from './CustomQuestion.vue';
 import CorrectionGeneric from '../corrections/CorrectionGeneric.vue';
 import { SwipeQuestion, SimpleChoiceQuestion } from '@/types/contents/assessment';
+import { MultipleChoiceQuestion } from '@/types/contents/assessment';
 
 const epocStore = useEpocStore()
 
@@ -118,7 +119,7 @@ defineExpose({
       </div>
       <div class="question">
         <simple-choice v-if="question.type === 'choice' && question.responses.length > 0" :question="question as SimpleChoiceQuestion" :userPreviousResponse="userResponses" :disabled="questionDisabled"@userHasResponded="updateUserResponse"></simple-choice>
-        <multiple-choice v-if="question.type === 'multiple-choice'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled"@userHasResponded="updateUserResponse($event)"></multiple-choice>
+        <multiple-choice v-if="question.type === 'multiple-choice'" :question="question as MultipleChoiceQuestion" :userPreviousResponse="userResponses" :disabled="questionDisabled"@userHasResponded="updateUserResponse($event)"></multiple-choice>
         <reorder v-if="question.type === 'reorder'" :question="question" :disabled="questionDisabled"@userHasResponded="updateUserResponse($event)"></reorder>
         <drag-and-drop v-if="question.type === 'drag-and-drop'" :question="question" :userPreviousResponse="userResponses" :disabled="questionDisabled" @dragging="onDrag($event)"@userHasResponded="updateUserResponse($event)"></drag-and-drop>
         <swipe v-if="question.type === 'swipe'" :question="question as SwipeQuestion" :userPreviousResponse="userResponses"  :disabled="questionDisabled" @userHasResponded="updateUserResponse"></swipe>
@@ -144,7 +145,7 @@ defineExpose({
       </div>
       <div>
         <correction-simple-choice v-if="question.type == 'choice'" :question="question" :userResponses="userResponses"></correction-simple-choice>
-        <correction-multiple-choice v-else-if="question.type == 'multiple-choice'" :question="question" :userResponses="userResponses"></correction-multiple-choice>
+        <correction-multiple-choice v-else-if="question.type == 'multiple-choice'" :question="question as MultipleChoiceQuestion" :userResponses="userResponses"></correction-multiple-choice>
         <correction-reorder v-else-if="question.type =='reorder'" :question="question" :userResponses="userResponses"></correction-reorder>
         <correction-sort v-else-if="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type)" :question="question" :userResponses="userResponses"></correction-sort>
         <correction-generic v-else :question="question" :userResponses="userResponses"></correction-generic>
