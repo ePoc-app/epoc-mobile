@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { Assessment, SimpleQuestion } from '@/types/contents/assessment';
 import { useEpocStore } from '@/stores/epocStore';
 import { IonIcon, IonButton, IonContent, IonFooter, IonPage } from '@ionic/vue';
@@ -21,46 +20,47 @@ import ScoreProgress from '@/components/ScoreProgress.vue';
 import { starOutline, arrowForwardOutline } from 'ionicons/icons';
 
 const { t } = useI18n();
-type CommonQuestionType = InstanceType<typeof CommonQuestion>
+type CommonQuestionType = InstanceType<typeof CommonQuestion>;
 
 //Store
-const epocStore = useEpocStore()
-const readingStore = useReadingStore()
+const epocStore = useEpocStore();
+const readingStore = useReadingStore();
 const router = useRouter();
 const route = useRoute();
 
 // params
-const epocId = ref<string>(route.params.epoc_id.toString())
-const assessmentId = ref<string>(route.params.assessment_id.toString())
+const epocId = ref<string>(route.params.epoc_id.toString());
+const assessmentId = ref<string>(route.params.assessment_id.toString());
 
 // # ref
-const { epoc } = storeToRefs(epocStore)
-const { readings } = storeToRefs(readingStore)
+const { epoc } = storeToRefs(epocStore);
+const { readings } = storeToRefs(readingStore);
 
-const questionsElements = useTemplateRefsList<CommonQuestionType>()
+const questionsElements = useTemplateRefsList<CommonQuestionType>();
 
 const userResponses = ref<any[]>([]);
 const currentQuestionUserResponse = ref<any[]>();
 const correctionShown = ref(false);
-const currentQuestionIndex= ref(0);
+const currentQuestionIndex = ref(0);
 const isEnd = ref(false);
-const certificateShown = ref(false)
-const questionSlides = ref<SwiperObject>() //undefined; will be set automatically on mounted by setSwiperRef 
-const trialNb = ref(0)
+const certificateShown = ref(false);
+const questionSlides = ref<SwiperObject>(); //undefined; will be set automatically on mounted by setSwiperRef
+const trialNb = ref(0);
 
 // Computed
-const reading = computed(() => readings.value.find(question => question.epocId === epoc.value!.id))
-const assessments = computed(() : (Assessment|SimpleQuestion)[] => epoc.value!.assessments)
-const assessment = computed(() : (Assessment|SimpleQuestion) => epoc.value!.contents[assessmentId.value] as Assessment)
+const reading = computed(() => readings.value.find((question) => question.epocId === epoc.value!.id));
+const assessments = computed((): (Assessment | SimpleQuestion)[] => epoc.value!.assessments);
+const assessment = computed((): Assessment | SimpleQuestion => epoc.value!.contents[assessmentId.value] as Assessment);
 
-const questions = computed(() => assessment.value?.questions?.map(questionId => epoc.value!.questions[questionId]) || [])
+const questions = computed(
+    () => assessment.value?.questions?.map((questionId) => epoc.value!.questions[questionId]) || []
+);
 
-
-// Scoring 
+// Scoring
 const userScore = ref(0);
-const maxScore = computed(() => epocStore.calcScoreTotal(epoc.value!, assessment.value.questions || []))
-const otherAssessmentsUserScore = computed(() => getTotalUserScoreForOtherAssessments(assessments.value))
-const allAssessmentsMaxScore = computed(() => getMaxScoreForAllAssessments(assessments.value))
+const maxScore = computed(() => epocStore.calcScoreTotal(epoc.value!, assessment.value.questions || []));
+const otherAssessmentsUserScore = computed(() => getTotalUserScoreForOtherAssessments(assessments.value));
+const allAssessmentsMaxScore = computed(() => getMaxScoreForAllAssessments(assessments.value));
 
 // setup process
 if (!reading) readingStore.addReading(epocId.value);
@@ -69,65 +69,82 @@ readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'starte
 // Lifecycle
 
 onIonViewWillEnter(() => {
-  retry();
-})
+    retry();
+});
 
 onIonViewDidEnter(() => {
-  updateFocus();
-  // @ts-ignore
-  const allowTouch = !!window.isPreviewWindow;
-  setTimeout(() => {
-    if  (questionSlides.value) {
-      questionSlides.value.allowTouchMove = allowTouch;
-    }
-  }, 100);
-})
+    updateFocus();
+    // @ts-ignore
+    const allowTouch = !!window.isPreviewWindow;
+    setTimeout(() => {
+        if (questionSlides.value) {
+            questionSlides.value.allowTouchMove = allowTouch;
+        }
+    }, 100);
+});
 
 // Methods
 
-// called only once, automatically done by the swiper event 
-const setSwiperRef = (swiper : SwiperObject) => {
-    questionSlides.value = swiper
-}
-
+// called only once, automatically done by the swiper event
+const setSwiperRef = (swiper: SwiperObject) => {
+    questionSlides.value = swiper;
+};
 
 const retry = () => {
-  trialNb.value++ // trigger rerender of the questions
-  userScore.value = 0;
-  userResponses.value = [];
-  currentQuestionUserResponse.value = undefined;
-  correctionShown.value = false;
-  currentQuestionIndex.value = 0;
-  questionSlides.value?.slideTo(0);
-  isEnd.value = false;
-}
+    trialNb.value++; // trigger rerender of the questions
+    userScore.value = 0;
+    userResponses.value = [];
+    currentQuestionUserResponse.value = undefined;
+    correctionShown.value = false;
+    currentQuestionIndex.value = 0;
+    questionSlides.value?.slideTo(0);
+    isEnd.value = false;
+};
 
 const onUserHasResponded = (userResponses: string[]) => {
     currentQuestionUserResponse.value = userResponses;
-}
+};
 
 const checkAnswer = () => {
-    const question = (questions.value) ? questions.value[currentQuestionIndex.value] : undefined
-    const response = currentQuestionUserResponse.value
+    const question = questions.value ? questions.value[currentQuestionIndex.value] : undefined;
+    const response = currentQuestionUserResponse.value;
     if (question && response) {
         const userSucceeded = epocStore.isUserResponsesCorrect(
             question.correctResponse,
             currentQuestionUserResponse.value
         );
-        
+
         const score = userSucceeded ? +question.score : 0;
         correctionShown.value = true;
-        questionsElements.value[currentQuestionIndex.value]?.showCorrection()
+        questionsElements.value[currentQuestionIndex.value]?.showCorrection();
         userScore.value += score;
         userResponses.value.push(response);
         // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestionIndex.value}`, score);
-        if (assessment.value && assessment.value.questions ) {
-            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestionIndex.value], 'attempted', true);
-            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestionIndex.value], 'scored', score);
-            readingStore.saveStatement(epocId.value, 'questions', assessment.value.questions[currentQuestionIndex.value], 'passed', userSucceeded);
+        if (assessment.value && assessment.value.questions) {
+            readingStore.saveStatement(
+                epocId.value,
+                'questions',
+                assessment.value.questions[currentQuestionIndex.value],
+                'attempted',
+                true
+            );
+            readingStore.saveStatement(
+                epocId.value,
+                'questions',
+                assessment.value.questions[currentQuestionIndex.value],
+                'scored',
+                score
+            );
+            readingStore.saveStatement(
+                epocId.value,
+                'questions',
+                assessment.value.questions[currentQuestionIndex.value],
+                'passed',
+                userSucceeded
+            );
         }
     }
-}
+};
 
 const nextQuestion = () => {
     currentQuestionUserResponse.value = undefined;
@@ -144,24 +161,24 @@ const nextQuestion = () => {
     setTimeout(() => {
         updateFocus();
     }, 1000);
-}
+};
 
-const checkCertificateCard = () => {  
+const checkCertificateCard = () => {
     if (otherAssessmentsUserScore.value + userScore.value >= epoc.value!.certificateScore) {
         if (reading.value?.badges.length || 0 >= epoc.value!.certificateBadgeCount) {
             if (!reading.value?.certificateShown) {
-            setTimeout(() => {
+                setTimeout(() => {
                     certificateShown.value = true;
                     readingStore.updateCertificateShown(epoc.value!.id, true);
-            }, 1500);
+                }, 1500);
             }
         }
     }
-}
+};
 
 const back = () => {
-  presentAlertConfirm()
-}
+    presentAlertConfirm();
+};
 
 const presentAlertConfirm = async () => {
     const alert = await alertController.create({
@@ -170,65 +187,67 @@ const presentAlertConfirm = async () => {
         buttons: [
             {
                 text: t('QUESTION.QUIT_MODAL.STAY'),
-                role: 'cancel'
+                role: 'cancel',
             },
             {
                 text: t('QUESTION.QUIT_MODAL.QUIT'),
-                handler: () => { router.back()},
-            }
+                handler: () => {
+                    router.back();
+                },
+            },
         ],
     });
 
     await alert.present();
-}
-
+};
 
 const resume = () => {
     router.push(`/epoc/play/${epocId.value}/${assessment.value.chapterId}/content/${assessmentId.value}/next`);
-}
+};
 
 const updateFocus = () => {
-    if(appService.screenReaderDetected) {
+    if (appService.screenReaderDetected) {
         (document.querySelector('app-epoc-assessment .assessment-reader') as HTMLElement).focus();
     }
-}
+};
 
-const getTotalUserScoreForOtherAssessments = (assessments: (Assessment| SimpleQuestion)[]) : number => {
-    let userScore = 0 
-    assessments.forEach((assessment : Assessment | SimpleQuestion) => {
+const getTotalUserScoreForOtherAssessments = (assessments: (Assessment | SimpleQuestion)[]): number => {
+    let userScore = 0;
+    assessments.forEach((assessment: Assessment | SimpleQuestion) => {
         if (assessment.id !== assessmentId.value) {
-            const userAssessment = reading.value?.assessments.find(a => assessment.id === a.id);
+            const userAssessment = reading.value?.assessments.find((a) => assessment.id === a.id);
             if (userAssessment && userAssessment.score > 0) {
                 userScore += userAssessment.score;
             }
         }
-    })
-    return userScore
-}
+    });
+    return userScore;
+};
 
-const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[]) : number => {
-    let maxScore = 0 
-    assessments.forEach((assessment : Assessment | SimpleQuestion) => {
-        maxScore += assessment.scoreTotal || 0
-    })
-    return maxScore
-}
-
+const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)[]): number => {
+    let maxScore = 0;
+    assessments.forEach((assessment: Assessment | SimpleQuestion) => {
+        maxScore += assessment.scoreTotal || 0;
+    });
+    return maxScore;
+};
 </script>
 
 <template>
     <ion-page>
         <ion-content :scrollY="false" v-if="assessment" :key="trialNb">
             <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
-                <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move=false>
-                    <swiper-slide v-for="(question, questionIndex) in denormalize(assessment.questions, epoc?.questions)">
+                <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move="false">
+                    <swiper-slide
+                        v-for="(question, questionIndex) in denormalize(assessment.questions, epoc?.questions)"
+                    >
                         <common-question
-                            :question="question" 
-                            :closable=true 
+                            :question="question"
+                            :closable="true"
                             :contentId="assessment.id"
                             :epocId="epocId"
-                            :aria-hidden="questionIndex !== currentQuestionIndex" 
-                            :subtitle="'Question '+(questionIndex+1)+'/'+assessment.questions?.length"
+                            :aria-hidden="questionIndex !== currentQuestionIndex"
+                            :subtitle="'Question ' + (questionIndex + 1) + '/' + assessment.questions?.length"
                             @close="back"
                             @userHasResponded="onUserHasResponded"
                             :ref="questionsElements.set"
@@ -241,28 +260,38 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[
                                 <div class="title-icon">
                                     <ion-icon aria-hidden="true" :icon="starOutline"></ion-icon>
                                 </div>
-                                <h5 class="title" v-if="maxScore > 0">{{$t('QUESTION.ASSESSMENT_PAGE.SCORE')}}</h5>
-                                <h5 class="title" v-if="maxScore <= 0">{{$t('QUESTION.ASSESSMENT_PAGE.NOT_GRADED')}}</h5>
+                                <h5 class="title" v-if="maxScore > 0">{{ $t('QUESTION.ASSESSMENT_PAGE.SCORE') }}</h5>
+                                <h5 class="title" v-if="maxScore <= 0">
+                                    {{ $t('QUESTION.ASSESSMENT_PAGE.NOT_GRADED') }}
+                                </h5>
                             </div>
                             <div class="score" v-if="maxScore > 0">
                                 <div class="score-points">
-                                    <div class="score-points-assessment">{{userScore}} pts</div>
+                                    <div class="score-points-assessment">{{ userScore }} pts</div>
                                     <div class="score-points-total">
-                                        <b>{{$t('QUESTION.ASSESSMENT_PAGE.TOTAL_SCORE')}}</b>
-                                        {{otherAssessmentsUserScore + userScore}} / {{allAssessmentsMaxScore}}
+                                        <b>{{ $t('QUESTION.ASSESSMENT_PAGE.TOTAL_SCORE') }}</b>
+                                        {{ otherAssessmentsUserScore + userScore }} / {{ allAssessmentsMaxScore }}
                                     </div>
                                 </div>
                                 <div aria-hidden="true" class="score-chart">
-                                    <score-progress :progress="otherAssessmentsUserScore / allAssessmentsMaxScore * 100"
-                                                    :delta="userScore / allAssessmentsMaxScore * 100"
-                                                    :threshold="epoc!.certificateScore / allAssessmentsMaxScore * 100"
-                                                    :minLabel="0"
-                                                    :maxLabel="allAssessmentsMaxScore">
+                                    <score-progress
+                                        :progress="(otherAssessmentsUserScore / allAssessmentsMaxScore) * 100"
+                                        :delta="(userScore / allAssessmentsMaxScore) * 100"
+                                        :threshold="epoc!.certificateScore / allAssessmentsMaxScore * 100"
+                                        :minLabel="0"
+                                        :maxLabel="allAssessmentsMaxScore"
+                                    >
                                     </score-progress>
                                 </div>
                             </div>
-                            <ion-button size="large" expand="block" color="outline-button" fill="outline" v-on:click="retry">
-                                <span>{{$t('QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY')}}</span>
+                            <ion-button
+                                size="large"
+                                expand="block"
+                                color="outline-button"
+                                fill="outline"
+                                v-on:click="retry"
+                            >
+                                <span>{{ $t('QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY') }}</span>
                             </ion-button>
                         </card>
                     </swiper-slide>
@@ -272,109 +301,123 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment| SimpleQuestion)[
         </ion-content>
 
         <ion-footer v-if="!isEnd">
-            <ion-button size="large" expand="block" color="inria" :disabled="!currentQuestionUserResponse" v-on:click="checkAnswer();" v-if="!correctionShown">
-                <span>{{$t('QUESTION.VALIDATE')}}</span>
+            <ion-button
+                size="large"
+                expand="block"
+                color="inria"
+                :disabled="!currentQuestionUserResponse"
+                v-on:click="checkAnswer()"
+                v-if="!correctionShown"
+            >
+                <span>{{ $t('QUESTION.VALIDATE') }}</span>
             </ion-button>
             <div class="next-buttons">
-                <ion-button role="button" color="inria-grey" size="large" expand="block" v-on:click="nextQuestion()" v-if="correctionShown">
-                    <span>{{$t('QUESTION.NEXT')}}</span>
+                <ion-button
+                    role="button"
+                    color="inria-grey"
+                    size="large"
+                    expand="block"
+                    v-on:click="nextQuestion()"
+                    v-if="correctionShown"
+                >
+                    <span>{{ $t('QUESTION.NEXT') }}</span>
                     <ion-icon aria-hidden="true" :icon="arrowForwardOutline" slot="end"></ion-icon>
                 </ion-button>
             </div>
         </ion-footer>
         <ion-footer v-if="isEnd">
             <ion-button role="button" size="large" expand="block" color="inria" v-on:click="resume">
-                <span>{{$t('QUESTION.ASSESSMENT_PAGE.CONTINUE_COURSE')}}</span>
+                <span>{{ $t('QUESTION.ASSESSMENT_PAGE.CONTINUE_COURSE') }}</span>
             </ion-button>
         </ion-footer>
     </ion-page>
 </template>
 
 <style scoped lang="scss">
-.slider-wrapper{
-  position: absolute;
-  top: var(--ion-safe-area-top);
-  height: calc(100% - var(--ion-safe-area-top));
-  width: 100%;
-  opacity: 1;
-  transition: opacity .3s ease;
-  background: var(--ion-color-contrast-2);
-
-  &.loading{
-    opacity: 0;
-  }
-  .slider{
+.slider-wrapper {
     position: absolute;
-    height:100%;
+    top: var(--ion-safe-area-top);
+    height: calc(100% - var(--ion-safe-area-top));
     width: 100%;
-    overflow: hidden;
-  }
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    background: var(--ion-color-contrast-2);
 
-  swiper-slide{
-    flex-direction: column;
-  }
-}
-
-ion-footer{
-  padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom)) 1rem;
-}
-
-.next-buttons{
-}
-
-.title-container{
-  margin-bottom: 1rem;
-  text-align: center;
-
-  .title-icon{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:3rem;
-    height:3rem;
-    margin: auto;
-    font-size: 1.5rem;
-    border-radius: 1rem;
-  }
-
-  .subtitle{
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: var(--ion-color-inria);
-    text-transform: uppercase;
-  }
-
-  .title{
-    font-size: 1.3rem;
-    font-weight: bold;
-  }
-
-  &:after{
-    content:'';
-    display: block;
-    width: 80px;
-    height:4px;
-    margin: 10px auto;
-    border-radius: 2px;
-    background: var(--ion-color-inria);
-  }
-}
-
-.score{
-  text-align: center;
-
-  &-points-assessment{
-    font-size: 2rem;
-    font-weight: bold;
-  }
-
-  &-points-total{
-    font-size: .8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    b{
-      color: var(--ion-color-inria-grey);
+    &.loading {
+        opacity: 0;
     }
-  }
+    .slider {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    swiper-slide {
+        flex-direction: column;
+    }
+}
+
+ion-footer {
+    padding: 1rem 1rem calc(1rem + var(--ion-safe-area-bottom)) 1rem;
+}
+
+.next-buttons {
+}
+
+.title-container {
+    margin-bottom: 1rem;
+    text-align: center;
+
+    .title-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 3rem;
+        height: 3rem;
+        margin: auto;
+        font-size: 1.5rem;
+        border-radius: 1rem;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: var(--ion-color-inria);
+        text-transform: uppercase;
+    }
+
+    .title {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        margin: 10px auto;
+        border-radius: 2px;
+        background: var(--ion-color-inria);
+    }
+}
+
+.score {
+    text-align: center;
+
+    &-points-assessment {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    &-points-total {
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        b {
+            color: var(--ion-color-inria-grey);
+        }
+    }
 }
 </style>
