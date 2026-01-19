@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import {
-  actionSheetController,
-  alertController,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonRefresher,
-  IonRefresherContent,
-  IonToolbar,
-  IonIcon,
-  IonButton,
-  RefresherCustomEvent,
+    actionSheetController,
+    alertController,
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonRefresher,
+    IonRefresherContent,
+    IonToolbar,
+    IonIcon,
+    IonButton,
+    RefresherCustomEvent,
 } from '@ionic/vue';
 import {
     settingsOutline,
@@ -34,6 +34,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Capacitor } from '@capacitor/core';
 import { useTemplateRef } from 'vue';
+import { useQr } from '@/composables/useQr';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -44,16 +45,16 @@ const { getOnboarding } = storeToRefs(onboardingStore);
 
 const inputRef = useTemplateRef('file');
 const fileHandler = (event: Event) => {
-  if (event.target === null || (event.target as HTMLInputElement).files === null) return;
-  const file = (event.target as HTMLInputElement).files?.[0];
+    if (event.target === null || (event.target as HTMLInputElement).files === null) return;
+    const file = (event.target as HTMLInputElement).files?.[0];
 
-  if (!file) return;
+    if (!file) return;
 
-  localEpocsStore.importFile(file);
+    localEpocsStore.importFile(file);
 
-  if (inputRef.value) {
-    inputRef.value.value = '';
-  }
+    if (inputRef.value) {
+        inputRef.value.value = '';
+    }
 };
 
 const doRefresh = async (event: RefresherCustomEvent) => {
@@ -62,8 +63,8 @@ const doRefresh = async (event: RefresherCustomEvent) => {
     await localEpocsStore.fetchLocalEpocs();
     const elapsedTime = Date.now() - startTime;
     if (elapsedTime < 1000) {
-      // Wait for the remaining time
-      await new Promise(resolve => setTimeout(resolve, 1000 - elapsedTime));
+        // Wait for the remaining time
+        await new Promise((resolve) => setTimeout(resolve, 1000 - elapsedTime));
     }
     await event.target.complete();
 };
@@ -75,6 +76,8 @@ const onboardingOptions = {
 const removeMessage = (id: string) => {
     onboardingStore.removeOnboarding(id);
 };
+
+const { startScan } = useQr();
 
 const openAddMenu = async () => {
     const buttons = [
@@ -102,7 +105,7 @@ const openAddMenu = async () => {
             text: t('FLOATING_MENU.IMPORT_QR'),
             icon: '/assets/icon/qr.svg',
             handler: () => {
-                router.push({ name: 'WIP', params: { any: '/library/qr' } });
+                startScan();
             },
         },
         {
@@ -120,7 +123,7 @@ const openAddMenu = async () => {
             text: t('FLOATING_MENU.IMPORT_QR'),
             icon: '/assets/icon/qr.svg',
             handler: () => {
-                router.push({ name: 'WIP', params: { any: '/library/qr' } });
+                startScan();
             },
         },
         {
@@ -128,6 +131,7 @@ const openAddMenu = async () => {
             role: 'cancel',
         },
     ];
+
     const actionSheet = await actionSheetController.create({
         header: t('FLOATING_MENU.IMPORT'),
         subHeader: t('FLOATING_MENU.IMPORT_SUBHEADER'),
@@ -373,7 +377,13 @@ const linkInputAlert = async () => {
                     <h3 aria-hidden="true" class="library-item-title">{{ $t('LIBRARY_PAGE.ADD_EPOC') }}</h3>
                 </div>
                 <!--<input type="file" accept="application/octet-stream,application/zip" hidden v-on:change="fileHandler($event)" #file>-->
-                <input ref="file" type="file" accept="application/octet-stream,application/zip,.epoc" hidden v-on:change="fileHandler($event)"/>
+                <input
+                    ref="file"
+                    type="file"
+                    accept="application/octet-stream,application/zip,.epoc"
+                    hidden
+                    v-on:change="fileHandler($event)"
+                />
             </div>
         </ion-content>
     </ion-page>
