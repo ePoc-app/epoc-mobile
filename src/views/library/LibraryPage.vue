@@ -11,6 +11,7 @@ import {
     IonIcon,
     IonButton,
     RefresherCustomEvent,
+    ActionSheetButton,
 } from '@ionic/vue';
 import {
     settingsOutline,
@@ -80,7 +81,7 @@ const removeMessage = (id: string) => {
 const { startScan } = useQr();
 
 const openAddMenu = async () => {
-    const buttons = [
+    const buttons: ActionSheetButton[] = [
         {
             text: 'ePoc',
             cssClass: 'separator',
@@ -101,36 +102,45 @@ const openAddMenu = async () => {
                 linkInputAlert();
             },
         },
-        {
-            text: t('FLOATING_MENU.IMPORT_QR'),
-            icon: '/assets/icon/qr.svg',
-            handler: () => {
-                startScan();
-            },
-        },
-        {
-            text: t('FLOATING_MENU.COLLECTION'),
-            cssClass: 'separator',
-        },
-        {
-            text: t('FLOATING_MENU.IMPORT_LINK'),
-            icon: '/assets/icon/lien.svg',
-            handler: () => {
-                linkInputAlert();
-            },
-        },
-        {
-            text: t('FLOATING_MENU.IMPORT_QR'),
-            icon: '/assets/icon/qr.svg',
-            handler: () => {
-                startScan();
-            },
-        },
-        {
-            text: t('CLOSE'),
-            role: 'cancel',
-        },
     ];
+
+    if (Capacitor.isNativePlatform()) {
+        buttons.push({
+            text: t('FLOATING_MENU.IMPORT_QR'),
+            icon: '/assets/icon/qr.svg',
+            handler: () => {
+                startScan();
+            },
+        });
+    }
+
+    buttons.push({
+        text: t('FLOATING_MENU.COLLECTION'),
+        cssClass: 'separator',
+    });
+
+    buttons.push({
+        text: t('FLOATING_MENU.IMPORT_LINK'),
+        icon: '/assets/icon/lien.svg',
+        handler: () => {
+            linkInputAlert();
+        },
+    });
+
+    if (Capacitor.isNativePlatform()) {
+        buttons.push({
+            text: t('FLOATING_MENU.IMPORT_QR'),
+            icon: '/assets/icon/qr.svg',
+            handler: () => {
+                startScan();
+            },
+        });
+    }
+
+    buttons.push({
+        text: t('CLOSE'),
+        role: 'cancel',
+    });
 
     const actionSheet = await actionSheetController.create({
         header: t('FLOATING_MENU.IMPORT'),
