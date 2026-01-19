@@ -13,7 +13,6 @@ import { useI18n } from 'vue-i18n';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Swiper as SwiperObject } from 'swiper/types';
 import { denormalize } from '@/utils/pipes';
-import { useTemplateRefsList } from '@vueuse/core';
 import Card from '@/components/Card.vue';
 import CommonQuestion from '@/components/questions/CommonQuestion.vue';
 import ScoreProgress from '@/components/ScoreProgress.vue';
@@ -36,7 +35,7 @@ const assessmentId = ref<string>(route.params.assessment_id.toString());
 const { epoc } = storeToRefs(epocStore);
 const { readings } = storeToRefs(readingStore);
 
-const questionsElements = useTemplateRefsList<CommonQuestionType>();
+const questionsElements = ref<CommonQuestionType[]>([]);
 
 const userResponses = ref<any[]>([]);
 const currentQuestionUserResponse = ref<any[]>();
@@ -45,7 +44,6 @@ const currentQuestionIndex = ref(0);
 const isEnd = ref(false);
 const certificateShown = ref(false);
 const questionSlides = ref<SwiperObject>(); //undefined; will be set automatically on mounted by setSwiperRef
-const trialNb = ref(0);
 
 // Computed
 const reading = computed(() => readings.value.find((question) => question.epocId === epoc.value!.id));
@@ -90,15 +88,16 @@ const setSwiperRef = (swiper: SwiperObject) => {
     questionSlides.value = swiper;
 };
 
-const retry = () => {
-    trialNb.value++; // trigger rerender of the questions
+const retry = async () => {
     userScore.value = 0;
     userResponses.value = [];
     currentQuestionUserResponse.value = undefined;
     correctionShown.value = false;
     currentQuestionIndex.value = 0;
-    questionSlides.value?.slideTo(0);
     isEnd.value = false;
+    questionSlides.value?.slideTo(0);
+
+    questionsElements.value = [];
 };
 
 const onUserHasResponded = (userResponses: string[]) => {
@@ -235,7 +234,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
 
 <template>
     <ion-page>
-        <ion-content v-if="assessment" :scrollY="false" :key="trialNb">
+        <ion-content v-if="assessment" :scrollY="false">
             <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
                 <swiper :allow-touch-move="false" class="slider assessment-swiper" @swiper="setSwiperRef">
                     <swiper-slide
@@ -243,13 +242,17 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                         :key="questionIndex"
                     >
                         <common-question
+                            :ref="
+                                (el) => {
+                                    if (el) questionsElements[questionIndex] = el;
+                                }
+                            "
                             :question="question"
                             :closable="true"
                             :contentId="assessment.id"
                             :epocId="epocId"
                             :aria-hidden="questionIndex !== currentQuestionIndex"
                             :subtitle="'Question ' + (questionIndex + 1) + '/' + assessment.questions?.length"
-                            :ref="questionsElements.set"
                             @close="back"
                             @userHasResponded="onUserHasResponded"
                         />
