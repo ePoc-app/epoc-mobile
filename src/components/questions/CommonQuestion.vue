@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Question } from '@/types/contents/assessment';
-import { onMounted, PropType, ref, useTemplateRef } from 'vue';
+import { PropType, ref, useTemplateRef } from 'vue';
 import { appService } from '@/utils/appService';
 import FlipCard from '../FlipCard.vue';
 import { removeSecableSpace, srcConvert } from '@/utils/pipes';
@@ -48,14 +48,13 @@ const flipCardComponent = useTemplateRef<FlipCardType>('flip-card');
 const questionDisabled = ref(props.userAssessment ? true : false);
 const userResponses = ref(
     props.userAssessment && Object.hasOwn(props.userAssessment, 'responses')
-        ? (props.userAssessment.responses as String[])
+        ? (props.userAssessment.responses as string[])
         : []
 );
 const flipped = ref(props.userAssessment ? true : false);
 
 const flip = (event?: any) => {
     // TODO Check usage of this line, is it dead code ?
-    console.log(flipCardComponent.value ? 'cmpt ok' : 'cmpt dead');
     if (event && (['SUMMARY'].indexOf(event.target.tagName) !== -1 || event.target.closest('a'))) return;
     if (questionDisabled.value) {
         flipCardComponent.value!.flip();
@@ -90,8 +89,6 @@ const updateFocus = () => {
 };
 
 const showCorrection = () => {
-    console.log(userResponses.value);
-    console.log(flipCardComponent.value ? 'cmpt ok' : 'cmpt dead');
     questionDisabled.value = true;
     flip();
 };
@@ -104,7 +101,6 @@ defineExpose({
 <template>
     <flip-card :initFlipped="flipped" v-on:click="flip($event)" ref="flip-card">
         <template v-slot:front>
-            flipcard is {{ flipCardComponent ? 'ok' : 'not ok' }}
             <div :aria-hidden="flipped">
                 <div class="title-container">
                     <div class="title-icon" v-if="icon">
@@ -178,6 +174,7 @@ defineExpose({
             </div>
             <slot></slot>
         </template>
+
         <template v-slot:back>
             <div class="correction" v-if="flipped && question.responses.length > 0">
                 <div class="title-container">
