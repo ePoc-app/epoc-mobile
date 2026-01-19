@@ -63,7 +63,7 @@ const otherAssessmentsUserScore = computed(() => getTotalUserScoreForOtherAssess
 const allAssessmentsMaxScore = computed(() => getMaxScoreForAllAssessments(assessments.value));
 
 // setup process
-if (!reading) readingStore.addReading(epocId.value);
+if (!reading.value) readingStore.addReading(epocId.value);
 readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'started', true);
 
 // Lifecycle
@@ -74,7 +74,7 @@ onIonViewWillEnter(() => {
 
 onIonViewDidEnter(() => {
     updateFocus();
-    // @ts-ignore
+    // @ts-expect-error: isPreviewWindow is not defined
     const allowTouch = !!window.isPreviewWindow;
     setTimeout(() => {
         if (questionSlides.value) {
@@ -235,11 +235,12 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
 
 <template>
     <ion-page>
-        <ion-content :scrollY="false" v-if="assessment" :key="trialNb">
+        <ion-content v-if="assessment" :scrollY="false" :key="trialNb">
             <div class="slider-wrapper assessment-reader" slot="fixed" tabindex="1">
-                <swiper @swiper="setSwiperRef" class="slider assessment-swiper" :allow-touch-move="false">
+                <swiper :allow-touch-move="false" class="slider assessment-swiper" @swiper="setSwiperRef">
                     <swiper-slide
                         v-for="(question, questionIndex) in denormalize(assessment.questions, epoc?.questions)"
+                        :key="questionIndex"
                     >
                         <common-question
                             :question="question"
@@ -248,24 +249,25 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                             :epocId="epocId"
                             :aria-hidden="questionIndex !== currentQuestionIndex"
                             :subtitle="'Question ' + (questionIndex + 1) + '/' + assessment.questions?.length"
+                            :ref="questionsElements.set"
                             @close="back"
                             @userHasResponded="onUserHasResponded"
-                            :ref="questionsElements.set"
-                        >
-                        </common-question>
+                        />
                     </swiper-slide>
+
                     <swiper-slide class="assessment-end">
                         <card v-if="isEnd">
                             <div class="title-container">
                                 <div class="title-icon">
-                                    <ion-icon aria-hidden="true" :icon="starOutline"></ion-icon>
+                                    <ion-icon aria-hidden="true" :icon="starOutline" />
                                 </div>
                                 <h5 class="title" v-if="maxScore > 0">{{ $t('QUESTION.ASSESSMENT_PAGE.SCORE') }}</h5>
                                 <h5 class="title" v-if="maxScore <= 0">
                                     {{ $t('QUESTION.ASSESSMENT_PAGE.NOT_GRADED') }}
                                 </h5>
                             </div>
-                            <div class="score" v-if="maxScore > 0">
+
+                            <div v-if="maxScore > 0" class="score">
                                 <div class="score-points">
                                     <div class="score-points-assessment">{{ userScore }} pts</div>
                                     <div class="score-points-total">
@@ -273,6 +275,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                                         {{ otherAssessmentsUserScore + userScore }} / {{ allAssessmentsMaxScore }}
                                     </div>
                                 </div>
+
                                 <div aria-hidden="true" class="score-chart">
                                     <score-progress
                                         :progress="(otherAssessmentsUserScore / allAssessmentsMaxScore) * 100"
@@ -280,16 +283,16 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                                         :threshold="epoc!.certificateScore / allAssessmentsMaxScore * 100"
                                         :minLabel="0"
                                         :maxLabel="allAssessmentsMaxScore"
-                                    >
-                                    </score-progress>
+                                    />
                                 </div>
                             </div>
+
                             <ion-button
                                 size="large"
                                 expand="block"
                                 color="outline-button"
                                 fill="outline"
-                                v-on:click="retry"
+                                @click="retry"
                             >
                                 <span>{{ $t('QUESTION.ASSESSMENT_PAGE.RESTART_ACTIVITY') }}</span>
                             </ion-button>
@@ -297,36 +300,39 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                     </swiper-slide>
                 </swiper>
             </div>
-            <certificate-modal :epocId="epocId" :certificateShown="certificateShown"></certificate-modal>
+
+            <certificate-modal :epocId="epocId" :certificateShown="certificateShown" />
         </ion-content>
 
         <ion-footer v-if="!isEnd">
             <ion-button
+                v-if="!correctionShown"
                 size="large"
                 expand="block"
                 color="inria"
                 :disabled="!currentQuestionUserResponse"
-                v-on:click="checkAnswer()"
-                v-if="!correctionShown"
+                @click="checkAnswer()"
             >
                 <span>{{ $t('QUESTION.VALIDATE') }}</span>
             </ion-button>
+
             <div class="next-buttons">
                 <ion-button
+                    v-if="correctionShown"
                     role="button"
                     color="inria-grey"
                     size="large"
                     expand="block"
-                    v-on:click="nextQuestion()"
-                    v-if="correctionShown"
+                    @click="nextQuestion()"
                 >
                     <span>{{ $t('QUESTION.NEXT') }}</span>
-                    <ion-icon aria-hidden="true" :icon="arrowForwardOutline" slot="end"></ion-icon>
+                    <ion-icon aria-hidden="true" :icon="arrowForwardOutline" slot="end" />
                 </ion-button>
             </div>
         </ion-footer>
-        <ion-footer v-if="isEnd">
-            <ion-button role="button" size="large" expand="block" color="inria" v-on:click="resume">
+
+        <ion-footer v-else>
+            <ion-button role="button" size="large" expand="block" color="inria" @click="resume">
                 <span>{{ $t('QUESTION.ASSESSMENT_PAGE.CONTINUE_COURSE') }}</span>
             </ion-button>
         </ion-footer>
