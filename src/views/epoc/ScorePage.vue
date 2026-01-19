@@ -53,7 +53,7 @@ onIonViewWillEnter(async () => {
 });
 
 const reading: Ref<Reading | undefined> = ref();
-const badgeMode = computed(() => (epoc.value.badges ? Object.keys(epoc.value.badges).length > 0 : false));
+const badgeMode = computed(() => (epoc.value?.badges ? Object.keys(epoc.value.badges).length > 0 : false));
 
 const certificateUnlocked = computed(() => {
     if (!epoc.value) return false;
@@ -82,6 +82,8 @@ function showBadgeDetail(badge: Badge) {
 
 const loading = ref(false);
 async function getCertificate() {
+    if (!epoc.value) return;
+
     if (loading.value) {
         presentFail(
             t('PLAYER.SCORE.FAIL_MODAL.HEADER'),
@@ -103,6 +105,8 @@ async function getCertificate() {
 }
 
 function downloadPdf(doc: jsPDF) {
+    if (!epoc.value) return;
+
     const fileName = `attestation-${epoc.value.id}.pdf`;
 
     if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === 'android') {
@@ -196,6 +200,8 @@ async function dismissLoading() {
 }
 
 function setAssessmentsData() {
+    if (!epoc.value) return;
+
     assessmentData.successStore = 0;
     assessmentData.attemptedScore = 0;
     assessmentData.todoScore = 0;
@@ -207,8 +213,10 @@ function setAssessmentsData() {
             return;
         }
 
+        console.log('readnig', reading.value);
         const userAssessment = reading.value?.assessments.find((a) => assessment.id === a.id);
-        const scoreTotal = epocStore.calcScoreTotal(epoc.value, assessment.questions);
+
+        const scoreTotal = epocStore.calcScoreTotal(epoc.value!, assessment.questions);
 
         assessment.score = getScore(assessment) ?? 0;
         assessment.scoreTotal = getScoreTotal(assessment);
@@ -233,7 +241,7 @@ function getScore(content: any) {
 }
 
 function getScoreTotal(content: any) {
-    return epocStore.calcScoreTotal(epoc.value, content.questions);
+    return epocStore.calcScoreTotal(epoc.value!, content.questions);
 }
 
 const unlockedBadges: Ref<uid[]> = ref([]);
@@ -244,7 +252,7 @@ watch(
         if (!epocValue) return;
 
         if (epocValue && readingsValue) {
-            reading.value = readingsValue.find((item) => item.epocId === route.params.id);
+            reading.value = readingsValue.find((item) => item.epocId === route.params.epoc_id);
         }
 
         if (!reading.value) {
@@ -260,7 +268,7 @@ watch(
     { immediate: true }
 );
 
-const denormalizedBadges = computed(() => denormalize(epoc.value.badges));
+const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
 </script>
 
 <template>
