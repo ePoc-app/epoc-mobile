@@ -45,6 +45,7 @@ const emits = defineEmits<{
 
 type FlipCardType = InstanceType<typeof FlipCard>;
 const flipCardComponent = useTemplateRef<FlipCardType>('flip-card');
+
 const questionDisabled = ref(props.userAssessment ? true : false);
 const userResponses = ref(
     props.userAssessment && Object.hasOwn(props.userAssessment, 'responses')
@@ -99,28 +100,31 @@ defineExpose({
 </script>
 
 <template>
-    <flip-card :initFlipped="flipped" v-on:click="flip($event)" ref="flip-card">
+    <flip-card ref="flip-card" :initFlipped="flipped" @click="flip($event)">
         <template v-slot:front>
             <div :aria-hidden="flipped">
                 <div class="title-container">
-                    <div class="title-icon" v-if="icon">
-                        <ion-icon aria-hidden="true" :icon="icon"></ion-icon>
+                    <div v-if="icon" class="title-icon">
+                        <ion-icon aria-hidden="true" :icon="icon" />
                     </div>
-                    <h5 class="subtitle" v-if="subtitle">{{ removeSecableSpace(subtitle) }}</h5>
-                    <h4 class="title" v-if="title">
+                    <h5 v-if="subtitle" class="subtitle">{{ removeSecableSpace(subtitle) }}</h5>
+                    <h4 v-if="title" class="title">
                         {{ removeSecableSpace(title) }} {{ +question.score ? '(' + question.score + 'pts)' : '' }}
                     </h4>
                 </div>
-                <div role="button" aria-label="Fermer" class="close" v-if="closable" v-on:click="back($event)">
-                    <ion-icon aria-hidden="true" :icon="closeOutline"></ion-icon>
+
+                <div v-if="closable" role="button" aria-label="Fermer" class="close" @click="back($event)">
+                    <ion-icon aria-hidden="true" :icon="closeOutline" />
                 </div>
+
                 <div class="statement ion-text-center">
                     <b>{{ removeSecableSpace(question.label) }}</b>
                     <div
                         v-if="question.statement && !['swipe', 'drag-and-drop'].includes(question.type)"
                         :innerHTML="srcConvert(removeSecableSpace(question.statement), epocStore.rootFolder)"
-                    ></div>
+                    />
                 </div>
+
                 <div class="question">
                     <simple-choice
                         v-if="question.type === 'choice' && question.responses.length > 0"
@@ -128,20 +132,20 @@ defineExpose({
                         :userPreviousResponse="userResponses"
                         :disabled="questionDisabled"
                         @userHasResponded="updateUserResponse"
-                    ></simple-choice>
+                    />
                     <multiple-choice
                         v-if="question.type === 'multiple-choice'"
                         :question="question as MultipleChoiceQuestion"
                         :userPreviousResponse="userResponses"
                         :disabled="questionDisabled"
                         @userHasResponded="updateUserResponse($event)"
-                    ></multiple-choice>
+                    />
                     <reorder
                         v-if="question.type === 'reorder'"
                         :question="question"
                         :disabled="questionDisabled"
                         @userHasResponded="updateUserResponse($event)"
-                    ></reorder>
+                    />
                     <drag-and-drop
                         v-if="question.type === 'drag-and-drop'"
                         :question="question"
@@ -149,81 +153,85 @@ defineExpose({
                         :disabled="questionDisabled"
                         @dragging="onDrag($event)"
                         @userHasResponded="updateUserResponse($event)"
-                    ></drag-and-drop>
+                    />
                     <swipe
                         v-if="question.type === 'swipe'"
                         :question="question as SwipeQuestion"
                         :userPreviousResponse="userResponses"
                         :disabled="questionDisabled"
                         @userHasResponded="updateUserResponse"
-                    ></swipe>
+                    />
                     <dropdown-list
                         v-if="question.type === 'dropdown-list'"
                         :question="question"
                         :disabled="questionDisabled"
                         @userHasResponded="updateUserResponse($event)"
-                    ></dropdown-list>
+                    />
                     <custom-question
                         v-if="question.type === 'custom'"
                         :question="question"
                         :userPreviousResponse="userResponses"
                         :disabled="questionDisabled"
                         @userHasResponded="updateUserResponse($event)"
-                    ></custom-question>
+                    />
                 </div>
             </div>
-            <slot></slot>
+            <slot />
         </template>
 
         <template v-slot:back>
-            <div class="correction" v-if="flipped && question.responses.length > 0">
+            <div v-if="flipped && question.responses.length > 0" class="correction">
                 <div class="title-container">
                     <div class="title-icon">
-                        <ion-icon aria-hidden="true" :icon="checkmarkCircleOutline"></ion-icon>
+                        <ion-icon aria-hidden="true" :icon="checkmarkCircleOutline" />
                     </div>
                     <h5 class="subtitle">{{ $t('QUESTION.PREVIEW.RESPONSES') }}</h5>
                 </div>
+
                 <div
+                    v-if="closable"
                     :aria-hidden="!flipped"
                     role="button"
                     aria-label="Fermer"
                     class="close"
-                    v-if="closable"
-                    v-on:click="back($event)"
+                    @click="back($event)"
                 >
-                    <ion-icon aria-hidden="true" :icon="closeOutline"></ion-icon>
+                    <ion-icon aria-hidden="true" :icon="closeOutline" />
                 </div>
+
                 <div class="statement ion-text-center">
                     <b>{{ question.label }}</b>
                 </div>
+
                 <div>
                     <correction-simple-choice
                         v-if="question.type == 'choice'"
                         :question="question"
                         :userResponses="userResponses"
-                    ></correction-simple-choice>
+                    />
                     <correction-multiple-choice
                         v-else-if="question.type == 'multiple-choice'"
                         :question="question as MultipleChoiceQuestion"
                         :userResponses="userResponses"
-                    ></correction-multiple-choice>
+                    />
                     <correction-reorder
                         v-else-if="question.type == 'reorder'"
                         :question="question"
                         :userResponses="userResponses"
-                    ></correction-reorder>
+                    />
                     <correction-sort
                         v-else-if="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type)"
                         :question="question"
                         :userResponses="userResponses"
-                    ></correction-sort>
-                    <correction-generic v-else :question="question" :userResponses="userResponses"></correction-generic>
+                    />
+                    <correction-generic v-else :question="question" :userResponses="userResponses" />
                 </div>
-                <div class="explanation" v-if="question.feedback || question.explanation">
+
+                <div v-if="question.feedback || question.explanation" class="explanation">
                     <h4>{{ $t('QUESTION.PREVIEW.EXPLANATION') }}</h4>
                     <html-content
-                        :html="srcConvert(question.feedback || question.explanation, epocStore.rootFolder)"
-                    ></html-content>
+                        :html="srcConvert((question.feedback || question.explanation) as string, epocStore.rootFolder)"
+                    />
                 </div>
             </div>
         </template>

@@ -244,7 +244,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                         <common-question
                             :ref="
                                 (el) => {
-                                    if (el) questionsElements[questionIndex] = el;
+                                    if (el) questionsElements[questionIndex] = el as CommonQuestionType;
                                 }
                             "
                             :question="question"
