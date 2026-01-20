@@ -19,6 +19,7 @@ import ScoreProgress from '@/components/ScoreProgress.vue';
 import { useRoute } from 'vue-router';
 import { chevronForwardOutline, downloadOutline, starOutline } from 'ionicons/icons';
 import BadgeComponent from '@/components/Badge.vue';
+import BadgeModal from '@/components/BadgeModal.vue';
 import type { Badge } from '@/types/epoc';
 import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from '@/stores/settingsStore';
@@ -405,7 +406,13 @@ const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
                 </div>
             </div>
         </ion-content>
-        <BadgeModal v-if="badgeModal" :show-modal="showBadgeModal" :badge="badgeModal" :epoc="epoc" />
+        <BadgeModal
+            v-if="badgeModal && epoc && reading"
+            v-model:open="showBadgeModal"
+            :badge="badgeModal"
+            :epoc="epoc"
+            :reading="reading"
+        />
     </ion-page>
 </template>
 

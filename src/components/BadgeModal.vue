@@ -2,73 +2,102 @@
 import { IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonButton } from '@ionic/vue';
 import { closeOutline } from 'ionicons/icons';
 import BadgeComponent from './Badge.vue';
-import type { Badge } from '@/types/epoc';
-import type { Epoc } from '@epoc/epoc-types/dist/v1/epoc';
+import type { Badge, Epoc } from '@/types/epoc';
 import type { Reading } from '@/types/reading';
-import { ref, Ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import * as jsonLogic from 'json-logic-js/logic';
+import { useVModel } from '@vueuse/core';
+
+interface RuleItem {
+    label: string;
+    success: boolean;
+}
 
 const props = defineProps<{
-    showModal: boolean;
+    open: boolean;
     badge: Badge;
     epoc: Epoc;
     reading: Reading;
 }>();
 
 const emit = defineEmits<{
-    (e: 'dismiss'): void;
+    (e: 'update:open', value: boolean): void;
 }>();
 
 const { t } = useI18n();
+const isOpen = useVModel(props, 'open', emit);
+
+const ruleList = ref<RuleItem[]>([]);
+
+function getEntityFromEpoc(type: string, id: string) {
+    const collectionKey = type !== 'pages' ? type : 'contents';
+
+    // @ts-expect-error: Type assertion
+    return props.epoc[collectionKey]?.[id];
+}
+
+function extractRuleComponents(rule: Record<string, any>) {
+    const ruleKey = Object.keys(rule)[0];
+    const ruleData = rule[ruleKey];
+    const statement = ruleData[0].var;
+    const value = ruleData[1];
+    const [type, id, action] = statement.split('.');
+
+    return { type, id, action, value };
+}
+
+function formatRuleLabel(type: string, id: string, action: string, value: any): string {
+    const verb = t(`BADGE.PASSIVE_VERBS.${action}`, { [action]: value });
+    const entity = getEntityFromEpoc(type, id);
+    const entityType = t(`BADGE.ENTITY_TYPES.${type !== 'pages' ? entity.type : 'page'}`);
+    const title = entity?.title ?? entity?.type;
+
+    return `${verb} ${entityType} "${title}"`;
+}
+
+function evaluateRule(rule: Record<string, any>): boolean {
+    const statements = props.reading?.statements ?? {};
+    console.log('rule', rule);
+
+    return jsonLogic.apply(rule, statements);
+}
+
+function processRules(badge: Badge): RuleItem[] {
+    if (!badge.rule?.and || typeof badge.rule.and === 'string') {
+        return [];
+    }
+
+    return badge.rule.and.map((rule) => {
+        console.log('rule from badge', rule);
+        const { type, id, action, value } = extractRuleComponents(rule as Record<string, any>);
+        const label = formatRuleLabel(type, id, action, value);
+        const success = evaluateRule(rule as Record<string, any>);
+
+        return { label, success };
+    });
+}
 
 watch(
     () => [props.badge, props.reading],
-    ([newBadge, newReading]) => {
-        if (typeof newBadge.rule?.and === 'string') return;
-
-        ruleList.value = newBadge.rule.and.map((rule) => {
-            const ruleKey = Object.keys(rule)[0];
-            const statement = rule[ruleKey][0].var;
-            const value = rule[ruleKey][1];
-            const split = statement.split('.');
-            const type = split[0];
-            const id = split[1];
-
-            const verb = t(`BADGE.PASSIVE_VERBS.${split[2]}`, { [split[2]]: value });
-
-            const entity = props.epoc[type !== 'pages' ? type : 'contents']?.[id];
-            const entityType = t(`BADGE.ENTITY_TYPES.${type !== 'pages' ? entity?.type : 'page'}`);
-
-            const title = entity?.title ?? entity?.type;
-
-            const statements = newReading?.statements ?? {};
-
-            const success = jsonLogic.apply(rule, statements);
-
-            return {
-                label: `${verb} ${entityType} "${title}"`,
-                success,
-            };
-        });
+    ([newBadge]) => {
+        ruleList.value = processRules(newBadge as Badge);
     },
     { immediate: true, deep: true }
 );
-
-const ruleList: Ref<{ label: string; success: boolean }[]> = ref([]);
 </script>
 
 <template>
-    <div v-if="showModal" class="badge-modal-container">
-        <ion-card calass="badge-modal-success-card">
+    <div v-if="isOpen" class="badge-modal-container">
+        <ion-card class="badge-modal-success-card">
             <ion-card-header class="badge-modal-success-card-header">
-                <div @click="emit('dismiss')" class="close">
+                <div @click="isOpen = false" class="close">
                     <ion-icon :icon="closeOutline" />
                 </div>
 
                 <div class="badge-modal-img">
                     <ion-img class="badge-modal-bg" src="assets/icon/badge/bg.svg" />
-                    <BadgeComponent nobg :icon="badge.icon" />
+                    <BadgeComponent class="badge" nobg :icon="badge.icon" />
                 </div>
             </ion-card-header>
 
@@ -76,7 +105,7 @@ const ruleList: Ref<{ label: string; success: boolean }[]> = ref([]);
                 <ion-card-title class="title">{{ badge.title }}</ion-card-title>
                 <p class="text1">{{ badge.description }}</p>
                 <div class="badge-rule-list">
-                    <div v-for="rule of ruleList" :key="rule" class="badge-rule-item">
+                    <div v-for="rule of ruleList" :key="rule.label" class="badge-rule-item">
                         <span class="badge-rule-item-check">
                             <ion-icon v-if="rule.success" src="/assets/icon/check-round.svg" />
                             <ion-icon v-else src="/assets/icon/clock-round.svg" />
@@ -85,14 +114,9 @@ const ruleList: Ref<{ label: string; success: boolean }[]> = ref([]);
                     </div>
                 </div>
 
-                <ion-button
-                    size="large"
-                    expand="block"
-                    fill="outline"
-                    color="outline-button"
-                    @click="emit('dismiss')"
-                    >{{ $t('CLOSE') }}</ion-button
-                >
+                <ion-button size="large" expand="block" fill="outline" color="outline-button" @click="isOpen = false">
+                    {{ $t('CLOSE') }}
+                </ion-button>
             </ion-card-content>
         </ion-card>
     </div>
@@ -171,7 +195,7 @@ const ruleList: Ref<{ label: string; success: boolean }[]> = ref([]);
                 display: block;
             }
 
-            badge {
+            .badge {
                 position: absolute;
                 top: 50%;
                 left: 50%;

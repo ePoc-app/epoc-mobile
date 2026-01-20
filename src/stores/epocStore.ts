@@ -22,10 +22,9 @@ export const useEpocStore = defineStore('epoc', () => {
     const _epoc = ref<Epoc | null>(null);
     const _rootFolder = ref<string>('');
 
-
     // --- Actions ---
 
-    async function getEpocById(id: string): Promise<Epoc|null> {
+    async function getEpocById(id: string): Promise<Epoc | null> {
         if (_epoc.value && _epoc.value.id === id) return _epoc.value;
 
         initialized.value = false;
@@ -58,6 +57,7 @@ export const useEpocStore = defineStore('epoc', () => {
         // backward compatibility before epoc parameters existed
         epoc.parameters = epoc.parameters ? epoc.parameters : {};
         for (const [chapterId, chapter] of Object.entries(epoc.chapters)) {
+            chapter.type = 'chapter';
             chapter.resumeLink = `/epoc/play/${epoc.id}/${chapterId}`;
             chapter.time = 0;
             chapter.mediaCount = 0;
