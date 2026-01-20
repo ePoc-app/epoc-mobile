@@ -58,7 +58,6 @@ function formatRuleLabel(type: string, id: string, action: string, value: any): 
 
 function evaluateRule(rule: Record<string, any>): boolean {
     const statements = props.reading?.statements ?? {};
-    console.log('rule', rule);
 
     return jsonLogic.apply(rule, statements);
 }
@@ -69,7 +68,6 @@ function processRules(badge: Badge): RuleItem[] {
     }
 
     return badge.rule.and.map((rule) => {
-        console.log('rule from badge', rule);
         const { type, id, action, value } = extractRuleComponents(rule as Record<string, any>);
         const label = formatRuleLabel(type, id, action, value);
         const success = evaluateRule(rule as Record<string, any>);

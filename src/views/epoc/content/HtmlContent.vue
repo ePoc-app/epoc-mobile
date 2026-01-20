@@ -2,8 +2,7 @@
 import renderMathInElement from 'katex/contrib/auto-render';
 import mermaid from 'mermaid';
 import GLightbox from 'glightbox';
-import { computed, ref, useTemplateRef } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, useTemplateRef } from 'vue';
 import { onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { usePlugin } from '@/composables';
 
@@ -14,11 +13,6 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits<{
-    goTo: [contentId: string];
-}>();
-
-const route = useRoute();
 const plugin = usePlugin();
 const content = useTemplateRef('content');
 // TODO - is not given when in AssessmentPage/CommonQuestion const chapterId = ref<string>(route.params.chapter_id.toString())
