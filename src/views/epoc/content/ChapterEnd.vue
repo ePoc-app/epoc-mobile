@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { PropType } from "vue";
-import { Chapter, Epoc } from "@/types/epoc";
-import { useEpocStore } from "@/stores/epocStore";
-import { IonButton, IonIcon } from "@ionic/vue";
-import { home } from "ionicons/icons";
-
-const epocStore = useEpocStore();
+import { PropType } from 'vue';
+import { Chapter, Epoc } from '@/types/epoc';
+import { IonButton, IonIcon } from '@ionic/vue';
+import { home } from 'ionicons/icons';
 
 defineProps({
     epoc: {
@@ -26,7 +23,7 @@ defineProps({
 <template>
     <template v-if="nextChapter">
         <p>
-            <b class="ion-text-capitalize"> {{ $t("PLAYER.CHAPTER_END.FOLLOWING_NEXT") }}:</b> {{ nextChapter.title }}
+            <b class="ion-text-capitalize"> {{ $t('PLAYER.CHAPTER_END.FOLLOWING_NEXT') }}</b> {{ nextChapter.title }}
         </p>
         <ion-button
             expand="block"
@@ -35,7 +32,7 @@ defineProps({
             fill="outline"
             :router-link="'/epoc/toc/' + epoc.id"
         >
-            <span>{{ $t("FLOATING_MENU.TOC") }}</span>
+            <span>{{ $t('FLOATING_MENU.TOC') }}</span>
         </ion-button>
         <ion-button
             expand="block"
@@ -43,7 +40,7 @@ defineProps({
             color="inria"
             :router-link="'/epoc/play/' + epoc.id + '/' + nextChapter.id"
         >
-            <span> {{ $t("PLAYER.CHAPTER_END.NEXT") }}</span>
+            <span> {{ $t('PLAYER.CHAPTER_END.NEXT') }}</span>
         </ion-button>
     </template>
     <template v-if="!nextChapter">
@@ -55,14 +52,14 @@ defineProps({
             fill="outline"
             :router-link="'/epoc/toc/' + epoc.id"
         >
-            <span>{{ $t("FLOATING_MENU.TOC") }}</span>
+            <span>{{ $t('FLOATING_MENU.TOC') }}</span>
         </ion-button>
         <ion-button expand="block" size="large" color="inria" :router-link="'/epoc/score/' + epoc.id">
-            <span>{{ $t("PLAYER.CHAPTER_END.SCORE") }}</span>
+            <span>{{ $t('PLAYER.CHAPTER_END.SCORE') }}</span>
         </ion-button>
         <ion-button expand="block" size="large" color="inria-grey" routerLink="/">
             <ion-icon slot="start" :icon="home"></ion-icon>
-            <span>{{ $t("FLOATING_MENU.HOME") }}</span>
+            <span>{{ $t('FLOATING_MENU.HOME') }}</span>
         </ion-button>
     </template>
 </template>
