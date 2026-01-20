@@ -4,16 +4,18 @@ import { PropType, ref } from 'vue';
 import { IonItem, IonCheckbox, IonLabel, IonList } from '@ionic/vue';
 
 const props = defineProps({
-    question: { type : Object as PropType<(MultipleChoiceQuestion)>, required: true},
+    question: { type: Object as PropType<MultipleChoiceQuestion>, required: true },
     disabled: Boolean,
-    userPreviousResponse: Array<String>,
-})
+    userPreviousResponse: Array<string>,
+});
 
 const emits = defineEmits<{
-  userHasResponded: [userResponses: any[]]; 
-}>()
+    userHasResponded: [userResponses: any[]];
+}>();
 
-const selectedAnswers = ref<any[]>((props.userPreviousResponse && props.userPreviousResponse.length > 0) ? props.userPreviousResponse : []);
+const selectedAnswers = ref<any[]>(
+    props.userPreviousResponse && props.userPreviousResponse.length > 0 ? props.userPreviousResponse : []
+);
 
 const selectAnswer = (answer: any) => {
     const index = selectedAnswers.value.indexOf(answer.detail.value);
@@ -25,19 +27,59 @@ const selectAnswer = (answer: any) => {
         }
     }
     emits('userHasResponded', selectedAnswers.value);
-}
+};
 </script>
 
 <template>
-<ion-list>
-  <ion-item v-for="response of question.responses" lines="none">
-    <ion-checkbox mode="md" slot="start" :value="response.value" @ionChange="selectAnswer"
-                  :checked="selectedAnswers.indexOf(response.value) !== -1" :disabled="disabled">
-    </ion-checkbox>
-    <ion-label class="ion-text-wrap">{{response.label}}</ion-label>
-  </ion-item>
-</ion-list>
+    <ion-list>
+        <ion-item v-for="response of question.responses" :key="response.value" lines="none">
+            <ion-checkbox
+                mode="ios"
+                slot="start"
+                :value="response.value"
+                :checked="selectedAnswers.indexOf(response.value) !== -1"
+                :disabled="disabled"
+                @ionChange="selectAnswer"
+            />
+            <ion-label class="ion-text-wrap">{{ response.label }}</ion-label>
+        </ion-item>
+    </ion-list>
 </template>
 
-<style>
+<style scoped lang="scss">
+ion-list {
+    display: block;
+    margin-top: 2rem;
+    background: var(--ion-color-content);
+}
+
+ion-item {
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    --min-height: 3.2rem;
+    --background: var(--ion-color-contrast);
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+ion-checkbox {
+    --border-color: white;
+    --border-color-checked: white;
+    --checkbox-background: white;
+    --checkbox-background-checked: var(--ion-color-inria-spe);
+    --border-radius: 0.375rem;
+    --border-width: 0.25rem;
+    --checkmark-color: transparent;
+    background: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--ion-color-unique-1);
+    border-radius: 0.375rem;
+
+    & + ion-label {
+        padding-top: 0.2em;
+        color: var(--ion-color-text);
+    }
+}
 </style>

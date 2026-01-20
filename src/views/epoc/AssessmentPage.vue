@@ -27,13 +27,15 @@ const readingStore = useReadingStore();
 const router = useRouter();
 const route = useRoute();
 
-// params
-const epocId = ref<string>(route.params.epoc_id.toString());
-const assessmentId = ref<string>(route.params.assessment_id.toString());
+const epocId = computed(() => route.params.epoc_id.toString());
+const assessmentId = computed(() => route.params.assessment_id.toString());
 
-// # ref
 const { epoc } = storeToRefs(epocStore);
 const { readings } = storeToRefs(readingStore);
+
+if (!epoc.value) {
+    epocStore.getEpocById(epocId.value);
+}
 
 const questionsElements = ref<CommonQuestionType[]>([]);
 
@@ -48,7 +50,7 @@ const questionSlides = ref<SwiperObject>(); //undefined; will be set automatical
 // Computed
 const reading = computed(() => readings.value.find((question) => question.epocId === epoc.value!.id));
 const assessments = computed((): (Assessment | SimpleQuestion)[] => epoc.value!.assessments);
-const assessment = computed((): Assessment | SimpleQuestion => epoc.value!.contents[assessmentId.value] as Assessment);
+const assessment = computed((): Assessment | SimpleQuestion => epoc.value?.contents[assessmentId.value] as Assessment);
 
 const questions = computed(
     () => assessment.value?.questions?.map((questionId) => epoc.value!.questions[questionId]) || []
