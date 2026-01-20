@@ -13,6 +13,7 @@ import { computed, ref, watch } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import { useReadingStore } from '@/stores/readingStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 import { useRoute } from 'vue-router';
 import { onIonViewWillEnter } from '@ionic/vue';
 import { storeToRefs } from 'pinia';
@@ -31,6 +32,10 @@ import CertificateModal from '@/components/CertificateModal.vue';
 import { appService } from '@/utils/appService';
 import HtmlContent from './content/HtmlContent.vue';
 import VideoContent from './content/VideoContent.vue';
+import AudioContent from '@/views/epoc/content/AudioContent.vue';
+import AssessmentContent from './content/AssessmentContent.vue';
+import SimpleQuestion from './content/SimpleQuestion.vue';
+
 import {
     documentTextOutline,
     cubeOutline,
@@ -40,8 +45,6 @@ import {
     gitBranchOutline,
 } from 'ionicons/icons';
 import { until } from '@vueuse/core';
-import AssessmentContent from './content/AssessmentContent.vue';
-import SimpleQuestion from './content/SimpleQuestion.vue';
 
 const CONTENT_TYPE_ICONS = {
     html: documentTextOutline,
@@ -57,6 +60,7 @@ const INTERACTIVE_ELEMENTS = ['ion-icon', 'button', 'ion-button', 'ion-checkbox'
 const epocStore = useEpocStore();
 const readingStore = useReadingStore();
 const settingsStore = useSettingsStore();
+const mediaPlayerStore = useMediaPlayerStore();
 const route = useRoute();
 
 const { epoc } = storeToRefs(epocStore);
@@ -158,6 +162,14 @@ watch(
         }
     }
 );
+
+watch(() => mediaPlayerStore.isTimelineDragging, (isDragging) => {
+  if (isDragging) {
+      swiperInstance.value?.disable();
+  } else {
+      swiperInstance.value?.enable();
+  }
+})
 
 onIonViewWillEnter(async () => {
     const newEpoc = await epocStore.getEpocById(epocId.value);
@@ -358,7 +370,10 @@ function shouldDisplayContent(content: Content): boolean {
                                 <video-content
                                     v-else-if="content.type === 'video'"
                                     :content="content"
-                                    @timeline-dragging="handleDragEvent"
+                                />
+                                <audio-content
+                                    v-else-if="content.type === 'audio'"
+                                    :content="content"
                                 />
                                 <assessment-content v-else-if="content.type === 'assessment'" :content="content" />
                             </common-content>
