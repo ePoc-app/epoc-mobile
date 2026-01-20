@@ -163,13 +163,16 @@ watch(
     }
 );
 
-watch(() => mediaPlayerStore.isTimelineDragging, (isDragging) => {
-  if (isDragging) {
-      swiperInstance.value?.disable();
-  } else {
-      swiperInstance.value?.enable();
-  }
-})
+watch(
+    () => mediaPlayerStore.isTimelineDragging,
+    (isDragging) => {
+        if (isDragging) {
+            swiperInstance.value?.disable();
+        } else {
+            swiperInstance.value?.enable();
+        }
+    }
+);
 
 onIonViewWillEnter(async () => {
     const newEpoc = await epocStore.getEpocById(epocId.value);
@@ -215,7 +218,7 @@ function checkForCertificate() {
 }
 
 function navigatePrevious() {
-    if (!canNavigateNext.value) return;
+    if (!canNavigatePrevious.value) return;
     swiperInstance.value?.slidePrev();
 }
 
@@ -367,14 +370,8 @@ function shouldDisplayContent(content: Content): boolean {
                                     :html="srcConvert(content.html, epocStore.rootFolder)"
                                     @go-to="navigateToContent"
                                 />
-                                <video-content
-                                    v-else-if="content.type === 'video'"
-                                    :content="content"
-                                />
-                                <audio-content
-                                    v-else-if="content.type === 'audio'"
-                                    :content="content"
-                                />
+                                <video-content v-else-if="content.type === 'video'" :content="content" />
+                                <audio-content v-else-if="content.type === 'audio'" :content="content" />
                                 <assessment-content v-else-if="content.type === 'assessment'" :content="content" />
                             </common-content>
 
