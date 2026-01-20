@@ -186,6 +186,10 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
         } catch (error) {
             console.error(error);
             showToast(t('FLOATING_MENU.ERROR'), 'danger');
+
+            const newImports = { ...imports.value };
+            delete newImports[tempId];
+            imports.value = newImports;
         }
     };
 
