@@ -62,6 +62,11 @@ const routes: Array<RouteRecordRaw> = [
         component: PlayerPage,
     },
     {
+        path: '/epoc/play/:epoc_id/:chapter_id/content/:content_id/:next',
+        name: 'EpocPlayerPage',
+        component: PlayerPage,
+    },
+    {
         path: '/epoc/play/:epoc_id/content/:content_id',
         name: 'OrphanPlayer',
         component: WIPPage,
