@@ -57,10 +57,10 @@ const playPause = (event: PlayPauseEvent) => {
       :subtitles="content.subtitles" :title="content.title" @playPause="playPause($event)">
     </audio-player>
     <template v-if="content.summary">
-      <h4>{{$t('PLAYER.AUDIO.SUMMARY')}}</h4>
+      <h4>{{$t('PLAYER.VIDEO.SUMMARY')}}</h4>
       <div class="audio-summary">
         <html-content :html="srcConvert(content.summary, epocStore.rootFolder)" v-if="content.summary && content.summary.length > 0"></html-content>
-        <p v-if="!content.summary || content.summary.length <= 0">{{$t('PLAYER.AUDIO.NO_SUMMARY')}}</p>
+        <p v-if="!content.summary || content.summary.length <= 0">{{$t('PLAYER.VIDEO.NO_SUMMARY')}}</p>
       </div>
     </template>
   </template>
