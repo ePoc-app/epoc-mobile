@@ -131,8 +131,9 @@ const selectSide = (side: SIDE) => {
         <template v-if="question.statement">
             <span class="custom" v-if="!disabled" :innerHTML="removeSecableSpace(question.statement)"></span>
         </template>
+
         <template v-else>
-            <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg"></ion-icon>
+            <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg" />
             <span>{{ $t('QUESTION.SWIPE.INSTRUCTION') }}</span>
         </template>
     </p>
@@ -154,7 +155,7 @@ const selectSide = (side: SIDE) => {
                 {{ card.selectedSide }}
             </div>
             <div :aria-hidden="cardsRemaining.length - 1 !== cardIndex" class="swipe-card-content">
-                <ion-icon aria-hidden="true" src="/assets/icon/citation.svg"></ion-icon>
+                <ion-icon aria-hidden="true" src="/assets/icon/citation.svg" />
                 <div>« {{ card.label }} »</div>
             </div>
         </div>
@@ -169,17 +170,17 @@ const selectSide = (side: SIDE) => {
         :max="question.responses.length"
         :value="question.responses.length - cardsRemaining.length"
         :snaps="true"
-    ></ion-range>
+    />
 
     <div class="swipe-actions">
         <div
             :aria-hidden="cardsRemaining.length < 1"
             role="button"
             class="swipe-action"
-            @click="swipe(SIDE.Left)"
             :class="{ hidden: cardsRemaining.length <= 0 || undoDisabled }"
+            @click="swipe(SIDE.Left)"
         >
-            <ion-icon aria-hidden="true" class="swipe-right" src="/assets/icon/gauche.svg"></ion-icon>
+            <ion-icon aria-hidden="true" class="swipe-right" src="/assets/icon/gauche.svg" />
             <span>{{ sides[1] }}</span>
         </div>
         <div
@@ -190,16 +191,16 @@ const selectSide = (side: SIDE) => {
             :class="{ hidden: cardsSorted.length <= 0 || undoDisabled }"
             @click="undo"
         >
-            <ion-icon aria-hidden="true" src="/assets/icon/annuler.svg"></ion-icon>
+            <ion-icon aria-hidden="true" src="/assets/icon/annuler.svg" />
         </div>
         <div
             :aria-hidden="cardsRemaining.length < 1"
             role="button"
             class="swipe-action"
-            @click="swipe(SIDE.Right)"
             :class="{ hidden: cardsRemaining.length <= 0 || undoDisabled }"
+            @click="swipe(SIDE.Right)"
         >
-            <ion-icon aria-hidden="true" src="/assets/icon/droite.svg"></ion-icon>
+            <ion-icon aria-hidden="true" src="/assets/icon/droite.svg" />
             <span>{{ sides[0] }}</span>
         </div>
     </div>
