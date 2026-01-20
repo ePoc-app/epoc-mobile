@@ -5,7 +5,17 @@ import { useI18n } from 'vue-i18n';
 import { actionSheetController, alertController, toastController } from '@ionic/vue';
 import { useSettingsStore } from './settingsStore';
 import { useReadingStore } from './readingStore';
-import {arrayBufferToBase64, deleteFolder, download, mkdir, mv, pathExists, readdir, unzip, write} from '@/utils/file';
+import {
+    arrayBufferToBase64,
+    deleteFolder,
+    download,
+    mkdir,
+    mv,
+    pathExists,
+    readdir,
+    unzip,
+    write,
+} from '@/utils/file';
 import { EpocLibrary } from '@/types/epoc';
 import { readEpocContent } from '@/utils/epocService';
 import { trackEvent } from '@/utils/matomo';
@@ -49,14 +59,15 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
         await mkdir('local-epocs');
         try {
             const files = await readdir('local-epocs');
-            const dirs = files.filter((f: any) => f.type === 'directory')
-            .sort((fileA: any, fileB: any) => {
-                return new Date(fileA.metadata?.modificationTime) > new Date(fileB.metadata?.modificationTime) ? 1 : -1;
-            });
+            const dirs = files
+                .filter((f: any) => f.type === 'directory')
+                .sort((fileA: any, fileB: any) => {
+                    return new Date(fileA.metadata?.modificationTime) > new Date(fileB.metadata?.modificationTime)
+                        ? 1
+                        : -1;
+                });
 
-            const epocContents = await Promise.all(
-                dirs.map((file: any) => readEpocContent('local-epocs', file.name))
-            );
+            const epocContents = await Promise.all(dirs.map((file: any) => readEpocContent('local-epocs', file.name)));
 
             localEpocs.value = epocContents.reduce((acc: EpocLibrary[], epocMetadata) => {
                 acc.push({
@@ -75,7 +86,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                             return content.type === 'assessment' ? count + 1 : count;
                         },
                         0
-                    )
+                    ),
                 });
                 return acc;
             }, []);
@@ -151,15 +162,16 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                                 cssClass: 'secondary',
                                 handler: async () => {
                                     await deleteFolder(`temp/${tempId}`);
-                                }
-                            }, {
+                                },
+                            },
+                            {
                                 text: 'Confirmer',
                                 handler: async () => {
                                     await deleteFolder(`local-epocs/${epoc.id}`);
                                     await mv(`temp/${tempId}`, `local-epocs/${epoc.id}`);
-                                }
-                            }
-                        ]
+                                },
+                            },
+                        ],
                     });
 
                     await alert.present();
@@ -178,7 +190,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
     };
 
     const deleteEpoc = async (epoc: EpocLibrary) => {
-        localEpocs.value = localEpocs.value.filter(e => e.id !== epoc.id);
+        localEpocs.value = localEpocs.value.filter((e) => e.id !== epoc.id);
         router.push('/library');
         await deleteFolder(`local-epocs/${epoc.id}`);
         await fetchLocalEpocs();
@@ -191,7 +203,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
             message,
             color,
             position: 'top',
-            duration: 2000
+            duration: 2000,
         });
         await toast.present();
     };
@@ -203,26 +215,26 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                 icon: listCircleOutline,
                 handler: () => {
                     router.push('/epoc/toc/' + epoc.id);
-                }
+                },
             },
             {
                 text: t('FLOATING_MENU.SCORE_DETAILS'),
                 icon: starOutline,
                 handler: () => {
                     router.push('/epoc/score/' + epoc.id);
-                }
+                },
             },
             {
                 text: t('FLOATING_MENU.DELETE'),
                 icon: trash,
                 handler: () => {
                     confirmDelete(epoc);
-                }
+                },
             },
             {
                 text: 'Fermer',
-                role: 'cancel'
-            }
+                role: 'cancel',
+            },
         ];
 
         const actionSheet = await actionSheetController.create({
@@ -230,7 +242,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
             subHeader: t('FLOATING_MENU.MAIN_MENU'),
             cssClass: 'custom-action-sheet',
             mode: 'ios',
-            buttons
+            buttons,
         });
 
         await actionSheet.present();
@@ -244,20 +256,19 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                 {
                     text: 'Annuler',
                     role: 'cancel',
-                    cssClass: 'secondary'
-                }, {
+                    cssClass: 'secondary',
+                },
+                {
                     text: 'Confirmer',
                     handler: () => {
                         deleteEpoc(epoc);
-                    }
-                }
-            ]
+                    },
+                },
+            ],
         });
 
         await alert.present();
     };
-
-
 
     // --- Initialization ---
     fetchLocalEpocs().then();
@@ -269,6 +280,6 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
         downloadLocalEpoc,
         importFile,
         deleteEpoc,
-        localEpocLibraryMenu
+        localEpocLibraryMenu,
     };
 });
