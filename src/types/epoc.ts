@@ -47,6 +47,7 @@ export interface EpocCollection extends ePocCollection{
 }
 
 export interface Chapter extends ChapterType {
+    type: 'chapter'
     id?: uid;
     time?: number;
     mediaCount?: number;
