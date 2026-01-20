@@ -164,6 +164,8 @@ export const useReadingStore = defineStore('reading', () => {
             if (!reading.statements[entityType][entityId]) {
                 reading.statements[entityType][entityId] = {};
             }
+
+            reading.statements[entityType][entityId][verb] = value;
         }
 
         if (!reading.badges) reading.badges = [];
