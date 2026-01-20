@@ -10,6 +10,7 @@ import TocPage from '@/views/epoc/TocPage.vue';
 import PlayerPage from '@/views/epoc/PlayerPage.vue';
 import AssessmentPage from '@/views/epoc/AssessmentPage.vue';
 import ScorePage from '@/views/epoc/ScorePage.vue';
+import { trackPageView } from '@/utils/matomo';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -86,6 +87,16 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
+});
+
+router.afterEach((to) => {
+    if (to.name === 'PlayerContent') return; // Skip for PlayerContent handle in PlayerPage updateCurrentContent
+    // We send a manually cleaned URL to Matomo
+    // This ensures iOS and Android appear identical
+    const cleanedPath = to.fullPath;
+    const pageTitle = to.name?.toString() || 'Default Title';
+
+    trackPageView(cleanedPath, pageTitle);
 });
 
 export default router;

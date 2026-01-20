@@ -45,6 +45,7 @@ import {
     gitBranchOutline,
 } from 'ionicons/icons';
 import { until } from '@vueuse/core';
+import { trackPageView } from '@/utils/matomo';
 
 const CONTENT_TYPE_ICONS = {
     html: documentTextOutline,
@@ -259,6 +260,7 @@ function updateCurrentContent(index: number) {
     // Update url without triggering navigation
     const newUrl = `/epoc/play/${epocId.value}/${chapterId.value}/content/${content.id}`;
     window.history.replaceState({}, '', newUrl);
+    trackPageView(newUrl, content.title);
 
     readingStore.saveChapterProgress(epocId.value, chapterId.value, content.id);
     readingStore.saveStatement(epocId.value, 'pages', content.id, 'viewed', true);
@@ -325,7 +327,6 @@ function shouldDisplayContent(content: Content): boolean {
 }
 /* TODO
     <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
-        <audio-content v-if="content.type === 'audio'" [inputContent]="content" @timelineDragging="onDrag($event)"></audio-content>
         <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
     </common-content>
 */

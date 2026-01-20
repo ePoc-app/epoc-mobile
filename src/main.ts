@@ -7,6 +7,7 @@ import router from './router';
 import { Capacitor } from '@capacitor/core';
 import { IonicVue } from '@ionic/vue';
 import { useStorage } from '@/composables/useStorage';
+import VueMatomo from 'vue-matomo';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -58,7 +59,18 @@ function init() {
         })
         .use(router)
         .use(pinia)
-        .use(i18n);
+        .use(i18n)
+
+    // Matomo setup NOT in development
+    app.use(VueMatomo, {
+        host: 'https://piwik.inria.fr',
+        siteId: 133,
+        enableLinkTracking: true,
+        debug: false,
+        // Disable auto-tracking to avoid scheme issues
+        router: null,
+        trackInitialView: false
+    });
 
     router.isReady().then(() => {
         app.mount('#app');
