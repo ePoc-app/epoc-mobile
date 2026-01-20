@@ -137,7 +137,7 @@ self.addEventListener("fetch", (event) => {
                         });
                     }
                     // Pour les vidéos, gérer les requêtes partielles (Range)
-                    else if (type.startsWith('video/')) {
+                    else if (type.startsWith('video/') || type.startsWith('audio/')) {
                         const rangeHeader = event.request.headers.get('Range');
                         const decodedContent = base64ToUint8Array(file.content);
 

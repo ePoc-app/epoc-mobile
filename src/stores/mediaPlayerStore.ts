@@ -5,6 +5,7 @@ export const useMediaPlayerStore = defineStore('mediaPlayer', () => {
     // État global
     const players = ref<Map<string, { duration: number; isPlaying: boolean; currentTime: number }>>(new Map());
     const activePlayerId = ref<string | null>(null);
+    const isTimelineDragging = ref<boolean>(false);
 
     // Actions
     const registerPlayer = (id: string, duration: number) => {
@@ -43,6 +44,7 @@ export const useMediaPlayerStore = defineStore('mediaPlayer', () => {
     return {
         players,
         activePlayerId,
+        isTimelineDragging,
         registerPlayer,
         unregisterPlayer,
         setPlayerState,

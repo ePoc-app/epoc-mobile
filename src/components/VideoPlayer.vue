@@ -3,6 +3,7 @@ import { IonIcon, IonSelect, IonSelectOption, IonItem, IonLabel, toastController
 import { ref, onMounted, onUnmounted, PropType } from 'vue';
 import { logoClosedCaptioning, pause, play as playIcon, expand } from 'ionicons/icons';
 import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
+import { PlayPauseEvent } from '@/types/contents/media';
 
 const props = defineProps({
   src: String,
@@ -31,8 +32,13 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits<{
+  (e: 'playPause', event: PlayPauseEvent): void
+}>();
+
+
 // Store Pinia
-const videoPlayerStore = useMediaPlayerStore();
+const mediaPlayerStore = useMediaPlayerStore();
 
 // Générer un ID unique pour ce lecteur
 const playerId = `video-player-${Math.random().toString(36).substring(2, 9)}`;
@@ -41,7 +47,7 @@ const playerId = `video-player-${Math.random().toString(36).substring(2, 9)}`;
 const video = ref<HTMLVideoElement | null>(null);
 const trackSelectRef = ref<typeof IonSelect | null>(null);
 const timelineProgress = ref<HTMLElement | null>(null);
-const timelineCursorRef = ref<HTMLElement | null>(null);
+const timelineCursor = ref<HTMLElement | null>(null);
 
 // État local
 const hasPlayed = ref(false);
@@ -125,29 +131,31 @@ onMounted(() => {
   if (!video.value) return;
 
   video.value.addEventListener('error', () => {
-    if (video.value.src.endsWith('loading')) return;
+    if (video.value && video.value.src.endsWith('loading')) return;
     presentToast('Error loading video');
   });
 
   video.value.addEventListener('loadedmetadata', () => {
-    videoPlayerStore.registerPlayer(playerId, video.value?.duration || 0);
+    mediaPlayerStore.registerPlayer(playerId, video.value?.duration || 0);
   });
 
   video.value.addEventListener('play', () => {
     hasPlayed.value = true;
     playing.value = true;
-    videoPlayerStore.setPlayerState(playerId, { isPlaying: true, currentTime: video.value?.currentTime || 0 });
+    mediaPlayerStore.setPlayerState(playerId, { isPlaying: true, currentTime: video.value?.currentTime || 0 });
+    emit('playPause', { isPlaying: true, playerId });
   });
 
   video.value.addEventListener('pause', () => {
     playing.value = false;
-    videoPlayerStore.setPlayerState(playerId, { isPlaying: false, currentTime: video.value?.currentTime || 0 });
+    mediaPlayerStore.setPlayerState(playerId, { isPlaying: false, currentTime: video.value?.currentTime || 0 });
+    emit('playPause', { isPlaying: false, playerId });
   });
 
   video.value.addEventListener('timeupdate', () => {
     if (!video.value) return;
     progress.value = (video.value.currentTime / video.value.duration) * 100;
-    videoPlayerStore.setPlayerState(playerId, { isPlaying: !video.value.paused, currentTime: video.value.currentTime });
+    mediaPlayerStore.setPlayerState(playerId, { isPlaying: !video.value.paused, currentTime: video.value.currentTime });
   });
 
   video.value.addEventListener('fullscreenchange', () => {
@@ -170,22 +178,25 @@ onMounted(() => {
   });
 
   // Gestion du geste sur la timeline
-  if (!timelineCursorRef.value) return;
+  if (!timelineCursor.value) return;
   let startCursorPos: DOMRect | null = null;
   let timelinePos: DOMRect | null = null;
 
   const gesture = createGesture({
-    el: timelineCursorRef.value,
+    el: timelineCursor.value,
     threshold: 0,
     gestureName: 'my-gesture',
     onStart: () => {
-      if (!timelineCursorRef.value) return;
-      startCursorPos = timelineCursorRef.value.getBoundingClientRect();
-      timelinePos = timelineCursorRef.value.parentElement?.getBoundingClientRect() || null;
+      if (!timelineCursor.value) return;
+      startCursorPos = timelineCursor.value.getBoundingClientRect();
+      timelinePos = timelineCursor.value.parentElement?.getBoundingClientRect() || null;
+      mediaPlayerStore.isTimelineDragging = true;
     },
-    onEnd: () => {},
+    onEnd: () => {
+      mediaPlayerStore.isTimelineDragging = false;
+    },
     onMove: (ev) => {
-      if (!startCursorPos || !timelinePos || !video.value || !timelineProgress.value || !timelineCursorRef.value) return;
+      if (!startCursorPos || !timelinePos || !video.value || !timelineProgress.value || !timelineCursor.value) return;
       const newX = Math.min(
           Math.max(startCursorPos.left - timelinePos.left + ev.deltaX, 0),
           timelinePos.width
@@ -193,7 +204,7 @@ onMounted(() => {
       const progressValue = newX / timelinePos.width;
       hasPlayed.value = true;
       timelineProgress.value.style.width = progressValue * 100 + '%';
-      timelineCursorRef.value.style.left = progressValue * 100 + '%';
+      timelineCursor.value.style.left = progressValue * 100 + '%';
       video.value.currentTime = Math.round(progressValue * video.value.duration);
     },
   });
@@ -202,7 +213,7 @@ onMounted(() => {
 
 // Nettoyage
 onUnmounted(() => {
-  videoPlayerStore.unregisterPlayer(playerId);
+  mediaPlayerStore.unregisterPlayer(playerId);
 });
 </script>
 

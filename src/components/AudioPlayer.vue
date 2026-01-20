@@ -2,7 +2,9 @@
 import { IonIcon } from '@ionic/vue';
 import { ref, onMounted, onUnmounted, PropType } from 'vue';
 import { createGesture } from '@ionic/vue';
-import { useMediaPlayerStore } from '@/stores/useMediaPlayerStore';
+import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
+import { PlayPauseEvent } from '@/types/contents/media';
+import {pause, play as playIcon} from 'ionicons/icons';
 
 // Props
 const props = defineProps({
@@ -22,6 +24,10 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits<{
+  (e: 'playPause', event: PlayPauseEvent): void
+}>();
+
 // Store Pinia
 const mediaPlayerStore = useMediaPlayerStore();
 
@@ -29,16 +35,15 @@ const mediaPlayerStore = useMediaPlayerStore();
 const playerId = `audio-player-${Math.random().toString(36).substring(2, 9)}`;
 
 // Références
-const audioRef = ref<HTMLAudioElement | null>(null);
+const audio = ref<HTMLAudioElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const timelineProgress = ref<HTMLElement | null>(null);
-const timelineCursorRef = ref<HTMLElement | null>(null);
+const timelineCursor = ref<HTMLElement | null>(null);
 
 // État local
 const hasPlayed = ref(false);
 const playing = ref(false);
 const progress = ref(0);
-const audio = ref<HTMLAudioElement | null>(null);
 const audioCtx = ref<AudioContext | null>(null);
 const analyser = ref<AnalyserNode | null>(null);
 const canvasCtx = ref<CanvasRenderingContext2D | null>(null);
@@ -84,9 +89,8 @@ const presentToast = async (text: string) => {
 
 // Animation du visualiseur audio
 const setupAudioVisualizer = () => {
-  if (!audioRef.value || !canvasRef.value) return;
+  if (!audio.value || !canvasRef.value) return;
 
-  audio.value = audioRef.value;
   const canvas = canvasRef.value;
   canvasCtx.value = canvas.getContext('2d');
   audioCtx.value = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -121,10 +125,14 @@ const setupAudioVisualizer = () => {
 
 // Cycle de vie
 onMounted(() => {
-  if (!audioRef.value || !canvasRef.value) return;
+  if (!audio.value || !canvasRef.value) return;
   setupAudioVisualizer();
 
-  audio.value = audioRef.value;
+  audio.value.addEventListener('error', () => {
+    if (audio.value && audio.value.src.endsWith('loading')) return;
+    presentToast('Error loading video');
+  });
+
   audio.value.addEventListener('loadedmetadata', () => {
     mediaPlayerStore.registerPlayer(playerId, audio.value?.duration || 0);
   });
@@ -133,11 +141,13 @@ onMounted(() => {
     hasPlayed.value = true;
     playing.value = true;
     mediaPlayerStore.setPlayerState(playerId, { isPlaying: true, currentTime: audio.value?.currentTime || 0 });
+    emit('playPause', { playerId, isPlaying: true });
   });
 
   audio.value.addEventListener('pause', () => {
     playing.value = false;
     mediaPlayerStore.setPlayerState(playerId, { isPlaying: false, currentTime: audio.value?.currentTime || 0 });
+    emit('playPause', { playerId, isPlaying: false });
   });
 
   audio.value.addEventListener('timeupdate', () => {
@@ -147,22 +157,25 @@ onMounted(() => {
   });
 
   // Gestion du geste sur la timeline
-  if (!timelineCursorRef.value) return;
+  if (!timelineCursor.value) return;
   let startCursorPos: DOMRect | null = null;
   let timelinePos: DOMRect | null = null;
 
   const gesture = createGesture({
-    el: timelineCursorRef.value,
+    el: timelineCursor.value,
     threshold: 0,
     gestureName: 'my-gesture',
     onStart: () => {
-      if (!timelineCursorRef.value) return;
-      startCursorPos = timelineCursorRef.value.getBoundingClientRect();
-      timelinePos = timelineCursorRef.value.parentElement?.getBoundingClientRect() || null;
+      if (!timelineCursor.value) return;
+      startCursorPos = timelineCursor.value.getBoundingClientRect();
+      timelinePos = timelineCursor.value.parentElement?.getBoundingClientRect() || null;
+      mediaPlayerStore.isTimelineDragging = true;
     },
-    onEnd: () => {},
+    onEnd: () => {
+      mediaPlayerStore.isTimelineDragging = false;
+    },
     onMove: (ev) => {
-      if (!startCursorPos || !timelinePos || !audio.value || !timelineProgress.value || !timelineCursorRef.value) return;
+      if (!startCursorPos || !timelinePos || !audio.value || !timelineProgress.value || !timelineCursor.value) return;
       const newX = Math.min(
           Math.max(startCursorPos.left - timelinePos.left + ev.deltaX, 0),
           timelinePos.width
@@ -170,7 +183,7 @@ onMounted(() => {
       const progressValue = newX / timelinePos.width;
       hasPlayed.value = true;
       timelineProgress.value.style.width = progressValue * 100 + '%';
-      timelineCursorRef.value.style.left = progressValue * 100 + '%';
+      timelineCursor.value.style.left = progressValue * 100 + '%';
       audio.value.currentTime = Math.round(progressValue * audio.value.duration);
     },
   });
@@ -194,11 +207,7 @@ onUnmounted(() => {
         :class="{ playing }"
         @click="play"
     >
-      <audio
-          v-if="src"
-          ref="audioRef"
-          :src="src"
-      />
+      <audio ref="audio" :src="src" />
       <div class="visualizer">
         <div v-if="!playing" class="play-overlay">
           <ion-icon :src="'/assets/icon/play.svg'" />
@@ -230,7 +239,7 @@ onUnmounted(() => {
           <span>-10</span>
         </button>
         <button class="audio-action" aria-label="Lancer la lecture" @click="play">
-          <ion-icon :name="playing ? 'pause-outline' : 'play-outline'" />
+          <ion-icon :icon="playing ? pause : playIcon"></ion-icon>
         </button>
         <button class="audio-action" aria-label="+10s" @click="jump(10)">
           <span>+10</span>
