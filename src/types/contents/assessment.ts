@@ -44,3 +44,10 @@ export interface DropDownListQuestion extends Question {
     // initialized at runtime
     categories?: Array<string>;
 }
+
+// --- Interfaces ---
+export interface DropDownListResponseItem {
+    label: string;
+    value: string;
+    category?: number;
+}
