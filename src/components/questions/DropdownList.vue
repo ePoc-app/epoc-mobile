@@ -4,7 +4,7 @@ import { actionSheetController, IonIcon } from '@ionic/vue';
 import { chevronDownOutline } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
 import { Response } from '@epoc/epoc-types/dist/v1/question';
-import { DropDownListQuestion, DropDownListResponseItem } from '@/types/contents/assessment';
+import { DropDownListQuestion, ResponseItem } from '@/types/contents/assessment';
 
 const props = defineProps<{
   question: DropDownListQuestion;
@@ -15,7 +15,7 @@ const emit = defineEmits(['userHasResponded']);
 
 const { t } = useI18n();
 const selectChoices = ref<string[]>([]);
-const userResponses = ref<DropDownListResponseItem[]>([]);
+const userResponses = ref<ResponseItem[]>([]);
 
 onMounted(() => {
   selectChoices.value = props.question.correctResponse.map((zone: {label: string, values: string[]}) => zone.label);
@@ -27,20 +27,20 @@ onMounted(() => {
 });
 
 // --- Methods ---
-const selectCategory = (index: number, response: DropDownListResponseItem) => {
+const selectCategory = (index: number, response: ResponseItem) => {
   response.category = index;
 
-  const allAnswered = userResponses.value.every((r:DropDownListResponseItem) => Object.prototype.hasOwnProperty.call(r, 'category'));
+  const allAnswered = userResponses.value.every((r:ResponseItem) => Object.prototype.hasOwnProperty.call(r, 'category'));
 
   if (allAnswered) {
     const answers = selectChoices.value.map((_:string, idx:number) => {
-      return userResponses.value.filter((r:DropDownListResponseItem) => r.category === idx);
+      return userResponses.value.filter((r:ResponseItem) => r.category === idx);
     });
     emit('userHasResponded', answers);
   }
 };
 
-const openActionSheet = async (response: DropDownListResponseItem) => {
+const openActionSheet = async (response: ResponseItem) => {
   if (props.disabled) return;
 
   const buttons = [

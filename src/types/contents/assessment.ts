@@ -45,8 +45,7 @@ export interface DropDownListQuestion extends Question {
     categories?: Array<string>;
 }
 
-// --- Interfaces ---
-export interface DropDownListResponseItem {
+export interface ResponseItem {
     label: string;
     value: string;
     category?: number;
