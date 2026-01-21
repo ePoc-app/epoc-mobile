@@ -28,7 +28,7 @@ const router = useRouter();
 const route = useRoute();
 
 const epocId = computed(() => route.params.epoc_id.toString());
-const assessmentId = computed(() => route.params.assessment_id.toString());
+const assessmentId = computed(() => route.params.assessment_id?.toString());
 
 const { epoc } = storeToRefs(epocStore);
 const { readings } = storeToRefs(readingStore);
