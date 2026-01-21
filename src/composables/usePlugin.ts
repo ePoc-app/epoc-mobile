@@ -1,11 +1,11 @@
-import {ref, onUnmounted} from 'vue';
+import { ref, onUnmounted } from 'vue';
 import type { PluginEntry } from '@/types/plugin';
 import type { Epoc } from '@/types/epoc';
 
 const plugins = ref<PluginEntry[]>([]);
 const rootFolder = ref<string>('');
 const allPluginLoaded = ref<boolean>(false);
-const activeListeners = new Set<{ handler: (e: MessageEvent) => void }>();
+const currentMessage = ref<any>({});
 
 /**
  * Composable to manage sandboxed plugins via iframes.
@@ -54,12 +54,12 @@ export function usePlugin() {
                     if (message.data.pluginId !== uid) return;
 
                     // 1. Initial Load: Plugin logic script is ready
-                    if (message.data.event === 'load' && !plugins.value.some((p) => p.uid === uid)) {
+                    if (message.data.event === 'load' && !plugins.value.some((p: PluginEntry) => p.uid === uid)) {
                         iframe.contentWindow?.postMessage({ event: 'load', context }, '*');
                     }
 
                     // 2. Config Received: Plugin has sent its manifest/config
-                    if (message.data.event === 'config' && !plugins.value.some((p) => p.uid === uid)) {
+                    if (message.data.event === 'config' && !plugins.value.some((p: PluginEntry) => p.uid === uid)) {
                         let templateSource = message.data.config.template;
 
                         // If template is a URL, fetch it now so 'embed()' can be synchronous later
@@ -86,8 +86,8 @@ export function usePlugin() {
 
                     // 3. Routing: Logic -> Embed communication
                     if (message.data.event === 'to-embed') {
-                        const plugin = plugins.value.find((p) => p.uid === uid);
-                        plugin?.embeds.forEach((embedId) => {
+                        const plugin = plugins.value.find((p: PluginEntry) => p.uid === uid);
+                        plugin?.embeds.forEach((embedId: string) => {
                             const embedIframe = document.getElementById(`embed-${uid}-${embedId}`) as HTMLIFrameElement;
                             embedIframe?.contentWindow?.postMessage(message.data.payload, '*');
                         });
@@ -95,7 +95,7 @@ export function usePlugin() {
 
                     // 4. Routing: Embed -> Logic communication
                     if (message.data.embedId) {
-                        const plugin = plugins.value.find((p) => p.uid === uid);
+                        const plugin = plugins.value.find((p: PluginEntry) => p.uid === uid);
                         if (!plugin) return;
                         const pluginIframe = document.getElementById(`plugin-${plugin.uid}`) as HTMLIFrameElement;
 
@@ -111,10 +111,11 @@ export function usePlugin() {
                             pluginIframe?.contentWindow?.postMessage(message.data.payload, '*');
                         }
                     }
+
+                    currentMessage.value = message.data;
                 };
 
                 window.addEventListener('message', messageHandler);
-                activeListeners.add({ handler: messageHandler });
             });
         });
 
@@ -146,7 +147,7 @@ export function usePlugin() {
                 data[key] = value.replace(/"/g, '');
             });
 
-            const plugin = plugins.value.find((p) => p.config.shortcode === shortcodeName);
+            const plugin = plugins.value.find((p: PluginEntry) => p.config.shortcode === shortcodeName);
             if (plugin) {
                 const iframeHtml = createEmbeddedIframe(plugin, data);
                 processedHtml = processedHtml.replace(shortcode, iframeHtml);
@@ -193,25 +194,30 @@ export function usePlugin() {
         ></iframe>`;
     }
 
+    /**
+     * Create an iframe with plugin html template.
+     * @param templateName The name of the html template file
+     * @param data The optional data to init the plugin embed with
+     */
+    function createEmbeddedIframeFromTemplateName (templateName: string, data?: unknown) {
+        const pluginEntry = plugins.value.find((p: PluginEntry) => p.config.template === templateName);
+        return createEmbeddedIframe(pluginEntry, data);
+    }
+
     function broadcastMessage (message: any) {
         document.querySelectorAll('iframe').forEach(frame => {
             frame.contentWindow?.postMessage(message, '*')
         });
     }
 
-    // --- Lifecycle Cleanup ---
-    onUnmounted(() => {
-        activeListeners.forEach(item => window.removeEventListener('message', item.handler));
-        activeListeners.clear();
-        document.querySelector('.plugins-wrapper')?.remove();
-    });
-
     return {
         plugins,
         allPluginLoaded,
+        currentMessage,
         init,
         embed,
         createEmbeddedIframe,
+        createEmbeddedIframeFromTemplateName,
         broadcastMessage
     };
 }
