@@ -97,7 +97,7 @@ const resetZoom = (): void => {
   <div class="card-host">
     <div
         ref="card"
-        class="card"
+        class="card app-card"
         :style="{
         transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`,
         touchAction: pinching ? 'pinch-zoom' : 'pan-y pan-x'
