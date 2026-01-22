@@ -1,4 +1,4 @@
-import { ref, onUnmounted } from 'vue';
+import { ref } from 'vue';
 import type { PluginEntry } from '@/types/plugin';
 import type { Epoc } from '@/types/epoc';
 
@@ -61,6 +61,7 @@ export function usePlugin() {
                     // 2. Config Received: Plugin has sent its manifest/config
                     if (message.data.event === 'config' && !plugins.value.some((p: PluginEntry) => p.uid === uid)) {
                         let templateSource = message.data.config.template;
+                        let templateOrignalSrc = templateSource;
 
                         // If template is a URL, fetch it now so 'embed()' can be synchronous later
                         if (templateSource.endsWith('.html')) {
@@ -77,7 +78,7 @@ export function usePlugin() {
                         const plugin: PluginEntry = {
                             uid,
                             src,
-                            config: { ...message.data.config, template: templateSource },
+                            config: { ...message.data.config, template: templateSource, templateOrignalSrc },
                             embeds: []
                         };
                         plugins.value.push(plugin);
@@ -162,7 +163,6 @@ export function usePlugin() {
      */
     function createEmbeddedIframe(plugin: PluginEntry, data?: unknown): string {
         const uidEmbed = (Math.random() + 1).toString(36).substring(3);
-
         const pluginEmbedHead = `
             <link rel="stylesheet" href="${document.baseURI}assets/css/plugin-embed.css">
             <script>
@@ -200,7 +200,13 @@ export function usePlugin() {
      * @param data The optional data to init the plugin embed with
      */
     function createEmbeddedIframeFromTemplateName (templateName: string, data?: unknown) {
-        const pluginEntry = plugins.value.find((p: PluginEntry) => p.config.template === templateName);
+        const pluginEntry = plugins.value.find((p: PluginEntry) => p.config.templateOrignalSrc === templateName);
+
+        if (!pluginEntry) {
+            console.error(`Failed to find plugin entry for template ${templateName}`);
+            return '';
+        }
+
         return createEmbeddedIframe(pluginEntry, data);
     }
 

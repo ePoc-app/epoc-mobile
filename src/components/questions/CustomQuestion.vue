@@ -1,44 +1,41 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { watch, computed } from 'vue';
 import { CustomQuestion } from '@epoc/epoc-types/dist/v1/question';
 import HtmlContent from '@/views/epoc/content/HtmlContent.vue';
 import { usePlugin } from '@/composables';
-
-// TODO : Test this question
 
 const props = defineProps<{
   question: CustomQuestion;
   disabled: boolean;
 }>();
 
-const emit = defineEmits(['userResponse']);
+const emit = defineEmits(['userHasResponded']);
 
-const html = ref<string | null>(null);
+const plugin = usePlugin();
 
-const pluginService = usePlugin();
-
-watch(() => pluginService.currentMessage, (message: any) => {
+watch(plugin.currentMessage, (message: any) => {
   if (message.event === 'user-responded') {
     userResponded(message.payload);
   }
 })
 
-onMounted(() => {
-  // Generate the iframe HTML from the service
-  html.value = pluginService.createEmbeddedIframeFromTemplateName(
-      props.question.template,
-      props.question.data
-  );
+const pluggedHtml = computed(() => {
+  if (plugin.allPluginLoaded.value) {
+    return plugin.createEmbeddedIframeFromTemplateName(
+        props.question.template,
+        props.question.data
+    );
+  }
+  return '';
 });
 
 const userResponded = (answer: any) => {
-  // Emitting as an array to maintain consistency with the original component logic
-  emit('userResponse', [answer]);
+  emit('userHasResponded', [answer]);
 };
 </script>
 
 <template>
-  <html-content v-if="html" :html="html"></html-content>
+  <html-content :html="pluggedHtml"></html-content>
 </template>
 
 <style scoped lang="scss">
