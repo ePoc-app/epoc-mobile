@@ -1,4 +1,4 @@
-const isDev = import.meta.env.DEV;
+const isDev = import.meta.env.DEV || import.meta.env.VITE_APP_MODE === 'preview';
 
 // Track a Page View
 export const trackPageView = (url?: string, title?: string) => {
