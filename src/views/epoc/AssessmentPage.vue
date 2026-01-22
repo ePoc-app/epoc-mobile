@@ -302,7 +302,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                 </swiper>
             </div>
 
-            <certificate-modal :epocId="epocId" :certificateShown="certificateShown" />
+            <CertificateModal :epocId="epocId" v-model:open="certificateShown" />
         </ion-content>
 
         <ion-footer v-if="!isEnd">

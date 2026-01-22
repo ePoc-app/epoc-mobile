@@ -395,7 +395,7 @@ function shouldDisplayContent(content: Content): boolean {
                     <ion-progress-bar color="inria" :value="progress" />
                 </div>
 
-                <certificate-modal slot="fixed" :epocId="epocId" :certificateShown="certificateShown" />
+                <CertificateModal slot="fixed" :epocId="epocId" v-model:open="certificateShown" />
 
                 <div class="reader-actions" :class="{ showing: showControls }" slot="fixed">
                     <div
