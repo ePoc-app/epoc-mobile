@@ -5,6 +5,12 @@ import {download, unzip} from '@/utils/file';
 
 
 export const readEpocContent = async (dir: string, epocId: string): Promise<Epoc | null> => {
+    if (dir === 'epoc-editor') {
+        const epoc = await fetch(`/assets/demo/epocs/${epocId}/content.json`).then(res => res.json()) as Epoc;
+        epoc.id = epocId;
+        epoc.dir = `/assets/demo/epocs/${epocId}/`;
+        return epoc;
+    }
     try {
         const file = await Filesystem.readFile({
             path: `${dir}/${epocId}/content.json`,

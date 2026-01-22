@@ -5,6 +5,8 @@
   "homepage": "https://epoc.inria.fr",
   "scripts": {
     "postinstall": "node scripts/patch-capacitor-file-transfer.js",
+    "build": "ionic build",
+    "build-preview": "VITE_APP_MODE=preview ionic build",
     "dev": "ionic serve",
     "android": "source .env; npm run resources && ionic cap run android $ANDROID_TARGET; node scripts/fix-config.js",
     "android-dev": "source .env; npm run resources && ionic cap run android $ANDROID_TARGET --livereload-url=http://localhost:8100; node scripts/fix-config.js",

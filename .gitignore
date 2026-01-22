@@ -45,3 +45,6 @@ ios/DerivedData/
 
 # Screenshots
 screenshots/
+
+# Demo assets (used for editor preview)
+/public/assets/demo/
