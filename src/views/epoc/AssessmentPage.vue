@@ -86,6 +86,7 @@ const setSwiperRef = (swiper: SwiperObject) => {
     questionSlides.value = swiper;
 };
 
+const retryKey = ref(0);
 const retry = async () => {
     userScore.value = 0;
     userResponses.value = [];
@@ -95,6 +96,7 @@ const retry = async () => {
     isEnd.value = false;
     questionSlides.value?.slideTo(0);
 
+    retryKey.value++;
     questionsElements.value = [];
 };
 
@@ -237,7 +239,7 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                 <swiper :allow-touch-move="false" class="slider assessment-swiper" @swiper="setSwiperRef">
                     <swiper-slide
                         v-for="(question, questionIndex) in denormalize(assessment.questions, epoc?.questions)"
-                        :key="questionIndex"
+                        :key="`${questionIndex}-${retryKey}`"
                     >
                         <common-question
                             :ref="
