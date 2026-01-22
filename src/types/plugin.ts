@@ -1,5 +1,3 @@
-import {ReplaySubject} from 'rxjs';
-
 export interface Plugin {
     onLoad(): void
     onChapterStart(): void
@@ -9,7 +7,7 @@ export interface Plugin {
     onActivityStart(): void
     onActivityEnd(): void
     onQuestion(): void
-    onHtmlContent(element): void
+    onHtmlContent(element: HTMLElement): void
 }
 
 export interface PluginEntry {
@@ -22,4 +20,5 @@ export interface PluginEntry {
 export interface PluginConfig {
     shortcode: string;
     template: string;
+    templateOrignalSrc: string;
 }

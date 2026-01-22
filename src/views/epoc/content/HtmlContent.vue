@@ -20,9 +20,8 @@ const content = useTemplateRef('content');
 const pluggedHtml = computed(() => {
     if (plugin.allPluginLoaded.value) {
         return plugin.embed(props.html);
-    } else {
-        return props.html;
     }
+    return props.html;
 });
 
 onIonViewDidEnter(async () => {
