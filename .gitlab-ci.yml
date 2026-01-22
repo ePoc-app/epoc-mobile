@@ -1,4 +1,4 @@
-image: node:18-alpine
+image: node:20-alpine
 
 stages:
   - build
@@ -9,7 +9,6 @@ build:
   before_script:
     - apk add --no-cache zip
   script:
-  - export NG_CLI_ANALYTICS=ci
   - npm ci
   - npm run build-preview # build preview for editor
   - cd dist && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd - # zip editor preview
