@@ -10,9 +10,8 @@ import {
     IonBackButton,
     IonButton,
     onIonViewDidEnter,
-    onIonViewWillEnter,
 } from '@ionic/vue';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink } from 'vue-router';
 import {
     checkmarkOutline,
     menuOutline,
@@ -37,7 +36,6 @@ import type { Chapter } from '@/types/epoc';
 import type { Content } from '@/types/contents/content';
 import type { uid } from '@epoc/epoc-types/dist/v1';
 
-const route = useRoute();
 const epocStore = useEpocStore();
 
 const { epoc } = storeToRefs(epocStore);
@@ -45,10 +43,6 @@ const { readings } = storeToRefs(useReadingStore());
 
 const reading: Ref<Reading | undefined> = ref();
 const contentInitialized = ref(true);
-
-onIonViewWillEnter(async () => {
-    await epocStore.getEpocById(route.params.id.toString());
-});
 
 onIonViewDidEnter(() => {
     if (reading.value) {

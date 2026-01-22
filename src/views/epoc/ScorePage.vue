@@ -11,7 +11,6 @@ import {
     IonButton,
     alertController,
     loadingController,
-    onIonViewWillEnter,
 } from '@ionic/vue';
 import { ref, reactive, computed, Ref, watch } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
@@ -48,10 +47,6 @@ const { readings } = storeToRefs(readingStore);
 const route = useRoute();
 
 const { user } = useUser();
-
-onIonViewWillEnter(async () => {
-    await epocStore.getEpocById(route.params.epoc_id.toString());
-});
 
 const reading: Ref<Reading | undefined> = ref();
 const badgeMode = computed(() => (epoc.value?.badges ? Object.keys(epoc.value.badges).length > 0 : false));

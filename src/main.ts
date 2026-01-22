@@ -57,9 +57,9 @@ function init() {
         .use(IonicVue, {
             innerHTMLTemplatesEnabled: true,
         })
-        .use(router)
-        .use(pinia)
         .use(i18n)
+        .use(pinia)
+        .use(router)
 
     // Matomo setup NOT in development
     app.use(VueMatomo, {

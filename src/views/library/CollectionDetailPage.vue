@@ -74,7 +74,7 @@ const collection = computed(() => {
                             <ion-button
                                 class="expanded"
                                 color="inria"
-                                @click="router.push({ name: 'TocPage', params: { id: epoc.id } })"
+                                @click="router.push({ name: 'TocPage', params: { epoc_id: epoc.id } })"
                             >
                                 <span v-if="epoc.opened">{{ $t('LIBRARY_PAGE.CONTINUE') }}</span>
                                 <ion-icon

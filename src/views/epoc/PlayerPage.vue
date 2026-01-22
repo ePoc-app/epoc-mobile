@@ -151,17 +151,12 @@ const readerStyles = computed(() => {
 const canNavigatePrevious = computed(() => currentPage.value > 0);
 const canNavigateNext = computed(() => currentPage.value <= filteredContents.value.length);
 
-watch(epoc, (newEpoc) => {
-    if (newEpoc) initializeData();
-});
-
 watch(
-    () => route.params.epoc_id,
-    (newId) => {
-        if (newId) {
-            epocStore.getEpocById(newId.toString());
-        }
-    }
+    epoc,
+    (newEpoc) => {
+        if (newEpoc) initializeData();
+    },
+    { immediate: true }
 );
 
 watch(
@@ -176,9 +171,6 @@ watch(
 );
 
 onIonViewWillEnter(async () => {
-    const newEpoc = await epocStore.getEpocById(epocId.value);
-    if (newEpoc) initializeData();
-
     if (contentId.value) {
         await until(dataInitialized).toBeTruthy();
         navigateToContent(contentId.value, 0);
