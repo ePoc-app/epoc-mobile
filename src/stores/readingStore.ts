@@ -228,6 +228,7 @@ export const useReadingStore = defineStore('reading', () => {
             bookmarks: [],
             choices: [],
             flags: [],
+            badges: [],
             certificateShown: false,
         }));
         saveReadings();
