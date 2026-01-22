@@ -5,11 +5,11 @@ import AboutPage from '@/views/AboutPage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
 import CollectionDetailPage from '@/views/library/CollectionDetailPage.vue';
 import EpocOverviewPage from '@/views/epoc/OverviewPage.vue';
-import WIPPage from '@/views/WIPPage.vue';
 import TocPage from '@/views/epoc/TocPage.vue';
 import PlayerPage from '@/views/epoc/PlayerPage.vue';
 import AssessmentPage from '@/views/epoc/AssessmentPage.vue';
 import ScorePage from '@/views/epoc/ScorePage.vue';
+import OrphanPlayerPage from '@/views/epoc/OrphanPlayerPage.vue';
 import { trackPageView } from '@/utils/matomo';
 import { useEpocStore } from '@/stores/epocStore';
 
@@ -55,11 +55,6 @@ const routes: Array<RouteRecordRaw> = [
         component: CollectionDetailPage,
     },
     {
-        path: '/wip/:any',
-        name: 'WIP',
-        component: WIPPage,
-    },
-    {
         path: '/:libraryId/:id',
         name: 'EpocOverviewPage',
         component: EpocOverviewPage,
@@ -91,7 +86,8 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/epoc/play/:epoc_id/content/:content_id',
         name: 'OrphanPlayer',
-        component: WIPPage,
+        component: OrphanPlayerPage,
+        beforeEnter: fetchEpoc,
     },
     {
         path: '/epoc/:epoc_id/assessment/:assessment_id',
