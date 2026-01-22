@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton, IonFooter, IonTitle, IonButtons, IonText } from '@ionic/vue';
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonToolbar,
+    IonIcon,
+    IonBackButton,
+    IonButton,
+    IonFooter,
+    IonTitle,
+    IonButtons,
+    IonText,
+} from '@ionic/vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
     ellipsisHorizontal,
@@ -18,7 +30,7 @@ import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
 import VideoPlayer from '@/components/VideoPlayer.vue';
 import { useLocalEpocsStore } from '@/stores/localEpocsStore';
-import {Capacitor} from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
 
 const { t } = useI18n();
 
@@ -109,7 +121,7 @@ const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
                         :controls="{ show: false, timeline: true, overlay: true }"
                     >
                     </video-player>
-                    <img v-else :alt="'Cover image : ' + epoc.title" :src="pathToUrl(epoc.thumbnail)" />
+                    <img v-else :alt="epoc.title" :src="pathToUrl(epoc.image)" />
                 </div>
 
                 <div class="epoc-specs">
@@ -179,7 +191,7 @@ const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
                 </div>
                 <div class="tabs">
                     <div class="tab" v-if="selectedTab === 0">
-                        <div class="course-objective" v-for="objective of epoc.objectives">
+                        <div v-for="objective of epoc.objectives" :key="objective" class="course-objective">
                             <div class="course-objective-icon">
                                 <ion-icon aria-hidden="true" :icon="checkmarkOutline"></ion-icon>
                             </div>
@@ -187,7 +199,11 @@ const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
                         </div>
                     </div>
                     <div class="tab" v-if="selectedTab === 3">
-                        <div class="course-prerequisites" v-for="prerequisite of epoc.prerequisites">
+                        <div
+                            v-for="prerequisite of epoc.prerequisites"
+                            :key="prerequisite"
+                            class="course-prerequisites"
+                        >
                             <div class="course-prerequisites-icon">
                                 <ion-icon aria-hidden="true" :icon="arrowForwardOutline"></ion-icon>
                             </div>
@@ -198,7 +214,7 @@ const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
                         <ion-text class="html-text" :innerHTML="epoc.summary"></ion-text>
                     </div>
                     <div class="tab" v-if="selectedTab === 2">
-                        <div class="epoc-author" v-for="author of epoc.authors">
+                        <div v-for="author of epoc.authors" :key="author.name" class="epoc-author">
                             <div class="epoc-author-name">
                                 <img
                                     :alt="t('OVERVIEW_PAGE.PICTURE_ALT') + author.name"
