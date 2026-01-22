@@ -39,7 +39,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.scss';
 
-if ('serviceWorker' in navigator && Capacitor.getPlatform() === 'web') {
+if ('serviceWorker' in navigator && Capacitor.getPlatform() === 'web' && import.meta.env.VITE_APP_MODE !== 'preview') {
     const registration = navigator.serviceWorker.register('/sw.js').then((registration) => {
         console.log('ServiceWorker registered:', registration);
         init();
