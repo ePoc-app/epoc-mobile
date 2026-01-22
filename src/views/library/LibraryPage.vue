@@ -272,7 +272,7 @@ const linkInputAlert = async () => {
                                 <ion-button
                                     class="expanded"
                                     color="inria"
-                                    v-on:click="router.push({ name: 'TocPage', params: { id: epoc.id } })"
+                                    v-on:click="router.push({ name: 'TocPage', params: { epoc_id: epoc.id } })"
                                 >
                                     <span v-if="epoc.opened">{{ $t('LIBRARY_PAGE.CONTINUE') }}</span>
                                     <ion-icon
@@ -360,7 +360,7 @@ const linkInputAlert = async () => {
                         <ion-button
                             class="expanded"
                             color="inria"
-                            v-on:click="router.push({ name: 'TocPage', params: { id: epoc.id } })"
+                            v-on:click="router.push({ name: 'TocPage', params: { epoc_id: epoc.id } })"
                         >
                             <span>{{ $t('LIBRARY_PAGE.OPEN') }}</span>
                         </ion-button>

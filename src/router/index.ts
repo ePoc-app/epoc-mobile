@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { RouteRecordRaw } from 'vue-router';
+import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
 import LibraryPage from '@/views/library/LibraryPage.vue';
 import AboutPage from '@/views/AboutPage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
@@ -11,6 +11,23 @@ import PlayerPage from '@/views/epoc/PlayerPage.vue';
 import AssessmentPage from '@/views/epoc/AssessmentPage.vue';
 import ScorePage from '@/views/epoc/ScorePage.vue';
 import { trackPageView } from '@/utils/matomo';
+import { useEpocStore } from '@/stores/epocStore';
+
+function fetchEpoc(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+    const epocId = to.params.epoc_id;
+
+    if (!epocId) {
+        next();
+        return;
+    }
+
+    const epocStore = useEpocStore();
+    if (!epocStore.epoc || epocStore.epoc.id !== epocId.toString()) {
+        epocStore.getEpocById(epocId.toString());
+    }
+
+    next();
+}
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -48,24 +65,28 @@ const routes: Array<RouteRecordRaw> = [
         component: EpocOverviewPage,
     },
     {
-        path: '/epoc/toc/:id',
+        path: '/epoc/toc/:epoc_id',
         name: 'TocPage',
         component: TocPage,
+        beforeEnter: fetchEpoc,
     },
     {
         path: '/epoc/play/:epoc_id/:chapter_id',
         name: 'Player',
         component: PlayerPage,
+        beforeEnter: fetchEpoc,
     },
     {
         path: '/epoc/play/:epoc_id/:chapter_id/content/:content_id',
         name: 'PlayerContent',
         component: PlayerPage,
+        beforeEnter: fetchEpoc,
     },
     {
         path: '/epoc/play/:epoc_id/:chapter_id/content/:content_id/:next',
         name: 'EpocPlayerPage',
         component: PlayerPage,
+        beforeEnter: fetchEpoc,
     },
     {
         path: '/epoc/play/:epoc_id/content/:content_id',
@@ -76,11 +97,13 @@ const routes: Array<RouteRecordRaw> = [
         path: '/epoc/:epoc_id/assessment/:assessment_id',
         name: 'AssessmentPage',
         component: AssessmentPage,
+        beforeEnter: fetchEpoc,
     },
     {
         path: '/epoc/score/:epoc_id',
         name: 'ScorePage',
         component: ScorePage,
+        beforeEnter: fetchEpoc,
     },
 ];
 
@@ -89,7 +112,7 @@ const router = createRouter({
     routes,
 });
 
-router.afterEach((to) => {
+router.afterEach((to: RouteLocationNormalized) => {
     if (to.name === 'PlayerContent') return; // Skip for PlayerContent handle in PlayerPage updateCurrentContent
     // We send a manually cleaned URL to Matomo
     // This ensures iOS and Android appear identical

@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { actionSheetController } from '@ionic/vue';
-import { useRouter } from 'vue-router';
 import { uid } from '@epoc/epoc-types/dist/v1';
-import { useI18n } from 'vue-i18n';
 import { homeOutline, listCircleOutline, starOutline, receiptOutline, settingsOutline } from 'ionicons/icons';
 import { readEpocContent } from '@/utils/epocService';
 import { Epoc, Chapter } from '@/types/epoc';
@@ -11,12 +9,11 @@ import { displayLicence } from '@/utils/app';
 import { usePlugin } from '@/composables';
 import { Content } from '@/types/contents/content';
 import { Capacitor } from '@capacitor/core';
+import { i18n } from '@/i18n';
+import router from '@/router';
 
 export const useEpocStore = defineStore('epoc', () => {
-    const { t } = useI18n();
-
     // --- State ---
-    const router = useRouter();
     const pluginService = usePlugin();
     const initialized = ref(false);
     const _epoc = ref<Epoc | null>(null);
@@ -137,7 +134,7 @@ export const useEpocStore = defineStore('epoc', () => {
 
         const buttons = [
             {
-                text: t('FLOATING_MENU.HOME'),
+                text: i18n.global.t('FLOATING_MENU.HOME'),
                 icon: homeOutline,
                 handler: () => {
                     router.push('/library');
@@ -146,7 +143,7 @@ export const useEpocStore = defineStore('epoc', () => {
             ...(!router.currentRoute.value.path.includes('/epoc/toc/' + _epoc.value!.id)
                 ? [
                       {
-                          text: t('FLOATING_MENU.TOC'),
+                          text: i18n.global.t('FLOATING_MENU.TOC'),
                           icon: listCircleOutline,
                           handler: () => {
                               router.push('/epoc/toc/' + _epoc.value!.id);
@@ -155,14 +152,14 @@ export const useEpocStore = defineStore('epoc', () => {
                   ]
                 : []),
             {
-                text: t('FLOATING_MENU.SCORE_DETAILS'),
+                text: i18n.global.t('FLOATING_MENU.SCORE_DETAILS'),
                 icon: starOutline,
                 handler: () => {
                     router.push('/epoc/score/' + _epoc.value!.id);
                 },
             },
             {
-                text: t('FLOATING_MENU.LICENSE'),
+                text: i18n.global.t('FLOATING_MENU.LICENSE'),
                 icon: receiptOutline,
                 handler: async () => {
                     if (!_epoc.value) return;
@@ -171,14 +168,14 @@ export const useEpocStore = defineStore('epoc', () => {
                 },
             },
             {
-                text: t('FLOATING_MENU.SETTINGS'),
+                text: i18n.global.t('FLOATING_MENU.SETTINGS'),
                 icon: settingsOutline,
                 handler: () => {
                     router.push('/settings');
                 },
             },
             {
-                text: t('CLOSE'),
+                text: i18n.global.t('CLOSE'),
                 role: 'cancel',
             },
         ];

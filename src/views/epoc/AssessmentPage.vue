@@ -33,10 +33,6 @@ const assessmentId = computed(() => route.params.assessment_id?.toString());
 const { epoc } = storeToRefs(epocStore);
 const { readings } = storeToRefs(readingStore);
 
-if (!epoc.value) {
-    epocStore.getEpocById(epocId.value);
-}
-
 const questionsElements = ref<CommonQuestionType[]>([]);
 
 const userResponses = ref<any[]>([]);
