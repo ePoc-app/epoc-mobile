@@ -319,5 +319,14 @@
   "CANCEL": "Abbrechen",
   "CONFIRM": "Bestätigen",
   "CLOSE": "Schließen",
-  "OK": "OK"
+  "OK": "OK",
+  
+  "MISSING": {
+    "MY_EPOCS": "Meine ePocs",
+    "CHAPTER_OPTIONS": "Kapiteloptionen",
+    "OPTIONS": "Optionen",
+    "RETURN": "Zurück",
+    "NEXT_CHAPTER": "Nächstes Kapitel",
+    "QUESTION": "keine Frage | 1 Frage | {nb} Fragen"
+  }
 }

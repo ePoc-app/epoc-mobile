@@ -319,5 +319,14 @@
   "CANCEL": "Annulla",
   "CONFIRM": "Conferma",
   "CLOSE": "Chiudi",
-  "OK": "OK"
+  "OK": "OK",
+  
+  "MISSING": {
+    "MY_EPOCS": "I miei ePocs",
+    "CHAPTER_OPTIONS": "Opzioni del capitolo",
+    "OPTIONS": "Opzioni",
+    "RETURN": "Indietro",
+    "NEXT_CHAPTER": "Prossimo capitolo",
+    "QUESTION": "nessuna domanda | 1 domanda | {nb} domande"
+  }
 }

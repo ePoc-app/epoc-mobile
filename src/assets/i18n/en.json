@@ -326,6 +326,7 @@
     "CHAPTER_OPTIONS": "Chapter's options",
     "OPTIONS" : "Options",
     "RETURN" : "Return",
-    "NEXT_CHAPTER" : "Next Chapter"
+    "NEXT_CHAPTER" : "Next Chapter",
+    "QUESTION" : "no question | 1 question | {nb} questions"
   }
 }
