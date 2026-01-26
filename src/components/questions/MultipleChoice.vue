@@ -17,29 +17,35 @@ const selectedAnswers = ref<any[]>(
     props.userPreviousResponse && props.userPreviousResponse.length > 0 ? props.userPreviousResponse : []
 );
 
-const selectAnswer = (answer: any) => {
-    const index = selectedAnswers.value.indexOf(answer.detail.value);
-    if (answer.detail.checked && index === -1) {
-        selectedAnswers.value.push(answer.detail.value);
+function selectAnswer(value: string) {
+    const index = selectedAnswers.value.indexOf(value);
+
+    if (index === -1) {
+        selectedAnswers.value.push(value);
     } else {
-        if (index >= 0) {
-            selectedAnswers.value.splice(index, 1);
-        }
+        selectedAnswers.value.splice(index, 1);
     }
+
     emits('userHasResponded', selectedAnswers.value);
-};
+}
 </script>
 
 <template>
     <ion-list>
-        <ion-item v-for="response of question.responses" :key="response.value" lines="none" :class="{ disabled }">
+        <ion-item
+            v-for="response of question.responses"
+            :key="response.value"
+            lines="none"
+            :class="{ disabled }"
+            @click="selectAnswer(response.value)"
+        >
             <ion-checkbox
                 mode="ios"
                 slot="start"
                 :value="response.value"
                 :checked="selectedAnswers.indexOf(response.value) !== -1"
                 :disabled="disabled"
-                @ionChange="selectAnswer"
+                @click.stop
             />
             <ion-label class="ion-text-wrap">{{ response.label }}</ion-label>
         </ion-item>
