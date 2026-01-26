@@ -37,6 +37,7 @@ const selectAnswer = (answer: string) => {
             :key="response.value"
             lines="none"
             color="inria-contrast-button"
+            :class="{ disabled }"
             @click="selectAnswer(response.value)"
         >
             <ion-radio mode="md" slot="start" :disabled="disabled" :value="response.value" />
@@ -47,7 +48,7 @@ const selectAnswer = (answer: string) => {
     </ion-radio-group>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 ion-radio-group {
     display: block;
     margin-top: 2rem;
@@ -60,6 +61,10 @@ ion-item {
 
     &:last-child {
         margin-bottom: 0;
+    }
+
+    &.disabled {
+        pointer-events: none;
     }
 }
 

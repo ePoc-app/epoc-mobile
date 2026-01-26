@@ -196,7 +196,12 @@ onBeforeUnmount(() => gesture?.destroy());
             <span>{{ sides[1] }}</span>
         </button>
 
-        <button class="swipe-action small" :class="{ hidden: cardsSorted.length === 0 }" @click="undo">
+        <button
+            class="swipe-action small"
+            :class="{ hidden: cardsSorted.length === 0 }"
+            :disabled="disabled"
+            @click="undo"
+        >
             <IonIcon aria-hidden src="/assets/icon/annuler.svg" />
         </button>
 

@@ -182,7 +182,7 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
 
 <template>
     <div class="drop-zones">
-        <div v-if="!disabled" class="drop-zones-instruction">
+        <div v-if="!disabled" class="instruction">
             <template v-if="question.statement">
                 <span :innerHTML="removeSecableSpace(question.statement)" class="custom" />
             </template>
@@ -191,58 +191,58 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
                 <IonIcon src="/assets/icon/glisser2.svg" />
                 <div :innerHTML="$t('QUESTION.DRAG_DROP_INSTRUCTION')" />
             </template>
+        </div>
 
-            <IonRange
-                class="progress-indicator"
-                disabled
-                mode="md"
-                :step="1"
-                :min="0"
-                :max="question.responses.length"
-                :value="question.responses.length - responses.length"
-                :snaps="true"
-            />
+        <IonRange
+            class="progress-indicator"
+            disabled
+            mode="md"
+            :step="1"
+            :min="0"
+            :max="question.responses.length"
+            :value="question.responses.length - responses.length"
+            :snaps="true"
+        />
 
-            <div v-if="responses.length" class="responses" :class="{ dragging: isDragging }">
-                <div ref="drop-item" class="response-item">
-                    <span>{{ responses[0].label }}</span>
-                    <IonIcon src="/assets/icon/slider.svg" />
-                    <div style="position: absolute; inset: 0; touch-action: none" />
+        <div v-if="responses.length" class="responses" :class="{ dragging: isDragging }">
+            <div ref="drop-item" class="response-item">
+                <span>{{ responses[0].label }}</span>
+                <IonIcon src="/assets/icon/slider.svg" />
+                <div style="position: absolute; inset: 0; touch-action: none" />
+            </div>
+        </div>
+
+        <div
+            v-for="(zone, zoneIndex) of dropZones"
+            :key="zoneIndex"
+            :ref="dropZonesElems.set"
+            class="drop-zone"
+            :class="{ open: zone.isOpen && answer[zoneIndex].length > 0 }"
+            @click="addResponse(zoneIndex)"
+        >
+            <div class="zone-header">
+                <div class="zone-label">{{ zone.label }}</div>
+                <div class="zone-count" :class="{ active: answer[zoneIndex]?.length > 0 }">
+                    {{ answer[zoneIndex]?.length }}
                 </div>
+                <IonIcon :icon="chevronForwardOutline" @click="openZone($event, zone)" />
             </div>
 
-            <div
-                v-for="(zone, zoneIndex) of dropZones"
-                :key="zoneIndex"
-                :ref="dropZonesElems.set"
-                class="drop-zone"
-                :class="{ open: zone.isOpen && answer[zoneIndex].length > 0 }"
-                @click="addResponse(zoneIndex)"
-            >
-                <div class="zone-header">
-                    <div class="zone-label">{{ zone.label }}</div>
-                    <div class="zone-count" :class="{ active: answer[zoneIndex]?.length > 0 }">
-                        {{ answer[zoneIndex]?.length }}
-                    </div>
-                    <IonIcon :icon="chevronForwardOutline" @click="openZone($event, zone)" />
-                </div>
-
-                <div class="zone">
-                    <div
-                        v-for="(response, responseIndex) of answer[zoneIndex]"
-                        :key="responseIndex"
-                        class="response-item sorted"
-                    >
-                        {{ response.label }}
-                        <IonIcon :icon="close" @click="removeResponse($event, zoneIndex, responseIndex as number)" />
-                    </div>
+            <div class="zone">
+                <div
+                    v-for="(response, responseIndex) of answer[zoneIndex]"
+                    :key="responseIndex"
+                    class="response-item sorted"
+                >
+                    {{ response.label }}
+                    <IonIcon :icon="close" @click="removeResponse($event, zoneIndex, responseIndex as number)" />
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped style="scss">
+<style style="scss">
 .responses {
     position: relative;
     margin-bottom: 1em;
@@ -264,6 +264,7 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
     border-radius: 0.5rem;
     box-shadow: 0 1px 7px 0 var(--ion-color-drag-drop-shadow);
     color: var(--ion-color-inria-spe);
+    cursor: move;
 
     ion-icon {
         color: var(--ion-color-text-2);
@@ -299,7 +300,7 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
         margin: 0 1rem;
     }
 
-    &-instruction {
+    .instruction {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -315,7 +316,7 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
         div {
             font-size: 0.875rem;
 
-            :deep(.label) {
+            .label {
                 display: inline-block;
                 padding: 0.1rem 0.2rem;
                 margin: 0 0.2rem;
@@ -325,7 +326,7 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
                 color: var(--ion-color-inria-spe);
             }
 
-            :deep(.cat) {
+            .cat {
                 display: inline-block;
                 padding: 0.1rem 0.2rem;
                 margin: 0 0.2rem;

@@ -32,7 +32,7 @@ const selectAnswer = (answer: any) => {
 
 <template>
     <ion-list>
-        <ion-item v-for="response of question.responses" :key="response.value" lines="none">
+        <ion-item v-for="response of question.responses" :key="response.value" lines="none" :class="{ disabled }">
             <ion-checkbox
                 mode="ios"
                 slot="start"
@@ -60,6 +60,10 @@ ion-item {
     --background: var(--ion-color-contrast);
     &:last-child {
         margin-bottom: 0;
+    }
+
+    &.disabled {
+        pointer-events: none;
     }
 }
 
