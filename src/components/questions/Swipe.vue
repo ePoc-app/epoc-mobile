@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted, PropType, ref, useTemplateRef } from 'vue';
+import { createGesture, Gesture, IonIcon, IonRange } from '@ionic/vue';
+import { ref, PropType, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue';
 import { SwipeQuestion } from '@/types/contents/assessment';
-import { shuffleArray, sleep } from '@/utils/utils';
-import { createGesture, createAnimation } from '@ionic/vue';
 import { removeSecableSpace } from '@/utils/transform';
-import { IonIcon, IonRange } from '@ionic/vue';
+import { Motion } from 'motion-v';
 
-type CardType = { label: string; value: string; selectedSide?: string };
-enum SIDE {
-    Left = 'left',
-    Right = 'right',
+interface Card {
+    id: string;
+    label: string | undefined;
+    animationState: 'initial' | 'swipeRight' | 'swipeLeft';
+    manualX: number;
+    selectedSide: string | null;
 }
 
 const props = defineProps({
@@ -18,195 +19,195 @@ const props = defineProps({
     userPreviousResponse: Array<string>,
 });
 
-const emits = defineEmits<{
-    userHasResponded: [userResponses: any[]];
+const emit = defineEmits<{
+    (e: 'dragging', value: 'dragstart' | 'dragend'): void;
+    (e: 'userHasResponded', userResponses: any[] | null): void;
 }>();
 
-// ref
-const swipeCardComponents = useTemplateRef<HTMLDivElement[]>('swipe-cards');
-const sides = ref<string[]>(props.question.correctResponse.map((response) => response.label));
-// TODO : add a reset of selectedSide on reload of the component. As of now if you come back to the same question, the selected side is already set and appears on the screen.
-const cardsRemaining = ref<Array<CardType>>(shuffleArray(props.question.responses));
-const cardsSorted = ref<Array<CardType>>([]);
+const cardsRemaining = ref<Card[]>([]);
+const cardsSorted = ref<Card[]>([]);
+const isDragging = ref(false);
+const topCardRef = ref(null);
+let gesture: Gesture | null = null;
 
-// Sent to parent
-const answers = ref<{ left: CardType[]; right: CardType[] }>({ left: [], right: [] });
+const totalCards = computed(() => props.question.responses.length);
+const isEmpty = computed(() => cardsRemaining.value.length === 0);
+const sides = computed(() => props.question.correctResponse.map((r) => r.label));
 
-// Related to animation
-const undoDisabled = ref<boolean>(false);
+function initCards() {
+    const responses = [...props.question.responses];
 
-const currentCard = computed(() =>
-    cardsRemaining.value.length > 0 ? cardsRemaining.value[cardsRemaining.value.length - 1] : undefined
-);
-const currentSwipeCard = computed(() =>
-    swipeCardComponents.value?.find((swipeCard) => swipeCard.id == currentCard.value?.label)
-);
+    cardsRemaining.value = responses
+        .sort(() => Math.random() - 0.5)
+        .map((r, i) => ({
+            ...r,
+            id: `card-${i}-${Math.random()}`,
+            animationState: 'initial',
+            manualX: 0,
+            selectedSide: null,
+        }));
+}
 
-onMounted(() => {
-    initSwipe();
+function setupGesture() {
+    if (gesture) gesture.destroy();
+    if (isEmpty.value || !topCardRef.value) return;
+
+    const card = cardsRemaining.value[cardsRemaining.value.length - 1];
+    const threshold = window.innerWidth / 3;
+
+    gesture = createGesture({
+        el: topCardRef.value,
+        gestureName: 'swipe-gesture',
+        onStart: () => {
+            isDragging.value = true;
+            emit('dragging', 'dragstart');
+        },
+        onMove: (event) => {
+            card.manualX = event.deltaX;
+            card.selectedSide = event.deltaX > 20 ? sides.value[0] : event.deltaX < -20 ? sides.value[1] : null;
+        },
+        onEnd: (event) => {
+            isDragging.value = false;
+            emit('dragging', 'dragend');
+
+            if (Math.abs(event.deltaX) > threshold || Math.abs(event.velocityX) > 0.4) {
+                completeSwipe(event.deltaX > 0 ? 'swipeRight' : 'swipeLeft');
+            } else {
+                card.manualX = 0;
+                card.selectedSide = null;
+            }
+        },
+    });
+
+    gesture.enable();
+}
+
+function completeSwipe(direction: 'swipeRight' | 'swipeLeft') {
+    const card = cardsRemaining.value[cardsRemaining.value.length - 1];
+    card.animationState = direction;
+
+    card.manualX = direction === 'swipeRight' ? 1000 : -1000;
+
+    setTimeout(() => {
+        const movedCard = cardsRemaining.value.pop();
+        if (!movedCard) return;
+
+        cardsSorted.value.push(movedCard);
+
+        if (isEmpty.value) {
+            const lefts = cardsSorted.value.filter((c) => c.animationState === 'swipeRight');
+            const rights = cardsSorted.value.filter((c) => c.animationState === 'swipeLeft');
+            emit('userHasResponded', [lefts, rights]);
+        }
+    }, 300);
+}
+
+function manualSwipe(direction: 'swipeRight' | 'swipeLeft') {
+    const card = cardsRemaining.value[cardsRemaining.value.length - 1];
+    card.selectedSide = direction === 'swipeRight' ? sides.value[0] : sides.value[1];
+    completeSwipe(direction);
+}
+
+async function undo() {
+    if (cardsSorted.value.length === 0) return;
+
+    const card = cardsSorted.value.pop();
+    if (!card) return;
+
+    cardsRemaining.value.push(card);
+
+    await nextTick();
+
+    setTimeout(() => {
+        card.animationState = 'initial';
+        card.manualX = 0;
+        card.selectedSide = null;
+    }, 30);
+
+    emit('userHasResponded', null);
+}
+
+watch([cardsRemaining, topCardRef], () => {
+    nextTick(setupGesture);
 });
 
-const initSwipe = () => {
-    const threshold = window.innerWidth / 3;
-    const thresholdVelocity = 0.4;
-    swipeCardComponents.value?.forEach((card, index) => {
-        const elem = card;
-        const swipeCard = cardsRemaining.value[index];
-        const gesture = createGesture({
-            el: elem,
-            threshold: 0,
-            gestureName: 'swipe',
-            onMove: (ev) => {
-                applyAnimation(`translateX(${ev.deltaX}px) rotate(${ev.deltaX / 10}deg)`);
-                swipeCard.selectedSide = ev.deltaX > 0 ? sides.value[0] : sides.value[1];
-            },
-            onEnd: (ev) => {
-                if (ev.deltaX > threshold || ev.velocityX > thresholdVelocity) {
-                    applyCompleteAnimation(SIDE.Right).then(() => selectSide(SIDE.Right));
-                } else if (ev.deltaX < -threshold || ev.velocityX < -thresholdVelocity) {
-                    applyCompleteAnimation(SIDE.Left).then(() => selectSide(SIDE.Left));
-                } else {
-                    swipeCard.selectedSide = undefined;
-                    applyAnimation(`translateX(0px) rotate(0deg)`);
-                    elem.style.transition = 'transform .3s ease-in-out';
-                }
-            },
-        });
-
-        gesture.enable(true);
-    });
-};
-
-const undo = () => {
-    if (cardsSorted.value.length > 0) {
-        const lastCardSorted = cardsSorted.value.pop() as CardType;
-        removeFromAnswers(lastCardSorted);
-        cardsRemaining.value.push(lastCardSorted!);
-        initSwipe();
-        emits('userHasResponded', []);
-    }
-};
-
-const removeFromAnswers = (card: CardType) => {
-    const selectedSide = card.selectedSide == sides.value[0] ? SIDE.Right : SIDE.Left;
-    answers.value[selectedSide].pop();
-    card.selectedSide = undefined;
-};
-
-const swipe = async (side: SIDE) => {
-    if (currentCard.value) {
-        currentCard.value.selectedSide = side == SIDE.Right ? sides.value[0] : sides.value[1];
-        applyCompleteAnimation(side).then(() => selectSide(side));
-    }
-};
-
-const applyCompleteAnimation = async (animationState: SIDE) => {
-    const translate =
-        animationState == SIDE.Left ? `translateX(-100vh) rotate(-50deg)` : `translateX(100vh) rotate(50deg)`;
-    await applyAnimation(translate);
-};
-
-const applyAnimation = async (translate: string) => {
-    if (currentSwipeCard.value) {
-        const animation = createAnimation().addElement(currentSwipeCard.value).duration(300).to('transform', translate);
-        animation.play();
-        await sleep(300); // wait until animation is done
-    }
-};
-
-const selectSide = (side: SIDE) => {
-    if (cardsRemaining.value.length > 0) {
-        const sortedCard = cardsRemaining.value.pop();
-        cardsSorted.value.push(sortedCard!);
-        answers.value[side].push({ label: sortedCard!.label, value: sortedCard!.value });
-    }
-    if (cardsRemaining.value.length === 0) {
-        emits('userHasResponded', [answers.value[SIDE.Right], answers.value[SIDE.Left]]);
-    }
-};
+onMounted(initCards);
+onBeforeUnmount(() => gesture?.destroy());
 </script>
 
 <template>
-    <p class="swipe-instruction" v-if="!disabled">
-        <template v-if="question.statement">
-            <span class="custom" v-if="!disabled" :innerHTML="removeSecableSpace(question.statement)"></span>
-        </template>
+    <p v-if="!disabled" class="swipe-instruction">
+        <span v-if="question.statement" class="custom" :innerHTML="removeSecableSpace(question.statement)" />
 
         <template v-else>
-            <ion-icon aria-hidden="true" src="/assets/icon/glisser2.svg" />
+            <IonIcon src="/assets/icon/glisser2.svg" aria-hidden />
             <span>{{ $t('QUESTION.SWIPE.INSTRUCTION') }}</span>
         </template>
     </p>
 
     <div class="swipe-cards">
-        <div
-            v-for="(card, cardIndex) of cardsRemaining"
-            :key="cardIndex"
-            ref="swipe-cards"
+        <Motion
+            v-for="(card, index) in cardsRemaining"
+            :key="card.id"
+            :ref="el => { if (index === cardsRemaining.length - 1) topCardRef = (el as any)?.$el || el }"
             class="swipe-card"
-            style="
-                 {
-                    transform: card.transform;
-                }
-            "
-            :id="card.label"
+            :initial="{
+                x: card.animationState === 'swipeRight' ? 500 : card.animationState === 'swipeLeft' ? -500 : 0,
+                rotate: card.animationState === 'swipeRight' ? 45 : card.animationState === 'swipeLeft' ? -45 : 0,
+                opacity: card.animationState === 'initial' ? 1 : 0,
+            }"
+            :animate="{
+                x: card.manualX,
+                rotate: card.manualX / 10,
+                scale: index === cardsRemaining.length - 1 ? 1 : 0.95,
+            }"
+            :transition="{
+                type: 'spring',
+                stiffness: isDragging ? 1000 : 300,
+                damping: 30,
+            }"
+            :style="{ zIndex: index }"
         >
-            <div class="swipe-card-choice" v-if="card.selectedSide">
+            <div v-if="card.selectedSide" class="swipe-card-choice">
                 {{ card.selectedSide }}
             </div>
-            <div :aria-hidden="cardsRemaining.length - 1 !== cardIndex" class="swipe-card-content">
-                <ion-icon aria-hidden="true" src="/assets/icon/citation.svg" />
-                <div>« {{ card.label }} »</div>
+
+            <div :aria-hidden="index !== cardsRemaining.length - 1" class="swipe-card-content">
+                <IonIcon src="/assets/icon/citation.svg" aria-hidden />
+                <p>« {{ card.label }} »</p>
             </div>
-        </div>
-        <div v-if="cardsRemaining.length <= 0">{{ $t('QUESTION.SWIPE.FINISH') }}</div>
+        </Motion>
+
+        <div v-if="isEmpty">{{ $t('QUESTION.SWIPE.FINISH') }}</div>
     </div>
-    <ion-range
+
+    <IonRange
         class="progress-indicator"
-        :disabled="true"
+        disabled
         mode="md"
-        :step="1"
-        :min="0"
-        :max="question.responses.length"
-        :value="question.responses.length - cardsRemaining.length"
-        :snaps="true"
+        :max="totalCards"
+        :value="totalCards - cardsRemaining.length"
+        snaps
     />
 
     <div class="swipe-actions">
-        <div
-            :aria-hidden="cardsRemaining.length < 1"
-            role="button"
-            class="swipe-action"
-            :class="{ hidden: cardsRemaining.length <= 0 || undoDisabled }"
-            @click="swipe(SIDE.Left)"
-        >
-            <ion-icon aria-hidden="true" class="swipe-right" src="/assets/icon/gauche.svg" />
+        <button class="swipe-action" :class="{ hidden: isEmpty }" @click="manualSwipe('swipeLeft')">
+            <IonIcon src="/assets/icon/gauche.svg" aria-hidden class="swipe-right" />
             <span>{{ sides[1] }}</span>
-        </div>
-        <div
-            :aria-hidden="cardsSorted.length < 1"
-            aria-roledescription="Retour"
-            role="button"
-            class="swipe-action small"
-            :class="{ hidden: cardsSorted.length <= 0 || undoDisabled }"
-            @click="undo"
-        >
-            <ion-icon aria-hidden="true" src="/assets/icon/annuler.svg" />
-        </div>
-        <div
-            :aria-hidden="cardsRemaining.length < 1"
-            role="button"
-            class="swipe-action"
-            :class="{ hidden: cardsRemaining.length <= 0 || undoDisabled }"
-            @click="swipe(SIDE.Right)"
-        >
-            <ion-icon aria-hidden="true" src="/assets/icon/droite.svg" />
+        </button>
+
+        <button class="swipe-action small" :class="{ hidden: cardsSorted.length === 0 }" @click="undo">
+            <IonIcon aria-hidden src="/assets/icon/annuler.svg" />
+        </button>
+
+        <button class="swipe-action" :class="{ hidden: isEmpty }" @click="manualSwipe('swipeRight')">
+            <IonIcon aria-hidden src="/assets/icon/droite.svg" />
             <span>{{ sides[0] }}</span>
-        </div>
+        </button>
     </div>
 </template>
 
-<style>
+<style scoped lang="scss">
 .swipe-instruction {
     display: flex;
     align-items: center;
@@ -304,6 +305,7 @@ const selectSide = (side: SIDE) => {
     color: white;
     z-index: 10;
     touch-action: none;
+    will-change: transform;
 
     &:before {
         content: '';
@@ -359,6 +361,8 @@ const selectSide = (side: SIDE) => {
         background: var(--ion-color-contrast);
         border-radius: 4rem;
         font-size: 2rem;
+
+        color: var(--ion-color-text-2);
 
         &.small {
             width: 2rem;
