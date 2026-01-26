@@ -3,7 +3,7 @@ import { DragAndDropquestion } from '@/types/contents/assessment';
 import { removeSecableSpace } from '@/utils/transform';
 import { Response } from '@epoc/epoc-types/src/v1/question';
 import { createGesture } from '@ionic/vue';
-import { ref, onMounted, useTemplateRef } from 'vue';
+import { ref, onMounted, useTemplateRef, watch, nextTick } from 'vue';
 import { IonIcon, IonRange } from '@ionic/vue';
 import { useTemplateRefsList } from '@vueuse/core';
 import { chevronForwardOutline, close } from 'ionicons/icons';
@@ -16,7 +16,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
     (e: 'dragging', value: 'dragstart' | 'dragend'): void;
-    (e: 'userHasResponded', userResponses: any[]): void;
+    (e: 'userHasResponded', userResponses: any[] | null): void;
 }>();
 
 interface Zone {
@@ -43,7 +43,6 @@ function initialize() {
         answer.value = props.question.correctResponse.map(() => {
             return [];
         });
-        console.log('answer initialized', answer.value);
     }
 
     if (!props.disabled) {
@@ -61,7 +60,7 @@ function shuffleResponses(arr: Response[]) {
 }
 
 let interval: NodeJS.Timeout;
-onMounted(() => {
+function initializeDrag() {
     if (!dropItem.value) return;
 
     const drag = createGesture({
@@ -69,7 +68,6 @@ onMounted(() => {
         threshold: 0,
         gestureName: 'drag',
         onStart: () => {
-            console.log('starting');
             isDragging.value = true;
             emit('dragging', 'dragstart');
         },
@@ -129,7 +127,24 @@ onMounted(() => {
     });
 
     drag.enable();
+}
+
+onMounted(() => {
+    initializeDrag();
 });
+
+watch(
+    () => responses.value.length,
+    (newLength, oldLength) => {
+        if (oldLength === 0 && newLength === 1) {
+            emit('userHasResponded', null);
+
+            nextTick(() => {
+                initializeDrag();
+            });
+        }
+    }
+);
 
 function hoveringZone(x: number, y: number): number {
     let hoveringZoneIndex = -1;
@@ -149,7 +164,6 @@ function hoveringZone(x: number, y: number): number {
 }
 
 function addResponse(index: number) {
-    console.log('adding response');
     if (responses.value.length > 0) {
         answer.value[index].push(responses.value.shift());
 
@@ -264,7 +278,10 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
     border-radius: 0.5rem;
     box-shadow: 0 1px 7px 0 var(--ion-color-drag-drop-shadow);
     color: var(--ion-color-inria-spe);
-    cursor: move;
+
+    &:not(.sorted) {
+        cursor: move;
+    }
 
     ion-icon {
         color: var(--ion-color-text-2);
