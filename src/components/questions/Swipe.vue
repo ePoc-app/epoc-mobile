@@ -118,11 +118,9 @@ async function undo() {
 
     await nextTick();
 
-    setTimeout(() => {
-        card.animationState = 'initial';
-        card.manualX = 0;
-        card.selectedSide = null;
-    }, 30);
+    card.animationState = 'initial';
+    card.manualX = 0;
+    card.selectedSide = null;
 
     emit('userHasResponded', null);
 }
@@ -161,11 +159,14 @@ onBeforeUnmount(() => gesture?.destroy());
                 rotate: card.manualX / 10,
                 scale: index === cardsRemaining.length - 1 ? 1 : 0.95,
             }"
-            :transition="{
-                type: 'spring',
-                stiffness: isDragging ? 1000 : 300,
-                damping: 30,
-            }"
+            :transition="
+                isDragging
+                    ? { type: 'tween', duration: 0, ease: 'linear' }
+                    : {
+                          scale: { type: 'tween', duration: 0.1, ease: 'linear' },
+                          default: { type: 'tween', duration: 0.25, ease: 'linear' },
+                      }
+            "
             :style="{ zIndex: index }"
         >
             <div v-if="card.selectedSide" class="swipe-card-choice">
