@@ -1,5 +1,5 @@
 import { Zip } from '@epoc/capacitor-zip';
-import { Directory, Filesystem, FileInfo } from '@capacitor/filesystem';
+import { Directory, Filesystem, FileInfo, Encoding } from '@capacitor/filesystem';
 import { FileTransfer, ProgressStatus } from '@capacitor/file-transfer';
 
 
@@ -85,6 +85,21 @@ export const mkdir = async (path: string): Promise<void> => {
         // Ignore if folder already exists
     }
 }
+
+export const overwrite = async (data: string, filename: string): Promise<void> => {
+    try {
+        await Filesystem.writeFile({
+            path: filename,
+            data: data,
+            directory: Directory.LibraryNoCloud,
+            recursive: true,
+            encoding: Encoding.UTF8,
+        });
+    } catch (error) {
+        console.error('Error downloading file:', error);
+        throw error;
+    }
+};
 
 export const write = async (data: string, filename: string): Promise<void> => {
     try {

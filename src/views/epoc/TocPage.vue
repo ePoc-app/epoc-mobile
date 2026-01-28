@@ -59,7 +59,7 @@ watch(
     [epoc, readings],
     ([epocValue, readingsValue]) => {
         if (!epocValue || !readingsValue) return;
-        reading.value = readingsValue.find((item) => (item.epocId = epocValue.id));
+        reading.value = readingsValue.find((item) => (item.epocId === epocValue.id));
         if (reading.value) {
             setProgress();
         }

@@ -3,14 +3,12 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { actionSheetController, alertController, toastController } from '@ionic/vue';
-import { useSettingsStore } from './settingsStore';
-import { useReadingStore } from './readingStore';
 import {
     arrayBufferToBase64,
     deleteFolder,
     download,
     mkdir,
-    mv,
+    mv, overwrite,
     pathExists,
     readdir,
     unzip,
@@ -22,38 +20,12 @@ import { trackEvent } from '@/utils/matomo';
 import { listCircleOutline, starOutline, trash } from 'ionicons/icons';
 
 export const useLocalEpocsStore = defineStore('localEpocs', () => {
-    // --- State ---
+
     const localEpocs = ref<EpocLibrary[]>([]);
     const imports = ref<{ [key: string]: string }>({});
 
-    // --- Composables ---
     const router = useRouter();
     const { t } = useI18n(); // t is equivalent to translate.instant
-    const settingsStore = useSettingsStore();
-    const readingStore = useReadingStore();
-
-    // --- Helpers ---
-    const simpleHash = (str: string) => {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash = hash * 31 + char;
-        }
-        return hash.toString(36).substring(0, 6).toUpperCase();
-    };
-
-    const blobToBase64 = (blob: Blob): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onerror = reject;
-            reader.onload = () => {
-                resolve(reader.result as string);
-            };
-            reader.readAsDataURL(blob);
-        });
-    };
-
-    // --- Actions ---
 
     const fetchLocalEpocs = async () => {
         await mkdir('local-epocs');
@@ -66,6 +38,38 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                         ? 1
                         : -1;
                 });
+
+            console.log('Dirs');
+            console.log(dirs);
+
+            // Backwards compatibility for old local ePocs without prefix
+            for (const dir of dirs) {
+                if (!dir.name.startsWith('local-')) {
+                    console.log(`Backward Compatibility: Renaming dir ${dir.name}`);
+                    const epoc = await readEpocContent('local-epocs', dir.name);
+                    if (epoc) {
+                        console.log(`Backward Compatibility: Moving dir ${dir.name} to ${epoc.id}`);
+                        try {
+                            console.log(`Moving dir ${dir.name} to ${epoc.id} to avoid conflicts with new naming convention`);
+                            await mv(`local-epocs/${dir.name}`, `local-epocs/${epoc.id}`);
+                            dir.name = epoc.id;
+                        } catch (error) {
+                            console.log('Error during backward compatibility rename, trying again by using dir.name', error);
+                            console.log(`Backward Compatibility: Moving dir ${dir.name} to local-${dir.name}`);
+                            try {
+                                console.log(`Changing epoc id to ${dir.name} in content.json for ePoc`);
+                                epoc.id = dir.name;
+                                await overwrite(JSON.stringify(epoc), `local-epocs/${dir.name}/content.json`);
+                                console.log(`Moving dir ${dir.name} to local-${dir.name} to avoid conflicts with new naming convention`);
+                                await mv(`local-epocs/${dir.name}`, `local-epocs/local-${dir.name}`);
+                                dir.name = `local-${dir.name}`;
+                            } catch (error) {
+                                console.error('Error during backward compatibility rename', error);
+                            }
+                        }
+                    }
+                }
+            }
 
             const epocContents = await Promise.all(dirs.map((file: any) => readEpocContent('local-epocs', file.name)));
 
