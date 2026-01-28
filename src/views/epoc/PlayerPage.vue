@@ -86,10 +86,22 @@ const chapter = computed<Chapter | undefined>(() => epoc.value?.chapters[chapter
 
 const nextChapterId = computed<uid | undefined>(() => {
     const keys = Object.keys(epoc.value?.chapters || {});
-    const hasNextChapter = chapterIndex.value >= 0 && chapterIndex.value < keys.length - 1;
 
-    return hasNextChapter ? keys[chapterIndex.value + 1] : undefined;
+    for (let i = chapterIndex.value + 1; i < keys.length; i++) {
+        const chapterId = keys[i];
+        const chapterData = epoc.value?.chapters?.[chapterId];
+
+        if (!chapterData) return;
+
+        if (!chapterData.rule) return chapterId;
+        if (!reading.value) return undefined;
+
+        if (readingStore.isUnlocked(reading.value, chapterData.rule)) return chapterId;
+    }
+
+    return undefined;
 });
+
 const nextChapter = computed(() => {
     if (!nextChapterId.value || !epoc.value?.chapters) return undefined;
     const chapterData = epoc.value.chapters[nextChapterId.value];
@@ -327,7 +339,9 @@ const unlockedContent = computed(() => {
     if (!chapter.value) return;
 
     return chapter.value.initializedContents.filter((content) => {
-        if (!content?.rule || !reading.value) return true;
+        if (!content.rule) return true;
+        if (!reading.value) return false;
+
         return readingStore.isUnlocked(reading.value!, content.rule);
     });
 });

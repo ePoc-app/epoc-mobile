@@ -27,7 +27,7 @@ import {
 } from 'ionicons/icons';
 import { useEpocStore } from '@/stores/epocStore';
 import { denormalize } from '@/utils/pipes';
-import { watch, Ref, ref } from 'vue';
+import { watch, Ref, ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useReadingStore } from '@/stores/readingStore';
 import { Reading } from '@/types/reading';
@@ -60,7 +60,7 @@ watch(
     [epoc, readings],
     ([epocValue, readingsValue]) => {
         if (!epocValue || !readingsValue) return;
-        reading.value = readingsValue.find((item) => (item.epocId === epocValue.id));
+        reading.value = readingsValue.find((item) => item.epocId === epocValue.id);
         if (reading.value) {
             setProgress();
         }
@@ -151,6 +151,18 @@ function buildResumeLink(chapterId: string, prevContentId: string | null) {
 
     return `/epoc/play/${epoc.value!.id}/${chapterId}/${contentPath}`;
 }
+
+const unlockedChapters = computed(() => {
+    if (!epoc.value) return;
+    const chapters = denormalize(epoc.value.chapters);
+
+    return chapters.filter((chapter) => {
+        if (!chapter.rule) return true;
+        if (!reading.value) return false;
+
+        return readingStore.isUnlocked(reading.value, chapter.rule);
+    });
+});
 </script>
 
 <template>
@@ -180,11 +192,7 @@ function buildResumeLink(chapterId: string, prevContentId: string | null) {
                     <div class="toc-header-title">{{ epocStore.epoc.title }}</div>
                 </div>
                 <div class="toc-content" tabindex="-1">
-                    <div
-                        class="toc-chapter"
-                        v-for="(chapter, index) of denormalize(epocStore.epoc.chapters)"
-                        :key="index"
-                    >
+                    <div class="toc-chapter" v-for="(chapter, index) of unlockedChapters" :key="index">
                         <div class="toc-chapter-summary">
                             <div class="toc-chapter-progress" :class="{ done: chapter.done }">
                                 <ion-icon aria-hidden="true" :icon="checkmarkOutline" v-if="chapter.done"></ion-icon>
