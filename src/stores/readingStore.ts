@@ -9,6 +9,7 @@ import * as jsonLogic from 'json-logic-js';
 import type { Reading, EntityTypes, Verb } from '@/types/reading';
 import type { Badge } from '@/types/epoc';
 import { uid } from '@epoc/epoc-types/dist/v1';
+import { Rule } from '@epoc/epoc-types/src/v1/rule';
 
 export const useReadingStore = defineStore('reading', () => {
     const storageService = useStorage();
@@ -261,6 +262,10 @@ export const useReadingStore = defineStore('reading', () => {
         }
     }
 
+    function isUnlocked(reading: Reading, rule: Rule) {
+        return jsonLogic.apply(rule, reading.statements);
+    }
+
     // --- Initialization ---
     fetchReadings();
 
@@ -286,5 +291,6 @@ export const useReadingStore = defineStore('reading', () => {
         toggleBookmark,
         removeBookmark,
         updateCertificateShown,
+        isUnlocked,
     };
 });

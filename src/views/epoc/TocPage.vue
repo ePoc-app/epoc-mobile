@@ -37,9 +37,10 @@ import type { Content } from '@/types/contents/content';
 import type { uid } from '@epoc/epoc-types/dist/v1';
 
 const epocStore = useEpocStore();
+const readingStore = useReadingStore();
 
 const { epoc } = storeToRefs(epocStore);
-const { readings } = storeToRefs(useReadingStore());
+const { readings } = storeToRefs(readingStore);
 
 const reading: Ref<Reading | undefined> = ref();
 const contentInitialized = ref(true);
@@ -221,7 +222,15 @@ function buildResumeLink(chapterId: string, prevContentId: string | null) {
                                 v-for="content of denormalize(chapter.contents, epocStore.epoc.contents)"
                                 :key="content.id"
                             >
-                                <template v-if="!content.hidden">
+                                <template
+                                    v-if="
+                                        !content.hidden && content.rule
+                                            ? reading
+                                                ? readingStore.isUnlocked(reading, content.rule)
+                                                : false
+                                            : true
+                                    "
+                                >
                                     <RouterLink
                                         :to="{
                                             name: 'PlayerContent',

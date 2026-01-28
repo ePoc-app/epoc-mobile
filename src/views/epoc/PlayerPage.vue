@@ -322,6 +322,15 @@ function shouldDisplayContent(content: Content): boolean {
         <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
     </common-content>
 */
+
+const unlockedContent = computed(() => {
+    if (!chapter.value) return;
+
+    return chapter.value.initializedContents.filter((content) => {
+        if (!content?.rule || !reading.value) return true;
+        return readingStore.isUnlocked(reading.value!, content.rule);
+    });
+});
 </script>
 
 <template>
@@ -345,7 +354,7 @@ function shouldDisplayContent(content: Content): boolean {
                         </swiper-slide>
 
                         <swiper-slide
-                            v-for="(content, index) in chapter.initializedContents"
+                            v-for="(content, index) in unlockedContent"
                             v-show="shouldDisplayContent"
                             :key="content.id"
                         >
