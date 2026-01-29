@@ -33,8 +33,11 @@ import { App, type AppInfo } from '@capacitor/app';
 import { languages } from '@/utils/languages';
 import { useUser } from '@/composables';
 import { handleSetUser } from '@/utils/user';
+import {deleteAllFiles} from '@/utils/file';
+import {useLocalEpocsStore} from '@/stores/localEpocsStore';
 
 const libraryStore = useLibraryStore();
+const localEpocsStore = useLocalEpocsStore();
 const settingsStore = useSettingsStore();
 const readingStore = useReadingStore();
 const { t } = useI18n();
@@ -178,6 +181,9 @@ async function deleteData() {
                     readingStore.resetAll();
                     settingsStore.resetSettings();
                     await setUser(null);
+                    await deleteAllFiles('');
+                    await libraryStore.refreshAll();
+                    await localEpocsStore.fetchLocalEpocs();
                 },
             },
         ],

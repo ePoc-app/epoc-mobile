@@ -197,3 +197,14 @@ export const pathExists = async (path: string): Promise<boolean> => {
         return false;
     }
 }
+
+export const deleteAllFiles = async (dir = ''): Promise<void> => {
+    const items = await readdir(dir);
+    for (const item of items) {
+        if (item.type === 'directory') {
+            await deleteFolder(`${dir}/${item.name}`);
+        } else {
+            await Filesystem.deleteFile({ directory: Directory.LibraryNoCloud, path: `${dir}/${item.name}` });
+        }
+    }
+}
