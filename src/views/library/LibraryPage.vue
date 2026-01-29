@@ -357,10 +357,11 @@ const linkInputAlert = async () => {
                     </RouterLink>
                     <h3 aria-hidden="true" class="library-item-title">{{ epoc.title }}</h3>
                     <div class="library-item-toolbar">
+
                         <ion-button
                             class="expanded"
                             color="inria"
-                            v-on:click="router.push({ name: 'TocPage', params: { epoc_id: epoc.id } })"
+                            v-on:click="router.push({ name: 'EpocOverviewPage', params: { libraryId: 'local-epocs', id: epoc.id } })"
                         >
                             <span>{{ $t('LIBRARY_PAGE.OPEN') }}</span>
                         </ion-button>
@@ -386,7 +387,6 @@ const linkInputAlert = async () => {
                     </div>
                     <h3 aria-hidden="true" class="library-item-title">{{ $t('LIBRARY_PAGE.ADD_EPOC') }}</h3>
                 </div>
-                <!--<input type="file" accept="application/octet-stream,application/zip" hidden v-on:change="fileHandler($event)" #file>-->
                 <input
                     ref="file"
                     type="file"
