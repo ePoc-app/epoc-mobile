@@ -11,7 +11,7 @@ import type { Badge } from '@/types/epoc';
 import { uid } from '@epoc/epoc-types/dist/v1';
 import { trackEvent } from '@/utils/matomo';
 import { Rule } from '@epoc/epoc-types/src/v1/rule';
-import {closeOutline, eyeOutline, openOutline} from 'ionicons/icons';
+import { closeOutline, openOutline } from 'ionicons/icons';
 
 export const useReadingStore = defineStore('reading', () => {
     const storageService = useStorage();
@@ -192,9 +192,6 @@ export const useReadingStore = defineStore('reading', () => {
         const epoc = epocService.epoc;
         if (!epoc || !epoc.badges) return;
         for (const [badgeId, badge] of Object.entries(epoc.badges)) {
-            setTimeout(() => {
-                presentBadge(badge as Badge);
-            }, Math.random() * 2000) // random wait between 0 and 2 seconds to avoid multiple toasts at the same time
             if (jsonLogic.apply(badge.rule, reading.statements) && !reading.badges.includes(badgeId)) {
                 presentBadge(badge as Badge);
                 reading.badges.push(badgeId);
