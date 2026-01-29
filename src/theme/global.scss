@@ -347,7 +347,7 @@ ion-range.progress-indicator{
 ion-toast.badge-toast {
   --border-radius: var(--epoc-border-radius);
   --background: var(--ion-color-content);
-  --box-shadow: 0 6px 14px 0 var(--ion-color-shadow);
+  --box-shadow: 0 4px 14px 0 var(--ion-color-shadow);
   --color: var(--ion-color-text);
 
   &::part(header) {
@@ -382,7 +382,27 @@ ion-toast.badge-toast {
       background-size: cover;
     }
   }
+
+ &::part(button) {
+    color: var(--ion-color-inria-blue);
+  }
 }
+
+ion-toast[style*="z-index"] {
+  position: absolute;
+  /* Adjust the transform values to control the offset */
+  transform: translateY(calc(var(--offset, 0) * 10px));
+}
+
+/* Target each toast based on its z-index and apply an increasing offset */
+ion-toast[style*="z-index: 60001"] { --offset: 0; }
+ion-toast[style*="z-index: 60002"] { --offset: 1; }
+ion-toast[style*="z-index: 60003"] { --offset: 2; }
+ion-toast[style*="z-index: 60004"] { --offset: 3; }
+ion-toast[style*="z-index: 60005"] { --offset: 4; }
+ion-toast[style*="z-index: 60006"] { --offset: 5; }
+/* Add more if you have more toasts */
+
 
 .ion-page {
   background: var(--ion-color-background);
