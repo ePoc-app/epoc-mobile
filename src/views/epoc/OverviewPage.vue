@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonToolbar,
-    IonIcon,
-    IonBackButton,
-    IonButton,
-    IonFooter,
-    IonTitle,
-    IonButtons,
-    IonText,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonIcon,
+  IonBackButton,
+  IonButton,
+  IonFooter,
+  IonTitle,
+  IonButtons,
+  IonText,
+  onIonViewWillEnter,
 } from '@ionic/vue';
 import { useRoute, useRouter } from 'vue-router';
 import {
@@ -49,7 +50,7 @@ const openEpocMenu = (epoc: EpocLibrary) => {
 };
 
 const downloadEpoc = (epoc: EpocLibrary) => {
-    libraryStore.downloadEpocFromCollection(route.params.libraryId.toString(), epoc.id);
+    libraryStore.downloadEpoc(epoc, route.params.libraryId.toString());
 };
 
 const getEpoc = (): EpocLibrary | undefined => {
@@ -76,15 +77,33 @@ const selectTab = (index: number) => {
     selectedTab.value = index;
 };
 
-const pathToUrl = (path) => {
+const pathToUrl = (path: string) => {
     if (path.startsWith('file://') || path.startsWith('http://') || path.startsWith('https://')) {
         return path;
     } else {
-        return Capacitor.convertFileSrc(`${epoc.value.dir}/${path}`);
+        return Capacitor.convertFileSrc(`${epoc.value?.dir}/${path}`);
     }
 };
 
 const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
+const aspectRatio = ref('16/9');
+
+onIonViewWillEnter(() => {
+  const epoc = getEpoc();
+
+  if (!epoc || !epoc.teaser) return;
+
+  const video = document.createElement('video');
+  video.controls = true;
+  video.preload = 'metadata';
+  video.src = pathToUrl(epoc.teaser);
+  video.load();
+
+  video.addEventListener('loadedmetadata', () => {
+    aspectRatio.value = `${video.videoWidth}/${video.videoHeight}`;
+  });
+});
+
 </script>
 
 <template>
@@ -119,6 +138,7 @@ const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
                         :src="pathToUrl(epoc.teaser)"
                         :poster="pathToUrl(epoc.thumbnail)"
                         :controls="{ show: false, timeline: true, overlay: true }"
+                        :style="{ aspectRatio: aspectRatio }"
                     >
                     </video-player>
                     <img v-else :alt="epoc.title" :src="pathToUrl(epoc.image)" />
@@ -344,6 +364,7 @@ const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
         height: 100%;
         object-fit: cover;
         color: white;
+        transition: aspect-ratio 0.5s ease-in-out;
     }
 }
 
