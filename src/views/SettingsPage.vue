@@ -49,7 +49,7 @@ const langs = languages;
 
 const devModeCount = ref(0);
 
-// TODO
+// Default value, real values are set by Capacitor
 const info = ref<AppInfo>({
     id: 'fr.inria.epoc',
     name: 'epoc',
