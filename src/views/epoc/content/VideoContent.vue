@@ -36,7 +36,7 @@ const playPause = (event: PlayPauseEvent) => {
 
   if (event.isPlaying) {
     readingStore.saveStatement(epocId, 'contents', props.content.id, 'played', true);
-    trackEvent('Video', 'played', `User played video ${epocId} ${props.content.id}`);
+    trackEvent(epocId, `${epocId} / Video played ${props.content.id} ${props.content.title}`);
     startTime.value = performance.now();
   } else {
     elapsed.value += Math.round((performance.now() - startTime.value) / 1000);
@@ -45,6 +45,7 @@ const playPause = (event: PlayPauseEvent) => {
 
     if (elapsed.value > Math.round(player.duration/2)) {
         readingStore.saveStatement(epocId, 'contents', props.content.id, 'watched', true);
+        trackEvent(epocId, `${epocId} / Video watched ${props.content.id} ${props.content.title}`);
     }
   }
 }

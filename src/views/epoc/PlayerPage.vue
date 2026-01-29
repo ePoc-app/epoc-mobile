@@ -45,7 +45,7 @@ import {
     gitBranchOutline,
 } from 'ionicons/icons';
 import { until } from '@vueuse/core';
-import { trackPageView } from '@/utils/matomo';
+import { trackEvent, trackPageView } from '@/utils/matomo';
 
 const CONTENT_TYPE_ICONS = {
     html: documentTextOutline,
@@ -199,6 +199,7 @@ onIonViewWillLeave(() => {
 
 function initializeData() {
     readingStore.saveStatement(epocId.value, 'chapters', chapterId.value, 'started', true);
+    trackEvent(epocId.value, `${epocId.value} / Chapter ${chapterId.value} ${chapter.value?.title} started`);
 
     reading.value = readings.value.find((item) => item.epocId === epocId.value);
     if (!reading.value) {
@@ -219,6 +220,7 @@ function checkForCertificate() {
     if (meetsScoreRequirements && meetsBadgeRequirement && !reading.value.certificateShown) {
         certificateShown.value = true;
         readingStore.updateCertificateShown(epoc.value.id, true);
+        trackEvent(epoc.value.id, `${epoc.value.id} / Certificate unlocked`);
     }
 }
 

@@ -154,6 +154,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
 
                 // If directory with same epoc id exists, ask for confirmation to replace
                 if (!dirExist) {
+                    trackEvent(epoc.id, `${epoc.id} / Imported`);
                     await mv(`temp/${tempId}`, `local-epocs/${epoc.id}`);
                 } else {
                     const alert = await alertController.create({
@@ -171,6 +172,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                             {
                                 text: 'Confirmer',
                                 handler: async () => {
+                                    trackEvent(epoc.id, `${epoc.id} / Updated`);
                                     await deleteFolder(`local-epocs/${epoc.id}`);
                                     await mv(`temp/${tempId}`, `local-epocs/${epoc.id}`);
                                 },
@@ -200,6 +202,7 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
     const deleteEpoc = async (epoc: EpocLibrary) => {
         localEpocs.value = localEpocs.value.filter((e) => e.id !== epoc.id);
         router.push('/library');
+        trackEvent(epoc.id, 'Deleted');
         await deleteFolder(`local-epocs/${epoc.id}`);
         await fetchLocalEpocs();
     };

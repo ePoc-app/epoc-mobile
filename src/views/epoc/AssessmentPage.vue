@@ -17,6 +17,7 @@ import Card from '@/components/Card.vue';
 import CommonQuestion from '@/components/questions/CommonQuestion.vue';
 import ScoreProgress from '@/components/ScoreProgress.vue';
 import { starOutline, arrowForwardOutline } from 'ionicons/icons';
+import {trackEvent} from '@/utils/matomo';
 
 const { t } = useI18n();
 type CommonQuestionType = InstanceType<typeof CommonQuestion>;
@@ -118,7 +119,11 @@ const checkAnswer = () => {
         questionsElements.value[currentQuestionIndex.value]?.showCorrection();
         userScore.value += score;
         userResponses.value.push(response);
-        // TODO Tracker tracker.trackEvent('Assessments', 'Answered', `Answered ${epocId.value} ${assessmentId.value} ${currentQuestionIndex.value}`, score);
+        trackEvent(epocId.value, `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} attempted`);
+
+        if (userSucceeded) trackEvent(epocId.value, `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} succeeded`);
+        else trackEvent(epocId.value, `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} failed`);
+
         if (assessment.value && assessment.value.questions) {
             readingStore.saveStatement(
                 epocId.value,

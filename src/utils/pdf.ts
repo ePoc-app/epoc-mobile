@@ -109,8 +109,7 @@ export async function generatePdf(epoc: Epoc, rootFolder: string, unlockedBadges
     doc.setFontSize(8);
     doc.setFont('Helvetica', 'normal');
     centeredText(`N°${id}`, posY);
-
-    trackEvent('Certificate', 'Generate certificate', `Certificate ${epoc.id} n°${id} (${password})`);
+    trackEvent(epoc.id, `${epoc.id} / Certificate generated`, `${epoc.id} / Certificate generated / n°${id} (${password})`);
 
     return doc;
 }

@@ -9,6 +9,7 @@ import * as jsonLogic from 'json-logic-js';
 import type { Reading, EntityTypes, Verb } from '@/types/reading';
 import type { Badge } from '@/types/epoc';
 import { uid } from '@epoc/epoc-types/dist/v1';
+import { trackEvent } from '@/utils/matomo';
 import { Rule } from '@epoc/epoc-types/src/v1/rule';
 
 export const useReadingStore = defineStore('reading', () => {
@@ -193,6 +194,7 @@ export const useReadingStore = defineStore('reading', () => {
             if (jsonLogic.apply(badge.rule, reading.statements) && !reading.badges.includes(badgeId)) {
                 presentBadge(badge as Badge);
                 reading.badges.push(badgeId);
+                trackEvent(epoc.id, `${epoc.id} / Badge unlocked ${badgeId} ${badge.title}`);
             }
         }
     }
