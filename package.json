@@ -1,6 +1,6 @@
 {
   "name": "epoc-mobile",
-  "version": "1.11.1",
+  "version": "2.0.0",
   "author": "Inria Learning Lab",
   "homepage": "https://epoc.inria.fr",
   "scripts": {
@@ -9,8 +9,10 @@
     "build-preview": "VITE_APP_MODE=preview ionic build",
     "dev": "ionic serve",
     "android": "source .env; npm run resources && ionic cap run android $ANDROID_TARGET; node scripts/fix-config.js",
+    "android-release": "npm run resources && ionic cap open android; node scripts/fix-config.js",
     "android-dev": "source .env; npm run resources && ionic cap run android $ANDROID_TARGET --livereload-url=http://localhost:8100; node scripts/fix-config.js",
     "ios": "source .env; npm run resources && ionic cap run ios $IOS_TARGET; node scripts/fix-config.js",
+    "ios-release": "npm run resources && ionic cap open ios; node scripts/fix-config.js",
     "ios-dev": "source .env; npm run resources && ionic cap run ios $IOS_TARGET --livereload-url=http://localhost:8100; node scripts/fix-config.js",
     "test:e2e": "cypress run",
     "test:unit": "vitest",

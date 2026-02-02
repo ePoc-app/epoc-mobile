@@ -8,6 +8,7 @@
 		"CAPBrowserPlugin",
 		"DevicePlugin",
 		"FileTransferPlugin",
+		"FileViewerPlugin",
 		"FilesystemPlugin",
 		"HapticsPlugin",
 		"KeyboardPlugin",
