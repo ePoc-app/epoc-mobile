@@ -1,7 +1,5 @@
-import {Epoc, EpocLibrary} from '@/types/epoc';
+import {Epoc} from '@/types/epoc';
 import {Directory, Encoding, Filesystem} from '@capacitor/filesystem';
-import {Capacitor} from '@capacitor/core';
-import {download, unzip} from '@/utils/file';
 
 
 export const readEpocContent = async (dir: string, epocId: string): Promise<Epoc | null> => {
@@ -23,7 +21,7 @@ export const readEpocContent = async (dir: string, epocId: string): Promise<Epoc
             path: `${dir}/${epocId}`
         });
 
-        let epoc: EpocLibrary;
+        let epoc: Epoc;
         const rawData = await (typeof file.data === 'string' ? Promise.resolve(file.data) : file.data.text())
         const isBase64 = /^[A-Za-z0-9+/]+={0,2}$/.test(rawData);
         if (isBase64) {

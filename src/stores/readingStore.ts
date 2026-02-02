@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import { useStorage } from '@/composables/useStorage';
 import { usePlugin } from '@/composables/usePlugin';
 import { useEpocStore } from './epocStore';
+// @ts-ignore
 import * as jsonLogic from 'json-logic-js';
 import type { Reading, EntityTypes, Verb } from '@/types/reading';
 import type { Badge } from '@/types/epoc';
@@ -57,6 +58,20 @@ export const useReadingStore = defineStore('reading', () => {
                     },
                     badges: [],
                 },
+            ];
+            saveReadings();
+        }
+    }
+
+    function duplicateReading(epocId: string, newName: string) {
+        const index = readings.value.findIndex((reading) => reading.epocId === epocId);
+        if (index !== -1) {
+            readings.value = [
+                ...readings.value,
+                {
+                    ...readings.value[index],
+                    epocId: newName,
+                }
             ];
             saveReadings();
         }
@@ -233,17 +248,7 @@ export const useReadingStore = defineStore('reading', () => {
     }
 
     function resetAll() {
-        readings.value = readings.value.map((reading) => ({
-            ...reading,
-            progress: 0,
-            chaptersProgress: [],
-            assessments: [],
-            bookmarks: [],
-            choices: [],
-            flags: [],
-            badges: [],
-            certificateShown: false,
-        }));
+        readings.value = [];
         saveReadings();
     }
 
@@ -290,6 +295,7 @@ export const useReadingStore = defineStore('reading', () => {
         fetchReadings,
         saveReadings,
         addReading,
+        duplicateReading,
         updateProgress,
         saveResponses,
         saveChapterProgress,
