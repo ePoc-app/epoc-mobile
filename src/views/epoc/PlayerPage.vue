@@ -21,7 +21,7 @@ import { Chapter } from '@/types/epoc';
 import { Reading, UserAssessment } from '@/types/reading';
 import { Content } from '@/types/contents/content';
 import { srcConvert } from '@/utils/pipes';
-import { menu } from 'ionicons/icons';
+import {lockClosedOutline, menu} from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Swiper as SwiperObject } from 'swiper/types';
 import ChapterInfo from '@/views/epoc/content/ChapterInfo.vue';
@@ -46,6 +46,7 @@ import {
 } from 'ionicons/icons';
 import { until } from '@vueuse/core';
 import { trackEvent, trackPageView } from '@/utils/matomo';
+import CourseChoice from '@/views/epoc/content/CourseChoice.vue';
 
 const CONTENT_TYPE_ICONS = {
     html: documentTextOutline,
@@ -54,6 +55,7 @@ const CONTENT_TYPE_ICONS = {
     audio: micOutline,
     'simple-question': helpOutline,
     choice: gitBranchOutline,
+    locked: lockClosedOutline
 } as const;
 
 const INTERACTIVE_ELEMENTS = ['ion-icon', 'button', 'ion-button', 'ion-checkbox', 'ion-radio', 'span'];
@@ -327,24 +329,19 @@ function stopAllMedia() {
     mediaElements.forEach((media) => media.pause());
 }
 
-function shouldDisplayContent(content: Content): boolean {
-    if (!content.conditional) return true;
-    return reading.value?.flags.includes(content.id) || false;
-}
-/* TODO
-    <common-content :aria-hidden="index + 1 !== currentPage" :title="content.title" :subtitle="content.subtitle" :icon="iconFromType[content.type]" v-if="content.type !== 'simple-question'">
-        <course-choice v-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="nextPage()"></course-choice>
-    </common-content>
-*/
-
 const unlockedContent = computed(() => {
     if (!chapter.value) return;
 
     return chapter.value.initializedContents.filter((content) => {
-        if (!content.rule) return true;
-        if (!reading.value) return false;
-
-        return readingStore.isUnlocked(reading.value!, content.rule);
+        if (content.conditional) {
+          return reading.value?.flags.includes(content.id) || false;
+        }
+        if (content.rule) {
+          if (!readingStore.isUnlocked(reading.value!, content.rule)) {
+            content.locked = true;
+          }
+        }
+        return true;
     });
 });
 </script>
@@ -371,36 +368,48 @@ const unlockedContent = computed(() => {
 
                         <swiper-slide
                             v-for="(content, index) in unlockedContent"
-                            v-show="shouldDisplayContent"
                             :key="content.id"
                         >
                             <app-debug :epocId="epocId" :chapterId="chapterId" :contentId="content.id" />
 
-                            <common-content
-                                v-if="content.type !== 'simple-question'"
-                                :aria-hidden="index + 1 !== currentPage"
-                                :title="content.title"
-                                :subtitle="content.subtitle || ''"
-                                :icon="CONTENT_TYPE_ICONS[content.type]"
-                            >
-                                <html-content
-                                    v-if="content.type === 'html'"
-                                    :html="srcConvert(content.html, epocStore.rootFolder)"
-                                    @go-to="navigateToContent"
-                                />
-                                <video-content v-else-if="content.type === 'video'" :content="content" />
-                                <audio-content v-else-if="content.type === 'audio'" :content="content" />
-                                <assessment-content v-else-if="content.type === 'assessment'" :content="content" />
-                            </common-content>
+                            <template v-if="content.locked">
+                              <common-content
+                                  :aria-hidden="index + 1 !== currentPage"
+                                  :title="$t('PLAYER.LOCKED_CONTENT')"
+                                  :subtitle="''"
+                                  :icon="CONTENT_TYPE_ICONS['locked']"
+                              >
+                                <p class="locked-content-message">{{ $t('PLAYER.LOCKED_CONTENT_MESSAGE') }}</p>
+                              </common-content>
+                            </template>
+                            <template v-else>
+                              <common-content
+                                  v-if="content.type !== 'simple-question'"
+                                  :aria-hidden="index + 1 !== currentPage"
+                                  :title="content.title"
+                                  :subtitle="content.subtitle || ''"
+                                  :icon="CONTENT_TYPE_ICONS[content.type]"
+                              >
+                                  <html-content
+                                      v-if="content.type === 'html'"
+                                      :html="srcConvert(content.html, epocStore.rootFolder)"
+                                      @go-to="navigateToContent"
+                                  />
+                                  <video-content v-else-if="content.type === 'video'" :content="content" />
+                                  <audio-content v-else-if="content.type === 'audio'" :content="content" />
+                                  <course-choice v-else-if="content.type === 'choice'" :epocId="epocId" :content="content" @chosen="navigateNext" />
+                                  <assessment-content v-else-if="content.type === 'assessment'" :content="content" />
+                              </common-content>
 
-                            <simple-question
-                                v-else
-                                :aria-hidden="index + 1 !== currentPage"
-                                :epocId="epocId"
-                                :content="content"
-                                :question="epoc.questions[content.question]"
-                                @dragging="handleDragEvent"
-                            />
+                              <simple-question
+                                  v-else
+                                  :aria-hidden="index + 1 !== currentPage"
+                                  :epocId="epocId"
+                                  :content="content"
+                                  :question="epoc.questions[content.question]"
+                                  @dragging="handleDragEvent"
+                              />
+                            </template>
                         </swiper-slide>
 
                         <swiper-slide>
@@ -535,5 +544,9 @@ ion-spinner {
             opacity: 0;
         }
     }
+}
+
+.locked-content-message {
+  text-align: center;
 }
 </style>

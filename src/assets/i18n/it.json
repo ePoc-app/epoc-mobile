@@ -225,7 +225,9 @@
         "DOWNLOAD_FINISH": "Download completato",
         "CERTIFICATE_OBTENTION": "Hai ricevuto l'attestato"
       }
-    }
+    },
+    "LOCKED_CONTENT": "Contenuto bloccato",
+    "LOCKED_CONTENT_MESSAGE": "Continua a progredire per sbloccare questo contenuto."
   },
   "QUESTION": {
     "PREVIEW": {

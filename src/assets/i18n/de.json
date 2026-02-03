@@ -225,7 +225,9 @@
         "DOWNLOAD_FINISH": "Download abgeschlossen",
         "CERTIFICATE_OBTENTION": "Sie haben das Zertifikat erhalten"
       }
-    }
+    },
+    "LOCKED_CONTENT": "Gesperrte Inhalte",
+    "LOCKED_CONTENT_MESSAGE": "Setze deinen Fortschritt fort, um diesen Inhalt freizuschalten."
   },
   "QUESTION": {
     "PREVIEW": {

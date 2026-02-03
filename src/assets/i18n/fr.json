@@ -225,7 +225,9 @@
         "DOWNLOAD_FINISH": "Téléchargement terminé",
         "CERTIFICATE_OBTENTION": "Vous avez bien obtenu l'attestation."
       }
-    }
+    },
+    "LOCKED_CONTENT": "Contenu verrouillé",
+    "LOCKED_CONTENT_MESSAGE": "Continuez votre progression dans l'ePoc pour débloquer ce contenu."
   },
   "QUESTION": {
     "PREVIEW": {
