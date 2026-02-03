@@ -63,6 +63,6 @@ watch(
 </script>
 <template>
     <ion-app>
-        <ion-router-outlet :swipe-gesture="false" />
+        <ion-router-outlet />
     </ion-app>
 </template>

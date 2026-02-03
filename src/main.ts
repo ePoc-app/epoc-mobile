@@ -56,6 +56,7 @@ function init() {
     const app = createApp(App)
         .use(IonicVue, {
             innerHTMLTemplatesEnabled: true,
+            swipeBackEnabled: false
         })
         .use(i18n)
         .use(pinia)
