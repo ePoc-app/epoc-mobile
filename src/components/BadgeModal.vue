@@ -210,6 +210,8 @@ watch(
         text-align: left;
         font-size: 0.875rem;
         color: var(--ion-color-text);
+        max-height: 50vh;
+        overflow: scroll;
     }
 
     &-item {
