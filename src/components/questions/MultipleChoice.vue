@@ -19,7 +19,7 @@ const selectedAnswers = ref<any[]>(
 
 function selectAnswer(value: string) {
     const index = selectedAnswers.value.indexOf(value);
-
+    console.log('selectAnswer');
     if (index === -1) {
         selectedAnswers.value.push(value);
     } else {
@@ -45,7 +45,7 @@ function selectAnswer(value: string) {
                 :value="response.value"
                 :checked="selectedAnswers.indexOf(response.value) !== -1"
                 :disabled="disabled"
-                @click.stop
+                @click.prevent
             />
             <ion-label class="ion-text-wrap">{{ response.label }}</ion-label>
         </ion-item>
