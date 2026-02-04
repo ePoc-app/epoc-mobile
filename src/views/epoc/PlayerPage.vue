@@ -21,7 +21,7 @@ import { Chapter } from '@/types/epoc';
 import { Reading, UserAssessment } from '@/types/reading';
 import { Content } from '@/types/contents/content';
 import { srcConvert } from '@/utils/pipes';
-import {lockClosedOutline, menu} from 'ionicons/icons';
+import { menu } from 'ionicons/icons';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Swiper as SwiperObject } from 'swiper/types';
 import ChapterInfo from '@/views/epoc/content/ChapterInfo.vue';
@@ -35,28 +35,10 @@ import VideoContent from './content/VideoContent.vue';
 import AudioContent from '@/views/epoc/content/AudioContent.vue';
 import AssessmentContent from './content/AssessmentContent.vue';
 import SimpleQuestion from './content/SimpleQuestion.vue';
-
-import {
-    documentTextOutline,
-    cubeOutline,
-    playCircleOutline,
-    micOutline,
-    helpOutline,
-    gitBranchOutline,
-} from 'ionicons/icons';
 import { until } from '@vueuse/core';
 import { trackEvent, trackPageView } from '@/utils/matomo';
 import CourseChoice from '@/views/epoc/content/CourseChoice.vue';
-
-const CONTENT_TYPE_ICONS = {
-    html: documentTextOutline,
-    assessment: cubeOutline,
-    video: playCircleOutline,
-    audio: micOutline,
-    'simple-question': helpOutline,
-    choice: gitBranchOutline,
-    locked: lockClosedOutline
-} as const;
+import { CONTENT_TYPE_ICONS } from '@/types/content-icons';
 
 const INTERACTIVE_ELEMENTS = ['ion-icon', 'button', 'ion-button', 'ion-checkbox', 'ion-radio', 'span'];
 

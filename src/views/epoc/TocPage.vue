@@ -17,12 +17,6 @@ import {
     menuOutline,
     arrowForwardOutline,
     timeOutline,
-    documentTextOutline,
-    playOutline,
-    musicalNotesOutline,
-    checkboxOutline,
-    bulbOutline,
-    gitBranchOutline,
     chevronForwardOutline,
 } from 'ionicons/icons';
 import { useEpocStore } from '@/stores/epocStore';
@@ -35,6 +29,7 @@ import { appService } from '@/utils/appService';
 import type { Chapter } from '@/types/epoc';
 import type { Content } from '@/types/contents/content';
 import type { uid } from '@epoc/epoc-types/dist/v1';
+import { CONTENT_TYPE_ICONS } from '@/types/content-icons';
 
 const epocStore = useEpocStore();
 const readingStore = useReadingStore();
@@ -43,13 +38,11 @@ const { epoc } = storeToRefs(epocStore);
 const { readings } = storeToRefs(readingStore);
 
 const reading: Ref<Reading | undefined> = ref();
-const contentInitialized = ref(true);
 
 onIonViewDidEnter(() => {
     if (reading.value) {
         setProgress();
     }
-    contentInitialized.value = true;
 
     if (appService.screenReaderDetected) {
         (document.querySelector('.toc-content') as HTMLElement).focus();
@@ -64,8 +57,6 @@ watch(
         if (reading.value) {
             setProgress();
         }
-
-        contentInitialized.value = true;
     },
     { immediate: true }
 );
@@ -152,15 +143,32 @@ function buildResumeLink(chapterId: string, prevContentId: string | null) {
     return `/epoc/play/${epoc.value!.id}/${chapterId}/${contentPath}`;
 }
 
-const unlockedChapters = computed(() => {
+const initializedChapters = computed(() => {
     if (!epoc.value) return;
-    const chapters = denormalize(epoc.value.chapters);
+    const chapters : Chapter[] = denormalize(epoc.value.chapters);
 
-    return chapters.filter((chapter) => {
-        if (!chapter.rule) return true;
-        if (!reading.value) return false;
+    return chapters.map((chapter) => {
+      if (chapter.rule) {
+        if (!reading.value || !readingStore.isUnlocked(reading.value, chapter.rule)) {
+          chapter.locked = true;
+        }
+      }
 
-        return readingStore.isUnlocked(reading.value, chapter.rule);
+      chapter.initializedContents = denormalize(chapter.contents, epoc.value!.contents).reduce((initializedContents: Content[], content: Content) => {
+        if (content.rule) {
+          if (!reading.value || !readingStore.isUnlocked(reading.value, content.rule)) {
+            content.locked = true;
+          }
+        }
+        if (content.hidden || !content.title) {
+          return initializedContents;
+        }
+
+        initializedContents.push(content);
+        return initializedContents;
+      }, []);
+
+      return chapter;
     });
 });
 </script>
@@ -180,7 +188,7 @@ const unlockedChapters = computed(() => {
                 </ion-buttons>
             </ion-toolbar>
         </ion-header>
-        <ion-content v-if="contentInitialized">
+        <ion-content>
             <div v-if="epocStore.epoc" class="wrapper">
                 <div class="toc-header">
                     <img
@@ -192,113 +200,83 @@ const unlockedChapters = computed(() => {
                     <div class="toc-header-title">{{ epocStore.epoc.title }}</div>
                 </div>
                 <div class="toc-content" tabindex="-1">
-                    <div class="toc-chapter" v-for="(chapter, index) of unlockedChapters" :key="index">
-                        <div class="toc-chapter-summary">
-                            <div class="toc-chapter-progress" :class="{ done: chapter.done }">
-                                <ion-icon aria-hidden="true" :icon="checkmarkOutline" v-if="chapter.done"></ion-icon>
-                                <ion-icon
-                                    aria-hidden="true"
-                                    :icon="arrowForwardOutline"
-                                    v-if="!chapter.done && chapter.chapterOpened"
-                                ></ion-icon>
-                                <ion-icon
-                                    aria-hidden="true"
-                                    :icon="timeOutline"
-                                    v-if="!chapter.done && !chapter.chapterOpened"
-                                ></ion-icon>
+                    <div class="toc-chapter" v-for="(chapter, index) of initializedChapters" :key="index">
+                        <template v-if="chapter.locked">
+                          <div class="toc-chapter-summary">
+                            <div class="toc-chapter-progress">
+                              <ion-icon aria-hidden="true" :icon="CONTENT_TYPE_ICONS['locked']"></ion-icon>
                             </div>
                             <div class="toc-chapter-info">
-                                <RouterLink :to="chapter.resumeLink" class="toc-chapter-info-title">
-                                    <div class="toc-chapter-info-label">{{ index + 1 }}. {{ chapter.title }}</div>
-                                    {{ chapter.subtitle }}
-                                </RouterLink>
-                                <div class="toc-chapter-info-details" v-on:click="toggleDetails(chapter)">
-                                    <template v-if="chapter.opened">{{ $t('TOC_PAGE.VIEW_LESS') }}</template>
-                                    <template v-if="!chapter.opened">{{ $t('TOC_PAGE.VIEW_MORE') }}</template>
-                                </div>
+                                <div class="toc-chapter-info-label">{{ $t('PLAYER.LOCKED_CONTENT') }}</div>
                             </div>
-                            <RouterLink
-                                :to="chapter.resumeLink"
-                                class="toc-chapter-open"
-                                :aria-label="$t('TOC_PAGE.NEXT_CHAPTER')"
-                            >
-                                <ion-icon aria-hidden="true" :icon="chevronForwardOutline" color="inria"></ion-icon>
-                            </RouterLink>
-                        </div>
-                        <div class="toc-chapter-details" v-if="chapter.opened">
-                            <template
-                                v-for="content of denormalize(chapter.contents, epocStore.epoc.contents)"
-                                :key="content.id"
-                            >
-                                <template
-                                    v-if="
-                                        !content.hidden && content.rule
-                                            ? reading
-                                                ? readingStore.isUnlocked(reading, content.rule)
-                                                : false
-                                            : true
-                                    "
-                                >
-                                    <RouterLink
-                                        :to="{
-                                            name: 'PlayerContent',
-                                            params: {
-                                                epoc_id: epocStore.epoc.id,
-                                                chapter_id: chapter.id,
-                                                content_id: content.id,
-                                            },
-                                        }"
-                                        class="toc-chapter-details-item"
-                                        :class="{ viewed: content.viewed }"
-                                    >
-                                        <div aria-hidden="true" class="toc-chapter-details-item-icon">
-                                            <ion-icon
-                                                v-if="content.type === 'html'"
-                                                :icon="documentTextOutline"
-                                                slot="start"
-                                            ></ion-icon>
-                                            <ion-icon
-                                                v-if="content.type === 'video'"
-                                                :icon="playOutline"
-                                                slot="start"
-                                            ></ion-icon>
-                                            <ion-icon
-                                                v-if="content.type === 'audio'"
-                                                :icon="musicalNotesOutline"
-                                                slot="start"
-                                            ></ion-icon>
-                                            <ion-icon
-                                                v-if="content.type === 'assessment'"
-                                                :icon="checkboxOutline"
-                                                slot="start"
-                                            ></ion-icon>
-                                            <ion-icon
-                                                v-if="
-                                                    content.type === 'simple-question' &&
-                                                    !+epocStore.epoc.questions[content.question].score
-                                                "
-                                                :icon="bulbOutline"
-                                                slot="start"
-                                            ></ion-icon>
-                                            <ion-icon
-                                                v-if="
-                                                    content.type === 'simple-question' &&
-                                                    +epocStore.epoc.questions[content.question].score
-                                                "
-                                                :icon="checkboxOutline"
-                                                slot="start"
-                                            ></ion-icon>
-                                            <ion-icon
-                                                v-if="content.type === 'choice'"
-                                                :icon="gitBranchOutline"
-                                                slot="start"
-                                            ></ion-icon>
-                                        </div>
-                                        <div>{{ content.title }}</div>
-                                    </RouterLink>
-                                </template>
-                            </template>
-                        </div>
+                          </div>
+                        </template>
+                        <template v-else>
+                          <div class="toc-chapter-summary">
+                              <div class="toc-chapter-progress" :class="{ done: chapter.done }">
+                                  <ion-icon aria-hidden="true" :icon="checkmarkOutline" v-if="chapter.done"></ion-icon>
+                                  <ion-icon
+                                      aria-hidden="true"
+                                      :icon="arrowForwardOutline"
+                                      v-if="!chapter.done && chapter.chapterOpened"
+                                  ></ion-icon>
+                                  <ion-icon
+                                      aria-hidden="true"
+                                      :icon="timeOutline"
+                                      v-if="!chapter.done && !chapter.chapterOpened"
+                                  ></ion-icon>
+                              </div>
+                              <div class="toc-chapter-info">
+                                  <RouterLink :to="chapter.resumeLink" class="toc-chapter-info-title">
+                                      <div class="toc-chapter-info-label">{{ index + 1 }}. {{ chapter.title }}</div>
+                                      {{ chapter.subtitle }}
+                                  </RouterLink>
+                                  <div class="toc-chapter-info-details" v-on:click="toggleDetails(chapter)">
+                                      <template v-if="chapter.opened">{{ $t('TOC_PAGE.VIEW_LESS') }}</template>
+                                      <template v-if="!chapter.opened">{{ $t('TOC_PAGE.VIEW_MORE') }}</template>
+                                  </div>
+                              </div>
+                              <RouterLink
+                                  :to="chapter.resumeLink"
+                                  class="toc-chapter-open"
+                                  :aria-label="$t('TOC_PAGE.NEXT_CHAPTER')"
+                              >
+                                  <ion-icon aria-hidden="true" :icon="chevronForwardOutline" color="inria"></ion-icon>
+                              </RouterLink>
+                          </div>
+                          <div class="toc-chapter-details" v-if="chapter.opened">
+                              <template
+                                  v-for="content of chapter.initializedContents"
+                                  :key="content.id"
+                              >
+                                  <RouterLink
+                                      :to="{
+                                          name: 'PlayerContent',
+                                          params: {
+                                              epoc_id: epocStore.epoc.id,
+                                              chapter_id: chapter.id,
+                                              content_id: content.id,
+                                          },
+                                      }"
+                                      class="toc-chapter-details-item"
+                                      :class="{ viewed: content.viewed }"
+                                  >
+                                    <template v-if="content.locked">
+                                      <div aria-hidden="true" class="toc-chapter-details-item-icon">
+                                        <ion-icon :icon="CONTENT_TYPE_ICONS['locked']" slot="start"></ion-icon>
+                                      </div>
+                                      <div>{{ $t('PLAYER.LOCKED_CONTENT') }}</div>
+                                    </template>
+                                    <template v-else>
+                                      <div aria-hidden="true" class="toc-chapter-details-item-icon">
+                                          <ion-icon :icon="CONTENT_TYPE_ICONS[content.type]" slot="start"></ion-icon>
+                                      </div>
+                                      <div>{{ content.title }}</div>
+                                    </template>
+                                  </RouterLink>
+                              </template>
+                          </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -367,6 +345,7 @@ const unlockedChapters = computed(() => {
     &-info {
         display: block;
         flex: 1;
+        align-content: center;
         &-label {
             font-weight: bold;
             line-height: 1.2;

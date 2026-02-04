@@ -58,7 +58,9 @@ export interface Chapter extends ChapterType {
     allViewed?: boolean;
     chapterOpened?: boolean;
     assessmentDone?: boolean;
-    resumeLink?:string;
+    resumeLink:string;
+    locked?: boolean;
+    opened?: boolean;
 }
 
 
