@@ -226,6 +226,7 @@
         "CERTIFICATE_OBTENTION": "Vous avez bien obtenu l'attestation."
       }
     },
+    "CONTENT_WITHOUT_TITLE": "Contenu sans titre",
     "LOCKED_CONTENT": "Contenu verrouillé",
     "LOCKED_CONTENT_MESSAGE": "Continuez votre progression dans l'ePoc pour débloquer ce contenu."
   },

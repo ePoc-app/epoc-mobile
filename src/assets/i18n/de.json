@@ -226,6 +226,7 @@
         "CERTIFICATE_OBTENTION": "Sie haben das Zertifikat erhalten"
       }
     },
+    "CONTENT_WITHOUT_TITLE": "Inhalt ohne Titel",
     "LOCKED_CONTENT": "Gesperrte Inhalte",
     "LOCKED_CONTENT_MESSAGE": "Setze deinen Fortschritt fort, um diesen Inhalt freizuschalten."
   },

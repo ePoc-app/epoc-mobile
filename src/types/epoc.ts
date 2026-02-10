@@ -53,6 +53,7 @@ export interface Chapter extends ChapterType {
     mediaCount?: number;
     assessmentCount?: number;
     initializedContents: Content[];
+    initializedTocContents: Content[];
     assessments?: uid[];
     done?: boolean;
     allViewed?: boolean;

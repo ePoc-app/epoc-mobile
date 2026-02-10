@@ -226,6 +226,7 @@
         "CERTIFICATE_OBTENTION": "You have received the certificate"
       }
     },
+    "CONTENT_WITHOUT_TITLE": "Content without title",
     "LOCKED_CONTENT": "Locked content",
     "LOCKED_CONTENT_MESSAGE": "Continue your progress to unlock this content."
   },

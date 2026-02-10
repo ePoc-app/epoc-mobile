@@ -226,6 +226,7 @@
         "CERTIFICATE_OBTENTION": "Has recibido el certificado"
       }
     },
+    "CONTENT_WITHOUT_TITLE": "Contenido sin título",
     "LOCKED_CONTENT": "Contenido bloqueado",
     "LOCKED_CONTENT_MESSAGE": "Continúa tu progreso para desbloquear este contenido."
   },

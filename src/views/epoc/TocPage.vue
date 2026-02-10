@@ -153,11 +153,11 @@ const initializedChapters = computed(() => {
         chapter.locked = !readingStore.isUnlocked(reading.value!, chapter.rule);
       }
 
-      chapter.initializedContents = denormalize(chapter.contents, epoc.value!.contents).reduce((initializedContents: Content[], content: Content) => {
+      chapter.initializedTocContents = denormalize(chapter.contents, epoc.value!.contents).reduce((initializedContents: Content[], content: Content) => {
         if (content.rule) {
           content.locked = !readingStore.isUnlocked(reading.value!, content.rule);
         }
-        if (content.hidden || !content.title) {
+        if (content.hidden) {
           return initializedContents;
         }
 
@@ -243,7 +243,7 @@ const initializedChapters = computed(() => {
                           </div>
                           <div class="toc-chapter-details" v-if="chapter.opened">
                               <template
-                                  v-for="content of chapter.initializedContents"
+                                  v-for="content of chapter.initializedTocContents"
                                   :key="content.id"
                               >
                                   <RouterLink
@@ -268,7 +268,7 @@ const initializedChapters = computed(() => {
                                       <div aria-hidden="true" class="toc-chapter-details-item-icon">
                                           <ion-icon :icon="CONTENT_TYPE_ICONS[content.type]" slot="start"></ion-icon>
                                       </div>
-                                      <div>{{ content.title }}</div>
+                                      <div>{{ content.title || $t('PLAYER.CONTENT_WITHOUT_TITLE') }}</div>
                                     </template>
                                   </RouterLink>
                               </template>
