@@ -9,7 +9,7 @@ import { computed, onMounted, PropType, ref, useTemplateRef } from 'vue';
 import { storeToRefs } from 'pinia';
 import { IonButton } from '@ionic/vue';
 import { helpCircleOutline } from 'ionicons/icons';
-import {trackEvent} from '@/utils/matomo';
+import { trackEvent } from '@/utils/matomo';
 const readingStore = useReadingStore();
 const epocStore = useEpocStore();
 
@@ -57,11 +57,16 @@ const checkAnswer = (event: Event) => {
         'passed',
         userSucceeded
     );
-  
+
     trackEvent(props.epocId, `${props.epocId} / SimpleQuestion attempted ${props.content.id} ${props.content?.title}`);
-  
-    if (userSucceeded) trackEvent(props.epocId, `${props.epocId} / SimpleQuestion succeeded ${props.content.id} ${props.content?.title}`);
-    else trackEvent(props.epocId, `${props.epocId} / SimpleQuestion failed ${props.content.id} ${props.content?.title}`);
+
+    if (userSucceeded)
+        trackEvent(
+            props.epocId,
+            `${props.epocId} / SimpleQuestion succeeded ${props.content.id} ${props.content?.title}`
+        );
+    else
+        trackEvent(props.epocId, `${props.epocId} / SimpleQuestion failed ${props.content.id} ${props.content?.title}`);
 
     commonQuestionCmpt.value?.showCorrection();
 };
@@ -117,7 +122,7 @@ const onUserHasResponded = (_userResponses: string[]) => {
     </common-question>
 </template>
 
-<style>
+<style scoped lang="scss">
 :host {
     display: flex;
     flex-direction: column;

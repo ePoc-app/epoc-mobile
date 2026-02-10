@@ -23,7 +23,7 @@ defineProps({
     </card>
 </template>
 
-<style>
+<style scoped lang="scss">
 :host {
     display: flex;
     flex-direction: column;

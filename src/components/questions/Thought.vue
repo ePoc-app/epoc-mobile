@@ -2,9 +2,6 @@
 // TODO
 </script>
 
-<template>
-THOUGHT
-</template>
+<template>THOUGHT</template>
 
-<style>
-</style>
+<style scoped></style>
