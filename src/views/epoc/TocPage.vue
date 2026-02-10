@@ -54,9 +54,10 @@ watch(
     ([epocValue, readingsValue]) => {
         if (!epocValue || !readingsValue) return;
         reading.value = readingsValue.find((item) => item.epocId === epocValue.id);
-        if (reading.value) {
-            setProgress();
+        if (!reading.value) {
+          readingStore.addReading(epocValue.id);
         }
+        setProgress();
     },
     { immediate: true }
 );
@@ -144,21 +145,17 @@ function buildResumeLink(chapterId: string, prevContentId: string | null) {
 }
 
 const initializedChapters = computed(() => {
-    if (!epoc.value) return;
+    if (!epoc.value || !reading.value) return;
     const chapters : Chapter[] = denormalize(epoc.value.chapters);
 
     return chapters.map((chapter) => {
       if (chapter.rule) {
-        if (!reading.value || !readingStore.isUnlocked(reading.value, chapter.rule)) {
-          chapter.locked = true;
-        }
+        chapter.locked = !readingStore.isUnlocked(reading.value!, chapter.rule);
       }
 
       chapter.initializedContents = denormalize(chapter.contents, epoc.value!.contents).reduce((initializedContents: Content[], content: Content) => {
         if (content.rule) {
-          if (!reading.value || !readingStore.isUnlocked(reading.value, content.rule)) {
-            content.locked = true;
-          }
+          content.locked = !readingStore.isUnlocked(reading.value!, content.rule);
         }
         if (content.hidden || !content.title) {
           return initializedContents;

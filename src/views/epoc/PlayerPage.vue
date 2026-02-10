@@ -312,16 +312,14 @@ function stopAllMedia() {
 }
 
 const unlockedContent = computed(() => {
-    if (!chapter.value) return;
+    if (!chapter.value || !reading.value) return;
 
     return chapter.value.initializedContents.filter((content) => {
+        if (content.rule) {
+          content.locked = !readingStore.isUnlocked(reading.value!, content.rule)
+        }
         if (content.conditional) {
           return reading.value?.flags.includes(content.id) || false;
-        }
-        if (content.rule) {
-          if (!readingStore.isUnlocked(reading.value!, content.rule)) {
-            content.locked = true;
-          }
         }
         return true;
     });
