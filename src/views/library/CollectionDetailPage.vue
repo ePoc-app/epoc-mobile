@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import { IonContent, IonButton, IonHeader, IonPage, IonBackButton, IonTitle, IonToolbar, IonIcon } from '@ionic/vue';
+import {
+  IonContent,
+  IonButton,
+  IonHeader,
+  IonPage,
+  IonBackButton,
+  IonTitle,
+  IonToolbar,
+  IonIcon,
+  IonButtons
+} from '@ionic/vue';
 import {
     informationCircleOutline,
     cloudDownloadOutline,
@@ -25,22 +35,18 @@ const collection = computed(() => {
     <ion-page v-if="collection">
         <ion-header :translucent="true">
             <ion-toolbar>
-                <RouterLink to="library" slot="start">
-                    <ion-button role="button" class="icon-btn">
-                        <ion-back-button :aria-label="$t('MISSING.RETURN')" text="" color="inria-icon" />
-                    </ion-button>
-                </RouterLink>
+              <ion-buttons slot="start">
+                <ion-back-button text="" defaultHref="/library" color="inria-icon"></ion-back-button>
+              </ion-buttons>
                 <ion-title>{{ collection.title }}</ion-title>
-                <RouterLink :to="{ name: 'WIP', params: { any: '/about' } }" slot="end">
-                    <ion-button role="button" class="icon-btn">
-                        <ion-icon
-                            aria-label="Informations"
-                            slot="icon-only"
-                            :icon="informationCircleOutline"
-                            color="inria-icon"
-                        />
-                    </ion-button>
-                </RouterLink>
+                <ion-button role="button" class="icon-btn" @click="libraryStore.openAboutPublisher(collection.publisher)" slot="end">
+                    <ion-icon
+                        aria-label="Informations"
+                        slot="icon-only"
+                        :icon="informationCircleOutline"
+                        color="inria-icon"
+                    />
+                </ion-button>
             </ion-toolbar>
         </ion-header>
 

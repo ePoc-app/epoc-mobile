@@ -349,9 +349,14 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     async function openAboutPublisher(publisher: Publisher) {
-        const message = `PUBLISHER_MODAL.MESSAGE (customize with publisher data)`;
+        const message = t('PUBLISHER_MODAL.MESSAGE', {
+            name: publisher.name,
+            description: publisher.description,
+            email: publisher.email,
+            website: publisher.website
+        });
         const alert = await alertController.create({
-            header: 'PUBLISHER_MODAL.ABOUT',
+            header: t('PUBLISHER_MODAL.ABOUT'),
             cssClass: 'alert-alignleft',
             message,
             buttons: ['OK'],
