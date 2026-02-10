@@ -12,6 +12,7 @@
 		"FilesystemPlugin",
 		"HapticsPlugin",
 		"KeyboardPlugin",
+		"ScreenOrientationPlugin",
 		"ScreenReaderPlugin",
 		"SplashScreenPlugin",
 		"StatusBarPlugin",

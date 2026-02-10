@@ -4,6 +4,7 @@ import { ref, onMounted, onUnmounted, PropType } from 'vue';
 import { logoClosedCaptioning, pause, play as playIcon, expand } from 'ionicons/icons';
 import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 import { PlayPauseEvent } from '@/types/contents/media';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 
 const props = defineProps({
     src: String,
@@ -124,6 +125,16 @@ const presentToast = async (text: string) => {
     toast.present();
 };
 
+const handleFullScreenChange = async () => {
+    const isFullscreen = document.fullscreenElement || (document as any).webkitFullScreenElement;
+
+    if (isFullscreen) {
+        await ScreenOrientation.unlock();
+    } else {
+        await ScreenOrientation.lock({ orientation: 'portrait' });
+    }
+};
+
 // Cycle de vie
 onMounted(() => {
     if (!video.value) return;
@@ -167,6 +178,9 @@ onMounted(() => {
             video.value.removeAttribute('controls');
         }
     });
+
+    video.value.addEventListener('fullscreenchange', handleFullScreenChange);
+    video.value.addEventListener('webkitfullscreenchange', handleFullScreenChange);
 
     video.value.textTracks.addEventListener('change', () => {
         if (!video.value) return;
@@ -213,6 +227,9 @@ onMounted(() => {
 // Nettoyage
 onUnmounted(() => {
     mediaPlayerStore.unregisterPlayer(playerId);
+
+    video.value?.removeEventListener('fullscreenchange', handleFullScreenChange);
+    video.value?.removeEventListener('webkitfullscreenchange', handleFullScreenChange);
 });
 </script>
 
