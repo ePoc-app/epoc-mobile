@@ -52,8 +52,9 @@ const playPause = (event: PlayPauseEvent) => {
 
 const subtitles = computed(() => {
   return props.content.subtitles.map((item) => {
-    item.src = epocStore.rootFolder + item.src
-    return item;
+    const newItem = JSON.parse(JSON.stringify(item));
+    newItem.src = epocStore.rootFolder + item.src
+    return newItem;
   })
 })
 </script>

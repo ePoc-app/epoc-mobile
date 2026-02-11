@@ -102,9 +102,9 @@ const resetZoom = (): void => {
         transform: `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`,
         touchAction: pinching ? 'pinch-zoom' : 'pan-y pan-x'
       }"
-        @touchstart="panStart"
-        @touchmove="panMove"
-        @touchend="panEnd"
+        @touchstart.passive="panStart"
+        @touchmove.passive="panMove"
+        @touchend.passive="panEnd"
         @gesturestart="zoomStart"
         @gesturechange="zoomInOut"
         @gestureend="zoomEnd"
