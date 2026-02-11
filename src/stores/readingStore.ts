@@ -36,8 +36,9 @@ export const useReadingStore = defineStore('reading', () => {
         await storageService.setValue('readings', JSON.stringify(readings.value));
     }
 
-    function addReading(epocId: string) {
-        if (readings.value.findIndex((reading) => reading.epocId === epocId) === -1) {
+    function addReading(epocId: string) : Reading {
+        const index = readings.value.findIndex((reading) => reading.epocId === epocId)
+        if (index === -1) {
             readings.value = [
                 ...readings.value,
                 {
@@ -60,7 +61,9 @@ export const useReadingStore = defineStore('reading', () => {
                 },
             ];
             saveReadings();
+            return readings.value[readings.value.length - 1];
         }
+        return readings.value[index];
     }
 
     function duplicateReading(epocId: string, newName: string) {

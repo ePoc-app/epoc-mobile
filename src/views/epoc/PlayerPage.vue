@@ -93,8 +93,12 @@ const nextChapter = computed(() => {
 });
 
 const filteredContents = computed<Content[]>(() => {
+    if (!reading.value) return [];
     return (
         chapter.value?.initializedContents.filter((content) => {
+            if (content.rule) {
+              content.locked = !readingStore.isUnlocked(reading.value!, content.rule)
+            }
             if (!content.conditional) return true;
             return reading.value?.flags.includes(content.id);
         }) || []
@@ -187,7 +191,7 @@ function initializeData() {
 
     reading.value = readings.value.find((item) => item.epocId === epocId.value);
     if (!reading.value) {
-        readingStore.addReading(epocId.value);
+      reading.value = readingStore.addReading(epocId.value);
     }
 
     readingStore.saveChapterProgress(epocId.value, chapterId.value);
@@ -310,20 +314,6 @@ function stopAllMedia() {
     const mediaElements = document.querySelectorAll('audio, video') as NodeListOf<HTMLMediaElement>;
     mediaElements.forEach((media) => media.pause());
 }
-
-const unlockedContent = computed(() => {
-    if (!chapter.value || !reading.value) return;
-
-    return chapter.value.initializedContents.filter((content) => {
-        if (content.rule) {
-          content.locked = !readingStore.isUnlocked(reading.value!, content.rule)
-        }
-        if (content.conditional) {
-          return reading.value?.flags.includes(content.id) || false;
-        }
-        return true;
-    });
-});
 </script>
 
 <template>
@@ -347,7 +337,7 @@ const unlockedContent = computed(() => {
                         </swiper-slide>
 
                         <swiper-slide
-                            v-for="(content, index) in unlockedContent"
+                            v-for="(content, index) in filteredContents"
                             :key="content.id"
                         >
                             <app-debug :epocId="epocId" :chapterId="chapterId" :contentId="content.id" />
