@@ -373,6 +373,7 @@ const unlockedContent = computed(() => {
                                   <html-content
                                       v-if="content.type === 'html'"
                                       :html="srcConvert(content.html, epocStore.rootFolder)"
+                                      :lazy-iframes="index + 1 !== currentPage"
                                       @go-to="navigateToContent"
                                   />
                                   <video-content v-else-if="content.type === 'video'" :content="content" />
