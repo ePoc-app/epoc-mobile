@@ -168,7 +168,7 @@ const renderMermaid = async () => {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, var(--ion-color-inria-dark) 0%, var(--ion-color-inria-black) 100%);
+        background: var(--ion-color-content);
         color: #fff;
         z-index: 5;
         transition: opacity 0.4s ease, visibility 0.4s;
