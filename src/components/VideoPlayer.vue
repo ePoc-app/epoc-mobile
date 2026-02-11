@@ -97,7 +97,7 @@ const seek = (event: MouseEvent) => {
 
 const captions = () => {
     if (trackSelectRef.value) {
-        trackSelectRef.value?.open();
+      trackSelectRef.value.$el.open();
     }
 };
 
@@ -263,6 +263,9 @@ onUnmounted(() => {
                     <div class="video-timeline-cursor" :style="{ left: progress + '%' }" ref="timelineCursor"></div>
                 </div>
                 <div v-if="controls.overlay" class="video-overlay-controls">
+                    <ion-icon
+                        v-if="controls.subtitles && subtitles && subtitles.length > 0"
+                        :icon="logoClosedCaptioning" @click="captions"></ion-icon>
                     <ion-icon :icon="expand" @click="fullscreen"></ion-icon>
                 </div>
             </div>
@@ -306,7 +309,7 @@ onUnmounted(() => {
 .video-player {
     .video-container {
         position: relative;
-        min-height: 210px;
+        min-height: 175px;
     }
     .video-container .poster {
         display: flex;
@@ -364,6 +367,7 @@ onUnmounted(() => {
         color: white;
         cursor: pointer;
         filter: drop-shadow(0 0 2px var(--ion-color-inria-blue));
+        padding: 0 5px;
     }
     @keyframes fadeOut {
         from {

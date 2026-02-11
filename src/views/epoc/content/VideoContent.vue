@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Video } from '@/types/contents/video';
 import { ContentRuntime } from '@/types/contents/content';
-import { PropType, ref } from 'vue';
+import { computed, PropType, ref } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
 import { useReadingStore } from '@/stores/readingStore';
 import { srcConvert } from '@/utils/pipes';
@@ -49,6 +49,13 @@ const playPause = (event: PlayPauseEvent) => {
         }
     }
 };
+
+const subtitles = computed(() => {
+  return props.content.subtitles.map((item) => {
+    item.src = epocStore.rootFolder + item.src
+    return item;
+  })
+})
 </script>
 
 <template>
@@ -56,7 +63,7 @@ const playPause = (event: PlayPauseEvent) => {
         <video-player
             :src="epocStore.rootFolder + content.source"
             :poster="epocStore.rootFolder + content.poster"
-            :subtitles="content.subtitles"
+            :subtitles="subtitles"
             :title="content.title"
             @playPause="playPause($event)"
         >

@@ -137,7 +137,7 @@ onIonViewWillEnter(() => {
                         v-if="epoc.teaser"
                         :src="pathToUrl(epoc.teaser)"
                         :poster="pathToUrl(epoc.thumbnail)"
-                        :controls="{ show: false, timeline: true, overlay: true }"
+                        :controls="{ show: false, timeline: true, overlay: true, subtitles: true }"
                         :style="{ aspectRatio: aspectRatio }"
                     >
                     </video-player>
