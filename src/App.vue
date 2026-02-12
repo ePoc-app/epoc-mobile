@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { IonApp, IonRouterOutlet, isPlatform } from '@ionic/vue';
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { register } from 'swiper/element/bundle';
-import { useSettingsStore } from './stores/settingsStore';
-import { watch, onMounted, nextTick } from 'vue';
-import { useI18n } from 'vue-i18n';
+import {IonApp, IonRouterOutlet} from '@ionic/vue';
+import {StatusBar, Style} from '@capacitor/status-bar';
+import {register} from 'swiper/element/bundle';
+import {useSettingsStore} from './stores/settingsStore';
+import {nextTick, onMounted, watch} from 'vue';
+import {useI18n} from 'vue-i18n';
 
 const settingsStore = useSettingsStore();
 
@@ -23,11 +23,16 @@ function applyTheme(theme: 'light' | 'dark') {
 }
 
 async function applyStatusBarStyle(theme: 'light' | 'dark') {
-    if (!isPlatform('ios')) return;
-
-    const style = theme === 'dark' ? Style.Dark : Style.Light;
     try {
-        await StatusBar.setStyle({ style });
+      const statusBarInfo: any = await StatusBar.getInfo();
+      document.documentElement.style.setProperty('--ion-safe-area-top', `${statusBarInfo.height}px`);
+      if (theme === 'dark') {
+        await StatusBar.setStyle({ style: Style.Dark });
+        await StatusBar.setBackgroundColor({ color: '#17191A00' });
+      } else {
+        await StatusBar.setStyle({ style: Style.Light });
+        await StatusBar.setBackgroundColor({ color: '#ffffff00' });
+      }
     } catch (e) {
         // In browser
     }
