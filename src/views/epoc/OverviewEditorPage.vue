@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, IonButton, IonFooter, IonTitle, IonButtons, IonText } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -21,6 +21,15 @@ const epocStore = useEpocStore();
 const router = useRouter();
 const selectedTab = ref(0);
 const { epoc } = storeToRefs(epocStore);
+
+const teaserSubtitles = computed(() => {
+  if (!epoc.value?.teaserSubtitles) return [];
+  return epoc.value?.teaserSubtitles.map((item) => {
+    const newItem = JSON.parse(JSON.stringify(item));
+    newItem.src = pathToUrl(item.src)
+    return newItem;
+  })
+})
 
 const selectTab = (index: number) => {
     selectedTab.value = index;
@@ -55,6 +64,7 @@ const pathToUrl = (path: string) => {
                         :src="pathToUrl(epoc.teaser)"
                         :poster="pathToUrl(epoc.thumbnail)"
                         :controls="{ show: false, timeline: true, overlay: true, subtitles: true }"
+                        :subtitles="teaserSubtitles"
                     >
                     </video-player>
                     <img v-else :alt="'Cover image : ' + epoc.title" :src="pathToUrl(epoc.thumbnail)" />

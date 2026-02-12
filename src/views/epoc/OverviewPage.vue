@@ -88,6 +88,15 @@ const pathToUrl = (path: string) => {
 const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
 const aspectRatio = ref('16/9');
 
+const teaserSubtitles = computed(() => {
+  if (!epoc.value?.teaserSubtitles) return [];
+  return epoc.value?.teaserSubtitles.map((item) => {
+    const newItem = JSON.parse(JSON.stringify(item));
+    newItem.src = pathToUrl(item.src)
+    return newItem;
+  })
+})
+
 onIonViewWillEnter(() => {
   const epoc = getEpoc();
 
@@ -139,6 +148,7 @@ onIonViewWillEnter(() => {
                         :poster="pathToUrl(epoc.thumbnail)"
                         :controls="{ show: false, timeline: true, overlay: true, subtitles: true }"
                         :style="{ aspectRatio: aspectRatio }"
+                        :subtitles="teaserSubtitles"
                     >
                     </video-player>
                     <img v-else :alt="epoc.title" :src="pathToUrl(epoc.image)" />
