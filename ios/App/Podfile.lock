@@ -107,23 +107,23 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@epoc/capacitor-zip"
 
 SPEC CHECKSUMS:
-  Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
-  CapacitorApp: 63b237168fc869e758481dba283315a85743ee78
-  CapacitorBarcodeScanner: 4e00db2f78415726d0c1f905adc11aaac6225b11
-  CapacitorBrowser: b98aa3db018a2ce4c68242d27e596c344f3b81b3
+  Capacitor: 09d9ff8e9618e8c4b3cab2bbee34a17215dd2fef
+  CapacitorApp: 3ddbd30ac18c321531c3da5e707b60873d89dd60
+  CapacitorBarcodeScanner: 550a9f291ee8533e2de25e8ec0d3d1e8b03c6ae5
+  CapacitorBrowser: 66aa8ff09cdca2a327ce464b113b470e6f667753
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
-  CapacitorDevice: b64654eb4d404373e733c01d835055ba59286e5c
-  CapacitorFilesystem: 66f05ee0d8b1ccdc00d509091273a9b3b57c4a0b
-  CapacitorFileTransfer: 44d57c7502e7ddd396047ec76874b0b7a6669e8f
-  CapacitorFileViewer: 504d3ba661aad5d93b7d627ba5478cfff1ce332b
-  CapacitorHaptics: ce15be8f287fa2c61c7d2d9e958885b90cf0bebc
-  CapacitorKeyboard: 5660c760113bfa48962817a785879373cf5339c3
-  CapacitorScreenOrientation: dbc5cb20775d43a8184830792808c71116b12d56
-  CapacitorScreenReader: bc27ae1049d8e194afa8c2d751f87a1a41762f31
-  CapacitorSplashScreen: 000f7591d546907dda5cbb514bd6b6d9e6048cf8
-  CapacitorStatusBar: d0e0151c89c001a9c7125bac59ddedf76b664768
-  CordovaPlugins: c9bd324fe394f7b3e27f0150af14567746dd74ff
-  EpocCapacitorZip: d350d34d6c27cdada5479b024759d752a07dd478
+  CapacitorDevice: acceaa3502f9a5edd446c96a451eb200d1ac6c03
+  CapacitorFilesystem: 2267b9183bfecb9e5b8163b79685c9efb5ed0a09
+  CapacitorFileTransfer: c186efc640dcd39703c1d621ac3d4de8240bf7c0
+  CapacitorFileViewer: 1b48fe864811229ea55dbdc7e804791b93d3f797
+  CapacitorHaptics: d17da7dd984cae34111b3f097ccd3e21f9feec62
+  CapacitorKeyboard: 45cae3956a6f4fb1753f9a4df3e884aeaed8fe82
+  CapacitorScreenOrientation: 737ad5b53c7b152c25f75aad1b4759cd86748616
+  CapacitorScreenReader: c4f4f3e28309daa4f8728551906525cbb1d2b329
+  CapacitorSplashScreen: 03d04ffe57d5b619cfc162efc7415a965c92cc3f
+  CapacitorStatusBar: 4bf126c3c01dbaca8a4e416a29c4899cf91d0626
+  CordovaPlugins: 2ce67ef2b09c9be5dca0c6208b7569674c07083e
+  EpocCapacitorZip: 64c2c5bf16772a73bae663ce6dc5958260d7c905
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   IONFileTransferLib: b268561ab0ba7f386eea228c4986b55ba0146ca9
   IONFileViewerLib: 574758ebcaa4b1543669b1c9708f1970e1172b29

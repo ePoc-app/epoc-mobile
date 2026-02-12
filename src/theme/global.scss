@@ -760,8 +760,15 @@ ion-card{
   background: var(--ion-color-contrast);
 }
 
-[aria-checked=true].sc-ion-alert-md .sc-ion-alert-md .alert-radio-label, .alert-radio-label.sc-ion-alert-md  {
-  color:var(--ion-color-text);
+.alert-radio-group {
+  [aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md, .sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+    color:var(--ion-color-text);
+
+  }
+
+  .alert-tappable.sc-ion-alert-md {
+    background:transparent;
+  }
 }
 
 a.about-page-link{
