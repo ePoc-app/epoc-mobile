@@ -225,7 +225,7 @@ const initializedChapters = computed(() => {
                               </div>
                               <div class="toc-chapter-info">
                                   <RouterLink :to="chapter.resumeLink" class="toc-chapter-info-title">
-                                      <div class="toc-chapter-info-label">{{ index + 1 }}. {{ chapter.title }}</div>
+                                      <div class="toc-chapter-info-label">{{ chapter.title }}</div>
                                       {{ chapter.subtitle }}
                                   </RouterLink>
                                   <div class="toc-chapter-info-details" v-on:click="toggleDetails(chapter)">
