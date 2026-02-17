@@ -2,8 +2,7 @@
 import renderMathInElement from 'katex/contrib/auto-render';
 import mermaid from 'mermaid';
 import GLightbox from 'glightbox';
-import { computed, useTemplateRef } from 'vue';
-import { onIonViewDidEnter } from '@ionic/vue';
+import { computed, useTemplateRef, watch } from 'vue';
 import { usePlugin } from '@/composables';
 
 const props = defineProps({
@@ -55,10 +54,10 @@ const pluggedHtml = computed(() => {
   return html;
 });
 
-onIonViewDidEnter(async () => {
+watch(content, () => {
   renderMath();
-  await renderMermaid();
-});
+  renderMermaid();
+})
 
 /**
  * 2. Click Handling
