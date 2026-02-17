@@ -311,6 +311,7 @@
       "audio": "audio",
       "assessment": "valutazione",
       "question": "domanda",
+      "multiple-choice": "scelta multipla",
       "choice": "scelta",
       "drag-and-drop": "trascina e rilascia",
       "reorder": "riordina",

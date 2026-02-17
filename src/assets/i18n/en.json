@@ -311,6 +311,7 @@
       "audio": "the audio",
       "assessment": "the assessment",
       "question": "the question",
+      "multiple-choice": "the multiple choice question",
       "choice": "the question",
       "drag-and-drop": "the question",
       "reorder": "the question",

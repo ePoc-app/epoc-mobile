@@ -18,7 +18,7 @@ const shape = computed(() => `${prefix}${props.grey ? 'shape-grey' : 'shape'}.sv
 const shadow = computed(() => `${prefix}${props.grey ? 'shadow-grey' : 'shadow'}.svg`);
 
 const iconSrc = computed(() => {
-    const path = props.icon.endsWith('.svg') ? epocStore.rootFolder + props.icon : prefix + props.icon + '.svg';
+    const path = props.icon.endsWith('.svg') ? epocStore.rootFolder + props.icon : prefix + (props.icon ? props.icon : 'check') + '.svg';
     return safe(path, 'url');
 });
 </script>
