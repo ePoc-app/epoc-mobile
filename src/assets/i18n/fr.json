@@ -270,7 +270,7 @@
       "FORGOTTEN": "Vous avez oublié",
       "OMISSION": "oubli | oublis",
       "WAS_TRUE": "C'était une bonne réponse !",
-      "CORRECT_ANSWERS":"bonne réponse | bonnes réponses",
+      "CORRECT_ANSWERS": "bonne réponse | bonnes réponses",
       "WRONG_ANSWERS": "mauvaise réponse | mauvaises réponses",
       "CORRECT_RANKING": "Voici le bon classement",
       "POSITION": "Position "
@@ -311,12 +311,13 @@
       "audio": "l'audio",
       "assessment": "l'évaluation",
       "question": "la question",
-      "multiple-choice": "la question à choix multiples",
+      "multiple-choice": "la question",
       "choice": "la question",
       "drag-and-drop": "la question",
       "reorder": "la question",
       "swipe": "la question",
-      "dropdown-list": "la question"
+      "dropdown-list": "la question",
+      "simple-question": "la question"
     }
   },
   "LOADING": "Chargement",
@@ -324,13 +325,12 @@
   "CONFIRM": "Confirmer",
   "CLOSE": "Fermer",
   "OK": "OK",
-
   "MISSING": {
-    "MY_EPOCS" : "Mes ePocs",
+    "MY_EPOCS": "Mes ePocs",
     "CHAPTER_OPTIONS": "Option du chapitre",
-    "OPTIONS" : "Options",
-    "RETURN" : "Retour",
-    "NEXT_CHAPTER" : "Prochain chapitre",
-    "QUESTION" : "aucune question | 1 question | {nb} questions"
+    "OPTIONS": "Options",
+    "RETURN": "Retour",
+    "NEXT_CHAPTER": "Prochain chapitre",
+    "QUESTION": "aucune question | 1 question | {nb} questions"
   }
 }

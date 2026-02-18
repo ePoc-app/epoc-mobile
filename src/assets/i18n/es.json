@@ -95,7 +95,7 @@
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Presentación del curso",
     "ACTIVITIES": "Evaluación | Evaluaciones",
-    "CHAPTERS":"Módulo | Módulos",
+    "CHAPTERS": "Módulo | Módulos",
     "MIN_MODULE": "min/módulo",
     "OBJECTIVES": "Objetivo | Objetivos",
     "PREREQUISITES": "Prerrequisitos",
@@ -268,7 +268,7 @@
       "FALSE": "¡Eso no es cierto!",
       "CORRECT": "Respuesta correcta:",
       "FORGOTTEN": "Olvidaste",
-      "OMISSION":"omisión | omisiones",
+      "OMISSION": "omisión | omisiones",
       "WAS_TRUE": "¡Era una buena respuesta!",
       "CORRECT_ANSWERS": "respuesta correcta | respuestas correctas",
       "WRONG_ANSWERS": "respuesta incorrecta | respuestas incorrectas",
@@ -311,12 +311,13 @@
       "audio": "el audio",
       "assessment": "la evaluación",
       "question": "la pregunta",
-      "mulitple-choice": "la pregunta de opción múltiple",
+      "multiple-choice": "la pregunta",
       "choice": "la pregunta",
       "drag-and-drop": "la pregunta",
       "reorder": "la pregunta",
       "swipe": "la pregunta",
-      "dropdown-list": "la pregunta"
+      "dropdown-list": "la pregunta",
+      "simple-question": "la pregunta"
     }
   },
   "LOADING": "Cargando",
@@ -324,7 +325,6 @@
   "CONFIRM": "Confirmar",
   "CLOSE": "Cerrar",
   "OK": "OK",
-  
   "MISSING": {
     "MY_EPOCS": "Mis ePocs",
     "CHAPTER_OPTIONS": "Opciones del capítulo",

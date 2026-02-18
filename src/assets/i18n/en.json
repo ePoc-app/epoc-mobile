@@ -311,12 +311,13 @@
       "audio": "the audio",
       "assessment": "the assessment",
       "question": "the question",
-      "multiple-choice": "the multiple choice question",
+      "multiple-choice": "the question",
       "choice": "the question",
       "drag-and-drop": "the question",
       "reorder": "the question",
       "swipe": "the question",
-      "dropdown-list": "the question"
+      "dropdown-list": "the question",
+      "simple-question": "the question"
     }
   },
   "LOADING": "Loading",
@@ -324,13 +325,12 @@
   "CONFIRM": "Confirm",
   "CLOSE": "Close",
   "OK": "OK",
-  
   "MISSING": {
-    "MY_EPOCS" : "My ePocs",
+    "MY_EPOCS": "My ePocs",
     "CHAPTER_OPTIONS": "Chapter's options",
-    "OPTIONS" : "Options",
-    "RETURN" : "Return",
-    "NEXT_CHAPTER" : "Next Chapter",
-    "QUESTION" : "no question | 1 question | {nb} questions"
+    "OPTIONS": "Options",
+    "RETURN": "Return",
+    "NEXT_CHAPTER": "Next Chapter",
+    "QUESTION": "no question | 1 question | {nb} questions"
   }
 }

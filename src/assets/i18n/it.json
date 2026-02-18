@@ -310,13 +310,14 @@
       "html": "testo",
       "audio": "audio",
       "assessment": "valutazione",
-      "question": "domanda",
-      "multiple-choice": "scelta multipla",
-      "choice": "scelta",
-      "drag-and-drop": "trascina e rilascia",
-      "reorder": "riordina",
-      "swipe": "cancella",
-      "dropdown-list": "elenco a discesa"
+      "question": "la domanda",
+      "multiple-choice": "la domanda",
+      "choice": "la domanda",
+      "drag-and-drop": "la domanda",
+      "reorder": "la domanda",
+      "swipe": "la domanda",
+      "dropdown-list": "la domanda",
+      "simple-question": "la domanda"
     }
   },
   "LOADING": "Caricamento in corso",
@@ -324,7 +325,6 @@
   "CONFIRM": "Conferma",
   "CLOSE": "Chiudi",
   "OK": "OK",
-  
   "MISSING": {
     "MY_EPOCS": "I miei ePocs",
     "CHAPTER_OPTIONS": "Opzioni del capitolo",

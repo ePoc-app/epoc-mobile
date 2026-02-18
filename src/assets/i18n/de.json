@@ -311,12 +311,13 @@
       "audio": "das Audio",
       "assessment": "die Bewertung",
       "question": "die Frage",
-      "multiple-choice": "die Frage mit mehreren Antworten",
+      "multiple-choice": "die Frage",
       "choice": "die Frage",
       "drag-and-drop": "die Frage",
       "reorder": "die Frage",
       "swipe": "die Frage",
-      "dropdown-list": "die Frage"
+      "dropdown-list": "die Frage",
+      "simple-question": "die Frage"
     }
   },
   "LOADING": "Wird geladen",
@@ -324,7 +325,6 @@
   "CONFIRM": "Bestätigen",
   "CLOSE": "Schließen",
   "OK": "OK",
-  
   "MISSING": {
     "MY_EPOCS": "Meine ePocs",
     "CHAPTER_OPTIONS": "Kapiteloptionen",
