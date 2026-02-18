@@ -29,6 +29,8 @@ const pluggedHtml = computed(() => {
     let html = plugin.allPluginLoaded.value ? plugin.embed(props.html) : props.html;
     if (!html) return '';
 
+    html = transformMermaidBlock(html);
+
     if (props.lazyIframes) {
         // Regex looks for iframes, captures attributes and the URL
         return html.replace(
@@ -50,8 +52,6 @@ const pluggedHtml = computed(() => {
             </div>`
         );
     }
-
-    return html;
 });
 
 watch(content, () => {
@@ -117,11 +117,37 @@ const renderMath = () => {
     }
 };
 
+const transformMermaidBlock = (html: string): string => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    doc.querySelectorAll('p').forEach((p) => {
+        if (!p.textContent?.startsWith('```mermaid')) return;
+
+        const source = p.innerHTML
+            .replace(/^```mermaid/, '')
+            .replace(/```$/, '')
+            .replace(/<br\s*\/?>/gi, '\n')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/&gt;/g, '>')
+            .replace(/&lt;/g, '<')
+            .replace(/&amp;/g, '&')
+            .trim();
+
+        const div = doc.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = source;
+        p.replaceWith(div);
+    });
+
+    return doc.body.innerHTML;
+};
+
 const renderMermaid = async () => {
     mermaid.initialize({ startOnLoad: false });
     const mermaidDiagram = content.value?.querySelector('.mermaid');
     if (mermaidDiagram) {
-        const { svg } = await mermaid.render('mermaid-svg', mermaidDiagram.innerHTML);
+        const { svg } = await mermaid.render('mermaid-svg', mermaidDiagram.textContent ?? '');
         mermaidDiagram.innerHTML = svg;
     }
 };
