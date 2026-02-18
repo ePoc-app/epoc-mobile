@@ -48,7 +48,7 @@ export function usePlugin() {
                 iframe.srcdoc = html;
                 wrapper.appendChild(iframe);
 
-                const context = { url, epoc };
+                const context = { url, epoc: JSON.parse(JSON.stringify(epoc)) };
 
                 const messageHandler = async (message: MessageEvent) => {
                     if (message.data.pluginId !== uid) return;
