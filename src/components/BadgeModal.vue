@@ -50,6 +50,9 @@ function extractRuleComponents(rule: Record<string, any>) {
 function formatRuleLabel(type: string, id: string, action: string, value: any): string {
     const verb = t(`BADGE.PASSIVE_VERBS.${action}`, { [action]: value });
     const entity = getEntityFromEpoc(type, id);
+    if (!entity) {
+        return `Error: Entity not found (${type} with ID ${id})`;
+    }
     const entityType = t(`BADGE.ENTITY_TYPES.${type !== 'pages' ? entity.type : 'page'}`);
     const title = entity?.title ?? entity?.type;
 
