@@ -231,7 +231,12 @@ export const useReadingStore = defineStore('reading', () => {
                 {
                     icon: openOutline,
                     handler: () => {
-                        router.push(`/epoc/score/${epocService.epoc?.id}`);
+                        // Handle badge click on AssessmentPage to go back to the player page
+                        if (router.currentRoute.value.name === "AssessmentPage" && epocService.epoc) {
+                            router.replace(`/epoc/score/${epocService.epoc?.id}`);
+                        } else {
+                            router.push(`/epoc/score/${epocService.epoc?.id}`);
+                        }
                     },
                 },
                 {
