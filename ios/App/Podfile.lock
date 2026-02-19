@@ -34,7 +34,7 @@ PODS:
     - Capacitor
   - CordovaPlugins (7.4.4):
     - CapacitorCordova
-  - EpocCapacitorZip (0.1.1):
+  - EpocCapacitorZip (0.1.2):
     - Capacitor
     - SSZipArchive (~> 2.4.2)
   - IONFilesystemLib (1.0.1)
@@ -123,7 +123,7 @@ SPEC CHECKSUMS:
   CapacitorSplashScreen: 03d04ffe57d5b619cfc162efc7415a965c92cc3f
   CapacitorStatusBar: 4bf126c3c01dbaca8a4e416a29c4899cf91d0626
   CordovaPlugins: 2ce67ef2b09c9be5dca0c6208b7569674c07083e
-  EpocCapacitorZip: 64c2c5bf16772a73bae663ce6dc5958260d7c905
+  EpocCapacitorZip: c8da1d5ed39d45cad7d627f95ad6672ef69d3652
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
   IONFileTransferLib: b268561ab0ba7f386eea228c4986b55ba0146ca9
   IONFileViewerLib: 574758ebcaa4b1543669b1c9708f1970e1172b29
