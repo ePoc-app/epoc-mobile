@@ -4,6 +4,8 @@ import mermaid from 'mermaid';
 import GLightbox from 'glightbox';
 import { computed, useTemplateRef, watch } from 'vue';
 import { usePlugin } from '@/composables';
+import { trackEvent } from '@/utils/matomo';
+import { useEpocStore } from '@/stores/epocStore';
 
 const props = defineProps({
     html: {
@@ -17,6 +19,7 @@ const props = defineProps({
     },
 });
 
+const epocStore = useEpocStore();
 const plugin = usePlugin();
 const content = useTemplateRef('content');
 
@@ -71,6 +74,17 @@ const handleClick = (event: Event) => {
         const imgSrc = (target as HTMLImageElement).src;
         openLightBox(imgSrc);
         return;
+    }
+
+    // Handle External Links
+    const anchor = target.closest('a');
+    if (anchor) {
+      const href = anchor.getAttribute('href');
+
+      // Check if it's an external link (starts with http)
+      if (href && (href.startsWith('http') || href.startsWith('//')) && epocStore.epoc) {
+        trackEvent(epocStore.epoc.id, `${epocStore.epoc.id} / External link clicked ${href}`);
+      }
     }
 
     // Handle Lazy Iframe activation
