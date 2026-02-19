@@ -196,7 +196,7 @@ const presentAlertConfirm = async () => {
             {
                 text: t('QUESTION.QUIT_MODAL.QUIT'),
                 handler: () => {
-                    router.back();
+                  router.push(`/epoc/play/${epocId.value}/${assessment.value.chapterId}/content/${assessmentId.value}`);
                 },
             },
         ],
