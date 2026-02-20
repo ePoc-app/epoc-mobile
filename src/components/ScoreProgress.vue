@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { computed, onUpdated, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { IonIcon } from '@ionic/vue';
 
 const props = defineProps({
     progress: { type: Number, required: true },
     delta: { type: Number, required: false },
-    threshold: { type: Number, required: true },
+    threshold: { type: Number, required: false },
     minLabel: { type: Number, required: true },
     maxLabel: { type: Number, required: true },
 });
 
 const currentDelta = ref(0);
-const thresholdPoints = computed(() => Math.round((props.threshold / 100) * props.maxLabel));
+const thresholdPoints = computed(() =>
+    props.threshold ? Math.round((props.threshold / 100) * props.maxLabel) : undefined
+);
 
 setTimeout(() => {
     currentDelta.value = props.delta || 0;
 }, 200);
-
-
 </script>
 
 <template>
@@ -26,7 +26,11 @@ setTimeout(() => {
             <div class="progress" :style="{ width: progress + '%' }"></div>
             <div class="progress-delta" :style="{ left: progress + '%', width: currentDelta + '%' }"></div>
         </div>
-        <div class="progress-threshold" :style="{ left: 'calc(' + threshold + '% - 0.9rem)' }" :v-if="threshold < 100">
+        <div
+            v-if="threshold && threshold < 100"
+            class="progress-threshold"
+            :style="{ left: 'calc(' + threshold + '% - 0.9rem)' }"
+        >
             <div class="progress-threshold-label">
                 {{ $t('QUESTION.CERTIFICATE') }}<br />
                 {{ thresholdPoints }} {{ $t('PLAYER.SCORE.PTS') }}

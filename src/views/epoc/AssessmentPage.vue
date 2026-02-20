@@ -17,7 +17,7 @@ import Card from '@/components/Card.vue';
 import CommonQuestion from '@/components/questions/CommonQuestion.vue';
 import ScoreProgress from '@/components/ScoreProgress.vue';
 import { starOutline, arrowForwardOutline } from 'ionicons/icons';
-import {trackEvent} from '@/utils/matomo';
+import { trackEvent } from '@/utils/matomo';
 
 const { t } = useI18n();
 type CommonQuestionType = InstanceType<typeof CommonQuestion>;
@@ -119,10 +119,21 @@ const checkAnswer = () => {
         questionsElements.value[currentQuestionIndex.value]?.showCorrection();
         userScore.value += score;
         userResponses.value.push(response);
-        trackEvent(epocId.value, `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} attempted`);
+        trackEvent(
+            epocId.value,
+            `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} attempted`
+        );
 
-        if (userSucceeded) trackEvent(epocId.value, `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} succeeded`);
-        else trackEvent(epocId.value, `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} failed`);
+        if (userSucceeded)
+            trackEvent(
+                epocId.value,
+                `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} succeeded`
+            );
+        else
+            trackEvent(
+                epocId.value,
+                `${epocId.value} / Assessment ${assessmentId.value} ${assessment.value.title} / Question ${currentQuestionIndex.value} failed`
+            );
 
         if (assessment.value && assessment.value.questions) {
             readingStore.saveStatement(
@@ -288,7 +299,11 @@ const getMaxScoreForAllAssessments = (assessments: (Assessment | SimpleQuestion)
                                     <score-progress
                                         :progress="(otherAssessmentsUserScore / allAssessmentsMaxScore) * 100"
                                         :delta="(userScore / allAssessmentsMaxScore) * 100"
-                                        :threshold="epoc!.certificateScore / allAssessmentsMaxScore * 100"
+                                        :threshold="
+                                            epoc?.certificateBadgeCount
+                                                ? undefined
+                                                : (epoc!.certificateScore / allAssessmentsMaxScore) * 100
+                                        "
                                         :minLabel="0"
                                         :maxLabel="allAssessmentsMaxScore"
                                     />
