@@ -167,7 +167,7 @@ const nextQuestion = () => {
     currentQuestionIndex.value++;
     if (currentQuestionIndex.value >= questions.value.length) {
         isEnd.value = true;
-        checkCertificateCard();
+        checkForCertificate();
         readingStore.saveResponses(epocId.value, assessmentId.value, userScore.value, userResponses.value);
         readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'completed', true);
         readingStore.saveStatement(epocId.value, 'contents', assessmentId.value, 'scored', userScore.value);
@@ -178,18 +178,18 @@ const nextQuestion = () => {
     }, 1000);
 };
 
-const checkCertificateCard = () => {
-    if (otherAssessmentsUserScore.value + userScore.value >= epoc.value!.certificateScore) {
-        if (reading.value?.badges.length || 0 >= epoc.value!.certificateBadgeCount) {
-            if (!reading.value?.certificateShown) {
-                setTimeout(() => {
-                    certificateShown.value = true;
-                    readingStore.updateCertificateShown(epoc.value!.id, true);
-                }, 1500);
-            }
-        }
+function checkForCertificate() {
+    if (!epoc.value || !reading.value) return;
+
+    const meetsScoreRequirements = otherAssessmentsUserScore.value + userScore.value >= epoc.value.certificateScore;
+    const meetsBadgeRequirement = (reading.value.badges.length || 0) >= epoc.value.certificateBadgeCount;
+
+    if (meetsScoreRequirements && meetsBadgeRequirement && !reading.value.certificateShown) {
+        certificateShown.value = true;
+        readingStore.updateCertificateShown(epoc.value.id, true);
+        trackEvent(epoc.value.id, `${epoc.value.id} / Certificate unlocked`);
     }
-};
+}
 
 const back = () => {
     presentAlertConfirm();
@@ -207,7 +207,9 @@ const presentAlertConfirm = async () => {
             {
                 text: t('QUESTION.QUIT_MODAL.QUIT'),
                 handler: () => {
-                  router.push(`/epoc/play/${epocId.value}/${assessment.value.chapterId}/content/${assessmentId.value}`);
+                    router.push(
+                        `/epoc/play/${epocId.value}/${assessment.value.chapterId}/content/${assessmentId.value}`
+                    );
                 },
             },
         ],
