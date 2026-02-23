@@ -14,10 +14,11 @@ import { useSettingsStore } from './settingsStore';
 import { useReadingStore } from './readingStore';
 import type { EpocCollection, EpocLibrary, EpocLibraryState, EpocMetadata, Publisher } from '@/types/epoc';
 import type { Reading } from '@/types/reading';
-import { download, unzip } from '@/utils/file';
+import {deleteFolder, download, unzip} from '@/utils/file';
 import { readEpocContent } from '@/utils/epocService';
 import { displayLicence } from '@/utils/app';
 import { i18n } from '@/i18n';
+import {trackEvent} from '@/utils/matomo';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
@@ -208,8 +209,10 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     async function deleteEpoc(epoc: EpocMetadata, libraryId: string) {
-        // todo Implement your delete logic here
+        trackEvent(epoc.id, 'Deleted');
+        await deleteFolder(`epocs/${epoc.id}`);
         updateEpocCollectionState(epoc.id, {}, libraryId);
+        router.push('/library');
     }
 
     async function checkCustomCollectionUrl(url: string): Promise<string | null> {
