@@ -5,12 +5,19 @@ import { EpocMetadata } from '@epoc/epoc-types/src/v1';
 export async function displayLicence(epoc: EpocMetadata) {
     let message = '';
 
-    if (epoc.license?.name && epoc.license?.url) {
-        message = i18n.global.t('LICENSE_MODAL.MESSAGE', {
-            epoc: epoc.title,
-            licenseName: epoc.license.name,
-            licenseUrl: epoc.license.url,
-        });
+    if (epoc.license?.name) {
+        if (epoc.license.url) {
+            message = i18n.global.t('LICENSE_MODAL.MESSAGE', {
+                epoc: epoc.title,
+                licenseName: epoc.license.name,
+                licenseUrl: epoc.license.url
+            });
+        } else {
+            message = i18n.global.t('LICENSE_MODAL.MESSAGE_WITHOUT_LINK', {
+                epoc: epoc.title,
+                licenseName: epoc.license.name
+            });
+        }
     } else {
         message = i18n.global.t('LICENSE_MODAL.MESSAGE', {
             epoc: epoc.title,

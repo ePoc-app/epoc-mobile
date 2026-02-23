@@ -17,8 +17,10 @@ import {
 import { EpocLibrary } from '@/types/epoc';
 import { readEpocContent } from '@/utils/epocService';
 import { trackEvent } from '@/utils/matomo';
-import { listCircleOutline, starOutline, trash } from 'ionicons/icons';
+import { listCircleOutline, receiptOutline, starOutline, trash } from 'ionicons/icons';
 import { moveOldEpocsWithRandomIds } from '@/utils/backwardCompatibility';
+import { i18n } from '@/i18n';
+import { displayLicence } from '@/utils/app';
 
 export const useLocalEpocsStore = defineStore('localEpocs', () => {
 
@@ -205,6 +207,13 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
                 icon: starOutline,
                 handler: () => {
                     router.push('/epoc/score/' + epoc.id);
+                },
+            },
+            {
+                text: i18n.global.t('FLOATING_MENU.LICENSE'),
+                icon: receiptOutline,
+                handler: async () => {
+                    await displayLicence(epoc);
                 },
             },
             {
