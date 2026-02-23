@@ -202,7 +202,7 @@
       "BADGE_REMAINING": "Earn {remaining} badges and get your certificate",
       "GET_CERTIFICATE": "Get the certificate",
       "CONGRATS": "Congratulations",
-      "CERTIFICATE_WIN": "You have reached the score to obtain the certificate",
+      "CERTIFICATE_WIN": "You have met the necessary conditions to obtain the certificate.",
       "PTS_RECAP": "Summary of points",
       "FAIL_MODAL": {
         "HEADER": "Not available",
@@ -283,7 +283,7 @@
   "DEBUG_REPORT": "Report",
   "CERTIFICATE_MODAL": {
     "HEADER": "Congratulations",
-    "SCORE_REACHED": "You have reached the score required to obtain the certificate",
+    "SCORE_REACHED": "You have met the necessary conditions to obtain the certificate.",
     "MSG": "Get the certificate now in the score page or continue to increase your score.",
     "GET": "Obtain the certificate",
     "CONTINUE": "Continue"

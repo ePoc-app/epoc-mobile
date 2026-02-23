@@ -202,7 +202,7 @@
       "BADGE_REMAINING": "Gana {remaining} insignias y obtén tu certificado",
       "GET_CERTIFICATE": "Obtener el certificado",
       "CONGRATS": "Enhorabuena",
-      "CERTIFICATE_WIN": "Has alcanzado la puntuación para obtener el certificado",
+      "CERTIFICATE_WIN": "Ha cumplido con los requisitos necesarios para obtener el certificado.",
       "PTS_RECAP": "Resumen de puntos",
       "FAIL_MODAL": {
         "HEADER": "No disponible",
@@ -283,7 +283,7 @@
   "DEBUG_REPORT": "Informe",
   "CERTIFICATE_MODAL": {
     "HEADER": "Enhorabuena",
-    "SCORE_REACHED": "Has alcanzado la puntuación requerida para obtener el certificado",
+    "SCORE_REACHED": "Ha cumplido con los requisitos necesarios para obtener el certificado.",
     "MSG": "Obtén el certificado ahora en la página de puntuaciones o continúa para aumentar tu puntuación.",
     "GET": "Obtener el certificado",
     "CONTINUE": "Continuar"

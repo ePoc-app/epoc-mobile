@@ -202,7 +202,7 @@
       "BADGE_REMAINING": "Sammeln Sie {remaining} Abzeichen und erhalten Sie Ihr Zertifikat",
       "GET_CERTIFICATE": "Zertifikat erhalten",
       "CONGRATS": "Herzlichen Glückwunsch",
-      "CERTIFICATE_WIN": "Sie haben die Punktzahl erreicht, um das Zertifikat zu erhalten",
+      "CERTIFICATE_WIN": "Sie haben die notwendigen Voraussetzungen für den Erhalt der Bescheinigung erfüllt.",
       "PTS_RECAP": "Punkteübersicht",
       "FAIL_MODAL": {
         "HEADER": "Nicht verfügbar",
@@ -283,7 +283,7 @@
   "DEBUG_REPORT": "Bericht",
   "CERTIFICATE_MODAL": {
     "HEADER": "Herzlichen Glückwunsch",
-    "SCORE_REACHED": "Sie haben die erforderliche Punktzahl erreicht, um das Zertifikat zu erhalten",
+    "SCORE_REACHED": "Sie haben die notwendigen Voraussetzungen für den Erhalt der Bescheinigung erfüllt.",
     "MSG": "Erhalten Sie das Zertifikat jetzt auf der Punktzahlenseite oder setzen Sie das Sammeln von Punkten fort.",
     "GET": "Zertifikat erhalten",
     "CONTINUE": "Fortsetzen"

@@ -202,7 +202,7 @@
       "BADGE_REMAINING": "Guadagna ancora {remaining} e ottieni il tuo attestato",
       "GET_CERTIFICATE": "Ottieni il attestato",
       "CONGRATS": "Congratulazioni",
-      "CERTIFICATE_WIN": "Hai raggiunto il punteggio per ottenere l'attestato",
+      "CERTIFICATE_WIN": "Hai soddisfatto le condizioni necessarie per ottenere l'attestato.",
       "PTS_RECAP": "Riepilogo dei punti",
       "FAIL_MODAL": {
         "HEADER": "Non disponibile",
@@ -283,7 +283,7 @@
   "DEBUG_REPORT": "Rapporto",
   "CERTIFICATE_MODAL": {
     "HEADER": "Congratulazioni",
-    "SCORE_REACHED": "Hai raggiunto il punteggio richiesto per ottenere l'attestato",
+    "SCORE_REACHED": "Hai soddisfatto le condizioni necessarie per ottenere l'attestato.",
     "MSG": "Ottieni subito l'attestato nella pagina dei punteggi o continua ad aumentare il tuo punteggio.",
     "GET": "Ottieni l'attestato",
     "CONTINUE": "Continua"

@@ -202,7 +202,7 @@
       "BADGE_REMAINING": "Gagnez encore {remaining} badges pour obtenir votre attestation",
       "GET_CERTIFICATE": "Obtenir l'attestation",
       "CONGRATS": "Félicitations !",
-      "CERTIFICATE_WIN": "Vous avez atteint le score pour obtenir l'attestation",
+      "CERTIFICATE_WIN": "Vous avez atteint les conditions nécessaires pour obtenir l'attestation",
       "PTS_RECAP": "Récapitulatif des points",
       "FAIL_MODAL": {
         "HEADER": "Non disponible",
@@ -283,7 +283,7 @@
   "DEBUG_REPORT": "Signaler",
   "CERTIFICATE_MODAL": {
     "HEADER": "Félicitations",
-    "SCORE_REACHED": "Vous avez atteint le score nécessaire pour obtenir l'attestation",
+    "SCORE_REACHED": "Vous avez atteint les conditions nécessaires pour obtenir l'attestation",
     "MSG": "Obtenir l'attestation maintenant dans la page des scores ou continuer pour augmenter votre score.",
     "GET": "Obtenir l'attestation",
     "CONTINUE": "Continuer"
