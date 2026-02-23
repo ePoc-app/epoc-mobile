@@ -19,7 +19,12 @@ const router = useRouter();
 
 function goToCertificate() {
     dismissCertificate();
-    router.push(`/epoc/score/${props.epocId}`);
+    // Handle certificate click on AssessmentPage to go back to the player page
+    if (router.currentRoute.value.name === "AssessmentPage") {
+      router.replace(`/epoc/score/${props.epocId}`);
+    } else {
+      router.push(`/epoc/score/${props.epocId}`);
+    }
 }
 
 function dismissCertificate() {
@@ -75,7 +80,7 @@ function dismissCertificate() {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.75);
-    z-index: 60;
+    z-index: 70000;
 
     .certificate-success-card {
         position: absolute;
