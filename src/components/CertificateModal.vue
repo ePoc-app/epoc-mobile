@@ -98,7 +98,7 @@ function dismissCertificate() {
 
         .title {
             font-family: 'Inria Sans';
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 5px;
             color: var(--ion-color-text);
