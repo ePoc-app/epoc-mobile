@@ -284,7 +284,7 @@
   "CERTIFICATE_MODAL": {
     "HEADER": "Congratulazioni",
     "SCORE_REACHED": "Hai soddisfatto le condizioni necessarie per ottenere l'attestato.",
-    "MSG": "Ottieni subito l'attestato nella pagina dei punteggi o continua ad aumentare il tuo punteggio.",
+    "MSG": "Ottenere l'attestato ora nella pagina dei punteggi o continuare.",
     "GET": "Ottieni l'attestato",
     "CONTINUE": "Continua"
   },

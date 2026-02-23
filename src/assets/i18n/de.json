@@ -284,7 +284,7 @@
   "CERTIFICATE_MODAL": {
     "HEADER": "Herzlichen Glückwunsch",
     "SCORE_REACHED": "Sie haben die notwendigen Voraussetzungen für den Erhalt der Bescheinigung erfüllt.",
-    "MSG": "Erhalten Sie das Zertifikat jetzt auf der Punktzahlenseite oder setzen Sie das Sammeln von Punkten fort.",
+    "MSG": "Erhalten Sie die Bescheinigung jetzt auf der Punkteseite oder fahren Sie fort.",
     "GET": "Zertifikat erhalten",
     "CONTINUE": "Fortsetzen"
   },

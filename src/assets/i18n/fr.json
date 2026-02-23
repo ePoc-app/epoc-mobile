@@ -284,7 +284,7 @@
   "CERTIFICATE_MODAL": {
     "HEADER": "Félicitations",
     "SCORE_REACHED": "Vous avez atteint les conditions nécessaires pour obtenir l'attestation",
-    "MSG": "Obtenir l'attestation maintenant dans la page des scores ou continuer pour augmenter votre score.",
+    "MSG": "Obtenir l'attestation maintenant dans la page des scores ou continuer.",
     "GET": "Obtenir l'attestation",
     "CONTINUE": "Continuer"
   },

@@ -284,7 +284,7 @@
   "CERTIFICATE_MODAL": {
     "HEADER": "Congratulations",
     "SCORE_REACHED": "You have met the necessary conditions to obtain the certificate.",
-    "MSG": "Get the certificate now in the score page or continue to increase your score.",
+    "MSG": "Get the certificate now on the scores page or continue.",
     "GET": "Obtain the certificate",
     "CONTINUE": "Continue"
   },
