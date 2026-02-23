@@ -12,19 +12,18 @@ import {
 import { useRouter } from 'vue-router';
 import { useSettingsStore } from './settingsStore';
 import { useReadingStore } from './readingStore';
-import type { EpocCollection, EpocLibraryState, EpocMetadata, Publisher } from '@/types/epoc';
+import type { EpocCollection, EpocLibrary, EpocLibraryState, EpocMetadata, Publisher } from '@/types/epoc';
 import type { Reading } from '@/types/reading';
 import { download, unzip } from '@/utils/file';
-import { useI18n } from 'vue-i18n';
 import { readEpocContent } from '@/utils/epocService';
 import { displayLicence } from '@/utils/app';
+import { i18n } from '@/i18n';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
     const settingsStore = useSettingsStore();
     const readingStore = useReadingStore();
     const router = useRouter();
-    const { t } = useI18n();
 
     const officialCollectionsUrl = 'https://epoc.inria.fr/official-collections.json';
 
@@ -125,7 +124,7 @@ export const useLibraryStore = defineStore('library', () => {
             // Check local content for each epoc
             for (const collection of Object.values(collectionsRecord)) {
                 for (const epoc of Object.values(collection.ePocs)) {
-                    const localEpoc = await readEpocContent(epoc.id);
+                    const localEpoc = await readEpocContent('epocs', epoc.id);
                     if (localEpoc) {
                         const downloadDate = localEpoc.lastModif
                             ? new Date(localEpoc.lastModif.replace(/-/g, '/'))
@@ -138,6 +137,13 @@ export const useLibraryStore = defineStore('library', () => {
         } catch (error) {
             console.error('Error fetching custom collections:', error);
         }
+    }
+
+    function findCollectionByEpocId(epocId: string): string | undefined {
+        const [collectionId] = Object.entries(collections.value).find(([_, collection]) => {
+            return !!collection.ePocs[epocId];
+        }) || [];
+        return collectionId;
     }
 
     function updateEpocCollectionState(
@@ -183,7 +189,7 @@ export const useLibraryStore = defineStore('library', () => {
         } catch (error) {
             console.error('Error downloading ePoc:', error);
             updateEpocCollectionState(epoc.id, { downloading: false }, libraryId);
-            await presentToast(t('LIBRARY_PAGE.DOWNLOAD_ERROR'), 'danger');
+            await presentToast(i18n.global.t('LIBRARY_PAGE.DOWNLOAD_ERROR'), 'danger');
             return;
         }
         unzipEpoc(epoc.id, libraryId);
@@ -201,8 +207,8 @@ export const useLibraryStore = defineStore('library', () => {
         updateEpocCollectionState(epocId, { downloaded: true }, libraryId);
     }
 
-    async function deleteEpoc(epoc: EpocMetadata, libraryId?: string) {
-        // Implement your delete logic here
+    async function deleteEpoc(epoc: EpocMetadata, libraryId: string) {
+        // todo Implement your delete logic here
         updateEpocCollectionState(epoc.id, {}, libraryId);
     }
 
@@ -223,20 +229,20 @@ export const useLibraryStore = defineStore('library', () => {
         }
     }
 
-    async function epocLibraryMenu(epoc: EpocMetadata, libraryId?: string) {
+    async function epocLibraryMenu(epoc: EpocLibrary, libraryId: string) {
         const buttons = [
             {
-                text: t('FLOATING_MENU.TOC'),
+                text: i18n.global.t('FLOATING_MENU.TOC'),
                 icon: listCircleOutline,
                 handler: () => router.push(`/epoc/toc/${epoc.id}`),
             },
             {
-                text: t('FLOATING_MENU.SCORE_DETAILS'),
+                text: i18n.global.t('FLOATING_MENU.SCORE_DETAILS'),
                 icon: starOutline,
                 handler: () => router.push(`/epoc/score/${epoc.id}`),
             },
             {
-                text: t('FLOATING_MENU.LICENSE'),
+                text: i18n.global.t('FLOATING_MENU.LICENSE'),
                 icon: receiptOutline,
                 handler: async () => {
                     await displayLicence(epoc);
@@ -245,7 +251,7 @@ export const useLibraryStore = defineStore('library', () => {
             ...(epoc.updateAvailable
                 ? [
                       {
-                          text: t('FLOATING_MENU.UPDATE'),
+                          text: i18n.global.t('FLOATING_MENU.UPDATE'),
                           icon: cloudDownloadOutline,
                           handler: () => {
                               deleteEpoc(epoc, libraryId);
@@ -257,26 +263,26 @@ export const useLibraryStore = defineStore('library', () => {
             ...(epoc.opened
                 ? [
                       {
-                          text: t('FLOATING_MENU.RESET'),
+                          text: i18n.global.t('FLOATING_MENU.RESET'),
                           icon: refreshOutline,
                           handler: () => confirmReset(epoc, libraryId),
                       },
                   ]
                 : []),
             {
-                text: t('FLOATING_MENU.DELETE'),
+                text: i18n.global.t('FLOATING_MENU.DELETE'),
                 icon: trash,
                 handler: () => confirmDelete(epoc, libraryId),
             },
             {
-                text: t('CLOSE'),
+                text: i18n.global.t('CLOSE'),
                 role: 'cancel',
             },
         ];
         const actionSheet = await actionSheetController.create({
             header: epoc.title,
             cssClass: 'custom-action-sheet',
-            subHeader: t('FLOATING_MENU.MAIN_MENU'),
+            subHeader: i18n.global.t('FLOATING_MENU.MAIN_MENU'),
             mode: 'ios',
             buttons,
         });
@@ -301,11 +307,11 @@ export const useLibraryStore = defineStore('library', () => {
         }
         await presentToast('CUSTOM_COLLECTION.SUCCESS', 'success');
         settingsStore.settings.customLibrairies.push(url);
-        settingsStore.updateSettings();
+        settingsStore.updateSettings({});
         await fetchCustomCollections();
     }
 
-    async function confirmReset(epoc: EpocMetadata, libraryId?: string) {
+    async function confirmReset(epoc: EpocLibrary, libraryId: string) {
         const alert = await alertController.create({
             header: 'Confirmation',
             message: `Attention la réinitialisation de l'ePoc <b>"${epoc.title}"</b> supprimera toute votre progression`,
@@ -327,7 +333,7 @@ export const useLibraryStore = defineStore('library', () => {
         await alert.present();
     }
 
-    async function confirmDelete(epoc: EpocMetadata, libraryId?: string) {
+    async function confirmDelete(epoc: EpocMetadata, libraryId: string) {
         const alert = await alertController.create({
             header: 'Confirmation',
             message: `Merci de confirmer la suppression de l'ePoc <b>"${epoc.title}"</b>`,
@@ -349,14 +355,14 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     async function openAboutPublisher(publisher: Publisher) {
-        const message = t('PUBLISHER_MODAL.MESSAGE', {
+        const message = i18n.global.t('PUBLISHER_MODAL.MESSAGE', {
             name: publisher.name,
             description: publisher.description,
             email: publisher.email,
             website: publisher.website
         });
         const alert = await alertController.create({
-            header: t('PUBLISHER_MODAL.ABOUT'),
+            header: i18n.global.t('PUBLISHER_MODAL.ABOUT'),
             cssClass: 'alert-alignleft',
             message,
             buttons: ['OK'],
@@ -386,6 +392,7 @@ export const useLibraryStore = defineStore('library', () => {
         refreshAll,
         fetchOfficialCollections,
         fetchCustomCollections,
+        findCollectionByEpocId,
         updateEpocCollectionState,
         updateEpocProgress,
         downloadEpoc,

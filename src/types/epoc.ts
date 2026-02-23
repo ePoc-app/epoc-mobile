@@ -5,6 +5,7 @@ import type {Assessment, Question, SimpleQuestion} from './contents/assessment';
 import type {ePocCollection} from '@epoc/epoc-types/dist/v1/collection';
 
 export type {EpocMetadata} from '@epoc/epoc-types/dist/v1'
+export type {Publisher} from '@epoc/epoc-types/dist/v1/publisher';
 
 export interface CustomLibrary {
     name: string;

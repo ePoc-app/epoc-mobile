@@ -314,9 +314,11 @@ ion-range.progress-indicator{
 
   .separator{
     display: flex;
-    background: var(--ion-color-background);
+    background: var(--ion-color-content);
     justify-content: center;
     align-items: center;
+    min-height: 1rem;
+    margin-top: 1rem;
     gap: .5rem;
     padding: 0;
 
@@ -336,7 +338,7 @@ ion-range.progress-indicator{
     span {
       display: block;
       width: auto;
-      flex-shrink: 1;
+      flex-shrink: 0;
       text-align: center;
       color: var(--ion-color-specs);
       font-size: 0.875rem;
@@ -660,6 +662,7 @@ div.epoc-author{
     align-items: center;
 
     img {
+      flex-shrink: 0;
       width: 3rem;
       height: 3rem;
       margin-right: 1em;

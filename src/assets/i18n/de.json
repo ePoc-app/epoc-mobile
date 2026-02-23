@@ -93,7 +93,7 @@
     "LIBRARY_NAME": "Bibliotheksname"
   },
   "OVERVIEW_PAGE": {
-    "PRESENTATION": "Kurspräsentation",
+    "PRESENTATION": "Präsentation",
     "ACTIVITIES": "Bewertung | Bewertungen",
     "CHAPTERS": "Modul | Module",
     "MIN_MODULE": "Min/Modul",
@@ -120,7 +120,8 @@
   },
   "LICENSE_MODAL": {
     "HEADER": "Lizenz",
-    "MESSAGE": "Nutzungsbedingungen für den ePoc-Inhalt <strong>\"{epoc}\"</strong>:<br/><br/>Sofern nicht anders angegeben, werden die Ressourcen in diesem ePoc unter der <a href=\"{licenseUrl}\" title=\"Lizenz-Link\" target=\"_blank\">{licenseName}</a>-Lizenz verbreitet. <br/><br/>Wenn Sie ePoc-Inhalte verwenden, hier ist die Angabe, die je nach Verwendung hinzugefügt werden muss:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, veröffentlicht unter der {licenseName}-Lizenz in der Anwendung <a href=\"https://epoc.inria.fr/\" title=\"Link zur ePoc-Seite\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE": "Nutzungsbedingungen für den ePoc-Inhalt <strong>\"{epoc}\"</strong>:<br/><br/>Sofern nicht anders angegeben, werden die Ressourcen in diesem ePoc unter der <a href=\"{licenseUrl}\" title=\"Lizenz-Link\" target=\"_blank\">{licenseName}</a>-Lizenz verbreitet. <br/><br/>Wenn Sie ePoc-Inhalte verwenden, hier ist die Angabe, die je nach Verwendung hinzugefügt werden muss:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, veröffentlicht unter der {licenseName}-Lizenz in der Anwendung <a href=\"https://epoc.inria.fr/\" title=\"Link zur ePoc-Seite\" target=\"_blank\">https://epoc.inria.fr/</a>",
+    "MESSAGE_WITHOUT_LINK": "Nutzungsbedingungen für den ePoc-Inhalt <strong>\"{epoc}\"</strong>:<br/><br/>Sofern nicht anders angegeben, werden die Ressourcen in diesem ePoc unter der {licenseName}-Lizenz verbreitet. <br/><br/>Wenn Sie ePoc-Inhalte verwenden, hier ist die Angabe, die je nach Verwendung hinzugefügt werden muss:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, veröffentlicht unter der {licenseName}-Lizenz in der Anwendung <a href=\"https://epoc.inria.fr/\" title=\"Link zur ePoc-Seite\" target=\"_blank\">https://epoc.inria.fr/</a> "
   },
   "COMMENT_MODAL": {
     "HEADER": "Einen Kommentar hinterlassen",
@@ -163,7 +164,10 @@
     "IMPORT_FROM_LINK": "Geben Sie den Link des ePoc oder der Sammlung ein, die Sie hinzufügen möchten",
     "COLLECTION": "Sammlung",
     "ERROR": "Ein Fehler ist aufgetreten",
-    "ERROR_SSL": "Kann nicht von unsicherer Quelle herunterladen (URL verwendet kein https)"
+    "ERROR_SSL": "Kann nicht von unsicherer Quelle herunterladen (URL verwendet kein https)",
+    "THIS_EPOC": "Dieser ePoc",
+    "ABOUT": "Präsentation dieses ePoc",
+    "GENERAL": "Allgemein"
   },
   "PLAYER": {
     "VIDEOS": "Video | Videos",

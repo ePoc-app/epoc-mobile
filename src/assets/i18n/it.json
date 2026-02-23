@@ -93,7 +93,7 @@
     "LIBRARY_NAME": "Nome della libreria"
   },
   "OVERVIEW_PAGE": {
-    "PRESENTATION": "Presentazione del corso",
+    "PRESENTATION": "Presentazione",
     "ACTIVITIES": "Valutazione | Valutazioni",
     "CHAPTERS": "Modulo | Moduli",
     "MIN_MODULE": "min/modulo",
@@ -120,7 +120,8 @@
   },
   "LICENSE_MODAL": {
     "HEADER": "Licenza",
-    "MESSAGE": "Condizioni d'uso per i contenuti ePoc <strong>\"{epoc}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza <a href=\"{licenseUrl}\" title=\"Link alla licenza\" target=\"_blank\">{licenseName}</a>. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{epoc}\"</strong>, pubblicato con licenza {licenseName} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE": "Condizioni d'uso per i contenuti ePoc <strong>\"{epoc}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza <a href=\"{licenseUrl}\" title=\"Link alla licenza\" target=\"_blank\">{licenseName}</a>. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{epoc}\"</strong>, pubblicato con licenza {licenseName} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>",
+    "MESSAGE_WITHOUT_LINK": "Condizioni d'uso per i contenuti ePoc <strong>\"{epoc}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza {licenseName}. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{epoc}\"</strong>, pubblicato con licenza {licenseName} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a> "
   },
   "COMMENT_MODAL": {
     "HEADER": "Lascia un commento",
@@ -163,7 +164,10 @@
     "IMPORT_FROM_LINK": "Inserisci il link dell'ePoc o della collezione che desideri aggiungere",
     "COLLECTION": "Collezione",
     "ERROR": "Si è verificato un errore",
-    "ERROR_SSL": "Impossibile scaricare da una fonte non sicura (l'URL non utilizza https)"
+    "ERROR_SSL": "Impossibile scaricare da una fonte non sicura (l'URL non utilizza https)",
+    "THIS_EPOC": "Questo ePoc",
+    "ABOUT": "Presentazione di questo ePoc",
+    "GENERAL": "Generali"
   },
   "PLAYER": {
     "VIDEOS": "Video | Video",

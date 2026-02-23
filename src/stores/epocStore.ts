@@ -2,7 +2,14 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { actionSheetController } from '@ionic/vue';
 import { uid } from '@epoc/epoc-types/dist/v1';
-import { homeOutline, listCircleOutline, starOutline, receiptOutline, settingsOutline } from 'ionicons/icons';
+import {
+    homeOutline,
+    listCircleOutline,
+    starOutline,
+    receiptOutline,
+    settingsOutline,
+    cubeOutline
+} from 'ionicons/icons';
 import { readEpocContent } from '@/utils/epocService';
 import { Epoc, Chapter } from '@/types/epoc';
 import { displayLicence } from '@/utils/app';
@@ -11,10 +18,12 @@ import { Content } from '@/types/contents/content';
 import { Capacitor } from '@capacitor/core';
 import { i18n } from '@/i18n';
 import router from '@/router';
+import { useLibraryStore } from '@/stores/libraryStore';
 
 export const useEpocStore = defineStore('epoc', () => {
     // --- State ---
     const pluginService = usePlugin();
+    const libraryStore = useLibraryStore();
     const initialized = ref(false);
     const _epoc = ref<Epoc | null>(null);
     const _rootFolder = ref<string>('');
@@ -135,10 +144,41 @@ export const useEpocStore = defineStore('epoc', () => {
 
         const buttons = [
             {
+                text: i18n.global.t('FLOATING_MENU.GENERAL'),
+                cssClass: 'separator',
+            },
+            {
                 text: i18n.global.t('FLOATING_MENU.HOME'),
                 icon: homeOutline,
                 handler: () => {
                     router.push('/library');
+                },
+            },
+            {
+                text: i18n.global.t('FLOATING_MENU.SETTINGS'),
+                icon: settingsOutline,
+                handler: () => {
+                    router.push('/settings');
+                },
+            },
+            {
+                text: i18n.global.t('FLOATING_MENU.THIS_EPOC'),
+                cssClass: 'separator',
+            },
+            {
+                text: i18n.global.t('FLOATING_MENU.ABOUT'),
+                icon: cubeOutline,
+                handler: () => {
+                    const ePocId = _epoc.value!.id;
+                    const isLocal = ePocId.startsWith('local-');
+                    const libraryId = isLocal ? 'local-epocs' : libraryStore.findCollectionByEpocId(ePocId);
+
+                    if (!libraryId) {
+                        console.error('Library not found for ePoc ID:', ePocId);
+                        return;
+                    }
+
+                    router.push(`/${libraryId}/${_epoc.value!.id}`);
                 },
             },
             ...(!router.currentRoute.value.path.includes('/epoc/toc/' + _epoc.value!.id)
@@ -166,13 +206,6 @@ export const useEpocStore = defineStore('epoc', () => {
                     if (!_epoc.value) return;
 
                     await displayLicence(_epoc.value);
-                },
-            },
-            {
-                text: i18n.global.t('FLOATING_MENU.SETTINGS'),
-                icon: settingsOutline,
-                handler: () => {
-                    router.push('/settings');
                 },
             },
             {

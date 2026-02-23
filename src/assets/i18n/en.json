@@ -93,7 +93,7 @@
     "LIBRARY_NAME": "Library name"
   },
   "OVERVIEW_PAGE": {
-    "PRESENTATION": "Course presentation",
+    "PRESENTATION": "Presentation",
     "ACTIVITIES": "Assessment | Assessments",
     "CHAPTERS": "Module | Modules",
     "MIN_MODULE": "min/module",
@@ -120,7 +120,8 @@
   },
   "LICENSE_MODAL": {
     "HEADER": "License",
-    "MESSAGE": "Conditions of use for ePoc content <strong>\"{epoc}\"</strong>:<br/><br/>Unless otherwise stated, the resources in this ePoc are distributed under the <a href=\"{licenseUrl}\" title=\"License link\" target=\"_blank\">{licenseName}</a> license. <br/><br/>If you are using ePoc content, here is the attribution to be added depending on the use:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, published under the {licenseName} license in the application <a href=\"https://epoc.inria.fr/\" title=\"Link to ePoc site\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE": "Conditions of use for ePoc content <strong>\"{epoc}\"</strong>:<br/><br/>Unless otherwise stated, the resources in this ePoc are distributed under the <a href=\"{licenseUrl}\" title=\"License link\" target=\"_blank\">{licenseName}</a> license. <br/><br/>If you are using ePoc content, here is the attribution to be added depending on the use:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, published under the {licenseName} license in the application <a href=\"https://epoc.inria.fr/\" title=\"Link to ePoc site\" target=\"_blank\">https://epoc.inria.fr/</a>",
+    "MESSAGE_WITHOUT_LINK": "Conditions of use for ePoc content <strong>\"{epoc}\"</strong>:<br/><br/>Unless otherwise stated, the resources in this ePoc are distributed under the {licenseName} license. <br/><br/>If you are using ePoc content, here is the attribution to be added depending on the use:<br/>Credit: ePoc <strong>\"{epoc}\"</strong>, published under the {licenseName} license in the application <a href=\"https://epoc.inria.fr/\" title=\"Link to ePoc site\" target=\"_blank\">https://epoc.inria.fr/</a> "
   },
   "COMMENT_MODAL": {
     "HEADER": "Leave a comment",
@@ -163,7 +164,10 @@
     "IMPORT_FROM_LINK": "Enter the link of the ePoc or collection you want to add",
     "COLLECTION": "Collection",
     "ERROR": "An error occurred",
-    "ERROR_SSL": "Cannot download from unsafe source (url does not use https)"
+    "ERROR_SSL": "Cannot download from unsafe source (url does not use https)",
+    "THIS_EPOC": "This ePoc",
+    "ABOUT": "Presentation of this ePoc",
+    "GENERAL": "General"
   },
   "PLAYER": {
     "VIDEOS": "Video | Videos",
