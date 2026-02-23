@@ -21,6 +21,7 @@ import { listCircleOutline, receiptOutline, starOutline, trash } from 'ionicons/
 import { moveOldEpocsWithRandomIds } from '@/utils/backwardCompatibility';
 import { i18n } from '@/i18n';
 import { displayLicence } from '@/utils/app';
+import {Capacitor} from '@capacitor/core';
 
 export const useLocalEpocsStore = defineStore('localEpocs', () => {
 
@@ -236,6 +237,8 @@ export const useLocalEpocsStore = defineStore('localEpocs', () => {
             mode: 'ios',
             buttons,
         });
+
+        document.documentElement.style.setProperty('--thumbnail-url', `url(${Capacitor.convertFileSrc(`${epoc.dir}/`) + epoc.image})`);
 
         await actionSheet.present();
     };
