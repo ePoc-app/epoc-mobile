@@ -66,7 +66,6 @@
     "RESET_USER": "Change user",
     "RESET_USER_WARNING": "Warning this will delete your progress",
     "DELETE_DATA": "Delete data",
-    "DATA_EXAMPLE": "Certificates, quizzes, preferences, etc.",
     "SET_USER": {
       "INFO": "Fill in your information",
       "MESSAGE": "This information wil be used to issue certificates",
@@ -79,7 +78,7 @@
     },
     "DELETE_DATA_MODAL": {
       "INFO": "Are you sure ? ",
-      "MESSAGE": "This action will delete the exercise data from the application <br/><small>(certificates, quizzes, preferences, etc.)</small>"
+      "MESSAGE": "This action will erase the app data<br><small>(downloaded ePocs, progress, preferences, etc.)</small> "
     },
     "THROW_ERROR": "An error has been issued",
     "DEVELOPER": "Developer",
@@ -90,7 +89,8 @@
     "CONFIRM_DELETE_LIBRARY": "Delete library?",
     "ADD_LIBRARY": "Add a library",
     "BECOME_PARTNER": "Become partner",
-    "LIBRARY_NAME": "Library name"
+    "LIBRARY_NAME": "Library name",
+    "DATA_EXAMPLE": "Downloaded ePocs, progress, preferences, etc."
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Presentation",

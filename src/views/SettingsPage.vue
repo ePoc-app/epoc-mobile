@@ -88,7 +88,7 @@ function getStyle() {
 async function resetUser() {
     const alert = await alertController.create({
         header: t('SETTINGS_PAGE.DELETE_DATA_MODAL.INFO'),
-        message: t('SETTINGS_PAGE.DELETE_DATA_MODAL.MESSAGE'),
+        message: t('SETTINGS_PAGE.RESET_USER_WARNING'),
         buttons: [
             {
                 text: t('CANCEL'),
@@ -100,6 +100,8 @@ async function resetUser() {
                 handler: async () => {
                     readingStore.resetAll();
                     await setUser(null);
+                    await libraryStore.refreshAll();
+                    await localEpocsStore.fetchLocalEpocs();
                 },
             },
         ],

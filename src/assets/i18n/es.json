@@ -66,7 +66,6 @@
     "RESET_USER": "Cambiar usuario",
     "RESET_USER_WARNING": "Atención, esto eliminará tu progreso",
     "DELETE_DATA": "Eliminar datos",
-    "DATA_EXAMPLE": "Certificados, cuestionarios, preferencias, etc.",
     "SET_USER": {
       "INFO": "Rellena tu información",
       "MESSAGE": "Esta información se utilizará para emitir certificados",
@@ -79,7 +78,7 @@
     },
     "DELETE_DATA_MODAL": {
       "INFO": "¿Estás seguro?",
-      "MESSAGE": "Esta acción eliminará los datos de los ejercicios de la aplicación <br/><small>(certificados, cuestionarios, preferencias, etc.)</small>"
+      "MESSAGE": "Esta acción borrará los datos de la aplicación<br><small>(ePocs descargados, progreso, preferencias, etc.)</small> "
     },
     "THROW_ERROR": "Se ha emitido un error",
     "DEVELOPER": "Desarrollador",
@@ -90,7 +89,8 @@
     "CONFIRM_DELETE_LIBRARY": "¿Eliminar biblioteca?",
     "ADD_LIBRARY": "Añadir una biblioteca",
     "BECOME_PARTNER": "Conviértete en socio",
-    "LIBRARY_NAME": "Nombre de la biblioteca"
+    "LIBRARY_NAME": "Nombre de la biblioteca",
+    "DATA_EXAMPLE": "ePocs descargados, progreso, preferencias, etc."
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Presentación",

@@ -59,14 +59,13 @@
     "VERSION": "Version",
     "BUILD_VERSION": "Build version",
     "DATA_COLLECTION": "Collecte de statistiques anonymes",
-    "EPOC_DATA": "Donées ePocs",
+    "EPOC_DATA": "Données ePocs",
     "DEV_MODE": "Mode développeur",
     "OPEN_EPOC": "Ouvrir un autre ePoc",
     "LIBRARY": "Bibliothèque",
     "RESET_USER": "Changer d'utilisateur",
     "RESET_USER_WARNING": "Attention cela supprimera votre progression",
     "DELETE_DATA": "Supprimer les données",
-    "DATA_EXAMPLE": "Attestations, quiz, préférences, etc.",
     "SET_USER": {
       "INFO": "Renseigner vos informations",
       "MESSAGE": "Ces informations serviront à l'édition des attestations",
@@ -79,7 +78,7 @@
     },
     "DELETE_DATA_MODAL": {
       "INFO": "Êtes vous sûr ? ",
-      "MESSAGE": "Cette action effacera les données des exercices de l'application <br/><small>(attestations, quiz, préférences, etc.)</small>"
+      "MESSAGE": "Cette action effacera les données de l'application<br><small>(ePocs téléchargés, progression, préférences, etc.)</small> "
     },
     "THROW_ERROR": "Une erreur a été émise",
     "DEVELOPER": "Développeur",
@@ -90,7 +89,8 @@
     "CONFIRM_DELETE_LIBRARY": "Supprimer la bibliothèque ?",
     "ADD_LIBRARY": "Ajouter une bibliothèque",
     "BECOME_PARTNER": "Devenir partenaire",
-    "LIBRARY_NAME": "Nom de la bibliothèque"
+    "LIBRARY_NAME": "Nom de la bibliothèque",
+    "DATA_EXAMPLE": "ePocs téléchargés, progression, préférences, etc."
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Présentation",

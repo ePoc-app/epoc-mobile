@@ -66,7 +66,6 @@
     "RESET_USER": "Benutzer ändern",
     "RESET_USER_WARNING": "Achtung, dies löscht Ihren Fortschritt",
     "DELETE_DATA": "Daten löschen",
-    "DATA_EXAMPLE": "Zertifikate, Quizze, Präferenzen usw.",
     "SET_USER": {
       "INFO": "Geben Sie Ihre Informationen ein",
       "MESSAGE": "Diese Informationen werden zur Ausstellung von Zertifikaten verwendet",
@@ -79,7 +78,7 @@
     },
     "DELETE_DATA_MODAL": {
       "INFO": "Sind Sie sicher?",
-      "MESSAGE": "Diese Aktion löscht die Übungsdaten aus der Anwendung <br/><small>(Zertifikate, Quizze, Präferenzen usw.)</small>"
+      "MESSAGE": "Diese Aktion löscht die App-Daten<br><small>(heruntergeladene ePocs, Fortschritt, Einstellungen usw.)</small> "
     },
     "THROW_ERROR": "Ein Fehler wurde ausgegeben",
     "DEVELOPER": "Entwickler",
@@ -90,7 +89,8 @@
     "CONFIRM_DELETE_LIBRARY": "Bibliothek löschen?",
     "ADD_LIBRARY": "Bibliothek hinzufügen",
     "BECOME_PARTNER": "Partner werden",
-    "LIBRARY_NAME": "Bibliotheksname"
+    "LIBRARY_NAME": "Bibliotheksname",
+    "DATA_EXAMPLE": "Heruntergeladene ePocs, Fortschritt, Einstellungen, usw."
   },
   "OVERVIEW_PAGE": {
     "PRESENTATION": "Präsentation",
