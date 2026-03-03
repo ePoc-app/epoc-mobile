@@ -100,7 +100,7 @@
     "OBJECTIVES": "Ziel | Ziele",
     "PREREQUISITES": "Voraussetzungen",
     "RESUME": "Zusammenfassung",
-    "AUTHORS": "Autor | Autoren",
+    "AUTHORS": "Credits",
     "PICTURE_ALT": "Bild von",
     "GO": "Los geht's!",
     "CONTINUE": "Fortsetzen",
@@ -214,7 +214,7 @@
       },
       "CERTIFICATE_PDF": {
         "COMPLETION_CERTIFICATE": "ABSCHLUSSZEUGNIS",
-        "AUTHORS": "Autor(en)",
+        "AUTHORS": "Credits",
         "EPOC_EDITION": "ePoc-Ausgabe",
         "DELIVERED_TO": "Zertifikat ausgestellt an:",
         "DELIVERED_THE": "Ausgestellt am",

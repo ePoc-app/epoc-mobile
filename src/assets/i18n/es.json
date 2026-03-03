@@ -100,7 +100,7 @@
     "OBJECTIVES": "Objetivo | Objetivos",
     "PREREQUISITES": "Prerrequisitos",
     "RESUME": "Resumen",
-    "AUTHORS": "Autor | Autores",
+    "AUTHORS": "Créditos",
     "PICTURE_ALT": "Imagen de",
     "GO": "¡Vamos!",
     "CONTINUE": "Continuar",
@@ -214,7 +214,7 @@
       },
       "CERTIFICATE_PDF": {
         "COMPLETION_CERTIFICATE": "CERTIFICADO DE FINALIZACIÓN",
-        "AUTHORS": "Autor(es)",
+        "AUTHORS": "Créditos",
         "EPOC_EDITION": "Edición ePoc",
         "DELIVERED_TO": "Certificado entregado a:",
         "DELIVERED_THE": "Entregado el",

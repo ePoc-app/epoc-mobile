@@ -132,7 +132,7 @@ const pathToUrl = (path: string) => {
                         v-on:click="selectTab(2)"
                         :class="selectedTab === 2 ? 'selected' : ''"
                     >
-                        <span>{{ t('OVERVIEW_PAGE.AUTHORS', epoc.authors.length) }}</span>
+                        <span>{{ t('OVERVIEW_PAGE.AUTHORS') }}</span>
                     </div>
                 </div>
                 <div class="tabs">
