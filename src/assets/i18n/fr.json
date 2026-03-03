@@ -181,7 +181,7 @@
     "CHAPTER_END": {
       "NEXT": "Suivant",
       "FOLLOWING_NEXT": "À suivre :",
-      "MSG": "Bravo, vous avez atteint la fin de cet ePoc.<br/>Pour obtenir l'attestation, consultez la page des scores<br/>Ou retournez à la table des matières.",
+      "MSG": "Bravo, vous avez atteint la fin de cet ePoc.<br/>Pour obtenir l'attestation, consultez la page des scores.",
       "SCORE": "Page des scores",
       "REVIEW": "Donner votre avis"
     },

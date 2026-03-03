@@ -181,7 +181,7 @@
     "CHAPTER_END": {
       "NEXT": "Prossimo",
       "FOLLOWING_NEXT": "In seguito:",
-      "MSG": "Congratulazioni, hai raggiunto la fine del corso.<br/>Per ottenere l'attestato, visita la pagina dei punteggi<br/>Oppure torna all'indice.",
+      "MSG": "Congratulazioni, hai raggiunto la fine del corso.<br/>Per ottenere l'attestato, visita la pagina dei punteggi.",
       "SCORE": "Pagina dei risultati",
       "REVIEW": "Esprimi la tua opinione"
     },
