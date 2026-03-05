@@ -200,6 +200,7 @@ export const useLibraryStore = defineStore('library', () => {
         updateEpocCollectionState(epocId, { unzipping: true }, libraryId);
         try {
             await unzip(`${epocId}.zip`, `epocs/${epocId}`);
+            trackEvent(epocId, `${epocId} (${libraryId}) / Imported`);
         } catch (error) {
             console.error('Error unzipping ePoc:', error);
             updateEpocCollectionState(epocId, { unzipping: false }, libraryId);
