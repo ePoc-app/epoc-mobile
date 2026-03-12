@@ -258,8 +258,9 @@ export const useLibraryStore = defineStore('library', () => {
                           text: i18n.global.t('FLOATING_MENU.UPDATE'),
                           icon: cloudDownloadOutline,
                           handler: () => {
-                              deleteEpoc(epoc, libraryId);
-                              downloadEpoc(epoc, libraryId);
+                              deleteEpoc(epoc, libraryId).then(() => {
+                                  downloadEpoc(epoc, libraryId);
+                              });
                           },
                       },
                   ]
