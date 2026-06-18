@@ -73,6 +73,7 @@ const aboutEpocLink = computed(() => {
                     v-if="aboutEpocLink"
                     :to="aboutEpocLink"
                     class="sidebar-nav-item"
+                    :class="{ active: route.name === 'EpocOverviewPage' }"
                 >
                     <ion-icon :icon="cubeOutline" aria-hidden="true"></ion-icon>
                     <span>{{ t('FLOATING_MENU.ABOUT') }}</span>
@@ -80,6 +81,7 @@ const aboutEpocLink = computed(() => {
                 <RouterLink
                     :to="'/epoc/toc/' + epoc.id"
                     class="sidebar-nav-item"
+                    :class="{ active: route.name === 'TocPage' }"
                 >
                     <ion-icon :icon="listCircleOutline" aria-hidden="true"></ion-icon>
                     <span>{{ t('FLOATING_MENU.TOC') }}</span>
@@ -87,6 +89,7 @@ const aboutEpocLink = computed(() => {
                 <RouterLink
                     :to="'/epoc/score/' + epoc.id"
                     class="sidebar-nav-item"
+                    :class="{ active: route.name === 'ScorePage' }"
                 >
                     <ion-icon :icon="starOutline" aria-hidden="true"></ion-icon>
                     <span>{{ t('FLOATING_MENU.SCORE_DETAILS') }}</span>
