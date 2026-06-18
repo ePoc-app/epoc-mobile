@@ -224,6 +224,12 @@ export const useEpocStore = defineStore('epoc', () => {
         await actionSheet.present();
     }
 
+    function clear() {
+        _epoc.value = null;
+        _rootFolder.value = '';
+        initialized.value = false;
+    }
+
     return {
         // State
         initialized,
@@ -236,5 +242,6 @@ export const useEpocStore = defineStore('epoc', () => {
         calcScore,
         isUserResponsesCorrect,
         epocMainMenu,
+        clear,
     };
 });

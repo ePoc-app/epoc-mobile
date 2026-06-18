@@ -226,7 +226,7 @@
   &:before, &:after{
     content:'';
     display: block;
-    border-bottom: 1px solid var(--ion-color-inria-lightgrey);
+    border-bottom: 1px solid var(--ion-color-item);
     flex-grow: 1;
     margin: 0 1rem;
   }
@@ -238,7 +238,7 @@
 
 .library-line-separator{
   display: block;
-  border-bottom: 1px solid var(--ion-color-inria-lightgrey);
+  border-bottom: 1px solid var(--ion-color-item);
   margin: 1rem;
 
   &:first-of-type{

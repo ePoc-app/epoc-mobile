@@ -117,7 +117,7 @@ onIonViewWillEnter(() => {
 
 <template>
     <ion-page>
-        <ion-header :translucent="true">
+        <ion-header class="mobile-only" :translucent="true">
             <ion-toolbar>
                 <ion-back-button
                     slot="start"

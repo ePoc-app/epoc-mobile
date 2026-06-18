@@ -46,7 +46,7 @@ const pathToUrl = (path: string) => {
 
 <template>
     <ion-page>
-        <ion-header :translucent="true">
+        <ion-header class="mobile-only" :translucent="true">
             <ion-toolbar>
                 <ion-title>{{ t('OVERVIEW_PAGE.PRESENTATION') }}</ion-title>
             </ion-toolbar>

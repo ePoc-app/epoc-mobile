@@ -13,6 +13,9 @@ import OrphanPlayerPage from '@/views/epoc/OrphanPlayerPage.vue';
 import OverviewEditorPage from '@/views/epoc/OverviewEditorPage.vue';
 import { trackPageView } from '@/utils/matomo';
 import { useEpocStore } from '@/stores/epocStore';
+import { useAppMode } from '@/composables/useAppMode';
+
+const { isPreview } = useAppMode();
 
 function fetchEpoc(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
     const epocId = to.params.epoc_id;
@@ -30,6 +33,12 @@ function fetchEpoc(to: RouteLocationNormalized, from: RouteLocationNormalized, n
     next();
 }
 
+function clearEpoc(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+    const epocStore = useEpocStore();
+    epocStore.clear();
+    next();
+}
+
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -39,6 +48,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/library',
         name: 'Library',
         component: LibraryPage,
+        beforeEnter: clearEpoc
     },
     {
         path: '/settings',
@@ -54,11 +64,13 @@ const routes: Array<RouteRecordRaw> = [
         path: '/:collection_id',
         name: 'CollectionDetail',
         component: CollectionDetailPage,
+        beforeEnter: clearEpoc,
     },
     {
         path: '/:libraryId/:id',
         name: 'EpocOverviewPage',
         component: EpocOverviewPage,
+        beforeEnter: fetchEpoc,
     },
     {
         path: '/epoc/toc/:epoc_id',
@@ -118,7 +130,7 @@ const routes: Array<RouteRecordRaw> = [
 
 // Define logic to filter routes
 const getRoutes = () => {
-    if (import.meta.env.VITE_APP_MODE === 'preview') {
+    if (isPreview.value) {
         // Only keep the root redirect and routes starting with /epoc
         return routes.filter(route =>
             route.path === '/' || route.path.startsWith('/epoc') || route.name === 'NotFound'
@@ -133,11 +145,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const isPreview = import.meta.env.VITE_APP_MODE === 'preview';
     if (to.name === 'NotFound') {
         console.warn(`unknown route: ${to.fullPath}`);
 
-        if (isPreview) {
+        if (isPreview.value) {
             // Redirect to OverviewEditorPage.
             // Note: Since OverviewEditorPage requires an :id,
             // you might need to provide a default or fallback ID here.

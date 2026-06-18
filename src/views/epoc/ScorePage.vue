@@ -269,7 +269,7 @@ const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
 
 <template>
     <ion-page>
-        <ion-header translucent>
+        <ion-header class="mobile-only" translucent>
             <ion-toolbar>
                 <ion-buttons slot="start">
                     <ion-back-button text="" defaultHref="/library" color="inria-icon" />
