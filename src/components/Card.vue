@@ -122,6 +122,8 @@ const resetZoom = (): void => {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 900px;
+  margin: auto;
   height: 100%;
   flex-grow: 1;
   text-align: left;

@@ -116,7 +116,9 @@ ion-toolbar {
 
 ion-button{
   &[size="large"]{
+    max-width: 900px;
     height: 2.8rem;
+    margin:auto;
     font-size: 1.1rem;
   }
   &[size="medium"]{

@@ -499,9 +499,11 @@ ion-spinner {
         border-radius: 4rem;
         font-size: 1.5rem;
         color: var(--ion-color-icon-2);
+        cursor: pointer;
 
         &.disabled {
             color: var(--ion-color-reader-action-disabled);
+            cursor: default;
         }
 
         &.small {
@@ -519,5 +521,30 @@ ion-spinner {
 
 .locked-content-message {
   text-align: center;
+}
+
+:global(.split-pane-visible .reader-actions) {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 0.5rem;
+    transform: translateY(0) !important;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    pointer-events: none;
+}
+
+:global(.split-pane-visible .reader-actions .reader-action) {
+    pointer-events: all;
+}
+
+:global(.split-pane-visible .reader-action.small) {
+    display: none;
 }
 </style>
