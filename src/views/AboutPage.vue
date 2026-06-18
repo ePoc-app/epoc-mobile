@@ -4,7 +4,7 @@ import { IonBackButton, IonButtons, IonContent, IonHeader, IonImg, IonPage, IonT
 
 <template>
   <ion-page>
-    <ion-header mode="ios">
+    <ion-header class="mobile-only" mode="ios">
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-back-button text="" default-href="/" color="inria-icon"></ion-back-button>

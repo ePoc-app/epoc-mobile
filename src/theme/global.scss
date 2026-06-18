@@ -836,3 +836,17 @@ iframe.plugin{
 ion-icon {
   color: inherit;
 }
+
+// when the split pane sidebar is visible (>900px)
+.split-pane-visible .mobile-only {
+    display: none;
+}
+
+// Hide web-only elements on mobile, show when split pane is visible
+.web-only {
+    display: none;
+}
+
+.split-pane-visible .web-only {
+    display: block;
+}

@@ -36,6 +36,7 @@ import 'swiper/css/pagination';
 import { Capacitor } from '@capacitor/core';
 import { useTemplateRef } from 'vue';
 import { useQr } from '@/composables/useQr';
+import { useViewportSize } from '@/composables/useViewportSize';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -45,6 +46,9 @@ const onboardingStore = useOnboardingStore();
 const { getOnboarding } = storeToRefs(onboardingStore);
 
 const inputRef = useTemplateRef('file');
+
+const maxEpocs = useViewportSize().maxEpocsToDisplay;
+
 const fileHandler = (event: Event) => {
     if (event.target === null || (event.target as HTMLInputElement).files === null) return;
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -182,7 +186,7 @@ const linkInputAlert = async () => {
 
 <template>
     <ion-page>
-        <ion-header :translucent="true">
+        <ion-header class="mobile-only" :translucent="true">
             <ion-toolbar>
                 <div aria-hidden="true" class="logo" slot="start">
                     <div class="epoc-logo"></div>
@@ -255,7 +259,7 @@ const linkInputAlert = async () => {
                         </div>
                         <div
                             class="library-item"
-                            v-for="epoc in Object.values(collection.ePocs).slice(0, 4)"
+                            v-for="epoc in Object.values(collection.ePocs).slice(0, maxEpocs)"
                             :key="epoc.id"
                         >
                             <RouterLink
@@ -334,7 +338,7 @@ const linkInputAlert = async () => {
                                 </ion-button>
                             </div>
                         </div>
-                        <div class="library-footer" v-if="Object.keys(collection.ePocs).length > 4">
+                        <div class="library-footer" v-if="Object.keys(collection.ePocs).length > maxEpocs">
                             <RouterLink :to="collection.id"
                                 >{{ $t('LIBRARY_PAGE.VIEW_ALL') }} <ion-icon :icon="chevronForwardOutline"></ion-icon
                             ></RouterLink>

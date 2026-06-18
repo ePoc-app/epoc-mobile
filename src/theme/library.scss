@@ -78,7 +78,8 @@
   display: flex;
   flex-wrap: wrap;
   padding: 1rem;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1rem;
   --library-item-gap: 1rem;
 }
 .library-item{
@@ -162,6 +163,12 @@
     flex: 0 0 calc(25 - var(--library-item-gap));
     width: calc(25% - var(--library-item-gap));
     max-width: calc(25% - var(--library-item-gap));
+  }
+
+  @media screen and (min-width: 1200px) {
+    flex: auto;
+    width: 250px;
+    max-width: 250px;
   }
 }
 

@@ -9,7 +9,8 @@
     "ADD_EPOC": "Ajouter votre ePoc",
     "IMPORT": "Import de",
     "VIEW_ALL": "Voir tous",
-    "DOWNLOAD_ERROR": "Erreur lors du téléchargement de l'ePoc"
+    "DOWNLOAD_ERROR": "Erreur lors du téléchargement de l'ePoc",
+    "TITLE": "Bibliothèque"
   },
   "CUSTOM_COLLECTION": {
     "SUCCESS": "Collection importée avec succès",

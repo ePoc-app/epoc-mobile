@@ -9,7 +9,8 @@
     "ADD_EPOC": "Add your ePoc",
     "IMPORT": "Import of",
     "VIEW_ALL": "View all",
-    "DOWNLOAD_ERROR": "Error while downloading ePoc"
+    "DOWNLOAD_ERROR": "Error while downloading ePoc",
+    "TITLE": "Library"
   },
   "CUSTOM_COLLECTION": {
     "SUCCESS": "Collection imported successfully",

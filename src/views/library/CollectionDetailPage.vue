@@ -11,11 +11,13 @@ import {
   IonButtons
 } from '@ionic/vue';
 import {
-    informationCircleOutline,
-    cloudDownloadOutline,
-    arrowForwardOutline,
-    cogOutline,
-    syncOutline,
+  informationCircleOutline,
+  cloudDownloadOutline,
+  arrowForwardOutline,
+  cogOutline,
+  syncOutline,
+  mailOutline,
+  linkOutline,
 } from 'ionicons/icons';
 import { useLibraryStore } from '@/stores/libraryStore';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
@@ -33,7 +35,7 @@ const collection = computed(() => {
 
 <template>
     <ion-page v-if="collection">
-        <ion-header :translucent="true">
+        <ion-header class="mobile-only" :translucent="true">
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button text="" defaultHref="/library" color="inria-icon"></ion-back-button>
@@ -51,13 +53,32 @@ const collection = computed(() => {
         </ion-header>
 
         <ion-content :fullscreen="true">
-            <div class="publisher-logo">
+            <div class="mobile-only publisher-logo">
                 <div
                     class="logo"
                     v-if="collection.publisher.logo"
                     :style="'background-image:url(' + collection.publisher.logo + ')'"
                 />
                 <div class="publisher-name" v-else>{{ collection.publisher.name }}</div>
+            </div>
+
+            <div class="web-only">
+              <div class="web-page-header">
+                <div class="web-page-header-logo" v-if="collection.publisher.logo">
+                  <div
+                      class="logo"
+                      :style="'background-image:url(' + collection.publisher.logo + ')'"
+                  />
+                </div>
+                <div class="web-page-header-info">
+                  <h1>{{ collection.title }}</h1>
+                  <p v-if="collection.publisher.description">{{ collection.publisher.description }}</p>
+                  <div class="web-page-header-links">
+                    <a v-if="collection.publisher.email" :href="`mailto:${collection.publisher.email}`"><ion-icon :icon="mailOutline"></ion-icon>{{ collection.publisher.email }}</a>
+                    <a v-if="collection.publisher.website" :href="collection.publisher.website" target="_blank" rel="noopener"><ion-icon :icon="linkOutline"></ion-icon>{{ collection.publisher.website }}</a>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div id="container">
@@ -166,6 +187,71 @@ ion-toolbar {
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
+    }
+}
+
+.web-page-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--ion-color-item);
+
+    &-logo {
+        flex-shrink: 0;
+        width: 120px;
+        height: 80px;
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-position: center left;
+            background-repeat: no-repeat;
+        }
+    }
+
+    &-info {
+        flex: 1;
+        min-width: 0;
+
+        h1 {
+            margin: 0 0 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--ion-color-inria-blue);
+            line-height: 1.2;
+        }
+
+        p {
+            margin: 0 0 0.5rem;
+            font-size: 0.9rem;
+            color: var(--ion-color-text-2);
+        }
+    }
+
+    &-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        margin-top: 0.5rem;
+
+        a {
+            font-size: 0.875rem;
+            color: var(--ion-color-inria);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            ion-icon {
+              display: inline-block;
+              vertical-align: middle;
+              font-size: 1rem;
+              margin-right: 5px;
+            }
+        }
     }
 }
 </style>
