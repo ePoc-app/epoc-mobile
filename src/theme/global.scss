@@ -599,7 +599,8 @@ body.preview{
   padding: 1rem;
   gap: 0 1rem;
   border-bottom: 1px solid var(--ion-color-item);
-  overflow-x: scroll;
+  overflow-x: auto;
+  cursor: pointer;
 
   .tabs-header {
     flex: 1 1 0;

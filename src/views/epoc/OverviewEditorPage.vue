@@ -177,6 +177,7 @@ const pathToUrl = (path: string) => {
 
         <ion-footer mode="ios" v-if="epoc">
             <ion-toolbar>
+              <div class="wrapper">
                 <ion-button
                     role="button"
                     class="start-course"
@@ -188,6 +189,7 @@ const pathToUrl = (path: string) => {
                 >
                     <span>{{ $t('OVERVIEW_PAGE.GO') }}</span>
                 </ion-button>
+              </div>
             </ion-toolbar>
         </ion-footer>
     </ion-page>
