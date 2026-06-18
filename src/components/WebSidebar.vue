@@ -17,34 +17,40 @@ const isLibraryActive = computed(() =>
 
 <template>
     <nav class="web-sidebar-nav">
+      <div class="sidebar-start">
         <div aria-hidden="true" class="sidebar-logo">
-            <div class="epoc-logo"></div>
-            <div class="by-inria"></div>
+          <div class="epoc-logo"></div>
+          <div class="by-inria"></div>
         </div>
+      </div>
+      <div class="sidebar-center">
         <RouterLink
             to="/library"
             class="sidebar-nav-item"
             :class="{ active: isLibraryActive }"
         >
-            <ion-icon :icon="libraryOutline" aria-hidden="true"></ion-icon>
-            <span>{{ t('LIBRARY_PAGE.TITLE') }}</span>
+          <ion-icon :icon="libraryOutline" aria-hidden="true"></ion-icon>
+          <span>{{ t('LIBRARY_PAGE.TITLE') }}</span>
+        </RouterLink>
+      </div>
+      <div class="sidebar-end">
+        <RouterLink
+            to="/about"
+            class="sidebar-nav-item"
+            :class="{ active: route.name === 'AboutPage' }"
+        >
+          <ion-icon :icon="informationCircleOutline" aria-hidden="true"></ion-icon>
+          <span>{{ t('ABOUT_PAGE.ABOUT') }}</span>
         </RouterLink>
         <RouterLink
             to="/settings"
             class="sidebar-nav-item"
             :class="{ active: route.name === 'SettingsPage' }"
         >
-            <ion-icon :icon="settingsOutline" aria-hidden="true"></ion-icon>
-            <span>{{ t('SETTINGS_PAGE.SETTINGS') }}</span>
+          <ion-icon :icon="settingsOutline" aria-hidden="true"></ion-icon>
+          <span>{{ t('SETTINGS_PAGE.SETTINGS') }}</span>
         </RouterLink>
-        <RouterLink
-            to="/about"
-            class="sidebar-nav-item"
-            :class="{ active: route.name === 'AboutPage' }"
-        >
-            <ion-icon :icon="informationCircleOutline" aria-hidden="true"></ion-icon>
-            <span>{{ t('ABOUT_PAGE.ABOUT') }}</span>
-        </RouterLink>
+      </div>
     </nav>
 </template>
 
@@ -54,6 +60,10 @@ const isLibraryActive = computed(() =>
     flex-direction: column;
     padding: 1.5rem 0.75rem;
     height: 100%;
+}
+
+.sidebar-center {
+  flex-grow: 1;
 }
 
 .sidebar-logo {
