@@ -34,6 +34,7 @@ import type { Reading } from '@/types/reading';
 import type { uid } from '@epoc/epoc-types/dist/v1';
 import { denormalize } from '@/utils/pipes';
 import { FileViewer } from '@capacitor/file-viewer';
+import badgeSvg from '@/assets/icon/badge.svg?url';
 
 const { t } = useI18n();
 
@@ -316,7 +317,7 @@ const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
                     </div>
 
                     <div v-else class="certificate success">
-                        <ion-icon class="badge" src="/assets/icon/badge.svg" />
+                        <ion-icon class="badge" :src="badgeSvg" />
                         <h5>{{ $t('PLAYER.SCORE.CONGRATS') }}</h5>
                         <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
                         <ion-button expand="block" @click="getCertificate">

@@ -4,6 +4,11 @@ import { ref, PropType, computed, watch, nextTick, onMounted, onBeforeUnmount } 
 import { SwipeQuestion } from '@/types/contents/assessment';
 import { removeSecableSpace } from '@/utils/transform';
 import { Motion } from 'motion-v';
+import glisser2Svg from '@/assets/icon/glisser2.svg?url';
+import citationSvg from '@/assets/icon/citation.svg?url';
+import gaucheSvg from '@/assets/icon/gauche.svg?url';
+import annulerSvg from '@/assets/icon/annuler.svg?url';
+import droiteSvg from '@/assets/icon/droite.svg?url';
 
 interface Card {
     id: string;
@@ -138,7 +143,7 @@ onBeforeUnmount(() => gesture?.destroy());
         <span v-if="question.statement" class="custom" :innerHTML="removeSecableSpace(question.statement)" />
 
         <template v-else>
-            <IonIcon src="/assets/icon/glisser2.svg" aria-hidden />
+            <IonIcon :src="glisser2Svg" aria-hidden />
             <span>{{ $t('QUESTION.SWIPE.INSTRUCTION') }}</span>
         </template>
     </p>
@@ -174,7 +179,7 @@ onBeforeUnmount(() => gesture?.destroy());
             </div>
 
             <div :aria-hidden="index !== cardsRemaining.length - 1" class="swipe-card-content">
-                <IonIcon src="/assets/icon/citation.svg" aria-hidden />
+                <IonIcon :src="citationSvg" aria-hidden />
                 <p>« {{ card.label }} »</p>
             </div>
         </Motion>
@@ -193,7 +198,7 @@ onBeforeUnmount(() => gesture?.destroy());
 
     <div class="swipe-actions">
         <button class="swipe-action" :class="{ hidden: isEmpty }" @click="manualSwipe('swipeLeft')">
-            <IonIcon src="/assets/icon/gauche.svg" aria-hidden class="swipe-right" />
+            <IonIcon :src="gaucheSvg" aria-hidden class="swipe-right" />
             <span>{{ sides[1] }}</span>
         </button>
 
@@ -203,11 +208,11 @@ onBeforeUnmount(() => gesture?.destroy());
             :disabled="disabled"
             @click="undo"
         >
-            <IonIcon aria-hidden src="/assets/icon/annuler.svg" />
+            <IonIcon aria-hidden :src="annulerSvg" />
         </button>
 
         <button class="swipe-action" :class="{ hidden: isEmpty }" @click="manualSwipe('swipeRight')">
-            <IonIcon aria-hidden src="/assets/icon/droite.svg" />
+            <IonIcon aria-hidden :src="droiteSvg" />
             <span>{{ sides[0] }}</span>
         </button>
     </div>

@@ -4,6 +4,11 @@ import { useUser } from '@/composables';
 import { trackEvent } from './matomo';
 import type { Epoc } from '@/types/epoc';
 import { uid } from '@epoc/epoc-types/dist/v1';
+import shapeSvg from '@/assets/icon/badge/shape.svg?url';
+import shadowGreySvg from '@/assets/icon/badge/shadow-grey.svg?url';
+import lockedBadgeSvg from '@/assets/icon/badge/locked.svg?url';
+
+const badgeIcons = import.meta.glob('../assets/icon/badge/*.svg', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
 
 const colors = {
     darkblue: '#384257',
@@ -163,15 +168,14 @@ async function insertBadges(
 
     for (const [key, badge] of badges) {
         let url;
-        const prefix = '/assets/icon/badge/';
         if (!badge.icon.endsWith('.svg')) {
-            url = prefix + badge.icon + '.svg';
+            url = badgeIcons[`../assets/icon/badge/${badge.icon}.svg`] || `/assets/icon/badge/${badge.icon}.svg`;
         } else {
             url = rootFolder + badge.icon;
         }
 
         if (unlockedBadges.includes(key)) {
-            const bg = await svgToPNG(prefix + 'shape.svg', 500);
+            const bg = await svgToPNG(shapeSvg, 500);
             if (bg) doc.addImage(bg, 'PNG', x, y, w, h);
             try {
                 const icon = await svgToPNG(url, 500);
@@ -179,10 +183,10 @@ async function insertBadges(
             } catch (e) {
                 console.log(url);
             }
-            const fg = await svgToPNG(prefix + 'shadow-grey.svg', 500);
+            const fg = await svgToPNG(shadowGreySvg, 500);
             if (fg) doc.addImage(fg, 'PNG', x, y, w, h);
         } else {
-            const bg = await svgToPNG(prefix + 'locked.svg', 500);
+            const bg = await svgToPNG(lockedBadgeSvg, 500);
             if (bg) doc.addImage(bg, 'PNG', x, y, w, h);
         }
 

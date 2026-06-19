@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { IonIcon, IonItem, IonLabel, IonReorder } from '@ionic/vue';
 import { checkmarkOutline, closeOutline, chevronDownOutline } from 'ionicons/icons';
+import sliderSvg from '@/assets/icon/slider.svg?url';
 
 const props = defineProps<{
     question: DragAndDropQuestion;
@@ -99,7 +100,7 @@ const wrongResponses = computed(() => correction.value.filter((c) => !c.correct)
             <IonItem lines="none">
                 <IonLabel class="ion-text-wrap">{{ response.label }}</IonLabel>
                 <IonReorder slot="end">
-                    <IonIcon aria-hidden="true" src="/assets/icon/slider.svg" />
+                    <IonIcon aria-hidden="true" :src="sliderSvg" />
                 </IonReorder>
             </IonItem>
         </div>

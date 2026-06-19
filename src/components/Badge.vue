@@ -2,6 +2,13 @@
 import { useEpocStore } from '@/stores/epocStore';
 import { computed } from 'vue';
 import { safe } from '@/utils/pipes';
+import shapeSvg from '@/assets/icon/badge/shape.svg?url';
+import shapeGreySvg from '@/assets/icon/badge/shape-grey.svg?url';
+import shadowSvg from '@/assets/icon/badge/shadow.svg?url';
+import shadowGreySvg from '@/assets/icon/badge/shadow-grey.svg?url';
+import lockedSvg from '@/assets/icon/badge/locked.svg?url';
+
+const badgeIcons = import.meta.glob('../assets/icon/badge/*.svg', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
 
 const props = defineProps<{
     title?: string;
@@ -13,13 +20,16 @@ const props = defineProps<{
 
 const epocStore = useEpocStore();
 
-const prefix = '/assets/icon/badge/';
-const shape = computed(() => `${prefix}${props.grey ? 'shape-grey' : 'shape'}.svg`);
-const shadow = computed(() => `${prefix}${props.grey ? 'shadow-grey' : 'shadow'}.svg`);
+const shape = computed(() => props.grey ? shapeGreySvg : shapeSvg);
+const shadow = computed(() => props.grey ? shadowGreySvg : shadowSvg);
 
 const iconSrc = computed(() => {
-    const path = props.icon.endsWith('.svg') ? epocStore.rootFolder + props.icon : prefix + (props.icon ? props.icon : 'check') + '.svg';
-    return safe(path, 'url');
+    if (props.icon.endsWith('.svg')) {
+        return safe(epocStore.rootFolder + props.icon, 'url');
+    }
+    const name = props.icon || 'check';
+    const url = badgeIcons[`../assets/icon/badge/${name}.svg`];
+    return safe(url || `/assets/icon/badge/${name}.svg`, 'url');
 });
 </script>
 
@@ -32,7 +42,7 @@ const iconSrc = computed(() => {
                 <img :src="shadow" class="image-shadow" alt="badge shadow" />
             </div>
             <div v-else class="badge-image">
-                <img src="/assets/icon/badge/locked.svg" alt="badge locked" />
+                <img :src="lockedSvg" alt="badge locked" />
             </div>
         </div>
 

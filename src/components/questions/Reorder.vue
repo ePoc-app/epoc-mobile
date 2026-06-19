@@ -8,6 +8,7 @@ import {
   IonIcon
 } from '@ionic/vue';
 import { ResponseItem, ReorderQuestion } from '@/types/contents/assessment';
+import sliderSvg from '@/assets/icon/slider.svg?url';
 
 const props = defineProps<{
   question: ReorderQuestion;
@@ -64,7 +65,7 @@ const doReorder = (ev: CustomEvent) => {
         </ion-label>
 
         <ion-reorder slot="end">
-          <ion-icon src="/assets/icon/slider.svg"></ion-icon>
+          <ion-icon :src="sliderSvg"></ion-icon>
         </ion-reorder>
       </ion-item>
     </div>

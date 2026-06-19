@@ -37,6 +37,10 @@ import { Capacitor } from '@capacitor/core';
 import { useTemplateRef } from 'vue';
 import { useQr } from '@/composables/useQr';
 import { useViewportSize } from '@/composables/useViewportSize';
+import importerSvg from '@/assets/icon/importer.svg?url';
+import lienSvg from '@/assets/icon/lien.svg?url';
+import qrSvg from '@/assets/icon/qr.svg?url';
+import ajouterSvg from '@/assets/icon/ajouter.svg?url';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -92,7 +96,7 @@ const openAddMenu = async () => {
         },
         {
             text: t('FLOATING_MENU.IMPORT_FILE'),
-            icon: '/assets/icon/importer.svg',
+            icon: importerSvg,
             handler: () => {
                 if (inputRef.value) {
                     inputRef.value.click();
@@ -101,7 +105,7 @@ const openAddMenu = async () => {
         },
         {
             text: t('FLOATING_MENU.IMPORT_LINK'),
-            icon: '/assets/icon/lien.svg',
+            icon: lienSvg,
             handler: () => {
                 linkInputAlert();
             },
@@ -111,7 +115,7 @@ const openAddMenu = async () => {
     if (Capacitor.isNativePlatform()) {
         buttons.push({
             text: t('FLOATING_MENU.IMPORT_QR'),
-            icon: '/assets/icon/qr.svg',
+            icon: qrSvg,
             handler: () => {
                 startScan();
             },
@@ -125,7 +129,7 @@ const openAddMenu = async () => {
 
     buttons.push({
         text: t('FLOATING_MENU.IMPORT_LINK'),
-        icon: '/assets/icon/lien.svg',
+        icon: lienSvg,
         handler: () => {
             linkInputAlert();
         },
@@ -134,7 +138,7 @@ const openAddMenu = async () => {
     if (Capacitor.isNativePlatform()) {
         buttons.push({
             text: t('FLOATING_MENU.IMPORT_QR'),
-            icon: '/assets/icon/qr.svg',
+            icon: qrSvg,
             handler: () => {
                 startScan();
             },
@@ -387,7 +391,7 @@ const linkInputAlert = async () => {
                 </div>
                 <div class="library-item library-item-add" v-on:click="openAddMenu()">
                     <div class="library-item-image">
-                        <ion-icon aria-hidden="true" src="/assets/icon/ajouter.svg" size="large"></ion-icon>
+                        <ion-icon aria-hidden="true" :src="ajouterSvg" size="large"></ion-icon>
                     </div>
                     <h3 aria-hidden="true" class="library-item-title">{{ $t('LIBRARY_PAGE.ADD_EPOC') }}</h3>
                 </div>

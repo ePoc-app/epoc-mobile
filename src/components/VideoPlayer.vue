@@ -5,6 +5,7 @@ import { logoClosedCaptioning, pause, play as playIcon, expand } from 'ionicons/
 import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 import { PlayPauseEvent } from '@/types/contents/media';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+import playSvg from '@/assets/icon/play.svg?url';
 
 const props = defineProps({
     src: String,
@@ -252,7 +253,7 @@ onUnmounted(() => {
             </div>
             <div v-if="src">
                 <div class="video-play-overlay">
-                    <ion-icon src="/assets/icon/play.svg"></ion-icon>
+                    <ion-icon :src="playSvg"></ion-icon>
                 </div>
                 <div v-if="controls.timeline" class="video-timeline" @click="seek">
                     <div

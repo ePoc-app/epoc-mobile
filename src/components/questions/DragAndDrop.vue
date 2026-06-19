@@ -7,6 +7,8 @@ import { ref, onMounted, useTemplateRef, watch, nextTick } from 'vue';
 import { IonIcon, IonRange } from '@ionic/vue';
 import { useTemplateRefsList } from '@vueuse/core';
 import { chevronForwardOutline, close } from 'ionicons/icons';
+import glisser2Svg from '@/assets/icon/glisser2.svg?url';
+import sliderSvg from '@/assets/icon/slider.svg?url';
 
 const props = defineProps<{
     question: DragAndDropquestion;
@@ -202,7 +204,7 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
             </template>
 
             <template v-else>
-                <IonIcon src="/assets/icon/glisser2.svg" />
+                <IonIcon :src="glisser2Svg" />
                 <div :innerHTML="$t('QUESTION.DRAG_DROP_INSTRUCTION')" />
             </template>
         </div>
@@ -221,7 +223,7 @@ function getRelativeYPosition(node1: HTMLElement, node2: HTMLElement) {
         <div v-if="responses.length" class="responses" :class="{ dragging: isDragging }">
             <div ref="drop-item" class="response-item">
                 <span>{{ responses[0].label }}</span>
-                <IonIcon src="/assets/icon/slider.svg" />
+                <IonIcon :src="sliderSvg" />
                 <div style="position: absolute; inset: 0; touch-action: none" />
             </div>
         </div>

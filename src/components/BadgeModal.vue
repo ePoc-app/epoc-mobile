@@ -8,6 +8,9 @@ import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import * as jsonLogic from 'json-logic-js/logic';
 import { useVModel } from '@vueuse/core';
+import badgeBgSvg from '@/assets/icon/badge/bg.svg?url';
+import checkRoundSvg from '@/assets/icon/check-round.svg?url';
+import clockRoundSvg from '@/assets/icon/clock-round.svg?url';
 
 interface RuleItem {
     label: string;
@@ -97,7 +100,7 @@ watch(
                 </div>
 
                 <div class="badge-modal-img">
-                    <ion-img class="badge-modal-bg" src="assets/icon/badge/bg.svg" />
+                    <ion-img class="badge-modal-bg" :src="badgeBgSvg" />
                     <BadgeComponent class="badge" nobg :icon="badge.icon" />
                 </div>
             </ion-card-header>
@@ -108,8 +111,8 @@ watch(
                 <div class="badge-rule-list">
                     <div v-for="rule of ruleList" :key="rule.label" class="badge-rule-item">
                         <span class="badge-rule-item-check">
-                            <ion-icon v-if="rule.success" src="/assets/icon/check-round.svg" />
-                            <ion-icon v-else src="/assets/icon/clock-round.svg" />
+                            <ion-icon v-if="rule.success" :src="checkRoundSvg" />
+                            <ion-icon v-else :src="clockRoundSvg" />
                         </span>
                         <span class="badge-rule-item-label">{{ $t(rule.label) }}</span>
                     </div>

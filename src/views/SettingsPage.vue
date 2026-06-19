@@ -35,6 +35,8 @@ import { useUser } from '@/composables';
 import { handleSetUser } from '@/utils/user';
 import {deleteAllFiles} from '@/utils/file';
 import {useLocalEpocsStore} from '@/stores/localEpocsStore';
+import textSizeSvg from '@/assets/icon/text-size.svg?url';
+import heightSvg from '@/assets/icon/height.svg?url';
 
 const libraryStore = useLibraryStore();
 const localEpocsStore = useLocalEpocsStore();
@@ -316,8 +318,8 @@ async function presentToast(message: string, color?: string) {
                                 @ionChange="settingsChanged()"
                                 snaps
                             >
-                                <ion-icon slot="start" size="small" src="assets/icon/text-size.svg"></ion-icon>
-                                <ion-icon slot="end" src="assets/icon/text-size.svg"></ion-icon>
+                                <ion-icon slot="start" size="small" :src="textSizeSvg"></ion-icon>
+                                <ion-icon slot="end" :src="textSizeSvg"></ion-icon>
                                 <div slot="label">{{ $t('SETTINGS_PAGE.SIZE') }}</div>
                             </ion-range>
                         </ion-item>
@@ -330,8 +332,8 @@ async function presentToast(message: string, color?: string) {
                                 @ionChange="settingsChanged()"
                                 snaps
                             >
-                                <ion-icon slot="start" size="small" src="assets/icon/height.svg"></ion-icon>
-                                <ion-icon slot="end" src="assets/icon/height.svg"></ion-icon>
+                                <ion-icon slot="start" size="small" :src="heightSvg"></ion-icon>
+                                <ion-icon slot="end" :src="heightSvg"></ion-icon>
                                 <div slot="label">{{ $t('SETTINGS_PAGE.INTERLINE') }}</div>
                             </ion-range>
                         </ion-item>

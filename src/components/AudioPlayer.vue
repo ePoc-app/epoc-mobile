@@ -5,6 +5,7 @@ import { createGesture } from '@ionic/vue';
 import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 import { PlayPauseEvent } from '@/types/contents/media';
 import {pause, play as playIcon} from 'ionicons/icons';
+import playSvg from '@/assets/icon/play.svg?url';
 
 // Props
 const props = defineProps({
@@ -210,7 +211,7 @@ onUnmounted(() => {
       <audio ref="audio" :src="src" />
       <div class="visualizer">
         <div v-if="!playing" class="play-overlay">
-          <ion-icon :src="'/assets/icon/play.svg'" />
+          <ion-icon :src="playSvg" />
         </div>
         <canvas ref="canvasRef" />
         <div v-if="src">

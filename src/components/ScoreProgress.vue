@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { IonIcon } from '@ionic/vue';
+import badgeSvg from '@/assets/icon/badge.svg?url';
 
 const props = defineProps({
     progress: { type: Number, required: true },
@@ -35,7 +36,7 @@ setTimeout(() => {
                 {{ $t('QUESTION.CERTIFICATE') }}<br />
                 {{ thresholdPoints }} {{ $t('PLAYER.SCORE.PTS') }}
             </div>
-            <ion-icon src="/assets/icon/badge.svg"></ion-icon>
+            <ion-icon :src="badgeSvg"></ion-icon>
         </div>
         <div class="progress-labels">
             <div class="progress-min">{{ minLabel }}</div>

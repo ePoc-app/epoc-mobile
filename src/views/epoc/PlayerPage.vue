@@ -39,6 +39,9 @@ import { until } from '@vueuse/core';
 import { trackEvent, trackPageView } from '@/utils/matomo';
 import CourseChoice from '@/views/epoc/content/CourseChoice.vue';
 import { CONTENT_TYPE_ICONS } from '@/types/content-icons';
+import doubleGauche from '@/assets/icon/double-gauche.svg?url';
+import doubleDroite from '@/assets/icon/double-droite.svg?url';
+import modulecheck from '@/assets/icon/modulecheck.svg?url';
 
 const INTERACTIVE_ELEMENTS = ['ion-icon', 'button', 'ion-button', 'ion-checkbox', 'ion-radio', 'span'];
 
@@ -388,7 +391,7 @@ function stopAllMedia() {
                             <common-content
                                 :title="$t('PLAYER.MODULE_END.FINISH')"
                                 :subtitle="$t('PLAYER.MODULE_END.CONGRATS')"
-                                icon="assets/icon/modulecheck.svg"
+                                :icon="modulecheck"
                             >
                                 <chapter-end :epoc="epoc" :chapter="chapter" :next-chapter="nextChapter!" />
                             </common-content>
@@ -411,7 +414,7 @@ function stopAllMedia() {
                         :class="{ disabled: !canNavigatePrevious }"
                         @click="navigatePrevious"
                     >
-                        <ion-icon aria-hidden="true" src="/assets/icon/double-gauche.svg" />
+                        <ion-icon aria-hidden="true" :src="doubleGauche" />
                     </div>
 
                     <div aria-label="Menu" role="button" class="reader-action small" @click="displayMenu()">
@@ -426,7 +429,7 @@ function stopAllMedia() {
                         :class="{ disabled: !canNavigateNext }"
                         @click="navigateNext"
                     >
-                        <ion-icon aria-hidden="true" src="/assets/icon/double-droite.svg" />
+                        <ion-icon aria-hidden="true" :src="doubleDroite" />
                     </div>
                 </div>
             </template>

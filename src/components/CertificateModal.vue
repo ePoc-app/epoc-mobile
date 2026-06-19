@@ -3,6 +3,8 @@ import { IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, IonImg, 
 import { useVModel } from '@vueuse/core';
 import { closeOutline } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
+import certificateSvg from '@/assets/img/certificate.svg?url';
+import certificateDarkSvg from '@/assets/img/certificate-dark.svg?url';
 
 const props = defineProps({
     epocId: String,
@@ -41,8 +43,8 @@ function dismissCertificate() {
                 </div>
 
                 <div>
-                    <IonImg class="certificate-img light" src="assets/img/certificate.svg" />
-                    <IonImg class="certificate-img dark" src="assets/img/certificate-dark.svg" />
+                    <IonImg class="certificate-img light" :src="certificateSvg" />
+                    <IonImg class="certificate-img dark" :src="certificateDarkSvg" />
                 </div>
             </IonCardHeader>
 
