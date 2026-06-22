@@ -32,6 +32,7 @@ const isLibraryActive = computed(() =>
 
 const aboutEpocLink = computed(() => {
     if (!epoc.value) return '';
+    if (isPreview.value) return '/';
     const id = epoc.value.id;
     const libraryId = id.startsWith('local-') ? 'local-epocs' : libraryStore.findCollectionByEpocId(id);
     return libraryId ? `/${libraryId}/${id}` : '';
@@ -70,10 +71,9 @@ const aboutEpocLink = computed(() => {
                     <span class="sidebar-epoc-title">{{ epoc.title }}</span>
                 </div>
                 <RouterLink
-                    v-if="aboutEpocLink"
                     :to="aboutEpocLink"
                     class="sidebar-nav-item"
-                    :class="{ active: route.name === 'EpocOverviewPage' }"
+                    :class="{ active: route.name === 'EpocOverviewPage' || route.name === 'OverviewEditorPage' }"
                 >
                     <ion-icon :icon="cubeOutline" aria-hidden="true"></ion-icon>
                     <span>{{ t('FLOATING_MENU.ABOUT') }}</span>
