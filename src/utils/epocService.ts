@@ -4,9 +4,10 @@ import {Directory, Encoding, Filesystem} from '@capacitor/filesystem';
 
 export const readEpocContent = async (dir: string, epocId: string): Promise<Epoc | null> => {
     if (dir === 'epoc-editor') {
-        const epoc = await fetch(`/assets/demo/epocs/${epocId}/content.json`).then(res => res.json()) as Epoc;
+        const baseUrl = import.meta.env.BASE_URL;
+        const epoc = await fetch(`${baseUrl}/assets/demo/epocs/${epocId}/content.json`).then(res => res.json()) as Epoc;
         epoc.id = epocId;
-        epoc.dir = `/assets/demo/epocs/${epocId}/`;
+        epoc.dir = `${baseUrl}/assets/demo/epocs/${epocId}/`;
         return epoc;
     }
     try {
@@ -45,6 +46,7 @@ export const readEpocContent = async (dir: string, epocId: string): Promise<Epoc
 
         return epoc;
     } catch (error) {
+        console.error('Error reading ePoc content:', dir, epocId, error);
         return null;
     }
 }
