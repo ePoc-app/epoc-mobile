@@ -47,7 +47,6 @@
     "@ionic/vue-router": "^8.0.0",
     "@types/katex": "^0.16.7",
     "@types/node": "^18.19.130",
-    "@vitejs/plugin-legacy": "^5.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/test-utils": "^2.3.0",
