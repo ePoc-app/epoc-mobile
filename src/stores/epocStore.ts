@@ -19,6 +19,7 @@ import { Capacitor } from '@capacitor/core';
 import { i18n } from '@/i18n';
 import router from '@/router';
 import { useLibraryStore } from '@/stores/libraryStore';
+import { useAppMode } from '@/composables/useAppMode';
 
 export const useEpocStore = defineStore('epoc', () => {
     // --- State ---
@@ -27,6 +28,7 @@ export const useEpocStore = defineStore('epoc', () => {
     const initialized = ref(false);
     const _epoc = ref<Epoc | null>(null);
     const _rootFolder = ref<string>('');
+    const { isPreview } = useAppMode();
 
     // --- Actions ---
 
@@ -36,7 +38,7 @@ export const useEpocStore = defineStore('epoc', () => {
         initialized.value = false;
 
         try {
-            const epocDir = id.startsWith('epoc-editor') ? 'epoc-editor' :id.startsWith('local-') ? 'local-epocs' : 'epocs';
+            const epocDir = isPreview ? 'epoc-editor' :id.startsWith('local-') ? 'local-epocs' : 'epocs';
             const epoc = await readEpocContent(epocDir, id);
 
             if (!epoc) {
