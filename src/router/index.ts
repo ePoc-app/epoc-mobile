@@ -133,7 +133,7 @@ const getRoutes = () => {
     if (isPreview.value) {
         // Only keep the root redirect and routes starting with /epoc
         return routes.filter(route =>
-            route.path === '/' || route.path.startsWith('/epoc') || route.name === 'NotFound'
+            route.path === '/' || route.path.startsWith('/epoc') || route.name === 'AboutPage' || route.name === 'SettingsPage' || route.name === 'NotFound'
         );
     }
     return routes;
