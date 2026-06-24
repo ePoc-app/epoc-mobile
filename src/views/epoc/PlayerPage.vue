@@ -256,7 +256,7 @@ function updateCurrentContent(index: number) {
 
     // Update url without triggering navigation
     const baseUrl = import.meta.env.BASE_URL;
-    const newUrl = `${baseUrl}/epoc/play/${epocId.value}/${chapterId.value}/content/${content.id}`;
+    const newUrl = `${baseUrl}epoc/play/${epocId.value}/${chapterId.value}/content/${content.id}`;
     window.history.replaceState({}, '', newUrl);
     trackPageView(newUrl, content.title);
 
