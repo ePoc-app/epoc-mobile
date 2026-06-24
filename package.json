@@ -82,5 +82,5 @@
   "overrides": {
     "rollup": "4.44.0"
   },
-  "description": "Lecteur mobile d'ePoc (Electronic Pocket Open Course)"
+  "description": "Lecteur web et mobile d'ePoc (Electronic Pocket Open Course)"
 }
