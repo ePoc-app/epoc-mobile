@@ -21,7 +21,7 @@
   "ABOUT_PAGE": {
     "ABOUT": "Über",
     "EPOC_APPLICATION": "Die ePoc-Anwendung",
-    "EPOC_DESCRIPTION": "ePoc (Electronic Pocket Open Course) ist eine digitale Schulungsanwendung für Mobilgeräte. Sie wurde innerhalb des <a href=\"https://learninglab.inria.fr\" target=\"_blank\" title=\"Inria Learning Lab Website\" class=\"about-page-link\">Inria Learning Lab</a> entwickelt.",
+    "EPOC_DESCRIPTION": "<a href=\"https://epoc.inria.fr\" target=\"_blank\" title=\"ePoc Website\" class=\"about-page-link\">ePoc</a> (Electronic Pocket Open Course) ist eine freie Lösung für Mikro-Lernen, entwickelt von <a href=\"https://learninglab.inria.fr\" target=\"_blank\" title=\"Site d'Inria Learning Lab\" class=\"about-page-link\">Inria Learning Lab</a>.<br/>Diese Lösung umfasst ein Dateiformat, einen mobilen und Web-Reader sowie einen Desktop-Inhaltseditor, mit dem Ziel, die Erstellung und den Austausch von Lerninhalten zu erleichtern und dabei den Datenschutz zu wahren und freie Software zu fördern.",
     "PERSONAL_DATA": "Persönliche Daten",
     "PERSONAL_DATA_DESCRIPTION": "Es werden keine personenbezogenen Daten erhoben.",
     "ANALYTICS": "Analysen",
