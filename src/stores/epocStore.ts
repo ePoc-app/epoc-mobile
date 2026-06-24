@@ -8,7 +8,8 @@ import {
     starOutline,
     receiptOutline,
     settingsOutline,
-    cubeOutline
+    cubeOutline,
+    informationCircleOutline
 } from 'ionicons/icons';
 import { readEpocContent } from '@/utils/epocService';
 import { Epoc, Chapter } from '@/types/epoc';
@@ -149,13 +150,25 @@ export const useEpocStore = defineStore('epoc', () => {
                 text: i18n.global.t('FLOATING_MENU.GENERAL'),
                 cssClass: 'separator',
             },
-            {
-                text: i18n.global.t('FLOATING_MENU.HOME'),
-                icon: homeOutline,
-                handler: () => {
-                    router.push('/library');
-                },
-            },
+            ...(!isPreview
+                ? [
+                    {
+                        text: i18n.global.t('FLOATING_MENU.HOME'),
+                        icon: homeOutline,
+                        handler: () => {
+                            router.push('/library');
+                        },
+                    },
+                ]
+                : [
+                    {
+                        text: i18n.global.t('ABOUT_PAGE.ABOUT'),
+                        icon: informationCircleOutline,
+                        handler: () => {
+                            router.push('/about');
+                        },
+                    },
+                ]),
             {
                 text: i18n.global.t('FLOATING_MENU.SETTINGS'),
                 icon: settingsOutline,
@@ -167,22 +180,26 @@ export const useEpocStore = defineStore('epoc', () => {
                 text: i18n.global.t('FLOATING_MENU.THIS_EPOC'),
                 cssClass: 'separator',
             },
-            {
-                text: i18n.global.t('FLOATING_MENU.ABOUT'),
-                icon: cubeOutline,
-                handler: () => {
-                    const ePocId = _epoc.value!.id;
-                    const isLocal = ePocId.startsWith('local-');
-                    const libraryId = isLocal ? 'local-epocs' : libraryStore.findCollectionByEpocId(ePocId);
+            ...(router.currentRoute.value.name !== 'OverviewEditorPage' &&  router.currentRoute.value.name !== 'EpocOverviewPage'
+                ? [
+                    {
+                        text: i18n.global.t('FLOATING_MENU.ABOUT'),
+                        icon: cubeOutline,
+                        handler: () => {
+                            const ePocId = _epoc.value!.id;
+                            const isLocal = ePocId.startsWith('local-');
+                            const libraryId = isLocal ? 'local-epocs' : libraryStore.findCollectionByEpocId(ePocId);
 
-                    if (!libraryId) {
-                        console.error('Library not found for ePoc ID:', ePocId);
-                        return;
-                    }
+                            if (!libraryId) {
+                                console.error('Library not found for ePoc ID:', ePocId);
+                                return;
+                            }
 
-                    router.push(`/${libraryId}/${_epoc.value!.id}`);
-                },
-            },
+                            router.push(`/${libraryId}/${_epoc.value!.id}`);
+                        },
+                    },
+                ]
+                : []),
             ...(!router.currentRoute.value.path.includes('/epoc/toc/' + _epoc.value!.id)
                 ? [
                       {

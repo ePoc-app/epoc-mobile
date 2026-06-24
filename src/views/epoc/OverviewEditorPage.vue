@@ -4,16 +4,17 @@ import { IonContent, IonHeader, IonPage, IonToolbar, IonIcon, IonBackButton, Ion
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import {
-    checkmarkOutline,
-    arrowForwardOutline,
-    readerOutline,
-    cubeOutline,
-    timeOutline
+  checkmarkOutline,
+  arrowForwardOutline,
+  readerOutline,
+  cubeOutline,
+  timeOutline, ellipsisHorizontal
 } from 'ionicons/icons';
 import { useEpocStore } from '@/stores/epocStore';
 import VideoPlayer from '@/components/VideoPlayer.vue';
 import { Capacitor } from '@capacitor/core';
 import { storeToRefs } from 'pinia';
+import {EpocLibrary} from '@/types/epoc';
 
 const { t } = useI18n();
 
@@ -49,6 +50,11 @@ const pathToUrl = (path: string) => {
         <ion-header class="mobile-only" :translucent="true">
             <ion-toolbar>
                 <ion-title>{{ t('OVERVIEW_PAGE.PRESENTATION') }}</ion-title>
+                <ion-buttons class="mobile-only" slot="end">
+                  <ion-button :aria-label="t('MISSING.OPTIONS')" v-on:click="epocStore.epocMainMenu()">
+                  <ion-icon aria-hidden="true" :icon="ellipsisHorizontal" color="inria-icon"></ion-icon>
+                </ion-button>
+              </ion-buttons>
             </ion-toolbar>
         </ion-header>
 

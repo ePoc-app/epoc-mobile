@@ -42,10 +42,10 @@ const aboutEpocLink = computed(() => {
 <template>
     <nav class="web-sidebar-nav">
         <div class="sidebar-start">
-            <div aria-hidden="true" class="sidebar-logo">
+            <RouterLink to="/" class="sidebar-logo">
                 <div class="epoc-logo"></div>
                 <div class="by-inria"></div>
-            </div>
+            </RouterLink>
         </div>
         <div class="sidebar-center">
             <RouterLink
@@ -137,6 +137,7 @@ const aboutEpocLink = computed(() => {
 }
 
 .sidebar-logo {
+    display: block;
     padding: 0 0.75rem 2rem 0.75rem;
 
     .epoc-logo {
