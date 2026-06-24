@@ -14,17 +14,19 @@ import { useSettingsStore } from './settingsStore';
 import { useReadingStore } from './readingStore';
 import type { EpocCollection, EpocLibrary, EpocLibraryState, EpocMetadata, Publisher } from '@/types/epoc';
 import type { Reading } from '@/types/reading';
-import {deleteFolder, download, unzip} from '@/utils/file';
+import { deleteFolder, download, unzip } from '@/utils/file';
 import { readEpocContent } from '@/utils/epocService';
 import { displayLicence } from '@/utils/app';
 import { i18n } from '@/i18n';
-import {trackEvent} from '@/utils/matomo';
+import { trackEvent } from '@/utils/matomo';
+import { useAppMode } from '@/composables/useAppMode';
 
 export const useLibraryStore = defineStore('library', () => {
     // --- State ---
     const settingsStore = useSettingsStore();
     const readingStore = useReadingStore();
     const router = useRouter();
+    const { isPreview } = useAppMode();
 
     const officialCollectionsUrl = 'https://epoc.inria.fr/official-collections.json';
 
@@ -46,6 +48,7 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     async function fetchOfficialCollections() {
+        if (isPreview) return;
         try {
             officialCollections.value = JSON.parse(localStorage.getItem('officialCollections') || '{}');
             const response = await fetch(officialCollectionsUrl);
@@ -93,6 +96,7 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     async function fetchCustomCollections() {
+        if (isPreview) return;
         try {
             const cachedCustomCollections = JSON.parse(localStorage.getItem('customCollections') || '{}');
             if (settingsStore.settings.customLibrairies.length === 0) {
