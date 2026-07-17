@@ -258,7 +258,7 @@
       "FINISH": "Ho finito"
     },
     "DRAG_DROP_INSTRUCTION": "Fai clic o trascina <span class='label'>l'etichetta</span> nella <span class='cat'>categoria</span> corretta qui sotto:",
-    "DROPDOWN_INSTRUCTION": "Seleziona una risposta",
+    "DROPDOWN_INSTRUCTION": "Seleziona una risposta per :",
     "SWIPE": {
       "INSTRUCTION": "Trascina la card a sinistra o a destra nella categoria appropriata",
       "FINISH": "È finito!"

@@ -56,10 +56,13 @@ const openActionSheet = async (response: ResponseItem) => {
     }
   ];
 
+
+
   const actionSheet = await actionSheetController.create({
     mode: 'ios',
     header: t('QUESTION.DROPDOWN_INSTRUCTION'),
-    cssClass: 'custom-action-sheet dropdown-list',
+    subHeader: `"${response.label}"`,
+    cssClass: 'custom-action-sheet dropdown-list no-thumbnail',
     buttons
   });
 
