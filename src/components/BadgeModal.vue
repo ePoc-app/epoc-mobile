@@ -92,6 +92,7 @@ watch(
 </script>
 
 <template>
+  <Teleport to="body">
     <div v-if="isOpen" class="badge-modal-container">
         <ion-card class="badge-modal-success-card">
             <ion-card-header class="badge-modal-success-card-header">
@@ -124,11 +125,12 @@ watch(
             </ion-card-content>
         </ion-card>
     </div>
+  </Teleport>
 </template>
 
 <style scoped lang="scss">
 :host {
-    z-index: 60;
+    z-index: 999;
 }
 
 .badge-modal-container {
