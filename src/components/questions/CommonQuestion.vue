@@ -19,6 +19,7 @@ import Swipe from './Swipe.vue';
 import CorrectionMultipleChoice from '../corrections/CorrectionMultipleChoice.vue';
 import CorrectionReorder from '../corrections/CorrectionReorder.vue';
 import CorrectionSort from '../corrections/CorrectionSort.vue';
+import CorrectionDropdown from '@/components/corrections/CorrectionDropdown.vue';
 import CustomQuestion from './CustomQuestion.vue';
 import CorrectionGeneric from '../corrections/CorrectionGeneric.vue';
 import { SwipeQuestion, SimpleChoiceQuestion } from '@/types/contents/assessment';
@@ -219,8 +220,13 @@ defineExpose({
                         :question="question"
                         :userResponses="userResponses"
                     />
+                    <correction-dropdown
+                        v-else-if="['dropdown-list'].includes(question.type)"
+                        :question="question"
+                        :userResponses="userResponses"
+                    />
                     <correction-sort
-                        v-else-if="['dropdown-list', 'swipe', 'drag-and-drop'].includes(question.type)"
+                        v-else-if="['swipe', 'drag-and-drop'].includes(question.type)"
                         :question="question"
                         :userResponses="userResponses"
                     />
