@@ -15,7 +15,12 @@ import { trackPageView } from '@/utils/matomo';
 import { useEpocStore } from '@/stores/epocStore';
 import { useAppMode } from '@/composables/useAppMode';
 
-const { isPreview } = useAppMode();
+const { isPreview } = useAppMode()
+
+// Find the default ePoc Id to redirect to in standalone mode (html/scorm)
+const epocIdFromUrl = new URLSearchParams(window.location.search).get('epocId')
+if (epocIdFromUrl) localStorage.setItem('standaloneEpocId', epocIdFromUrl)
+const defaultEpocId = epocIdFromUrl ?? localStorage.getItem('standaloneEpocId') ?? 'default';
 
 function fetchEpoc(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
     const epocId = to.params.epoc_id;
@@ -152,7 +157,7 @@ router.beforeEach((to, from, next) => {
             // Redirect to OverviewEditorPage.
             // Note: Since OverviewEditorPage requires an :id,
             // you might need to provide a default or fallback ID here.
-            next({ name: 'OverviewEditorPage', params: { epoc_id: 'default' } });
+            next({ name: 'OverviewEditorPage', params: { epoc_id: defaultEpocId } });
         } else {
             next({ name: 'Library' });
         }
