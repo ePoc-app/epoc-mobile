@@ -42,6 +42,7 @@ import { CONTENT_TYPE_ICONS } from '@/types/content-icons';
 import doubleGauche from '@/assets/icon/double-gauche.svg?url';
 import doubleDroite from '@/assets/icon/double-droite.svg?url';
 import modulecheck from '@/assets/icon/modulecheck.svg?url';
+import {scormComplete, scormSetScore} from '@/scorm';
 
 const INTERACTIVE_ELEMENTS = ['ion-icon', 'button', 'ion-button', 'ion-checkbox', 'ion-radio', 'span'];
 
@@ -211,6 +212,8 @@ function checkForCertificate() {
     if (meetsScoreRequirements && meetsBadgeRequirement && !reading.value.certificateShown) {
         certificateShown.value = true;
         readingStore.updateCertificateShown(epoc.value.id, true);
+        scormSetScore(assessmentData.value.totalUserScore, 0, assessmentData.value.totalScore);
+        scormComplete();
         trackEvent(epoc.value.id, `${epoc.value.id} / Certificate unlocked`);
     }
 }

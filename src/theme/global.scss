@@ -235,6 +235,9 @@ ion-range.progress-indicator{
       padding-bottom: var(--ion-safe-area-bottom);
     }
   }
+  &.no-thumbnail .action-sheet-title:before{
+    content: none;
+  }
   .action-sheet-title{
     &::before {
       content: '';

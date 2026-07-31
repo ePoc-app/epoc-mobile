@@ -14,6 +14,8 @@ import { trackEvent } from '@/utils/matomo';
 import { Rule } from '@epoc/epoc-types/src/v1/rule';
 import { closeOutline, openOutline } from 'ionicons/icons';
 
+const badgeIcons = import.meta.glob('../assets/icon/badge/*.svg', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+
 export const useReadingStore = defineStore('reading', () => {
     const storageService = useStorage();
     const epocService = useEpocStore();
@@ -224,7 +226,7 @@ export const useReadingStore = defineStore('reading', () => {
             message: badge.title,
             icon: badge.icon.endsWith('.svg')
                 ? epocService.rootFolder + badge.icon
-                : `/assets/icon/badge/${badge.icon}.svg`,
+                : (badgeIcons[`../assets/icon/badge/${badge.icon}.svg`] || `/assets/icon/badge/${badge.icon}.svg`),
             cssClass: 'badge-toast',
             position: 'top',
             buttons: [
