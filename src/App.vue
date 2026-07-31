@@ -6,8 +6,12 @@ import {register} from 'swiper/element/bundle';
 import {useSettingsStore} from './stores/settingsStore';
 import {nextTick, onMounted, watch} from 'vue';
 import {useI18n} from 'vue-i18n';
+import {App} from '@capacitor/app';
+import {useRouter} from 'vue-router';
+import {confirmOpen} from '@/composables/useQr';
 
 const settingsStore = useSettingsStore();
+const router = useRouter();
 
 register();
 
@@ -51,6 +55,19 @@ onMounted(async () => {
     await nextTick();
     loadTheme(settingsStore.settings.theme);
     locale.value = settingsStore.settings.lang;
+
+    await App.addListener('appUrlOpen', (event) => {
+      const urlOpen = new URL(event.url);
+      const slug = urlOpen.pathname.replace('/app-redirect', '');
+      if (slug === '/dl') {
+        // e.g. https://epoc.inria.fr/app-redirect/dl?url=https://example.com/epoc.zip
+        const url = urlOpen.searchParams.get('url');
+        if (url) confirmOpen(url);
+      } else if (slug) {
+        // e.g. https://epoc.inria.fr/app-redirect/settings → navigate to /settings
+        router.push(slug);
+      }
+    });
 });
 
 watch(
