@@ -39,7 +39,7 @@ export const useEpocStore = defineStore('epoc', () => {
         initialized.value = false;
 
         try {
-            const epocDir = isPreview ? 'epoc-editor' :id.startsWith('local-') ? 'local-epocs' : 'epocs';
+            const epocDir = isPreview.value ? 'epoc-editor' : id.startsWith('local-') ? 'local-epocs' : 'epocs';
             const epoc = await readEpocContent(epocDir, id);
 
             if (!epoc) {

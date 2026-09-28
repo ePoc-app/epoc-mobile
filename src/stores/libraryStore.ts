@@ -48,7 +48,7 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     async function fetchOfficialCollections() {
-        if (isPreview) return;
+        if (isPreview.value) return;
         try {
             officialCollections.value = JSON.parse(localStorage.getItem('officialCollections') || '{}');
             const response = await fetch(officialCollectionsUrl);
@@ -96,7 +96,7 @@ export const useLibraryStore = defineStore('library', () => {
     }
 
     async function fetchCustomCollections() {
-        if (isPreview) return;
+        if (isPreview.value) return;
         try {
             const cachedCustomCollections = JSON.parse(localStorage.getItem('customCollections') || '{}');
             if (settingsStore.settings.customLibrairies.length === 0) {
