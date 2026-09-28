@@ -94,10 +94,10 @@ const pathToUrl = (path: string) => {
                         <div
                             role="img"
                             aria-roledescription="Temps"
-                            aria-label="10 min par module"
+                            :aria-label="(epoc.duration || 60)+t('OVERVIEW_PAGE.MIN_MODULE')"
                             class="epoc-spec-value"
                         >
-                            {{ epoc.chapterDuration || 10 }} {{ t('OVERVIEW_PAGE.MIN_MODULE') }}
+                            {{ epoc.duration || 60 }} {{ t('OVERVIEW_PAGE.MIN_MODULE') }}
                         </div>
                     </div>
                 </div>

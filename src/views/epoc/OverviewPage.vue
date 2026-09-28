@@ -169,14 +169,14 @@ onIonViewWillEnter(() => {
                     </div>
                     <div class="epoc-spec">
                         <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="timeOutline"></ion-icon></div>
-                        <div
-                            role="img"
-                            aria-roledescription="Temps"
-                            aria-label="10 min par module"
-                            class="epoc-spec-value"
-                        >
-                            {{ epoc.chapterDuration || 10 }} {{ t('OVERVIEW_PAGE.MIN_MODULE') }}
-                        </div>
+                      <div
+                          role="img"
+                          aria-roledescription="Temps"
+                          :aria-label="(epoc.duration || 60)+t('OVERVIEW_PAGE.MIN_MODULE')"
+                          class="epoc-spec-value"
+                      >
+                        {{ epoc.duration || 60 }} {{ t('OVERVIEW_PAGE.MIN_MODULE') }}
+                      </div>
                     </div>
                 </div>
 
