@@ -74,26 +74,19 @@ const chapter = computed<Chapter | undefined>(() => epoc.value?.chapters[chapter
 
 const nextChapterId = computed<uid | undefined>(() => {
     const keys = Object.keys(epoc.value?.chapters || {});
-
-    for (let i = chapterIndex.value + 1; i < keys.length; i++) {
-        const chapterId = keys[i];
-        const chapterData = epoc.value?.chapters?.[chapterId];
-
-        if (!chapterData) return;
-
-        if (!chapterData.rule) return chapterId;
-        if (!reading.value) return undefined;
-
-        if (readingStore.isUnlocked(reading.value, chapterData.rule)) return chapterId;
-    }
-
-    return undefined;
+    return keys[chapterIndex.value + 1];
 });
 
 const nextChapter = computed(() => {
     if (!nextChapterId.value || !epoc.value?.chapters) return undefined;
     const chapterData = epoc.value.chapters[nextChapterId.value];
-    return chapterData ? { ...chapterData, id: nextChapterId.value } : undefined;
+    if (!chapterData) return undefined;
+
+    const locked = chapterData.rule
+        ? !reading.value || !readingStore.isUnlocked(reading.value, chapterData.rule)
+        : false;
+
+    return { ...chapterData, id: nextChapterId.value, locked };
 });
 
 const filteredContents = computed<Content[]>(() => {

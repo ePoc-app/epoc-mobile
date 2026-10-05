@@ -181,7 +181,9 @@
     },
     "CHAPTER_END": {
       "NEXT": "Suivant",
+      "NEXT_LOCKED": "Verrouillé",
       "FOLLOWING_NEXT": "À suivre :",
+      "NEXT_LOCKED_MSG": "Continuez votre progression pour débloquer la suite.",
       "MSG": "Bravo, vous avez atteint la fin de cet ePoc.<br/>Pour obtenir l'attestation, consultez la page des scores.",
       "SCORE": "Page des scores",
       "REVIEW": "Donner votre avis"

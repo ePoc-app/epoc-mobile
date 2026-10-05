@@ -181,7 +181,9 @@
     },
     "CHAPTER_END": {
       "NEXT": "Nächstes",
+      "NEXT_LOCKED": "Gesperrt",
       "FOLLOWING_NEXT": "Als Nächstes:",
+      "NEXT_LOCKED_MSG": "Setzen Sie Ihren Fortschritt fort, um fortzufahren.",
       "MSG": "Glückwunsch, Sie haben das Ende des Kurses erreicht.<br/>Besuchen Sie die Punktzahlenseite, um das Zertifikat zu erhalten.",
       "SCORE": "Punktzahlenseite",
       "REVIEW": "Ihre Meinung abgeben"

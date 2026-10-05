@@ -181,7 +181,9 @@
     },
     "CHAPTER_END": {
       "NEXT": "Siguiente",
+      "NEXT_LOCKED": "Bloqueado",
       "FOLLOWING_NEXT": "A continuación:",
+      "NEXT_LOCKED_MSG": "Continúa tu progreso para desbloquear lo que sigue.",
       "MSG": "Enhorabuena, has llegado al final del curso.<br/>Para obtener el certificado, visita la página de puntuaciones.",
       "SCORE": "Página de puntuaciones",
       "REVIEW": "Dar tu opinión"

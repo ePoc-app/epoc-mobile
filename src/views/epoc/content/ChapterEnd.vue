@@ -2,7 +2,7 @@
 import { PropType } from 'vue';
 import { Chapter, Epoc } from '@/types/epoc';
 import { IonButton, IonIcon } from '@ionic/vue';
-import { home } from 'ionicons/icons';
+import { home, lockClosedOutline } from 'ionicons/icons';
 
 defineProps({
     epoc: {
@@ -21,7 +21,7 @@ defineProps({
 </script>
 
 <template>
-    <template v-if="nextChapter">
+    <template v-if="nextChapter && !nextChapter.locked">
         <p>
             <b class="ion-text-capitalize"> {{ $t('PLAYER.CHAPTER_END.FOLLOWING_NEXT') }}</b> {{ nextChapter.title }}
         </p>
@@ -43,7 +43,23 @@ defineProps({
             <span> {{ $t('PLAYER.CHAPTER_END.NEXT') }}</span>
         </ion-button>
     </template>
-    <template v-if="!nextChapter">
+    <template v-else-if="nextChapter && nextChapter.locked">
+        <p>{{ $t('PLAYER.CHAPTER_END.NEXT_LOCKED_MSG') }}</p>
+        <ion-button
+            expand="block"
+            size="large"
+            color="outline-button"
+            fill="outline"
+            :router-link="'/epoc/toc/' + epoc.id"
+        >
+            <span>{{ $t('FLOATING_MENU.TOC') }}</span>
+        </ion-button>
+        <ion-button expand="block" size="large" color="inria" disabled>
+            <ion-icon slot="start" :icon="lockClosedOutline"></ion-icon>
+            <span>{{ $t('PLAYER.CHAPTER_END.NEXT_LOCKED') }}</span>
+        </ion-button>
+    </template>
+    <template v-else>
         <p v-html="$t('PLAYER.CHAPTER_END.MSG')"></p>
         <ion-button
             expand="block"
