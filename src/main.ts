@@ -5,6 +5,7 @@ import App from './App.vue';
 import router from './router';
 
 import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import { IonicVue } from '@ionic/vue';
 import { useStorage } from '@/composables/useStorage';
 import VueMatomo from 'vue-matomo';
@@ -73,7 +74,11 @@ function init() {
         trackInitialView: false
     });
 
-    router.isReady().then(() => {
+    router.isReady().then(async () => {
+        // Preload Filesystem to prevent error on first load
+        if (Capacitor.getPlatform() === 'web') {
+            await Filesystem.readdir({ path: '', directory: Directory.LibraryNoCloud }).catch(() => undefined);
+        }
         app.mount('#app');
         useStorage();
     });

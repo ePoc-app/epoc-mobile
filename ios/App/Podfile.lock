@@ -1,46 +1,46 @@
 PODS:
-  - Capacitor (7.4.4):
+  - Capacitor (8.5.2):
     - CapacitorCordova
-  - CapacitorApp (7.1.1):
+  - CapacitorApp (8.1.1):
     - Capacitor
-  - CapacitorBarcodeScanner (2.2.4):
+  - CapacitorBarcodeScanner (3.1.2):
     - Capacitor
-    - OSBarcodeLib (= 2.0.1)
-  - CapacitorBrowser (7.0.3):
+    - OSBarcodeLib (= 2.2.1)
+  - CapacitorBrowser (8.0.4):
     - Capacitor
-  - CapacitorCordova (7.4.4)
-  - CapacitorDevice (7.0.3):
+  - CapacitorCordova (8.5.2)
+  - CapacitorDevice (8.0.3):
     - Capacitor
-  - CapacitorFilesystem (7.1.6):
+  - CapacitorFilesystem (8.1.3):
     - Capacitor
-    - IONFilesystemLib (~> 1.0.1)
-  - CapacitorFileTransfer (1.0.9):
+    - IONFilesystemLib (~> 1.1.1)
+  - CapacitorFileTransfer (2.0.5):
     - Capacitor
-    - IONFileTransferLib (~> 1.0.1)
-  - CapacitorFileViewer (1.0.6):
+    - IONFileTransferLib (~> 1.0.2)
+  - CapacitorFileViewer (2.0.3):
     - Capacitor
-    - IONFileViewerLib (~> 1.0.3)
-  - CapacitorHaptics (7.0.3):
+    - IONFileViewerLib (~> 1.0.4)
+  - CapacitorHaptics (8.0.2):
     - Capacitor
-  - CapacitorKeyboard (7.0.4):
+  - CapacitorKeyboard (8.0.5):
     - Capacitor
-  - CapacitorScreenOrientation (7.0.3):
+  - CapacitorScreenOrientation (8.0.1):
     - Capacitor
-  - CapacitorScreenReader (7.0.3):
+  - CapacitorScreenReader (8.0.1):
     - Capacitor
-  - CapacitorSplashScreen (7.0.4):
+  - CapacitorSplashScreen (8.0.2):
     - Capacitor
-  - CapacitorStatusBar (7.0.4):
+  - CapacitorStatusBar (8.0.3):
     - Capacitor
-  - CordovaPlugins (7.4.4):
+  - CordovaPlugins (8.5.2):
     - CapacitorCordova
   - EpocCapacitorZip (0.1.2):
     - Capacitor
     - SSZipArchive (~> 2.4.2)
-  - IONFilesystemLib (1.0.1)
-  - IONFileTransferLib (1.0.1)
-  - IONFileViewerLib (1.0.3)
-  - OSBarcodeLib (2.0.1)
+  - IONFilesystemLib (1.1.4)
+  - IONFileTransferLib (1.0.3)
+  - IONFileViewerLib (1.0.4)
+  - OSBarcodeLib (2.2.1)
   - SSZipArchive (2.4.3)
 
 DEPENDENCIES:
@@ -107,29 +107,29 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@epoc/capacitor-zip"
 
 SPEC CHECKSUMS:
-  Capacitor: 09d9ff8e9618e8c4b3cab2bbee34a17215dd2fef
-  CapacitorApp: 3ddbd30ac18c321531c3da5e707b60873d89dd60
-  CapacitorBarcodeScanner: 550a9f291ee8533e2de25e8ec0d3d1e8b03c6ae5
-  CapacitorBrowser: 66aa8ff09cdca2a327ce464b113b470e6f667753
-  CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
-  CapacitorDevice: acceaa3502f9a5edd446c96a451eb200d1ac6c03
-  CapacitorFilesystem: 2267b9183bfecb9e5b8163b79685c9efb5ed0a09
-  CapacitorFileTransfer: c186efc640dcd39703c1d621ac3d4de8240bf7c0
-  CapacitorFileViewer: 1b48fe864811229ea55dbdc7e804791b93d3f797
-  CapacitorHaptics: d17da7dd984cae34111b3f097ccd3e21f9feec62
-  CapacitorKeyboard: 45cae3956a6f4fb1753f9a4df3e884aeaed8fe82
-  CapacitorScreenOrientation: 737ad5b53c7b152c25f75aad1b4759cd86748616
-  CapacitorScreenReader: c4f4f3e28309daa4f8728551906525cbb1d2b329
-  CapacitorSplashScreen: 03d04ffe57d5b619cfc162efc7415a965c92cc3f
-  CapacitorStatusBar: 4bf126c3c01dbaca8a4e416a29c4899cf91d0626
-  CordovaPlugins: 2ce67ef2b09c9be5dca0c6208b7569674c07083e
+  Capacitor: 59aea4e8bd98b24b798919b4c55ae90c6ded1b0d
+  CapacitorApp: 9fd99482b6536ddf1a54721ce678145fc7fa3418
+  CapacitorBarcodeScanner: f88fd4357624131dc516b6068638248ebaa05c4d
+  CapacitorBrowser: 553fcb154526484a5d12efc38093d3f781cb6a82
+  CapacitorCordova: 5bec5648cbd09a176ce34ce5e7b6cdabb2c8a327
+  CapacitorDevice: e5599fa82274e59220170995826a16095ad20c40
+  CapacitorFilesystem: 8ad396fd0d680c15d018577f3d92dc1397f477de
+  CapacitorFileTransfer: cd2506f5a7abde7f7c13882c459e2e6a6b73630b
+  CapacitorFileViewer: 51f5aeacf075ab850beeb51352105d4e7ddb54ea
+  CapacitorHaptics: 4e1e84c2b74fb5918e403fb8f0e73a07d05937df
+  CapacitorKeyboard: b7df6f45f1072c292d7de8688aa98b9b266b37fe
+  CapacitorScreenOrientation: 07503c9d633377427f1e122449b06b1dbc992d10
+  CapacitorScreenReader: 4faf73361fd8564c6a288050a585ec2dc2a16bc4
+  CapacitorSplashScreen: 120117d1b2264bba31a6e6f998f51e510144dd12
+  CapacitorStatusBar: 40bdc21352ecc617ec71c45ea06d669cdd2da8df
+  CordovaPlugins: 329d6d84eb6e23b396cc749dee598d25b1efc79e
   EpocCapacitorZip: c8da1d5ed39d45cad7d627f95ad6672ef69d3652
-  IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
-  IONFileTransferLib: b268561ab0ba7f386eea228c4986b55ba0146ca9
-  IONFileViewerLib: 574758ebcaa4b1543669b1c9708f1970e1172b29
-  OSBarcodeLib: 57987d2eb1f916f701f4554e20e349b3cb83f023
+  IONFilesystemLib: e6610c2b260d15e4b9cb9d5e37a87095479b669e
+  IONFileTransferLib: addbbf50405c163dcd74a7b1bd8c6f9302342be2
+  IONFileViewerLib: 834a41ff8581ca18cb02eb45f76a7dcc853cf3d9
+  OSBarcodeLib: e749f578530593d2e4ea3a2096fecb953fe7a943
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
 
-PODFILE CHECKSUM: db284a95a55a996e30c38d2021a48f0ddf7783b3
+PODFILE CHECKSUM: 0108e642ad51d4fd6987afda4515c57155bbbaa9
 
 COCOAPODS: 1.16.2

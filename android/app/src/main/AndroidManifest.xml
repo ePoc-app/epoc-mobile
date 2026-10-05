@@ -15,7 +15,7 @@
         <activity
             android:exported="true"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
             android:name="fr.inria.epoc.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBarLaunch"
