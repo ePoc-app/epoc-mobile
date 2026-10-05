@@ -86,9 +86,7 @@ function setProgress() {
 
 function updateChapterAssessmentStatus(chapter: Chapter) {
     chapter.assessmentDone =
-        chapter.assessments?.every((uid) => {
-            isAssessmentCompleted(uid);
-        }) ?? false;
+        chapter.assessments?.every((uid) => isAssessmentCompleted(uid)) ?? false;
 }
 
 function updateChapterOpenedStatus(chapter: Chapter, chapterId: string) {
