@@ -99,6 +99,8 @@
     "CHAPTERS": "Modulo | Moduli",
     "MIN_MODULE": "min",
     "OBJECTIVES": "Obiettivo | Obiettivi",
+    "LICENSE": "Licenza",
+    "NO_LICENSE": "Nessuna licenza",
     "PREREQUISITES": "Prerequisiti",
     "RESUME": "Sommario",
     "AUTHORS": "Crediti",
@@ -122,7 +124,8 @@
   "LICENSE_MODAL": {
     "HEADER": "Licenza",
     "MESSAGE": "Condizioni d'uso per i contenuti ePoc <strong>\"{epoc}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza <a href=\"{licenseUrl}\" title=\"Link alla licenza\" target=\"_blank\">{licenseName}</a>. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{epoc}\"</strong>, pubblicato con licenza {licenseName} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>",
-    "MESSAGE_WITHOUT_LINK": "Condizioni d'uso per i contenuti ePoc <strong>\"{epoc}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza {licenseName}. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{epoc}\"</strong>, pubblicato con licenza {licenseName} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a> "
+    "MESSAGE_WITHOUT_LINK": "Condizioni d'uso per i contenuti ePoc <strong>\"{epoc}\"</strong>:<br/><br/>Salvo diversa indicazione, le risorse contenute in questo ePoc sono distribuite con licenza {licenseName}. <br/><br/>Se si utilizzano contenuti ePoc, ecco l'attribuzione da aggiungere in base all'utilizzo:<br/>Credito: ePoc <strong>\"{epoc}\"</strong>, pubblicato con licenza {licenseName} nell'applicazione <a href=\"https://epoc.inria.fr/\" title=\"Link al sito ePoc\" target=\"_blank\">https://epoc.inria.fr/</a> ",
+    "MESSAGE_NO_LICENSE": "Non è stata indicata alcuna licenza per l'ePoc <strong>\"{epoc}\"</strong>.<br/><br/>Non siamo in grado di determinare le condizioni di utilizzo di questo contenuto. Per saperne di più, ti consigliamo di contattare direttamente l'autore o l'editore di questo ePoc."
   },
   "COMMENT_MODAL": {
     "HEADER": "Lascia un commento",

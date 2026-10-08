@@ -18,9 +18,8 @@ import {
     ellipsisHorizontal,
     checkmarkOutline,
     arrowForwardOutline,
-    readerOutline,
-    cubeOutline,
     timeOutline,
+    receiptOutline,
     cloudDownloadOutline,
     syncOutline,
     cogOutline,
@@ -32,6 +31,7 @@ import { ref, computed } from 'vue';
 import VideoPlayer from '@/components/VideoPlayer.vue';
 import { useLocalEpocsStore } from '@/stores/localEpocsStore';
 import { Capacitor } from '@capacitor/core';
+import { displayLicence } from '@/utils/app';
 
 const { t } = useI18n();
 
@@ -155,16 +155,10 @@ onIonViewWillEnter(() => {
                 </div>
 
                 <div class="epoc-specs">
-                    <div class="epoc-spec">
-                        <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="readerOutline"></ion-icon></div>
+                    <div class="epoc-spec" v-if="epoc.objectives && epoc.objectives.length > 0">
+                        <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="checkmarkOutline"></ion-icon></div>
                         <div class="epoc-spec-value">
-                            {{ epoc.chaptersCount }} {{ t('OVERVIEW_PAGE.CHAPTERS', epoc.chaptersCount) }}
-                        </div>
-                    </div>
-                    <div class="epoc-spec">
-                        <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="cubeOutline"></ion-icon></div>
-                        <div class="epoc-spec-value">
-                            {{ epoc.assessmentsCount }} {{ t('OVERVIEW_PAGE.ACTIVITIES', epoc.assessmentsCount) }}
+                            {{ epoc.objectives.length }} {{ t('OVERVIEW_PAGE.OBJECTIVES', epoc.objectives.length) }}
                         </div>
                     </div>
                     <div class="epoc-spec">
@@ -177,6 +171,12 @@ onIonViewWillEnter(() => {
                       >
                         {{ epoc.duration || 60 }} {{ t('OVERVIEW_PAGE.MIN_MODULE') }}
                       </div>
+                    </div>
+                    <div class="epoc-spec epoc-spec-clickable" role="button" :aria-label="t('OVERVIEW_PAGE.LICENSE')" @click="displayLicence(epoc)">
+                        <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="receiptOutline"></ion-icon></div>
+                        <div class="epoc-spec-value">
+                            {{ epoc.license?.name || t('OVERVIEW_PAGE.NO_LICENSE') }}
+                        </div>
                     </div>
                 </div>
 

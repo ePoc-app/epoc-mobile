@@ -99,6 +99,8 @@
     "CHAPTERS": "Módulo | Módulos",
     "MIN_MODULE": "min",
     "OBJECTIVES": "Objetivo | Objetivos",
+    "LICENSE": "Licencia",
+    "NO_LICENSE": "Sin licencia",
     "PREREQUISITES": "Prerrequisitos",
     "RESUME": "Resumen",
     "AUTHORS": "Créditos",
@@ -122,7 +124,8 @@
   "LICENSE_MODAL": {
     "HEADER": "Licencia",
     "MESSAGE": "Condiciones de uso para el contenido de ePoc <strong>{epoc}</strong>:<br/><br/>Salvo que se indique lo contrario, los recursos de este ePoc se distribuyen bajo la licencia <a href=\"{licenseUrl}\" title=\"Enlace a la licencia\" target=\"_blank\">{licenseName}</a>. <br/><br/>Si estás utilizando contenido de ePoc, aquí tienes la atribución que debes añadir según el uso:<br/>Crédito: ePoc <strong>{epoc}</strong>, publicado bajo la licencia {licenseName} en la aplicación <a href=\"https://epoc.inria.fr/\" title=\"Enlace al sitio de ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>",
-    "MESSAGE_WITHOUT_LINK": "Condiciones de uso para el contenido de ePoc <strong>{epoc}</strong>:<br/><br/>Salvo que se indique lo contrario, los recursos de este ePoc se distribuyen bajo la licencia {licenseName}. <br/><br/>Si estás utilizando contenido de ePoc, aquí tienes la atribución que debes añadir según el uso:<br/>Crédito: ePoc <strong>{epoc}</strong>, publicado bajo la licencia {licenseName} en la aplicación <a href=\"https://epoc.inria.fr/\" title=\"Enlace al sitio de ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>"
+    "MESSAGE_WITHOUT_LINK": "Condiciones de uso para el contenido de ePoc <strong>{epoc}</strong>:<br/><br/>Salvo que se indique lo contrario, los recursos de este ePoc se distribuyen bajo la licencia {licenseName}. <br/><br/>Si estás utilizando contenido de ePoc, aquí tienes la atribución que debes añadir según el uso:<br/>Crédito: ePoc <strong>{epoc}</strong>, publicado bajo la licencia {licenseName} en la aplicación <a href=\"https://epoc.inria.fr/\" title=\"Enlace al sitio de ePoc\" target=\"_blank\">https://epoc.inria.fr/</a>",
+    "MESSAGE_NO_LICENSE": "No se ha indicado ninguna licencia para el ePoc <strong>\"{epoc}\"</strong>.<br/><br/>No podemos determinar las condiciones de uso de este contenido. Para más información, le recomendamos que se ponga en contacto directamente con el autor o el editor de este ePoc."
   },
   "COMMENT_MODAL": {
     "HEADER": "Dejar un comentario",

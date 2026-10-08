@@ -19,10 +19,8 @@ export async function displayLicence(epoc: EpocMetadata) {
             });
         }
     } else {
-        message = i18n.global.t('LICENSE_MODAL.MESSAGE', {
+        message = i18n.global.t('LICENSE_MODAL.MESSAGE_NO_LICENSE', {
             epoc: epoc.title,
-            licenseName: 'CC-BY 4.0',
-            licenseUrl: 'https://creativecommons.org/licenses/by/4.0/deed',
         });
     }
 
