@@ -150,7 +150,7 @@ export const useEpocStore = defineStore('epoc', () => {
                 text: i18n.global.t('FLOATING_MENU.GENERAL'),
                 cssClass: 'separator',
             },
-            ...(!isPreview
+            ...(!isPreview.value
                 ? [
                     {
                         text: i18n.global.t('FLOATING_MENU.HOME'),
