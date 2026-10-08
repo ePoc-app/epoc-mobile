@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {IonApp, IonContent, IonMenu, IonRouterOutlet, IonSplitPane} from '@ionic/vue';
 import WebSidebar from './components/WebSidebar.vue';
+import DetachedAudioPlayer from './components/DetachedAudioPlayer.vue';
+import DetachedVideoPlayer from './components/DetachedVideoPlayer.vue';
 import {StatusBar, Style} from '@capacitor/status-bar';
 import {register} from 'swiper/element/bundle';
 import {useSettingsStore} from './stores/settingsStore';
@@ -86,13 +88,15 @@ watch(
 </script>
 <template>
     <ion-app>
+        <DetachedAudioPlayer />
+        <DetachedVideoPlayer />
         <ion-split-pane content-id="main-content" when="(min-width: 900px)">
             <ion-menu content-id="main-content" class="web-nav-menu" :swipe-gesture="false">
                 <ion-content>
                     <WebSidebar />
                 </ion-content>
             </ion-menu>
-            <ion-router-outlet id="main-content"></ion-router-outlet>
+            <ion-router-outlet id="main-content" class="detached-offset-top"></ion-router-outlet>
         </ion-split-pane>
     </ion-app>
 </template>
@@ -101,5 +105,9 @@ watch(
   ion-menu {
     max-width: 300px;
     --border: 1px solid var(--ion-color-item);
+  }
+
+  .detached-offset-top {
+    top: var(--detached-audio-player-offset, 0px);
   }
 </style>

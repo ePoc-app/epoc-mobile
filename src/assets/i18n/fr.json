@@ -194,7 +194,8 @@
     },
     "VIDEO": {
       "SUMMARY": "Résumé",
-      "NO_SUMMARY": "Pas de résumé."
+      "NO_SUMMARY": "Pas de résumé.",
+      "DETACHED": "Lecture en cours dans le lecteur détaché"
     },
     "TRANSCRIPT": {
       "TRANSCRIPT": "Transcript",

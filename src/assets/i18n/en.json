@@ -194,7 +194,8 @@
     },
     "VIDEO": {
       "SUMMARY": "Summary",
-      "NO_SUMMARY": "No summary."
+      "NO_SUMMARY": "No summary.",
+      "DETACHED": "Playing in the detached player"
     },
     "TRANSCRIPT": {
       "TRANSCRIPT": "Transcript",

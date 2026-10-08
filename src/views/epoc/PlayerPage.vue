@@ -5,9 +5,9 @@ import {
     IonIcon,
     IonPage,
     IonProgressBar,
-    onIonViewWillLeave,
     IonSpinner,
     onIonViewDidEnter,
+    onIonViewWillLeave,
 } from '@ionic/vue';
 import { computed, ref, watch } from 'vue';
 import { useEpocStore } from '@/stores/epocStore';
@@ -178,8 +178,10 @@ onIonViewDidEnter(async () => {
     updateScreenReaderFocus();
 });
 
+// Leaving the page (chapter change, TOC, home, ...): a video already in PiP keeps
+// playing, anything else gets paused; a playing audio surfaces the mini player.
 onIonViewWillLeave(() => {
-    stopAllMedia();
+    mediaPlayerStore.handleMediaOnNavigate();
 });
 
 function initializeData() {
@@ -235,7 +237,7 @@ function navigateToContent(targetContentId: uid, duration?: number) {
 }
 
 function handleSlideChange() {
-    stopAllMedia();
+    mediaPlayerStore.handleMediaOnNavigate();
 
     const newIndex = swiperInstance.value?.activeIndex || 0;
     currentPage.value = newIndex;
@@ -308,11 +310,6 @@ function updateScreenReaderFocus() {
     ) as HTMLElement;
 
     readerElement?.focus();
-}
-
-function stopAllMedia() {
-    const mediaElements = document.querySelectorAll('audio, video') as NodeListOf<HTMLMediaElement>;
-    mediaElements.forEach((media) => media.pause());
 }
 </script>
 

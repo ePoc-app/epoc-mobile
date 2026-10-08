@@ -194,7 +194,8 @@
     },
     "VIDEO": {
       "SUMMARY": "Resumen",
-      "NO_SUMMARY": "Sin resumen."
+      "NO_SUMMARY": "Sin resumen.",
+      "DETACHED": "Reproduciéndose en el reproductor independiente"
     },
     "TRANSCRIPT": {
       "TRANSCRIPT": "Transcripción",

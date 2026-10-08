@@ -194,7 +194,8 @@
     },
     "VIDEO": {
       "SUMMARY": "Sommario",
-      "NO_SUMMARY": "Nessun sommario."
+      "NO_SUMMARY": "Nessun sommario.",
+      "DETACHED": "Riproduzione in corso nel player staccato"
     },
     "TRANSCRIPT": {
       "TRANSCRIPT": "Trascrizione",

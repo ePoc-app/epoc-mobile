@@ -194,7 +194,8 @@
     },
     "VIDEO": {
       "SUMMARY": "Zusammenfassung",
-      "NO_SUMMARY": "Keine Zusammenfassung."
+      "NO_SUMMARY": "Keine Zusammenfassung.",
+      "DETACHED": "Wiedergabe im abgedockten Player"
     },
     "TRANSCRIPT": {
       "TRANSCRIPT": "Transkript",

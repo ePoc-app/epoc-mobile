@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { IonIcon } from '@ionic/vue';
-import { ref, onMounted, onUnmounted, PropType } from 'vue';
+import { ref, computed, onMounted, onUnmounted, PropType } from 'vue';
 import { createGesture } from '@ionic/vue';
 import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 import { PlayPauseEvent } from '@/types/contents/media';
-import {pause, play as playIcon} from 'ionicons/icons';
+import { pause, play as playIcon, copyOutline } from 'ionicons/icons';
 import playSvg from '@/assets/icon/play.svg?url';
 
 // Props
@@ -49,9 +49,17 @@ const audioCtx = ref<AudioContext | null>(null);
 const analyser = ref<AnalyserNode | null>(null);
 const canvasCtx = ref<CanvasRenderingContext2D | null>(null);
 
+const isDetached = computed(() => {
+  return (
+    !!audio.value &&
+    mediaPlayerStore.activeMediaElement === mediaPlayerStore.audioDetachedElement &&
+    mediaPlayerStore.originalMediaElement === audio.value
+  );
+});
+
 // Méthodes
 const play = () => {
-  if (!audio.value) return;
+  if (!audio.value || isDetached.value) return;
   if (audio.value.paused) {
     audio.value.play();
     if (audioCtx.value?.state === 'suspended') {
@@ -63,7 +71,7 @@ const play = () => {
 };
 
 const jump = (delta: number) => {
-  if (!audio.value) return;
+  if (!audio.value || isDetached.value) return;
   audio.value.currentTime += delta;
   audio.value.play();
 };
@@ -77,6 +85,19 @@ const seek = (event: MouseEvent) => {
   const rect = timeline.getBoundingClientRect();
   const progressValue = (event.clientX - rect.left) / rect.width;
   audio.value.currentTime = Math.round(progressValue * audio.value.duration);
+};
+
+const toggleDetachedPlayer = async (event: Event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!audio.value) return;
+
+  if (isDetached.value) {
+    await mediaPlayerStore.stopActiveMedia();
+    return;
+  }
+
+  await mediaPlayerStore.moveAudioToDetached(audio.value);
 };
 
 const presentToast = async (text: string) => {
@@ -141,6 +162,7 @@ onMounted(() => {
   audio.value.addEventListener('play', () => {
     hasPlayed.value = true;
     playing.value = true;
+    mediaPlayerStore.setActiveMedia(audio.value!, props.title || null);
     mediaPlayerStore.setPlayerState(playerId, { isPlaying: true, currentTime: audio.value?.currentTime || 0 });
     emit('playPause', { playerId, isPlaying: true });
   });
@@ -194,6 +216,7 @@ onMounted(() => {
 // Nettoyage
 onUnmounted(() => {
   mediaPlayerStore.unregisterPlayer(playerId);
+  if (audio.value) mediaPlayerStore.clearActiveMedia(audio.value);
   if (audioCtx.value?.state !== 'closed') {
     audioCtx.value?.close();
   }
@@ -205,11 +228,15 @@ onUnmounted(() => {
     <div
         aria-hidden="true"
         class="audio-container"
-        :class="{ playing }"
+        :class="{ playing, detached: isDetached }"
         @click="play"
     >
       <audio ref="audio" :src="src" />
-      <div class="visualizer">
+      <div v-if="isDetached" class="detached-overlay">
+        <ion-icon :icon="copyOutline"></ion-icon>
+        <p>{{ $t('PLAYER.VIDEO.DETACHED') }}</p>
+      </div>
+      <div v-else class="visualizer">
         <div v-if="!playing" class="play-overlay">
           <ion-icon :src="playSvg" />
         </div>
@@ -235,7 +262,8 @@ onUnmounted(() => {
       </div>
     </div>
     <div v-if="src && controls.show" class="audio-actions">
-      <div v-if="controls.playbutton" class="audio-actions-center">
+      <div class="audio-actions-left"></div>
+      <div v-if="controls.playbutton && !isDetached" class="audio-actions-center">
         <button class="audio-action" aria-label="-10s" @click="jump(-10)">
           <span>-10</span>
         </button>
@@ -244,6 +272,16 @@ onUnmounted(() => {
         </button>
         <button class="audio-action" aria-label="+10s" @click="jump(10)">
           <span>+10</span>
+        </button>
+      </div>
+      <div class="audio-actions-right">
+        <button
+            class="audio-action"
+            :class="{ active: isDetached }"
+            aria-label="Lecteur détaché"
+            @click="toggleDetachedPlayer"
+        >
+          <ion-icon :icon="copyOutline"></ion-icon>
         </button>
       </div>
     </div>
@@ -284,15 +322,47 @@ canvas {
   transform: translate(-50%, -50%);
 }
 
+.audio-container.detached {
+  cursor: default;
+}
+
+.detached-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  padding: 1rem;
+  text-align: center;
+  color: white;
+  background: var(--ion-color-inria-blue);
+}
+
 .audio-actions {
   display: flex;
+  align-items: center;
   font-size: 25px;
-  justify-content: center;
-  padding: 10px 16px;
+  padding: 10px 0;
+}
+
+.audio-actions-left,
+.audio-actions-right {
+  display: flex;
+  flex: 0 0 auto;
+  /* reserve the same width on both sides so the center group stays centered */
+  min-width: 40px;
+}
+
+.audio-actions-right {
+  justify-content: flex-end;
 }
 
 .audio-actions-center {
+  flex: 1 1 auto;
   display: flex;
+  justify-content: center;
   text-align: center;
 }
 
@@ -309,6 +379,11 @@ canvas {
   text-align: center;
   line-height: 35px;
   font-size: 0.8rem;
+}
+
+.audio-action.active {
+  background: var(--ion-color-inria);
+  color: white;
 }
 
 .audio-action ion-icon {

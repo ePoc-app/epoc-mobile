@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IonIcon, IonSelect, IonSelectOption, IonItem, IonLabel, toastController, createGesture } from '@ionic/vue';
-import { ref, onMounted, onUnmounted, PropType } from 'vue';
-import { logoClosedCaptioning, pause, play as playIcon, expand } from 'ionicons/icons';
+import { ref, computed, onMounted, onUnmounted, PropType } from 'vue';
+import { logoClosedCaptioning, pause, play as playIcon, expand, copyOutline } from 'ionicons/icons';
 import { useMediaPlayerStore } from '@/stores/mediaPlayerStore';
 import { PlayPauseEvent } from '@/types/contents/media';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
@@ -55,10 +55,19 @@ const hasPlayed = ref(false);
 const playing = ref(false);
 const trackSelected = ref('none');
 const progress = ref(0);
+const pipSupported = ref(false);
+
+const isDetached = computed(() => {
+    return (
+        !!video.value &&
+        mediaPlayerStore.activeMediaElement === mediaPlayerStore.pipDetachedElement &&
+        mediaPlayerStore.originalMediaElement === video.value
+    );
+});
 
 // Méthodes
 const play = () => {
-    if (!video.value) return;
+    if (!video.value || isDetached.value) return;
     if (video.value.paused) {
         video.value.play();
     } else {
@@ -67,7 +76,7 @@ const play = () => {
 };
 
 const jump = (delta: number) => {
-    if (!video.value) return;
+    if (!video.value || isDetached.value) return;
     video.value.currentTime += delta;
     video.value.play();
 };
@@ -117,6 +126,41 @@ const changeSubtitles = (event: CustomEvent) => {
     trackSelected.value = value;
 };
 
+const supportsPip = () => {
+    if (!video.value) return false;
+    const el = video.value as HTMLVideoElement & { webkitSupportsPresentationMode?: (mode: string) => boolean };
+    return !!document.pictureInPictureEnabled || !!el.webkitSupportsPresentationMode?.('picture-in-picture');
+};
+
+const pip = async (event: Event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!video.value) return;
+
+    const host = mediaPlayerStore.pipDetachedElement as
+        | (HTMLVideoElement & { webkitPresentationMode?: string; webkitSetPresentationMode?: (mode: string) => void })
+        | null;
+
+    if (document.pictureInPictureElement === video.value || document.pictureInPictureElement === host) {
+        try {
+            await document.exitPictureInPicture();
+        } catch {
+            // nothing to exit
+        }
+        return;
+    }
+
+    if (host?.webkitPresentationMode === 'picture-in-picture') {
+        host.webkitSetPresentationMode?.('inline');
+        return;
+    }
+
+    const entered = await mediaPlayerStore.enterPip(video.value);
+    if (!entered) {
+        presentToast('Picture in Picture not supported on your phone');
+    }
+};
+
 const presentToast = async (text: string) => {
     const toast = await toastController.create({
         position: 'top',
@@ -147,11 +191,13 @@ onMounted(() => {
 
     video.value.addEventListener('loadedmetadata', () => {
         mediaPlayerStore.registerPlayer(playerId, video.value?.duration || 0);
+        pipSupported.value = supportsPip();
     });
 
     video.value.addEventListener('play', () => {
         hasPlayed.value = true;
         playing.value = true;
+        mediaPlayerStore.setActiveMedia(video.value!, props.title || null);
         mediaPlayerStore.setPlayerState(playerId, { isPlaying: true, currentTime: video.value?.currentTime || 0 });
         emit('playPause', { isPlaying: true, playerId });
     });
@@ -228,6 +274,7 @@ onMounted(() => {
 // Nettoyage
 onUnmounted(() => {
     mediaPlayerStore.unregisterPlayer(playerId);
+    if (video.value) mediaPlayerStore.clearActiveMedia(video.value);
 
     video.value?.removeEventListener('fullscreenchange', handleFullScreenChange);
     video.value?.removeEventListener('webkitfullscreenchange', handleFullScreenChange);
@@ -236,8 +283,8 @@ onUnmounted(() => {
 
 <template>
     <div class="video-player">
-        <div aria-hidden="true" class="video-container" :class="{ playing }" @click="play">
-            <video ref="video" disablePictureInPicture playsinline preload="metadata" :src="src">
+        <div aria-hidden="true" class="video-container" :class="{ playing, detached: isDetached }" @click="play">
+            <video ref="video" playsinline preload="metadata" :src="src">
                 <track
                     v-for="sub in subtitles"
                     :key="sub.lang"
@@ -247,41 +294,46 @@ onUnmounted(() => {
                     :src="sub.src"
                 />
             </video>
-            <div v-if="!hasPlayed" class="poster">
-                <h4 class="title">{{ title }}</h4>
-                <img v-if="poster" :src="poster" />
+            <div v-if="isDetached" class="detached-overlay">
+                <ion-icon :icon="copyOutline"></ion-icon>
+                <p>{{ $t('PLAYER.VIDEO.DETACHED') }}</p>
             </div>
-            <div v-if="src">
-                <div class="video-play-overlay">
-                    <ion-icon :src="playSvg"></ion-icon>
+            <template v-else>
+                <div v-if="!hasPlayed" class="poster">
+                    <h4 class="title">{{ title }}</h4>
+                    <img v-if="poster" :src="poster" />
                 </div>
-                <div v-if="controls.timeline" class="video-timeline" @click="seek">
-                    <div
-                        class="video-timeline-progress"
-                        :style="{ width: progress + '%' }"
-                        ref="timelineProgress"
-                    ></div>
-                    <div class="video-timeline-cursor" :style="{ left: progress + '%' }" ref="timelineCursor"></div>
+                <div v-if="src">
+                    <div class="video-play-overlay">
+                        <ion-icon :src="playSvg"></ion-icon>
+                    </div>
+                    <div v-if="controls.timeline" class="video-timeline" @click="seek">
+                        <div
+                            class="video-timeline-progress"
+                            :style="{ width: progress + '%' }"
+                            ref="timelineProgress"
+                        ></div>
+                        <div class="video-timeline-cursor" :style="{ left: progress + '%' }" ref="timelineCursor"></div>
+                    </div>
+                    <div v-if="controls.overlay" class="video-overlay-controls">
+                        <ion-icon v-if="controls.subtitles && subtitles && subtitles.length > 0" :icon="logoClosedCaptioning" @click="captions"></ion-icon>
+                        <ion-icon v-if="pipSupported" :icon="copyOutline" aria-label="Image dans l'image" @click="pip"></ion-icon>
+                        <ion-icon :icon="expand" @click="fullscreen"></ion-icon>
+                    </div>
                 </div>
-                <div v-if="controls.overlay" class="video-overlay-controls">
-                    <ion-icon
-                        v-if="controls.subtitles && subtitles && subtitles.length > 0"
-                        :icon="logoClosedCaptioning" @click="captions"></ion-icon>
-                    <ion-icon :icon="expand" @click="fullscreen"></ion-icon>
-                </div>
-            </div>
+            </template>
         </div>
         <div v-if="src && controls.show" class="video-actions">
             <div class="video-actions-left">
                 <button
-                    v-if="controls.subtitles && subtitles && subtitles.length > 0"
+                    v-if="!isDetached && controls.subtitles && subtitles && subtitles.length > 0"
                     class="video-action"
                     @click="captions"
                 >
                     <ion-icon :icon="logoClosedCaptioning"></ion-icon>
                 </button>
             </div>
-            <div v-if="controls.playbutton" class="video-actions-center">
+            <div v-if="controls.playbutton && !isDetached" class="video-actions-center">
                 <button class="video-action" aria-label="-10s" @click="jump(-10)">-10</button>
                 <button class="video-action" aria-label="Lancer la lecture" @click="play">
                     <ion-icon :icon="playing ? pause : playIcon"></ion-icon>
@@ -289,7 +341,15 @@ onUnmounted(() => {
                 <button class="video-action" aria-label="+10s" @click="jump(10)">+10</button>
             </div>
             <div v-if="controls.fullscreen" class="video-actions-right">
-                <button class="video-action" aria-label="Plein écran" @click="fullscreen">
+                <button
+                    v-if="pipSupported && !isDetached"
+                    class="video-action"
+                    aria-label="Image dans l'image"
+                    @click="pip"
+                >
+                    <ion-icon :icon="copyOutline"></ion-icon>
+                </button>
+                <button v-if="!isDetached" class="video-action" aria-label="Plein écran" @click="fullscreen">
                     <ion-icon :icon="expand"></ion-icon>
                 </button>
             </div>
@@ -357,6 +417,25 @@ onUnmounted(() => {
     .video-container.playing .video-play-overlay {
         opacity: 0;
     }
+    .video-container.detached {
+        cursor: default;
+    }
+    .video-container .detached-overlay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        padding: 1rem;
+        text-align: center;
+        color: white;
+        background: var(--ion-color-inria-blue);
+    }
     .video-container .video-overlay-controls {
         position: absolute;
         bottom: 0;
@@ -389,9 +468,9 @@ onUnmounted(() => {
     }
     .video-actions {
         display: flex;
+        align-items: center;
         font-size: 25px;
-        justify-content: space-between;
-        padding: 16px;
+        padding: 10px 0;
     }
     .video-actions .video-action {
         position: relative;
@@ -406,7 +485,7 @@ onUnmounted(() => {
         text-align: center;
         line-height: 35px;
     }
-    .video-actions .video-action ion-icon {
+    .video-actions .video-action ion-icon{
         position: absolute;
         display: inline-block;
         top: 50%;
@@ -415,20 +494,27 @@ onUnmounted(() => {
         height: 50%;
         transform: translate(-50%, -50%);
     }
-    .video-actions-left {
+    .video-actions-left,
+    .video-actions-right {
         display: flex;
-        width: 30px;
+        flex: 0 0 auto;
+        gap: 5px;
+        min-width: 65px;
+    }
+    .video-actions-left {
+        justify-content: flex-start;
+    }
+    .video-actions-right {
+        justify-content: flex-end;
     }
     .video-actions-center {
+        flex: 1 1 auto;
         display: flex;
+        justify-content: center;
         text-align: center;
     }
     .video-actions-center .video-action {
         margin: 0 5px;
-    }
-    .video-actions-right {
-        display: flex;
-        width: 30px;
     }
     .video-timeline {
         position: absolute;
