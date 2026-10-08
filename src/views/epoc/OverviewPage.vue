@@ -188,6 +188,15 @@ onIonViewWillEnter(() => {
                         v-on:click="selectTab(0)"
                         :class="selectedTab === 0 ? 'selected' : ''"
                     >
+                        <span>{{ t('OVERVIEW_PAGE.RESUME') }}</span>
+                    </div>
+                    <div
+                        role="tab"
+                        :aria-selected="selectedTab === 1"
+                        class="tabs-header"
+                        v-on:click="selectTab(1)"
+                        :class="selectedTab === 1 ? 'selected' : ''"
+                    >
                         <span>{{ t('OVERVIEW_PAGE.OBJECTIVES', epoc.objectives.length) }}</span>
                     </div>
                     <div
@@ -202,15 +211,6 @@ onIonViewWillEnter(() => {
                     </div>
                     <div
                         role="tab"
-                        :aria-selected="selectedTab === 1"
-                        class="tabs-header"
-                        v-on:click="selectTab(1)"
-                        :class="selectedTab === 1 ? 'selected' : ''"
-                    >
-                        <span>{{ t('OVERVIEW_PAGE.RESUME') }}</span>
-                    </div>
-                    <div
-                        role="tab"
                         :aria-selected="selectedTab === 2"
                         class="tabs-header"
                         v-on:click="selectTab(2)"
@@ -221,6 +221,9 @@ onIonViewWillEnter(() => {
                 </div>
                 <div class="tabs">
                     <div class="tab" v-if="selectedTab === 0">
+                        <ion-text class="html-text" :innerHTML="epoc.summary"></ion-text>
+                    </div>
+                    <div class="tab" v-if="selectedTab === 1">
                         <div v-for="objective of epoc.objectives" :key="objective" class="course-objective">
                             <div class="course-objective-icon">
                                 <ion-icon aria-hidden="true" :icon="checkmarkOutline"></ion-icon>
@@ -239,9 +242,6 @@ onIonViewWillEnter(() => {
                             </div>
                             <ion-text>{{ prerequisite }}</ion-text>
                         </div>
-                    </div>
-                    <div class="tab" v-if="selectedTab === 1">
-                        <ion-text class="html-text" :innerHTML="epoc.summary"></ion-text>
                     </div>
                     <div class="tab" v-if="selectedTab === 2">
                         <div v-for="author of epoc.authors" :key="author.name" class="epoc-author">
