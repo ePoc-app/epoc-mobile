@@ -258,9 +258,9 @@ watch(
 
         if (badgeMode.value) {
             unlockedBadges.value = reading.value ? reading.value.badges : [];
-        } else {
-            setAssessmentsData();
         }
+
+        setAssessmentsData();
     },
     { immediate: true }
 );
@@ -280,7 +280,7 @@ const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
         </ion-header>
 
         <ion-content>
-            <div class="wrapper" v-if="epoc && !badgeMode && assessmentData">
+            <div class="wrapper" v-if="epoc && assessmentData">
                 <div class="title-container">
                     <div class="title-icon">
                         <ion-icon :icon="starOutline" />
@@ -293,7 +293,7 @@ const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
                     <div class="score-chart">
                         <ScoreProgress
                             :progress="(assessmentData.totalUserScore / assessmentData.totalScore) * 100"
-                            :threshold="(epoc.certificateScore / assessmentData.totalScore) * 100"
+                            :threshold="badgeMode ? undefined : (epoc.certificateScore / assessmentData.totalScore) * 100"
                             :min-label="0"
                             :max-label="assessmentData.totalScore"
                         />
@@ -301,31 +301,87 @@ const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
                 </div>
 
                 <template v-if="!epoc.certificateDisabled">
-                    <div v-if="!certificateUnlocked" class="certificate">
-                        <h5>{{ $t('PLAYER.SCORE.CONTINUE') }}</h5>
-                        <p>
-                            {{
-                                $t('PLAYER.SCORE.REMAINING', {
-                                    remaining: epoc.certificateScore - assessmentData.totalUserScore,
-                                })
-                            }}
-                        </p>
-                        <ion-button size="default" expand="block" color="medium" fill="outline" @click="getCertificate">
-                            <ion-icon :icon="downloadOutline" slot="start" />
-                            <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
-                        </ion-button>
-                    </div>
+                    <template v-if="!badgeMode">
+                        <div v-if="!certificateUnlocked" class="certificate">
+                            <h5>{{ $t('PLAYER.SCORE.CONTINUE') }}</h5>
+                            <p>
+                                {{
+                                    $t('PLAYER.SCORE.REMAINING', {
+                                        remaining: epoc.certificateScore - assessmentData.totalUserScore,
+                                    })
+                                }}
+                            </p>
+                            <ion-button
+                                size="default"
+                                expand="block"
+                                color="medium"
+                                fill="outline"
+                                @click="getCertificate"
+                            >
+                                <ion-icon :icon="downloadOutline" slot="start" />
+                                <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
+                            </ion-button>
+                        </div>
 
-                    <div v-else class="certificate success">
-                        <ion-icon class="badge" :src="badgeSvg" />
-                        <h5>{{ $t('PLAYER.SCORE.CONGRATS') }}</h5>
-                        <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
-                        <ion-button expand="block" @click="getCertificate">
-                            <ion-icon :icon="downloadOutline" slot="start" />
-                            <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
-                        </ion-button>
-                    </div>
+                        <div v-else class="certificate success">
+                            <ion-icon class="badge" :src="badgeSvg" />
+                            <h5>{{ $t('PLAYER.SCORE.CONGRATS') }}</h5>
+                            <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
+                            <ion-button expand="block" @click="getCertificate">
+                                <ion-icon :icon="downloadOutline" slot="start" />
+                                <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
+                            </ion-button>
+                        </div>
+                    </template>
+
+                    <template v-else>
+                        <div v-if="!certificateUnlocked" class="certificate flex">
+                            <div class="certificate-text">
+                                <h6>{{ $t('PLAYER.SCORE.CONTINUE') }}</h6>
+                                <p>
+                                    {{
+                                        $t('PLAYER.SCORE.BADGE_REMAINING', {
+                                            remaining: epoc.certificateBadgeCount - unlockedBadges.length,
+                                        })
+                                    }}
+                                </p>
+                            </div>
+                            <div class="certificate-badge">
+                                <BadgeComponent icon="cert-grey" grey nobg />
+                            </div>
+                        </div>
+
+                        <div v-else class="certificate flex success">
+                            <div class="certificate-text">
+                                <h6>{{ $t('PLAYER.SCORE.CONGRATS') }}</h6>
+                                <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
+                            </div>
+                            <div class="certificate-badge">
+                                <BadgeComponent icon="cert" nobg />
+                            </div>
+                            <ion-button expand="block" @click="getCertificate">
+                                <ion-icon :icon="downloadOutline" slot="start" />
+                                <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
+                            </ion-button>
+                        </div>
+                    </template>
                 </template>
+
+                <div v-if="badgeMode" class="badge-list">
+                    <div
+                        v-for="(badge, index) of denormalizedBadges"
+                        :key="index"
+                        class="badge-item"
+                        :class="{ unlocked: unlockedBadges.includes(badge.id!) }"
+                        @click="showBadgeDetail(badge)"
+                    >
+                        <BadgeComponent
+                            :title="badge.title"
+                            :icon="badge.icon"
+                            :locked="!unlockedBadges.includes(badge.id!)"
+                        />
+                    </div>
+                </div>
 
                 <div class="short-access">
                     <h4 class="short-access-label">{{ $t('PLAYER.SCORE.PTS_RECAP') }}</h4>
@@ -353,52 +409,6 @@ const denormalizedBadges = computed(() => denormalize(epoc.value!.badges));
                         </ion-note>
                         <ion-icon :icon="chevronForwardOutline" />
                     </RouterLink>
-                </div>
-            </div>
-            <div v-if="epoc && badgeMode" class="wrapper">
-                <div v-if="!certificateUnlocked" class="certificate flex">
-                    <div class="certificate-text">
-                        <h6>{{ $t('PLAYER.SCORE.CONTINUE') }}</h6>
-                        <p>
-                            {{
-                                $t('PLAYER.SCORE.BADGE_REMAINING', {
-                                    remaining: epoc.certificateBadgeCount - unlockedBadges.length,
-                                })
-                            }}
-                        </p>
-                    </div>
-                    <div class="certificate-badge">
-                        <BadgeComponent icon="cert-grey" grey nobg />
-                    </div>
-                </div>
-
-                <div v-else class="certificate flex success">
-                    <div class="certificate-text">
-                        <h6>{{ $t('PLAYER.SCORE.CONGRATS') }}</h6>
-                        <p>{{ $t('PLAYER.SCORE.CERTIFICATE_WIN') }}</p>
-                    </div>
-                    <div class="certificate-badge">
-                        <BadgeComponent icon="cert" nobg />
-                    </div>
-                    <ion-button expand="block" @click="getCertificate">
-                        <ion-icon :icon="downloadOutline" slot="start" />
-                        <span>{{ $t('PLAYER.SCORE.GET_CERTIFICATE') }}</span>
-                    </ion-button>
-                </div>
-                <div class="badge-list">
-                    <div
-                        v-for="(badge, index) of denormalizedBadges"
-                        :key="index"
-                        class="badge-item"
-                        :class="{ unlocked: unlockedBadges.includes(badge.id!) }"
-                        @click="showBadgeDetail(badge)"
-                    >
-                        <BadgeComponent
-                            :title="badge.title"
-                            :icon="badge.icon"
-                            :locked="!unlockedBadges.includes(badge.id!)"
-                        />
-                    </div>
                 </div>
             </div>
         </ion-content>
