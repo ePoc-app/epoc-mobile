@@ -10,7 +10,7 @@ build:
     - apk add --no-cache zip
   script:
   - npm ci
-  - npm run build-preview # build preview for editor
+  - npm run build-preview -- -- --base=./ # build preview for editor (relative base, required for epoc-editor's local preview and for the standalone/SCORM export reusing the same artifact)
   - cd dist && rm -rf ./assets/demo && zip -r ../preview.zip ./* && cd - # zip editor preview
   artifacts:
     expire_in: 1 week
