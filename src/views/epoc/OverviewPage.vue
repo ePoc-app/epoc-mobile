@@ -25,7 +25,7 @@ import {
     cogOutline,
 } from 'ionicons/icons';
 import { useLibraryStore } from '@/stores/libraryStore';
-import { EpocLibrary } from '@/types/epoc';
+import { EpocCollection, EpocLibrary } from '@/types/epoc';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
 import VideoPlayer from '@/components/VideoPlayer.vue';
@@ -66,11 +66,15 @@ const getEpoc = (): EpocLibrary | undefined => {
 };
 
 const getEpocFromCollection = (collectionId: string, epocId: string): EpocLibrary | undefined => {
-    const collections = { ...libraryStore.customCollections, ...libraryStore.officialCollections };
-    const collection = collections[collectionId];
+    const collection = getCollection(collectionId);
     if (collection && collection.ePocs[epocId]) {
         return collection.ePocs[epocId];
     }
+};
+
+const getCollection = (collectionId: string): EpocCollection | undefined => {
+    const collections = { ...libraryStore.customCollections, ...libraryStore.officialCollections };
+    return collections[collectionId];
 };
 
 const selectTab = (index: number) => {
@@ -86,6 +90,11 @@ const pathToUrl = (path: string) => {
 };
 
 const epoc = computed<EpocLibrary | undefined>(() => getEpoc());
+const collectionLicense = computed(() => {
+    if (!route.params.libraryId || route.params.libraryId === 'local-epocs') return undefined;
+
+    return getCollection(route.params.libraryId.toString())?.licence;
+});
 const aspectRatio = ref('16/9');
 
 const teaserSubtitles = computed(() => {
@@ -172,10 +181,15 @@ onIonViewWillEnter(() => {
                         {{ epoc.duration || 60 }} {{ t('OVERVIEW_PAGE.MIN_MODULE') }}
                       </div>
                     </div>
-                    <div class="epoc-spec epoc-spec-clickable" role="button" :aria-label="t('OVERVIEW_PAGE.LICENSE')" @click="displayLicence(epoc)">
+                    <div
+                        class="epoc-spec epoc-spec-clickable"
+                        role="button"
+                        :aria-label="t('OVERVIEW_PAGE.LICENSE')"
+                        @click="displayLicence(epoc, collectionLicense)"
+                    >
                         <div class="epoc-spec-icon"><ion-icon aria-hidden="true" :icon="receiptOutline"></ion-icon></div>
                         <div class="epoc-spec-value">
-                            {{ epoc.license?.name || t('OVERVIEW_PAGE.NO_LICENSE') }}
+                            {{ epoc.license?.name || collectionLicense?.name || t('OVERVIEW_PAGE.NO_LICENSE') }}
                         </div>
                     </div>
                 </div>

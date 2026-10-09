@@ -96,7 +96,7 @@ const aboutEpocLink = computed(() => {
                 </RouterLink>
                 <button
                     class="sidebar-nav-item"
-                    @click="displayLicence(epoc)"
+                    @click="displayLicence(epoc, libraryStore.getCollectionLicense(epoc.id))"
                 >
                     <ion-icon :icon="receiptOutline" aria-hidden="true"></ion-icon>
                     <span>{{ t('FLOATING_MENU.LICENSE') }}</span>

@@ -224,7 +224,7 @@ export const useEpocStore = defineStore('epoc', () => {
                 handler: async () => {
                     if (!_epoc.value) return;
 
-                    await displayLicence(_epoc.value);
+                    await displayLicence(_epoc.value, libraryStore.getCollectionLicense(_epoc.value.id));
                 },
             },
             {

@@ -6,6 +6,7 @@ import type {ePocCollection} from '@epoc/epoc-types/dist/v1/collection';
 
 export type {EpocMetadata} from '@epoc/epoc-types/dist/v1'
 export type {Publisher} from '@epoc/epoc-types/dist/v1/publisher';
+export type {License} from '@epoc/epoc-types/dist/v1/license';
 
 export interface CustomLibrary {
     name: string;

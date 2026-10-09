@@ -12,7 +12,7 @@ import {
 import { useRouter } from 'vue-router';
 import { useSettingsStore } from './settingsStore';
 import { useReadingStore } from './readingStore';
-import type { EpocCollection, EpocLibrary, EpocLibraryState, EpocMetadata, Publisher } from '@/types/epoc';
+import type { EpocCollection, EpocLibrary, EpocLibraryState, EpocMetadata, License, Publisher } from '@/types/epoc';
 import type { Reading } from '@/types/reading';
 import { deleteFolder, download, unzip } from '@/utils/file';
 import { readEpocContent } from '@/utils/epocService';
@@ -151,6 +151,13 @@ export const useLibraryStore = defineStore('library', () => {
         return collectionId;
     }
 
+    function getCollectionLicense(epocId: string): License | undefined {
+        if (epocId.startsWith('local-')) return undefined;
+
+        const collectionId = findCollectionByEpocId(epocId);
+        return collectionId ? collections.value[collectionId]?.licence : undefined;
+    }
+
     function updateEpocCollectionState(
         epocId: string,
         {
@@ -253,7 +260,7 @@ export const useLibraryStore = defineStore('library', () => {
                 text: i18n.global.t('FLOATING_MENU.LICENSE'),
                 icon: receiptOutline,
                 handler: async () => {
-                    await displayLicence(epoc);
+                    await displayLicence(epoc, collections.value[libraryId]?.licence);
                 },
             },
             ...(epoc.updateAvailable
@@ -402,6 +409,7 @@ export const useLibraryStore = defineStore('library', () => {
         fetchOfficialCollections,
         fetchCustomCollections,
         findCollectionByEpocId,
+        getCollectionLicense,
         updateEpocCollectionState,
         updateEpocProgress,
         downloadEpoc,

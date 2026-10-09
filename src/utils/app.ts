@@ -1,21 +1,23 @@
 import { i18n } from '@/i18n';
 import { alertController, IonicSafeString } from '@ionic/vue';
 import { EpocMetadata } from '@epoc/epoc-types/src/v1';
+import { License } from '@epoc/epoc-types/src/v1/license';
 
-export async function displayLicence(epoc: EpocMetadata) {
+export async function displayLicence(epoc: EpocMetadata, fallbackLicense?: License) {
     let message = '';
+    const license = epoc.license?.name ? epoc.license : fallbackLicense;
 
-    if (epoc.license?.name) {
-        if (epoc.license.url) {
+    if (license?.name) {
+        if (license.url) {
             message = i18n.global.t('LICENSE_MODAL.MESSAGE', {
                 epoc: epoc.title,
-                licenseName: epoc.license.name,
-                licenseUrl: epoc.license.url
+                licenseName: license.name,
+                licenseUrl: license.url
             });
         } else {
             message = i18n.global.t('LICENSE_MODAL.MESSAGE_WITHOUT_LINK', {
                 epoc: epoc.title,
-                licenseName: epoc.license.name
+                licenseName: license.name
             });
         }
     } else {
